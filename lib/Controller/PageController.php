@@ -21,6 +21,7 @@
 
 namespace OCA\ServerInfo\Controller;
 
+use OCP\AppFramework\Http\JSONResponse;
 use OCP\IRequest;
 use OCP\AppFramework\Http\TemplateResponse;
 use OCP\AppFramework\Http\DataResponse;
@@ -50,11 +51,16 @@ class PageController extends Controller {
 	/**
 	 * request data update
 	 *
-	 * @return TemplateResponse
+	 * @return JSONResponse
 	 */
 	public function update() {
-		$params = ['users' => 100];
-		return new TemplateResponse('serverinfo', 'main', $params);  // templates/main.php
+		$data = [
+			'users' => 100,
+			'freespace' => 1024
+		];
+
+		return new JSONResponse($data);
+
 
 	}
 
