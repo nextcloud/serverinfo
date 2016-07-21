@@ -1,0 +1,14 @@
+<?xml version="1.0"?>
+<info>
+    <id>serverinfo</id>
+    <name>Server Info</name>
+    <description>Provider useful server information</description>
+    <licence>AGPL</licence>
+    <author>Bjoern Schiessle</author>
+    <version>0.0.1</version>
+    <namespace>ServerInfo</namespace>
+    <category>other</category>
+    <dependencies>
+        <owncloud min-version="9.1" />
+    </dependencies>
+</info>
