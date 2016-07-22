@@ -44,6 +44,7 @@ class SystemStatistics {
 	}
 
 	public function getSystemStatistics() {
+		$memoryUsage = $this->getMemoryUsage();
 		return [
 			'version' => $this->config->getSystemValue('version'),
 			'theme' => $this->config->getSystemValue('theme', 'none'),
@@ -55,7 +56,33 @@ class SystemStatistics {
 			'filelocking.enabled' => $this->config->getSystemValue('filelocking.enabled', true) ? 'yes' : 'no',
 			'memcache.locking' => $this->config->getSystemValue('memcache.locking', 'none'),
 			'debug' => $this->config->getSystemValue('debug', false) ? 'yes' : 'no',
-			'freespace' => $this->view->free_space()
+			'freespace' => $this->view->free_space(),
+			'cpuload' => sys_getloadavg(),
+			'mem_total' => $memoryUsage['mem_total'],
+			'mem_free' => $memoryUsage['mem_free']
+		];
+	}
+
+	/**
+	 * get available and free memory including both RAM and Swap
+	 *
+	 * @return array with the two values 'mem_free' and 'mem_total'
+	 */
+	protected function getMemoryUsage() {
+		$memoryUsage = shell_exec('awk -F" " \'{ print $1 $2 }\' /proc/meminfo');
+		if ($memoryUsage === null) {
+			return ['mem_free' => 'N/A', 'mem_total' => 'N/A'];
+		}
+		$array = explode(PHP_EOL, $memoryUsage);
+		$data = [];
+		foreach($array as $value) {
+			list($k, $v) = explode(':', $value);
+			$data[$k] = $v;
+		}
+
+		return [
+			'mem_free' => (int)$data['MemAvailable'] + (int)$data['SwapFree'],
+			'mem_total' => (int)$data['MemTotal'] + (int)$data['SwapTotal']
 		];
 	}
 
