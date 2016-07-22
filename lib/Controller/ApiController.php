@@ -19,21 +19,34 @@
  *
  */
 
-/**
- * Create your routes in here. The name is the lowercase name of the controller
- * without the controller part, the stuff after the hash is the method.
- * e.g. page#index -> OCA\ServerInfo\Controller\PageController->index()
- *
- * The controller class has to be registered in the application.php file since
- * it's instantiated in there
- */
 
-return [
-    'routes' => [
-	   ['name' => 'page#index', 'url' => '/', 'verb' => 'GET'],
-	   ['name' => 'page#update', 'url' => '/update', 'verb' => 'GET'],
-    ],
-	'ocs' => [
-		['name' => 'api#info', 'url' => '/api/v1/info', 'verb' => 'GET'],
-	]
-];
+namespace OCA\ServerInfo\Controller;
+
+use OCP\AppFramework\Http\DataResponse;
+use OCP\AppFramework\OCSController;
+
+class ApiController extends OCSController {
+
+
+	public function __construct($appName,
+								\OCP\IRequest $request) {
+		parent::__construct($appName, $request);
+	}
+
+	/**
+	 * @NoCSRFRequired
+	 *
+	 * @return DataResponse
+	 */
+	public function info() {
+		return new DataResponse(
+			['data' =>
+				[
+					'key' => 'value'
+				]
+			]
+		);
+
+	}
+
+}
