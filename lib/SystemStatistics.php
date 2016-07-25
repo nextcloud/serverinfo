@@ -52,7 +52,6 @@ class SystemStatistics {
 			'enable_previews' => $this->config->getSystemValue('enable_previews', true) ? 'yes' : 'no',
 			'memcache.local' => $this->config->getSystemValue('memcache.local', 'none'),
 			'memcache.distributed' => $this->config->getSystemValue('memcache.distributed', 'none'),
-			'asset-pipeline.enabled' => $this->config->getSystemValue('asset-pipeline.enabled') ? 'yes' : 'no',
 			'filelocking.enabled' => $this->config->getSystemValue('filelocking.enabled', true) ? 'yes' : 'no',
 			'memcache.locking' => $this->config->getSystemValue('memcache.locking', 'none'),
 			'debug' => $this->config->getSystemValue('debug', false) ? 'yes' : 'no',
