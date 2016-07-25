@@ -29,12 +29,8 @@ use OCP\AppFramework\Controller;
 
 class PageController extends Controller {
 
-
-	private $userId;
-
-	public function __construct($AppName, IRequest $request, $UserId){
+	public function __construct($AppName, IRequest $request){
 		parent::__construct($AppName, $request);
-		$this->userId = $UserId;
 	}
 
 	/**
@@ -62,14 +58,6 @@ class PageController extends Controller {
 		return new JSONResponse($data);
 
 
-	}
-
-	/**
-	 * Simply method that posts back the payload of the request
-	 * @NoAdminRequired
-	 */
-	public function doEcho($echo) {
-		return new DataResponse(['echo' => $echo]);
 	}
 
 
