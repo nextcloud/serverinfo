@@ -22,15 +22,58 @@
 
 namespace OCA\ServerInfo\Controller;
 
+use OCA\ServerInfo\DatabaseStatistics;
+use OCA\ServerInfo\PhpStatistics;
+use OCA\ServerInfo\ShareStatistics;
+use OCA\ServerInfo\StorageStatistics;
+use OCA\ServerInfo\SystemStatistics;
 use OCP\AppFramework\Http\DataResponse;
 use OCP\AppFramework\OCSController;
+use OCP\IRequest;
 
 class ApiController extends OCSController {
 
+	/** @var SystemStatistics */
+	private $systemStatistics;
 
+	/** @var StorageStatistics */
+	private $storageStatistics;
+
+	/** @var PhpStatistics */
+	private $phpStatistics;
+
+	/** @var DatabaseStatistics  */
+	private $databaseStatistics;
+
+	/** @var ShareStatistics */
+	private $shareStatistics;
+
+	/**
+	 * ApiController constructor.
+	 *
+	 * @param string $appName
+	 * @param IRequest $request
+	 * @param SystemStatistics $systemStatistics
+	 * @param StorageStatistics $storageStatistics
+	 * @param PhpStatistics $phpStatistics
+	 * @param DatabaseStatistics $databaseStatistics
+	 * @param ShareStatistics $shareStatistics
+	 */
 	public function __construct($appName,
-								\OCP\IRequest $request) {
+								IRequest $request,
+								SystemStatistics $systemStatistics,
+								StorageStatistics $storageStatistics,
+								PhpStatistics $phpStatistics,
+								DatabaseStatistics $databaseStatistics,
+								ShareStatistics $shareStatistics
+	) {
 		parent::__construct($appName, $request);
+
+		$this->systemStatistics = $systemStatistics;
+		$this->storageStatistics = $storageStatistics;
+		$this->phpStatistics = $phpStatistics;
+		$this->databaseStatistics = $databaseStatistics;
+		$this->shareStatistics = $shareStatistics;
 	}
 
 	/**
@@ -39,14 +82,41 @@ class ApiController extends OCSController {
 	 * @return DataResponse
 	 */
 	public function info() {
+
 		return new DataResponse(
 			['data' =>
 				[
-					'key' => 'value'
+					'nextcloud' =>
+						[
+							'system' => $this->systemStatistics->getSystemStatistics(),
+							'storage' => $this->storageStatistics->getStorageStatistics(),
+							'shares' => $this->shareStatistics->getShareStatistics()
+						],
+					'server' =>
+						[
+							'webserver' => $this->getWebserver(),
+							'php' => $this->phpStatistics->getPhpStatistics(),
+							'database' => $this->databaseStatistics->getDatabaseStatistics()
+						]
 				]
 			]
 		);
 
 	}
+
+	/**
+	 * get webserver
+	 *
+	 * @return string
+	 */
+	private function getWebserver() {
+		if (isset($_SERVER['SERVER_SOFTWARE'])) {
+			return $_SERVER['SERVER_SOFTWARE'];
+		}
+
+		return "unknown";
+	}
+
+
 
 }
