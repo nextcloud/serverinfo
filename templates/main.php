@@ -20,6 +20,9 @@
  */
 
 script('serverinfo', 'script');
+script('serverinfo', 'smoothie');
+script('serverinfo', 'Chart.min');
+
 style('serverinfo', 'style');
 
 ?>

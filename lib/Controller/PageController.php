@@ -26,11 +26,55 @@ use OCP\IRequest;
 use OCP\AppFramework\Http\TemplateResponse;
 use OCP\AppFramework\Http\DataResponse;
 use OCP\AppFramework\Controller;
+use OCA\ServerInfo\DatabaseStatistics;
+use OCA\ServerInfo\PhpStatistics;
+use OCA\ServerInfo\ShareStatistics;
+use OCA\ServerInfo\StorageStatistics;
+use OCA\ServerInfo\SystemStatistics;
 
 class PageController extends Controller {
 
-	public function __construct($AppName, IRequest $request){
-		parent::__construct($AppName, $request);
+	/** @var SystemStatistics */
+	private $systemStatistics;
+
+	/** @var StorageStatistics */
+	private $storageStatistics;
+
+	/** @var PhpStatistics */
+	private $phpStatistics;
+
+	/** @var DatabaseStatistics  */
+	private $databaseStatistics;
+
+	/** @var ShareStatistics */
+	private $shareStatistics;
+
+	/**
+	 * ApiController constructor.
+	 *
+	 * @param string $appName
+	 * @param IRequest $request
+	 * @param SystemStatistics $systemStatistics
+	 * @param StorageStatistics $storageStatistics
+	 * @param PhpStatistics $phpStatistics
+	 * @param DatabaseStatistics $databaseStatistics
+	 * @param ShareStatistics $shareStatistics
+	 */
+	public function __construct($appName,
+								IRequest $request,
+								SystemStatistics $systemStatistics,
+								StorageStatistics $storageStatistics,
+								PhpStatistics $phpStatistics,
+								DatabaseStatistics $databaseStatistics,
+								ShareStatistics $shareStatistics
+	) {
+		parent::__construct($appName, $request);
+
+		$this->systemStatistics = $systemStatistics;
+		$this->storageStatistics = $storageStatistics;
+		$this->phpStatistics = $phpStatistics;
+		$this->databaseStatistics = $databaseStatistics;
+		$this->shareStatistics = $shareStatistics;
 	}
 
 	/**
@@ -50,14 +94,16 @@ class PageController extends Controller {
 	 * @return JSONResponse
 	 */
 	public function update() {
+				
 		$data = [
-			'users' => 100,
-			'freespace' => 1024
+			'system' => $this->systemStatistics->getSystemStatistics(),
+			'storage' => $this->storageStatistics->getStorageStatistics(),
+			'shares' => $this->shareStatistics->getShareStatistics(),
+			'php' => $this->phpStatistics->getPhpStatistics(),
+			'database' => $this->databaseStatistics->getDatabaseStatistics()
 		];
 
 		return new JSONResponse($data);
-
-
 	}
 
 
