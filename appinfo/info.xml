@@ -9,6 +9,6 @@
     <namespace>ServerInfo</namespace>
     <category>other</category>
     <dependencies>
-        <owncloud min-version="9.1" />
+        <owncloud min-version="8.0" max-version="10" />
     </dependencies>
 </info>
