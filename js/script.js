@@ -98,8 +98,8 @@
 			home_storages 	= storages.num_storages_home,
 			other_storages	= storages.num_storages_other;
 
-		$('#numUsersStorage').text(users_storages);
-		$('#numFilesStorage').text(files_storages);
+		$('#numUsersStorage').text(' ' + users_storages);
+		$('#numFilesStorage').text(' ' + files_storages);
 
 		if (typeof storagesCgart === 'undefined') {
 			var ctx = document.getElementById("storagescanvas");
@@ -139,6 +139,8 @@
 			num_fed_shares_sent 		= shares.num_fed_shares_sent,
 			num_fed_shares_received 	= shares.num_fed_shares_received;
 
+		$('#totalShares').text(' ' + num_shares); 
+
 		if (typeof sharesChart === 'undefined') {
 			var ctx = document.getElementById("sharecanvas");
 
@@ -175,17 +177,17 @@
 
 	function updatePHPStatistics (php) {
 
-		$('#phpVersion').text(php.version);
-		$('#phpMemLimit').text(php.memory_limit);
-		$('#phpMaxExecTime').text(php.max_execution_time);
-		$('#phpUploadMaxSize').text(php.upload_max_filesize);
+		$('#phpVersion').text(' ' + php.version);
+		$('#phpMemLimit').text(' ' + php.memory_limit);
+		$('#phpMaxExecTime').text(' ' + php.max_execution_time);
+		$('#phpUploadMaxSize').text(' ' + php.upload_max_filesize);
 	}
 
 	function updateDatabaseStatistics (database) {
 
-		$('#databaseType').text(database.type);
-		$('#databaseVersion').text(database.version);
-		$('#dataBaseSize').text(database.size);
+		$('#databaseType').text(' ' + database.type);
+		$('#databaseVersion').text(' ' + database.version);
+		$('#dataBaseSize').text(' ' + database.size);
 	}
 
 })(jQuery, OC);
