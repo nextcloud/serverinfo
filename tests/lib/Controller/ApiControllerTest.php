@@ -26,6 +26,7 @@ namespace OCA\ServerInfo\Tests\lib\Controller;
 use OCA\ServerInfo\Controller\ApiController;
 use OCA\ServerInfo\DatabaseStatistics;
 use OCA\ServerInfo\PhpStatistics;
+use OCA\ServerInfo\SessionStatistics;
 use OCA\ServerInfo\ShareStatistics;
 use OCA\ServerInfo\StorageStatistics;
 use OCA\ServerInfo\SystemStatistics;
@@ -52,6 +53,9 @@ class ApiControllerTest extends TestCase {
 
 	/** @var  ShareStatistics | \PHPUnit_Framework_MockObject_MockObject */
 	private $shareStatistics;
+
+	/** @var  SessionStatistics | \PHPUnit_Framework_MockObject_MockObject */
+	private $sessionStatistics;
 
 	/** @var  ApiController */
 	private $instance;
@@ -83,6 +87,11 @@ class ApiControllerTest extends TestCase {
 			->disableOriginalConstructor()
 			->getMock();
 
+		$this->sessionStatistics = $this->getMockBuilder('OCA\ServerInfo\SessionStatistics')
+			->disableOriginalConstructor()
+			->getMock();
+
+
 		$this->instance = new ApiController(
 			'ServerInfoTest',
 			$this->request,
@@ -90,7 +99,8 @@ class ApiControllerTest extends TestCase {
 			$this->storageStatistics,
 			$this->phpStatistics,
 			$this->databaseStatistics,
-			$this->shareStatistics
+			$this->shareStatistics,
+			$this->sessionStatistics
 		);
 	}
 
@@ -106,6 +116,8 @@ class ApiControllerTest extends TestCase {
 			->willReturn('databaseStatistics');
 		$this->shareStatistics->expects($this->once())->method('getShareStatistics')
 			->willReturn('shareStatistics');
+		$this->sessionStatistics->expects($this->once())->method('getSessionStatistics')
+			->willReturn('sessionStatistics');
 
 		$result = $this->instance->info();
 		$this->assertTrue($result instanceof DataResponse);
@@ -119,6 +131,7 @@ class ApiControllerTest extends TestCase {
 		$this->assertSame('unknown', $data['data']['server']['webserver']);
 		$this->assertSame('databaseStatistics', $data['data']['server']['database']);
 		$this->assertSame('phpStatistics', $data['data']['server']['php']);
+		$this->assertSame('sessionStatistics', $data['data']['activeUsers']);
 	}
 
 }
