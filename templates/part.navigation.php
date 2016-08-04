@@ -1,10 +1,7 @@
 <ul>
-	<li><a href="#">First level entry</a></li>
-	<li>
-		<a href="#">First level container</a>
-		<ul>
-			<li><a href="#">Second level entry</a></li>
-			<li><a href="#">Second level entry</a></li>
-		</ul>
-	</li>
+	<li><a href="#systemSection">System</a></li>
+	<li><a href="#storageSection">Storage</a></li>
+	<li><a href="#shareSection">Share</a></li>
+	<li><a href="#phpSection">PHP</a></li>
+	<li><a href="#databaseSection">Database</a></li>
 </ul>
