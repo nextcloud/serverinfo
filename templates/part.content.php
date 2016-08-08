@@ -1,28 +1,27 @@
-<div class="section" id="systemSection">
-	<h2><?php p($l->t('System'));?></h2>
-	<p><?php p($l->t('CPU'));?></p>
-	<canvas id="cpuloadcanvas" width="400" height="100"></canvas>
-	<p><em><?php p($l->t('CPU load average (Last minute)')); ?></em></p>
-	<br>
-	<p><?php p($l->t('Memory'));?></p>
-	<canvas id="memorycanvas" width="400" height="100"></canvas>
+<div class="section" id="cpuSection">
+	<h2><?php p($l->t('CPU load'));?></h2>
+	<canvas id="cpuloadcanvas" width="600" height="150"></canvas>
+	<p><em id="cpuFooterInfo"></em></p>
+</div>
+<div class="section" id="memorySection">
+	<h2><?php p($l->t('Memory usage'));?></h2>
+	<canvas id="memorycanvas" width="600" height="150"></canvas>
 	<p><em id="memFooterInfo"></em></p>
+</div>
+<div class="section" id="activeUsersSection">
+	<h2><?php p($l->t('Active users'));?></h2>
+	<br>
+	<canvas class="barchart" id="activeuserscanvas"></canvas>
+</div>
+<div class="section" id="sharesSection">
+	<h2><?php p($l->t('Shares'));?></h2>
+	<br>
+	<canvas class="barchart" id="sharecanvas"></canvas>
 </div>
 <div class="section" id="storageSection">
 	<h2><?php p($l->t('Storage'));?></h2>
 	<p><?php p($l->t('Users:'));?><em id="numUsersStorage"> -- </em></p>
 	<p><?php p($l->t('Files:'));?><em id="numFilesStorage"> -- </em></p>
-	<p><?php p($l->t('Storages:'));?></p>
-	<div id="container" style="width:280px; height:250px;">
-		<canvas id="storagescanvas" width="280" height="250"></canvas>
-	</div>
-</div>
-<div class="section" id="shareSection">
-	<h2><?php p($l->t('Shares'));?></h2>
-	<p><?php p($l->t('Total:'));?><em id="totalShares"> -- </em></p>
-	<div id="container" style="width:350px; height:350px;">
-		<canvas id="sharecanvas" width="350" height="350"></canvas>
-	</div>
 </div>
 <div class="section" id="phpSection">
 	<h2><?php p($l->t('PHP'));?></h2>

@@ -1,3 +1,4 @@
-#hello {
-	color: red;
+.barchart {
+	max-width: 700px;
+	max-height: 350px;
 }
