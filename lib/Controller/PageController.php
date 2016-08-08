@@ -28,6 +28,7 @@ use OCP\AppFramework\Http\DataResponse;
 use OCP\AppFramework\Controller;
 use OCA\ServerInfo\DatabaseStatistics;
 use OCA\ServerInfo\PhpStatistics;
+use OCA\ServerInfo\SessionStatistics;
 use OCA\ServerInfo\ShareStatistics;
 use OCA\ServerInfo\StorageStatistics;
 use OCA\ServerInfo\SystemStatistics;
@@ -49,6 +50,9 @@ class PageController extends Controller {
 	/** @var ShareStatistics */
 	private $shareStatistics;
 
+	/** @var SessionStatistics */
+	private $sessionStatistics;
+
 	/**
 	 * ApiController constructor.
 	 *
@@ -59,6 +63,7 @@ class PageController extends Controller {
 	 * @param PhpStatistics $phpStatistics
 	 * @param DatabaseStatistics $databaseStatistics
 	 * @param ShareStatistics $shareStatistics
+	 * @param SessionStatistics $sessionStatistics
 	 */
 	public function __construct($appName,
 								IRequest $request,
@@ -66,7 +71,8 @@ class PageController extends Controller {
 								StorageStatistics $storageStatistics,
 								PhpStatistics $phpStatistics,
 								DatabaseStatistics $databaseStatistics,
-								ShareStatistics $shareStatistics
+								ShareStatistics $shareStatistics,
+								SessionStatistics $sessionStatistics
 	) {
 		parent::__construct($appName, $request);
 
@@ -75,6 +81,7 @@ class PageController extends Controller {
 		$this->phpStatistics = $phpStatistics;
 		$this->databaseStatistics = $databaseStatistics;
 		$this->shareStatistics = $shareStatistics;
+		$this->sessionStatistics = $sessionStatistics;
 	}
 
 	/**
@@ -100,7 +107,8 @@ class PageController extends Controller {
 			'storage' => $this->storageStatistics->getStorageStatistics(),
 			'shares' => $this->shareStatistics->getShareStatistics(),
 			'php' => $this->phpStatistics->getPhpStatistics(),
-			'database' => $this->databaseStatistics->getDatabaseStatistics()
+			'database' => $this->databaseStatistics->getDatabaseStatistics(),
+			'activeUsers' => $this->sessionStatistics->getSessionStatistics()
 		];
 
 		return new JSONResponse($data);
