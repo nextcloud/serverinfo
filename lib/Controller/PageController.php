@@ -54,9 +54,6 @@ class PageController extends Controller {
 	/** @var SessionStatistics */
 	private $sessionStatistics;
 
-	/** @var IURLGenerator */
-	private $urlGenerator;
-
 	/**
 	 * ApiController constructor.
 	 *
@@ -68,7 +65,6 @@ class PageController extends Controller {
 	 * @param DatabaseStatistics $databaseStatistics
 	 * @param ShareStatistics $shareStatistics
 	 * @param SessionStatistics $sessionStatistics
-	 * @param IURLGenerator $urlGenerator
 	 */
 	public function __construct($appName,
 								IRequest $request,
@@ -77,8 +73,7 @@ class PageController extends Controller {
 								PhpStatistics $phpStatistics,
 								DatabaseStatistics $databaseStatistics,
 								ShareStatistics $shareStatistics,
-								SessionStatistics $sessionStatistics,
-								IURLGenerator $urlGenerator
+								SessionStatistics $sessionStatistics
 	) {
 		parent::__construct($appName, $request);
 
@@ -88,18 +83,6 @@ class PageController extends Controller {
 		$this->databaseStatistics = $databaseStatistics;
 		$this->shareStatistics = $shareStatistics;
 		$this->sessionStatistics = $sessionStatistics;
-		$this->urlGenerator = $urlGenerator;
-	}
-
-	/**
-	 * Show app page with the server statistics
-	 * @NoCSRFRequired
-	 *
-	 * @return TemplateResponse
-	 */
-	public function index() {
-		$params = ['ocs' => $this->urlGenerator->getAbsoluteURL('ocs/v2.php/apps/serverinfo/api/v1/info')];
-		return new TemplateResponse('serverinfo', 'main', $params);
 	}
 
 	/**
