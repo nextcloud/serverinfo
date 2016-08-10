@@ -36,3 +36,11 @@
 	<p><?php p($l->t('Version:'));?><em id="databaseVersion"> -- </em></p>
 	<p><?php p($l->t('Size:'));?><em id="dataBaseSize"> -- </em></p>
 </div>
+
+<div class="section" id="ocsEndPoint">
+	<h2><?php p($l->t('External monitoring tool'));?></h2>
+	<p>
+		<?php p($l->t('You can connect a external monitoring tool by using this end point: ') . $_['ocs']);?>
+
+
+</div>
