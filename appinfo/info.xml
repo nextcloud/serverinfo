@@ -5,11 +5,15 @@
     <description>Provider useful server information</description>
     <licence>AGPL</licence>
     <author>Bjoern Schiessle, Ivan Sein Santiago</author>
-    <version>1.1.0</version>
+    <version>1.1.1</version>
     <namespace>ServerInfo</namespace>
     <category>other</category>
     <dependencies>
         <owncloud min-version="9.1" max-version="9.2" />
     </dependencies>
     <default_enable/>
+    <settings>
+        <admin>\OCA\ServerInfo\Settings\AdminSettings</admin>
+        <admin-section>\OCA\ServerInfo\Settings\AdminSection</admin-section>
+    </settings>
 </info>
