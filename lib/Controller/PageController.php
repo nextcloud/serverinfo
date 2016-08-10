@@ -32,6 +32,7 @@ use OCA\ServerInfo\SessionStatistics;
 use OCA\ServerInfo\ShareStatistics;
 use OCA\ServerInfo\StorageStatistics;
 use OCA\ServerInfo\SystemStatistics;
+use OCP\IURLGenerator;
 
 class PageController extends Controller {
 
@@ -53,6 +54,9 @@ class PageController extends Controller {
 	/** @var SessionStatistics */
 	private $sessionStatistics;
 
+	/** @var IURLGenerator */
+	private $urlGenerator;
+
 	/**
 	 * ApiController constructor.
 	 *
@@ -64,6 +68,7 @@ class PageController extends Controller {
 	 * @param DatabaseStatistics $databaseStatistics
 	 * @param ShareStatistics $shareStatistics
 	 * @param SessionStatistics $sessionStatistics
+	 * @param IURLGenerator $urlGenerator
 	 */
 	public function __construct($appName,
 								IRequest $request,
@@ -72,7 +77,8 @@ class PageController extends Controller {
 								PhpStatistics $phpStatistics,
 								DatabaseStatistics $databaseStatistics,
 								ShareStatistics $shareStatistics,
-								SessionStatistics $sessionStatistics
+								SessionStatistics $sessionStatistics,
+								IURLGenerator $urlGenerator
 	) {
 		parent::__construct($appName, $request);
 
@@ -82,6 +88,7 @@ class PageController extends Controller {
 		$this->databaseStatistics = $databaseStatistics;
 		$this->shareStatistics = $shareStatistics;
 		$this->sessionStatistics = $sessionStatistics;
+		$this->urlGenerator = $urlGenerator;
 	}
 
 	/**
@@ -91,8 +98,8 @@ class PageController extends Controller {
 	 * @return TemplateResponse
 	 */
 	public function index() {
-		$params = ['users' => 100];
-		return new TemplateResponse('serverinfo', 'main', $params);  // templates/main.php
+		$params = ['ocs' => $this->urlGenerator->getAbsoluteURL('ocs/v2.php/apps/serverinfo/api/v1/info')];
+		return new TemplateResponse('serverinfo', 'main', $params);
 	}
 
 	/**
@@ -101,7 +108,7 @@ class PageController extends Controller {
 	 * @return JSONResponse
 	 */
 	public function update() {
-				
+
 		$data = [
 			'system' => $this->systemStatistics->getSystemStatistics(),
 			'storage' => $this->storageStatistics->getStorageStatistics(),
