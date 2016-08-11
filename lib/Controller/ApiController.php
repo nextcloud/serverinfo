@@ -91,22 +91,20 @@ class ApiController extends OCSController {
 	public function info() {
 
 		return new DataResponse(
-			['data' =>
-				[
-					'nextcloud' =>
-						[
-							'system' => $this->systemStatistics->getSystemStatistics(),
-							'storage' => $this->storageStatistics->getStorageStatistics(),
-							'shares' => $this->shareStatistics->getShareStatistics()
-						],
-					'server' =>
-						[
-							'webserver' => $this->getWebserver(),
-							'php' => $this->phpStatistics->getPhpStatistics(),
-							'database' => $this->databaseStatistics->getDatabaseStatistics()
-						],
-					'activeUsers' => $this->sessionStatistics->getSessionStatistics()
-				]
+			[
+				'nextcloud' =>
+					[
+						'system' => $this->systemStatistics->getSystemStatistics(),
+						'storage' => $this->storageStatistics->getStorageStatistics(),
+						'shares' => $this->shareStatistics->getShareStatistics()
+					],
+				'server' =>
+					[
+						'webserver' => $this->getWebserver(),
+						'php' => $this->phpStatistics->getPhpStatistics(),
+						'database' => $this->databaseStatistics->getDatabaseStatistics()
+					],
+				'activeUsers' => $this->sessionStatistics->getSessionStatistics()
 			]
 		);
 

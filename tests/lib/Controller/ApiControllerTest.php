@@ -122,16 +122,16 @@ class ApiControllerTest extends TestCase {
 		$result = $this->instance->info();
 		$this->assertTrue($result instanceof DataResponse);
 		$data = $result->getData();
-		$this->assertTrue(isset($data['data']['nextcloud']));
-		$this->assertTrue(isset($data['data']['server']));
+		$this->assertTrue(isset($data['nextcloud']));
+		$this->assertTrue(isset($data['server']));
 
-		$this->assertSame('systemStatistics', $data['data']['nextcloud']['system']);
-		$this->assertSame('storageStatistics', $data['data']['nextcloud']['storage']);
-		$this->assertSame('shareStatistics', $data['data']['nextcloud']['shares']);
-		$this->assertSame('unknown', $data['data']['server']['webserver']);
-		$this->assertSame('databaseStatistics', $data['data']['server']['database']);
-		$this->assertSame('phpStatistics', $data['data']['server']['php']);
-		$this->assertSame('sessionStatistics', $data['data']['activeUsers']);
+		$this->assertSame('systemStatistics', $data['nextcloud']['system']);
+		$this->assertSame('storageStatistics', $data['nextcloud']['storage']);
+		$this->assertSame('shareStatistics', $data['nextcloud']['shares']);
+		$this->assertSame('unknown', $data['server']['webserver']);
+		$this->assertSame('databaseStatistics', $data['server']['database']);
+		$this->assertSame('phpStatistics', $data['server']['php']);
+		$this->assertSame('sessionStatistics', $data['activeUsers']);
 	}
 
 }
