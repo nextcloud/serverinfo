@@ -51,7 +51,7 @@ class AdminSection implements ISection {
 	 * @return string
 	 */
 	public function getName() {
-		return $this->l->t('Server Info');
+		return $this->l->t('Server info');
 	}
 
 	/**
