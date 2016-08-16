@@ -73,8 +73,10 @@ class SystemStatistics {
 			return ['mem_free' => 'N/A', 'mem_total' => 'N/A'];
 		}
 		$array = explode(PHP_EOL, $memoryUsage);
+		// the last value is a empty string after explode, skip it
+		$values = array_slice($array, 0, count($array) - 1);
 		$data = [];
-		foreach($array as $value) {
+		foreach($values as $value) {
 			list($k, $v) = explode(':', $value);
 			$data[$k] = $v;
 		}
