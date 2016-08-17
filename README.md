@@ -8,7 +8,7 @@ monitoring tool to the provided end-points.
 
 ## Installation
 
-Place this app in **owncloud/apps/**
+Place this app in **nextcloud/apps/**
 
 ## API
 
