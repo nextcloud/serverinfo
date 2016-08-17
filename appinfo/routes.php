@@ -30,7 +30,6 @@
 
 return [
     'routes' => [
-	   ['name' => 'page#index', 'url' => '/', 'verb' => 'GET'],
 	   ['name' => 'page#update', 'url' => '/update', 'verb' => 'GET'],
     ],
 	'ocs' => [
