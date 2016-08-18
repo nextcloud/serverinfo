@@ -235,7 +235,11 @@
 
 		$('#databaseType').text(' ' + database.type);
 		$('#databaseVersion').text(' ' + database.version);
-		$('#dataBaseSize').text(' ' + bytesToSize(database.size));
+		if (database.size === 'N/A') {
+			$('#dataBaseSize').text(' ' + database.size);
+		} else {
+			$('#dataBaseSize').text(' ' + bytesToSize(database.size));
+		}
 	}
 
 	function resizeSystemCharts () {
