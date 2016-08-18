@@ -114,8 +114,14 @@ class DatabaseStatistics {
 				}
 				break;
 			case 'sqlite':
+			case 'sqlite3':
 				if (file_exists($this->config->getSystemValue('dbhost'))) {
 					$database_size = filesize($this->config->getSystemValue('dbhost'));
+				} else {
+					$params = $this->connection->getParams();
+					if (file_exists($params['path'])) {
+						$database_size = filesize($params['path']);
+					}
 				}
 				break;
 			case 'pgsql':
