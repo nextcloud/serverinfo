@@ -76,6 +76,11 @@
 	}
 
 	function updateMemoryStatistics (memTotal, memFree) {
+		if (memTotal === 'N/A' || memFree === 'N/A') {
+			$('#memFooterInfo').text(t('serverinfo', 'Memory info not available'));
+			$('#memorycanvas').addClass('hidden');
+			return;
+		}
 
 		var memTotalBytes = memTotal * 1024,
 			memUsageBytes = (memTotal - memFree) * 1024,
