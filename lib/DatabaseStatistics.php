@@ -92,26 +92,16 @@ class DatabaseStatistics {
 		// This code is heavily influenced by a similar routine in phpMyAdmin 2.2.0
 		switch ($this->config->getSystemValue('dbtype')) {
 			case 'mysql':
-				$sql = 'SELECT VERSION() AS mysql_version';
+				$db_name = $this->config->getSystemValue('dbname');
+				$sql = 'SHOW TABLE STATUS FROM ' . $db_name;
 				$result = $this->connection->executeQuery($sql);
-				$row = $result->fetch();
-				$result->closeCursor();
-				if ($row) {
-					$version = $row['mysql_version'];
-					if (preg_match('#(3\.23|[45]\.)#', $version)) {
-						$db_name = (preg_match('#^(?:3\.23\.(?:[6-9]|[1-9]{2}))|[45]\.#', $version)) ? "`{$this->config->getSystemValue('dbname')}`" : $this->config->getSystemValue('dbname');
-						$sql = 'SHOW TABLE STATUS
-							FROM ' . $db_name;
-						$result = $this->connection->executeQuery($sql);
-						$database_size = 0;
-						while ($row = $result->fetch()) {
-							if ((isset($row['Type']) && $row['Type'] !== 'MRG_MyISAM') || (isset($row['Engine']) && ($row['Engine'] === 'MyISAM' || $row['Engine'] === 'InnoDB'))) {
-								$database_size += $row['Data_length'] + $row['Index_length'];
-							}
-						}
-						$result->closeCursor();
+				$database_size = 0;
+				while ($row = $result->fetch()) {
+					if ((isset($row['Type']) && $row['Type'] !== 'MRG_MyISAM') || (isset($row['Engine']) && ($row['Engine'] === 'MyISAM' || $row['Engine'] === 'InnoDB'))) {
+						$database_size += $row['Data_length'] + $row['Index_length'];
 					}
 				}
+				$result->closeCursor();
 				break;
 			case 'sqlite':
 			case 'sqlite3':
