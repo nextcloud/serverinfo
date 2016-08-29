@@ -180,7 +180,7 @@
 
 	function updateActiveUsersStatistics (activeUsers) {
 
-		var activeusers_data = [activeUsers.last5minutes, activeUsers.last1hour, activeUsers.last24hours];
+		var activeusers_data = [activeUsers.last24hours, activeUsers.last1hour, activeUsers.last5minutes],
 			stepSize = 0;
 
 		if (Math.max.apply(null, activeusers_data) < 10) {stepSize = 1;} 
@@ -191,7 +191,7 @@
 			activeusersChart = new Chart(ctx, {
 									    type: 'line',
 									    data: {
-									        labels: ["Last 5 mins", "Last 1 hour", "Last 24 hours"],
+									        labels: ["Last 24 hours", "Last 1 hour", "Last 5 mins"],
 									        datasets: [{
 									        	label: " ",
 									            data: activeusers_data,
@@ -209,6 +209,7 @@
 									            pointHoverBorderWidth: 1,
 									            pointRadius: 5,
 									            pointHitRadius: 10,
+									            lineTension:0
 									        }]
 									    },
 									    options: {
@@ -224,8 +225,6 @@
 									    }
 			});
 		}
-
-		$('#numFilesStorage').text(' hola' + activeUsers.last5minutes);
 	}
 
 	function updatePHPStatistics (php) {
