@@ -105,7 +105,7 @@ class DatabaseStatistics {
 						$result = $this->connection->executeQuery($sql);
 						$database_size = 0;
 						while ($row = $result->fetch()) {
-							if ((isset($row['Type']) && $row['Type'] != 'MRG_MyISAM') || (isset($row['Engine']) && ($row['Engine'] == 'MyISAM' || $row['Engine'] == 'InnoDB'))) {
+							if ((isset($row['Type']) && $row['Type'] !== 'MRG_MyISAM') || (isset($row['Engine']) && ($row['Engine'] === 'MyISAM' || $row['Engine'] === 'InnoDB'))) {
 								$database_size += $row['Data_length'] + $row['Index_length'];
 							}
 						}
@@ -131,7 +131,7 @@ class DatabaseStatistics {
 				$result = $this->connection->executeQuery($sql);
 				$row = $result->fetch();
 				$result->closeCursor();
-				if ($row['proname'] == 'pg_database_size') {
+				if ($row['proname'] === 'pg_database_size') {
 					$database = $this->config->getSystemValue('dbname');
 					if (strpos($database, '.') !== false)
 					{
