@@ -71,7 +71,7 @@
 			cpuLoadChart.addTimeSeries(cpuLoadLine, {lineWidth:1, strokeStyle:'rgb(0, 0, 255)', fillStyle:'rgba(0, 0, 255, 0.2)'});
 		}
 		
-		$('#cpuFooterInfo').text("Load average: "+cpu1+" (Last minute)");
+		$('#cpuFooterInfo').text(t('serverinfo', 'Load average')+": "+cpu1+" ("+t('serverinfo', 'Last minute')+")");
 		cpuLoadLine.append(new Date().getTime(), cpu1);
 	}
 
@@ -101,7 +101,7 @@
 			memoryUsageChart.addTimeSeries(memoryUsageLine, {lineWidth:1, strokeStyle:'rgb(0, 255, 0)', fillStyle:'rgba(0, 255, 0, 0.2)'});
 		}
 
-		$('#memFooterInfo').text("Total: "+bytesToSize(memTotalBytes)+" - Current usage: "+bytesToSize(memUsageBytes));
+		$('#memFooterInfo').text(t('serverinfo', 'Total')+": "+bytesToSize(memTotalBytes)+" - "+t('serverinfo', 'Current usage')+": "+bytesToSize(memUsageBytes));
 		memoryUsageLine.append(new Date().getTime(), memUsageGB);
 	}
 
@@ -140,7 +140,11 @@
 			sharesChart = new Chart(ctx, {
 									    type: 'bar',
 									    data: {
-									        labels: ["Users", "Groups", "Links", "Federated sent", "Federated received"],
+									        labels: [t('serverinfo', 'Users'), 
+									        		t('serverinfo', 'Groups'), 
+									        		t('serverinfo', 'Links'), 
+									        		t('serverinfo', 'Federated sent'), 
+									        		t('serverinfo', 'Federated received')],
 									        datasets: [{
 									        	label: " ",
 									            data: shares_data,
@@ -191,7 +195,9 @@
 			activeusersChart = new Chart(ctx, {
 									    type: 'line',
 									    data: {
-									        labels: ["Last 24 hours", "Last 1 hour", "Last 5 mins"],
+									        labels: [t('serverinfo', 'Last 24 hours'), 
+									        		t('serverinfo', 'Last 1 hour'), 
+									        		t('serverinfo', 'Last 5 mins')],
 									        datasets: [{
 									        	label: " ",
 									            data: activeusers_data,
