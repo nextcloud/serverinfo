@@ -40,30 +40,30 @@ style('serverinfo', 'style');
 <div class="section" id="activeUsersSection">
 	<h2><?php p($l->t('Active users'));?></h2>
 	<br>
-	<canvas class="barchart" id="activeuserscanvas"></canvas>
+	<canvas data-users="<?php p(json_encode($_['activeUsers'])) ?>" class="barchart" id="activeuserscanvas"></canvas>
 </div>
 <div class="section" id="sharesSection">
 	<h2><?php p($l->t('Shares'));?></h2>
 	<br>
-	<canvas class="barchart" id="sharecanvas"></canvas>
+	<canvas data-shares="<?php p(json_encode($_['shares'])) ?>" class="barchart" id="sharecanvas"></canvas>
 </div>
 <div class="section" id="storageSection">
 	<h2><?php p($l->t('Storage'));?></h2>
-	<p><?php p($l->t('Users:'));?><em id="numUsersStorage"> -- </em></p>
-	<p><?php p($l->t('Files:'));?><em id="numFilesStorage"> -- </em></p>
+	<p><?php p($l->t('Users:'));?> <em id="numUsersStorage"><?php p($_['storage']['num_users']);?></em></p>
+	<p><?php p($l->t('Files:'));?> <em id="numFilesStorage"><?php p($_['storage']['num_files']);?></em></p>
 </div>
 <div class="section" id="phpSection">
 	<h2><?php p($l->t('PHP'));?></h2>
-	<p><?php p($l->t('Version:'));?><em id="phpVersion"> -- </em></p>
-	<p><?php p($l->t('Memory Limit:'));?><em id="phpMemLimit"> -- </em></p>
-	<p><?php p($l->t('Max Execution Time:'));?><em id="phpMaxExecTime"> -- </em></p>
-	<p><?php p($l->t('Upload max size:'));?><em id="phpUploadMaxSize"> -- </em></p>
+	<p><?php p($l->t('Version:'));?> <em id="phpVersion"><?php p($_['php']['version']);?></em></p>
+	<p><?php p($l->t('Memory Limit:'));?> <em id="phpMemLimit"><?php p($_['php']['memory_limit']);?></em></p>
+	<p><?php p($l->t('Max Execution Time:'));?> <em id="phpMaxExecTime"><?php p($_['php']['max_execution_time']);?></em></p>
+	<p><?php p($l->t('Upload max size:'));?> <em id="phpUploadMaxSize"><?php p($_['php']['upload_max_filesize']);?></em></p>
 </div>
 <div class="section" id="databaseSection">
 	<h2><?php p($l->t('Database'));?></h2>
-	<p><?php p($l->t('Type:'));?><em id="databaseType"> -- </em></p>
-	<p><?php p($l->t('Version:'));?><em id="databaseVersion"> -- </em></p>
-	<p><?php p($l->t('Size:'));?><em id="dataBaseSize"> -- </em></p>
+	<p><?php p($l->t('Type:'));?> <em id="databaseType"><?php p($_['database']['type']);?></em></p>
+	<p><?php p($l->t('Version:'));?> <em id="databaseVersion"><?php p($_['database']['version']);?></em></p>
+	<p><?php p($l->t('Size:'));?> <em id="dataBaseSize"><?php p($_['database']['size']);?></em></p>
 </div>
 
 <div class="section" id="ocsEndPoint">

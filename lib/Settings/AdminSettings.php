@@ -27,6 +27,11 @@ use OCP\AppFramework\Http\TemplateResponse;
 use OCP\IL10N;
 use OCP\IURLGenerator;
 use OCP\Settings\ISettings;
+use OCA\ServerInfo\DatabaseStatistics;
+use OCA\ServerInfo\PhpStatistics;
+use OCA\ServerInfo\SessionStatistics;
+use OCA\ServerInfo\ShareStatistics;
+use OCA\ServerInfo\StorageStatistics;
 
 class AdminSettings implements ISettings {
 
@@ -37,15 +42,47 @@ class AdminSettings implements ISettings {
 	/** @var IURLGenerator */
 	private $urlGenerator;
 
+	/** @var StorageStatistics */
+	private $storageStatistics;
+
+	/** @var PhpStatistics */
+	private $phpStatistics;
+
+	/** @var DatabaseStatistics  */
+	private $databaseStatistics;
+
+	/** @var ShareStatistics */
+	private $shareStatistics;
+
+	/** @var SessionStatistics */
+	private $sessionStatistics;
+
 	/**
 	 * Admin constructor.
 	 *
 	 * @param IL10N $l
 	 * @param IURLGenerator $urlGenerator
+	 * @param StorageStatistics $storageStatistics
+	 * @param PhpStatistics $phpStatistics
+	 * @param DatabaseStatistics $databaseStatistics
+	 * @param ShareStatistics $shareStatistics
+	 * @param SessionStatistics $sessionStatistics
 	 */
-	public function __construct(IL10N $l, IURLGenerator $urlGenerator) {
+	public function __construct(IL10N $l, 
+								IURLGenerator $urlGenerator,
+								StorageStatistics $storageStatistics,
+								PhpStatistics $phpStatistics,
+								DatabaseStatistics $databaseStatistics,
+								ShareStatistics $shareStatistics,
+								SessionStatistics $sessionStatistics
+	) {
 		$this->l = $l;
 		$this->urlGenerator = $urlGenerator;
+		$this->storageStatistics = $storageStatistics;
+		$this->phpStatistics = $phpStatistics;
+		$this->databaseStatistics = $databaseStatistics;
+		$this->shareStatistics = $shareStatistics;
+		$this->sessionStatistics = $sessionStatistics;
 	}
 
 	/**
@@ -53,7 +90,14 @@ class AdminSettings implements ISettings {
 	 */
 	public function getForm() {
 		$monitoringEndPoint = $this->urlGenerator->getAbsoluteURL('ocs/v2.php/apps/serverinfo/api/v1/info');
-		$params = ['ocs' => $monitoringEndPoint];
+		$params = [
+				'ocs' => $monitoringEndPoint,
+				'storage' => $this->storageStatistics->getStorageStatistics(),
+				'shares' => $this->shareStatistics->getShareStatistics(),
+				'php' => $this->phpStatistics->getPhpStatistics(),
+				'database' => $this->databaseStatistics->getDatabaseStatistics(),
+				'activeUsers' => $this->sessionStatistics->getSessionStatistics()
+		];
 
 		return new TemplateResponse('serverinfo', 'settings-admin', $params);
 	}

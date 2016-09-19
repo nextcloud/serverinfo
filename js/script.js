@@ -32,6 +32,10 @@
 		var updateTimer = setInterval(updateInfo, 1000);
 
 		resizeSystemCharts();
+		updateActiveUsersStatistics();
+		updateShareStatistics();
+		setHumanReadableSizeToElement("dataBaseSize");
+		setHumanReadableSizeToElement("phpUploadMaxSize");
 
 		function updateInfo() {
 			var url = OC.generateUrl('/apps/serverinfo/update');
@@ -39,11 +43,6 @@
 			$.get(url).success(function (response) {
 				updateCPUStatistics(response.system.cpuload);
 				updateMemoryStatistics(response.system.mem_total, response.system.mem_free);
-				updateActiveUsersStatistics(response.activeUsers);
-				updateStoragesStatistics(response.storage)
-				updateShareStatistics(response.shares);
-				updatePHPStatistics(response.php);
-				updateDatabaseStatistics(response.database);
 			});
 		}
 	});
@@ -101,35 +100,14 @@
 			memoryUsageChart.addTimeSeries(memoryUsageLine, {lineWidth:1, strokeStyle:'rgb(0, 255, 0)', fillStyle:'rgba(0, 255, 0, 0.2)'});
 		}
 
-		$('#memFooterInfo').text(t('serverinfo', 'Total')+": "+bytesToSize(memTotalBytes)+" - "+t('serverinfo', 'Current usage')+": "+bytesToSize(memUsageBytes));
+		$('#memFooterInfo').text(t('serverinfo', 'Total')+": "+OC.Util.humanFileSize(memTotalBytes)+" - "+t('serverinfo', 'Current usage')+": "+OC.Util.humanFileSize(memUsageBytes));
 		memoryUsageLine.append(new Date().getTime(), memUsageGB);
 	}
 
-	/**
-	 * human readable byte size
-	 *
-	 * @return human readable byte size string
-	 */
-	function bytesToSize(bytes) {
-    	var sizes = ['Bytes', 'KB', 'MB', 'GB', 'TB'];
-    	if (bytes == 0) return 'n/a';
-    	var i = parseInt(Math.floor(Math.log(bytes) / Math.log(1024)));
-    	if (i == 0) return bytes + ' ' + sizes[i];
-    	return (bytes / Math.pow(1024, i)).toFixed(1) + ' ' + sizes[i];
-	};
+	function updateShareStatistics () {
 
-	function updateStoragesStatistics (storages) {
-
-		var users_storages 	= storages.num_users,
-			files_storages 	= storages.num_files;
-
-		$('#numUsersStorage').text(' ' + users_storages);
-		$('#numFilesStorage').text(' ' + files_storages);
-	}
-
-	function updateShareStatistics (shares) {
-
-		var shares_data = [shares.num_shares_user, shares.num_shares_groups, shares.num_shares_link, shares.num_fed_shares_sent, shares.num_fed_shares_received],
+		var shares = $('#sharecanvas').data('shares'),
+			shares_data = [shares.num_shares_user, shares.num_shares_groups, shares.num_shares_link, shares.num_fed_shares_sent, shares.num_fed_shares_received],
 			stepSize = 0; 
 
 		if (Math.max.apply(null, shares_data) < 10) {stepSize = 1;} 
@@ -182,12 +160,13 @@
 		sharesChart.update();
 	}
 
-	function updateActiveUsersStatistics (activeUsers) {
+	function updateActiveUsersStatistics () {
 
-		var activeusers_data = [activeUsers.last24hours, activeUsers.last1hour, activeUsers.last5minutes],
+		var activeUsers = $('#activeuserscanvas').data('users'),
+			activeUsers_data = [activeUsers.last24hours, activeUsers.last1hour, activeUsers.last5minutes],
 			stepSize = 0;
 
-		if (Math.max.apply(null, activeusers_data) < 10) {stepSize = 1;} 
+		if (Math.max.apply(null, activeUsers_data) < 10) {stepSize = 1;} 
 
 		if (typeof activeusersChart === 'undefined') {
 			var ctx = document.getElementById("activeuserscanvas");
@@ -200,7 +179,7 @@
 									        		t('serverinfo', 'Last 5 mins')],
 									        datasets: [{
 									        	label: " ",
-									            data: activeusers_data,
+									            data: activeUsers_data,
 									            fill: false,
 									            borderColor: ['rgba(0, 0, 255, 1)'],
 									            borderWidth: 1,
@@ -233,22 +212,11 @@
 		}
 	}
 
-	function updatePHPStatistics (php) {
+	function setHumanReadableSizeToElement (elementId) {
+		var maxUploadSize = parseInt($('#' + elementId).text());
 
-		$('#phpVersion').text(' ' + php.version);
-		$('#phpMemLimit').text(' ' + bytesToSize(php.memory_limit));
-		$('#phpMaxExecTime').text(' ' + php.max_execution_time);
-		$('#phpUploadMaxSize').text(' ' + bytesToSize(php.upload_max_filesize));
-	}
-
-	function updateDatabaseStatistics (database) {
-
-		$('#databaseType').text(' ' + database.type);
-		$('#databaseVersion').text(' ' + database.version);
-		if (database.size === 'N/A') {
-			$('#dataBaseSize').text(' ' + database.size);
-		} else {
-			$('#dataBaseSize').text(' ' + bytesToSize(database.size));
+		if ($.isNumeric(maxUploadSize)) {
+			$('#' + elementId).text(OC.Util.humanFileSize(maxUploadSize));
 		}
 	}
 
