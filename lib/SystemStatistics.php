@@ -68,8 +68,8 @@ class SystemStatistics {
 	 * @return array with the two values 'mem_free' and 'mem_total'
 	 */
 	protected function getMemoryUsage() {
-		$memoryUsage = shell_exec('awk -F" " \'{ print $1 $2 }\' /proc/meminfo');
-		if ($memoryUsage === null) {
+		$memoryUsage = file_get_contents('/proc/meminfo');
+		if ($memoryUsage === false) {
 			return ['mem_free' => 'N/A', 'mem_total' => 'N/A'];
 		}
 		$array = explode(PHP_EOL, $memoryUsage);
@@ -77,7 +77,7 @@ class SystemStatistics {
 		$values = array_slice($array, 0, count($array) - 1);
 		$data = [];
 		foreach($values as $value) {
-			list($k, $v) = explode(':', $value);
+			list($k, $v) = preg_split('/[\s:]+/', $value);
 			$data[$k] = $v;
 		}
 
