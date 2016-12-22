@@ -1,4 +1,4 @@
-# Server Info
+# Monitoring
 
 This apps provides useful server information, such as CPU load, RAM usage,
 disk usage, number of users, etc.
