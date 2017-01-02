@@ -3,6 +3,7 @@ OC.L10N.register(
     {
     "Load average" : "Средняя нагрузка",
     "Last minute" : "За последнюю минуту",
+    "Memory info not available" : "Информация о памяти недоступна",
     "Total" : "Всего",
     "Current usage" : "Текущая нагрузка",
     "Users" : "Пользователи",
@@ -15,6 +16,7 @@ OC.L10N.register(
     "CPU load" : "Загрузка процессора",
     "Memory usage" : "Использование памяти",
     "Active users" : "Активные пользователи",
+    "Shares" : "Ресурсы общего доступа",
     "Storage" : "Хранилище",
     "Users:" : "Пользователей:",
     "Files:" : "Файлы:",
