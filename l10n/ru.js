@@ -9,6 +9,8 @@ OC.L10N.register(
     "Users" : "Пользователи",
     "Groups" : "Группы",
     "Links" : "Ссылки",
+    "Federated sent" : "Федеративно отправлено",
+    "Federated received" : "Федеративно получено",
     "Last 24 hours" : "За 24 часа",
     "Last 1 hour" : "За 1 час",
     "Last 5 mins" : "За 5 минут",
