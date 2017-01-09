@@ -9,8 +9,8 @@ OC.L10N.register(
     "Users" : "Användare",
     "Groups" : "Grupper",
     "Links" : "Länkar",
-    "Federated sent" : "Sammankoppling skickad",
-    "Federated received" : "Sammankoppling mottagen",
+    "Federated sent" : "Sammankopplingar skickade",
+    "Federated received" : "Sammankopplingar mottagna",
     "Last 24 hours" : "Senaste 24 timmarna",
     "Last 1 hour" : "Senaste timmen",
     "Last 5 mins" : "Senaste 5 minuterna",
@@ -24,13 +24,13 @@ OC.L10N.register(
     "Files:" : "Filer:",
     "PHP" : "PHP",
     "Version:" : "Version:",
-    "Memory Limit:" : "Minneskapacitet:",
+    "Memory Limit:" : "Minneskapacitetsgräns:",
     "Max Execution Time:" : "Längsta körningstid:",
     "Upload max size:" : "Största uppladdningsstorlek:",
     "Database" : "Databas",
     "Type:" : "Typ:",
     "Size:" : "Storlek:",
-    "External monitoring tool" : "Extern övervakningsfunktion",
-    "You can connect an external monitoring tool by using this end point: " : "Du kan ansluta en extern övervakningsfunktion genom att använda denna adress:"
+    "External monitoring tool" : "Externt övervakningsverktyg",
+    "You can connect an external monitoring tool by using this end point: " : "Du kan ansluta ett externt övervakningsverktyg genom att använda denna adress:"
 },
 "nplurals=2; plural=(n != 1);");
