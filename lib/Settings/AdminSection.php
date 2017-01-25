@@ -24,15 +24,26 @@ namespace OCA\ServerInfo\Settings;
 
 
 use OCP\IL10N;
-use OCP\Settings\ISection;
+use OCP\IURLGenerator;
+use OCP\Settings\IIconSection;
 
-class AdminSection implements ISection {
+class AdminSection implements IIconSection {
 
 	/** @var IL10N */
 	private $l;
 
-	public function __construct(IL10N $l) {
+	/** @var  IURLGenerator */
+	private $urlGenerator;
+
+	/**
+	 * AdminSection constructor.
+	 *
+	 * @param IL10N $l
+	 * @param IURLGenerator $urlGenerator
+	 */
+	public function __construct(IL10N $l, IURLGenerator $urlGenerator) {
 		$this->l = $l;
+		$this->urlGenerator = $urlGenerator;
 	}
 
 	/**
@@ -63,6 +74,17 @@ class AdminSection implements ISection {
 	 */
 	public function getPriority() {
 		return 0;
+	}
+
+	/**
+	 * returns the relative path to an 16*16 icon describing the section.
+	 * e.g. '/core/img/places/files.svg'
+	 *
+	 * @returns string
+	 * @since 12
+	 */
+	public function getIcon() {
+		return $this->urlGenerator->imagePath('serverinfo', 'app-dark.svg');
 	}
 
 }
