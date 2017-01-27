@@ -14,7 +14,7 @@ OC.L10N.register(
     "Last 24 hours" : "Letzte 24 Stunden",
     "Last 1 hour" : "Letzte Stunde",
     "Last 5 mins" : "Letzte 5 Minuteb",
-    "Monitoring" : "Überwachung",
+    "Monitoring" : "Information",
     "CPU load" : "CPU-Auslastung",
     "Memory usage" : "Arbeitsspeicher-Auslastung",
     "Active users" : "Aktive Nutzer",
