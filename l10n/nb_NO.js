@@ -9,6 +9,8 @@ OC.L10N.register(
     "Users" : "Brukere",
     "Groups" : "Grupper",
     "Links" : "Lenker",
+    "Federated sent" : "«Forent sendt» - delingen sendt eksternt",
+    "Federated received" : "«Forent mottatt» - en ekstern deling mottatt",
     "Last 24 hours" : "Siste 24 timer",
     "Last 1 hour" : "Siste time",
     "Last 5 mins" : "Siste 5 minutter",
