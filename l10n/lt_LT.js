@@ -16,7 +16,7 @@ OC.L10N.register(
     "CPU load" : "Procesoriaus apkrova",
     "Memory usage" : "Atminties sunaudojimas",
     "Active users" : "Aktyvūs naudotojai",
-    "Shares" : "Dalijimaisi",
+    "Shares" : "Viešiniai",
     "Storage" : "Saugykla",
     "Users:" : "Naudotojai:",
     "Files:" : "Failai:",
