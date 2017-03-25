@@ -4,13 +4,13 @@ OC.L10N.register(
     "Load average" : "平均负载",
     "Last minute" : "上一分钟",
     "Memory info not available" : "内存信息不可用",
-    "Total" : "全部",
-    "Current usage" : "当前使用",
+    "Total" : "总量",
+    "Current usage" : "当前用量",
     "Users" : "用户",
     "Groups" : "分组",
     "Links" : "链接",
-    "Federated sent" : "联盟发送",
-    "Federated received" : "联盟接手",
+    "Federated sent" : "联合云发送",
+    "Federated received" : "联合云接收",
     "Last 24 hours" : "最近 24 小时",
     "Last 1 hour" : "最近 1 小时",
     "Last 5 mins" : "最近 5 分钟",
@@ -31,6 +31,6 @@ OC.L10N.register(
     "Type:" : "类型:",
     "Size:" : "大小:",
     "External monitoring tool" : "外部监控工具",
-    "You can connect an external monitoring tool by using this end point: " : "您可以使用这个终端连接扩展监控器工具:"
+    "You can connect an external monitoring tool by using this end point: " : "你可以使用此链接接入外部监控工具："
 },
 "nplurals=1; plural=0;");
