@@ -17,6 +17,7 @@ OC.L10N.register(
     "Memory usage" : "Uso de memoria",
     "Active users" : "Usuarios activos",
     "Storage" : "Almacenamiento",
+    "Users:" : "Usuarios:",
     "Upload max size:" : "Tamaño máximo de carga:"
 },
 "nplurals=2; plural=(n != 1);");

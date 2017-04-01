@@ -15,6 +15,7 @@
     "Memory usage" : "Uso de memoria",
     "Active users" : "Usuarios activos",
     "Storage" : "Almacenamiento",
+    "Users:" : "Usuarios:",
     "Upload max size:" : "Tamaño máximo de carga:"
 },"pluralForm" :"nplurals=2; plural=(n != 1);"
 }
