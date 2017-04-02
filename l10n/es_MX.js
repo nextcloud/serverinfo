@@ -9,6 +9,7 @@ OC.L10N.register(
     "Users" : "Ususarios",
     "Groups" : "Grupos",
     "Links" : "Ligas",
+    "Federated sent" : "Envío federado",
     "Last 24 hours" : "Últimas 24 horas",
     "Last 1 hour" : "Última 1 hora",
     "Last 5 mins" : "Últimos 5 minutos",
