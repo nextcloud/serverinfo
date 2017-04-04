@@ -19,6 +19,11 @@ OC.L10N.register(
     "Active users" : "Usuarios activos",
     "Storage" : "Almacenamiento",
     "Users:" : "Usuarios:",
+    "Files:" : "Archivos:",
+    "PHP" : "PHP",
+    "Version:" : "Versión:",
+    "Memory Limit:" : "Límite de Memoria:",
+    "Max Execution Time:" : "Tiempo Max de Ejecución:",
     "Upload max size:" : "Tamaño máximo de carga:"
 },
 "nplurals=2; plural=(n != 1);");
