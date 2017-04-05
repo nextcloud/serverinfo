@@ -17,6 +17,7 @@ OC.L10N.register(
     "CPU load" : "Carga del CPU",
     "Memory usage" : "Uso de memoria",
     "Active users" : "Usuarios activos",
+    "Shares" : "Elemento compartido",
     "Storage" : "Almacenamiento",
     "Users:" : "Usuarios:",
     "Files:" : "Archivos:",
@@ -24,6 +25,11 @@ OC.L10N.register(
     "Version:" : "Versión:",
     "Memory Limit:" : "Límite de Memoria:",
     "Max Execution Time:" : "Tiempo Max de Ejecución:",
-    "Upload max size:" : "Tamaño máximo de carga:"
+    "Upload max size:" : "Tamaño máximo de carga:",
+    "Database" : "Base de datos",
+    "Type:" : "Tipo:",
+    "Size:" : "Tamaño:",
+    "External monitoring tool" : "Herramienta de montoreo externa",
+    "You can connect an external monitoring tool by using this end point: " : "Usted puede conectar una herramienta externa de monitoreo usando este punto de acceso:"
 },
 "nplurals=2; plural=(n != 1);");
