@@ -2,7 +2,7 @@
 <info>
     <id>serverinfo</id>
     <name>Monitoring</name>
-    <description>Provider useful server information</description>
+    <description>Provides useful server information, such as CPU load, RAM usage, disk usage, number of users, etc.</description>
     <licence>AGPL</licence>
     <author>Bjoern Schiessle</author>
     <author>Ivan Sein Santiago</author>
