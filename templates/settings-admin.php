@@ -36,6 +36,7 @@ style('serverinfo', 'style');
 	<h2><?php p($l->t('Memory usage'));?></h2>
 	<canvas id="memorycanvas" width="600" height="150"></canvas>
 	<p><em id="memFooterInfo"></em></p>
+	<p><em id="swapFooterInfo"></em></p>
 </div>
 <div class="section" id="activeUsersSection">
 	<h2><?php p($l->t('Active users'));?></h2>
