@@ -70,7 +70,12 @@ class SystemStatistics {
 	 * @return array with the two values 'mem_free' and 'mem_total'
 	 */
 	protected function getMemoryUsage() {
-		$memoryUsage = @file_get_contents('/proc/meminfo');
+		$memoryUsage = false;
+		if (is_readable('/proc/meminfo')) {
+			// read meminfo from OS
+			$memoryUsage = file_get_contents('/proc/meminfo');
+		}
+		// check if determining memoryUsage failed
 		if ($memoryUsage === false) {
 			return ['mem_free' => 'N/A', 'mem_total' => 'N/A', 'swap_free' => 'N/A', 'swap_total' => 'N/A'];
 		}
