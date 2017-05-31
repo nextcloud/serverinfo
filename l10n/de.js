@@ -3,7 +3,7 @@ OC.L10N.register(
     {
     "Load average" : "Durchschnittsauslastung",
     "Last minute" : "Letzte Minute",
-    "Memory info not available" : "Arbeitsspeicherinformationen nicht verfügbar",
+    "Memory info not available" : "Informationen zum Arbeitsspeicher nicht verfügbar",
     "Total" : "Gesamt",
     "Current usage" : "Aktuelle Nutzung",
     "Users" : "Nutzer",
@@ -24,7 +24,7 @@ OC.L10N.register(
     "Files:" : "Dateien:",
     "PHP" : "PHP",
     "Version:" : "Version:",
-    "Memory Limit:" : "Arbeitspeichergrenzwert:",
+    "Memory Limit:" : "Arbeitspeicher-Grenzwert:",
     "Max Execution Time:" : "Maximale Ausführungszeit:",
     "Upload max size:" : "Maximale Größe zum Hochladen:",
     "Database" : "Datenbank",
