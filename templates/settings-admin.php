@@ -69,5 +69,6 @@ style('serverinfo', 'style');
 <div class="section" id="ocsEndPoint">
 	<h2><?php p($l->t('External monitoring tool'));?></h2>
 	<p>
-		<?php p($l->t('You can connect an external monitoring tool by using this end point: ') . $_['ocs']);?>
+		<?php print_unescaped($l->t('You can connect an external monitoring tool by using this end point: <a target="_blank" rel="noreferrer" href="%1$s">%1$s</a>.', $_['ocs'])); ?>
+	</p>
 </div>
