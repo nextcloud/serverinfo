@@ -1,7 +1,7 @@
 OC.L10N.register(
     "serverinfo",
     {
-    "Load average" : "Μέσος όρος φόρτου",
+    "Load average" : "Μέσος όρος φόρτωσης",
     "Last minute" : "Τελευταίο λεπτό",
     "Memory info not available" : "Η πληροφορία μνήμης δεν είναι διαθέσιμη",
     "Total" : "Σύνολο",
@@ -9,8 +9,8 @@ OC.L10N.register(
     "Users" : "Χρήστες",
     "Groups" : "Ομάδες",
     "Links" : "Σύνδεσμοι",
-    "Federated sent" : "Αποστολή Federated",
-    "Federated received" : "Λήψη Federated",
+    "Federated sent" : "Το Federated απεστάλη",
+    "Federated received" : "Λήφθηκε το Federated",
     "Last 24 hours" : "Τελευταίες 24 ώρες",
     "Last 1 hour" : "Τελευταία 1 ώρα",
     "Last 5 mins" : "Τελευταία 5 λεπτά",

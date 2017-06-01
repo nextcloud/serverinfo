@@ -18,7 +18,7 @@ branches:
 
 before_install:
   - wget https://raw.githubusercontent.com/nextcloud/travis_ci/master/before_install.sh
-  - bash ./before_install.sh $APP_NAME $CORE_BRANCH $DB
+  - . ./before_install.sh $APP_NAME $CORE_BRANCH $DB
 
   # Add some output debugging information
   - cd ../server
@@ -40,6 +40,8 @@ script:
 
   # Run phpunit tests
   - cd tests
+  - which phpunit
+  - phpunit --version
   - sh -c "if [ '$CODECHECK' != '1' -a '$CODECHECK' != '2' ]; then phpunit --configuration phpunit.xml; fi"
   - cd ..
 
