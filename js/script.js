@@ -36,6 +36,7 @@
 		updateActiveUsersStatistics();
 		updateShareStatistics();
 		setHumanReadableSizeToElement("dataBaseSize");
+		setHumanReadableSizeToElement("phpMemLimit");
 		setHumanReadableSizeToElement("phpUploadMaxSize");
 
 		function updateInfo() {
