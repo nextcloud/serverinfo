@@ -57,7 +57,7 @@ class SystemStatistics {
 			'memcache.locking' => $this->config->getSystemValue('memcache.locking', 'none'),
 			'debug' => $this->config->getSystemValue('debug', false) ? 'yes' : 'no',
 			'freespace' => $this->view->free_space(),
-			'cpuload' => $processorUsage["loadavg"],
+			'cpuload' => $processorUsage['loadavg'],
 			'mem_total' => $memoryUsage['mem_total'],
 			'mem_free' => $memoryUsage['mem_free']
 		];
@@ -105,7 +105,7 @@ class SystemStatistics {
 		$loadavg = sys_getloadavg();
 
 		// check if we got any values back.
-		if (!(is_array($loadavg) && count($loadavg) <= 3)) {
+		if (!(is_array($loadavg) && count($loadavg) === 3)) {
 			// either no array or too few array keys.
 			// returning back zeroes to prevent any errors on JS side.
 			$loadavg = [0, 0, 0];
