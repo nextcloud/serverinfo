@@ -111,12 +111,12 @@
 			memoryUsageLine = new TimeSeries();
 			memoryUsageChart.addTimeSeries(memoryUsageLine, {lineWidth:1, strokeStyle:'rgb(0, 255, 0)', fillStyle:'rgba(0, 255, 0, 0.2)'});
 			swapUsageLine = new TimeSeries();
-      memoryUsageChart.addTimeSeries(swapUsageLine, {lineWidth:1, strokeStyle:'rgb(255, 0, 0)', fillStyle:'rgba(255, 0, 0, 0.2)'});
+			memoryUsageChart.addTimeSeries(swapUsageLine, {lineWidth:1, strokeStyle:'rgb(255, 0, 0)', fillStyle:'rgba(255, 0, 0, 0.2)'});
 		}
 
-		$('#memFooterInfo').text(t('serverinfo', 'Total')+": "+OC.Util.humanFileSize(memTotalBytes)+" - "+t('serverinfo', 'Current usage')+": "+OC.Util.humanFileSize(memUsageBytes));
+		$('#memFooterInfo').text("RAM "+t('serverinfo', 'Total')+": "+OC.Util.humanFileSize(memTotalBytes)+" - "+t('serverinfo', 'Current usage')+": "+OC.Util.humanFileSize(memUsageBytes));
 		memoryUsageLine.append(new Date().getTime(), memUsageGB);
-		$('#swapFooterInfo').text("Total (SWAP): "+OC.Util.humanFileSize(swapTotalBytes)+" - Current usage: "+OC.Util.humanFileSize(swapUsageBytes));
+		$('#swapFooterInfo').text("SWAP "+t('serverinfo', 'Total')+": "+OC.Util.humanFileSize(swapTotalBytes)+" - "+t('serverinfo', 'Current usage')+": "+OC.Util.humanFileSize(swapUsageBytes));
 		swapUsageLine.append(new Date().getTime(), swapUsageGB);
 	}
 
