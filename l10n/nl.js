@@ -31,6 +31,7 @@ OC.L10N.register(
     "Type:" : "Type:",
     "Size:" : "Grootte:",
     "External monitoring tool" : "Externe monitoring tool",
-    "You can connect an external monitoring tool by using this end point: " : "Je kunt een externe monitoring tool verbinden door deze endpoint te gebruiken:"
+    "You can connect an external monitoring tool by using this end point: " : "Je kunt een externe monitoring tool verbinden door deze endpoint te gebruiken:",
+    "You can connect a external monitoring tool by using this end point: " : "Je kunt een externe monitoring tool verbinden door deze endpoint te gebruiken:"
 },
 "nplurals=2; plural=(n != 1);");
