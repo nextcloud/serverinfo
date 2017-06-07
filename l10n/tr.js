@@ -31,6 +31,8 @@ OC.L10N.register(
     "Type:" : "Tür:",
     "Size:" : "Boyut:",
     "External monitoring tool" : "Dış izleme aracı",
-    "You can connect an external monitoring tool by using this end point: " : "Bu uç noktasını kullanarak bir dış izleme aracı bağlayabilirsiniz:"
+    "You can connect an external monitoring tool by using this end point: " : "Bu uç noktasını kullanarak bir dış izleme aracı bağlayabilirsiniz:",
+    "Server info" : "Sunucu bilgileri",
+    "You can connect a external monitoring tool by using this end point: " : "Bu uç noktasını kullanarak bir dış izleme aracı bağlayabilirsiniz:"
 },
 "nplurals=2; plural=(n > 1);");
