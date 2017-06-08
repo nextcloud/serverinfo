@@ -1,0 +1,28 @@
+{ "translations": {
+    "Load average" : "Дундаж ачаалал",
+    "Last minute" : "Сүүлийн минутанд",
+    "Memory info not available" : "Санах ойн мэдээлэл идэвхгүй байна",
+    "Total" : "Нийт",
+    "Current usage" : "Тухайн ашиглалт",
+    "Users" : "Хэрэглэгчид",
+    "Groups" : "Бүлгүүд",
+    "Links" : "Холбоосууд",
+    "Last 24 hours" : "Сүүлийн 24 цаг",
+    "Last 1 hour" : "Сүүлийн 1 цаг",
+    "Last 5 mins" : "Сүүлийн 5 минут",
+    "Monitoring" : "Хяналт",
+    "CPU load" : "CPU ачаалалт",
+    "Memory usage" : "Санах ойн хэрэглээ",
+    "Active users" : "Идэвхтэй хэрэглэгчид",
+    "Shares" : "Түгээлтүүд",
+    "Storage" : "Багтаамж",
+    "Users:" : "Хэрэглэгчид:",
+    "Files:" : "Файлууд:",
+    "PHP" : "PHP",
+    "Version:" : "Хувилбар:",
+    "Memory Limit:" : "Санах ойн хязгаар:",
+    "Database" : "Өгөгдлийн сан",
+    "Type:" : "Төрөл:",
+    "Size:" : "Хэмжээ:"
+},"pluralForm" :"nplurals=2; plural=(n != 1);"
+}
