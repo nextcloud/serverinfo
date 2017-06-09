@@ -56,6 +56,9 @@
 			$('#cpuFooterInfo').text(t('serverinfo', 'CPU info not available'));
 			$('#cpuloadcanvas').addClass('hidden');
 			return;
+
+		} else if ($("#cpuloadcanvas").hasClass('hidden')) {
+			$("#cpuloadcanvas").removeClass('hidden');
 		}
 
 		var cpu1 = cpuload[0],
@@ -84,6 +87,9 @@
 			$('#memFooterInfo').text(t('serverinfo', 'Memory info not available'));
 			$('#memorycanvas').addClass('hidden');
 			return;
+
+		} else if ($("#memorycanvas").hasClass('hidden')) {
+			$("#memorycanvas").removeClass('hidden');
 		}
 
 		var memTotalBytes = memTotal * 1024,
