@@ -108,7 +108,7 @@ class SystemStatistics {
 		if (!(is_array($loadavg) && count($loadavg) === 3)) {
 			// either no array or too few array keys.
 			// returning back zeroes to prevent any errors on JS side.
-			$loadavg = [0, 0, 0];
+			$loadavg = 'N/A';
 		}
 
 		return [

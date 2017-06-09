@@ -52,6 +52,11 @@
 	});
 
 	function updateCPUStatistics (cpuload) {
+		if (cpuload === 'N/A') {
+			$('#cpuFooterInfo').text(t('serverinfo', 'CPU info not available'));
+			$('#cpuloadcanvas').addClass('hidden');
+			return;
+		}
 
 		var cpu1 = cpuload[0],
 			cpu2 = cpuload[1],
