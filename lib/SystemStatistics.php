@@ -24,25 +24,34 @@ namespace OCA\ServerInfo;
 
 use OC\Files\View;
 use OCP\IConfig;
+use OC\App\AppStore\Fetcher\AppFetcher;
 
 class SystemStatistics {
 
 	/** @var IConfig */
 	private $config;
-
 	/** @var View view on data/ */
 	private $view;
+	/** @var appFetcher */
+	private $appFetcher;
 
 	/**
 	 * SystemStatistics constructor.
 	 *
 	 * @param IConfig $config
+	 * @param AppFetcher $appFetcher
 	 */
-	public function __construct(IConfig $config) {
+	public function __construct(IConfig $config, AppFetcher $appFetcher) {
 		$this->config = $config;
 		$this->view = new View();
+		$this->appFetcher = $appFetcher;
 	}
 
+	/**
+	 * Get statistics about the system
+	 *
+	 * @return array with with of data
+	 */
 	public function getSystemStatistics() {
 		$memoryUsage = $this->getMemoryUsage();
 		return [
@@ -58,7 +67,8 @@ class SystemStatistics {
 			'freespace' => $this->view->free_space(),
 			'cpuload' => sys_getloadavg(),
 			'mem_total' => $memoryUsage['mem_total'],
-			'mem_free' => $memoryUsage['mem_free']
+			'mem_free' => $memoryUsage['mem_free'],
+			'apps' => $this->getAppsInfo(),
 		];
 	}
 
@@ -97,6 +107,39 @@ class SystemStatistics {
 			'mem_free' => (int)$available + (int)$data['SwapFree'],
 			'mem_total' => (int)$data['MemTotal'] + (int)$data['SwapTotal']
 		];
+	}
+
+	/**
+	 * Get some info about installed apps, including available updates.
+	 *
+	 * @return array data about apps
+	 */
+	protected function getAppsInfo() {
+
+		// sekeleton about the data we return back
+		$info = [
+			'num_installed' => 0,
+			'num_updates_available' => 0,
+			'app_updates' => [],
+		];
+
+		// load all apps
+		$appClass = new \OC_App();
+		$apps = $appClass->listAllApps();
+		// check each app
+		foreach($apps as $key => $app) {
+			$info['num_installed']++;
+
+			// check if there is any new version available for that specific app
+			$newVersion = \OC\Installer::isUpdateAvailable($app['id'], $this->appFetcher);
+			if ($newVersion) {
+				// new version available, count up and tell which version.
+				$info['num_updates_available']++;
+				$info['app_updates'][$app['id']] = $newVersion;
+			}
+		}
+
+		return $info;
 	}
 
 }
