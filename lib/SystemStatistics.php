@@ -24,6 +24,7 @@ namespace OCA\ServerInfo;
 
 use OC\Files\View;
 use OCP\IConfig;
+use \OC_App;
 use OC\App\AppStore\Fetcher\AppFetcher;
 
 class SystemStatistics {
@@ -119,16 +120,20 @@ class SystemStatistics {
 		// sekeleton about the data we return back
 		$info = [
 			'num_installed' => 0,
+			'num_enabled' => 0,
 			'num_updates_available' => 0,
 			'app_updates' => [],
 		];
 
 		// load all apps
-		$appClass = new \OC_App();
-		$apps = $appClass->listAllApps();
-		// check each app
+		$apps = (new OC_App())->listAllApps();
 		foreach($apps as $key => $app) {
+			// count installed apps
 			$info['num_installed']++;
+			// count activated apps
+			if ($app['active']) {
+				$info['num_enabled']++;
+			}
 
 			// check if there is any new version available for that specific app
 			$newVersion = \OC\Installer::isUpdateAvailable($app['id'], $this->appFetcher);
