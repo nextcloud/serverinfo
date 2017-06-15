@@ -31,6 +31,8 @@ OC.L10N.register(
     "Type:" : "类型:",
     "Size:" : "大小:",
     "External monitoring tool" : "外部监控工具",
-    "You can connect an external monitoring tool by using this end point: " : "你可以使用此链接接入外部监控工具："
+    "You can connect an external monitoring tool by using this end point: " : "你可以使用此链接接入外部监控工具：",
+    "Server info" : "服务器信息",
+    "You can connect a external monitoring tool by using this end point: " : "你可以使用此链接接入外部监控工具："
 },
 "nplurals=1; plural=0;");
