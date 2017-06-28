@@ -29,6 +29,7 @@ OC.L10N.register(
     "Type:" : "Tipas:",
     "Size:" : "Dydis:",
     "External monitoring tool" : "Išorinis stebėjimo įrankis",
-    "You can connect an external monitoring tool by using this end point: " : "Jūs galite prijungti išorinį stebėjimo įrankį pasinaudodami:"
+    "You can connect an external monitoring tool by using this end point: " : "Jūs galite prijungti išorinį stebėjimo įrankį pasinaudodami:",
+    "Server info" : "Serverio informacija"
 },
 "nplurals=3; plural=(n%10==1 && n%100!=11 ? 0 : n%10>=2 && (n%100<10 || n%100>=20) ? 1 : 2);");
