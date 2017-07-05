@@ -24,7 +24,7 @@ namespace OCA\ServerInfo;
 
 use OC\Files\View;
 use OCP\IConfig;
-use \OC_App;
+use OCP\App\IAppManager;
 use OC\App\AppStore\Fetcher\AppFetcher;
 
 class SystemStatistics {
@@ -35,16 +35,19 @@ class SystemStatistics {
 	private $view;
 	/** @var appFetcher */
 	private $appFetcher;
+	/** @var appManager */
+	private $appManager;
 
 	/**
 	 * SystemStatistics constructor.
 	 *
-	 * @param IConfig $config
-	 * @param AppFetcher $appFetcher
+ 	 * @param IConfig $config
+	 * @param IAppManager $appManager
 	 */
-	public function __construct(IConfig $config, AppFetcher $appFetcher) {
+	public function __construct(IConfig $config, IAppManager $appManager, AppFetcher $appFetcher) {
 		$this->config = $config;
 		$this->view = new View();
+		$this->appManager = $appManager;
 		$this->appFetcher = $appFetcher;
 	}
 
@@ -120,27 +123,22 @@ class SystemStatistics {
 		// sekeleton about the data we return back
 		$info = [
 			'num_installed' => 0,
-			'num_enabled' => 0,
 			'num_updates_available' => 0,
 			'app_updates' => [],
 		];
 
 		// load all apps
-		$apps = (new OC_App())->listAllApps();
-		foreach($apps as $key => $app) {
-			// count installed apps
-			$info['num_installed']++;
-			// count activated apps
-			if ($app['active']) {
-				$info['num_enabled']++;
-			}
+		$apps = $this->appManager->getInstalledApps();
+		$info['num_installed'] = count($apps);
 
+		// iteriate through all installed apps.
+		foreach($apps as $app) {
 			// check if there is any new version available for that specific app
-			$newVersion = \OC\Installer::isUpdateAvailable($app['id'], $this->appFetcher);
+			$newVersion = \OC\Installer::isUpdateAvailable($app, $this->appFetcher);
 			if ($newVersion) {
 				// new version available, count up and tell which version.
 				$info['num_updates_available']++;
-				$info['app_updates'][$app['id']] = $newVersion;
+				$info['app_updates'][$app] = $newVersion;
 			}
 		}
 
