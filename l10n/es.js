@@ -28,7 +28,7 @@ OC.L10N.register(
     "Max Execution Time:" : "Máximo tiempo de ejecución:",
     "Upload max size:" : "Máximo tamaño de subida:",
     "Database" : "Base de datos",
-    "Type:" : "Tipo",
+    "Type:" : "Tipo:",
     "Size:" : "Tamaño:",
     "External monitoring tool" : "Herramienta de monitoreo externo",
     "You can connect an external monitoring tool by using this end point: " : "Puede conectar una herramienta externa de monitoreo usando este punto de comunicación:",
