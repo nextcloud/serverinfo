@@ -1,4 +1,6 @@
-{ "translations": {
+OC.L10N.register(
+    "serverinfo",
+    {
     "Load average" : "Carga promedio",
     "Last minute" : "Último minuto",
     "Memory info not available" : "Información de la memoria no disponible",
@@ -6,7 +8,7 @@
     "Current usage" : "Uso actual",
     "Users" : "Ususarios",
     "Groups" : "Grupos",
-    "Links" : "Ligas",
+    "Links" : "Links",
     "Federated sent" : "Envío federado",
     "Federated received" : "Federado recibido",
     "Last 24 hours" : "Últimas 24 horas",
@@ -28,9 +30,9 @@
     "Database" : "Base de datos",
     "Type:" : "Tipo:",
     "Size:" : "Tamaño:",
-    "External monitoring tool" : "Herramienta de monitoreo externa",
-    "You can connect an external monitoring tool by using this end point: " : "Puedes conectar una herramienta externa de monitoreo usando este punto de acceso:",
+    "External monitoring tool" : "Herramienta de montoreo externa",
+    "You can connect an external monitoring tool by using this end point: " : "Usted puede conectar una herramienta externa de monitoreo usando este punto de acceso:",
     "Server info" : "Información del servidor",
-    "You can connect a external monitoring tool by using this end point: " : "Puedes conectar una herramienta de monitoreo externa usando este punto de acceso:"
-},"pluralForm" :"nplurals=2; plural=(n != 1);"
-}
+    "You can connect a external monitoring tool by using this end point: " : "Puede conectar una herramienta de monitoreo externa usando este punto de acceso:"
+},
+"nplurals=2; plural=(n != 1);");
