@@ -13,6 +13,7 @@ OC.L10N.register(
     "Last 1 hour" : "Zgjat 1 orë",
     "Last 5 mins" : "5 minutat e fundit",
     "Monitoring" : "Vëzhgim",
+    "CPU load" : "ngarkesa CPU ",
     "Memory usage" : "Përdorimi i kujtesës",
     "Active users" : "Përdoruesit aktivë",
     "Shares" : "Shpërndarje",

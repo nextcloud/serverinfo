@@ -31,6 +31,8 @@ OC.L10N.register(
     "Type:" : "Τύπος:",
     "Size:" : "Μέγεθος:",
     "External monitoring tool" : "Εξωτερικό εργαλείο παρακολούθησης",
-    "You can connect an external monitoring tool by using this end point: " : "Μπορείτε να συνδεθείτε στο εργαλείο εξωτερικής παρακολούθησης με την χρήση αυτού του τελικού σημείου:"
+    "You can connect an external monitoring tool by using this end point: " : "Μπορείτε να συνδεθείτε στο εργαλείο εξωτερικής παρακολούθησης με την χρήση αυτού του τελικού σημείου:",
+    "Server info" : "Πληροφορίες διακομιστή",
+    "You can connect a external monitoring tool by using this end point: " : "Μπορείτε να συνδέσετε ένα εξωτερικό εργαλείο παρακολούθησης χρησιμοποιώντας αυτό το τελικό σημείο"
 },
 "nplurals=2; plural=(n != 1);");
