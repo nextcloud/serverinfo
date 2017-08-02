@@ -31,6 +31,8 @@ OC.L10N.register(
     "Type:" : "タイプ:",
     "Size:" : "サイズ:",
     "External monitoring tool" : "外部モニタリングツール",
-    "You can connect an external monitoring tool by using this end point: " : "このエンドポイントを利用して外部モニタリングツールに接続することが可能です："
+    "You can connect an external monitoring tool by using this end point: " : "このエンドポイントを利用して外部モニタリングツールに接続することが可能です：",
+    "Server info" : "サーバー情報",
+    "You can connect a external monitoring tool by using this end point: " : "このエンドポイントに外部モニターツールを接続できます:"
 },
 "nplurals=1; plural=0;");
