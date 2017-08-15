@@ -9,10 +9,13 @@ OC.L10N.register(
     "Users" : "Përdoruesit",
     "Groups" : "Grupet",
     "Links" : "Lidhje",
+    "Federated sent" : "Federated dërguar",
+    "Federated received" : "Federated te marra",
     "Last 24 hours" : "24 orët e fundit",
     "Last 1 hour" : "Zgjat 1 orë",
     "Last 5 mins" : "5 minutat e fundit",
     "Monitoring" : "Vëzhgim",
+    "CPU load" : "ngarkesa CPU ",
     "Memory usage" : "Përdorimi i kujtesës",
     "Active users" : "Përdoruesit aktivë",
     "Shares" : "Shpërndarje",
@@ -28,6 +31,8 @@ OC.L10N.register(
     "Type:" : "Lloji:",
     "Size:" : "Madhësia:",
     "External monitoring tool" : "Mjet i kontrollit të jashtëm",
-    "You can connect an external monitoring tool by using this end point: " : "Ju mund të lidhni një vegël monitorimi të jashtme duke përdorur këtë pikë përfundimi:"
+    "You can connect an external monitoring tool by using this end point: " : "Ju mund të lidhni një vegël monitorimi të jashtme duke përdorur këtë pikë përfundimi:",
+    "Server info" : "Informacion i serverit",
+    "You can connect a external monitoring tool by using this end point: " : "Ju mund të lidhni një mjet të jashtëm të monitorimit duke përdorur këtë pikë fundore:"
 },
 "nplurals=2; plural=(n != 1);");
