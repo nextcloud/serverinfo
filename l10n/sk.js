@@ -31,6 +31,8 @@ OC.L10N.register(
     "Type:" : "Typ:",
     "Size:" : "Veľkosť:",
     "External monitoring tool" : "Externý sledovací nástroj",
-    "You can connect an external monitoring tool by using this end point: " : "Pre pripojenie externého sledovacieho nástroja použite tento koncový bod:"
+    "You can connect an external monitoring tool by using this end point: " : "Pre pripojenie externého sledovacieho nástroja použite tento koncový bod:",
+    "Server info" : "Informácia o serveri",
+    "You can connect a external monitoring tool by using this end point: " : "Pre pripojenie externého sledovacieho nástroja použite tento koncový bod:"
 },
 "nplurals=3; plural=(n==1) ? 0 : (n>=2 && n<=4) ? 1 : 2;");
