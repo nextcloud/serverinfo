@@ -9,6 +9,8 @@ OC.L10N.register(
     "Users" : "Naudotojai",
     "Groups" : "Grupės",
     "Links" : " Nuorodos",
+    "Federated sent" : "Centralizuotai išsiųstas",
+    "Federated received" : "Centralizuotai gautas",
     "Last 24 hours" : "Paskutinės 24 valandos",
     "Last 1 hour" : "Paskutinė valanda",
     "Last 5 mins" : "Paskutinės 5 minutės",
@@ -30,6 +32,7 @@ OC.L10N.register(
     "Size:" : "Dydis:",
     "External monitoring tool" : "Išorinis stebėjimo įrankis",
     "You can connect an external monitoring tool by using this end point: " : "Jūs galite prijungti išorinį stebėjimo įrankį pasinaudodami:",
-    "Server info" : "Serverio informacija"
+    "Server info" : "Serverio informacija",
+    "You can connect a external monitoring tool by using this end point: " : "Jūs galite prijungti išorinį stebėjimo įrankį pasinaudodami:"
 },
 "nplurals=3; plural=(n%10==1 && n%100!=11 ? 0 : n%10>=2 && (n%100<10 || n%100>=20) ? 1 : 2);");
