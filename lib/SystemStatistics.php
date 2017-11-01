@@ -73,6 +73,19 @@ class SystemStatistics {
 			// read meminfo from OS
 			$memoryUsage = file_get_contents('/proc/meminfo');
 		}
+		//If FreeBSD is used and exec()-usage is allowed
+		if (PHP_OS === 'FreeBSD' && \OC_Helper::is_function_enabled('exec')) {
+			exec("/sbin/sysctl -n hw.physmem hw.pagesize vm.stats.vm.v_inactive_count vm.stats.vm.v_cache_count vm.stats.vm.v_free_count",$return,$status);
+			if ($status===0) {
+				$return=array_map('intval',$return);
+				if ($return === array_filter($return, 'is_int')) {
+					return [
+						'mem_total' => (int) $return[0]/1024,
+						'mem_free' => (int) $return[1]*($return[2]+$return[3]+$return[4])/1024
+					];
+				}
+			}
+		}
 		// check if determining memoryUsage failed
 		if ($memoryUsage === false) {
 			return ['mem_free' => 'N/A', 'mem_total' => 'N/A'];
