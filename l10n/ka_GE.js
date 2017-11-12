@@ -9,8 +9,8 @@ OC.L10N.register(
     "Users" : "მომხმარებლები",
     "Groups" : "ჯგუფები",
     "Links" : "ბმულები",
-    "Federated sent" : "ფედერალიზირებული გაიგზავნა",
-    "Federated received" : "ფედერალიზირებული შემოვიდა",
+    "Federated sent" : "ფედერალური გაიგზავნა",
+    "Federated received" : "ფედერალური შემოვიდა",
     "Last 24 hours" : "ბოლო 24 საათი",
     "Last 1 hour" : "ბოლო 1 საათი",
     "Last 5 mins" : "ბოლო 5 წუთი",
@@ -31,8 +31,8 @@ OC.L10N.register(
     "Type:" : "ტიპი:",
     "Size:" : "ზომა:",
     "External monitoring tool" : "გარე მონიტორინგის ხელსაწყო",
-    "You can connect an external monitoring tool by using this end point: " : "ამ დანიშნულების წერტილით გარე მონიტორინგის ხელსაწყოს ვერ დაუკავშირდებით:",
+    "You can connect an external monitoring tool by using this end point: " : "ამ დანიშნულების წერტილით, გარე მონიტორინგის ხელსაწყოს ვერ დაუკავშირდებით:",
     "Server info" : "ინფორმაცია სერვერზე",
-    "You can connect a external monitoring tool by using this end point: " : "ამ დანიშნულების წერტილით გარე მონიტორინგის ხელსაწყოს დაუკავშირდებით:"
+    "You can connect a external monitoring tool by using this end point: " : "ამ დანიშნულების წერტილით, გარე მონიტორინგის ხელსაწყოს დაუკავშირდებით:"
 },
 "nplurals=1; plural=0;");
