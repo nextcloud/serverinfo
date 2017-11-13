@@ -58,7 +58,9 @@ class SystemStatistics {
 			'freespace' => $this->view->free_space(),
 			'cpuload' => sys_getloadavg(),
 			'mem_total' => $memoryUsage['mem_total'],
-			'mem_free' => $memoryUsage['mem_free']
+			'mem_free' => $memoryUsage['mem_free'],
+			'swap_total' => $memoryUsage['swap_total'],
+			'swap_free' => $memoryUsage['swap_free']
 		];
 	}
 
@@ -88,7 +90,7 @@ class SystemStatistics {
 		}
 		// check if determining memoryUsage failed
 		if ($memoryUsage === false) {
-			return ['mem_free' => 'N/A', 'mem_total' => 'N/A'];
+			return ['mem_free' => 'N/A', 'mem_total' => 'N/A', 'swap_free' => 'N/A', 'swap_total' => 'N/A'];
 		}
 		$array = explode(PHP_EOL, $memoryUsage);
 		// the last value is a empty string after explode, skip it
@@ -107,8 +109,10 @@ class SystemStatistics {
 		}
 
 		return [
-			'mem_free' => (int)$available + (int)$data['SwapFree'],
-			'mem_total' => (int)$data['MemTotal'] + (int)$data['SwapTotal']
+			'mem_free' => (int)$available,
+			'mem_total' => (int)$data['MemTotal'],
+			'swap_free' => (int)$data['SwapFree'],
+			'swap_total' => (int)$data['SwapTotal']
 		];
 	}
 
