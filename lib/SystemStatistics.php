@@ -77,13 +77,27 @@ class SystemStatistics {
 		}
 		//If FreeBSD is used and exec()-usage is allowed
 		if (PHP_OS === 'FreeBSD' && \OC_Helper::is_function_enabled('exec')) {
+			//Read Swap usage:
+			exec("/usr/sbin/swapinfo",$return,$status);
+			if ($status===0 && count($return) > 1) {
+				$line = preg_split("/[\s]+/", $return[1]);			
+				if(count($line) > 3) {
+					$swapTotal = (int) $line[3];
+					$swapFree = $swapTotal- (int) $line[2];
+				}
+			}
+			unset($status);
+			unset($return);
+			//Read Memory Usage
 			exec("/sbin/sysctl -n hw.physmem hw.pagesize vm.stats.vm.v_inactive_count vm.stats.vm.v_cache_count vm.stats.vm.v_free_count",$return,$status);
 			if ($status===0) {
 				$return=array_map('intval',$return);
 				if ($return === array_filter($return, 'is_int')) {
 					return [
 						'mem_total' => (int) $return[0]/1024,
-						'mem_free' => (int) $return[1]*($return[2]+$return[3]+$return[4])/1024
+						'mem_free' => (int) $return[1]*($return[2]+$return[3]+$return[4])/1024,
+						'swap_free' => (isset($swapFree)) ? $swapFree : 'N/A',
+						'swap_total' => (isset($swapTotal)) ? $swapTotal : 'N/A'
 					];
 				}
 			}
