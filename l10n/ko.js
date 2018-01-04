@@ -31,6 +31,8 @@ OC.L10N.register(
     "Type:" : "종류:",
     "Size:" : "크기:",
     "External monitoring tool" : "외부 모니터링 도구",
-    "You can connect an external monitoring tool by using this end point: " : "다음 엔드포인트로 외부 모니터링 도구에 연결할 수 있습니다:"
+    "You can connect an external monitoring tool by using this end point: " : "다음 엔드포인트로 외부 모니터링 도구에 연결할 수 있습니다:",
+    "Server info" : "서버 정보",
+    "You can connect a external monitoring tool by using this end point: " : "다음 엔드포인트로 외부 모니터링 도구를 연결할 수 있습니다:"
 },
 "nplurals=1; plural=0;");
