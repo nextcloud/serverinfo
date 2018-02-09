@@ -13,7 +13,7 @@ OC.L10N.register(
     "Federated received" : "Federated empfangen",
     "Last 24 hours" : "Letzte 24 Stunden",
     "Last 1 hour" : "Letzte Stunde",
-    "Last 5 mins" : "Letzte 5 Minuteb",
+    "Last 5 mins" : "Letzte 5 Minuten",
     "Monitoring" : "Information",
     "CPU load" : "CPU-Auslastung",
     "Memory usage" : "Arbeitsspeicher-Auslastung",
