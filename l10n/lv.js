@@ -31,7 +31,6 @@ OC.L10N.register(
     "Type:" : "Tips:",
     "Size:" : "Izmērs:",
     "External monitoring tool" : "Ārējās uzraudzības instruments",
-    "You can connect an external monitoring tool by using this end point: " : "Jūs varat pieslēgt ārējo uzraudzības instrumentu, izmantojot šo beigu punktu:",
-    "Server info" : "Servera informācija"
+    "You can connect an external monitoring tool by using this end point: " : "Jūs varat pieslēgt ārējo uzraudzības instrumentu, izmantojot šo beigu punktu:"
 },
 "nplurals=3; plural=(n%10==1 && n%100!=11 ? 0 : n != 0 ? 1 : 2);");

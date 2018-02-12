@@ -31,8 +31,6 @@ OC.L10N.register(
     "Type:" : "Тип:",
     "Size:" : "Размер:",
     "External monitoring tool" : "Внешний мониторинг",
-    "You can connect an external monitoring tool by using this end point: " : "Вы можете подключить внешний мониторинг используя этот адрес:",
-    "Server info" : "Информация о сервере",
-    "You can connect a external monitoring tool by using this end point: " : "Вы можете подключить внешний мониторинг используя этот адрес:"
+    "You can connect an external monitoring tool by using this end point: " : "Вы можете подключить внешний мониторинг используя этот адрес:"
 },
 "nplurals=4; plural=(n%10==1 && n%100!=11 ? 0 : n%10>=2 && n%10<=4 && (n%100<12 || n%100>14) ? 1 : n%10==0 || (n%10>=5 && n%10<=9) || (n%100>=11 && n%100<=14)? 2 : 3);");

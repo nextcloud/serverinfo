@@ -31,8 +31,6 @@ OC.L10N.register(
     "Type:" : "Lloji:",
     "Size:" : "Madhësia:",
     "External monitoring tool" : "Mjet i kontrollit të jashtëm",
-    "You can connect an external monitoring tool by using this end point: " : "Ju mund të lidhni një vegël monitorimi të jashtme duke përdorur këtë pikë përfundimi:",
-    "Server info" : "Informacion i serverit",
-    "You can connect a external monitoring tool by using this end point: " : "Ju mund të lidhni një mjet të jashtëm të monitorimit duke përdorur këtë pikë fundore:"
+    "You can connect an external monitoring tool by using this end point: " : "Ju mund të lidhni një vegël monitorimi të jashtme duke përdorur këtë pikë përfundimi:"
 },
 "nplurals=2; plural=(n != 1);");

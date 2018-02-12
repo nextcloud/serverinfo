@@ -14,7 +14,7 @@ OC.L10N.register(
     "Last 24 hours" : "Últimas 24 horas",
     "Last 1 hour" : "Última hora",
     "Last 5 mins" : "Últimos 5 minutos",
-    "Monitoring" : "Monitorizando",
+    "Monitoring" : "Monitorización",
     "CPU load" : "Carga del CPU",
     "Memory usage" : "Uso de memoria",
     "Active users" : "Usuarios activos",
@@ -31,8 +31,6 @@ OC.L10N.register(
     "Type:" : "Tipo:",
     "Size:" : "Tamaño:",
     "External monitoring tool" : "Herramienta de monitoreo externo",
-    "You can connect an external monitoring tool by using this end point: " : "Puede conectar una herramienta externa de monitorización usando este punto de comunicación:",
-    "Server info" : "Información del servidor",
-    "You can connect a external monitoring tool by using this end point: " : "Puedes conectar una herramienta de monitorización externa usando este punto de finalización:"
+    "You can connect an external monitoring tool by using this end point: " : "Puede conectar una herramienta externa de monitorización usando este punto de comunicación:"
 },
 "nplurals=2; plural=(n != 1);");

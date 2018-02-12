@@ -31,8 +31,6 @@ OC.L10N.register(
     "Type:" : "Típus:",
     "Size:" : "Méret:",
     "External monitoring tool" : "Külső monitorozó eszköz",
-    "You can connect an external monitoring tool by using this end point: " : "Ennek a végpontnak a használatával külső monitorozó eszközt csatlakoztathatsz:",
-    "Server info" : "Szerver információ",
-    "You can connect a external monitoring tool by using this end point: " : "Ennek a végpontnak a használatával külső monitorozó eszközt csatlakoztathatsz:"
+    "You can connect an external monitoring tool by using this end point: " : "Ennek a végpontnak a használatával külső monitorozó eszközt csatlakoztathatsz:"
 },
 "nplurals=2; plural=(n != 1);");
