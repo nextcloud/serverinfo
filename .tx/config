@@ -4,6 +4,6 @@ lang_map = bg_BG: bg, cs_CZ: cs, fi_FI: fi, hu_HU: hu, nb_NO: nb, sk_SK: sk, th_
 
 [nextcloud.serverinfo]
 file_filter = <lang>/serverinfo.po
-source_file = templates/serverinfo.pot
+source_file = translationfiles/templates/serverinfo.pot
 source_lang = en
 type = PO
