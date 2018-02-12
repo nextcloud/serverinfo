@@ -31,7 +31,6 @@ OC.L10N.register(
     "Type:" : "Triba:",
     "Size:" : "Tamañu:",
     "External monitoring tool" : "Ferramienta esterna de monitorización",
-    "You can connect an external monitoring tool by using this end point: " : "Pues coneutar una ferramienta esterna de monitorización usando esti estremu:",
-    "Server info" : "Información del sirvidor"
+    "You can connect an external monitoring tool by using this end point: " : "Pues coneutar una ferramienta esterna de monitorización usando esti estremu:"
 },
 "nplurals=2; plural=(n != 1);");

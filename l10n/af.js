@@ -18,7 +18,6 @@ OC.L10N.register(
     "Memory Limit:" : "Geheuelimiet:",
     "Database" : "Databasis",
     "Type:" : "Tipe:",
-    "Size:" : "Grootte:",
-    "Server info" : "Bedienerinligting"
+    "Size:" : "Grootte:"
 },
 "nplurals=2; plural=(n != 1);");

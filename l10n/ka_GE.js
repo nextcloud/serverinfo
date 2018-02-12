@@ -31,8 +31,6 @@ OC.L10N.register(
     "Type:" : "ტიპი:",
     "Size:" : "ზომა:",
     "External monitoring tool" : "გარე მონიტორინგის ხელსაწყო",
-    "You can connect an external monitoring tool by using this end point: " : "ამ დანიშნულების წერტილით, გარე მონიტორინგის ხელსაწყოს ვერ დაუკავშირდებით:",
-    "Server info" : "ინფორმაცია სერვერზე",
-    "You can connect a external monitoring tool by using this end point: " : "ამ დანიშნულების წერტილით, გარე მონიტორინგის ხელსაწყოს დაუკავშირდებით:"
+    "You can connect an external monitoring tool by using this end point: " : "ამ დანიშნულების წერტილით, გარე მონიტორინგის ხელსაწყოს ვერ დაუკავშირდებით:"
 },
 "nplurals=1; plural=0;");

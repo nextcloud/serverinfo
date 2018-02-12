@@ -31,8 +31,6 @@ OC.L10N.register(
     "Type:" : "Tipo:",
     "Size:" : "Tamanho:",
     "External monitoring tool" : "Ferramenta de monitoramento externo",
-    "You can connect an external monitoring tool by using this end point: " : "Você pode conectar uma ferramenta de monitoramento externa usando este ponto: ",
-    "Server info" : "Informação do servidor",
-    "You can connect a external monitoring tool by using this end point: " : "Você pode conectar uma ferramenta de monitoramento externa usando este ponto final:"
+    "You can connect an external monitoring tool by using this end point: " : "Você pode conectar uma ferramenta de monitoramento externa usando este ponto: "
 },
 "nplurals=2; plural=(n > 1);");

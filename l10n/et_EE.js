@@ -31,8 +31,6 @@ OC.L10N.register(
     "Type:" : "Tüüp:",
     "Size:" : "Suurus:",
     "External monitoring tool" : "Väline monitoorimistööriist",
-    "You can connect an external monitoring tool by using this end point: " : "Saad ühendada välise monitoorimistööriista kasutades seda lõpp-punkti:",
-    "Server info" : "Serveri info",
-    "You can connect a external monitoring tool by using this end point: " : "Saad ühendada välise monitoorimistööriista kasutades seda lõpp-punkti:"
+    "You can connect an external monitoring tool by using this end point: " : "Saad ühendada välise monitoorimistööriista kasutades seda lõpp-punkti:"
 },
 "nplurals=2; plural=(n != 1);");

@@ -31,8 +31,6 @@ OC.L10N.register(
     "Type:" : "Tegund:",
     "Size:" : "Stærð:",
     "External monitoring tool" : "Utanaðkomandi vöktunartól",
-    "You can connect an external monitoring tool by using this end point: " : "Þú getur tengt utanaðkomandi vöktunartól með því að nota þennan endapunkt: ",
-    "Server info" : "Upplýsingar um þjón",
-    "You can connect a external monitoring tool by using this end point: " : "Þú getur tengt utanaðkomandi vöktunartól með því að nota þennan endapunkt: "
+    "You can connect an external monitoring tool by using this end point: " : "Þú getur tengt utanaðkomandi vöktunartól með því að nota þennan endapunkt: "
 },
 "nplurals=2; plural=(n % 10 != 1 || n % 100 == 11);");

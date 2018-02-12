@@ -24,8 +24,6 @@ OC.L10N.register(
     "Type:" : "Type:",
     "Size:" : "Storleik:",
     "External monitoring tool" : "Eksternt monoitor verktøy",
-    "You can connect an external monitoring tool by using this end point: " : "Du kan kople til et ekstent monitor verktøy ved å bruke dette endepunktet:",
-    "Server info" : "Server informasjon",
-    "You can connect a external monitoring tool by using this end point: " : "Du kan koble til et eksternt monitor verktøy ved å bruke dette endepunktet:"
+    "You can connect an external monitoring tool by using this end point: " : "Du kan kople til et ekstent monitor verktøy ved å bruke dette endepunktet:"
 },
 "nplurals=2; plural=(n != 1);");
