@@ -31,8 +31,6 @@ OC.L10N.register(
     "Type:" : "Тип:",
     "Size:" : "Величина:",
     "External monitoring tool" : "Спољни алати за праћење система",
-    "You can connect an external monitoring tool by using this end point: " : "Можете повезати спољни алат за праћење система користећи следећу тачку повезивања:",
-    "Server info" : "Серверске информације",
-    "You can connect a external monitoring tool by using this end point: " : "Можете повезати спољни алат за праћење система користећи следећу тачку повезивања:"
+    "You can connect an external monitoring tool by using this end point: " : "Можете повезати спољни алат за праћење система користећи следећу тачку повезивања:"
 },
 "nplurals=3; plural=(n%10==1 && n%100!=11 ? 0 : n%10>=2 && n%10<=4 && (n%100<10 || n%100>=20) ? 1 : 2);");

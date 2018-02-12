@@ -31,8 +31,6 @@ OC.L10N.register(
     "Type:" : "Tyyppi:",
     "Size:" : "Koko:",
     "External monitoring tool" : "Ulkopuolinen valvontatyökalu",
-    "You can connect an external monitoring tool by using this end point: " : "Voit yhdistää ulkopuolisen valvontatyökalun käyttämällä tätä liityntäkohtaa: ",
-    "Server info" : "Palvelimen tiedot",
-    "You can connect a external monitoring tool by using this end point: " : "Voit yhdistää ulkopuolisen valvontatyökalun käyttämällä tätä liityntäkohtaa: "
+    "You can connect an external monitoring tool by using this end point: " : "Voit yhdistää ulkopuolisen valvontatyökalun käyttämällä tätä liityntäkohtaa: "
 },
 "nplurals=2; plural=(n != 1);");

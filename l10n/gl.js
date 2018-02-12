@@ -27,7 +27,6 @@ OC.L10N.register(
     "Upload max size:" : "Máximo tamaño subida:",
     "Database" : "Base de datos",
     "Type:" : "Tipo:",
-    "Size:" : "Tamaño:",
-    "Server info" : "Información do servidor"
+    "Size:" : "Tamaño:"
 },
 "nplurals=2; plural=(n != 1);");
