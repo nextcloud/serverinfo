@@ -26,7 +26,7 @@ OC.L10N.register(
     "Version:" : "Verze:",
     "Memory Limit:" : "Limit paměti:",
     "Max Execution Time:" : "Největší čas vykonávání:",
-    "Upload max size:" : "Největší velikost nahraného souboru:",
+    "Upload max size:" : "Maximální velikost nahraného souboru:",
     "Database" : "Databáze",
     "Type:" : "Typ:",
     "Size:" : "Velikost:",
