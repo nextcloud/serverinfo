@@ -31,4 +31,4 @@ OC.L10N.register(
     "External monitoring tool" : "כלי מעקב חיצוני",
     "You can connect an external monitoring tool by using this end point: " : "ניתן לחבר כלי מעקב חיצוני אל נקודת הגישה הבאה:"
 },
-"nplurals=2; plural=(n != 1);");
+"nplurals=4; plural=(n==1 ? 1: n == 2 ? 2 : (n % 10 == 0 and n > 10) ? 4);");

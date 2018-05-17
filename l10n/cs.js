@@ -33,4 +33,4 @@ OC.L10N.register(
     "External monitoring tool" : "Externí nástroj pro sledování",
     "You can connect an external monitoring tool by using this end point: " : "Externí sledovací nástroj můžete připojit pomocí následujícího přípojného bodu: "
 },
-"nplurals=3; plural=(n==1) ? 0 : (n>=2 && n<=4) ? 1 : 2;");
+"nplurals=4; plural=(n < 10 && n % 1 == 0) ? 1 : (n < 9999 && n >= 10 && n % 1 == 0) ? 3 : (n % 1 != 0) : 4;");
