@@ -33,4 +33,4 @@ OC.L10N.register(
     "External monitoring tool" : "გარე მონიტორინგის ხელსაწყო",
     "You can connect an external monitoring tool by using this end point: " : "ამ დანიშნულების წერტილით, გარე მონიტორინგის ხელსაწყოს ვერ დაუკავშირდებით:"
 },
-"nplurals=1; plural=0;");
+"nplurals=2; plural=(n==1);");
