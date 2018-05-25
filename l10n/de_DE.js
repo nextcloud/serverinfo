@@ -15,6 +15,7 @@ OC.L10N.register(
     "Last 1 hour" : "Letzte Stunde",
     "Last 5 mins" : "Letzte 5 Minuten",
     "Monitoring" : "Information",
+    "Provides useful server information, such as CPU load, RAM usage, disk usage, number of users, etc." : "Zeigt nütztliche Informationen des Servers an wie z.B. CPU-Last, Arbeitsspeicherauslastung, Massenspeicherauslastung, Anzahl der Benutzer, usw.",
     "CPU load" : "CPU-Auslastung",
     "Memory usage" : "Arbeitsspeicher-Auslastung",
     "Active users" : "Aktive Benutzer",
