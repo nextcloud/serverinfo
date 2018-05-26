@@ -1,7 +1,7 @@
 OC.L10N.register(
     "serverinfo",
     {
-    "Load average" : "Průměrné zatížení",
+    "Load average" : "Průměrné vytížení",
     "Last minute" : "Poslední minuta",
     "Memory info not available" : "Informace o paměti není dostupná",
     "Total" : "Celkem",
@@ -13,9 +13,10 @@ OC.L10N.register(
     "Federated received" : "Sdruženě přijato",
     "Last 24 hours" : "Posledních 24 hodin",
     "Last 1 hour" : "Poslední 1 hodina",
-    "Last 5 mins" : "Posledních 5 minut",
+    "Last 5 mins" : "Uplynulých 5 minut",
     "Monitoring" : "Sledování",
-    "CPU load" : "Vytížení CPU",
+    "Provides useful server information, such as CPU load, RAM usage, disk usage, number of users, etc." : "Poskytuje užitečné informace o serveru, jako vytížení procesoru, obsazenost operační paměti, obsazenost datového úložiště, počet uživatelů, atd.",
+    "CPU load" : "Vytížení procesoru",
     "Memory usage" : "Využití paměti",
     "Active users" : "Aktivní uživatelé",
     "Shares" : "Sdílení",
