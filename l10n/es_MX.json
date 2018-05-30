@@ -13,6 +13,7 @@
     "Last 1 hour" : "Última hora",
     "Last 5 mins" : "Últimos 5 minutos",
     "Monitoring" : "Monitoreo",
+    "Provides useful server information, such as CPU load, RAM usage, disk usage, number of users, etc." : "Provee información útil del servidor como carga del CPU, uso de RAM, uso de disco, número de usuarios, etc.",
     "CPU load" : "Carga del CPU",
     "Memory usage" : "Uso de memoria",
     "Active users" : "Usuarios activos",

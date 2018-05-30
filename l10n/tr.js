@@ -15,6 +15,7 @@ OC.L10N.register(
     "Last 1 hour" : "Son 1 saat",
     "Last 5 mins" : "Son 5 dakika",
     "Monitoring" : "İzleniyor",
+    "Provides useful server information, such as CPU load, RAM usage, disk usage, number of users, etc." : "İşlemci yükü, bellek ve disk kullanımı, kullanıcı sayısı gibi sunucu hakkında çeşitli bilgiler sağlar. ",
     "CPU load" : "İşlemci yükü",
     "Memory usage" : "Bellek kullanımı",
     "Active users" : "Etkin kullanıcılar",
