@@ -15,6 +15,7 @@ OC.L10N.register(
     "Last 1 hour" : "Last 1 hour",
     "Last 5 mins" : "Last 5 mins",
     "Monitoring" : "Monitoring",
+    "Provides useful server information, such as CPU load, RAM usage, disk usage, number of users, etc." : "Provides useful server information, such as CPU load, RAM usage, disk usage, number of users, etc.",
     "CPU load" : "CPU load",
     "Memory usage" : "Memory usage",
     "Active users" : "Active users",
