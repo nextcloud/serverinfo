@@ -15,6 +15,7 @@ OC.L10N.register(
     "Last 1 hour" : "Последњих 1 сат",
     "Last 5 mins" : "Последњих 5 минута",
     "Monitoring" : "Праћење система",
+    "Provides useful server information, such as CPU load, RAM usage, disk usage, number of users, etc." : "Даје корисне информације о серверу, као што су оптерећење процесора, употреба RAM-а, употреба диска, број корисника, итд.",
     "CPU load" : "Оптерећење процесора",
     "Memory usage" : "Употреба меморије",
     "Active users" : "Активних корисника",
