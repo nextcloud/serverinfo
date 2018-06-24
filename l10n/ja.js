@@ -5,7 +5,7 @@ OC.L10N.register(
     "Last minute" : "直近",
     "Memory info not available" : "メモリ情報が利用できません",
     "Total" : "合計",
-    "Current usage" : "現在の利用",
+    "Current usage" : "現在の利用量",
     "Users" : "ユーザー",
     "Groups" : "グループ",
     "Links" : "リンク",
