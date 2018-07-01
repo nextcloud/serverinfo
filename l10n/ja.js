@@ -16,7 +16,7 @@ OC.L10N.register(
     "Last 5 mins" : "5分以内",
     "Monitoring" : "モニタリング",
     "CPU load" : "CPU負荷",
-    "Memory usage" : "メモリ利用",
+    "Memory usage" : "メモリ使用量",
     "Active users" : "アクティブユーザー数",
     "Shares" : "共有数",
     "Storage" : "ストレージ",
