@@ -36,10 +36,10 @@
 		updateShareStatistics();
 		setHumanReadableSizeToElement("dataBaseSize");
 		setHumanReadableSizeToElement("phpUploadMaxSize");
-		
+
 		$("#monitoring-endpoint-url").on('click', function() {
-                        $(this).select();
-                });
+			$(this).select();
+		});
 
 		function updateInfo() {
 			var url = OC.generateUrl('/apps/serverinfo/update');
@@ -64,16 +64,16 @@
 		if (typeof cpuLoadChart === 'undefined') {
 			cpuLoadChart = new SmoothieChart(
 			{
-				millisPerPixel:250,
-				minValue:0,
-				grid:{fillStyle:'rgba(0,0,0,0.03)',strokeStyle:'transparent'},
-				labels:{fillStyle:'rgba(0,0,0,0.4)', fontSize:12}
+				millisPerPixel: 250,
+				minValue: 0,
+				grid: { fillStyle: 'rgba(0,0,0,0.03)', strokeStyle: 'transparent' },
+				labels: { fillStyle: 'rgba(0,0,0,0.4)', fontSize: 12 }
 			});
 			cpuLoadChart.streamTo(document.getElementById("cpuloadcanvas"), 1000/*delay*/);
 			cpuLoadLine = new TimeSeries();
-			cpuLoadChart.addTimeSeries(cpuLoadLine, {lineWidth:1, strokeStyle:'rgb(0, 0, 255)', fillStyle:'rgba(0, 0, 255, 0.2)'});
+			cpuLoadChart.addTimeSeries(cpuLoadLine, { lineWidth: 1, strokeStyle: 'rgb(0, 0, 255)', fillStyle: 'rgba(0, 0, 255, 0.2)' });
 		}
-		
+
 		$('#cpuFooterInfo').text(t('serverinfo', 'Load average')+": "+cpu1+" ("+t('serverinfo', 'Last minute')+")");
 		cpuLoadLine.append(new Date().getTime(), cpu1);
 	}
@@ -93,11 +93,11 @@
 		if (typeof memoryUsageChart === 'undefined') {
 			memoryUsageChart = new SmoothieChart(
 			{
-				millisPerPixel:250, 
-				maxValue:memTotalGB, 
-				minValue:0, 
-				grid:{fillStyle:'rgba(0,0,0,0.03)',strokeStyle:'transparent'},
-				labels:{fillStyle:'rgba(0,0,0,0.4)', fontSize:12}
+				millisPerPixel: 250,
+				maxValue: memTotalGB,
+				minValue: 0,
+				grid: { fillStyle: 'rgba(0,0,0,0.03)', strokeStyle: 'transparent' },
+				labels: { fillStyle: 'rgba(0,0,0,0.4)', fontSize: 12 }
 			});
 			memoryUsageChart.streamTo(document.getElementById("memorycanvas"), 1000/*delay*/);
 			memoryUsageLine = new TimeSeries();
@@ -112,52 +112,56 @@
 
 		var shares = $('#sharecanvas').data('shares'),
 			shares_data = [shares.num_shares_user, shares.num_shares_groups, shares.num_shares_link, shares.num_fed_shares_sent, shares.num_fed_shares_received],
-			stepSize = 0; 
+			stepSize = 0;
 
-		if (Math.max.apply(null, shares_data) < 10) {stepSize = 1;} 
+		if (Math.max.apply(null, shares_data) < 10) {
+			stepSize = 1;
+		}
 
 		if (typeof sharesChart === 'undefined') {
 			var ctx = document.getElementById("sharecanvas");
 
 			sharesChart = new Chart(ctx, {
-									    type: 'bar',
-									    data: {
-									        labels: [t('serverinfo', 'Users'), 
-									        		t('serverinfo', 'Groups'), 
-									        		t('serverinfo', 'Links'), 
-									        		t('serverinfo', 'Federated sent'), 
-									        		t('serverinfo', 'Federated received')],
-									        datasets: [{
-									        	label: " ",
-									            data: shares_data,
-									            backgroundColor: [
-									                'rgba(0, 0, 255, 0.2)',
-									                'rgba(0, 255, 0, 0.2)',
-									                'rgba(255, 0, 0, 0.2)',
-									                'rgba(0, 255, 255, 0.2)',
-									                'rgba(255, 0, 255, 0.2)'
-									            ],
-									            borderColor: [
-									                'rgba(0, 0, 255, 1)',
-									                'rgba(0, 255, 0, 1)',
-									                'rgba(255, 0, 0, 1)',
-									                'rgba(0, 255, 255, 1)',
-									                'rgba(255, 0, 255, 1)'
-									            ],
-									            borderWidth: 1
-									        }]
-									    },
-									    options: {
-									       	legend: {display:false},
-									       	scales: {
-									            yAxes: [{
-									                ticks: {
-									                	min: 0,
-									                    stepSize: stepSize
-									                }
-									            }]
-									        }
-									    }
+										type: 'bar',
+										data: {
+											labels: [
+												t('serverinfo', 'Users'),
+												t('serverinfo', 'Groups'),
+												t('serverinfo', 'Links'),
+												t('serverinfo', 'Federated sent'),
+												t('serverinfo', 'Federated received')
+											],
+											datasets: [{
+												label: " ",
+												data: shares_data,
+												backgroundColor: [
+													'rgba(0, 0, 255, 0.2)',
+													'rgba(0, 255, 0, 0.2)',
+													'rgba(255, 0, 0, 0.2)',
+													'rgba(0, 255, 255, 0.2)',
+													'rgba(255, 0, 255, 0.2)'
+												],
+												borderColor: [
+													'rgba(0, 0, 255, 1)',
+													'rgba(0, 255, 0, 1)',
+													'rgba(255, 0, 0, 1)',
+													'rgba(0, 255, 255, 1)',
+													'rgba(255, 0, 255, 1)'
+												],
+												borderWidth: 1
+											}]
+										},
+										options: {
+											legend: { display:false },
+											scales: {
+												yAxes: [{
+													ticks: {
+														min: 0,
+														stepSize: stepSize
+													}
+												}]
+											}
+										}
 			});
 		}
 
@@ -170,48 +174,52 @@
 			activeUsers_data = [activeUsers.last24hours, activeUsers.last1hour, activeUsers.last5minutes],
 			stepSize = 0;
 
-		if (Math.max.apply(null, activeUsers_data) < 10) {stepSize = 1;} 
+		if (Math.max.apply(null, activeUsers_data) < 10) {
+			stepSize = 1;
+		}
 
 		if (typeof activeusersChart === 'undefined') {
 			var ctx = document.getElementById("activeuserscanvas");
 
 			activeusersChart = new Chart(ctx, {
-									    type: 'line',
-									    data: {
-									        labels: [t('serverinfo', 'Last 24 hours'), 
-									        		t('serverinfo', 'Last 1 hour'), 
-									        		t('serverinfo', 'Last 5 mins')],
-									        datasets: [{
-									        	label: " ",
-									            data: activeUsers_data,
-									            fill: false,
-									            borderColor: ['rgba(0, 0, 255, 1)'],
-									            borderWidth: 1,
-									            borderDashOffset: 0.0,
-									            borderJoinStyle: 'miter',
-									            pointBorderColor: 'rgba(0, 0, 255, 1)',
-									            pointBackgroundColor: "#fff",
-									            pointBorderWidth: 1,
-									            pointHoverRadius: 5,
-									            pointHoverBackgroundColor: "rgba(0,0,255,0.6)",
-									            pointHoverBorderColor: "rgba(0, 0, 255, 1)",
-									            pointHoverBorderWidth: 1,
-									            pointRadius: 5,
-									            pointHitRadius: 10,
-									            lineTension:0
-									        }]
-									    },
-									    options: {
-									       	legend: {display:false},
-									       	scales: {
-									            yAxes: [{
-									                ticks: {
-									                	min: 0,
-									                    stepSize: stepSize
-									                }
-									            }]
-									        }
-									    }
+										type: 'line',
+										data: {
+											labels: [
+												t('serverinfo', 'Last 24 hours'),
+												t('serverinfo', 'Last 1 hour'),
+												t('serverinfo', 'Last 5 mins')
+											],
+											datasets: [{
+												label: " ",
+												data: activeUsers_data,
+												fill: false,
+												borderColor: [ 'rgba(0, 0, 255, 1)' ],
+												borderWidth: 1,
+												borderDashOffset: 0.0,
+												borderJoinStyle: 'miter',
+												pointBorderColor: 'rgba(0, 0, 255, 1)',
+												pointBackgroundColor: "#fff",
+												pointBorderWidth: 1,
+												pointHoverRadius: 5,
+												pointHoverBackgroundColor: "rgba(0,0,255,0.6)",
+												pointHoverBorderColor: "rgba(0, 0, 255, 1)",
+												pointHoverBorderWidth: 1,
+												pointRadius: 5,
+												pointHitRadius: 10,
+												lineTension: 0
+											}]
+										},
+										options: {
+											legend: { display:false },
+											scales: {
+												yAxes: [{
+													ticks: {
+														min: 0,
+														stepSize: stepSize
+													}
+												}]
+											}
+										}
 			});
 		}
 	}
@@ -237,7 +245,7 @@
 
 		cpuloadcanvas.width = newWidth;
 		cpuloadcanvas.height = newHeight;
-		
+
 		mem_canvas.width = newWidth;
 		mem_canvas.height = newHeight;
 	}
