@@ -74,7 +74,7 @@ class SystemStatistics {
 			'mem_free' => $memoryUsage['mem_free'],
 			'swap_total' => $memoryUsage['swap_total'],
 			'swap_free' => $memoryUsage['swap_free'],
-      'apps' => $this->getAppsInfo()
+			'apps' => $this->getAppsInfo()
 		];
 	}
 
@@ -94,7 +94,7 @@ class SystemStatistics {
 			//Read Swap usage:
 			exec("/usr/sbin/swapinfo",$return,$status);
 			if ($status===0 && count($return) > 1) {
-				$line = preg_split("/[\s]+/", $return[1]);			
+				$line = preg_split("/[\s]+/", $return[1]);
 				if(count($line) > 3) {
 					$swapTotal = (int) $line[3];
 					$swapFree = $swapTotal- (int) $line[2];
