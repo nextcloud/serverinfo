@@ -2,3 +2,10 @@
 	max-width: 700px;
 	max-height: 350px;
 }
+
+.clipboardButton {
+	display: inline-block;
+	position: relative;
+	top: 2px;
+	margin-left: 5px;
+}

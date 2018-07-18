@@ -25,6 +25,7 @@ script('serverinfo', 'smoothie');
 script('serverinfo', 'Chart.min');
 
 style('serverinfo', 'style');
+
 ?>
 
 <div class="section" id="cpuSection">
@@ -72,6 +73,7 @@ style('serverinfo', 'style');
 		<?php p($l->t('You can connect an external monitoring tool by using this end point:')); ?>
 	</p>
 	<div>
-		<input type="text" readonly="readonly" style="width: 415px;" id="monitoring-endpoint-url" value="<?php echo p($_['ocs']); ?>">
+		<input type="text" readonly="readonly" style="width: 415px;" id="monitoring-endpoint-url" value="<?php echo p($_['ocs']); ?>" />
+		<a class="clipboardButton icon icon-clippy" data-clipboard-target="#monitoring-endpoint-url"></a>
  	</div>
 </div>
