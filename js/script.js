@@ -140,46 +140,46 @@
 			var ctx = document.getElementById("sharecanvas");
 
 			sharesChart = new Chart(ctx, {
-										type: 'bar',
-										data: {
-											labels: [
-												t('serverinfo', 'Users'),
-												t('serverinfo', 'Groups'),
-												t('serverinfo', 'Links'),
-												t('serverinfo', 'Federated sent'),
-												t('serverinfo', 'Federated received')
-											],
-											datasets: [{
-												label: " ",
-												data: shares_data,
-												backgroundColor: [
-													'rgba(0, 0, 255, 0.2)',
-													'rgba(0, 255, 0, 0.2)',
-													'rgba(255, 0, 0, 0.2)',
-													'rgba(0, 255, 255, 0.2)',
-													'rgba(255, 0, 255, 0.2)'
-												],
-												borderColor: [
-													'rgba(0, 0, 255, 1)',
-													'rgba(0, 255, 0, 1)',
-													'rgba(255, 0, 0, 1)',
-													'rgba(0, 255, 255, 1)',
-													'rgba(255, 0, 255, 1)'
-												],
-												borderWidth: 1
-											}]
-										},
-										options: {
-											legend: { display:false },
-											scales: {
-												yAxes: [{
-													ticks: {
-														min: 0,
-														stepSize: stepSize
-													}
-												}]
-											}
-										}
+				type: 'bar',
+				data: {
+					labels: [
+						t('serverinfo', 'Users'),
+						t('serverinfo', 'Groups'),
+						t('serverinfo', 'Links'),
+						t('serverinfo', 'Federated sent'),
+						t('serverinfo', 'Federated received')
+					],
+					datasets: [{
+						label: " ",
+						data: shares_data,
+						backgroundColor: [
+							'rgba(0, 0, 255, 0.2)',
+							'rgba(0, 255, 0, 0.2)',
+							'rgba(255, 0, 0, 0.2)',
+							'rgba(0, 255, 255, 0.2)',
+							'rgba(255, 0, 255, 0.2)'
+						],
+						borderColor: [
+							'rgba(0, 0, 255, 1)',
+							'rgba(0, 255, 0, 1)',
+							'rgba(255, 0, 0, 1)',
+							'rgba(0, 255, 255, 1)',
+							'rgba(255, 0, 255, 1)'
+						],
+						borderWidth: 1
+					}]
+				},
+				options: {
+					legend: { display:false },
+					scales: {
+						yAxes: [{
+							ticks: {
+								min: 0,
+								stepSize: stepSize
+							}
+						}]
+					}
+				}
 			});
 		}
 
@@ -200,44 +200,44 @@
 			var ctx = document.getElementById("activeuserscanvas");
 
 			activeusersChart = new Chart(ctx, {
-										type: 'line',
-										data: {
-											labels: [
-												t('serverinfo', 'Last 24 hours'),
-												t('serverinfo', 'Last 1 hour'),
-												t('serverinfo', 'Last 5 mins')
-											],
-											datasets: [{
-												label: " ",
-												data: activeUsers_data,
-												fill: false,
-												borderColor: [ 'rgba(0, 0, 255, 1)' ],
-												borderWidth: 1,
-												borderDashOffset: 0.0,
-												borderJoinStyle: 'miter',
-												pointBorderColor: 'rgba(0, 0, 255, 1)',
-												pointBackgroundColor: "#fff",
-												pointBorderWidth: 1,
-												pointHoverRadius: 5,
-												pointHoverBackgroundColor: "rgba(0,0,255,0.6)",
-												pointHoverBorderColor: "rgba(0, 0, 255, 1)",
-												pointHoverBorderWidth: 1,
-												pointRadius: 5,
-												pointHitRadius: 10,
-												lineTension: 0
-											}]
-										},
-										options: {
-											legend: { display:false },
-											scales: {
-												yAxes: [{
-													ticks: {
-														min: 0,
-														stepSize: stepSize
-													}
-												}]
-											}
-										}
+				type: 'line',
+				data: {
+					labels: [
+						t('serverinfo', 'Last 24 hours'),
+						t('serverinfo', 'Last 1 hour'),
+						t('serverinfo', 'Last 5 mins')
+					],
+					datasets: [{
+						label: " ",
+						data: activeUsers_data,
+						fill: false,
+						borderColor: [ 'rgba(0, 0, 255, 1)' ],
+						borderWidth: 1,
+						borderDashOffset: 0.0,
+						borderJoinStyle: 'miter',
+						pointBorderColor: 'rgba(0, 0, 255, 1)',
+						pointBackgroundColor: "#fff",
+						pointBorderWidth: 1,
+						pointHoverRadius: 5,
+						pointHoverBackgroundColor: "rgba(0,0,255,0.6)",
+						pointHoverBorderColor: "rgba(0, 0, 255, 1)",
+						pointHoverBorderWidth: 1,
+						pointRadius: 5,
+						pointHitRadius: 10,
+						lineTension: 0
+					}]
+				},
+				options: {
+					legend: { display:false },
+					scales: {
+						yAxes: [{
+							ticks: {
+								min: 0,
+								stepSize: stepSize
+							}
+						}]
+					}
+				}
 			});
 		}
 	}
