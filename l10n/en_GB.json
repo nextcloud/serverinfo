@@ -13,6 +13,7 @@
     "Last 1 hour" : "Last 1 hour",
     "Last 5 mins" : "Last 5 mins",
     "Monitoring" : "Monitoring",
+    "Provides useful server information, such as CPU load, RAM usage, disk usage, number of users, etc." : "Provides useful server information, such as CPU load, RAM usage, disk usage, number of users, etc.",
     "CPU load" : "CPU load",
     "Memory usage" : "Memory usage",
     "Active users" : "Active users",
@@ -29,8 +30,6 @@
     "Type:" : "Type:",
     "Size:" : "Size:",
     "External monitoring tool" : "External monitoring tool",
-    "You can connect an external monitoring tool by using this end point: " : "You can connect an external monitoring tool by using this end point: ",
-    "Server info" : "Server info",
-    "You can connect a external monitoring tool by using this end point: " : "You can connect an external monitoring tool by using this end point: "
+    "You can connect an external monitoring tool by using this end point: " : "You can connect an external monitoring tool by using this end point: "
 },"pluralForm" :"nplurals=2; plural=(n != 1);"
 }

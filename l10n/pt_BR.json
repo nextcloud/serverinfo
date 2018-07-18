@@ -13,6 +13,7 @@
     "Last 1 hour" : "Última 1 hora",
     "Last 5 mins" : "Últimos 5 minutos",
     "Monitoring" : "Monitoramento",
+    "Provides useful server information, such as CPU load, RAM usage, disk usage, number of users, etc." : "Fornece informações úteis do servidor, como carga de CPU, uso de RAM, uso do disco, número de usuários, etc.",
     "CPU load" : "Carga da CPU",
     "Memory usage" : "Uso de memória",
     "Active users" : "Usuários ativos",
@@ -29,8 +30,6 @@
     "Type:" : "Tipo:",
     "Size:" : "Tamanho:",
     "External monitoring tool" : "Ferramenta de monitoramento externo",
-    "You can connect an external monitoring tool by using this end point: " : "Você pode conectar uma ferramenta de monitoramento externa usando este ponto: ",
-    "Server info" : "Informação do servidor",
-    "You can connect a external monitoring tool by using this end point: " : "Você pode conectar uma ferramenta de monitoramento externa usando este ponto final:"
+    "You can connect an external monitoring tool by using this end point: " : "Você pode conectar uma ferramenta de monitoramento externa usando este ponto: "
 },"pluralForm" :"nplurals=2; plural=(n > 1);"
 }

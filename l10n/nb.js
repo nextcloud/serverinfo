@@ -25,14 +25,12 @@ OC.L10N.register(
     "PHP" : "PHP",
     "Version:" : "Versjon:",
     "Memory Limit:" : "Minnegrense:",
-    "Max Execution Time:" : "Maks eksekveringstid:",
-    "Upload max size:" : "Maks opplastingstørrelse:",
+    "Max Execution Time:" : "Maks. kjøringstid:",
+    "Upload max size:" : "Maks. opplastingstørrelse:",
     "Database" : "Database",
     "Type:" : "Type:",
     "Size:" : "Størrelse:",
     "External monitoring tool" : "Eksternt overvåkingsverktøy",
-    "You can connect an external monitoring tool by using this end point: " : "Du kan koble til et eksternt overvåkingsverktøy ved å bruke følgende endepunkt:",
-    "Server info" : "Tjenerinformasjon",
-    "You can connect a external monitoring tool by using this end point: " : "Du kan koble til et eksternt overvåkingsverktøy ved å bruke dette endepunktet: "
+    "You can connect an external monitoring tool by using this end point: " : "Du kan koble til et eksternt overvåkingsverktøy ved å bruke følgende endepunkt:"
 },
 "nplurals=2; plural=(n != 1);");

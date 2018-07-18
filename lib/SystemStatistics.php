@@ -72,7 +72,9 @@ class SystemStatistics {
 			'cpuload' => sys_getloadavg(),
 			'mem_total' => $memoryUsage['mem_total'],
 			'mem_free' => $memoryUsage['mem_free'],
-			'apps' => $this->getAppsInfo(),
+			'swap_total' => $memoryUsage['swap_total'],
+			'swap_free' => $memoryUsage['swap_free'],
+      'apps' => $this->getAppsInfo()
 		];
 	}
 
@@ -87,9 +89,36 @@ class SystemStatistics {
 			// read meminfo from OS
 			$memoryUsage = file_get_contents('/proc/meminfo');
 		}
+		//If FreeBSD is used and exec()-usage is allowed
+		if (PHP_OS === 'FreeBSD' && \OC_Helper::is_function_enabled('exec')) {
+			//Read Swap usage:
+			exec("/usr/sbin/swapinfo",$return,$status);
+			if ($status===0 && count($return) > 1) {
+				$line = preg_split("/[\s]+/", $return[1]);			
+				if(count($line) > 3) {
+					$swapTotal = (int) $line[3];
+					$swapFree = $swapTotal- (int) $line[2];
+				}
+			}
+			unset($status);
+			unset($return);
+			//Read Memory Usage
+			exec("/sbin/sysctl -n hw.physmem hw.pagesize vm.stats.vm.v_inactive_count vm.stats.vm.v_cache_count vm.stats.vm.v_free_count",$return,$status);
+			if ($status===0) {
+				$return=array_map('intval',$return);
+				if ($return === array_filter($return, 'is_int')) {
+					return [
+						'mem_total' => (int) $return[0]/1024,
+						'mem_free' => (int) $return[1]*($return[2]+$return[3]+$return[4])/1024,
+						'swap_free' => (isset($swapFree)) ? $swapFree : 'N/A',
+						'swap_total' => (isset($swapTotal)) ? $swapTotal : 'N/A'
+					];
+				}
+			}
+		}
 		// check if determining memoryUsage failed
 		if ($memoryUsage === false) {
-			return ['mem_free' => 'N/A', 'mem_total' => 'N/A'];
+			return ['mem_free' => 'N/A', 'mem_total' => 'N/A', 'swap_free' => 'N/A', 'swap_total' => 'N/A'];
 		}
 		$array = explode(PHP_EOL, $memoryUsage);
 		// the last value is a empty string after explode, skip it
@@ -108,8 +137,10 @@ class SystemStatistics {
 		}
 
 		return [
-			'mem_free' => (int)$available + (int)$data['SwapFree'],
-			'mem_total' => (int)$data['MemTotal'] + (int)$data['SwapTotal']
+			'mem_free' => (int)$available,
+			'mem_total' => (int)$data['MemTotal'],
+			'swap_free' => (int)$data['SwapFree'],
+			'swap_total' => (int)$data['SwapTotal']
 		];
 	}
 

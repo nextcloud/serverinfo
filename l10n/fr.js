@@ -15,6 +15,7 @@ OC.L10N.register(
     "Last 1 hour" : "Dernière heure",
     "Last 5 mins" : "5 dernières minutes",
     "Monitoring" : "Surveillance",
+    "Provides useful server information, such as CPU load, RAM usage, disk usage, number of users, etc." : "Fournit des informations utiles sur le serveur, telles que la charge du processeur, l'utilisation de la RAM, l'utilisation du disque, le nombre d'utilisateurs, etc.",
     "CPU load" : "Charge CPU",
     "Memory usage" : "Utilisation mémoire",
     "Active users" : "Utilisateurs actifs",
@@ -31,8 +32,6 @@ OC.L10N.register(
     "Type:" : "Type :",
     "Size:" : "Taille :",
     "External monitoring tool" : "Outil de surveillance externe",
-    "You can connect an external monitoring tool by using this end point: " : "Vous pouvez connecter un outil de surveillance externe en utilisant cette API :",
-    "Server info" : "Informations du serveur",
-    "You can connect a external monitoring tool by using this end point: " : "Vous pouvez connecter un outil de surveillance externe en utilisant cette API :"
+    "You can connect an external monitoring tool by using this end point: " : "Vous pouvez connecter un outil de surveillance externe en utilisant cette API :"
 },
 "nplurals=2; plural=(n > 1);");
