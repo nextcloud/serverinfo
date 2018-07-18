@@ -14,7 +14,8 @@ OC.L10N.register(
     "Last 24 hours" : "Últimas 24 horas",
     "Last 1 hour" : "Última 1 hora",
     "Last 5 mins" : "Últimos 5 minutos",
-    "Monitoring" : "Monitorando",
+    "Monitoring" : "Monitoramento",
+    "Provides useful server information, such as CPU load, RAM usage, disk usage, number of users, etc." : "Fornece informações úteis do servidor, como carga de CPU, uso de RAM, uso do disco, número de usuários, etc.",
     "CPU load" : "Carga da CPU",
     "Memory usage" : "Uso de memória",
     "Active users" : "Usuários ativos",
@@ -25,12 +26,12 @@ OC.L10N.register(
     "PHP" : "PHP",
     "Version:" : "Versão:",
     "Memory Limit:" : "Limite de memória:",
-    "Max Execution Time:" : "Tempo Máximo de Execução:",
+    "Max Execution Time:" : "Tempo máximo de execução:",
     "Upload max size:" : "Tamanho máximo para envio:",
     "Database" : "Banco de Dados",
     "Type:" : "Tipo:",
     "Size:" : "Tamanho:",
     "External monitoring tool" : "Ferramenta de monitoramento externo",
-    "You can connect an external monitoring tool by using this end point: " : "Você pode conectar uma ferramenta de monitoramento externa usando este ponto:"
+    "You can connect an external monitoring tool by using this end point: " : "Você pode conectar uma ferramenta de monitoramento externa usando este ponto: "
 },
 "nplurals=2; plural=(n > 1);");

@@ -36,7 +36,8 @@ style('serverinfo', 'style');
 <div class="section" id="memorySection">
 	<h2><?php p($l->t('Memory usage'));?></h2>
 	<canvas id="memorycanvas" width="600" height="150"></canvas>
-	<p><em id="memFooterInfo"></em></p>
+	<p><img src="data:image/png;base64,iVBORw0KGgoAAAANSUhEUgAAAAoAAAAKCAIAAAACUFjqAAAACXBIWXMAAAsTAAALEwEAmpwYAAAAB3RJTUUH4QYBDCANxB9ROQAAABl0RVh0Q29tbWVudABDcmVhdGVkIHdpdGggR0lNUFeBDhcAAAAUSURBVBjTY2T4z4AHMDEwjEpjAgBALQETBkU7DgAAAABJRU5ErkJggg==" alt="RAM color" />&nbsp;&nbsp;<em id="memFooterInfo"></em></p>
+	<p><img src="data:image/png;base64,iVBORw0KGgoAAAANSUhEUgAAAAoAAAAKCAIAAAACUFjqAAAACXBIWXMAAAsTAAALEwEAmpwYAAAAB3RJTUUH4QYBDB0ds0AJ4wAAABl0RVh0Q29tbWVudABDcmVhdGVkIHdpdGggR0lNUFeBDhcAAAASSURBVBjTY/zPgA8wMYxKYwEAQSwBE2ViEDMAAAAASUVORK5CYII=" alt="SWAP color" />&nbsp;&nbsp;<em id="swapFooterInfo"></em></p>
 </div>
 <div class="section" id="activeUsersSection">
 	<h2><?php p($l->t('Active users'));?></h2>

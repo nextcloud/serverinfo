@@ -21,7 +21,7 @@ OC.L10N.register(
     "Shares" : "Koplietots",
     "Storage" : "Krātuve",
     "Users:" : "Lietotāji:",
-    "Files:" : "Faili:",
+    "Files:" : "Datnes:",
     "PHP" : "PHP",
     "Version:" : "Versija:",
     "Memory Limit:" : "Atmiņas limits:",

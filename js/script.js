@@ -22,6 +22,7 @@
 
 	var memoryUsageChart,
 		memoryUsageLine,
+		swapUsageLine,
 		cpuLoadChart,
 		cpuLoadLine,
 		activeusersChart,
@@ -35,6 +36,7 @@
 		updateActiveUsersStatistics();
 		updateShareStatistics();
 		setHumanReadableSizeToElement("dataBaseSize");
+		setHumanReadableSizeToElement("phpMemLimit");
 		setHumanReadableSizeToElement("phpUploadMaxSize");
 
 		initMonitoringLinkToClipboard();
@@ -47,7 +49,7 @@
 
 			$.get(url).success(function (response) {
 				updateCPUStatistics(response.system.cpuload);
-				updateMemoryStatistics(response.system.mem_total, response.system.mem_free);
+				updateMemoryStatistics(response.system.mem_total, response.system.mem_free, response.system.swap_total, response.system.swap_free);
 			});
 		}
 	});
@@ -79,7 +81,7 @@
 		cpuLoadLine.append(new Date().getTime(), cpu1);
 	}
 
-	function updateMemoryStatistics (memTotal, memFree) {
+	function updateMemoryStatistics (memTotal, memFree, swapTotal, swapFree) {
 		if (memTotal === 'N/A' || memFree === 'N/A') {
 			$('#memFooterInfo').text(t('serverinfo', 'Memory info not available'));
 			$('#memorycanvas').addClass('hidden');
@@ -91,11 +93,22 @@
 			memTotalGB = memTotal / (1024 * 1024),
 			memUsageGB = (memTotal - memFree) / (1024 * 1024);
 
+		var swapTotalBytes = swapTotal * 1024,
+			swapUsageBytes = (swapTotal - swapFree) * 1024,
+			swapTotalGB = swapTotal / (1024 * 1024),
+			swapUsageGB = (swapTotal - swapFree) / (1024 * 1024);
+
+		if (memTotalGB > swapTotalGB) {
+			var maxValueOfChart = memTotalGB;
+		} else {
+			var maxValueOfChart = swapTotalGB;
+		}
+
 		if (typeof memoryUsageChart === 'undefined') {
 			memoryUsageChart = new SmoothieChart(
 			{
 				millisPerPixel: 250,
-				maxValue: memTotalGB,
+				maxValue: maxValueOfChart,
 				minValue: 0,
 				grid: { fillStyle: 'rgba(0,0,0,0.03)', strokeStyle: 'transparent' },
 				labels: { fillStyle: 'rgba(0,0,0,0.4)', fontSize: 12 }
@@ -103,10 +116,14 @@
 			memoryUsageChart.streamTo(document.getElementById("memorycanvas"), 1000/*delay*/);
 			memoryUsageLine = new TimeSeries();
 			memoryUsageChart.addTimeSeries(memoryUsageLine, {lineWidth:1, strokeStyle:'rgb(0, 255, 0)', fillStyle:'rgba(0, 255, 0, 0.2)'});
+			swapUsageLine = new TimeSeries();
+			memoryUsageChart.addTimeSeries(swapUsageLine, {lineWidth:1, strokeStyle:'rgb(255, 0, 0)', fillStyle:'rgba(255, 0, 0, 0.2)'});
 		}
 
-		$('#memFooterInfo').text(t('serverinfo', 'Total')+": "+OC.Util.humanFileSize(memTotalBytes)+" - "+t('serverinfo', 'Current usage')+": "+OC.Util.humanFileSize(memUsageBytes));
+		$('#memFooterInfo').text("RAM: "+t('serverinfo', 'Total')+": "+OC.Util.humanFileSize(memTotalBytes)+" - "+t('serverinfo', 'Current usage')+": "+OC.Util.humanFileSize(memUsageBytes));
 		memoryUsageLine.append(new Date().getTime(), memUsageGB);
+		$('#swapFooterInfo').text("SWAP: "+t('serverinfo', 'Total')+": "+OC.Util.humanFileSize(swapTotalBytes)+" - "+t('serverinfo', 'Current usage')+": "+OC.Util.humanFileSize(swapUsageBytes));
+		swapUsageLine.append(new Date().getTime(), swapUsageGB);
 	}
 
 	function updateShareStatistics () {

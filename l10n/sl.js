@@ -1,6 +1,7 @@
 OC.L10N.register(
     "serverinfo",
     {
+    "Load average" : "V povprečju naložite",
     "Last minute" : "Zadnja minuta",
     "Memory info not available" : "Informacija o pomnilniku ni na voljo",
     "Total" : "Skupaj",
@@ -14,6 +15,6 @@ OC.L10N.register(
     "Monitoring" : "Opazovanje",
     "CPU load" : "Obremenitev procesorja",
     "Memory usage" : "Uporaba pomnilnika",
-    "Active users" : "Aktivni uporabniki"
+    "Active users" : "Dejavni uporabniki"
 },
 "nplurals=4; plural=(n%100==1 ? 0 : n%100==2 ? 1 : n%100==3 || n%100==4 ? 2 : 3);");
