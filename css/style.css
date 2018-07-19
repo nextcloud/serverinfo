@@ -13,3 +13,8 @@
 #ocsEndPoint {
 	margin-bottom: 10px;
 }
+
+#monitoring-endpoint-url {
+	width: 80%;
+	max-width: 415px;
+}
