@@ -15,6 +15,7 @@ OC.L10N.register(
     "Last 1 hour" : "Síðustu klst",
     "Last 5 mins" : "Síðustu 5 mín",
     "Monitoring" : "Vöktun",
+    "Provides useful server information, such as CPU load, RAM usage, disk usage, number of users, etc." : "Gefur nytsamlegar upplýsingar um vefþjón, svo sem álag á örgjörva, diskanotkun, fjölda notenda, o.s.frv.",
     "CPU load" : "Örgjörvaálag",
     "Memory usage" : "Minnisnotkun",
     "Active users" : "Virkir notendur",
