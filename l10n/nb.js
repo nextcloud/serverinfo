@@ -15,6 +15,7 @@ OC.L10N.register(
     "Last 1 hour" : "Siste time",
     "Last 5 mins" : "Siste 5 minutter",
     "Monitoring" : "Overvåker",
+    "Provides useful server information, such as CPU load, RAM usage, disk usage, number of users, etc." : "Gir nyttig serverinformasjon, som CPU-belastning, RAM-bruk, diskbruk, antall brukere, ned mere.",
     "CPU load" : "CPU last",
     "Memory usage" : "Minnebruk",
     "Active users" : "Aktive brukere",
