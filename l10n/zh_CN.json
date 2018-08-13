@@ -13,6 +13,7 @@
     "Last 1 hour" : "最近 1 小时",
     "Last 5 mins" : "最近 5 分钟",
     "Monitoring" : "监控器",
+    "Provides useful server information, such as CPU load, RAM usage, disk usage, number of users, etc." : "提供有用的服务器信息，例如 CPU 负载、内存占用、硬盘占用、在线用户数等。",
     "CPU load" : "CPU 负载",
     "Memory usage" : "内存使用",
     "Active users" : "活跃用户",
