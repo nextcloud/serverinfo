@@ -15,6 +15,7 @@ OC.L10N.register(
     "Last 1 hour" : "Viimane 1 tund",
     "Last 5 mins" : "Viimased 5 minutit",
     "Monitoring" : "Monitooring",
+    "Provides useful server information, such as CPU load, RAM usage, disk usage, number of users, etc." : "Näitab kasulikku infot serveri kohta, näiteks protsessori koormus, mälukasutus, kettaruum, kasutajate arv jne.",
     "CPU load" : "CPU koormus",
     "Memory usage" : "Mälukasutus",
     "Active users" : "Aktiivseid kasutajaid",
