@@ -294,7 +294,7 @@
 			if (/iPhone|iPad/i.test(navigator.userAgent)) {
 				actionMsg = t('core', 'Not supported!');
 			} else if (/Mac/i.test(navigator.userAgent)) {
-				actionMsg = t('core', 'Press âŒ˜-C to copy.');
+				actionMsg = t('core', 'Press ⌘-C to copy.');
 			} else {
 				actionMsg = t('core', 'Press Ctrl-C to copy.');
 			}
