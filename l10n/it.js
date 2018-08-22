@@ -14,6 +14,11 @@ OC.L10N.register(
     "Last 24 hours" : "Ultime 24 ore",
     "Last 1 hour" : "Ultima ora",
     "Last 5 mins" : "Ultimi 5 minuti",
+    "Copy" : "Copia",
+    "Copied!" : "Copiati!",
+    "Not supported!" : "Non supportato!",
+    "Press âŒ˜-C to copy." : "Premi âŒ˜-C per copiare.",
+    "Press Ctrl-C to copy." : "Premi Ctrl-C per copiare.",
     "Monitoring" : "Monitoraggio",
     "Provides useful server information, such as CPU load, RAM usage, disk usage, number of users, etc." : "Fornisce informazioni utili sul server, come carico della CPU, utilizzo della memoria, utilizzo del disco, numero di utenti, ecc.",
     "CPU load" : "Carico CPU",
@@ -32,6 +37,7 @@ OC.L10N.register(
     "Type:" : "Tipo:",
     "Size:" : "Dimensione:",
     "External monitoring tool" : "Strumento di controllo esterno",
+    "You can connect an external monitoring tool by using this end point:" : "Puoi collegare uno strumento di controllo esterno utilizzando questo terminatore: ",
     "You can connect an external monitoring tool by using this end point: " : "Puoi collegare uno strumento di controllo esterno utilizzando questo terminatore: "
 },
 "nplurals=2; plural=(n != 1);");

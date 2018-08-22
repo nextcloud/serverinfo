@@ -14,6 +14,11 @@ OC.L10N.register(
     "Last 24 hours" : "Son 24 saat",
     "Last 1 hour" : "Son 1 saat",
     "Last 5 mins" : "Son 5 dakika",
+    "Copy" : "Kopyala",
+    "Copied!" : "Kopyalandı!",
+    "Not supported!" : "Desteklenmiyor!",
+    "Press âŒ˜-C to copy." : "Kopyalamak için âŒ˜-C tuşlarına basın.",
+    "Press Ctrl-C to copy." : "Kopyalamak için Ctrl-C tuşlarına basın.",
     "Monitoring" : "İzleniyor",
     "Provides useful server information, such as CPU load, RAM usage, disk usage, number of users, etc." : "İşlemci yükü, bellek ve disk kullanımı, kullanıcı sayısı gibi sunucu hakkında çeşitli bilgiler sağlar. ",
     "CPU load" : "İşlemci yükü",
@@ -32,6 +37,7 @@ OC.L10N.register(
     "Type:" : "Tür:",
     "Size:" : "Boyut:",
     "External monitoring tool" : "Dış izleme aracı",
+    "You can connect an external monitoring tool by using this end point:" : "Bu uç noktasını kullanarak bir dış izleme aracı bağlayabilirsiniz:",
     "You can connect an external monitoring tool by using this end point: " : "Bu uç noktasını kullanarak bir dış izleme aracı bağlayabilirsiniz:"
 },
 "nplurals=2; plural=(n > 1);");
