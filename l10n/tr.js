@@ -17,7 +17,6 @@ OC.L10N.register(
     "Copy" : "Kopyala",
     "Copied!" : "Kopyalandı!",
     "Not supported!" : "Desteklenmiyor!",
-    "Press âŒ˜-C to copy." : "Kopyalamak için âŒ˜-C tuşlarına basın.",
     "Press Ctrl-C to copy." : "Kopyalamak için Ctrl-C tuşlarına basın.",
     "Monitoring" : "İzleniyor",
     "Provides useful server information, such as CPU load, RAM usage, disk usage, number of users, etc." : "İşlemci yükü, bellek ve disk kullanımı, kullanıcı sayısı gibi sunucu hakkında çeşitli bilgiler sağlar. ",
