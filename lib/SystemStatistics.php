@@ -33,16 +33,17 @@ class SystemStatistics {
 	private $config;
 	/** @var View view on data/ */
 	private $view;
-	/** @var appFetcher */
-	private $appFetcher;
-	/** @var appManager */
+	/** @var IAppManager */
 	private $appManager;
+	/** @var AppFetcher */
+	private $appFetcher;
 
 	/**
 	 * SystemStatistics constructor.
 	 *
  	 * @param IConfig $config
 	 * @param IAppManager $appManager
+	 * @param AppFetcher $appFetcher
 	 */
 	public function __construct(IConfig $config, IAppManager $appManager, AppFetcher $appFetcher) {
 		$this->config = $config;
