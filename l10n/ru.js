@@ -17,7 +17,6 @@ OC.L10N.register(
     "Copy" : "Копировать",
     "Copied!" : "Скопировано!",
     "Not supported!" : "Не поддерживается!",
-    "Press âŒ˜-C to copy." : "Нажмите ⌘-C для копирования.",
     "Press Ctrl-C to copy." : "Нажмите Ctrl-C для копирования.",
     "Monitoring" : "Мониторинг",
     "Provides useful server information, such as CPU load, RAM usage, disk usage, number of users, etc." : "Предоставляет полезную информацию о сервере, такую как загрузка процессора, использование ОЗУ, диска, количество пользователей и т.д.",
