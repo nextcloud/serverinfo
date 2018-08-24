@@ -2,3 +2,19 @@
 	max-width: 700px;
 	max-height: 350px;
 }
+
+.clipboardButton {
+	display: inline-block;
+	position: relative;
+	top: 2px;
+	margin-left: 5px;
+}
+
+#ocsEndPoint {
+	margin-bottom: 10px;
+}
+
+#monitoring-endpoint-url {
+	width: 80%;
+	max-width: 415px;
+}

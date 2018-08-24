@@ -63,10 +63,10 @@ class AdminSection implements IIconSection {
 	 * the settings navigation. The sections are arranged in ascending order of
 	 * the priority values. It is required to return a value between 0 and 99.
 	 *
-	 * keep the server setting at the top, right after "server settings"
+	 * keep the server setting at the top, right after "overview" and "basic settings"
 	 */
 	public function getPriority() {
-		return 0;
+		return 1;
 	}
 
 	/**
