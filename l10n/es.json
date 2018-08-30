@@ -15,6 +15,7 @@
     "Copy" : "Copiar",
     "Copied!" : "Copiado.",
     "Not supported!" : "No está soportado.",
+    "Press ⌘-C to copy." : "Pulsa ⌘-C para copiar.",
     "Press Ctrl-C to copy." : "Pulsa Ctrl-C para copiar.",
     "Monitoring" : "Monitorización",
     "Provides useful server information, such as CPU load, RAM usage, disk usage, number of users, etc." : "Provee información útil como la carga de la CPU, el uso de RAM y disco, el número de usuarios, etc.",
