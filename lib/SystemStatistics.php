@@ -24,25 +24,39 @@ namespace OCA\ServerInfo;
 
 use OC\Files\View;
 use OCP\IConfig;
+use OCP\App\IAppManager;
+use OC\App\AppStore\Fetcher\AppFetcher;
 
 class SystemStatistics {
 
 	/** @var IConfig */
 	private $config;
-
 	/** @var View view on data/ */
 	private $view;
+	/** @var IAppManager */
+	private $appManager;
+	/** @var AppFetcher */
+	private $appFetcher;
 
 	/**
 	 * SystemStatistics constructor.
 	 *
-	 * @param IConfig $config
+ 	 * @param IConfig $config
+	 * @param IAppManager $appManager
+	 * @param AppFetcher $appFetcher
 	 */
-	public function __construct(IConfig $config) {
+	public function __construct(IConfig $config, IAppManager $appManager, AppFetcher $appFetcher) {
 		$this->config = $config;
 		$this->view = new View();
+		$this->appManager = $appManager;
+		$this->appFetcher = $appFetcher;
 	}
 
+	/**
+	 * Get statistics about the system
+	 *
+	 * @return array with with of data
+	 */
 	public function getSystemStatistics() {
 		$memoryUsage = $this->getMemoryUsage();
 		return [
@@ -60,7 +74,8 @@ class SystemStatistics {
 			'mem_total' => $memoryUsage['mem_total'],
 			'mem_free' => $memoryUsage['mem_free'],
 			'swap_total' => $memoryUsage['swap_total'],
-			'swap_free' => $memoryUsage['swap_free']
+			'swap_free' => $memoryUsage['swap_free'],
+			'apps' => $this->getAppsInfo()
 		];
 	}
 
@@ -80,7 +95,7 @@ class SystemStatistics {
 			//Read Swap usage:
 			exec("/usr/sbin/swapinfo",$return,$status);
 			if ($status===0 && count($return) > 1) {
-				$line = preg_split("/[\s]+/", $return[1]);			
+				$line = preg_split("/[\s]+/", $return[1]);
 				if(count($line) > 3) {
 					$swapTotal = (int) $line[3];
 					$swapFree = $swapTotal- (int) $line[2];
@@ -128,6 +143,38 @@ class SystemStatistics {
 			'swap_free' => (int)$data['SwapFree'],
 			'swap_total' => (int)$data['SwapTotal']
 		];
+	}
+
+	/**
+	 * Get some info about installed apps, including available updates.
+	 *
+	 * @return array data about apps
+	 */
+	protected function getAppsInfo() {
+
+		// sekeleton about the data we return back
+		$info = [
+			'num_installed' => 0,
+			'num_updates_available' => 0,
+			'app_updates' => [],
+		];
+
+		// load all apps
+		$apps = $this->appManager->getInstalledApps();
+		$info['num_installed'] = count($apps);
+
+		// iteriate through all installed apps.
+		foreach($apps as $app) {
+			// check if there is any new version available for that specific app
+			$newVersion = \OC\Installer::isUpdateAvailable($app, $this->appFetcher);
+			if ($newVersion) {
+				// new version available, count up and tell which version.
+				$info['num_updates_available']++;
+				$info['app_updates'][$app] = $newVersion;
+			}
+		}
+
+		return $info;
 	}
 
 }
