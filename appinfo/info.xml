@@ -5,17 +5,17 @@
     <summary>Monitoring app with useful server information</summary>
     <description>Provides useful server information, such as CPU load, RAM usage, disk usage, number of users, etc.</description>
     <version>1.4.0</version>
-    <licence>AGPL</licence>
+    <licence>agpl</licence>
     <author>Bjoern Schiessle</author>
     <author>Ivan Sein Santiago</author>
     <namespace>ServerInfo</namespace>
-    <category>other</category>
-    <dependencies>
-		<nextcloud min-version="14" max-version="14" />
-    </dependencies>
-    <default_enable/>
+    <category>monitoring</category>
     <settings>
         <admin>\OCA\ServerInfo\Settings\AdminSettings</admin>
         <admin-section>\OCA\ServerInfo\Settings\AdminSection</admin-section>
     </settings>
+    <dependencies>
+        <nextcloud min-version="14" max-version="14" />
+    </dependencies>
+    <default_enable/>
 </info>
