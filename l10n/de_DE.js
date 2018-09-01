@@ -37,7 +37,7 @@ OC.L10N.register(
     "Type:" : "Art:",
     "Size:" : "Größe:",
     "External monitoring tool" : "Externes Überwachungsprogramm",
-    "You can connect an external monitoring tool by using this end point:" : "Durch Verwendung des folgenden Zugangspunktes, kann ein externes Überwachungsprogramm verwendet werden:",
+    "You can connect an external monitoring tool by using this end point:" : "Durch Verwendung des folgenden Zugangspunktes kann ein externes Überwachungsprogramm verwendet werden: ",
     "You can connect an external monitoring tool by using this end point: " : "Durch Verwendung des folgenden Zugangspunktes, kann ein externes Überwachungsprogramm verwendet werden:"
 },
 "nplurals=2; plural=(n != 1);");
