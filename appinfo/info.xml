@@ -9,14 +9,14 @@
     <author>Bjoern Schiessle</author>
     <author>Ivan Sein Santiago</author>
     <namespace>ServerInfo</namespace>
+    <default_enable/>
     <category>monitoring</category>
     <bugs>https://github.com/nextcloud/serverinfo/issues</bugs>
     <dependencies>
         <nextcloud min-version="14" max-version="14" />
     </dependencies>
     <settings>
-        <admin>\OCA\ServerInfo\Settings\AdminSettings</admin>
-        <admin-section>\OCA\ServerInfo\Settings\AdminSection</admin-section>
+        <admin>OCA\ServerInfo\Settings\AdminSettings</admin>
+        <admin-section>OCA\ServerInfo\Settings\AdminSection</admin-section>
     </settings>
-    <default_enable/>
 </info>
