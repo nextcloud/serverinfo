@@ -35,9 +35,11 @@
 		resizeSystemCharts();
 		updateActiveUsersStatistics();
 		updateShareStatistics();
+
 		setHumanReadableSizeToElement("dataBaseSize");
 		setHumanReadableSizeToElement("phpMemLimit");
 		setHumanReadableSizeToElement("phpUploadMaxSize");
+		setHumanReadableSizeToElement("numFilesFreeSpace");
 
 		initMonitoringLinkToClipboard();
 		$("#monitoring-endpoint-url").on('click', function() {

@@ -53,6 +53,14 @@ style('serverinfo', 'style');
 	<h2><?php p($l->t('Storage'));?></h2>
 	<p><?php p($l->t('Users:'));?> <em id="numUsersStorage"><?php p($_['storage']['num_users']);?></em></p>
 	<p><?php p($l->t('Files:'));?> <em id="numFilesStorage"><?php p($_['storage']['num_files']);?></em></p>
+	<p><?php p($l->t('Storages:'));?> <em id="numFilesStorages"><?php p($_['storage']['num_storages']);?></em></p>
+	<p><?php p($l->t('Free Space:'));?> <em id="numFilesFreeSpace"><?php p($_['system']['freespace']);?></em></p>
+</div>
+<div class="section" id="ncSection">
+	<h2><?php p($l->t('Nextcloud'));?></h2>
+	<p><?php p($l->t('Version:'));?> <em id="ncVersion"><?php p($_['system']['version']);?></em></p>
+	<p><?php p($l->t('Apps installed:'));?> <em id="ncAppsInstalled"><?php p($_['system']['apps']['num_installed']);?></em></p>
+	<p><?php p($l->t('Apps updates available:'));?> <em id="ncAppsUpdates"><?php p($_['system']['apps']['num_updates_available']);?></em></p>
 </div>
 <div class="section" id="phpSection">
 	<h2><?php p($l->t('PHP'));?></h2>
