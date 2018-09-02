@@ -37,6 +37,8 @@ class SystemStatistics {
 	private $appManager;
 	/** @var AppFetcher */
 	private $appFetcher;
+	/** @var OC_Helper */
+	private $ocHelper;
 
 	/**
 	 * SystemStatistics constructor.
@@ -45,11 +47,12 @@ class SystemStatistics {
 	 * @param IAppManager $appManager
 	 * @param AppFetcher $appFetcher
 	 */
-	public function __construct(IConfig $config, IAppManager $appManager, AppFetcher $appFetcher) {
+	public function __construct(IConfig $config, IAppManager $appManager, AppFetcher $appFetcher, \OC_Helper $ocHelper) {
 		$this->config = $config;
 		$this->view = new View();
 		$this->appManager = $appManager;
 		$this->appFetcher = $appFetcher;
+		$this->ocHelper = $ocHelper;
 	}
 
 	/**
@@ -91,7 +94,7 @@ class SystemStatistics {
 			$memoryUsage = file_get_contents('/proc/meminfo');
 		}
 		//If FreeBSD is used and exec()-usage is allowed
-		if (PHP_OS === 'FreeBSD' && \OC_Helper::is_function_enabled('exec')) {
+		if (PHP_OS === 'FreeBSD' && $this->ocHelper->is_function_enabled('exec')) {
 			//Read Swap usage:
 			exec("/usr/sbin/swapinfo",$return,$status);
 			if ($status===0 && count($return) > 1) {
