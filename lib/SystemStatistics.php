@@ -23,9 +23,9 @@
 namespace OCA\ServerInfo;
 
 use OC\Files\View;
+use OC\Installer;
 use OCP\IConfig;
 use OCP\App\IAppManager;
-use OC\App\AppStore\Fetcher\AppFetcher;
 
 class SystemStatistics {
 
@@ -35,30 +35,29 @@ class SystemStatistics {
 	private $view;
 	/** @var IAppManager */
 	private $appManager;
-	/** @var AppFetcher */
-	private $appFetcher;
-	/** @var OC_Helper */
-	private $ocHelper;
+	/** @var Installer */
+	private $installer;
 
 	/**
 	 * SystemStatistics constructor.
 	 *
- 	 * @param IConfig $config
+	 * @param IConfig $config
 	 * @param IAppManager $appManager
-	 * @param AppFetcher $appFetcher
+	 * @param Installer $installer
+	 * @throws \Exception
 	 */
-	public function __construct(IConfig $config, IAppManager $appManager, AppFetcher $appFetcher, \OC_Helper $ocHelper) {
+	public function __construct(IConfig $config, IAppManager $appManager, Installer $installer) {
 		$this->config = $config;
 		$this->view = new View();
 		$this->appManager = $appManager;
-		$this->appFetcher = $appFetcher;
-		$this->ocHelper = $ocHelper;
+		$this->installer = $installer;
 	}
 
 	/**
 	 * Get statistics about the system
 	 *
 	 * @return array with with of data
+	 * @throws \OCP\Files\InvalidPathException
 	 */
 	public function getSystemStatistics() {
 		$memoryUsage = $this->getMemoryUsage();
@@ -94,7 +93,7 @@ class SystemStatistics {
 			$memoryUsage = file_get_contents('/proc/meminfo');
 		}
 		//If FreeBSD is used and exec()-usage is allowed
-		if (PHP_OS === 'FreeBSD' && $this->ocHelper->is_function_enabled('exec')) {
+		if (PHP_OS === 'FreeBSD' && \OC_Helper::is_function_enabled('exec')) {
 			//Read Swap usage:
 			exec("/usr/sbin/swapinfo",$return,$status);
 			if ($status===0 && count($return) > 1) {
@@ -164,16 +163,16 @@ class SystemStatistics {
 
 		// load all apps
 		$apps = $this->appManager->getInstalledApps();
-		$info['num_installed'] = count($apps);
+		$info['num_installed'] = \count($apps);
 
 		// iteriate through all installed apps.
-		foreach($apps as $app) {
+		foreach($apps as $appId) {
 			// check if there is any new version available for that specific app
-			$newVersion = \OC\Installer::isUpdateAvailable($app, $this->appFetcher);
+			$newVersion = $this->installer->isUpdateAvailable($appId);
 			if ($newVersion) {
 				// new version available, count up and tell which version.
 				$info['num_updates_available']++;
-				$info['app_updates'][$app] = $newVersion;
+				$info['app_updates'][$appId] = $newVersion;
 			}
 		}
 

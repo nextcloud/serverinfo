@@ -32,6 +32,7 @@ use OCA\ServerInfo\PhpStatistics;
 use OCA\ServerInfo\SessionStatistics;
 use OCA\ServerInfo\ShareStatistics;
 use OCA\ServerInfo\StorageStatistics;
+use OCA\ServerInfo\SystemStatistics;
 
 class AdminSettings implements ISettings {
 
@@ -57,6 +58,9 @@ class AdminSettings implements ISettings {
 	/** @var SessionStatistics */
 	private $sessionStatistics;
 
+	/** @var SystemStatistics */
+	private $systemStatistics;
+
 	/**
 	 * Admin constructor.
 	 *
@@ -67,14 +71,16 @@ class AdminSettings implements ISettings {
 	 * @param DatabaseStatistics $databaseStatistics
 	 * @param ShareStatistics $shareStatistics
 	 * @param SessionStatistics $sessionStatistics
+	 * @param SystemStatistics $systemStatistics
 	 */
-	public function __construct(IL10N $l, 
+	public function __construct(IL10N $l,
 								IURLGenerator $urlGenerator,
 								StorageStatistics $storageStatistics,
 								PhpStatistics $phpStatistics,
 								DatabaseStatistics $databaseStatistics,
 								ShareStatistics $shareStatistics,
-								SessionStatistics $sessionStatistics
+								SessionStatistics $sessionStatistics,
+								SystemStatistics $systemStatistics
 	) {
 		$this->l = $l;
 		$this->urlGenerator = $urlGenerator;
@@ -83,6 +89,7 @@ class AdminSettings implements ISettings {
 		$this->databaseStatistics = $databaseStatistics;
 		$this->shareStatistics = $shareStatistics;
 		$this->sessionStatistics = $sessionStatistics;
+		$this->systemStatistics = $systemStatistics;
 	}
 
 	/**
@@ -96,7 +103,8 @@ class AdminSettings implements ISettings {
 				'shares' => $this->shareStatistics->getShareStatistics(),
 				'php' => $this->phpStatistics->getPhpStatistics(),
 				'database' => $this->databaseStatistics->getDatabaseStatistics(),
-				'activeUsers' => $this->sessionStatistics->getSessionStatistics()
+				'activeUsers' => $this->sessionStatistics->getSessionStatistics(),
+				'system' => $this->systemStatistics->getSystemStatistics()
 		];
 
 		return new TemplateResponse('serverinfo', 'settings-admin', $params);
