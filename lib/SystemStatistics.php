@@ -23,9 +23,9 @@
 namespace OCA\ServerInfo;
 
 use OC\Files\View;
+use OC\Installer;
 use OCP\IConfig;
 use OCP\App\IAppManager;
-use OC\App\AppStore\Fetcher\AppFetcher;
 
 class SystemStatistics {
 
@@ -35,27 +35,29 @@ class SystemStatistics {
 	private $view;
 	/** @var IAppManager */
 	private $appManager;
-	/** @var AppFetcher */
-	private $appFetcher;
+	/** @var Installer */
+	private $installer;
 
 	/**
 	 * SystemStatistics constructor.
 	 *
- 	 * @param IConfig $config
+	 * @param IConfig $config
 	 * @param IAppManager $appManager
-	 * @param AppFetcher $appFetcher
+	 * @param Installer $installer
+	 * @throws \Exception
 	 */
-	public function __construct(IConfig $config, IAppManager $appManager, AppFetcher $appFetcher) {
+	public function __construct(IConfig $config, IAppManager $appManager, Installer $installer) {
 		$this->config = $config;
 		$this->view = new View();
 		$this->appManager = $appManager;
-		$this->appFetcher = $appFetcher;
+		$this->installer = $installer;
 	}
 
 	/**
 	 * Get statistics about the system
 	 *
 	 * @return array with with of data
+	 * @throws \OCP\Files\InvalidPathException
 	 */
 	public function getSystemStatistics() {
 		$memoryUsage = $this->getMemoryUsage();
@@ -161,16 +163,16 @@ class SystemStatistics {
 
 		// load all apps
 		$apps = $this->appManager->getInstalledApps();
-		$info['num_installed'] = count($apps);
+		$info['num_installed'] = \count($apps);
 
 		// iteriate through all installed apps.
-		foreach($apps as $app) {
+		foreach($apps as $appId) {
 			// check if there is any new version available for that specific app
-			$newVersion = \OC\Installer::isUpdateAvailable($app, $this->appFetcher);
+			$newVersion = $this->installer->isUpdateAvailable($appId);
 			if ($newVersion) {
 				// new version available, count up and tell which version.
 				$info['num_updates_available']++;
-				$info['app_updates'][$app] = $newVersion;
+				$info['app_updates'][$appId] = $newVersion;
 			}
 		}
 
