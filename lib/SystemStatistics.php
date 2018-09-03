@@ -195,14 +195,10 @@ class SystemStatistics {
 		if (!function_exists($function_name)) {
 			return false;
 		}
-		$disabled = explode(',', $this->phpIni->get('disable_functions') ?: '');
-		$disabled = array_map('trim', $disabled);
-		if (in_array($function_name, $disabled)) {
+		if ($this->phpIni->listContains('disable_functions', $function_name)) {
 			return false;
 		}
-		$disabled = explode(',', $this->phpIni->get('suhosin.executor.func.blacklist') ?: '');
-		$disabled = array_map('trim', $disabled);
-		if (in_array($function_name, $disabled)) {
+		if ($this->phpIni->listContains('suhosin.executor.func.blacklist', $function_name)) {
 			return false;
 		}
 		return true;
