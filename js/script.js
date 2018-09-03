@@ -36,10 +36,10 @@
 		updateActiveUsersStatistics();
 		updateShareStatistics();
 
-		setHumanReadableSizeToElement("dataBaseSize");
+		setHumanReadableSizeToElement("databaseSize");
 		setHumanReadableSizeToElement("phpMemLimit");
 		setHumanReadableSizeToElement("phpUploadMaxSize");
-		setHumanReadableSizeToElement("numFilesFreeSpace");
+		setHumanReadableSizeToElement("systemDiskFreeSpace");
 
 		initMonitoringLinkToClipboard();
 		$("#monitoring-endpoint-url").on('click', function() {

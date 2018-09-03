@@ -54,7 +54,7 @@ style('serverinfo', 'style');
 	<p><?php p($l->t('Users:'));?> <em id="numUsersStorage"><?php p($_['storage']['num_users']);?></em></p>
 	<p><?php p($l->t('Files:'));?> <em id="numFilesStorage"><?php p($_['storage']['num_files']);?></em></p>
 	<p><?php p($l->t('Storages:'));?> <em id="numFilesStorages"><?php p($_['storage']['num_storages']);?></em></p>
-	<p><?php p($l->t('Free Space:'));?> <em id="numFilesFreeSpace"><?php p($_['system']['freespace']);?></em></p>
+	<p><?php p($l->t('Free Space:'));?> <em id="systemDiskFreeSpace"><?php p($_['system']['freespace']);?></em></p>
 </div>
 <div class="section" id="ncSection">
 	<h2><?php p($l->t('Nextcloud'));?></h2>
@@ -73,7 +73,7 @@ style('serverinfo', 'style');
 	<h2><?php p($l->t('Database'));?></h2>
 	<p><?php p($l->t('Type:'));?> <em id="databaseType"><?php p($_['database']['type']);?></em></p>
 	<p><?php p($l->t('Version:'));?> <em id="databaseVersion"><?php p($_['database']['version']);?></em></p>
-	<p><?php p($l->t('Size:'));?> <em id="dataBaseSize"><?php p($_['database']['size']);?></em></p>
+	<p><?php p($l->t('Size:'));?> <em id="databaseSize"><?php p($_['database']['size']);?></em></p>
 </div>
 
 <div class="section" id="ocsEndPoint">
