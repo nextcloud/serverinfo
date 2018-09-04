@@ -84,5 +84,6 @@ style('serverinfo', 'style');
 	<div>
 		<input type="text" readonly="readonly" id="monitoring-endpoint-url" value="<?php echo p($_['ocs']); ?>" />
 		<a class="clipboardButton icon icon-clippy" data-clipboard-target="#monitoring-endpoint-url"></a>
- 	</div>
+		<span class="icon-info svg" title="" data-original-title="<?php p($l->t('Did you know?')); ?> <?php p($l->t('Appending "?format=json" at the end of the URL gives you the result in JSON format!')); ?>"></span>
+	</div>
 </div>
