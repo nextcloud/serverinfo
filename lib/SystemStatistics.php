@@ -198,9 +198,6 @@ class SystemStatistics {
 		if ($this->phpIni->listContains('disable_functions', $function_name)) {
 			return false;
 		}
-		if ($this->phpIni->listContains('suhosin.executor.func.blacklist', $function_name)) {
-			return false;
-		}
 		return true;
 	}
 
