@@ -23,9 +23,10 @@
 namespace OCA\ServerInfo;
 
 use OC\Files\View;
+use OC\Installer;
 use OCP\IConfig;
 use OCP\App\IAppManager;
-use OC\App\AppStore\Fetcher\AppFetcher;
+use bantu\IniGetWrapper\IniGetWrapper;
 
 class SystemStatistics {
 
@@ -35,27 +36,33 @@ class SystemStatistics {
 	private $view;
 	/** @var IAppManager */
 	private $appManager;
-	/** @var AppFetcher */
-	private $appFetcher;
+	/** @var Installer */
+	private $installer;
+	/** @var IniGetWrapper */
+	protected $phpIni;
 
 	/**
 	 * SystemStatistics constructor.
 	 *
- 	 * @param IConfig $config
+	 * @param IConfig $config
 	 * @param IAppManager $appManager
-	 * @param AppFetcher $appFetcher
+	 * @param Installer $installer
+	 * @param IniGetWrapper $phpIni
+	 * @throws \Exception
 	 */
-	public function __construct(IConfig $config, IAppManager $appManager, AppFetcher $appFetcher) {
+	public function __construct(IConfig $config, IAppManager $appManager, Installer $installer, IniGetWrapper $phpIni) {
 		$this->config = $config;
 		$this->view = new View();
 		$this->appManager = $appManager;
-		$this->appFetcher = $appFetcher;
+		$this->installer = $installer;
+		$this->phpIni = $phpIni;
 	}
 
 	/**
 	 * Get statistics about the system
 	 *
 	 * @return array with with of data
+	 * @throws \OCP\Files\InvalidPathException
 	 */
 	public function getSystemStatistics() {
 		$memoryUsage = $this->getMemoryUsage();
@@ -80,7 +87,7 @@ class SystemStatistics {
 	}
 
 	/**
-	 * get available and free memory including both RAM and Swap
+	 * Get available and free memory including both RAM and Swap
 	 *
 	 * @return array with the two values 'mem_free' and 'mem_total'
 	 */
@@ -91,26 +98,26 @@ class SystemStatistics {
 			$memoryUsage = file_get_contents('/proc/meminfo');
 		}
 		//If FreeBSD is used and exec()-usage is allowed
-		if (PHP_OS === 'FreeBSD' && \OC_Helper::is_function_enabled('exec')) {
+		if (PHP_OS === 'FreeBSD' && $this->is_function_enabled('exec')) {
 			//Read Swap usage:
-			exec("/usr/sbin/swapinfo",$return,$status);
-			if ($status===0 && count($return) > 1) {
+			exec("/usr/sbin/swapinfo", $return, $status);
+			if ($status === 0 && count($return) > 1) {
 				$line = preg_split("/[\s]+/", $return[1]);
 				if(count($line) > 3) {
-					$swapTotal = (int) $line[3];
-					$swapFree = $swapTotal- (int) $line[2];
+					$swapTotal = (int)$line[3];
+					$swapFree = $swapTotal - (int)$line[2];
 				}
 			}
 			unset($status);
 			unset($return);
 			//Read Memory Usage
-			exec("/sbin/sysctl -n hw.physmem hw.pagesize vm.stats.vm.v_inactive_count vm.stats.vm.v_cache_count vm.stats.vm.v_free_count",$return,$status);
-			if ($status===0) {
-				$return=array_map('intval',$return);
+			exec("/sbin/sysctl -n hw.physmem hw.pagesize vm.stats.vm.v_inactive_count vm.stats.vm.v_cache_count vm.stats.vm.v_free_count", $return, $status);
+			if ($status === 0) {
+				$return = array_map('intval', $return);
 				if ($return === array_filter($return, 'is_int')) {
 					return [
-						'mem_total' => (int) $return[0]/1024,
-						'mem_free' => (int) $return[1]*($return[2]+$return[3]+$return[4])/1024,
+						'mem_total' => (int)$return[0]/1024,
+						'mem_free' => (int)$return[1] * ($return[2] + $return[3] + $return[4]) / 1024,
 						'swap_free' => (isset($swapFree)) ? $swapFree : 'N/A',
 						'swap_total' => (isset($swapTotal)) ? $swapTotal : 'N/A'
 					];
@@ -161,20 +168,37 @@ class SystemStatistics {
 
 		// load all apps
 		$apps = $this->appManager->getInstalledApps();
-		$info['num_installed'] = count($apps);
+		$info['num_installed'] = \count($apps);
 
 		// iteriate through all installed apps.
-		foreach($apps as $app) {
+		foreach($apps as $appId) {
 			// check if there is any new version available for that specific app
-			$newVersion = \OC\Installer::isUpdateAvailable($app, $this->appFetcher);
+			$newVersion = $this->installer->isUpdateAvailable($appId);
 			if ($newVersion) {
 				// new version available, count up and tell which version.
 				$info['num_updates_available']++;
-				$info['app_updates'][$app] = $newVersion;
+				$info['app_updates'][$appId] = $newVersion;
 			}
 		}
 
 		return $info;
+	}
+
+	/**
+	 * Checks if a function is available. Borrowed from
+	 * https://github.com/nextcloud/server/blob/2e36069e24406455ad3f3998aa25e2a949d1402a/lib/private/legacy/helper.php#L475
+	 *
+	 * @param string $function_name
+	 * @return bool
+	 */
+	public function is_function_enabled($function_name) {
+		if (!function_exists($function_name)) {
+			return false;
+		}
+		if ($this->phpIni->listContains('disable_functions', $function_name)) {
+			return false;
+		}
+		return true;
 	}
 
 }
