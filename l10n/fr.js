@@ -20,6 +20,7 @@ OC.L10N.register(
     "Press ⌘-C to copy." : "Pressez ⌘-C pour copier.",
     "Press Ctrl-C to copy." : "Pressez Ctrl-C pour copier.",
     "Monitoring" : "Surveillance",
+    "Monitoring app with useful server information" : "Application de surveillance avec les informations utiles du serveur",
     "Provides useful server information, such as CPU load, RAM usage, disk usage, number of users, etc." : "Fournit des informations utiles sur le serveur, telles que la charge du processeur, l'utilisation de la RAM, l'utilisation du disque, le nombre d'utilisateurs, etc.",
     "CPU load" : "Charge CPU",
     "Memory usage" : "Utilisation mémoire",
