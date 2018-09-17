@@ -18,6 +18,8 @@
     "Press ⌘-C to copy." : "Druk op ⌘-C om te kopiëren.",
     "Press Ctrl-C to copy." : "Druk op Ctrl-C om te kopiëren.",
     "Monitoring" : "Monitoren",
+    "Monitoring app with useful server information" : "Monitor app met nuttige serverinformatie",
+    "Provides useful server information, such as CPU load, RAM usage, disk usage, number of users, etc." : "Toont nuttige serverinformatie, zoals CPU belasting, RAM gebruik, disk gebruik, aantal gebruikers, etc.",
     "CPU load" : "CPU belasting",
     "Memory usage" : "Geheugengebruik",
     "Active users" : "Actieve gebruikers",
