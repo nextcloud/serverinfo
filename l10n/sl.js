@@ -16,6 +16,7 @@ OC.L10N.register(
     "CPU load" : "Obremenitev procesorja",
     "Memory usage" : "Uporaba pomnilnika",
     "Active users" : "Dejavni uporabniki",
+    "Shares" : "Souporaba",
     "Users:" : "Uporabniki:",
     "Files:" : "Datoteke:",
     "Storages:" : "Shrambe:",
