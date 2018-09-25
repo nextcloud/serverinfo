@@ -37,7 +37,7 @@ OC.L10N.register(
     "Apps updates available:" : "Jsou k dispozici aktualizace aplikací:",
     "PHP" : "PHP",
     "Memory Limit:" : "Limit paměti:",
-    "Max Execution Time:" : "Největší čas vykonávání:",
+    "Max Execution Time:" : "Nejdelší umožněný čas vykonávání:",
     "Upload max size:" : "Maximální velikost nahraného souboru:",
     "Database" : "Databáze",
     "Type:" : "Typ:",
