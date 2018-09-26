@@ -1,7 +1,6 @@
 OC.L10N.register(
     "serverinfo",
     {
-    "Load average" : "V povprečju naložite",
     "Last minute" : "Zadnja minuta",
     "Memory info not available" : "Informacija o pomnilniku ni na voljo",
     "Total" : "Skupaj",
