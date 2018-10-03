@@ -16,6 +16,7 @@ OC.L10N.register(
     "Memory usage" : "Uporaba pomnilnika",
     "Active users" : "Dejavni uporabniki",
     "Shares" : "Souporaba",
+    "Storage" : "Shramba",
     "Users:" : "Uporabniki:",
     "Files:" : "Datoteke:",
     "Storages:" : "Shrambe:",
@@ -23,6 +24,10 @@ OC.L10N.register(
     "Version:" : "Različica:",
     "Apps installed:" : "Nameščeni programi:",
     "Apps updates available:" : "Posodobitve programov:",
-    "Memory Limit:" : "Omejitev pomnilnika:"
+    "PHP" : "Okolje PHP",
+    "Memory Limit:" : "Omejitev pomnilnika:",
+    "Database" : "Podatkovne zbirka",
+    "Type:" : "Vrsta:",
+    "Size:" : "Velikost:"
 },
 "nplurals=4; plural=(n%100==1 ? 0 : n%100==2 ? 1 : n%100==3 || n%100==4 ? 2 : 3);");
