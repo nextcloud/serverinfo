@@ -14,6 +14,8 @@ OC.L10N.register(
     "Last 24 hours" : "Előző 24 óra",
     "Last 1 hour" : "Előző 1 óra",
     "Last 5 mins" : "Előző 5 perc",
+    "Copy" : "Másolás",
+    "Not supported!" : "Nem támogatott!",
     "Monitoring" : "Megfigyelés",
     "Provides useful server information, such as CPU load, RAM usage, disk usage, number of users, etc." : "Hasznos szerver információk szolgáltatása, mint a CPU terhelés, RAM foglaltság, felhasználók száma, stb.",
     "CPU load" : "CPU terhelés",
