@@ -19,7 +19,7 @@ OC.L10N.register(
     "CPU load" : "CPU 负载",
     "Memory usage" : "内存使用",
     "Active users" : "活跃用户",
-    "Shares" : "分享",
+    "Shares" : "共享",
     "Storage" : "存储",
     "Users:" : "用户:",
     "Files:" : "文件:",
