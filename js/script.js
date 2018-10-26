@@ -61,6 +61,14 @@
 	});
 
 	function updateCPUStatistics (cpuload) {
+		if (cpuload === 'N/A') {
+			$('#cpuFooterInfo').text(t('serverinfo', 'CPU info not available'));
+			$('#cpuloadcanvas').addClass('hidden');
+			return;
+
+		} else if ($("#cpuloadcanvas").hasClass('hidden')) {
+			$("#cpuloadcanvas").removeClass('hidden');
+		}
 
 		var cpu1 = cpuload[0],
 			cpu2 = cpuload[1],
@@ -88,6 +96,9 @@
 			$('#memFooterInfo').text(t('serverinfo', 'Memory info not available'));
 			$('#memorycanvas').addClass('hidden');
 			return;
+
+		} else if ($("#memorycanvas").hasClass('hidden')) {
+			$("#memorycanvas").removeClass('hidden');
 		}
 
 		var memTotalBytes = memTotal * 1024,

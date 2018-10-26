@@ -65,6 +65,7 @@ class SystemStatistics {
 	 * @throws \OCP\Files\InvalidPathException
 	 */
 	public function getSystemStatistics() {
+		$processorUsage = $this->getProcessorUsage();
 		$memoryUsage = $this->getMemoryUsage();
 		return [
 			'version' => $this->config->getSystemValue('version'),
@@ -77,7 +78,7 @@ class SystemStatistics {
 			'memcache.locking' => $this->config->getSystemValue('memcache.locking', 'none'),
 			'debug' => $this->config->getSystemValue('debug', false) ? 'yes' : 'no',
 			'freespace' => $this->view->free_space(),
-			'cpuload' => sys_getloadavg(),
+			'cpuload' => $processorUsage['loadavg'],
 			'mem_total' => $memoryUsage['mem_total'],
 			'mem_free' => $memoryUsage['mem_free'],
 			'swap_total' => $memoryUsage['swap_total'],
@@ -199,6 +200,27 @@ class SystemStatistics {
 			return false;
 		}
 		return true;
+	}
+
+	/**
+	 * Get current CPU load average
+	 *
+	 * @return array load average with three values, 1/5/15 minutes average.
+	 */
+	protected function getProcessorUsage() {
+		// get current system load average.
+		$loadavg = sys_getloadavg();
+
+		// check if we got any values back.
+		if (!(is_array($loadavg) && count($loadavg) === 3)) {
+			// either no array or too few array keys.
+			// returning back zeroes to prevent any errors on JS side.
+			$loadavg = 'N/A';
+		}
+
+		return [
+			'loadavg' => $loadavg
+		];
 	}
 
 }
