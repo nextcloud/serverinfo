@@ -25,7 +25,7 @@
 		swapUsageLine,
 		cpuLoadChart,
 		cpuLoadLine,
-		activeusersChart,
+		activeUsersChart,
 		sharesChart;
 
 	$(document).ready(function () {
@@ -41,6 +41,7 @@
 		setHumanReadableSizeToElement("phpUploadMaxSize");
 		setHumanReadableSizeToElement("systemDiskFreeSpace");
 
+		$('#ocsEndPoint span.icon-info').tooltip({placement: 'top'});
 		initMonitoringLinkToClipboard();
 		$("#monitoring-endpoint-url").on('click', function() {
 			$(this).select();
@@ -209,10 +210,10 @@
 			stepSize = 1;
 		}
 
-		if (typeof activeusersChart === 'undefined') {
+		if (typeof activeUsersChart === 'undefined') {
 			var ctx = document.getElementById("activeuserscanvas");
 
-			activeusersChart = new Chart(ctx, {
+			activeUsersChart = new Chart(ctx, {
 				type: 'line',
 				data: {
 					labels: [
