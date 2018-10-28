@@ -1,6 +1,7 @@
 OC.L10N.register(
     "serverinfo",
     {
+    "CPU info not available" : "Örgjörvaupplýsingar ekki tiltækar",
     "Load average" : "Meðaltalsálag",
     "Last minute" : "Á síðustu mínútu",
     "Memory info not available" : "Upplýsingar um minni eru ekki tiltækar",
@@ -20,6 +21,7 @@ OC.L10N.register(
     "Press ⌘-C to copy." : "Ýttu á ⌘-C til að afrita.",
     "Press Ctrl-C to copy." : "Ýttu á Ctrl-C til að afrita.",
     "Monitoring" : "Vöktun",
+    "Monitoring app with useful server information" : "Vöktunarforrit sem nær í ýmsar notadrjúgar upplýsingar um þjón",
     "Provides useful server information, such as CPU load, RAM usage, disk usage, number of users, etc." : "Gefur nytsamlegar upplýsingar um vefþjón, svo sem álag á örgjörva, diskanotkun, fjölda notenda, o.s.frv.",
     "CPU load" : "Örgjörvaálag",
     "Memory usage" : "Minnisnotkun",
@@ -43,6 +45,8 @@ OC.L10N.register(
     "Size:" : "Stærð:",
     "External monitoring tool" : "Utanaðkomandi vöktunartól",
     "You can connect an external monitoring tool by using this end point:" : "Þú getur tengt utanaðkomandi vöktunartól með því að nota þennan endapunkt: ",
+    "Did you know?" : "Vissirðu?",
+    "Appending \"?format=json\" at the end of the URL gives you the result in JSON format!" : "Að með því að bæta \"?format=json\" við enda URL-slóðar, muntu fá niðurstöðurnar á JSON-sniði!",
     "You can connect an external monitoring tool by using this end point: " : "Þú getur tengt utanaðkomandi vöktunartól með því að nota þennan endapunkt: "
 },
 "nplurals=2; plural=(n % 10 != 1 || n % 100 == 11);");
