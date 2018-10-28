@@ -1,6 +1,7 @@
 OC.L10N.register(
     "serverinfo",
     {
+    "CPU info not available" : "CPU info niet beschikbaar",
     "Load average" : "Gemiddelde belasting",
     "Last minute" : "Laatste minuut",
     "Memory info not available" : "Geheugeninfo niet beschikbaar",
@@ -44,6 +45,8 @@ OC.L10N.register(
     "Size:" : "Grootte:",
     "External monitoring tool" : "Externe monitoring tool",
     "You can connect an external monitoring tool by using this end point:" : "Je kunt een externe monitor-tool verbinden door dit end point te gebruiken:",
+    "Did you know?" : "Wist je dat?",
+    "Appending \"?format=json\" at the end of the URL gives you the result in JSON format!" : "Door \"?format=json\" aan het eind van de URL te zetten, krijg je het resultaat in JSON formaat!",
     "You can connect an external monitoring tool by using this end point: " : "Je kunt een externe monitoring tool verbinden door deze endpoint te gebruiken:"
 },
 "nplurals=2; plural=(n != 1);");

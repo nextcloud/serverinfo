@@ -1,6 +1,7 @@
 OC.L10N.register(
     "serverinfo",
     {
+    "CPU info not available" : "Información de CPU no disponible",
     "Load average" : "Carga media",
     "Last minute" : "Último minuto",
     "Memory info not available" : "Información de la memoria no disponible",
@@ -9,13 +10,13 @@ OC.L10N.register(
     "Users" : "Usuarios",
     "Groups" : "Grupos",
     "Links" : "Enlaces",
-    "Federated sent" : "Federados enviados",
-    "Federated received" : "Federados recibidos",
+    "Federated sent" : "Federado enviado",
+    "Federated received" : "Federado recibido",
     "Last 24 hours" : "Últimas 24 horas",
     "Last 1 hour" : "Última hora",
     "Last 5 mins" : "Últimos 5 minutos",
     "Copy" : "Copiar",
-    "Copied!" : "Copiado.",
+    "Copied!" : "¡Copiado!",
     "Not supported!" : "No está soportado.",
     "Press ⌘-C to copy." : "Pulsa ⌘-C para copiar.",
     "Press Ctrl-C to copy." : "Pulsa Ctrl-C para copiar.",
@@ -44,6 +45,8 @@ OC.L10N.register(
     "Size:" : "Tamaño:",
     "External monitoring tool" : "Herramienta externa de monitorización",
     "You can connect an external monitoring tool by using this end point:" : "Puedes conectar una herramienta de monitorización externa usando este endpoint:",
+    "Did you know?" : "Sabías que...?",
+    "Appending \"?format=json\" at the end of the URL gives you the result in JSON format!" : "¡Añadir \"?format=json\" al final de la URL devuelve el resultado en formato JSON!",
     "You can connect an external monitoring tool by using this end point: " : "Puede conectar una herramienta externa de monitorización usando este punto de comunicación: "
 },
 "nplurals=2; plural=(n != 1);");
