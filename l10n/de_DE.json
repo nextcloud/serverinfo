@@ -43,8 +43,8 @@
     "Size:" : "Größe:",
     "External monitoring tool" : "Externes Überwachungsprogramm",
     "You can connect an external monitoring tool by using this end point:" : "Durch Verwendung des folgenden Zugangspunktes kann ein externes Überwachungsprogramm verwendet werden: ",
-    "Did you know?" : "Wussten Sie das?",
-    "Appending \"?format=json\" at the end of the URL gives you the result in JSON format!" : "Das Anhängen von \"?format=json\" am Ende der URL gibt Ihnen das Ergebnis im JSON-Format wieder!",
+    "Did you know?" : "Wussten Sie schon?",
+    "Appending \"?format=json\" at the end of the URL gives you the result in JSON format!" : "Das Anhängen von \"?format=json\" am Ende der URL liefert Ihnen das Ergebnis im JSON-Format!",
     "You can connect an external monitoring tool by using this end point: " : "Durch Verwendung des folgenden Zugangspunktes, kann ein externes Überwachungsprogramm verwendet werden:"
 },"pluralForm" :"nplurals=2; plural=(n != 1);"
 }
