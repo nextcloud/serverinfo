@@ -1,6 +1,7 @@
 OC.L10N.register(
     "serverinfo",
     {
+    "CPU info not available" : "Информације о процесору нису доступне",
     "Load average" : "Просечно оптерећење",
     "Last minute" : "Последњи минут",
     "Memory info not available" : "Информације о меморији нису доступне",
@@ -44,6 +45,8 @@ OC.L10N.register(
     "Size:" : "Величина:",
     "External monitoring tool" : "Спољни алати за праћење система",
     "You can connect an external monitoring tool by using this end point:" : "Можете повезати спољни алат за праћење система користећи следећу тачку повезивања:",
+    "Did you know?" : "Да ли сте знали?",
+    "Appending \"?format=json\" at the end of the URL gives you the result in JSON format!" : "Ако додате \"?format=json\" на крај адресе, добићете резултате у JSON формату!",
     "You can connect an external monitoring tool by using this end point: " : "Можете повезати спољни алат за праћење система користећи следећу тачку повезивања:"
 },
 "nplurals=3; plural=(n%10==1 && n%100!=11 ? 0 : n%10>=2 && n%10<=4 && (n%100<10 || n%100>=20) ? 1 : 2);");
