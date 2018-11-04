@@ -1,6 +1,7 @@
 OC.L10N.register(
     "serverinfo",
     {
+    "CPU info not available" : "Info o CPU nie je dostupné",
     "Load average" : "Priemerné zaťaženie",
     "Last minute" : "Posledná minúta",
     "Memory info not available" : "Informácie o pamäti nie sú dostupné",
@@ -44,6 +45,7 @@ OC.L10N.register(
     "Size:" : "Veľkosť:",
     "External monitoring tool" : "Externý sledovací nástroj",
     "You can connect an external monitoring tool by using this end point:" : "Pre pripojenie externého sledovacieho nástroja použite tento koncový bod:",
+    "Did you know?" : "Vedeli ste?",
     "You can connect an external monitoring tool by using this end point: " : "Pre pripojenie externého sledovacieho nástroja použite tento koncový bod:"
 },
 "nplurals=4; plural=(n % 1 == 0 && n == 1 ? 0 : n % 1 == 0 && n >= 2 && n <= 4 ? 1 : n % 1 != 0 ? 2: 3);");
