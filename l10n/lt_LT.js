@@ -22,6 +22,7 @@ OC.L10N.register(
     "Storage" : "Saugykla",
     "Users:" : "Naudotojai:",
     "Files:" : "Failai:",
+    "Free Space:" : "Laisva vieta:",
     "Version:" : "Versija:",
     "PHP" : "PHP",
     "Memory Limit:" : "Atminties limitas:",
