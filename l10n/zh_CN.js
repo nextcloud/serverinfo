@@ -1,6 +1,7 @@
 OC.L10N.register(
     "serverinfo",
     {
+    "CPU info not available" : "CPU 信息不可用",
     "Load average" : "平均负载",
     "Last minute" : "上一分钟",
     "Memory info not available" : "内存信息不可用",
@@ -14,6 +15,11 @@ OC.L10N.register(
     "Last 24 hours" : "最近 24 小时",
     "Last 1 hour" : "最近 1 小时",
     "Last 5 mins" : "最近 5 分钟",
+    "Copy" : "复制",
+    "Copied!" : "已复制！",
+    "Not supported!" : "不支持！",
+    "Press ⌘-C to copy." : "使用 ⌘-C 复制。",
+    "Press Ctrl-C to copy." : "使用 Ctrl-C 复制。",
     "Monitoring" : "监控器",
     "Provides useful server information, such as CPU load, RAM usage, disk usage, number of users, etc." : "提供有用的服务器信息，例如 CPU 负载、内存占用、硬盘占用、在线用户数等。",
     "CPU load" : "CPU 负载",
@@ -23,7 +29,11 @@ OC.L10N.register(
     "Storage" : "存储",
     "Users:" : "用户:",
     "Files:" : "文件:",
+    "Storages:" : "存储设备：",
+    "Free Space:" : "剩余空间：",
     "Version:" : "版本:",
+    "Apps installed:" : "已安装应用：",
+    "Apps updates available:" : "可更新应用：",
     "PHP" : "PHP",
     "Memory Limit:" : "内存限制:",
     "Max Execution Time:" : "最大执行时间:",
@@ -32,6 +42,9 @@ OC.L10N.register(
     "Type:" : "类型:",
     "Size:" : "大小:",
     "External monitoring tool" : "外部监控工具",
+    "You can connect an external monitoring tool by using this end point:" : "此地址可用于外部监控工具：",
+    "Did you know?" : "你知道吗？",
+    "Appending \"?format=json\" at the end of the URL gives you the result in JSON format!" : "在 URL 最后附加 \"?format=json\" 参数可以获得 JSON 格式的结果！",
     "You can connect an external monitoring tool by using this end point: " : "你可以使用此链接接入外部监控工具："
 },
 "nplurals=1; plural=0;");
