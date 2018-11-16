@@ -1,6 +1,7 @@
 OC.L10N.register(
     "serverinfo",
     {
+    "CPU info not available" : "Информация о ЦП недоступна",
     "Load average" : "Средняя нагрузка",
     "Last minute" : "За последнюю минуту",
     "Memory info not available" : "Информация о памяти недоступна",
