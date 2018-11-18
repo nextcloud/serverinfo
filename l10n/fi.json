@@ -1,4 +1,5 @@
 { "translations": {
+    "CPU info not available" : "Suorittimen tietoja ei ole saatavilla",
     "Load average" : "Keskiarvoinen kuorma",
     "Last minute" : "Viimeisin minuutti",
     "Memory info not available" : "Muistin tila ei saatavilla",
@@ -42,6 +43,8 @@
     "Size:" : "Koko:",
     "External monitoring tool" : "Ulkopuolinen valvontatyökalu",
     "You can connect an external monitoring tool by using this end point:" : "Voit yhdistää ulkopuolisen valvontatyökalun käyttämällä tätä liityntäkohtaa:",
+    "Did you know?" : "Tiesitkö?",
+    "Appending \"?format=json\" at the end of the URL gives you the result in JSON format!" : "Lisäämällä \"?format=json\" URL-osoitteen loppuun saat tulokset JSON-muodossa!",
     "You can connect an external monitoring tool by using this end point: " : "Voit yhdistää ulkopuolisen valvontatyökalun käyttämällä tätä liityntäkohtaa: "
 },"pluralForm" :"nplurals=2; plural=(n != 1);"
 }
