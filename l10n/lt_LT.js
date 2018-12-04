@@ -26,6 +26,7 @@ OC.L10N.register(
     "Users:" : "Naudotojai:",
     "Files:" : "Failai:",
     "Free Space:" : "Laisva vieta:",
+    "Nextcloud" : "Nextcloud",
     "Version:" : "Versija:",
     "PHP" : "PHP",
     "Memory Limit:" : "Atminties limitas:",
