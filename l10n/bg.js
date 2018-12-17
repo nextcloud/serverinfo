@@ -20,7 +20,10 @@ OC.L10N.register(
     "Storage" : "Хранилище",
     "Users:" : "Потребители:",
     "Files:" : "Файлове:",
+    "Free Space:" : "Свободно място:",
     "Version:" : "Версия:",
+    "Apps installed:" : "Инсталирани приложения:",
+    "Apps updates available:" : "Налични актуализации за приложения:",
     "PHP" : "PHP",
     "Memory Limit:" : "Лимит за памет:",
     "Max Execution Time:" : "Максимално време за изпълнение:",
@@ -28,6 +31,8 @@ OC.L10N.register(
     "Database" : "База данни",
     "Type:" : "Тип:",
     "Size:" : "Размер:",
-    "External monitoring tool" : "Външно средство за мониторинг"
+    "External monitoring tool" : "Външно средство за мониторинг",
+    "You can connect an external monitoring tool by using this end point:" : "Можете да свържете външен софтуер за мониторинг, чрез следния URL:",
+    "You can connect an external monitoring tool by using this end point: " : "Можете да свържете външен софтуер за мониторинг, чрез следния URL:"
 },
 "nplurals=2; plural=(n != 1);");
