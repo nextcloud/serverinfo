@@ -20,6 +20,7 @@ OC.L10N.register(
     "Press ⌘-C to copy." : "Tryck ⌘-C för att kopiera.",
     "Press Ctrl-C to copy." : "Tryck Ctrl-C för att kopiera.",
     "Monitoring" : "Övervakning",
+    "Provides useful server information, such as CPU load, RAM usage, disk usage, number of users, etc." : "Ger användbar serverinformation, såsom CPU belastning, RAM-användning, diskanvändning, antal användare, m.m.",
     "CPU load" : "CPU-användning",
     "Memory usage" : "Minnesanvändning",
     "Active users" : "Aktiva användare",
