@@ -143,7 +143,7 @@
 	function updateShareStatistics () {
 
 		var shares = $('#sharecanvas').data('shares'),
-			shares_data = [shares.num_shares_user, shares.num_shares_groups, shares.num_shares_link, shares.num_fed_shares_sent, shares.num_fed_shares_received],
+			shares_data = [shares.num_shares_user, shares.num_shares_groups, shares.num_shares_link, shares.num_shares_mail, shares.num_fed_shares_sent, shares.num_fed_shares_received, shares.num_shares_room],
 			stepSize = 0;
 
 		if (Math.max.apply(null, shares_data) < 10) {
@@ -160,25 +160,31 @@
 						t('serverinfo', 'Users'),
 						t('serverinfo', 'Groups'),
 						t('serverinfo', 'Links'),
+						t('serverinfo', 'Mails'),
 						t('serverinfo', 'Federated sent'),
-						t('serverinfo', 'Federated received')
+						t('serverinfo', 'Federated received'),
+						t('serverinfo', 'Talk Rooms'),
 					],
 					datasets: [{
 						label: " ",
 						data: shares_data,
 						backgroundColor: [
-							'rgba(0, 0, 255, 0.2)',
-							'rgba(0, 255, 0, 0.2)',
-							'rgba(255, 0, 0, 0.2)',
-							'rgba(0, 255, 255, 0.2)',
-							'rgba(255, 0, 255, 0.2)'
+							'rgba(0, 76, 153, 0.2)',
+							'rgba(51, 153, 255, 0.2)',
+							'rgba(207, 102, 0, 0.2)',
+							'rgba(255, 178, 102, 0.2)',
+							'rgba(0, 153, 0, 0.2)',
+							'rgba(153, 255, 51, 0.2)',
+							'rgba(178, 102, 255, 0.2)'
 						],
 						borderColor: [
-							'rgba(0, 0, 255, 1)',
-							'rgba(0, 255, 0, 1)',
-							'rgba(255, 0, 0, 1)',
-							'rgba(0, 255, 255, 1)',
-							'rgba(255, 0, 255, 1)'
+							'rgba(0, 76, 153, 1)',
+							'rgba(51, 153, 255, 1)',
+							'rgba(207, 102, 0, 1)',
+							'rgba(255, 178, 102, 1)',
+							'rgba(0, 153, 0, 1)',
+							'rgba(153, 255, 51, 1)',
+							'rgba(178, 102, 255, 1)'
 						],
 						borderWidth: 1
 					}]
