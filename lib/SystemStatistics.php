@@ -94,7 +94,7 @@ class SystemStatistics {
 	 */
 	protected function getMemoryUsage() {
 		$memoryUsage = false;
-		if (is_readable('/proc/meminfo')) {
+		if (@is_readable('/proc/meminfo')) {
 			// read meminfo from OS
 			$memoryUsage = file_get_contents('/proc/meminfo');
 		}
