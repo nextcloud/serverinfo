@@ -163,7 +163,7 @@
 						t('serverinfo', 'Mails'),
 						t('serverinfo', 'Federated sent'),
 						t('serverinfo', 'Federated received'),
-						t('serverinfo', 'Talk Rooms'),
+						t('serverinfo', 'Talk conversations'),
 					],
 					datasets: [{
 						label: " ",
