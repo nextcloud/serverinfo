@@ -25,6 +25,7 @@ OC.L10N.register(
     "Storage" : "Saugykla",
     "Users:" : "Naudotojai:",
     "Files:" : "Failai:",
+    "Storages:" : "Saugyklos:",
     "Free Space:" : "Laisva vieta:",
     "Nextcloud" : "Nextcloud",
     "Version:" : "Versija:",
@@ -36,6 +37,7 @@ OC.L10N.register(
     "Type:" : "Tipas:",
     "Size:" : "Dydis:",
     "External monitoring tool" : "Išorinis stebėjimo įrankis",
+    "Did you know?" : "Ar žinojote?",
     "You can connect an external monitoring tool by using this end point: " : "Jūs galite prijungti išorinį stebėjimo įrankį pasinaudodami:"
 },
 "nplurals=4; plural=(n % 10 == 1 && (n % 100 > 19 || n % 100 < 11) ? 0 : (n % 10 >= 2 && n % 10 <=9) && (n % 100 > 19 || n % 100 < 11) ? 1 : n % 1 != 0 ? 2: 3);");

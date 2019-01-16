@@ -12,6 +12,8 @@ OC.L10N.register(
     "Last 24 hours" : "Последни 24 часа",
     "Last 1 hour" : "Последен 1 час",
     "Last 5 mins" : "Последни 5 минути",
+    "Press ⌘-C to copy." : "За копиране натиснете ⌘-C.",
+    "Press Ctrl-C to copy." : "За копиране натиснете Ctrl-C.",
     "Monitoring" : "Наблюдение",
     "CPU load" : "Натоварване на процесора",
     "Memory usage" : "Използвана памет",
@@ -21,6 +23,7 @@ OC.L10N.register(
     "Users:" : "Потребители:",
     "Files:" : "Файлове:",
     "Free Space:" : "Свободно място:",
+    "Nextcloud" : "Nextcloud",
     "Version:" : "Версия:",
     "Apps installed:" : "Инсталирани приложения:",
     "Apps updates available:" : "Налични актуализации за приложения:",
@@ -33,6 +36,7 @@ OC.L10N.register(
     "Size:" : "Размер:",
     "External monitoring tool" : "Външно средство за мониторинг",
     "You can connect an external monitoring tool by using this end point:" : "Можете да свържете външен софтуер за мониторинг, чрез следния URL:",
+    "Did you know?" : "Известно ли ви е?",
     "You can connect an external monitoring tool by using this end point: " : "Можете да свържете външен софтуер за мониторинг, чрез следния URL:"
 },
 "nplurals=2; plural=(n != 1);");
