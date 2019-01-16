@@ -6,7 +6,7 @@ OC.L10N.register(
     "Memory info not available" : "Información de la memoria no disponible",
     "Total" : "Total",
     "Current usage" : "Uso actual",
-    "Users" : "Ususarios",
+    "Users" : " Usuarios",
     "Groups" : "Grupos",
     "Links" : "Ligas",
     "Federated sent" : "Envío federado",
