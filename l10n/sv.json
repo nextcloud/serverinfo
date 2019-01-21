@@ -1,4 +1,5 @@
 { "translations": {
+    "CPU info not available" : "CPU info ej tillgänglig",
     "Load average" : "Genomsnittsanvändning",
     "Last minute" : "Senaste minuten",
     "Memory info not available" : "Minnesinformation ej tillgänglig",
@@ -7,8 +8,10 @@
     "Users" : "Användare",
     "Groups" : "Grupper",
     "Links" : "Länkar",
+    "Mails" : "E-post",
     "Federated sent" : "Sammankopplingar skickade",
     "Federated received" : "Sammankopplingar mottagna",
+    "Talk conversations" : "Talk-konversationer",
     "Last 24 hours" : "Senaste 24 timmarna",
     "Last 1 hour" : "Senaste timmen",
     "Last 5 mins" : "Senaste 5 minuterna",
@@ -18,6 +21,7 @@
     "Press ⌘-C to copy." : "Tryck ⌘-C för att kopiera.",
     "Press Ctrl-C to copy." : "Tryck Ctrl-C för att kopiera.",
     "Monitoring" : "Övervakning",
+    "Monitoring app with useful server information" : "Övervaknings-app med användbar serverinformation",
     "Provides useful server information, such as CPU load, RAM usage, disk usage, number of users, etc." : "Ger användbar serverinformation, såsom CPU belastning, RAM-användning, diskanvändning, antal användare, m.m.",
     "CPU load" : "CPU-användning",
     "Memory usage" : "Minnesanvändning",
@@ -26,7 +30,12 @@
     "Storage" : "Lagring",
     "Users:" : "Användare:",
     "Files:" : "Filer:",
+    "Storages:" : "Lagring:",
+    "Free Space:" : "Ledigt utrymme:",
+    "Nextcloud" : "Nextcloud",
     "Version:" : "Version:",
+    "Apps installed:" : "Installerade appar:",
+    "Apps updates available:" : "Tillgängliga app-uppdateringar",
     "PHP" : "PHP",
     "Memory Limit:" : "Minneskapacitetsgräns:",
     "Max Execution Time:" : "Längsta körningstid:",
@@ -35,6 +44,9 @@
     "Type:" : "Typ:",
     "Size:" : "Storlek:",
     "External monitoring tool" : "Externt övervakningsverktyg",
+    "You can connect an external monitoring tool by using this end point:" : "Du kan ansluta ett externt övervakningsverktyg genom att använda denna adress:",
+    "Did you know?" : "Visste du?",
+    "Appending \"?format=json\" at the end of the URL gives you the result in JSON format!" : "Lägga till \"?format=json\" i slutet av webbadressen ger dig resultatet i JSON-format!",
     "You can connect an external monitoring tool by using this end point: " : "Du kan ansluta ett externt övervakningsverktyg genom att använda denna adress:"
 },"pluralForm" :"nplurals=2; plural=(n != 1);"
 }
