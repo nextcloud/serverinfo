@@ -35,6 +35,7 @@ OC.L10N.register(
     "Apps updates available:" : "Razpoložljive posodobitve:",
     "PHP" : "Okolje PHP",
     "Memory Limit:" : "Omejitev pomnilnika:",
+    "Upload max size:" : "Največja velikost pošiljanja:",
     "Database" : "Podatkovna zbirka",
     "Type:" : "Vrsta:",
     "Size:" : "Velikost:",
