@@ -10,6 +10,7 @@ OC.L10N.register(
     "Users" : "Użytkownicy",
     "Groups" : "Grupy",
     "Links" : "Linki",
+    "Mails" : "E-maile",
     "Federated sent" : "Wysłane do federacji",
     "Federated received" : "Otrzymane z federacji",
     "Talk conversations" : "Rozmowy Talk",
