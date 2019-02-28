@@ -46,7 +46,6 @@ OC.L10N.register(
     "External monitoring tool" : "外部监控工具",
     "You can connect an external monitoring tool by using this end point:" : "此地址可用于外部监控工具：",
     "Did you know?" : "您知道吗？",
-    "Appending \"?format=json\" at the end of the URL gives you the result in JSON format!" : "在 URL 最后附加 \"?format=json\" 参数可以获得 JSON 格式的结果！",
-    "You can connect an external monitoring tool by using this end point: " : "您可以使用此链接接入外部监控工具："
+    "Appending \"?format=json\" at the end of the URL gives you the result in JSON format!" : "在 URL 最后附加 \"?format=json\" 参数可以获得 JSON 格式的结果！"
 },
 "nplurals=1; plural=0;");

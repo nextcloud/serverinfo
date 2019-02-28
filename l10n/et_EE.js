@@ -31,7 +31,6 @@ OC.L10N.register(
     "Database" : "Andmebaas",
     "Type:" : "Tüüp:",
     "Size:" : "Suurus:",
-    "External monitoring tool" : "Väline monitoorimistööriist",
-    "You can connect an external monitoring tool by using this end point: " : "Saad ühendada välise monitoorimistööriista kasutades seda lõpp-punkti:"
+    "External monitoring tool" : "Väline monitoorimistööriist"
 },
 "nplurals=2; plural=(n != 1);");

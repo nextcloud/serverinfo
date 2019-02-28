@@ -29,7 +29,6 @@
     "Database" : "Database",
     "Type:" : "Type:",
     "Size:" : "Size:",
-    "External monitoring tool" : "External monitoring tool",
-    "You can connect an external monitoring tool by using this end point: " : "You can connect an external monitoring tool by using this end point: "
+    "External monitoring tool" : "External monitoring tool"
 },"pluralForm" :"nplurals=2; plural=(n != 1);"
 }
