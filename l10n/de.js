@@ -48,7 +48,6 @@ OC.L10N.register(
     "External monitoring tool" : "Externes Überwachungsprogramm",
     "You can connect an external monitoring tool by using this end point:" : "Durch Verwendung des folgenden Zugangspunktes kann ein externes Überwachungsprogramm verwendet werden: ",
     "Did you know?" : "Wusstest Du schon?",
-    "Appending \"?format=json\" at the end of the URL gives you the result in JSON format!" : "Das Anhängen von \"?format=json\" am Ende der URL gibt Dir das Ergebnis im JSON-Format!",
-    "You can connect an external monitoring tool by using this end point: " : "Durch Verwendung des folgenden Zugangspunktes, kann ein externes Überwachungsprogramm verwendet werden:"
+    "Appending \"?format=json\" at the end of the URL gives you the result in JSON format!" : "Das Anhängen von \"?format=json\" am Ende der URL gibt Dir das Ergebnis im JSON-Format!"
 },
 "nplurals=2; plural=(n != 1);");

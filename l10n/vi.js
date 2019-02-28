@@ -28,7 +28,6 @@ OC.L10N.register(
     "Database" : "Cơ sở dữ liệu",
     "Type:" : "Loại:",
     "Size:" : "Kích thước:",
-    "External monitoring tool" : "Công cụ giám sát ngoài",
-    "You can connect an external monitoring tool by using this end point: " : "Bạn có thể kết nối một công cụ giám sát ngoài bằng cách sử dụng điểm cuối này:"
+    "External monitoring tool" : "Công cụ giám sát ngoài"
 },
 "nplurals=1; plural=0;");

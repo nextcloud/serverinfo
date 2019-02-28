@@ -28,7 +28,6 @@
     "Database" : "Base de datos",
     "Type:" : "Tipo:",
     "Size:" : "Tamaño:",
-    "External monitoring tool" : "Herramienta de montoreo externa",
-    "You can connect an external monitoring tool by using this end point: " : "Usted puede conectar una herramienta externa de monitoreo usando este punto de acceso:"
+    "External monitoring tool" : "Herramienta de montoreo externa"
 },"pluralForm" :"nplurals=2; plural=(n != 1);"
 }

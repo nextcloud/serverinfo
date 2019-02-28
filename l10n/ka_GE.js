@@ -30,7 +30,6 @@ OC.L10N.register(
     "Database" : "მონაცემთა ბაზა",
     "Type:" : "ტიპი:",
     "Size:" : "ზომა:",
-    "External monitoring tool" : "გარე მონიტორინგის ხელსაწყო",
-    "You can connect an external monitoring tool by using this end point: " : "ამ დანიშნულების წერტილით, გარე მონიტორინგის ხელსაწყოს ვერ დაუკავშირდებით:"
+    "External monitoring tool" : "გარე მონიტორინგის ხელსაწყო"
 },
 "nplurals=2; plural=(n!=1);");

@@ -48,7 +48,6 @@ OC.L10N.register(
     "External monitoring tool" : "Ferramenta externa de supervisión",
     "You can connect an external monitoring tool by using this end point:" : "Pode conectar unha ferramenta externa de seguimento usando este punto final:",
     "Did you know?" : "Sabía vostede?",
-    "Appending \"?format=json\" at the end of the URL gives you the result in JSON format!" : "Engadindo «?format=json» na fin do URL devolve o resultado en formato JSON!",
-    "You can connect an external monitoring tool by using this end point: " : "Pode conectar unha ferramenta externa de seguimento usando este punto final:"
+    "Appending \"?format=json\" at the end of the URL gives you the result in JSON format!" : "Engadindo «?format=json» na fin do URL devolve o resultado en formato JSON!"
 },
 "nplurals=2; plural=(n != 1);");

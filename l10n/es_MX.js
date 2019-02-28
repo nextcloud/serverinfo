@@ -46,7 +46,6 @@ OC.L10N.register(
     "Size:" : "Tamaño:",
     "External monitoring tool" : "Herramienta de monitoreo externa",
     "You can connect an external monitoring tool by using this end point:" : "Puede conectar una herramienta de monitoreo externo usando esta terminal:",
-    "Did you know?" : "¿Sabía usted?",
-    "You can connect an external monitoring tool by using this end point: " : "Puedes conectar una herramienta externa de monitoreo usando este punto de acceso:"
+    "Did you know?" : "¿Sabía usted?"
 },
 "nplurals=2; plural=(n != 1);");

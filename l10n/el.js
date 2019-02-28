@@ -33,7 +33,6 @@ OC.L10N.register(
     "Database" : "Βάση δεδομένων",
     "Type:" : "Τύπος:",
     "Size:" : "Μέγεθος:",
-    "External monitoring tool" : "Εξωτερικό εργαλείο παρακολούθησης",
-    "You can connect an external monitoring tool by using this end point: " : "Μπορείτε να συνδεθείτε στο εργαλείο εξωτερικής παρακολούθησης με την χρήση αυτού του τελικού σημείου:"
+    "External monitoring tool" : "Εξωτερικό εργαλείο παρακολούθησης"
 },
 "nplurals=2; plural=(n != 1);");
