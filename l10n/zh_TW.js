@@ -43,7 +43,6 @@ OC.L10N.register(
     "Type:" : "類型:",
     "Size:" : "大小:",
     "External monitoring tool" : "外部監控工具",
-    "You can connect an external monitoring tool by using this end point:" : "您可以使用此終端連接外部監視工具：",
-    "You can connect an external monitoring tool by using this end point: " : "你不能藉由這個終端連線外部監控工具:"
+    "You can connect an external monitoring tool by using this end point:" : "您可以使用此終端連接外部監視工具："
 },
 "nplurals=1; plural=0;");

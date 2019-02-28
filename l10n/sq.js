@@ -30,7 +30,6 @@ OC.L10N.register(
     "Database" : "Databazë",
     "Type:" : "Lloji:",
     "Size:" : "Madhësia:",
-    "External monitoring tool" : "Mjet i kontrollit të jashtëm",
-    "You can connect an external monitoring tool by using this end point: " : "Ju mund të lidhni një vegël monitorimi të jashtme duke përdorur këtë pikë përfundimi:"
+    "External monitoring tool" : "Mjet i kontrollit të jashtëm"
 },
 "nplurals=2; plural=(n != 1);");

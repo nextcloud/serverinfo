@@ -28,7 +28,6 @@ OC.L10N.register(
     "Database" : "מסד נתונים",
     "Type:" : "סוג:",
     "Size:" : "גודל:",
-    "External monitoring tool" : "כלי מעקב חיצוני",
-    "You can connect an external monitoring tool by using this end point: " : "ניתן לחבר כלי מעקב חיצוני אל נקודת הגישה הבאה:"
+    "External monitoring tool" : "כלי מעקב חיצוני"
 },
 "nplurals=4; plural=(n == 1 && n % 1 == 0) ? 0 : (n == 2 && n % 1 == 0) ? 1: (n % 10 == 0 && n % 1 == 0 && n > 10) ? 2 : 3;");

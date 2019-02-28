@@ -23,7 +23,6 @@ OC.L10N.register(
     "Database" : "Database",
     "Type:" : "Type:",
     "Size:" : "Storleik:",
-    "External monitoring tool" : "Eksternt monoitor verktøy",
-    "You can connect an external monitoring tool by using this end point: " : "Du kan kople til et ekstent monitor verktøy ved å bruke dette endepunktet:"
+    "External monitoring tool" : "Eksternt monoitor verktøy"
 },
 "nplurals=2; plural=(n != 1);");

@@ -34,7 +34,6 @@ OC.L10N.register(
     "Database" : "Datu-basea",
     "Type:" : "Mota:",
     "Size:" : "Tamaina:",
-    "External monitoring tool" : "Kanpo jarraipen tresna",
-    "You can connect an external monitoring tool by using this end point: " : "Kanpoko jarraipen tresna bat konekta dezakezuend pint hau erabiliz:"
+    "External monitoring tool" : "Kanpo jarraipen tresna"
 },
 "nplurals=2; plural=(n != 1);");

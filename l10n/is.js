@@ -48,7 +48,6 @@ OC.L10N.register(
     "External monitoring tool" : "Utanaðkomandi vöktunartól",
     "You can connect an external monitoring tool by using this end point:" : "Þú getur tengt utanaðkomandi vöktunartól með því að nota þennan endapunkt: ",
     "Did you know?" : "Vissirðu?",
-    "Appending \"?format=json\" at the end of the URL gives you the result in JSON format!" : "Að með því að bæta \"?format=json\" við enda URL-slóðar, muntu fá niðurstöðurnar á JSON-sniði!",
-    "You can connect an external monitoring tool by using this end point: " : "Þú getur tengt utanaðkomandi vöktunartól með því að nota þennan endapunkt: "
+    "Appending \"?format=json\" at the end of the URL gives you the result in JSON format!" : "Að með því að bæta \"?format=json\" við enda URL-slóðar, muntu fá niðurstöðurnar á JSON-sniði!"
 },
 "nplurals=2; plural=(n % 10 != 1 || n % 100 == 11);");

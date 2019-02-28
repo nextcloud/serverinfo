@@ -25,7 +25,6 @@ OC.L10N.register(
     "Database" : "Database",
     "Type:" : "Tipe",
     "Size:" : "Ukuran:",
-    "External monitoring tool" : "Alat pemantauan eksternal",
-    "You can connect an external monitoring tool by using this end point: " : "Anda dapat terhubung ke alat pemantauan eksternal menggunakan end point ini:"
+    "External monitoring tool" : "Alat pemantauan eksternal"
 },
 "nplurals=1; plural=0;");

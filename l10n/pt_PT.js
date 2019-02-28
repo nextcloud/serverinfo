@@ -28,7 +28,6 @@ OC.L10N.register(
     "Database" : "Base de dados",
     "Type:" : "Tipo:",
     "Size:" : "Tamanho:",
-    "External monitoring tool" : "Ferramenta externa de monitorização",
-    "You can connect an external monitoring tool by using this end point: " : "Pode conectar uma ferramenta externa de monitorização usando este endpoint:"
+    "External monitoring tool" : "Ferramenta externa de monitorização"
 },
 "nplurals=2; plural=(n != 1);");

@@ -30,7 +30,6 @@ OC.L10N.register(
     "Database" : "Base de datos",
     "Type:" : "Triba:",
     "Size:" : "Tamañu:",
-    "External monitoring tool" : "Ferramienta esterna de monitorización",
-    "You can connect an external monitoring tool by using this end point: " : "Pues coneutar una ferramienta esterna de monitorización usando esti estremu:"
+    "External monitoring tool" : "Ferramienta esterna de monitorización"
 },
 "nplurals=2; plural=(n != 1);");

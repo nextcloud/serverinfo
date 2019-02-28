@@ -46,7 +46,6 @@
     "External monitoring tool" : "Herramienta externa de monitorización",
     "You can connect an external monitoring tool by using this end point:" : "Puedes conectar una herramienta de monitorización externa usando este endpoint:",
     "Did you know?" : "Sabías que...?",
-    "Appending \"?format=json\" at the end of the URL gives you the result in JSON format!" : "¡Añadir \"?format=json\" al final de la URL devuelve el resultado en formato JSON!",
-    "You can connect an external monitoring tool by using this end point: " : "Puede conectar una herramienta externa de monitorización usando este punto de comunicación: "
+    "Appending \"?format=json\" at the end of the URL gives you the result in JSON format!" : "¡Añadir \"?format=json\" al final de la URL devuelve el resultado en formato JSON!"
 },"pluralForm" :"nplurals=2; plural=(n != 1);"
 }
