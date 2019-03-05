@@ -22,6 +22,7 @@
 
 namespace OCA\ServerInfo\Controller;
 
+use OCA\ServerInfo\Os;
 use OCA\ServerInfo\DatabaseStatistics;
 use OCA\ServerInfo\PhpStatistics;
 use OCA\ServerInfo\SessionStatistics;
@@ -33,6 +34,9 @@ use OCP\AppFramework\OCSController;
 use OCP\IRequest;
 
 class ApiController extends OCSController {
+
+	/** @var Os */
+	private $Os;
 
 	/** @var SystemStatistics */
 	private $systemStatistics;
@@ -57,6 +61,7 @@ class ApiController extends OCSController {
 	 *
 	 * @param string $appName
 	 * @param IRequest $request
+	 * @param Os $Os
 	 * @param SystemStatistics $systemStatistics
 	 * @param StorageStatistics $storageStatistics
 	 * @param PhpStatistics $phpStatistics
@@ -66,6 +71,7 @@ class ApiController extends OCSController {
 	 */
 	public function __construct($appName,
 								IRequest $request,
+								Os $Os,
 								SystemStatistics $systemStatistics,
 								StorageStatistics $storageStatistics,
 								PhpStatistics $phpStatistics,
@@ -75,6 +81,7 @@ class ApiController extends OCSController {
 	) {
 		parent::__construct($appName, $request);
 
+		$this->Os = $Os;
 		$this->systemStatistics = $systemStatistics;
 		$this->storageStatistics = $storageStatistics;
 		$this->phpStatistics = $phpStatistics;
@@ -109,6 +116,25 @@ class ApiController extends OCSController {
 		);
 
 	}
+
+	/**
+	 * @return DataResponse
+	 */
+	public function BasicData(): DataResponse {
+		$servertime = $this->Os->getTime();
+		$uptime = $this->Os->getUptime();
+		$timeservers = $this->Os->getTimeServers()[0];
+		return new DataResponse(array('servertime'=>$servertime,'uptime'=>$uptime,'timeservers'=>$timeservers));
+	}
+
+	/**
+	 * @return DataResponse
+	 */
+	public function DiskData(): DataResponse {
+		$result = $this->Os->getDiskData();
+		return new DataResponse($result);
+	}
+
 
 	/**
 	 * get webserver
