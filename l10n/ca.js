@@ -22,6 +22,7 @@ OC.L10N.register(
     "Storage" : "Emmagatzematge",
     "Users:" : "Usuaris:",
     "Files:" : "FItxers:",
+    "Nextcloud" : "Nextcloud",
     "Version:" : "Versió:",
     "PHP" : "PHP",
     "Memory Limit:" : "Límit de la Memòria:",
