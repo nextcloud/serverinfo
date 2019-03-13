@@ -85,7 +85,7 @@
 			});
 			cpuLoadChart.streamTo(document.getElementById("cpuloadcanvas"), 1000/*delay*/);
 			cpuLoadLine = new TimeSeries();
-			cpuLoadChart.addTimeSeries(cpuLoadLine, { lineWidth: 1, strokeStyle: 'rgb(180, 180, 180)', fillStyle: 'rgb(56, 128, 195)' });
+			cpuLoadChart.addTimeSeries(cpuLoadLine, { lineWidth: 1, strokeStyle: 'rgb(180, 180, 180)', fillStyle: OCA.Theming.color });
 		}
 
 		$('#cpuFooterInfo').text(t('serverinfo', 'Load average')+": "+cpu1+" ("+t('serverinfo', 'Last minute')+")");
@@ -129,7 +129,7 @@
 			});
 			memoryUsageChart.streamTo(document.getElementById("memorycanvas"), 1000/*delay*/);
 			memoryUsageLine = new TimeSeries();
-			memoryUsageChart.addTimeSeries(memoryUsageLine, {lineWidth:1, strokeStyle:'rgb(180, 180, 180)', fillStyle:'rgb(56, 128, 195)'});
+			memoryUsageChart.addTimeSeries(memoryUsageLine, {lineWidth:1, strokeStyle:'rgb(180, 180, 180)', fillStyle:OCA.Theming.color});
 			swapUsageLine = new TimeSeries();
 			memoryUsageChart.addTimeSeries(swapUsageLine, {lineWidth:1, strokeStyle:'rgb(255, 0, 0)', fillStyle:'rgba(255, 0, 0, 0.2)'});
 		}
@@ -354,7 +354,7 @@ $(document).ready(function(){
 					datasets : [
 						{
 							backgroundColor: [
-				                'rgb(54, 129, 195)',
+				                OCA.Theming.color,
 				                'rgb(249, 249, 249)',
 				            ],
 				            borderWidth: 0,
