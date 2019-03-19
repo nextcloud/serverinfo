@@ -30,7 +30,7 @@
 
 	$(document).ready(function () {
 
-		var updateTimer = setInterval(updateInfo, 1000);
+		var updateTimer = setInterval(updateInfo, 300);
 
 		resizeSystemCharts();
 		updateActiveUsersStatistics();
@@ -78,7 +78,7 @@
 		if (typeof cpuLoadChart === 'undefined') {
 			cpuLoadChart = new SmoothieChart(
 			{
-				millisPerPixel: 150,
+				millisPerPixel: 100,
 				minValue: 0,
 				grid: { fillStyle: 'rgba(249,249,249,1)', strokeStyle: 'transparent' },
 				labels: { fillStyle: 'rgba(0,0,0,0.4)', fontSize: 12 }
@@ -121,7 +121,7 @@
 		if (typeof memoryUsageChart === 'undefined') {
 			memoryUsageChart = new SmoothieChart(
 			{
-				millisPerPixel: 150,
+				millisPerPixel: 100,
 				maxValue: maxValueOfChart,
 				minValue: 0,
 				grid: { fillStyle: 'rgba(0,0,0,0)', strokeStyle: 'transparent' },
@@ -354,10 +354,10 @@ $(document).ready(function(){
 					datasets : [
 						{
 							backgroundColor: [
-				                OCA.Theming.color,
-				                'rgb(249, 249, 249)',
-				            ],
-				            borderWidth: 0,
+								OCA.Theming.color,
+								'rgb(249, 249, 249)',
+							],
+							borderWidth: 0,
 							data: diskdata[i]
 						}
 					]
