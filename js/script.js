@@ -29,6 +29,12 @@
 		sharesChart;
 
 	$(document).ready(function () {
+		var x = document.getElementById('rambox');
+		x.style.backgroundColor = OCA.Theming.color;
+
+		var x = document.getElementById('swapbox');
+		x.style.backgroundColor = 'rgba(100, 100, 100, 0.8)';
+
 
 		var updateTimer = setInterval(updateInfo, 300);
 
@@ -131,7 +137,7 @@
 			memoryUsageLine = new TimeSeries();
 			memoryUsageChart.addTimeSeries(memoryUsageLine, {lineWidth:1, strokeStyle:'rgb(180, 180, 180)', fillStyle:OCA.Theming.color});
 			swapUsageLine = new TimeSeries();
-			memoryUsageChart.addTimeSeries(swapUsageLine, {lineWidth:1, strokeStyle:'rgb(255, 0, 0)', fillStyle:'rgba(255, 0, 0, 0.2)'});
+			memoryUsageChart.addTimeSeries(swapUsageLine, {lineWidth:1, strokeStyle:'rgb(100, 100, 100)', fillStyle:'rgba(100, 100, 100, 0.2)'});
 		}
 
 		$('#memFooterInfo').text("RAM: "+t('serverinfo', 'Total')+": "+OC.Util.humanFileSize(memTotalBytes)+" - "+t('serverinfo', 'Current usage')+": "+OC.Util.humanFileSize(memUsageBytes));

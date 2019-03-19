@@ -19,6 +19,22 @@
 	max-width: 415px;
 }
 
+.rambox {
+	padding: 0px;
+	margin: 0px;
+ 	height: 10px;
+ 	width: 10px;
+ 	background-color: #555;
+ 	border-radius: 20%;
+}
+
+.swapbox {
+  height: 10px;
+  width: 10px;
+  background-color: #222;
+  border-radius: 20%;
+}
+
 .info {
 	font-weight: bold;
 	text-color: #777777;

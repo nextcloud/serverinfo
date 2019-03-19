@@ -78,8 +78,8 @@ function FormatBytes($byte) {
 			<h2><?php p($l->t('Memory'));?></h2>
 			<canvas id="memorycanvas" width="300" height="150"></canvas>
 			</div>
-			<p><img src="data:image/png;base64,iVBORw0KGgoAAAANSUhEUgAAAAoAAAAKCAIAAAACUFjqAAAACXBIWXMAAAsTAAALEwEAmpwYAAAAB3RJTUUH4QYBDCANxB9ROQAAABl0RVh0Q29tbWVudABDcmVhdGVkIHdpdGggR0lNUFeBDhcAAAAUSURBVBjTY2T4z4AHMDEwjEpjAgBALQETBkU7DgAAAABJRU5ErkJggg==" alt="RAM color" />&nbsp;&nbsp;<em id="memFooterInfo"></em></p>
-			<p><img src="data:image/png;base64,iVBORw0KGgoAAAANSUhEUgAAAAoAAAAKCAIAAAACUFjqAAAACXBIWXMAAAsTAAALEwEAmpwYAAAAB3RJTUUH4QYBDB0ds0AJ4wAAABl0RVh0Q29tbWVudABDcmVhdGVkIHdpdGggR0lNUFeBDhcAAAASSURBVBjTY/zPgA8wMYxKYwEAQSwBE2ViEDMAAAAASUVORK5CYII=" alt="SWAP color" />&nbsp;&nbsp;<em id="swapFooterInfo"></em></p>
+			<p><span class="rambox" id="rambox">&nbsp;&nbsp;</span>&nbsp;&nbsp;<em id="memFooterInfo"></em></p>
+			<p><span class="swapbox" id="swapbox">&nbsp;&nbsp;</span>&nbsp;&nbsp;<em id="swapFooterInfo"></em></p>
 
 
 		</div>
