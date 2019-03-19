@@ -95,7 +95,7 @@ class DefaultOs {
 	*/
 	public function getTimeServers() {
 		$servers = shell_exec('cat /etc/ntp.conf |grep  \'^pool\' | cut -f 2 -d " "');
-		$servers.= ' '.shell_exec('cat /etc/systemd/timesyncd.conf |grep  \'^pool\' | cut -f 2 -d " "');
+		$servers.= ' '.shell_exec('cat /etc/systemd/timesyncd.conf |grep  \'^NTP=\' | cut -f 2 -d " "');
 		return $servers;
 	}
 
