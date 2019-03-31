@@ -30,7 +30,7 @@
 
 	$(document).ready(function () {
 		var x = document.getElementById('rambox');
-		x.style.backgroundColor = OCA.Theming.color;
+		x.style.backgroundColor = OCA.Theming  ? OCA.Theming.color : 'rgb(54, 129, 195)'; 
 
 		var x = document.getElementById('swapbox');
 		x.style.backgroundColor = 'rgba(100, 100, 100, 0.8)';
@@ -91,7 +91,7 @@
 			});
 			cpuLoadChart.streamTo(document.getElementById("cpuloadcanvas"), 1000/*delay*/);
 			cpuLoadLine = new TimeSeries();
-			cpuLoadChart.addTimeSeries(cpuLoadLine, { lineWidth: 1, strokeStyle: 'rgb(180, 180, 180)', fillStyle: OCA.Theming.color });
+			cpuLoadChart.addTimeSeries(cpuLoadLine, { lineWidth: 1, strokeStyle: 'rgb(180, 180, 180)', fillStyle: OCA.Theming  ? OCA.Theming.color : 'rgb(54, 129, 195)' });
 		}
 
 		$('#cpuFooterInfo').text(t('serverinfo', 'Load average')+": "+cpu1+" ("+t('serverinfo', 'Last minute')+")");
@@ -135,7 +135,7 @@
 			});
 			memoryUsageChart.streamTo(document.getElementById("memorycanvas"), 1000/*delay*/);
 			memoryUsageLine = new TimeSeries();
-			memoryUsageChart.addTimeSeries(memoryUsageLine, {lineWidth:1, strokeStyle:'rgb(180, 180, 180)', fillStyle:OCA.Theming.color});
+			memoryUsageChart.addTimeSeries(memoryUsageLine, {lineWidth:1, strokeStyle:'rgb(180, 180, 180)', fillStyle:OCA.Theming  ? OCA.Theming.color : 'rgb(54, 129, 195)'});
 			swapUsageLine = new TimeSeries();
 			memoryUsageChart.addTimeSeries(swapUsageLine, {lineWidth:1, strokeStyle:'rgb(100, 100, 100)', fillStyle:'rgba(100, 100, 100, 0.2)'});
 		}
@@ -360,7 +360,7 @@ $(document).ready(function(){
 					datasets : [
 						{
 							backgroundColor: [
-								OCA.Theming.color,
+								OCA.Theming  ? OCA.Theming.color : 'rgb(54, 129, 195)',
 								'rgb(249, 249, 249)',
 							],
 							borderWidth: 0,
