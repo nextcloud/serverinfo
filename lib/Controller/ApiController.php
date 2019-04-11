@@ -19,11 +19,10 @@
  *
  */
 
-
 namespace OCA\ServerInfo\Controller;
 
-use OCA\ServerInfo\Os;
 use OCA\ServerInfo\DatabaseStatistics;
+use OCA\ServerInfo\Os;
 use OCA\ServerInfo\PhpStatistics;
 use OCA\ServerInfo\SessionStatistics;
 use OCA\ServerInfo\ShareStatistics;
@@ -61,7 +60,7 @@ class ApiController extends OCSController {
 	 *
 	 * @param string $appName
 	 * @param IRequest $request
-	 * @param Os $Os
+	 * @param Os $os
 	 * @param SystemStatistics $systemStatistics
 	 * @param StorageStatistics $storageStatistics
 	 * @param PhpStatistics $phpStatistics
@@ -71,23 +70,22 @@ class ApiController extends OCSController {
 	 */
 	public function __construct($appName,
 								IRequest $request,
-								Os $Os,
+								Os $os,
 								SystemStatistics $systemStatistics,
 								StorageStatistics $storageStatistics,
 								PhpStatistics $phpStatistics,
 								DatabaseStatistics $databaseStatistics,
 								ShareStatistics $shareStatistics,
-								SessionStatistics $sessionStatistics
-	) {
+								SessionStatistics $sessionStatistics) {
 		parent::__construct($appName, $request);
 
-		$this->Os = $Os;
-		$this->systemStatistics = $systemStatistics;
-		$this->storageStatistics = $storageStatistics;
-		$this->phpStatistics = $phpStatistics;
+		$this->os                 = $os;
+		$this->systemStatistics   = $systemStatistics;
+		$this->storageStatistics  = $storageStatistics;
+		$this->phpStatistics      = $phpStatistics;
 		$this->databaseStatistics = $databaseStatistics;
-		$this->shareStatistics = $shareStatistics;
-		$this->sessionStatistics = $sessionStatistics;
+		$this->shareStatistics    = $shareStatistics;
+		$this->sessionStatistics  = $sessionStatistics;
 	}
 
 	/**
@@ -97,23 +95,19 @@ class ApiController extends OCSController {
 	 */
 	public function info() {
 
-		return new DataResponse(
-			[
-				'nextcloud' =>
-					[
-						'system' => $this->systemStatistics->getSystemStatistics(),
-						'storage' => $this->storageStatistics->getStorageStatistics(),
-						'shares' => $this->shareStatistics->getShareStatistics()
-					],
-				'server' =>
-					[
-						'webserver' => $this->getWebserver(),
-						'php' => $this->phpStatistics->getPhpStatistics(),
-						'database' => $this->databaseStatistics->getDatabaseStatistics()
-					],
-				'activeUsers' => $this->sessionStatistics->getSessionStatistics()
-			]
-		);
+		return new DataResponse([
+			'nextcloud' => [
+				'system'  => $this->systemStatistics->getSystemStatistics(),
+				'storage' => $this->storageStatistics->getStorageStatistics(),
+				'shares'  => $this->shareStatistics->getShareStatistics()
+			],
+			'server' => [
+				'webserver' => $this->getWebserver(),
+				'php'       => $this->phpStatistics->getPhpStatistics(),
+				'database'  => $this->databaseStatistics->getDatabaseStatistics()
+			],
+			'activeUsers' => $this->sessionStatistics->getSessionStatistics()
+		]);
 
 	}
 
@@ -121,20 +115,24 @@ class ApiController extends OCSController {
 	 * @return DataResponse
 	 */
 	public function BasicData(): DataResponse {
-		$servertime = $this->Os->getTime();
-		$uptime = $this->Os->getUptime();
-		$timeservers = $this->Os->getTimeServers()[0];
-		return new DataResponse(array('servertime'=>$servertime,'uptime'=>$uptime,'timeservers'=>$timeservers));
+		$servertime  = $this->os->getTime();
+		$uptime      = $this->os->getUptime();
+		$timeservers = $this->os->getTimeServers()[0];
+
+		return new DataResponse([
+			'servertime' => $servertime,
+			'uptime' => $uptime,
+			'timeservers' => $timeservers
+		]);
 	}
 
 	/**
 	 * @return DataResponse
 	 */
 	public function DiskData(): DataResponse {
-		$result = $this->Os->getDiskData();
+		$result = $this->os->getDiskData();
 		return new DataResponse($result);
 	}
-
 
 	/**
 	 * get webserver
@@ -145,10 +143,6 @@ class ApiController extends OCSController {
 		if (isset($_SERVER['SERVER_SOFTWARE'])) {
 			return $_SERVER['SERVER_SOFTWARE'];
 		}
-
-		return "unknown";
+		return 'unknown';
 	}
-
-
-
 }
