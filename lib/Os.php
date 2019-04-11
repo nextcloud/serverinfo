@@ -83,7 +83,7 @@ class Os {
 	/**
 	 * @return string
 	 */
-	public function detectOs() {
+	public function detectOs(): string {
 		$release = shell_exec('cat /etc/*-release');
 		if(stripos($release,'ubuntu')) {
 			$os = shell_exec('lsb_release -r -s');
