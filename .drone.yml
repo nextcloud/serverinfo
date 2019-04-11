@@ -8,7 +8,7 @@ pipeline:
     image: nextcloudci/php7.1:php7.1-16
     environment:
       - APP_NAME=serverinfo
-      - CORE_BRANCH=master
+      - CORE_BRANCH=stable16
       - DB=sqlite
     commands:
       - wget https://raw.githubusercontent.com/nextcloud/travis_ci/master/before_install.sh
