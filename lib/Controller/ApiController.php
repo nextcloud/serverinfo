@@ -36,7 +36,7 @@ use OCP\IRequest;
 class ApiController extends OCSController {
 
 	/** @var Os */
-	private $Os;
+	private $os;
 
 	/** @var SystemStatistics */
 	private $systemStatistics;
