@@ -9,6 +9,7 @@
     <licence>agpl</licence>
     <author>Bjoern Schiessle</author>
     <author>Ivan Sein Santiago</author>
+    <author>Frank Karlitschek</author>
     <namespace>ServerInfo</namespace>
     <default_enable/>
     <category>monitoring</category>

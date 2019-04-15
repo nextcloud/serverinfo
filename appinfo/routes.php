@@ -34,5 +34,7 @@ return [
     ],
 	'ocs' => [
 		['name' => 'api#info', 'url' => '/api/v1/info', 'verb' => 'GET'],
-	]
+		['name' => 'api#DiskData', 'url' => '/api/v1/diskdata', 'verb' => 'GET'],
+		['name' => 'api#BasicData', 'url' => '/api/v1/basicdata', 'verb' => 'GET'],
+	],
 ];

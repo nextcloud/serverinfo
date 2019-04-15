@@ -29,8 +29,14 @@
 		sharesChart;
 
 	$(document).ready(function () {
+		var x = document.getElementById('rambox');
+		x.style.backgroundColor = OCA.Theming  ? OCA.Theming.color : 'rgb(54, 129, 195)'; 
 
-		var updateTimer = setInterval(updateInfo, 1000);
+		var x = document.getElementById('swapbox');
+		x.style.backgroundColor = 'rgba(100, 100, 100, 0.8)';
+
+
+		var updateTimer = setInterval(updateInfo, 300);
 
 		resizeSystemCharts();
 		updateActiveUsersStatistics();
@@ -78,14 +84,14 @@
 		if (typeof cpuLoadChart === 'undefined') {
 			cpuLoadChart = new SmoothieChart(
 			{
-				millisPerPixel: 250,
+				millisPerPixel: 100,
 				minValue: 0,
-				grid: { fillStyle: 'rgba(0,0,0,0.03)', strokeStyle: 'transparent' },
+				grid: { fillStyle: 'rgba(249,249,249,1)', strokeStyle: 'transparent' },
 				labels: { fillStyle: 'rgba(0,0,0,0.4)', fontSize: 12 }
 			});
 			cpuLoadChart.streamTo(document.getElementById("cpuloadcanvas"), 1000/*delay*/);
 			cpuLoadLine = new TimeSeries();
-			cpuLoadChart.addTimeSeries(cpuLoadLine, { lineWidth: 1, strokeStyle: 'rgb(0, 0, 255)', fillStyle: 'rgba(0, 0, 255, 0.2)' });
+			cpuLoadChart.addTimeSeries(cpuLoadLine, { lineWidth: 1, strokeStyle: 'rgb(180, 180, 180)', fillStyle: OCA.Theming  ? OCA.Theming.color : 'rgb(54, 129, 195)' });
 		}
 
 		$('#cpuFooterInfo').text(t('serverinfo', 'Load average')+": "+cpu1+" ("+t('serverinfo', 'Last minute')+")");
@@ -121,17 +127,17 @@
 		if (typeof memoryUsageChart === 'undefined') {
 			memoryUsageChart = new SmoothieChart(
 			{
-				millisPerPixel: 250,
+				millisPerPixel: 100,
 				maxValue: maxValueOfChart,
 				minValue: 0,
-				grid: { fillStyle: 'rgba(0,0,0,0.03)', strokeStyle: 'transparent' },
+				grid: { fillStyle: 'rgba(0,0,0,0)', strokeStyle: 'transparent' },
 				labels: { fillStyle: 'rgba(0,0,0,0.4)', fontSize: 12 }
 			});
 			memoryUsageChart.streamTo(document.getElementById("memorycanvas"), 1000/*delay*/);
 			memoryUsageLine = new TimeSeries();
-			memoryUsageChart.addTimeSeries(memoryUsageLine, {lineWidth:1, strokeStyle:'rgb(0, 255, 0)', fillStyle:'rgba(0, 255, 0, 0.2)'});
+			memoryUsageChart.addTimeSeries(memoryUsageLine, {lineWidth:1, strokeStyle:'rgb(180, 180, 180)', fillStyle:OCA.Theming  ? OCA.Theming.color : 'rgb(54, 129, 195)'});
 			swapUsageLine = new TimeSeries();
-			memoryUsageChart.addTimeSeries(swapUsageLine, {lineWidth:1, strokeStyle:'rgb(255, 0, 0)', fillStyle:'rgba(255, 0, 0, 0.2)'});
+			memoryUsageChart.addTimeSeries(swapUsageLine, {lineWidth:1, strokeStyle:'rgb(100, 100, 100)', fillStyle:'rgba(100, 100, 100, 0.2)'});
 		}
 
 		$('#memFooterInfo').text("RAM: "+t('serverinfo', 'Total')+": "+OC.Util.humanFileSize(memTotalBytes)+" - "+t('serverinfo', 'Current usage')+": "+OC.Util.humanFileSize(memUsageBytes));
@@ -223,9 +229,9 @@
 				type: 'line',
 				data: {
 					labels: [
-						t('serverinfo', 'Last 24 hours'),
-						t('serverinfo', 'Last 1 hour'),
-						t('serverinfo', 'Last 5 mins')
+						t('serverinfo', '24 hours'),
+						t('serverinfo', '1 hour'),
+						t('serverinfo', '5 mins')
 					],
 					datasets: [{
 						label: " ",
@@ -274,18 +280,29 @@
 
 		var cpu_canvas = document.getElementById("cpuloadcanvas"),
 			mem_canvas = document.getElementById("memorycanvas");
+			activeuserscanvas = document.getElementById("activeuserscanvas");
+			sharecanvas = document.getElementById("sharecanvas");
 
 		var newWidth = $('#cpuSection').width();
 			newHeight = newWidth / 4
 
 		if (newWidth <= 100) newWidth = 100;
+		if (newWidth >= 500) newWidth = 500;
 		if (newHeight > 150) newHeight = 150;
+
 
 		cpuloadcanvas.width = newWidth;
 		cpuloadcanvas.height = newHeight;
 
 		mem_canvas.width = newWidth;
 		mem_canvas.height = newHeight;
+
+		activeuserscanvas.width = 600;
+		activeuserscanvas.height = 500;
+
+		sharecanvas.width = 800;
+
+
 	}
 
 	function initMonitoringLinkToClipboard() {
@@ -333,3 +350,71 @@
 	}
 
 })(jQuery, OC);
+
+
+$(document).ready(function(){
+	$.ajax({
+		url: OC.linkToOCS('apps/serverinfo/api/v1/', 2) + 'diskdata?format=json',
+		method: "GET",
+		success: function(response) {
+			var diskdata = response.ocs.data;
+			var x = document.querySelectorAll(".DiskChart");
+			var i;
+			for (i = 0; i < x.length; i++) {
+				var chartdata = {
+					labels: ["Used GB", "Available GB"],
+					datasets : [
+						{
+							backgroundColor: [
+								OCA.Theming  ? OCA.Theming.color : 'rgb(54, 129, 195)',
+								'rgb(249, 249, 249)',
+							],
+							borderWidth: 0,
+							data: diskdata[i]
+						}
+					]
+				};
+				var ctx = x[i];
+				var barGraph = new Chart(ctx, {
+					type: 'doughnut',
+					data: chartdata,
+					options: {
+						legend: {
+							display: false,
+						},
+						tooltips: {
+							enabled: true,
+						},
+						cutoutPercentage: 60
+					}
+				});
+			}
+		},
+		error: function(data) {
+			console.log(data);
+		}
+	});
+
+	var interval = 1000;  // 1000 = 1 second, 3000 = 3 seconds
+	function doAjax() {
+		$.ajax({
+			url: OC.linkToOCS('apps/serverinfo/api/v1/', 2) + 'basicdata?format=json',
+			method: "GET",
+			success: function(response) {
+				var data = response.ocs.data;
+				document.getElementById("servertime").innerHTML = data.servertime;
+				document.getElementById("uptime").innerHTML = data.uptime;
+				document.getElementById("timeservers").innerHTML = data.timeservers;
+			},
+			error: function(data) {
+				console.log(data);
+			},
+			complete: function (data) {
+				setTimeout(doAjax, interval);
+			}
+		});
+	}
+	setTimeout(doAjax, interval);
+
+
+});
