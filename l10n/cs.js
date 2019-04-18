@@ -39,6 +39,7 @@ OC.L10N.register(
     "Size" : "Velikost",
     "Available" : "K dispozici",
     "Used" : "Použito",
+    "You will get a notification once one of your disks is nearly full." : "Pokud budou vaše disky téměř zaplněné, obdržíte oznámení.",
     "Files:" : "Soubory:",
     "Storages:" : "Úložiště:",
     "Free Space:" : "Volné místo:",
