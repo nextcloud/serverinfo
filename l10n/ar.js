@@ -52,6 +52,7 @@ OC.L10N.register(
     "Memory usage" : "المستخدام من الذاكرة",
     "Storage" : "تخزين",
     "Users:" : "المستخدمين:",
+    "Nextcloud" : "Nextcloud",
     "Apps installed:" : "التطبيقات المثبتة:",
     "Apps updates available:" : "التحديثات المتوفرة للتطبيقات:"
 },
