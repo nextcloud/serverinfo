@@ -15,6 +15,7 @@ OC.L10N.register(
     "Copied!" : "Nukopijuota!",
     "Not supported!" : "Nepalaikoma!",
     "Monitoring" : "Stebėjimas",
+    "Operating System" : "Operacinė sistema",
     "Memory" : "Atmintis",
     "Disk" : "Diskas",
     "Filesystem" : "Failų sistema",
@@ -23,11 +24,13 @@ OC.L10N.register(
     "Storages:" : "Saugyklos:",
     "Free Space:" : "Laisva vieta:",
     "Network" : "Tinklas",
+    "DNS" : "DNS",
     "Gateway" : "Tinklų sietuvas",
     "MAC" : "MAC",
     "IPv4" : "IPv4",
     "IPv6" : "IPv6",
     "Active users" : "Aktyvūs naudotojai",
+    "Total users:" : "Iš viso naudotojų:",
     "Shares" : "Viešiniai",
     "PHP" : "PHP",
     "Version:" : "Versija:",
@@ -46,6 +49,8 @@ OC.L10N.register(
     "Memory usage" : "Atminties sunaudojimas",
     "Storage" : "Saugykla",
     "Users:" : "Naudotojai:",
-    "Nextcloud" : "Nextcloud"
+    "Nextcloud" : "Nextcloud",
+    "Apps installed:" : "Įdiegta programėlių:",
+    "Apps updates available:" : "Yra prieinama atnaujinimų programėlėms:"
 },
 "nplurals=4; plural=(n % 10 == 1 && (n % 100 > 19 || n % 100 < 11) ? 0 : (n % 10 >= 2 && n % 10 <=9) && (n % 100 > 19 || n % 100 < 11) ? 1 : n % 1 != 0 ? 2: 3);");
