@@ -42,7 +42,7 @@ OC.L10N.register(
     "You will get a notification once one of your disks is nearly full." : "Você receberá uma notificação quando um dos seus discos estiver quase cheio.",
     "Files:" : "Arquivos:",
     "Storages:" : "Armazenamentos:",
-    "Free Space:" : "Espaço Livre:",
+    "Free Space:" : "Espaço livre:",
     "Network" : "Rede",
     "Hostname" : "Hostname",
     "DNS" : "DNS",
