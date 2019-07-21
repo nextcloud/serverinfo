@@ -14,7 +14,7 @@ OC.L10N.register(
     "Copy" : "Kopiatu",
     "Copied!" : "Kopiatua!",
     "Press ⌘-C to copy." : "Sakatu ⌘-C kopiatzeko.",
-    "Press Ctrl-C to copy." : "Sakatu Ctrl-C kpiatzeko.",
+    "Press Ctrl-C to copy." : "Sakatu Ctrl-C kopiatzeko.",
     "Monitoring" : "Jarraipena",
     "Files:" : "Fitxategiak:",
     "Active users" : "Erabiltzaile aktiboak",
@@ -34,6 +34,8 @@ OC.L10N.register(
     "CPU load" : "CPU erabilera",
     "Memory usage" : "Memoria erabilera",
     "Storage" : "Biltegiratzea",
-    "Users:" : "Erabiltzaileak:"
+    "Users:" : "Erabiltzaileak:",
+    "Nextcloud" : "Nextcloud",
+    "Apps installed:" : "Instalatutako aplikazioak:"
 },
 "nplurals=2; plural=(n != 1);");
