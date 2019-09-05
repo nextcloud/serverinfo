@@ -3,10 +3,13 @@ php:
   - 7.1
   - 7.2
   - 7.3
+services:
+  - mysql
+  - postgresql
 
 env:
   global:
-    - CORE_BRANCH=master
+    - CORE_BRANCH=stable17
     - APP_NAME=serverinfo
   matrix:
     - DB=sqlite
