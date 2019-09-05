@@ -35,7 +35,7 @@ OC.L10N.register(
     "Load" : "Искористеност",
     "Disk" : "Диск",
     "Mount" : "Монтиран",
-    "Filesystem" : "Filesystem",
+    "Filesystem" : "Податоци",
     "Size" : "Големина",
     "Available" : "Достапно",
     "Used" : "Искористено",
