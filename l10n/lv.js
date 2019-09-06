@@ -24,7 +24,7 @@ OC.L10N.register(
     "Press Ctrl-C to copy." : "Spied Ctrl-C lai kopētu.",
     "System" : "Sistēma",
     "Monitoring" : "Uzraudzība",
-    "Monitoring app with useful server information" : "Programmas pārraudzība ar noderīgu servera informāciju",
+    "Monitoring app with useful server information" : "Monitoringa lietotne ar noderīgu servera informāciju",
     "Provides useful server information, such as CPU load, RAM usage, disk usage, number of users, etc." : "Sniedz noderīgu servera informāciju, piemēram, CPU ielādi, RAM lietojumu, diska lietojumu, lietotāju skaitu utt.",
     "Operating System" : "Operētājsistēma",
     "CPU" : "CPU",
@@ -75,7 +75,7 @@ OC.L10N.register(
     "Storage" : "Krātuve",
     "Users:" : "Lietotāji:",
     "Nextcloud" : "Nextcloud",
-    "Apps installed:" : "Instalētās programmas:",
-    "Apps updates available:" : "Pieejami programmu atjauninājumi:"
+    "Apps installed:" : "Instalētās lietotnes:",
+    "Apps updates available:" : "Pieejami lietotņu atjauninājumi:"
 },
 "nplurals=3; plural=(n%10==1 && n%100!=11 ? 0 : n != 0 ? 1 : 2);");
