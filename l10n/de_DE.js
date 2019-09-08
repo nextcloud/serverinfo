@@ -21,7 +21,7 @@ OC.L10N.register(
     "Copied!" : "Kopiert!",
     "Not supported!" : "Nicht unterstützt!",
     "Press ⌘-C to copy." : "Zum Kopieren ⌘-C drücken.",
-    "Press Ctrl-C to copy." : "Ctrl-C zum Kopieren drücken.",
+    "Press Ctrl-C to copy." : "Strg-C zum Kopieren drücken.",
     "System" : "System",
     "Monitoring" : "Information",
     "Monitoring app with useful server information" : "Monitoring-App mit nützlichen Serverinformationen",
