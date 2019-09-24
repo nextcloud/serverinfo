@@ -24,7 +24,7 @@ OC.L10N.register(
     "Press Ctrl-C to copy." : "Prema Ctrl-C para copiar.",
     "System" : "Sistema",
     "Monitoring" : "Seguimento",
-    "Monitoring app with useful server information" : "Aplicativo de seguimento con información útil do servidor",
+    "Monitoring app with useful server information" : "Aplicación de seguimento con información útil do servidor",
     "Provides useful server information, such as CPU load, RAM usage, disk usage, number of users, etc." : "Fornece información útil do servidor, como a carga da CPU, o uso da memoria RAM, o uso do disco, o número de usuarios, etc.",
     "Operating System" : "Sistema operativo",
     "CPU" : "CPU",
@@ -75,7 +75,7 @@ OC.L10N.register(
     "Storage" : "Almacenamento",
     "Users:" : "Usuarios:",
     "Nextcloud" : "Nextcloud",
-    "Apps installed:" : "Aplicativos instalados:",
-    "Apps updates available:" : "Actualizacións dispoñíbeis de aplicativos:"
+    "Apps installed:" : "Aplicacións instaladas:",
+    "Apps updates available:" : "Actualizacións dispoñíbeis de aplicacións:"
 },
 "nplurals=2; plural=(n != 1);");
