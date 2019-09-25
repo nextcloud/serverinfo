@@ -26,6 +26,7 @@ OC.L10N.register(
     "Network" : "Tinklas",
     "DNS" : "DNS",
     "Gateway" : "Tinklų sietuvas",
+    "Status" : "Būsena",
     "MAC" : "MAC",
     "IPv4" : "IPv4",
     "IPv6" : "IPv6",
