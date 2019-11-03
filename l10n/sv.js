@@ -76,6 +76,6 @@ OC.L10N.register(
     "Users:" : "Användare:",
     "Nextcloud" : "Nextcloud",
     "Apps installed:" : "Installerade appar:",
-    "Apps updates available:" : "Tillgängliga app-uppdateringar"
+    "Apps updates available:" : "Tillgängliga appuppdateringar"
 },
 "nplurals=2; plural=(n != 1);");
