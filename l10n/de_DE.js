@@ -32,7 +32,7 @@ OC.L10N.register(
     "Server time" : "Server-Zeit",
     "Uptime" : "Betriebszeit",
     "Time Servers" : "Zeitserver",
-    "Load" : "Lade",
+    "Load" : "Auslastung",
     "Disk" : "Disk",
     "Mount" : "Mount",
     "Filesystem" : "Dateisystem",
