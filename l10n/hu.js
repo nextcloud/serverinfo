@@ -13,6 +13,7 @@ OC.L10N.register(
     "Mails" : "Levelek",
     "Federated sent" : "Küldött egyesítés",
     "Federated received" : "Fogadott egyesítés",
+    "Talk conversations" : "Beszélgetések",
     "24 hours" : "24 óra",
     "1 hour" : "1 óra",
     "5 mins" : "5 perc",
