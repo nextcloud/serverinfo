@@ -55,7 +55,7 @@ class SessionStatisticsTest extends TestCase {
 
 	private $currentTime = 100000;
 
-	public function setUp() {
+	protected function setUp(): void {
 		parent::setUp();
 
 		$this->timeFactory = $this->getMockBuilder('OCP\AppFramework\Utility\ITimeFactory')
