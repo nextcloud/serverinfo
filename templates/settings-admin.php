@@ -1,39 +1,40 @@
 <?php
-/**
- * @copyright Copyright (c) 2016 Bjoern Schiessle <bjoern@schiessle.org>
- *
- * @license GNU AGPL version 3 or any later version
- *
- * This program is free software: you can redistribute it and/or modify
- * it under the terms of the GNU Affero General Public License as
- * published by the Free Software Foundation, either version 3 of the
- * License, or (at your option) any later version.
- *
- * This program is distributed in the hope that it will be useful,
- * but WITHOUT ANY WARRANTY; without even the implied warranty of
- * MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE.  See the
- * GNU Affero General Public License for more details.
- *
- * You should have received a copy of the GNU Affero General Public License
- * along with this program.  If not, see <http://www.gnu.org/licenses/>.
- *
- */
+	/**
+	 * @copyright Copyright (c) 2016 Bjoern Schiessle <bjoern@schiessle.org>
+	 *
+	 * @license GNU AGPL version 3 or any later version
+	 *
+	 * This program is free software: you can redistribute it and/or modify
+	 * it under the terms of the GNU Affero General Public License as
+	 * published by the Free Software Foundation, either version 3 of the
+	 * License, or (at your option) any later version.
+	 *
+	 * This program is distributed in the hope that it will be useful,
+	 * but WITHOUT ANY WARRANTY; without even the implied warranty of
+	 * MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE.  See the
+	 * GNU Affero General Public License for more details.
+	 *
+	 * You should have received a copy of the GNU Affero General Public License
+	 * along with this program.  If not, see <http://www.gnu.org/licenses/>.
+	 *
+	 */
 
-script('serverinfo', 'script');
-script('serverinfo', 'smoothie');
-script('serverinfo', 'Chart.min');
+	script('serverinfo', 'script');
+	script('serverinfo', 'smoothie');
+	script('serverinfo', 'Chart.min');
 
-style('serverinfo', 'style');
+	style('serverinfo', 'style');
 
-function FormatBytes($byte) {
-	$unim  = array('B', 'KB', 'MB', 'GB', 'TB', 'PB');
-	$count = 1;
-	while ($byte >= 1024) {
-		$count++;
-		$byte = $byte / 1024;
+	function FormatBytes($byte) {
+		$unim = array('B', 'KB', 'MB', 'GB', 'TB', 'PB');
+		$count = 1;
+		while ($byte >= 1024) {
+			$count++;
+			$byte = $byte / 1024;
+		}
+
+		return number_format($byte, 2, '.', '.') . ' ' . $unim[$count];
 	}
-	return number_format($byte, 2, '.', '.') . ' ' . $unim[$count];
-}
 
 ?>
 
@@ -44,7 +45,7 @@ function FormatBytes($byte) {
 		<div class="row">
 			<div class="col col-12">
 				<h2>
-					<img class="infoicon" src="<?php p(image_path('core', 'actions/screen.svg')); ?>">
+					<img class="infoicon" src="<?php p(image_path('serverinfo', 'server.svg')); ?>">
 					<?php p($_['hostname']); ?>
 				</h2>
 				<div class="table-wrapper">
@@ -98,7 +99,7 @@ function FormatBytes($byte) {
 
 			<div class="col col-6 col-l-12">
 				<h2>
-					<img class="infoicon" src="<?php p(image_path('core', 'actions/screen.svg')); ?>">
+					<img class="infoicon" src="<?php p(image_path('serverinfo', 'server.svg')); ?>">
 					<?php p($l->t('Load')); ?>
 				</h2>
 				<div class="infobox" id="cpuSection">
@@ -111,7 +112,7 @@ function FormatBytes($byte) {
 
 			<div class="col col-6 col-l-12">
 				<h2>
-					<img class="infoicon" src="<?php p(image_path('core', 'actions/quota.svg')); ?>">
+					<img class="infoicon" src="<?php p(image_path('serverinfo', 'hdd-o.svg')); ?>">
 					<?php p($l->t('Memory')); ?>
 				</h2>
 				<div class="infobox">
@@ -131,7 +132,7 @@ function FormatBytes($byte) {
 		<div class="row">
 			<div class="col col-12">
 				<h2>
-					<img class="infoicon" src="<?php p(image_path('core', 'actions/quota.svg')); ?>">
+					<img class="infoicon" src="<?php p(image_path('serverinfo', 'hdd-o.svg')); ?>">
 					<?php p($l->t('Disk')); ?>
 				</h2>
 			</div>
@@ -175,7 +176,7 @@ function FormatBytes($byte) {
 		<div class="row">
 			<div class="col col-12">
 				<h2>
-					<img class="infoicon" src="<?php p(image_path('core', 'categories/integration.svg')); ?>">
+					<img class="infoicon" src="<?php p(image_path('serverinfo', 'sort.svg')); ?>">
 					<?php p($l->t('Network')); ?>
 				</h2>
 			</div>
@@ -230,7 +231,7 @@ function FormatBytes($byte) {
 			<div class="col col-6 col-m-12">
 				<!-- ACTIVE USERS -->
 				<h2>
-					<img class="infoicon" src="<?php p(image_path('core', 'categories/social.svg')); ?>">
+					<img class="infoicon" src="<?php p(image_path('serverinfo', 'user.svg')); ?>">
 					<?php p($l->t('Active users')); ?>
 				</h2>
 				<div class="infobox">
@@ -255,7 +256,7 @@ function FormatBytes($byte) {
 			<div class="col col-6 col-m-12">
 				<!-- SHARES -->
 				<h2>
-					<img class="infoicon" src="<?php p(image_path('core', 'places/files.svg')); ?>">
+					<img class="infoicon" src="<?php p(image_path('serverinfo', 'folder.svg')); ?>">
 					<?php p($l->t('Shares')); ?>
 				</h2>
 				<div class="infobox">
@@ -281,7 +282,7 @@ function FormatBytes($byte) {
 			<div class="col col-6 col-m-12">
 				<!-- PHPINFO -->
 				<h2>
-					<img class="infoicon" src="<?php p(image_path('core', 'actions/screen.svg')); ?>">
+					<img class="infoicon" src="<?php p(image_path('serverinfo', 'hdd-o.svg')); ?>">
 					<?php p($l->t('PHP')); ?>
 				</h2>
 				<div class="infobox">
@@ -309,7 +310,7 @@ function FormatBytes($byte) {
 			<div class="col col-6 col-m-12">
 				<!-- DATABASE -->
 				<h2>
-					<img class="infoicon" src="<?php p(image_path('core', 'actions/screen.svg')); ?>">
+					<img class="infoicon" src="<?php p(image_path('serverinfo', 'hdd-o.svg')); ?>">
 					<?php p($l->t('Database')); ?>
 				</h2>
 				<div class="infobox">
@@ -342,12 +343,12 @@ function FormatBytes($byte) {
 					<?php p($l->t('You can connect an external monitoring tool by using this end point:')); ?>
 				</p>
 				<div class="monitoring-wrapper">
-					<input type="text" readonly="readonly" id="monitoring-endpoint-url" value="<?php echo p($_['ocs']); ?>"/>
+					<input type="text" readonly="readonly" id="monitoring-endpoint-url"
+						   value="<?php echo p($_['ocs']); ?>"/>
 					<a class="clipboardButton icon icon-clippy" data-clipboard-target="#monitoring-endpoint-url"></a>
+					<span class="icon-info svg" title=""
+						  data-original-title="<?php p($l->t('Did you know?')); ?> <?php p($l->t('Appending "?format=json" at the end of the URL gives you the result in JSON format!')); ?>"></span>
 				</div>
-				<p class="settings-hint">
-					<?php p($l->t('Appending "?format=json" at the end of the URL gives you the result in JSON.')); ?>
-				</p>
 			</div>
 		</div>
 	</div>

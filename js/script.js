@@ -44,23 +44,20 @@
 		setHumanReadableSizeToElement("phpUploadMaxSize");
 		setHumanReadableSizeToElement("systemDiskFreeSpace");
 
+		$('#ocsEndPoint span.icon-info').tooltip({placement: 'top'});
 		initMonitoringLinkToClipboard();
 		$("#monitoring-endpoint-url").on('click', function () {
 			$(this).select();
 		});
 
 		function updateInfo() {
-			const url = OC.generateUrl('/apps/serverinfo/update')
+			var url = OC.generateUrl('/apps/serverinfo/update');
 
-			$.get(url).success(function(response) {
-				updateCPUStatistics(response.system.cpuload)
-				updateMemoryStatistics(response.system.mem_total, response.system.mem_free, response.system.swap_total, response.system.swap_free)
-			}).complete(function() {
-				setTimeout(updateInfo, 300)
-			})
+			$.get(url).success(function (response) {
+				updateCPUStatistics(response.system.cpuload);
+				updateMemoryStatistics(response.system.mem_total, response.system.mem_free, response.system.swap_total, response.system.swap_free);
+			});
 		}
-
-		setTimeout(updateInfo, 0)
 	});
 
 	$(window).load(function(){
@@ -75,40 +72,41 @@
 	 * Reset all canvas widths on window resize so canvas is responsive
 	 */
 	function resizeSystemCharts() {
-		var cpuCanvas = $("#cpuloadcanvas"),
-			cpuCanvasWidth = cpuCanvas.parents('.infobox').width() - 30,
-			memCanvas = $("#memorycanvas"),
-			memCanvasWidth = memCanvas.parents('.infobox').width() - 30,
-			activeUsersCanvas = $("#activeuserscanvas"),
-			activeUsersCanvasWidth = activeUsersCanvas.parents('.infobox').width() - 30,
-			shareCanvas = $("#sharecanvas"),
-			shareCanvasWidth = shareCanvas.parents('.infobox').width() - 30;
+		var cpu_canvas = $("#cpuloadcanvas"),
+			cpu_canvas_width = cpu_canvas.parents('.infobox').width() - 30,
+			mem_canvas = $("#memorycanvas"),
+			mem_canvas_width = mem_canvas.parents('.infobox').width() - 30,
+			active_users_canvas = $("#activeuserscanvas"),
+			active_users_canvas_width = active_users_canvas.parents('.infobox').width() - 30,
+			share_canvas = $("#sharecanvas"),
+			share_canvas_width = share_canvas.parents('.infobox').width() - 30,
+			current_vw = $(window).width();
 
 		// We have to set css width AND attribute width
-		cpuCanvas.width(cpuCanvasWidth);
-		cpuCanvas.attr('width', cpuCanvasWidth);
-		memCanvas.width(memCanvasWidth);
-		memCanvas.attr('width', memCanvasWidth);
-		activeUsersCanvas.width(activeUsersCanvasWidth);
-		activeUsersCanvas.attr('width', activeUsersCanvasWidth);
-		shareCanvas.width(shareCanvasWidth);
-		shareCanvas.attr('width', shareCanvasWidth);
+		cpu_canvas.width(cpu_canvas_width);
+		cpu_canvas.attr('width', cpu_canvas_width);
+		mem_canvas.width(mem_canvas_width);
+		mem_canvas.attr('width', mem_canvas_width);
+		active_users_canvas.width(active_users_canvas_width);
+		active_users_canvas.attr('width', active_users_canvas_width);
+		share_canvas.width(share_canvas_width);
+		share_canvas.attr('width', share_canvas_width);
 
 		updateShareStatistics();
 		updateActiveUsersStatistics();
 	}
 
 	function updateCPUStatistics(cpuload) {
-		var $cpuFooterInfo = $('#cpuFooterInfo');
-		var $cpuLoadCanvas = $('#cpuloadcanvas');
+		var $cpu_footer_info = $('#cpuFooterInfo');
+		var $cpu_load_canvas = $('#cpuloadcanvas');
 
 		if (cpuload === 'N/A') {
-			$cpuFooterInfo.text(t('serverinfo', 'CPU info not available'));
-			$cpuLoadCanvas.addClass('hidden');
+			$cpu_footer_info.text(t('serverinfo', 'CPU info not available'));
+			$cpu_load_canvas.addClass('hidden');
 			return;
 
-		} else if ($cpuLoadCanvas.hasClass('hidden')) {
-			$cpuLoadCanvas.removeClass('hidden');
+		} else if ($cpu_load_canvas.hasClass('hidden')) {
+			$cpu_load_canvas.removeClass('hidden');
 		}
 
 		var cpu1 = cpuload[0],
@@ -133,21 +131,21 @@
 			});
 		}
 
-		$cpuFooterInfo.text(t('serverinfo', 'Load average') + ": " + cpu1 + " (" + t('serverinfo', 'Last minute') + ")");
+		$cpu_footer_info.text(t('serverinfo', 'Load average') + ": " + cpu1 + " (" + t('serverinfo', 'Last minute') + ")");
 		cpuLoadLine.append(new Date().getTime(), cpu1);
 	}
 
 	function updateMemoryStatistics(memTotal, memFree, swapTotal, swapFree) {
-		var $memFooterInfo = $('#memFooterInfo');
-		var $memoryCanvas = $('#memorycanvas');
+		var $mem_footer_info = $('#memFooterInfo');
+		var $memory_canvas = $('#memorycanvas');
 
 		if (memTotal === 'N/A' || memFree === 'N/A') {
-			$memFooterInfo.text(t('serverinfo', 'Memory info not available'));
-			$memoryCanvas.addClass('hidden');
+			$mem_footer_info.text(t('serverinfo', 'Memory info not available'));
+			$memory_canvas.addClass('hidden');
 			return;
 
-		} else if ($memoryCanvas.hasClass('hidden')) {
-			$memoryCanvas.removeClass('hidden');
+		} else if ($memory_canvas.hasClass('hidden')) {
+			$memory_canvas.removeClass('hidden');
 		}
 
 		var memTotalBytes = memTotal * 1024,
@@ -190,7 +188,7 @@
 			});
 		}
 
-		$memFooterInfo
+		$mem_footer_info
 			.text("RAM: " + t('serverinfo', 'Total') + ": " + OC.Util.humanFileSize(memTotalBytes) + " - " + t('serverinfo', 'Current usage') + ": " + OC.Util.humanFileSize(memUsageBytes));
 		memoryUsageLine.append(new Date().getTime(), memUsageGB);
 		$('#swapFooterInfo')
@@ -198,10 +196,10 @@
 		swapUsageLine.append(new Date().getTime(), swapUsageGB);
 	}
 
-	function updateShareStatistics () {
+	function updateShareStatistics() {
 
 		var shares = $('#sharecanvas').data('shares'),
-			sharesData = [shares.num_shares_user,
+			shares_data = [shares.num_shares_user,
 				shares.num_shares_groups,
 				shares.num_shares_link,
 				shares.num_shares_mail,
@@ -211,7 +209,7 @@
 			],
 			stepSize = 0;
 
-		if (Math.max.apply(null, sharesData) < 10) {
+		if (Math.max.apply(null, shares_data) < 10) {
 			stepSize = 1;
 		}
 
@@ -232,7 +230,7 @@
 					],
 					datasets: [{
 						label: " ",
-						data: sharesData,
+						data: shares_data,
 						backgroundColor: [
 							'rgba(0, 76, 153, 0.2)',
 							'rgba(51, 153, 255, 0.2)',
@@ -274,10 +272,10 @@
 	function updateActiveUsersStatistics() {
 
 		var activeUsers = $('#activeuserscanvas').data('users'),
-			activeUsersData = [activeUsers.last24hours, activeUsers.last1hour, activeUsers.last5minutes],
+			activeUsers_data = [activeUsers.last24hours, activeUsers.last1hour, activeUsers.last5minutes],
 			stepSize = 0;
 
-		if (Math.max.apply(null, activeUsersData) < 10) {
+		if (Math.max.apply(null, activeUsers_data) < 10) {
 			stepSize = 1;
 		}
 
@@ -294,14 +292,14 @@
 					],
 					datasets: [{
 						label: " ",
-						data: activeUsersData,
+						data: activeUsers_data,
 						fill: false,
 						borderColor: ['rgba(0, 0, 255, 1)'],
 						borderWidth: 1,
 						borderDashOffset: 0.0,
 						borderJoinStyle: 'miter',
 						pointBorderColor: 'rgba(0, 0, 255, 1)',
-						pointBackgroundColor: "#fff",
+						pointBackgroundColor: "#ffffff",
 						pointBorderWidth: 1,
 						pointHoverRadius: 5,
 						pointHoverBackgroundColor: "rgba(0,0,255,0.6)",
@@ -313,7 +311,7 @@
 					}]
 				},
 				options: {
-					legend: { display:false },
+					legend: {display: false},
 					scales: {
 						yAxes: [{
 							ticks: {
@@ -327,7 +325,7 @@
 		}
 	}
 
-	function setHumanReadableSizeToElement (elementId) {
+	function setHumanReadableSizeToElement(elementId) {
 		var maxUploadSize = parseInt($('#' + elementId).text());
 
 		if ($.isNumeric(maxUploadSize)) {
@@ -342,14 +340,14 @@
 
 		// Clipboard!
 		var clipboard = new Clipboard('.clipboardButton');
-		clipboard.on('success', function(e) {
+		clipboard.on('success', function (e) {
 			var $input = $(e.trigger);
 			$input.tooltip('hide')
 				.attr('data-original-title', t('core', 'Copied!'))
 				.tooltip('fixTitle')
 				.tooltip({placement: 'bottom', trigger: 'manual'})
 				.tooltip('show');
-			_.delay(function() {
+			_.delay(function () {
 				$input.tooltip('hide')
 					.attr('data-original-title', t('core', 'Copy'))
 					.tooltip('fixTitle');
