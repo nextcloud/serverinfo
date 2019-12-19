@@ -72,41 +72,40 @@
 	 * Reset all canvas widths on window resize so canvas is responsive
 	 */
 	function resizeSystemCharts() {
-		var cpu_canvas = $("#cpuloadcanvas"),
-			cpu_canvas_width = cpu_canvas.parents('.infobox').width() - 30,
-			mem_canvas = $("#memorycanvas"),
-			mem_canvas_width = mem_canvas.parents('.infobox').width() - 30,
-			active_users_canvas = $("#activeuserscanvas"),
-			active_users_canvas_width = active_users_canvas.parents('.infobox').width() - 30,
-			share_canvas = $("#sharecanvas"),
-			share_canvas_width = share_canvas.parents('.infobox').width() - 30,
-			current_vw = $(window).width();
+		var cpuCanvas = $("#cpuloadcanvas"),
+			cpuCanvasWidth = cpuCanvas.parents('.infobox').width() - 30,
+			memCanvas = $("#memorycanvas"),
+			memCanvasWidth = memCanvas.parents('.infobox').width() - 30,
+			activeUsersCanvas = $("#activeuserscanvas"),
+			activeUsersCanvasWidth = activeUsersCanvas.parents('.infobox').width() - 30,
+			shareCanvas = $("#sharecanvas"),
+			shareCanvasWidth = shareCanvas.parents('.infobox').width() - 30;
 
 		// We have to set css width AND attribute width
-		cpu_canvas.width(cpu_canvas_width);
-		cpu_canvas.attr('width', cpu_canvas_width);
-		mem_canvas.width(mem_canvas_width);
-		mem_canvas.attr('width', mem_canvas_width);
-		active_users_canvas.width(active_users_canvas_width);
-		active_users_canvas.attr('width', active_users_canvas_width);
-		share_canvas.width(share_canvas_width);
-		share_canvas.attr('width', share_canvas_width);
+		cpuCanvas.width(cpuCanvasWidth);
+		cpuCanvas.attr('width', cpuCanvasWidth);
+		memCanvas.width(memCanvasWidth);
+		memCanvas.attr('width', memCanvasWidth);
+		activeUsersCanvas.width(activeUsersCanvasWidth);
+		activeUsersCanvas.attr('width', activeUsersCanvasWidth);
+		shareCanvas.width(shareCanvasWidth);
+		shareCanvas.attr('width', shareCanvasWidth);
 
 		updateShareStatistics();
 		updateActiveUsersStatistics();
 	}
 
 	function updateCPUStatistics(cpuload) {
-		var $cpu_footer_info = $('#cpuFooterInfo');
-		var $cpu_load_canvas = $('#cpuloadcanvas');
+		var $cpuFooterInfo = $('#cpuFooterInfo');
+		var $cpuLoadCanvas = $('#cpuloadcanvas');
 
 		if (cpuload === 'N/A') {
-			$cpu_footer_info.text(t('serverinfo', 'CPU info not available'));
-			$cpu_load_canvas.addClass('hidden');
+			$cpuFooterInfo.text(t('serverinfo', 'CPU info not available'));
+			$cpuLoadCanvas.addClass('hidden');
 			return;
 
-		} else if ($cpu_load_canvas.hasClass('hidden')) {
-			$cpu_load_canvas.removeClass('hidden');
+		} else if ($cpuLoadCanvas.hasClass('hidden')) {
+			$cpuLoadCanvas.removeClass('hidden');
 		}
 
 		var cpu1 = cpuload[0],
@@ -131,21 +130,21 @@
 			});
 		}
 
-		$cpu_footer_info.text(t('serverinfo', 'Load average') + ": " + cpu1 + " (" + t('serverinfo', 'Last minute') + ")");
+		$cpuFooterInfo.text(t('serverinfo', 'Load average') + ": " + cpu1 + " (" + t('serverinfo', 'Last minute') + ")");
 		cpuLoadLine.append(new Date().getTime(), cpu1);
 	}
 
 	function updateMemoryStatistics(memTotal, memFree, swapTotal, swapFree) {
-		var $mem_footer_info = $('#memFooterInfo');
-		var $memory_canvas = $('#memorycanvas');
+		var $memFooterInfo = $('#memFooterInfo');
+		var $memoryCanvas = $('#memorycanvas');
 
 		if (memTotal === 'N/A' || memFree === 'N/A') {
-			$mem_footer_info.text(t('serverinfo', 'Memory info not available'));
-			$memory_canvas.addClass('hidden');
+			$memFooterInfo.text(t('serverinfo', 'Memory info not available'));
+			$memoryCanvas.addClass('hidden');
 			return;
 
-		} else if ($memory_canvas.hasClass('hidden')) {
-			$memory_canvas.removeClass('hidden');
+		} else if ($memoryCanvas.hasClass('hidden')) {
+			$memoryCanvas.removeClass('hidden');
 		}
 
 		var memTotalBytes = memTotal * 1024,
@@ -188,7 +187,7 @@
 			});
 		}
 
-		$mem_footer_info
+		$memFooterInfo
 			.text("RAM: " + t('serverinfo', 'Total') + ": " + OC.Util.humanFileSize(memTotalBytes) + " - " + t('serverinfo', 'Current usage') + ": " + OC.Util.humanFileSize(memUsageBytes));
 		memoryUsageLine.append(new Date().getTime(), memUsageGB);
 		$('#swapFooterInfo')
@@ -199,7 +198,7 @@
 	function updateShareStatistics() {
 
 		var shares = $('#sharecanvas').data('shares'),
-			shares_data = [shares.num_shares_user,
+			sharesData = [shares.num_shares_user,
 				shares.num_shares_groups,
 				shares.num_shares_link,
 				shares.num_shares_mail,
@@ -209,7 +208,7 @@
 			],
 			stepSize = 0;
 
-		if (Math.max.apply(null, shares_data) < 10) {
+		if (Math.max.apply(null, sharesData) < 10) {
 			stepSize = 1;
 		}
 
@@ -230,7 +229,7 @@
 					],
 					datasets: [{
 						label: " ",
-						data: shares_data,
+						data: sharesData,
 						backgroundColor: [
 							'rgba(0, 76, 153, 0.2)',
 							'rgba(51, 153, 255, 0.2)',
@@ -272,10 +271,10 @@
 	function updateActiveUsersStatistics() {
 
 		var activeUsers = $('#activeuserscanvas').data('users'),
-			activeUsers_data = [activeUsers.last24hours, activeUsers.last1hour, activeUsers.last5minutes],
+			activeUsersData = [activeUsers.last24hours, activeUsers.last1hour, activeUsers.last5minutes],
 			stepSize = 0;
 
-		if (Math.max.apply(null, activeUsers_data) < 10) {
+		if (Math.max.apply(null, activeUsersData) < 10) {
 			stepSize = 1;
 		}
 
@@ -292,7 +291,7 @@
 					],
 					datasets: [{
 						label: " ",
-						data: activeUsers_data,
+						data: activeUsersData,
 						fill: false,
 						borderColor: ['rgba(0, 0, 255, 1)'],
 						borderWidth: 1,
