@@ -1,75 +1,97 @@
-.barchart {
-	max-width: 200px;
-	max-height: 350px;
+.server-info-wrapper {
+	max-width: 100vw;
 }
 
-.clipboardButton {
-	display: inline-block;
-	position: relative;
-	top: 2px;
-	margin-left: 5px;
+.table-wrapper {
+	overflow-x: auto;
 }
 
-#ocsEndPoint {
-	margin-bottom: 10px;
+.server-infos-table {
+	margin-bottom: 25px;
 }
 
-#monitoring-endpoint-url {
-	width: 80%;
-	max-width: 415px;
+.server-infos-table td:first-child {
+	width: 120px;
+}
+
+.monitoring-wrapper {
+	display: -webkit-flex;
+	display: flex;
+}
+
+.monitoring-wrapper > input {
+	flex: 1 0 auto;
 }
 
 .rambox {
-	padding: 0px;
-	margin: 0px;
- 	height: 10px;
- 	width: 10px;
- 	background-color: #555;
- 	border-radius: 20%;
+	height: 10px;
+	width: 10px;
+	background-color: #555;
 }
 
 .swapbox {
-  height: 10px;
-  width: 10px;
-  background-color: #222;
-  border-radius: 20%;
+	height: 10px;
+	width: 10px;
+	background-color: #222;
 }
 
 .info {
 	font-weight: bold;
-	text-color: #777777;
+	color: #777;
 }
 
 .smallinfo {
-	color: #888888;
+	color: #888;
 	font-size: 11px;
 }
 
 .infobox {
-	width: 400px;
-	border: 1px solid #DDDDDD;
-	margin: 10px 0px 20px 0px;
+	display: flex;
+	flex-wrap: nowrap;
+	align-items: center;
+
+	border: 1px solid #ddd;
 	padding: 15px;
-	color: #555555;
-	background-color: #F9F9F9;
+	margin: 15px 0;
+	color: #555;
+	background-color: #f9f9f9;
 	border-radius: 6px;
-	box-shadow: 1px 1px 9px 1px #EEEEEE;
+	box-shadow: 1px 1px 9px 1px #eee;
 }
 
-.infobox h3 {
-	color: #555555;
-	font-size: 22px;
-	font-weight: bold;
-	padding: 5px 0px 10px 0px;
-	margin: 0px;
+.diskchart-container {
+	width: 100px;
+	border: 1px black;
+}
+
+@media only screen and (max-width: 768px){
+	.infobox {
+		display: block;
+		text-align: center;
+	}
+	.diskchart-container {
+		margin: 0 auto;
+	}
+}
+
+.diskinfo-container {
+	flex: 1 0 auto;
 }
 
 .infobox h2 {
-	color: #555555;
+	color: #555;
 	font-size: 18px;
 	font-weight: bold;
-	padding: 5px 5px 5px 5px;
-	margin: 0px;
+	padding: 5px;
+	margin: 0;
+}
+
+.infobox h3 {
+	color: #555;
+	font-size: 22px;
+	font-weight: bold;
+	padding: 5px 0 10px 0;
+	margin: 0;
 }
 
 .infoicon {
@@ -79,45 +101,142 @@
 }
 
 .chart-container {
-	height:300px;
-	width: 800px;
-	margin: 5px 10px 5px 5px;
+	position: relative;
+	margin: 10px;
 }
 
-.diskchart-container {
-	position: static;
+.clipboardButton {
 	display: inline-block;
-	height:130px;
-	width:130px;
-	float:left;
-	border: 1px black;
-	margin: 5px 10px 5px 5px;
+	position: relative;
+	top: 2px;
+	margin-left: 5px;
 }
 
-.wrapper {
-  overflow:hidden;
+/* GRID SYSTEM */
+
+.row {
+	display: -webkit-flex;
+	display: flex;
+	flex: 0 1 auto;
+	flex-direction: row;
+	flex-wrap: wrap;
+	margin-left: -15px;
+	margin-right: -15px;
 }
 
-.wrapper div {
-   min-height: 100px;
-   padding: 0px;
-}
-#one {
-  float:left;
-  width:440px;
-  margin-right: 10px;
+.col {
+	flex-grow: 1;
+	flex-basis: 0;
+	max-width: 100%;
+	padding-left: 15px;
+	padding-right: 15px;
 }
 
-#two {
-  overflow:hidden;
-  width:440px;
-  min-height:100px;
+.col-1 {
+	flex-basis: 8.333%;
+	max-width: 8.333%;
+	min-width: 8.333%;
 }
 
-@media screen and (max-width: 1000px) {
-   #one {
-    float: none;
-    margin-right:0;
-    width:auto;
-  }
+.col-2 {
+	flex-basis: 16.666%;
+	max-width: 16.666%;
+	min-width: 16.666%;
+}
+
+.col-3 {
+	flex-basis: 25%;
+	max-width: 25%;
+	min-width: 25%;
+}
+
+.col-4 {
+	flex-basis: 33.333%;
+	max-width: 33.333%;
+	min-width: 33.333%;
+}
+
+.col-5 {
+	flex-basis: 41.666%;
+	max-width: 41.666%;
+	min-width: 41.666%;
+}
+
+.col-6 {
+	flex-basis: 50%;
+	max-width: 50%;
+	min-width: 50%;
+}
+
+.col-7 {
+	flex-basis: 58.333%;
+	max-width: 58.333%;
+	min-width: 58.333%;
+}
+
+.col-8 {
+	flex-basis: 66.666%;
+	max-width: 66.666%;
+	min-width: 66.666%;
+}
+
+.col-9 {
+	flex-basis: 75%;
+	max-width: 75%;
+	min-width: 75%;
+}
+
+.col-10 {
+	flex-basis: 83.333%;
+	max-width: 83.333%;
+	min-width: 83.333%;
+}
+
+.col-11 {
+	flex-basis: 91.666%;
+	max-width: 91.666%;
+	min-width: 91.666%;
+}
+
+.col-12 {
+	flex-basis: 100%;
+	max-width: 100%;
+	min-width: 100%;
+}
+
+
+@media only screen and (max-width: 1200px) {
+	.col-xl-6 {
+		flex-basis: 50%;
+		max-width: 50%;
+		min-width: 50%;
+	}
+}
+
+@media only screen and (max-width: 1024px) {
+	.col-l-6 {
+		flex-basis: 50%;
+		max-width: 50%;
+		min-width: 50%;
+	}
+
+	.col-l-12 {
+		flex-basis: 100%;
+		max-width: 100%;
+		min-width: 100%;
+	}
+}
+
+@media only screen and (max-width: 768px) {
+	.col-m-6 {
+		flex-basis: 50%;
+		max-width: 50%;
+		min-width: 50%;
+	}
+
+	.col-m-12 {
+		flex-basis: 100%;
+		max-width: 100%;
+		min-width: 100%;
+	}
 }
