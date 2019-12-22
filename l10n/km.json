@@ -1,0 +1,9 @@
+{ "translations": {
+    "Users" : "អ្នកប្រើ",
+    "Groups" : "ក្រុ",
+    "Size" : "ទំហំ",
+    "Shares" : "ចែក​រំលែក",
+    "Type:" : "ប្រភេទ៖",
+    "Size:" : "ទំហំ៖"
+},"pluralForm" :"nplurals=1; plural=0;"
+}

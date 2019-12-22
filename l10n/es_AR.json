@@ -9,8 +9,19 @@
     "Links" : "Links",
     "Federated sent" : "Envío federado",
     "Federated received" : "Federado recibido",
+    "24 hours" : "24 horas",
+    "1 hour" : "1 hora",
+    "Copy" : "Copiar",
+    "Copied!" : "¡Copiado!",
+    "Not supported!" : "¡No soportado!",
+    "Press ⌘-C to copy." : "Presione ⌘-C para copiar.",
+    "Press Ctrl-C to copy." : "Presione Ctrl-C para copiar.",
+    "System" : "Sistema",
     "Monitoring" : "Monitoreo",
+    "Size" : "Tamaño",
     "Files:" : "Archivos:",
+    "Hostname" : "Nombre del servidor",
+    "Status" : "Estatus",
     "Active users" : "Usuarios activos",
     "Shares" : "Elementos compartido",
     "PHP" : "PHP",
@@ -28,6 +39,7 @@
     "CPU load" : "Carga del CPU",
     "Memory usage" : "Uso de memoria",
     "Storage" : "Almacenamiento",
-    "Users:" : "Usuarios:"
+    "Users:" : "Usuarios:",
+    "Nextcloud" : "Nextcloud"
 },"pluralForm" :"nplurals=2; plural=(n != 1);"
 }

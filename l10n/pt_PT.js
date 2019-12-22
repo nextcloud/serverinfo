@@ -9,8 +9,19 @@ OC.L10N.register(
     "Users" : "Utilizadores",
     "Groups" : "Grupos",
     "Links" : "Hiperligações",
+    "24 hours" : "24 horas",
+    "1 hour" : "1 hora",
+    "Copy" : "Copiar",
+    "Copied!" : "Copiado!",
+    "Not supported!" : "Não suportado!",
+    "Press ⌘-C to copy." : "Pressionar ⌘-C para copiar.",
+    "Press Ctrl-C to copy." : "Pressionar Ctrl-C para copiar.",
+    "System" : "Sistema",
     "Monitoring" : "Monitorização",
+    "Size" : "Tamanho",
     "Files:" : "Ficheiros:",
+    "Hostname" : "Nome do Anfitrião",
+    "Status" : "Estado",
     "Active users" : "Utilizadores activos",
     "Shares" : "Partilhas",
     "PHP" : "PHP",
@@ -28,6 +39,7 @@ OC.L10N.register(
     "CPU load" : "Carga do CPU",
     "Memory usage" : "Utilização de memória",
     "Storage" : "Armazenamento",
-    "Users:" : "Utilizadores:"
+    "Users:" : "Utilizadores:",
+    "Nextcloud" : "Nextcloud"
 },
 "nplurals=2; plural=(n != 1);");
