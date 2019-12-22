@@ -1,0 +1,10 @@
+{ "translations": {
+    "Users" : "ব্যবহারকারী",
+    "Groups" : "গোষ্ঠীসমূহ",
+    "Size" : "আকার",
+    "Hostname" : "হোস্টনেম",
+    "Shares" : "ভাগাভাগি",
+    "Type:" : "ধরণঃ",
+    "Size:" : "আয়তনঃ"
+},"pluralForm" :"nplurals=2; plural=(n != 1);"
+}

@@ -9,8 +9,18 @@ OC.L10N.register(
     "Users" : "Хэрэглэгчид",
     "Groups" : "Бүлгүүд",
     "Links" : "Холбоосууд",
+    "24 hours" : "24 цаг",
+    "1 hour" : "1 цаг",
+    "Copy" : "Хуулах",
+    "Copied!" : "Хуулсан!",
+    "Not supported!" : "Дэмжигдэхгүй",
+    "Press ⌘-C to copy." : "Хуулахын тулд ⌘-C дарна уу.",
+    "Press Ctrl-C to copy." : "Хуулахын тулд Ctrl-C дарна уу.",
+    "System" : "сисмем",
     "Monitoring" : "Хяналт",
+    "Size" : "Хэмжээ",
     "Files:" : "Файлууд:",
+    "Status" : "төлөв",
     "Active users" : "Идэвхтэй хэрэглэгчид",
     "Shares" : "Түгээлтүүд",
     "PHP" : "PHP",
@@ -25,6 +35,7 @@ OC.L10N.register(
     "CPU load" : "CPU ачаалалт",
     "Memory usage" : "Санах ойн хэрэглээ",
     "Storage" : "Багтаамж",
-    "Users:" : "Хэрэглэгчид:"
+    "Users:" : "Хэрэглэгчид:",
+    "Nextcloud" : "Nextcloud"
 },
 "nplurals=2; plural=(n != 1);");

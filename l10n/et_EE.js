@@ -11,9 +11,18 @@ OC.L10N.register(
     "Links" : "Lingid",
     "Federated sent" : "Liitpilve saadetud",
     "Federated received" : "Liitpilvest vastu võetud",
+    "Copy" : "Kopeeri",
+    "Copied!" : "Kopeeritud!",
+    "Not supported!" : "Pole toetatud!",
+    "Press ⌘-C to copy." : "Kopeerimiseks vajuta ⌘+C.",
+    "Press Ctrl-C to copy." : "Kopeerimiseks vajuta Ctrl+C.",
+    "System" : "Süsteem",
     "Monitoring" : "Monitooring",
     "Provides useful server information, such as CPU load, RAM usage, disk usage, number of users, etc." : "Näitab kasulikku infot serveri kohta, näiteks protsessori koormus, mälukasutus, kettaruum, kasutajate arv jne.",
+    "Size" : "Suurus",
     "Files:" : "Faile:",
+    "Hostname" : "Hostinimi",
+    "Status" : "Staatus",
     "Active users" : "Aktiivseid kasutajaid",
     "Shares" : "Jagamisi",
     "PHP" : "PHP",
@@ -31,6 +40,7 @@ OC.L10N.register(
     "CPU load" : "CPU koormus",
     "Memory usage" : "Mälukasutus",
     "Storage" : "Andmehoidlad",
-    "Users:" : "Kasutajaid:"
+    "Users:" : "Kasutajaid:",
+    "Nextcloud" : "Nextcloud"
 },
 "nplurals=2; plural=(n != 1);");
