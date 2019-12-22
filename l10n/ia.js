@@ -11,8 +11,16 @@ OC.L10N.register(
     "Links" : "Ligamines",
     "Federated sent" : "Invio federate",
     "Federated received" : "Reception federate",
+    "Copy" : "Copiar",
+    "Copied!" : "Copiate!",
+    "Not supported!" : "Non supportate!",
+    "Press ⌘-C to copy." : "Pulsa ⌘-C pro copiar.",
+    "Press Ctrl-C to copy." : "Pulsa Ctrl-C pro copiar.",
+    "System" : "Systema",
     "Monitoring" : "Controlante",
+    "Size" : "Dimension",
     "Files:" : "Files:",
+    "Hostname" : "Nomine de Hospite",
     "Active users" : "Usatores active",
     "Shares" : "Compartimentos",
     "PHP" : "PHP",
@@ -30,6 +38,7 @@ OC.L10N.register(
     "CPU load" : "Carga del CPU",
     "Memory usage" : "Uso del memoria",
     "Storage" : "Immagazinage",
-    "Users:" : "Usatores:"
+    "Users:" : "Usatores:",
+    "Nextcloud" : "Nextcloud"
 },
 "nplurals=2; plural=(n != 1);");

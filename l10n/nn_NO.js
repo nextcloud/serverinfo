@@ -8,8 +8,14 @@ OC.L10N.register(
     "Users" : "Brukarare",
     "Groups" : "Grupper",
     "Links" : "Lenker",
+    "Copied!" : "Kopiert!",
+    "Not supported!" : "Ikkje støtta!",
+    "Press ⌘-C to copy." : "Trykk  ⌘-C for å kopiere.",
+    "Press Ctrl-C to copy." : "Trykk Ctrl-C for å kopiere.",
     "Monitoring" : "Overvåker",
+    "Size" : "Storleik",
     "Files:" : "Filar:",
+    "Status" : "Status",
     "Active users" : "Aktive brukarare",
     "Shares" : "Delingar",
     "Memory Limit:" : "Minne grense:",
@@ -23,6 +29,7 @@ OC.L10N.register(
     "Last 5 mins" : "Siste 5 minutt",
     "Memory usage" : "Minne bruk",
     "Storage" : "Lagring",
-    "Users:" : "Brukarare:"
+    "Users:" : "Brukarare:",
+    "Nextcloud" : "Nextcloud"
 },
 "nplurals=2; plural=(n != 1);");

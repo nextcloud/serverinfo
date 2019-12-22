@@ -1,0 +1,11 @@
+{ "translations": {
+    "Users" : "İstifadəçilər",
+    "Groups" : "Qruplar",
+    "System" : "Sistem",
+    "Size" : "Həcm",
+    "Hostname" : "Sahibadı",
+    "Shares" : "Yayımlanmalar",
+    "Type:" : "Tip:",
+    "Size:" : "Həcm:"
+},"pluralForm" :"nplurals=2; plural=(n != 1);"
+}

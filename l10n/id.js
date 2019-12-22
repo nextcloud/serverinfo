@@ -9,9 +9,18 @@ OC.L10N.register(
     "Users" : "Pengguna",
     "Groups" : "Grup",
     "Links" : "Link",
+    "Copy" : "Salin",
+    "Copied!" : "Tersalin!",
+    "Not supported!" : "Tidak didukung!",
+    "Press ⌘-C to copy." : "Tekan ⌘-C untuk menyalin.",
+    "Press Ctrl-C to copy." : "Tekan CTRL-C untuk menyalin.",
+    "System" : "Sistem",
     "Monitoring" : "Pemantauan",
+    "Size" : "Ukuran",
     "Files:" : "Berkas:",
+    "Hostname" : "Nama Host",
     "Active users" : "Pengguna aktif",
+    "Shares" : "Dibagikan",
     "PHP" : "PHP",
     "Version:" : "Versi:",
     "Memory Limit:" : "Batas Memori",
@@ -25,6 +34,7 @@ OC.L10N.register(
     "Last 5 mins" : "5 Menit lalu",
     "Memory usage" : "Penggunaan Memori",
     "Storage" : "Penyimpanan",
-    "Users:" : "Pengguna:"
+    "Users:" : "Pengguna:",
+    "Nextcloud" : "Nextcloud"
 },
 "nplurals=1; plural=0;");

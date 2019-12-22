@@ -11,8 +11,19 @@ OC.L10N.register(
     "Links" : "Enllaces",
     "Federated sent" : "Unvióse la federación",
     "Federated received" : "Recibióse la federación",
+    "24 hours" : "24 hores",
+    "1 hour" : "1 hora",
+    "Copy" : "Copiar",
+    "Copied!" : "¡Copióse!",
+    "Not supported!" : "¡Nun se sofita!",
+    "Press ⌘-C to copy." : "Primi ⌘-C pa copiar.",
+    "Press Ctrl-C to copy." : "Primi Ctrl-C pa copiar.",
+    "System" : "Sistema",
     "Monitoring" : "Monitorización",
+    "Size" : "Tamañu",
     "Files:" : "Ficheros:",
+    "Hostname" : "Nome d'agospiu",
+    "Status" : "Estáu",
     "Active users" : "Usuarios activos",
     "Shares" : "Comparticiones",
     "PHP" : "PHP",
@@ -30,6 +41,7 @@ OC.L10N.register(
     "CPU load" : "Carga de CPU",
     "Memory usage" : "Usu de memoria",
     "Storage" : "Almacenamientu",
-    "Users:" : "Usuarios:"
+    "Users:" : "Usuarios:",
+    "Nextcloud" : "Nextcloud"
 },
 "nplurals=2; plural=(n != 1);");

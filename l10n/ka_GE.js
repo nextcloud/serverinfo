@@ -11,8 +11,19 @@ OC.L10N.register(
     "Links" : "ბმულები",
     "Federated sent" : "ფედერალური გაიგზავნა",
     "Federated received" : "ფედერალური შემოვიდა",
+    "24 hours" : "24 საათი",
+    "1 hour" : "1 საათი",
+    "Copy" : "კოპირება",
+    "Copied!" : "კოპირებულია!",
+    "Not supported!" : "არაა მხარდაჭერილი",
+    "Press ⌘-C to copy." : "კოპირებისთვის დააჭირეთ ⌘-C-ს.",
+    "Press Ctrl-C to copy." : "კოპირებისთვის დააჭირეთ Ctrl-C-ს.",
+    "System" : "სისტემა",
     "Monitoring" : "მონიტორინგი",
+    "Size" : "ზომა",
     "Files:" : "ფაილები",
+    "Hostname" : "ჰოსტი",
+    "Status" : "სტატუსი",
     "Active users" : "აქტიური მომხმარებლები",
     "Shares" : "გაზიარებები",
     "PHP" : "PHP",
@@ -30,6 +41,7 @@ OC.L10N.register(
     "CPU load" : "CPU-ს დატვირთვა",
     "Memory usage" : "მეხსიერების მოხმარება",
     "Storage" : "საცავი",
-    "Users:" : "მომხმარებლები:"
+    "Users:" : "მომხმარებლები:",
+    "Nextcloud" : "Nextcloud-ი"
 },
 "nplurals=2; plural=(n!=1);");

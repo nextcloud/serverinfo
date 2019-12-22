@@ -11,8 +11,19 @@ OC.L10N.register(
     "Links" : "Lidhje",
     "Federated sent" : "Federated dërguar",
     "Federated received" : "Federated te marra",
+    "24 hours" : "24 orë",
+    "1 hour" : "1 orë",
+    "Copy" : "Kopjo",
+    "Copied!" : "I kopjuar!",
+    "Not supported!" : "Nuk mbështetet!",
+    "Press ⌘-C to copy." : "Shtyp ⌘-C për të kopjuar.",
+    "Press Ctrl-C to copy." : "Shtyp Ctrl-C për të kopjuar",
+    "System" : "Sistem",
     "Monitoring" : "Vëzhgim",
+    "Size" : "Madhësi",
     "Files:" : "Skedarët: ",
+    "Hostname" : "Strehëemër",
+    "Status" : "Status",
     "Active users" : "Përdoruesit aktivë",
     "Shares" : "Shpërndarje",
     "PHP" : "PHP",
@@ -30,6 +41,7 @@ OC.L10N.register(
     "CPU load" : "ngarkesa CPU ",
     "Memory usage" : "Përdorimi i kujtesës",
     "Storage" : "Depozit",
-    "Users:" : "Përdoruesit:"
+    "Users:" : "Përdoruesit:",
+    "Nextcloud" : "Nextcloud"
 },
 "nplurals=2; plural=(n != 1);");
