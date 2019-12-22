@@ -6,6 +6,13 @@ OC.L10N.register(
     "Users" : "Gebruikers",
     "Groups" : "Groepe",
     "Links" : "Skakels",
+    "Copy" : "Kopieer",
+    "Copied!" : "Gekopieer!",
+    "Not supported!" : "Word nie ondersteun nie!",
+    "Press ⌘-C to copy." : "Druk ⌘-C om te kopieer.",
+    "Press Ctrl-C to copy." : "Druk Ctrl-C om te kopieer.",
+    "System" : "Stelsel",
+    "Size" : "Grootte",
     "Files:" : "Lêers",
     "Active users" : "Aktiewe gebruikers",
     "PHP" : "PHP",
@@ -18,6 +25,7 @@ OC.L10N.register(
     "Last 1 hour" : "Afgelope 1 uur",
     "Last 5 mins" : "Afgelope 5 min",
     "Memory usage" : "Geheuegebruik",
-    "Users:" : "Gebruikers:"
+    "Users:" : "Gebruikers:",
+    "Nextcloud" : "Nextcloud"
 },
 "nplurals=2; plural=(n != 1);");
