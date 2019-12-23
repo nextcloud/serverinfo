@@ -1,10 +1,10 @@
 OC.L10N.register(
     "serverinfo",
     {
-    "CPU info not available" : "CPU-info ej tillgänglig",
+    "CPU info not available" : "CPU-info inte tillgänglig",
     "Load average" : "Genomsnittsanvändning",
     "Last minute" : "Senaste minuten",
-    "Memory info not available" : "Minnesinformation ej tillgänglig",
+    "Memory info not available" : "Minnesinformation inte tillgänglig",
     "Total" : "Totalt",
     "Current usage" : "Nuvarande användning",
     "Users" : "Användare",
@@ -19,7 +19,7 @@ OC.L10N.register(
     "5 mins" : "5 min",
     "Copy" : "Kopiera",
     "Copied!" : "Kopierat!",
-    "Not supported!" : "Stöds ej!",
+    "Not supported!" : "Stöds inte!",
     "Press ⌘-C to copy." : "Tryck ⌘-C för att kopiera.",
     "Press Ctrl-C to copy." : "Tryck Ctrl-C för att kopiera.",
     "System" : "System",
