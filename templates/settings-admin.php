@@ -32,7 +32,6 @@ function FormatBytes($byte) {
         $count++;
         $byte = $byte / 1024;
     }
-
     return number_format($byte, 2, '.', '.') . ' ' . $unim[$count];
 }
 
