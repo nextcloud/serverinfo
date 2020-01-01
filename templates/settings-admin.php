@@ -26,13 +26,13 @@ script('serverinfo', 'Chart.min');
 style('serverinfo', 'style');
 
 function FormatBytes($byte) {
-    $unim = array('B', 'KB', 'MB', 'GB', 'TB', 'PB');
-    $count = 1;
-    while ($byte >= 1024) {
-        $count++;
-        $byte = $byte / 1024;
-    }
-    return number_format($byte, 2, '.', '.') . ' ' . $unim[$count];
+	$unim  = array('B', 'KB', 'MB', 'GB', 'TB', 'PB');
+	$count = 1;
+	while ($byte >= 1024) {
+		$count++;
+		$byte = $byte / 1024;
+	}
+	return number_format($byte, 2, '.', '.') . ' ' . $unim[$count];
 }
 
 ?>
