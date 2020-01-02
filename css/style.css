@@ -23,6 +23,10 @@
 	flex: 1 0 auto;
 }
 
+.monitoring-wrapper + .settings-hint {
+	margin-top: 0;
+}
+
 .rambox {
 	height: 10px;
 	width: 10px;

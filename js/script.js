@@ -44,7 +44,6 @@
 		setHumanReadableSizeToElement("phpUploadMaxSize");
 		setHumanReadableSizeToElement("systemDiskFreeSpace");
 
-		$('#ocsEndPoint span.icon-info').tooltip({placement: 'top'});
 		initMonitoringLinkToClipboard();
 		$("#monitoring-endpoint-url").on('click', function () {
 			$(this).select();
