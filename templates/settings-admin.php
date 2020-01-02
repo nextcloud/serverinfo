@@ -342,12 +342,12 @@ function FormatBytes($byte) {
 					<?php p($l->t('You can connect an external monitoring tool by using this end point:')); ?>
 				</p>
 				<div class="monitoring-wrapper">
-					<input type="text" readonly="readonly" id="monitoring-endpoint-url"
-						   value="<?php echo p($_['ocs']); ?>"/>
+					<input type="text" readonly="readonly" id="monitoring-endpoint-url" value="<?php echo p($_['ocs']); ?>"/>
 					<a class="clipboardButton icon icon-clippy" data-clipboard-target="#monitoring-endpoint-url"></a>
-					<span class="icon-info svg" title=""
-						  data-original-title="<?php p($l->t('Did you know?')); ?> <?php p($l->t('Appending "?format=json" at the end of the URL gives you the result in JSON format!')); ?>"></span>
 				</div>
+				<p class="settings-hint">
+					<?php p($l->t('Appending "?format=json" at the end of the URL gives you the result in JSON.')); ?>
+				</p>
 			</div>
 		</div>
 	</div>
