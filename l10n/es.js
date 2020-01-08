@@ -58,7 +58,7 @@ OC.L10N.register(
     "PHP" : "PHP",
     "Version:" : "Versión:",
     "Memory Limit:" : "Límite de memoria:",
-    "Max Execution Time:" : "Máximo tiempo de ejecución:",
+    "Max Execution Time:" : "Tiempo máx. de ejecución:",
     "Upload max size:" : "Tamaño máximo de subida:",
     "Database" : "Base de datos",
     "Type:" : "Tipo:",
