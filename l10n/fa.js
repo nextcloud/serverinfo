@@ -12,8 +12,10 @@ OC.L10N.register(
     "Press Ctrl-C to copy." : "برای کپی کردن از دکمه ctrl+c استفاده نمایید",
     "System" : "سیستم",
     "Size" : "اندازه",
+    "Hostname" : "نام میزبان",
     "Shares" : "اشتراک گذاری ها",
     "Type:" : "نوع:",
-    "Size:" : "اندازه"
+    "Size:" : "اندازه",
+    "Nextcloud" : "Nextcloud "
 },
 "nplurals=2; plural=(n > 1);");
