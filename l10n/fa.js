@@ -11,9 +11,13 @@ OC.L10N.register(
     "Press ⌘-C to copy." : "برای کپی کردن از دکمه های C+⌘ استفاده نمایید",
     "Press Ctrl-C to copy." : "برای کپی کردن از دکمه ctrl+c استفاده نمایید",
     "System" : "سیستم",
+    "Monitoring" : "نظارت بر",
     "Size" : "اندازه",
     "Hostname" : "نام میزبان",
+    "Status" : "وضعیت",
     "Shares" : "اشتراک گذاری ها",
+    "PHP" : "PHP",
+    "Database" : "بانک اطلاعات",
     "Type:" : "نوع:",
     "Size:" : "اندازه",
     "Nextcloud" : "Nextcloud "
