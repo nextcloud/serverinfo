@@ -48,6 +48,10 @@ class SessionStatistics {
 	private $offset1Hour = 3600;
 
 	private $offset1Day = 86400;
+	
+	private $offset7Days = 604800;
+	
+	private $offset30Days = 2592000;
 
 	/**
 	 * SessionStatistics constructor.
@@ -65,7 +69,9 @@ class SessionStatistics {
 		return [
 			'last5minutes' => $this->getNumberOfActiveUsers($this->offset5Minutes),
 			'last1hour' => $this->getNumberOfActiveUsers($this->offset1Hour),
-			'last24hours' => $this->getNumberOfActiveUsers($this->offset1Day)
+			'last24hours' => $this->getNumberOfActiveUsers($this->offset1Day),
+			'last7days' => $this->getNumberOfActiveUsers($this->offset7Days),
+			'last30days' => $this->getNumberOfActiveUsers($this->offset30Days)
 		];
 	}
 
