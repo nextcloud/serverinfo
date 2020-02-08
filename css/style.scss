@@ -68,7 +68,7 @@
 	border: 1px black;
 }
 
-@media only screen and (max-width: 768px){
+@media only screen and (max-width: $breakpoint-mobile){
 	.infobox {
 		display: block;
 		text-align: center;
@@ -231,7 +231,7 @@
 	}
 }
 
-@media only screen and (max-width: 768px) {
+@media only screen and (max-width: $breakpoint-mobile) {
 	.col-m-6 {
 		flex-basis: 50%;
 		max-width: 50%;
