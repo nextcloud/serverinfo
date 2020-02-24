@@ -44,7 +44,7 @@ function FormatBytes($byte) {
 		<div class="row">
 			<div class="col col-12">
 				<h2>
-					<img class="infoicon" src="<?php p(image_path('serverinfo', 'server.svg')); ?>">
+					<img class="infoicon" src="<?php p(image_path('core', 'actions/screen.svg')); ?>">
 					<?php p($_['hostname']); ?>
 				</h2>
 				<div class="table-wrapper">
@@ -98,7 +98,7 @@ function FormatBytes($byte) {
 
 			<div class="col col-6 col-l-12">
 				<h2>
-					<img class="infoicon" src="<?php p(image_path('serverinfo', 'server.svg')); ?>">
+					<img class="infoicon" src="<?php p(image_path('core', 'actions/screen.svg')); ?>">
 					<?php p($l->t('Load')); ?>
 				</h2>
 				<div class="infobox" id="cpuSection">
@@ -111,7 +111,7 @@ function FormatBytes($byte) {
 
 			<div class="col col-6 col-l-12">
 				<h2>
-					<img class="infoicon" src="<?php p(image_path('serverinfo', 'hdd-o.svg')); ?>">
+					<img class="infoicon" src="<?php p(image_path('core', 'actions/quota.svg')); ?>">
 					<?php p($l->t('Memory')); ?>
 				</h2>
 				<div class="infobox">
@@ -131,7 +131,7 @@ function FormatBytes($byte) {
 		<div class="row">
 			<div class="col col-12">
 				<h2>
-					<img class="infoicon" src="<?php p(image_path('serverinfo', 'hdd-o.svg')); ?>">
+					<img class="infoicon" src="<?php p(image_path('core', 'actions/quota.svg')); ?>">
 					<?php p($l->t('Disk')); ?>
 				</h2>
 			</div>
@@ -175,7 +175,7 @@ function FormatBytes($byte) {
 		<div class="row">
 			<div class="col col-12">
 				<h2>
-					<img class="infoicon" src="<?php p(image_path('serverinfo', 'sort.svg')); ?>">
+					<img class="infoicon" src="<?php p(image_path('core', 'categories/integration.svg')); ?>">
 					<?php p($l->t('Network')); ?>
 				</h2>
 			</div>
@@ -230,7 +230,7 @@ function FormatBytes($byte) {
 			<div class="col col-6 col-m-12">
 				<!-- ACTIVE USERS -->
 				<h2>
-					<img class="infoicon" src="<?php p(image_path('serverinfo', 'user.svg')); ?>">
+					<img class="infoicon" src="<?php p(image_path('core', 'categories/social.svg')); ?>">
 					<?php p($l->t('Active users')); ?>
 				</h2>
 				<div class="infobox">
@@ -255,7 +255,7 @@ function FormatBytes($byte) {
 			<div class="col col-6 col-m-12">
 				<!-- SHARES -->
 				<h2>
-					<img class="infoicon" src="<?php p(image_path('serverinfo', 'folder.svg')); ?>">
+					<img class="infoicon" src="<?php p(image_path('core', 'places/files.svg')); ?>">
 					<?php p($l->t('Shares')); ?>
 				</h2>
 				<div class="infobox">
@@ -281,7 +281,7 @@ function FormatBytes($byte) {
 			<div class="col col-6 col-m-12">
 				<!-- PHPINFO -->
 				<h2>
-					<img class="infoicon" src="<?php p(image_path('serverinfo', 'hdd-o.svg')); ?>">
+					<img class="infoicon" src="<?php p(image_path('core', 'actions/screen.svg')); ?>">
 					<?php p($l->t('PHP')); ?>
 				</h2>
 				<div class="infobox">
@@ -309,7 +309,7 @@ function FormatBytes($byte) {
 			<div class="col col-6 col-m-12">
 				<!-- DATABASE -->
 				<h2>
-					<img class="infoicon" src="<?php p(image_path('serverinfo', 'hdd-o.svg')); ?>">
+					<img class="infoicon" src="<?php p(image_path('core', 'actions/screen.svg')); ?>">
 					<?php p($l->t('Database')); ?>
 				</h2>
 				<div class="infobox">
