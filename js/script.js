@@ -35,9 +35,6 @@
 		var x = document.getElementById('swapbox');
 		x.style.backgroundColor = 'rgba(100, 100, 100, 0.8)';
 
-
-		var updateTimer = setInterval(updateInfo, 300);
-
 		resizeSystemCharts();
 		updateActiveUsersStatistics();
 		updateShareStatistics();
@@ -54,13 +51,17 @@
 		});
 
 		function updateInfo() {
-			var url = OC.generateUrl('/apps/serverinfo/update');
+			const url = OC.generateUrl('/apps/serverinfo/update')
 
-			$.get(url).success(function (response) {
-				updateCPUStatistics(response.system.cpuload);
-				updateMemoryStatistics(response.system.mem_total, response.system.mem_free, response.system.swap_total, response.system.swap_free);
-			});
+			$.get(url).success(function(response) {
+				updateCPUStatistics(response.system.cpuload)
+				updateMemoryStatistics(response.system.mem_total, response.system.mem_free, response.system.swap_total, response.system.swap_free)
+			}).complete(function() {
+				setTimeout(updateInfo, 300)
+			})
 		}
+
+		setTimeout(updateInfo, 0)
 	});
 
 	$(window).resize(function () {
