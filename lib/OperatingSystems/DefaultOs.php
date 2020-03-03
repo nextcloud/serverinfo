@@ -154,7 +154,7 @@ class DefaultOs {
 	 */
 	public function getDiskInfo() {
 		$blacklist = ['', 'Type', 'tmpfs', 'devtmpfs'];
-		$data  = shell_exec('df -T');
+		$data  = shell_exec('df -TP');
 		$lines = preg_split('/[\r\n]+/', $data);
 
 		foreach ($lines as $line) {
