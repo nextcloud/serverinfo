@@ -57,7 +57,7 @@ class SessionStatisticsTest extends TestCase {
 
 	private $offset30Days = 2592000;
 
-	private $currentTime = $offset30Days + 100000;
+	private $currentTime = 2592001;
 
 	protected function setUp(): void {
 		parent::setUp();
