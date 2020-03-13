@@ -50,13 +50,17 @@
 		});
 
 		function updateInfo() {
-			var url = OC.generateUrl('/apps/serverinfo/update');
+			const url = OC.generateUrl('/apps/serverinfo/update')
 
-			$.get(url).success(function (response) {
-				updateCPUStatistics(response.system.cpuload);
-				updateMemoryStatistics(response.system.mem_total, response.system.mem_free, response.system.swap_total, response.system.swap_free);
-			});
+			$.get(url).success(function(response) {
+				updateCPUStatistics(response.system.cpuload)
+				updateMemoryStatistics(response.system.mem_total, response.system.mem_free, response.system.swap_total, response.system.swap_free)
+			}).complete(function() {
+				setTimeout(updateInfo, 300)
+			})
 		}
+
+		setTimeout(updateInfo, 0)
 	});
 
 	$(window).load(function(){
