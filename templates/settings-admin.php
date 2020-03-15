@@ -54,7 +54,7 @@ function FormatBytes($byte) {
 	</p>
 	<p>
 		<?php p($l->t('Memory'));?>:
-		<span class="info"><?php p($_['memory']);?></span>
+		<span class="info"><?php p(FormatBytes($_['memory']['MemTotal']));?></span>
 	</p>
 	<p>
 		<?php p($l->t('Server time'));?>:

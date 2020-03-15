@@ -26,7 +26,8 @@ namespace OCA\ServerInfo\OperatingSystems;
  */
 class DefaultOs {
 
-	public function __construct() {}
+	/** @var string */
+	protected $meminfo;
 
 	/**
 	 * @return bool
@@ -44,18 +45,44 @@ class DefaultOs {
 	}
 
 	/**
-	 * @return string
+	 * Get memory will return a list key => value where all values are in bytes.
+	 * [MemTotal => 0, MemFree => 0, MemAvailable => 0, SwapTotal => 0, SwapFree => 0].
+	 *
+	 * @return array
 	 */
-	public function getMemory() {
-		$memory = shell_exec('cat /proc/meminfo  | grep -i \'MemTotal\' | cut -f 2 -d ":" | awk \'{$1=$1}1\'');
-		$memory = explode(' ', $memory);
-		$memory = round($memory[0] / 1024);
-		if ($memory < 1024) {
-			$memory = $memory . ' MB';
-		} else {
-			$memory = round($memory / 1024, 1) . ' GB';
+	public function getMemory(): array {
+		$data = ['MemTotal' => -1, 'MemFree' => -1, 'MemAvailable' => -1, 'SwapTotal' => -1, 'SwapFree' => -1];
+
+		if ($this->meminfo === null) {
+			$this->meminfo = $this->readContent('/proc/meminfo');
 		}
-		return $memory;
+
+		if ($this->meminfo === '') {
+			return $data;
+		}
+
+		$matches = [];
+		$pattern = '/(?<Key>(?:MemTotal|MemFree|MemAvailable|SwapTotal|SwapFree)+):\s+(?<Value>\d+)\s+(?<Unit>\w{2})/';
+		if (preg_match_all($pattern, $this->meminfo, $matches) === false) {
+			return $data;
+		}
+
+		$keys = array_map('trim', $matches['Key']);
+		$values = array_map('trim', $matches['Value']);
+		$units = array_map('trim', $matches['Unit']);
+
+		foreach ($keys as $i => $key) {
+			$value = (int)$values[$i];
+			$unit = $units[$i];
+
+			if ($unit === 'kB') {
+				$value *= 1000;
+			}
+
+			$data[$key] = $value;
+		}
+
+		return $data;
 	}
 
 	/**
@@ -173,4 +200,10 @@ class DefaultOs {
 		return $result;
 	}
 
+	protected function readContent(string $filename): string {
+		if (is_readable($filename)) {
+			return file_get_contents($filename);
+		}
+		return '';
+	}
 }

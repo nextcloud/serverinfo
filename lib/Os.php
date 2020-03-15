@@ -22,7 +22,6 @@ namespace OCA\ServerInfo;
 
 use bantu\IniGetWrapper\IniGetWrapper;
 use OCA\ServerInfo\OperatingSystems\DefaultOs;
-use OCP\AppFramework\Http;
 use OCP\Http\Client\IClientService;
 use OCP\IConfig;
 use OCP\IDBConnection;
@@ -98,11 +97,13 @@ class Os {
 	}
 
 	/**
-	 * @return string
+	 * Get memory will return a list key => value where all values are in bytes.
+	 * [MemTotal => 0, MemFree => 0, MemAvailable => 0, SwapTotal => 0, SwapFree => 0].
+	 *
+	 * @return array
 	 */
-	public function getMemory() {
-		$data = $this->backend->getMemory();
-		return $data;
+	public function getMemory(): array {
+		return $this->backend->getMemory();
 	}
 
 	/**
