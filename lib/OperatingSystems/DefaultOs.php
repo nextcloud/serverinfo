@@ -18,7 +18,7 @@
  *
  */
 
-namespace OCA\Serverinfo\OperatingSystems;
+namespace OCA\ServerInfo\OperatingSystems;
 /**
  * Class Ubuntu
  *
