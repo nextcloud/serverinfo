@@ -107,11 +107,12 @@ class Os {
 	}
 
 	/**
+	 * Get name of the processor
+	 *
 	 * @return string
 	 */
-	public function getCPUName() {
-		$data = $this->backend->getCPUName();
-		return $data;
+	public function getCPUName(): string {
+		return $this->backend->getCPUName();
 	}
 
 	/**

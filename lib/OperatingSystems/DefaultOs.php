@@ -27,6 +27,9 @@ namespace OCA\ServerInfo\OperatingSystems;
 class DefaultOs {
 
 	/** @var string */
+	protected $cpuinfo;
+
+	/** @var string */
 	protected $meminfo;
 
 	/**
@@ -63,6 +66,7 @@ class DefaultOs {
 
 		$matches = [];
 		$pattern = '/(?<Key>(?:MemTotal|MemFree|MemAvailable|SwapTotal|SwapFree)+):\s+(?<Value>\d+)\s+(?<Unit>\w{2})/';
+
 		if (preg_match_all($pattern, $this->meminfo, $matches) === false) {
 			return $data;
 		}
@@ -86,17 +90,38 @@ class DefaultOs {
 	}
 
 	/**
+	 * Get name of the processor
+	 *
 	 * @return string
 	 */
-	public function getCPUName() {
-		$cpu   = shell_exec('cat /proc/cpuinfo  | grep -i \'Model name\' | cut -f 2 -d ":" | awk \'{$1=$1}1\'');
-		$cores = shell_exec('cat /proc/cpuinfo  | grep -i \'cpu cores\' | cut -f 2 -d ":" | awk \'{$1=$1}1\'');
-		if ($cores === 1) {
-			$cores = ' (' . $cores . ' core)';
-		} else {
-			$cores = ' (' . $cores . ' cores)';
+	public function getCPUName(): string {
+		$data = 'Unknown Processor';
+
+		if ($this->cpuinfo === null) {
+			$this->cpuinfo = $this->readContent('/proc/cpuinfo');
 		}
-		return $cpu . ' ' . $cores;
+
+		if ($this->cpuinfo === '') {
+			return $data;
+		}
+
+		$matches = [];
+		$pattern = '/model name\s:\s(.+)/';
+
+		if (preg_match_all($pattern, $this->cpuinfo, $matches) === false) {
+			return $data;
+		}
+
+		$model = $matches[1][0];
+		$cores = count($matches[1]);
+
+		if ($cores === 1) {
+			$data = $model . ' (1 core)';
+		} else {
+			$data = $model . ' (' . $cores . ' cores)';
+		}
+
+		return $data;
 	}
 
 	/**
