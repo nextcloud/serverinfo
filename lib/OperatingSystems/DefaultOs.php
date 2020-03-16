@@ -75,7 +75,7 @@ class DefaultOs {
 			$unit = $units[$i];
 
 			if ($unit === 'kB') {
-				$value *= 1000;
+				$value *= 1024;
 			}
 
 			$data[$key] = $value;
@@ -223,8 +223,8 @@ class DefaultOs {
 				$items = [];
 				$items['device']    = $entry[0];
 				$items['fs']        = $entry[1];
-				$items['used']      = $entry[3];
-				$items['available'] = $entry[4];
+				$items['used']      = $entry[3] * 1024;
+				$items['available'] = $entry[4] * 1024;
 				$items['percent']   = $entry[5];
 				$items['mount']     = $entry[6];
 				$result[] = $items;

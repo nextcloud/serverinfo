@@ -62,11 +62,11 @@ class DefaultOsTest extends TestCase {
 		$this->assertArrayHasKey('SwapTotal', $memory);
 		$this->assertArrayHasKey('SwapFree', $memory);
 
-		$this->assertEquals(16330252 * 1000, $memory['MemTotal']);
-		$this->assertEquals(2443908 * 1000, $memory['MemFree']);
-		$this->assertEquals(7675276 * 1000, $memory['MemAvailable']);
-		$this->assertEquals(999420 * 1000, $memory['SwapTotal']);
-		$this->assertEquals(917756 * 1000, $memory['SwapFree']);
+		$this->assertEquals(16330252 * 1024, $memory['MemTotal']);
+		$this->assertEquals(2443908 * 1024, $memory['MemFree']);
+		$this->assertEquals(7675276 * 1024, $memory['MemAvailable']);
+		$this->assertEquals(999420 * 1024, $memory['SwapTotal']);
+		$this->assertEquals(917756 * 1024, $memory['SwapFree']);
 	}
 
 	public function testGetCPUName(): void {

@@ -167,7 +167,6 @@ class ApiController extends OCSController {
 		if ($interval->d > 0) {
 			return $interval->format('%d days, %h hours, %i minutes, %s seconds');
 		}
-
 		return $interval->format('%h hours, %i minutes, %s seconds');
 	}
 }

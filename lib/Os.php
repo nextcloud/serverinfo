@@ -144,22 +144,24 @@ class Os {
 	}
 
 	/**
-	 * @return string
+	 * Get diskdata will return a numerical list with two elements for each disk (used and available) where all values are in gigabyte.
+	 * [
+	 *        [used => 0, available => 0],
+	 *        [used => 0, available => 0],
+	 * ]
+	 *
+	 * @return array
 	 */
-	public function getDiskData() {
+	public function getDiskData(): array {
+		$data = [];
 		$disks = $this->backend->getDiskInfo();
-		$data = array();
-		$i = 0;
-		foreach ($disks as $disk) {
-			$data[$i] = [
-				round(($disk['used']) / 1024 / 1024, 1),
-				round($disk['available'] / 1024 / 1024, 1)
-			];
-			$i++;
-		}
 
-//		debug data
-		//		$data = array('0'=>array(1,2),'1'=>array(4,5),'2'=>array(3,1));
+		foreach ($disks as $disk) {
+			$data[] = [
+				round($disk['used'] / 1024 / 1024 / 1024, 1),
+				round($disk['available'] / 1024 / 1024 / 1024, 1)
+			];
+		}
 
 		return $data;
 	}
