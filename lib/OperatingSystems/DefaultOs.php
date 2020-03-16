@@ -43,14 +43,6 @@ class DefaultOs {
 	}
 
 	/**
-	 * @return string
-	 */
-	public function getHostname() {
-		$hostname = shell_exec('hostname');
-		return $hostname;
-	}
-
-	/**
 	 * Get memory will return a list key => value where all values are in bytes.
 	 * [MemTotal => 0, MemFree => 0, MemAvailable => 0, SwapTotal => 0, SwapFree => 0].
 	 *

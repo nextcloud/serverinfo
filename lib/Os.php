@@ -84,8 +84,7 @@ class Os {
 	 * @return string
 	 */
 	public function getHostname() {
-		$data = $this->backend->getHostname();
-		return $data;
+		return (string)gethostname();
 	}
 
 	/**
