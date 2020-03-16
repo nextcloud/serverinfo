@@ -47,9 +47,6 @@ class Os {
 	/** @var */
 	protected $backend;
 
-	/** @var */
-	protected $osname;
-
 	/**
 	 * Os constructor.
 	 *
@@ -90,9 +87,8 @@ class Os {
 	/**
 	 * @return string
 	 */
-	public function getOSName() {
-		$data = $this->osname;
-		return $data;
+	public function getOSName(): string {
+		return PHP_OS . ' ' . php_uname('r') . ' ' . php_uname('m');
 	}
 
 	/**
