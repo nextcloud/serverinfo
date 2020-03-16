@@ -74,8 +74,15 @@ class DefaultOsTest extends TestCase {
 			->with('/proc/cpuinfo')
 			->willReturn(file_get_contents(__DIR__ . '/../data/cpuinfo'));
 
-		$cpuName = $this->os->getCPUName();
-		$this->assertEquals('Intel(R) Core(TM) i5-6500 CPU @ 3.20GHz (4 cores)', $cpuName);
+		$this->assertEquals('Intel(R) Core(TM) i5-6500 CPU @ 3.20GHz (4 cores)', $this->os->getCPUName());
+	}
+
+	public function testGetUptime(): void {
+		$this->os->method('readContent')
+			->with('/proc/uptime')
+			->willReturn(file_get_contents(__DIR__ . '/../data/uptime'));
+
+		$this->assertEquals(13278, $this->os->getUptime());
 	}
 
 }

@@ -124,11 +124,12 @@ class Os {
 	}
 
 	/**
-	 * @return string
+	 * Get the total number of seconds the system has been up
+	 *
+	 * @return int
 	 */
-	public function getUptime() {
-		$data = $this->backend->getUptime();
-		return $data;
+	public function getUptime(): int {
+		return $this->backend->getUptime();
 	}
 
 	/**

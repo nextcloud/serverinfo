@@ -116,7 +116,7 @@ class ApiController extends OCSController {
 	 */
 	public function BasicData(): DataResponse {
 		$servertime  = $this->os->getTime();
-		$uptime      = $this->os->getUptime();
+		$uptime      = $this->formatUptime($this->os->getUptime());
 		$timeservers = $this->os->getTimeServers()[0];
 
 		return new DataResponse([
@@ -144,5 +144,30 @@ class ApiController extends OCSController {
 			return $_SERVER['SERVER_SOFTWARE'];
 		}
 		return 'unknown';
+	}
+
+	/**
+	 * Return the uptime of the system as human readable value
+	 *
+	 * @param int $uptime
+	 * @return string
+	 */
+	private function formatUptime(int $uptime): string {
+		if ($uptime === -1) {
+			return 'Unknown';
+		}
+
+		try {
+			$boot = new \DateTime($uptime . ' seconds ago');
+		} catch (\Exception $e) {
+			return 'Unknown';
+		}
+
+		$interval = $boot->diff(new \DateTime());
+		if ($interval->d > 0) {
+			return $interval->format('%d days, %h hours, %i minutes, %s seconds');
+		}
+
+		return $interval->format('%h hours, %i minutes, %s seconds');
 	}
 }

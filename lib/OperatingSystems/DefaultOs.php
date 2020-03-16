@@ -32,6 +32,9 @@ class DefaultOs {
 	/** @var string */
 	protected $meminfo;
 
+	/** @var string */
+	protected $uptime;
+
 	/**
 	 * @return bool
 	 */
@@ -133,10 +136,23 @@ class DefaultOs {
 	}
 
 	/**
-	 * @return string
+	 * Get the total number of seconds the system has been up or -1 on failure.
+	 *
+	 * @return int
 	 */
-	public function getUptime() {
-		$uptime = shell_exec('uptime -p');
+	public function getUptime(): int {
+		$data = -1;
+
+		if ($this->uptime === null) {
+			$this->uptime = $this->readContent('/proc/uptime');
+		}
+
+		if ($this->uptime === '') {
+			return $data;
+		}
+
+		[$uptime,] = array_map('intval', explode(' ', $this->uptime));
+
 		return $uptime;
 	}
 
