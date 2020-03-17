@@ -66,7 +66,7 @@ OC.L10N.register(
     "External monitoring tool" : "Strumento di controllo esterno",
     "You can connect an external monitoring tool by using this end point:" : "Puoi collegare uno strumento di controllo esterno utilizzando questo terminatore: ",
     "Did you know?" : "Sapevi che?",
-    "Appending \"?format=json\" at the end of the URL gives you the result in JSON format!" : "L'aggiunta di \"?format=json\" alla fine dell'UR restituisce il risultato in formato JSON!",
+    "Appending \"?format=json\" at the end of the URL gives you the result in JSON format!" : "L'aggiunta di \"?format=json\" alla fine dell'URL restituisce il risultato in formato JSON!",
     "Last 24 hours" : "Ultime 24 ore",
     "Last 1 hour" : "Ultima ora",
     "Last 5 mins" : "Ultimi 5 minuti",
