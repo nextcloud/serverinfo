@@ -41,11 +41,11 @@
 
 .info {
 	font-weight: bold;
-	color: #777;
+	color: var(--color-text-light);
 }
 
 .smallinfo {
-	color: #888;
+	color: var(--color-text-light);
 	font-size: 11px;
 }
 
@@ -54,21 +54,21 @@
 	flex-wrap: nowrap;
 	align-items: center;
 
-	border: 1px solid #ddd;
+	border: 1px solid var(--color-border);
 	padding: 15px;
 	margin: 15px 0;
-	color: #555;
-	background-color: #f9f9f9;
+	color: var(--color-text-lighter);
+	background-color: var(--color-background-dark);
 	border-radius: 6px;
-	box-shadow: 1px 1px 9px 1px #eee;
+	box-shadow: 1px 1px 9px 1px var(--color-box-shadow);
 }
 
 .diskchart-container {
 	width: 100px;
-	border: 1px black;
+	border: 1px var(--color-border);
 }
 
-@media only screen and (max-width: $breakpoint-mobile){
+@media only screen and (max-width: $breakpoint-mobile) {
 	.infobox {
 		display: block;
 		text-align: center;

@@ -67,6 +67,14 @@
 		resizeSystemCharts();
 	});
 
+	function getThemedPrimaryColor() {
+		return OCA.Theming ? OCA.Theming.color : 'rgb(54, 129, 195)';
+	}
+
+	function getThemedPassiveColor() {
+		return OCA.Theming && OCA.Theming.inverted ? 'rgb(55, 55, 55)' : 'rgb(200, 200, 200)';
+	}
+
 	/**
 	 * Reset all canvas widths on window resize so canvas is responsive
 	 */
@@ -116,7 +124,7 @@
 				{
 					millisPerPixel: 100,
 					minValue: 0,
-					grid: {fillStyle: 'rgba(249,249,249,1)', strokeStyle: 'transparent'},
+					grid: {fillStyle: 'rgba(0,0,0,0)', strokeStyle: 'transparent'},
 					labels: {fillStyle: 'rgba(0,0,0,0.4)', fontSize: 12},
 					responsive: true
 				});
@@ -124,8 +132,8 @@
 			cpuLoadLine = new TimeSeries();
 			cpuLoadChart.addTimeSeries(cpuLoadLine, {
 				lineWidth: 1,
-				strokeStyle: 'rgb(180, 180, 180)',
-				fillStyle: OCA.Theming ? OCA.Theming.color : 'rgb(54, 129, 195)'
+				strokeStyle: getThemedPassiveColor(),
+				fillStyle: getThemedPrimaryColor()
 			});
 		}
 
@@ -175,8 +183,8 @@
 			memoryUsageLine = new TimeSeries();
 			memoryUsageChart.addTimeSeries(memoryUsageLine, {
 				lineWidth: 1,
-				strokeStyle: 'rgb(180, 180, 180)',
-				fillStyle: OCA.Theming ? OCA.Theming.color : 'rgb(54, 129, 195)'
+				strokeStyle: getThemedPassiveColor(),
+				fillStyle: getThemedPrimaryColor()
 			});
 			swapUsageLine = new TimeSeries();
 			memoryUsageChart.addTimeSeries(swapUsageLine, {
@@ -292,16 +300,16 @@
 						label: " ",
 						data: activeUsersData,
 						fill: false,
-						borderColor: ['rgba(0, 0, 255, 1)'],
+						borderColor: [getThemedPrimaryColor()],
 						borderWidth: 1,
 						borderDashOffset: 0.0,
 						borderJoinStyle: 'miter',
-						pointBorderColor: 'rgba(0, 0, 255, 1)',
-						pointBackgroundColor: "#ffffff",
+						pointBorderColor: getThemedPrimaryColor(),
+						pointBackgroundColor: getThemedPassiveColor(),
 						pointBorderWidth: 1,
 						pointHoverRadius: 5,
-						pointHoverBackgroundColor: "rgba(0,0,255,0.6)",
-						pointHoverBorderColor: "rgba(0, 0, 255, 1)",
+						pointHoverBackgroundColor: getThemedPrimaryColor(),
+						pointHoverBorderColor: getThemedPrimaryColor(),
 						pointHoverBorderWidth: 1,
 						pointRadius: 5,
 						pointHitRadius: 10,
@@ -389,8 +397,8 @@
 						datasets: [
 							{
 								backgroundColor: [
-									OCA.Theming ? OCA.Theming.color : 'rgb(54, 129, 195)',
-									'rgb(200, 200, 200)',
+									getThemedPrimaryColor(),
+									getThemedPassiveColor(),
 								],
 								borderWidth: 0,
 								data: diskdata[i]
