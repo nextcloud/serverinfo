@@ -35,8 +35,6 @@
 		var swapbox = document.getElementById('swapbox');
 		swapbox.style.backgroundColor = 'rgba(100, 100, 100, 0.8)';
 
-		var updateTimer = setInterval(updateInfo, 300);
-
 		initDiskCharts();
 
 		setHumanReadableSizeToElement("databaseSize");
