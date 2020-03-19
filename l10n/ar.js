@@ -47,7 +47,6 @@ OC.L10N.register(
     "Database" : "قاعدة البيانات",
     "Type:" : "النوع:",
     "Size:" : "الحجم:",
-    "Did you know?" : "هل تعلم؟",
     "Last 24 hours" : "اخر 24 ساعة",
     "Last 1 hour" : "اخر 1 ساعة",
     "Last 5 mins" : "اخر 5 دقائق",
@@ -57,6 +56,7 @@ OC.L10N.register(
     "Users:" : "المستخدمين:",
     "Nextcloud" : "Nextcloud",
     "Apps installed:" : "التطبيقات المثبتة:",
-    "Apps updates available:" : "التحديثات المتوفرة للتطبيقات:"
+    "Apps updates available:" : "التحديثات المتوفرة للتطبيقات:",
+    "Did you know?" : "هل تعلم؟"
 },
 "nplurals=6; plural=n==0 ? 0 : n==1 ? 1 : n==2 ? 2 : n%100>=3 && n%100<=10 ? 3 : n%100>=11 && n%100<=99 ? 4 : 5;");

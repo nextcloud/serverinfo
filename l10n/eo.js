@@ -65,8 +65,6 @@ OC.L10N.register(
     "Size:" : "Grando:",
     "External monitoring tool" : "Ekstera observa ilo",
     "You can connect an external monitoring tool by using this end point:" : "Vi povas konekti eksteran observan ilon per tiu adreso:",
-    "Did you know?" : "Ĉu vi sciis?",
-    "Appending \"?format=json\" at the end of the URL gives you the result in JSON format!" : "Postaldoni „?format=json“ fine de la adreso liveras al vi la rezulton en JSON-formo!",
     "Last 24 hours" : "Lastaj 24 horoj",
     "Last 1 hour" : "Lasta horo",
     "Last 5 mins" : "Lastaj 5 min",
@@ -76,6 +74,8 @@ OC.L10N.register(
     "Users:" : "Uzantoj:",
     "Nextcloud" : "Nextcloud",
     "Apps installed:" : "Aplikaĵoj instalitaj:",
-    "Apps updates available:" : "Aplikaĵoj ĝisdatigotaj:"
+    "Apps updates available:" : "Aplikaĵoj ĝisdatigotaj:",
+    "Did you know?" : "Ĉu vi sciis?",
+    "Appending \"?format=json\" at the end of the URL gives you the result in JSON format!" : "Postaldoni „?format=json“ fine de la adreso liveras al vi la rezulton en JSON-formo!"
 },
 "nplurals=2; plural=(n != 1);");

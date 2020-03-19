@@ -51,7 +51,6 @@ OC.L10N.register(
     "Size:" : "Размер:",
     "External monitoring tool" : "Външно средство за мониторинг",
     "You can connect an external monitoring tool by using this end point:" : "Можете да свържете външен софтуер за мониторинг, чрез следния URL:",
-    "Did you know?" : "Известно ли ви е?",
     "Last 24 hours" : "Последни 24 часа",
     "Last 1 hour" : "Последен 1 час",
     "Last 5 mins" : "Последни 5 минути",
@@ -61,6 +60,7 @@ OC.L10N.register(
     "Users:" : "Потребители:",
     "Nextcloud" : "Nextcloud",
     "Apps installed:" : "Инсталирани приложения:",
-    "Apps updates available:" : "Налични актуализации за приложения:"
+    "Apps updates available:" : "Налични актуализации за приложения:",
+    "Did you know?" : "Известно ли ви е?"
 },
 "nplurals=2; plural=(n != 1);");
