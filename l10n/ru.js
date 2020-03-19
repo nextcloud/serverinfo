@@ -65,8 +65,6 @@ OC.L10N.register(
     "Size:" : "Размер:",
     "External monitoring tool" : "Внешний мониторинг",
     "You can connect an external monitoring tool by using this end point:" : "Вы можете подключить внешний мониторинг используя этот адрес:",
-    "Did you know?" : "Совет:",
-    "Appending \"?format=json\" at the end of the URL gives you the result in JSON format!" : "Если к строке URL добавить «?format=json», то ответ сервера будет в формате JSON.",
     "Last 24 hours" : "За 24 часа",
     "Last 1 hour" : "За 1 час",
     "Last 5 mins" : "За 5 минут",
@@ -76,6 +74,8 @@ OC.L10N.register(
     "Users:" : "Пользователей:",
     "Nextcloud" : "Nextcloud",
     "Apps installed:" : "Установленные приложения:",
-    "Apps updates available:" : "Доступные обновления:"
+    "Apps updates available:" : "Доступные обновления:",
+    "Did you know?" : "Совет:",
+    "Appending \"?format=json\" at the end of the URL gives you the result in JSON format!" : "Если к строке URL добавить «?format=json», то ответ сервера будет в формате JSON."
 },
 "nplurals=4; plural=(n%10==1 && n%100!=11 ? 0 : n%10>=2 && n%10<=4 && (n%100<12 || n%100>14) ? 1 : n%10==0 || (n%10>=5 && n%10<=9) || (n%100>=11 && n%100<=14)? 2 : 3);");

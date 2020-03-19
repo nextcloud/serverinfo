@@ -65,8 +65,6 @@ OC.L10N.register(
     "Size:" : "Tamaño:",
     "External monitoring tool" : "Herramienta externa de monitorización",
     "You can connect an external monitoring tool by using this end point:" : "Puedes conectar una herramienta de monitorización externa usando este endpoint:",
-    "Did you know?" : "Sabías que...?",
-    "Appending \"?format=json\" at the end of the URL gives you the result in JSON format!" : "¡Añadir \"?format=json\" al final de la URL devuelve el resultado en formato JSON!",
     "Last 24 hours" : "Últimas 24 horas",
     "Last 1 hour" : "Última hora",
     "Last 5 mins" : "Últimos 5 minutos",
@@ -76,6 +74,8 @@ OC.L10N.register(
     "Users:" : "Usuarios:",
     "Nextcloud" : "Nextcloud",
     "Apps installed:" : "Apps instaladas:",
-    "Apps updates available:" : "Actualizaciones de apps disponibles:"
+    "Apps updates available:" : "Actualizaciones de apps disponibles:",
+    "Did you know?" : "Sabías que...?",
+    "Appending \"?format=json\" at the end of the URL gives you the result in JSON format!" : "¡Añadir \"?format=json\" al final de la URL devuelve el resultado en formato JSON!"
 },
 "nplurals=2; plural=(n != 1);");
