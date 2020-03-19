@@ -65,8 +65,6 @@ OC.L10N.register(
     "Size:" : "Koko:",
     "External monitoring tool" : "Ulkopuolinen valvontatyökalu",
     "You can connect an external monitoring tool by using this end point:" : "Voit yhdistää ulkopuolisen valvontatyökalun käyttämällä tätä liityntäkohtaa:",
-    "Did you know?" : "Tiesitkö?",
-    "Appending \"?format=json\" at the end of the URL gives you the result in JSON format!" : "Lisäämällä \"?format=json\" URL-osoitteen loppuun saat tulokset JSON-muodossa!",
     "Last 24 hours" : "Viimeiset 24 tuntia",
     "Last 1 hour" : "Viimeisin tunti",
     "Last 5 mins" : "Viimeiset 5 min",
@@ -76,6 +74,8 @@ OC.L10N.register(
     "Users:" : "Käyttäjiä:",
     "Nextcloud" : "Nextcloud",
     "Apps installed:" : "Sovelluksia asennettu:",
-    "Apps updates available:" : "Sovelluspäivityksiä saatavilla:"
+    "Apps updates available:" : "Sovelluspäivityksiä saatavilla:",
+    "Did you know?" : "Tiesitkö?",
+    "Appending \"?format=json\" at the end of the URL gives you the result in JSON format!" : "Lisäämällä \"?format=json\" URL-osoitteen loppuun saat tulokset JSON-muodossa!"
 },
 "nplurals=2; plural=(n != 1);");
