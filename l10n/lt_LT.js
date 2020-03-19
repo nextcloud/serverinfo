@@ -49,7 +49,6 @@ OC.L10N.register(
     "Type:" : "Tipas:",
     "Size:" : "Dydis:",
     "External monitoring tool" : "Išorinis stebėjimo įrankis",
-    "Did you know?" : "Ar žinojote?",
     "Last 24 hours" : "Paskutinės 24 valandos",
     "Last 1 hour" : "Paskutinė valanda",
     "Last 5 mins" : "Paskutinės 5 minutės",
@@ -59,6 +58,7 @@ OC.L10N.register(
     "Users:" : "Naudotojai:",
     "Nextcloud" : "Nextcloud",
     "Apps installed:" : "Įdiegta programėlių:",
-    "Apps updates available:" : "Yra prieinama atnaujinimų programėlėms:"
+    "Apps updates available:" : "Yra prieinama atnaujinimų programėlėms:",
+    "Did you know?" : "Ar žinojote?"
 },
 "nplurals=4; plural=(n % 10 == 1 && (n % 100 > 19 || n % 100 < 11) ? 0 : (n % 10 >= 2 && n % 10 <=9) && (n % 100 > 19 || n % 100 < 11) ? 1 : n % 1 != 0 ? 2: 3);");

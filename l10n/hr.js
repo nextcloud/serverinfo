@@ -65,8 +65,6 @@ OC.L10N.register(
     "Size:" : "Veličina:",
     "External monitoring tool" : "Vanjski alat za praćenje",
     "You can connect an external monitoring tool by using this end point:" : "Možete povezati vanjski alat za praćenje s pomoću ove krajnje točke:",
-    "Did you know?" : "Jeste li to znali?",
-    "Appending \"?format=json\" at the end of the URL gives you the result in JSON format!" : "Dodavanjem „?format = json” na kraj URL-a dobije se rezultat u formatu JSON!",
     "Last 24 hours" : "Posljednja 24 sata",
     "Last 1 hour" : "Posljednji sat",
     "Last 5 mins" : "Posljednjih 5 min",
@@ -76,6 +74,8 @@ OC.L10N.register(
     "Users:" : "Korisnici:",
     "Nextcloud" : "Nextcloud",
     "Apps installed:" : "Instalirane aplikacije:",
-    "Apps updates available:" : "Dostupna su ažuriranja za aplikacije:"
+    "Apps updates available:" : "Dostupna su ažuriranja za aplikacije:",
+    "Did you know?" : "Jeste li to znali?",
+    "Appending \"?format=json\" at the end of the URL gives you the result in JSON format!" : "Dodavanjem „?format = json” na kraj URL-a dobije se rezultat u formatu JSON!"
 },
 "nplurals=3; plural=n%10==1 && n%100!=11 ? 0 : n%10>=2 && n%10<=4 && (n%100<10 || n%100>=20) ? 1 : 2;");
