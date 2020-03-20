@@ -63,6 +63,7 @@
     "Size:" : "Storlek:",
     "External monitoring tool" : "Externt övervakningsverktyg",
     "You can connect an external monitoring tool by using this end point:" : "Du kan ansluta ett externt övervakningsverktyg genom att använda denna adress:",
+    "Appending \"?format=json\" at the end of the URL gives you the result in JSON." : "Lägg till \"?format=json\" i slutet av webbadressen för att få resultatet i JSON.",
     "Last 24 hours" : "Senaste 24 timmarna",
     "Last 1 hour" : "Senaste timmen",
     "Last 5 mins" : "Senaste 5 minuterna",
