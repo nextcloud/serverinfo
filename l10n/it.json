@@ -63,6 +63,7 @@
     "Size:" : "Dimensione:",
     "External monitoring tool" : "Strumento di controllo esterno",
     "You can connect an external monitoring tool by using this end point:" : "Puoi collegare uno strumento di controllo esterno utilizzando questo terminatore: ",
+    "Appending \"?format=json\" at the end of the URL gives you the result in JSON." : "L'aggiunta di \"?format=json\" alla fine dell'URL ti fornirà il risultato in JSON.",
     "Last 24 hours" : "Ultime 24 ore",
     "Last 1 hour" : "Ultima ora",
     "Last 5 mins" : "Ultimi 5 minuti",

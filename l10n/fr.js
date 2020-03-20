@@ -65,6 +65,7 @@ OC.L10N.register(
     "Size:" : "Taille :",
     "External monitoring tool" : "Outil de surveillance externe",
     "You can connect an external monitoring tool by using this end point:" : "Vous pouvez connecter un outil de surveillance externe en utilisant ce point d'extrémité :",
+    "Appending \"?format=json\" at the end of the URL gives you the result in JSON." : "Ajoutez \"?format=json\" à la fin de l'URL pour obtenir le résultat au format JSON. ",
     "Last 24 hours" : "24 dernières heures",
     "Last 1 hour" : "Dernière heure",
     "Last 5 mins" : "5 dernières minutes",
