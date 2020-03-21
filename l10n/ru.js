@@ -65,6 +65,7 @@ OC.L10N.register(
     "Size:" : "Размер:",
     "External monitoring tool" : "Внешний мониторинг",
     "You can connect an external monitoring tool by using this end point:" : "Вы можете подключить внешний мониторинг используя этот адрес:",
+    "Appending \"?format=json\" at the end of the URL gives you the result in JSON." : "Если к строке URL добавить «?format=json», то ответ сервера будет в формате JSON.",
     "Last 24 hours" : "За 24 часа",
     "Last 1 hour" : "За 1 час",
     "Last 5 mins" : "За 5 минут",
