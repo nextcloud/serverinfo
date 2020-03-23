@@ -65,6 +65,7 @@ OC.L10N.register(
     "Size:" : "Wielkość:",
     "External monitoring tool" : "Zewnętrzne narzędzie monitorujące",
     "You can connect an external monitoring tool by using this end point:" : "Możesz połączyć się z zewnętrznym narzędziem monitorującym używając tej końcówki: ",
+    "Appending \"?format=json\" at the end of the URL gives you the result in JSON." : "Dołączenie \"?format=json\" na końcu adresu URL daje wynik w formacie JSON.",
     "Last 24 hours" : "Ostatnie 24 godziny",
     "Last 1 hour" : "Ostatnia 1 godzina",
     "Last 5 mins" : "Ostatnie 5 minut",
