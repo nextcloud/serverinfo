@@ -65,6 +65,7 @@ OC.L10N.register(
     "Size:" : "Stærð:",
     "External monitoring tool" : "Utanaðkomandi vöktunartól",
     "You can connect an external monitoring tool by using this end point:" : "Þú getur tengt utanaðkomandi vöktunartól með því að nota þennan endapunkt: ",
+    "Appending \"?format=json\" at the end of the URL gives you the result in JSON." : "Að með því að bæta \"?format=json\" við enda URL-slóðar, muntu fá niðurstöðurnar á JSON-sniði.",
     "Last 24 hours" : "Síðustu 24 klst",
     "Last 1 hour" : "Síðustu klst",
     "Last 5 mins" : "Síðustu 5 mín",
