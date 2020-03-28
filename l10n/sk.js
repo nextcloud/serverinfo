@@ -65,6 +65,7 @@ OC.L10N.register(
     "Size:" : "Veľkosť:",
     "External monitoring tool" : "Externý sledovací nástroj",
     "You can connect an external monitoring tool by using this end point:" : "Pre pripojenie externého sledovacieho nástroja použite tento koncový bod:",
+    "Appending \"?format=json\" at the end of the URL gives you the result in JSON." : "Ak na koniec adresy URL pridáte „?format = json“, získate výsledok v JSON.",
     "Last 24 hours" : "Posledných 24 hodín",
     "Last 1 hour" : "Posledná 1 hodina",
     "Last 5 mins" : "Posledných 5 minút",
