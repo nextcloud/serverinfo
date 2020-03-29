@@ -63,6 +63,7 @@
     "Size:" : "大小：",
     "External monitoring tool" : "外部监控工具",
     "You can connect an external monitoring tool by using this end point:" : "此地址可用于外部监控工具：",
+    "Appending \"?format=json\" at the end of the URL gives you the result in JSON." : "在 URL 末尾附加 \"?format=json\" 会为您提供 JSON 结果。",
     "Last 24 hours" : "最近 24 小时",
     "Last 1 hour" : "最近 1 小时",
     "Last 5 mins" : "最近 5 分钟",
