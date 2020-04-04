@@ -37,243 +37,304 @@ function FormatBytes($byte) {
 
 ?>
 
-<!-- SERVER INFOS -->
-<div class="section">
-	<h2>
-		<img class="infoicon" src="<?php p(image_path('serverinfo', 'server.svg'));?>">
-		<?php p($_['hostname']);?>
-	</h2>
+<div class="server-info-wrapper">
 
-	<p>
-		<?php p($l->t('Operating System'));?>:
-		<span class="info"><?php p($_['osname']);?></span>
-	</p>
-	<p>
-		<?php p($l->t('CPU'));?>:
-		<span class="info"><?php p($_['cpu']);?></span>
-	</p>
-	<p>
-		<?php p($l->t('Memory'));?>:
-		<span class="info"><?php p(FormatBytes($_['memory']['MemTotal']));?></span>
-	</p>
-	<p>
-		<?php p($l->t('Server time'));?>:
-		<span class="info" id="servertime"></span>
-	</p>
-	<p>
-		<?php p($l->t('Uptime'));?>:
-		<span class="info" id="uptime"></span>
-	</p>
-	<p>
-		<?php p($l->t('Time Servers'));?>:
-		<span class="info" id="timeservers"></span>
-	</p>
-
-	<div class="wrapper">
-
-		<div id="one">
-			<div class="infobox" id="cpuSection">
-				<h2><?php p($l->t('Load'));?></h2>
-				<canvas id="cpuloadcanvas" width="100" height="150"></canvas>
-			</div>
-			<p><em id="cpuFooterInfo"></em></p>
-		</div>
-
-		<div id="two">
-			<div class="infobox">
-			<h2><?php p($l->t('Memory'));?></h2>
-			<canvas id="memorycanvas" width="300" height="150"></canvas>
-			</div>
-			<p><span class="rambox" id="rambox">&nbsp;&nbsp;</span>&nbsp;&nbsp;<em id="memFooterInfo"></em></p>
-			<p><span class="swapbox" id="swapbox">&nbsp;&nbsp;</span>&nbsp;&nbsp;<em id="swapFooterInfo"></em></p>
-		</div>
-
-	</div>
-</div>
-
-<!-- DISK STATUS -->
-<div class="section">
-	<h2>
-		<img class="infoicon" src="<?php p(image_path('serverinfo', 'hdd-o.svg'));?>">
-		<?php p($l->t('Disk'));?>
-	</h2>
-	<p>
-		<?php foreach ($_['diskinfo'] as $disk) {?>
-
-			<div class="infobox">
-				<div class="diskchart-container">
-					<canvas id="DiskChart" class="DiskChart" width="50" height="50"></canvas>
+	<!-- SERVER INFOS -->
+	<div class="section server-infos">
+		<div class="row">
+			<div class="col col-12">
+				<h2>
+					<img class="infoicon" src="<?php p(image_path('core', 'actions/screen.svg')); ?>">
+					<?php p($_['hostname']); ?>
+				</h2>
+				<div class="table-wrapper">
+					<table class="server-infos-table">
+						<thead>
+						</thead>
+						<tbody>
+						<tr>
+							<td><?php p($l->t('Operating System')); ?>:</td>
+							<td><?php p($_['osname']); ?></td>
+						</tr>
+						<tr>
+							<td><?php p($l->t('CPU')); ?>:</td>
+							<td><?php p($_['cpu']) ?></td>
+						</tr>
+						<tr>
+							<td><?php p($l->t('Memory')); ?>:</td>
+							<td><?php p(FormatBytes($_['memory']['MemTotal'])) ?></td>
+						</tr>
+						<tr>
+							<td><?php p($l->t('Server time')); ?>:</td>
+							<td><span class="info" id="servertime"></span></td>
+						</tr>
+						<tr>
+							<td><?php p($l->t('Uptime')); ?>:</td>
+							<td><span class="info" id="uptime"></span></td>
+						</tr>
+						<tr>
+							<td><?php p($l->t('Time Servers')); ?>:</td>
+							<td><span class="info" id="timeservers"></span></td>
+						</tr>
+						</tbody>
+					</table>
 				</div>
-
-				<h3><?php p(basename($disk['device']));?></h3>
-				<p>
-					<?php p($l->t('Mount'));?> :
-					<span class="info"><?php p($disk['mount']);?></span>
-				</p>
-				<p>
-					<?php p($l->t('Filesystem'));?> :
-					<span class="info"><?php p($disk['fs']);?></span>
-				</p>
-				<p>
-					<?php p($l->t('Size'));?> :
-					<span class="info"><?php p(FormatBytes($disk['used'] + $disk['available']));?></span>
-				</p>
-				<p>
-					<?php p($l->t('Available'));?> :
-					<span class="info"><?php p(FormatBytes($disk['available']));?></span>
-				</p>
-				<p>
-					<?php p($l->t('Used'));?> :
-					<span class="info"><?php p($disk['percent']);?></span>
-				</p>
 			</div>
 
-		<?php }?>
-
-		<div class="smallinfo"> <?php p($l->t('You will get a notification once one of your disks is nearly full.'));?></div>
-
-		<p><?php p($l->t('Files:'));?> <em id="numFilesStorage"><?php p($_['storage']['num_files']);?></em></p>
-		<p><?php p($l->t('Storages:'));?> <em id="numFilesStorages"><?php p($_['storage']['num_storages']);?></em></p>
-		<p><?php p($l->t('Free Space:'));?> <em id="systemDiskFreeSpace"><?php p($_['system']['freespace']);?></em></p>
-	</p>
-</div>
-
-<!-- NETWORK -->
-<div class="section">
-	<h2>
-		<img class="infoicon" src="<?php p(image_path('serverinfo', 'sort.svg'));?>">
-		<?php p($l->t('Network'));?>
-	</h2>
-	<p>
-		<p>
-			<?php p($l->t('Hostname'));?>:
-			<span class="info"><?php p($_['networkinfo']['hostname']);?></span>
-		</p>
-		<p>
-			<?php p($l->t('DNS'));?>:
-			<span class="info"><?php p($_['networkinfo']['dns']);?></span>
-		</p>
-		<p>
-			<?php p($l->t('Gateway'));?>:
-			<span class="info"><?php p($_['networkinfo']['gateway']);?></span>
-		</p>
-		<p>
-		<?php foreach ($_['networkinterfaces'] as $interface) {?>
-
-			<div class="infobox">
-				<h3><?php p($interface['interface'])?></h3>
-				<p>
-					<?php p($l->t('Status'));?>:
-					<span class="info"><?php p($interface['status'])?></span>
-				</p>
-				<p>
-					<?php p($l->t('Speed'));?>:
-					<span class="info"><?php p($interface['speed'] . ' ' . $interface['duplex'])?></span>
-				</p>
-				<?php if (!empty($interface['mac'])) {?>
-					<p>
-						<?php p($l->t('MAC'));?>:
-						<span class="info"><?php p($interface['mac'])?></span>
-					</p>
-				<?php }?>
-				<p>
-					<?php p($l->t('IPv4'));?>:
-					<span class="info"><?php p($interface['ipv4'])?></span>
-				</p>
-				<p>
-					<?php p($l->t('IPv6'));?>:
-					<span class="info"><?php p($interface['ipv6'])?></span>
-				</p>
+			<div class="col col-6 col-l-12">
+				<h2>
+					<img class="infoicon" src="<?php p(image_path('core', 'actions/screen.svg')); ?>">
+					<?php p($l->t('Load')); ?>
+				</h2>
+				<div class="infobox" id="cpuSection">
+					<div class="cpu-wrapper">
+						<canvas id="cpuloadcanvas" style="width:100%; height:200px" width="600" height="200"></canvas>
+					</div>
+				</div>
+				<p><em id="cpuFooterInfo"></em></p>
 			</div>
 
-		<?php }?>
+			<div class="col col-6 col-l-12">
+				<h2>
+					<img class="infoicon" src="<?php p(image_path('core', 'actions/quota.svg')); ?>">
+					<?php p($l->t('Memory')); ?>
+				</h2>
+				<div class="infobox">
+					<div class="memory-wrapper">
+						<canvas id="memorycanvas" style="width:100%; height:200px" width="600" height="200"></canvas>
+					</div>
+				</div>
+				<p><span class="rambox" id="rambox">&nbsp;&nbsp;</span>&nbsp;&nbsp;<em id="memFooterInfo"></em></p>
+				<p><span class="swapbox" id="swapbox">&nbsp;&nbsp;</span>&nbsp;&nbsp;<em id="swapFooterInfo"></em></p>
+			</div>
 
-	</p>
-</div>
-
-<!-- ACTIVE USERS -->
-<div class="section" id="activeUsersSection">
-	<div class="infobox">
-		<h2><?php p($l->t('Active users'));?></h2>
-		<br>
-		<div class="chart-container">
-			<canvas width="400" height="250" data-users="<?php p(json_encode($_['activeUsers']))?>" class="barchart" id="activeuserscanvas"></canvas>
-		</div>
-		<p>
-			<?php p($l->t('Total users:'));?>
-			<em id="numUsersStorage"><?php p($_['storage']['num_users']);?></em>
-		</p>
-	</div>
-</div>
-
-<!-- SHARES -->
-<div class="section" id="sharesSection">
-	<div class="infobox">
-		<h2><?php p($l->t('Shares'));?></h2>
-		<br>
-		<div class="chart-container">
-			<canvas data-shares="<?php p(json_encode($_['shares']))?>" class="barchart" id="sharecanvas"></canvas>
 		</div>
 	</div>
-</div>
 
-<!-- PHPINFO -->
-<div class="section" id="phpSection">
-	<h2>
-		<img class="infoicon" src="<?php p(image_path('serverinfo', 'hdd-o.svg'));?>">
-		<?php p($l->t('PHP'));?>
-	</h2>
-	<div class="infobox">
-		<p>
-			<?php p($l->t('Version:'));?>
-			<em id="phpVersion"><?php p($_['php']['version']);?></em>
-		</p>
-		<p>
-			<?php p($l->t('Memory Limit:'));?>
-			<em id="phpMemLimit"><?php p($_['php']['memory_limit']);?></em>
-		</p>
-		<p>
-			<?php p($l->t('Max Execution Time:'));?>
-			<em id="phpMaxExecTime"><?php p($_['php']['max_execution_time']);?></em>
-		</p>
-		<p>
-			<?php p($l->t('Upload max size:'));?>
-			<em id="phpUploadMaxSize"><?php p($_['php']['upload_max_filesize']);?></em>
+	<!-- DISK STATUS -->
+	<div class="section disk-status">
+		<div class="row">
+			<div class="col col-12">
+				<h2>
+					<img class="infoicon" src="<?php p(image_path('core', 'actions/quota.svg')); ?>">
+					<?php p($l->t('Disk')); ?>
+				</h2>
+			</div>
+			<?php foreach ($_['diskinfo'] as $disk): ?>
+				<div class="col col-4 col-xl-6 col-m-12">
+					<div class="infobox">
+						<div class="diskchart-container">
+							<canvas id="DiskChart" class="DiskChart" style="width:100%; height:200px" width="600"
+									height="200"></canvas>
+						</div>
+						<div class="diskinfo-container">
+							<h3><?php p(basename($disk['device'])); ?></h3>
+							<?php p($l->t('Mount')); ?> :
+							<span class="info"><?php p($disk['mount']); ?></span><br>
+							<?php p($l->t('Filesystem')); ?> :
+							<span class="info"><?php p($disk['fs']); ?></span><br>
+							<?php p($l->t('Size')); ?> :
+							<span class="info"><?php p(FormatBytes($disk['used'] + $disk['available'])); ?></span><br>
+							<?php p($l->t('Available')); ?> :
+							<span class="info"><?php p(FormatBytes($disk['available'])); ?></span><br>
+							<?php p($l->t('Used')); ?> :
+							<span class="info"><?php p($disk['percent']); ?></span><br>
+						</div>
+					</div>
+				</div>
+			<?php endforeach; ?>
+		</div>
+
+		<div class="smallinfo">
+			<?php p($l->t('You will get a notification once one of your disks is nearly full.')); ?>
+		</div>
+
+		<p><?php p($l->t('Files:')); ?> <em id="numFilesStorage"><?php p($_['storage']['num_files']); ?></em></p>
+		<p><?php p($l->t('Storages:')); ?> <em id="numFilesStorages"><?php p($_['storage']['num_storages']); ?></em></p>
+		<p><?php p($l->t('Free Space:')); ?> <em id="systemDiskFreeSpace"><?php p($_['system']['freespace']); ?></em>
 		</p>
 	</div>
-</div>
 
-<!-- DATABASE -->
-<div class="section" id="databaseSection">
-	<h2>
-		<img class="infoicon" src="<?php p(image_path('serverinfo', 'hdd-o.svg'));?>">
-		<?php p($l->t('Database'));?>
-	</h2>
-	<div class="infobox">
-		<p>
-			<?php p($l->t('Type:'));?>
-			<em id="databaseType"><?php p($_['database']['type']);?></em>
-		</p>
-		<p>
-			<?php p($l->t('Version:'));?>
-			<em id="databaseVersion"><?php p($_['database']['version']);?></em>
-		</p>
-		<p>
-			<?php p($l->t('Size:'));?>
-			<em id="databaseSize"><?php p($_['database']['size']);?></em>
-		</p>
-	</div>
-</div>
+	<!-- NETWORK -->
+	<div class="section network-infos">
+		<div class="row">
+			<div class="col col-12">
+				<h2>
+					<img class="infoicon" src="<?php p(image_path('core', 'categories/integration.svg')); ?>">
+					<?php p($l->t('Network')); ?>
+				</h2>
+			</div>
 
-<!-- OCS ENDPOINT -->
-<div class="section" id="ocsEndPoint">
-	<h2><?php p($l->t('External monitoring tool'));?></h2>
-	<p>
-		<?php p($l->t('You can connect an external monitoring tool by using this end point:'));?>
-	</p>
-	<div>
-		<input type="text" readonly="readonly" id="monitoring-endpoint-url" value="<?php echo p($_['ocs']); ?>" />
-		<a class="clipboardButton icon icon-clippy" data-clipboard-target="#monitoring-endpoint-url"></a>
-		<span class="icon-info svg" title="" data-original-title="<?php p($l->t('Did you know?'));?> <?php p($l->t('Appending "?format=json" at the end of the URL gives you the result in JSON format!'));?>"></span>
+			<div class="col col-12">
+				<?php p($l->t('Hostname')); ?>:
+				<span class="info"><?php p($_['networkinfo']['hostname']); ?></span>
+			</div>
+			<div class="col col-12">
+				<?php p($l->t('DNS')); ?>:
+				<span class="info"><?php p($_['networkinfo']['dns']); ?></span>
+			</div>
+			<div class="col col-12">
+				<?php p($l->t('Gateway')); ?>:
+				<span class="info"><?php p($_['networkinfo']['gateway']); ?></span>
+			</div>
+			<div class="col col-12">
+				<div class="row">
+					<?php foreach ($_['networkinterfaces'] as $interface): ?>
+
+						<div class="col col-4 col-l-6 col-m-12">
+							<div class="infobox">
+								<div class="interface-wrapper">
+									<h3><?php p($interface['interface']) ?></h3>
+									<?php p($l->t('Status')); ?>:
+									<span class="info"><?php p($interface['status']) ?></span><br>
+									<?php p($l->t('Speed')); ?>:
+									<span
+										class="info"><?php p($interface['speed'] . ' ' . $interface['duplex']) ?></span><br>
+									<?php if (!empty($interface['mac'])): ?>
+										<?php p($l->t('MAC')); ?>:
+										<span class="info"><?php p($interface['mac']) ?></span><br>
+									<?php endif; ?>
+									<?php p($l->t('IPv4')); ?>:
+									<span class="info"><?php p($interface['ipv4']) ?></span><br>
+									<?php p($l->t('IPv6')); ?>:
+									<span class="info"><?php p($interface['ipv6']) ?></span>
+								</div>
+							</div>
+						</div>
+
+					<?php endforeach; ?>
+				</div>
+			</div>
+		</div>
 	</div>
+
+	<!-- ACTIVE USER & SHARES-->
+	<div class="section active-users-shares">
+		<div class="row">
+
+			<div class="col col-6 col-m-12">
+				<!-- ACTIVE USERS -->
+				<h2>
+					<img class="infoicon" src="<?php p(image_path('core', 'categories/social.svg')); ?>">
+					<?php p($l->t('Active users')); ?>
+				</h2>
+				<div class="infobox">
+					<div class="active-users-wrapper">
+						<br>
+						<div class="chart-container">
+							<canvas data-users="<?php p(json_encode($_['activeUsers'])) ?>"
+									class="barchart"
+									id="activeuserscanvas"
+									style="width:100%; height:200px"
+									width="300" height="300"
+							></canvas>
+						</div>
+						<p>
+							<?php p($l->t('Total users:')); ?>
+							<em id="numUsersStorage"><?php p($_['storage']['num_users']); ?></em>
+						</p>
+					</div>
+				</div>
+			</div>
+
+			<div class="col col-6 col-m-12">
+				<!-- SHARES -->
+				<h2>
+					<img class="infoicon" src="<?php p(image_path('core', 'places/files.svg')); ?>">
+					<?php p($l->t('Shares')); ?>
+				</h2>
+				<div class="infobox">
+					<div class="shares-wrapper">
+						<br>
+						<div class="chart-container">
+							<canvas data-shares="<?php p(json_encode($_['shares'])) ?>"
+									class="barchart"
+									id="sharecanvas"
+									style="width:100%; height:200px"
+									width="300" height="300"
+							></canvas>
+						</div>
+					</div>
+				</div>
+			</div>
+		</div>
+	</div>
+
+	<!-- PHP, DATABASE -->
+	<div class="section php-database">
+		<div class="row">
+			<div class="col col-6 col-m-12">
+				<!-- PHPINFO -->
+				<h2>
+					<img class="infoicon" src="<?php p(image_path('core', 'actions/screen.svg')); ?>">
+					<?php p($l->t('PHP')); ?>
+				</h2>
+				<div class="infobox">
+					<div class="phpinfo-wrapper">
+						<p>
+							<?php p($l->t('Version:')); ?>
+							<em id="phpVersion"><?php p($_['php']['version']); ?></em>
+						</p>
+						<p>
+							<?php p($l->t('Memory Limit:')); ?>
+							<em id="phpMemLimit"><?php p($_['php']['memory_limit']); ?></em>
+						</p>
+						<p>
+							<?php p($l->t('Max Execution Time:')); ?>
+							<em id="phpMaxExecTime"><?php p($_['php']['max_execution_time']); ?></em>
+						</p>
+						<p>
+							<?php p($l->t('Upload max size:')); ?>
+							<em id="phpUploadMaxSize"><?php p($_['php']['upload_max_filesize']); ?></em>
+						</p>
+					</div>
+				</div>
+			</div>
+
+			<div class="col col-6 col-m-12">
+				<!-- DATABASE -->
+				<h2>
+					<img class="infoicon" src="<?php p(image_path('core', 'actions/screen.svg')); ?>">
+					<?php p($l->t('Database')); ?>
+				</h2>
+				<div class="infobox">
+					<div class="database-wrapper">
+						<p>
+							<?php p($l->t('Type:')); ?>
+							<em id="databaseType"><?php p($_['database']['type']); ?></em>
+						</p>
+						<p>
+							<?php p($l->t('Version:')); ?>
+							<em id="databaseVersion"><?php p($_['database']['version']); ?></em>
+						</p>
+						<p>
+							<?php p($l->t('Size:')); ?>
+							<em id="databaseSize"><?php p($_['database']['size']); ?></em>
+						</p>
+					</div>
+				</div>
+			</div>
+		</div>
+	</div>
+
+	<!-- EXTERNAL MONITORING-->
+	<div class="section monitoring">
+		<div class="row">
+			<div class="col col-6 col-m-12">
+				<!-- OCS ENDPOINT -->
+				<h2><?php p($l->t('External monitoring tool')); ?></h2>
+				<p>
+					<?php p($l->t('You can connect an external monitoring tool by using this end point:')); ?>
+				</p>
+				<div class="monitoring-wrapper">
+					<input type="text" readonly="readonly" id="monitoring-endpoint-url" value="<?php echo p($_['ocs']); ?>"/>
+					<a class="clipboardButton icon icon-clippy" data-clipboard-target="#monitoring-endpoint-url"></a>
+				</div>
+				<p class="settings-hint">
+					<?php p($l->t('Appending "?format=json" at the end of the URL gives you the result in JSON.')); ?>
+				</p>
+			</div>
+		</div>
+	</div>
+
 </div>
