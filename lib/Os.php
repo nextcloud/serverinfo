@@ -152,7 +152,7 @@ class Os {
 		$disks = $this->backend->getDiskInfo();
 		$data = array();
 		$i = 0;
-		foreach ($disks as $disk) {
+		foreach ((array) $disks as $disk) {
 			$data[$i] = [
 				round(($disk['used']) / 1024 / 1024, 1),
 				round($disk['available'] / 1024 / 1024, 1)
