@@ -63,7 +63,7 @@ function FormatBytes($byte) {
 									$cpu_name_output = [];
 									$splitted_cpu_name = explode(PHP_EOL, $_['cpu']);
 									if (sizeof($splitted_cpu_name) > 0):
-										foreach ($splitted_cpu_name as $cpu_name_part):
+										foreach ((array) $splitted_cpu_name as $cpu_name_part):
 											if (!in_array($cpu_name_part, $cpu_name_output)):
 												if (!is_numeric($cpu_name_part)):
 													$cpu_name_output[] = $cpu_name_part;
@@ -135,7 +135,7 @@ function FormatBytes($byte) {
 					<?php p($l->t('Disk')); ?>
 				</h2>
 			</div>
-			<?php foreach ($_['diskinfo'] as $disk): ?>
+			<?php foreach ((array) $_['diskinfo'] as $disk): ?>
 				<div class="col col-4 col-xl-6 col-m-12">
 					<div class="infobox">
 						<div class="diskchart-container">
@@ -194,7 +194,7 @@ function FormatBytes($byte) {
 			</div>
 			<div class="col col-12">
 				<div class="row">
-					<?php foreach ($_['networkinterfaces'] as $interface): ?>
+					<?php foreach ((array) $_['networkinterfaces'] as $interface): ?>
 
 						<div class="col col-4 col-l-6 col-m-12">
 							<div class="infobox">
