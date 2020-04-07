@@ -170,7 +170,7 @@ class DefaultOs {
 				$result[] = $items;
 			}
 		}
-		return $result;
+		return $result = $result ?? [];
 	}
 
 }
