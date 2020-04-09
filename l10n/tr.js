@@ -65,6 +65,7 @@ OC.L10N.register(
     "Size:" : "Boyut:",
     "External monitoring tool" : "Dış izleme aracı",
     "You can connect an external monitoring tool by using this end point:" : "Bu uç noktasını kullanarak bir dış izleme aracı bağlayabilirsiniz:",
+    "Appending \"?format=json\" at the end of the URL gives you the result in JSON." : "Adresin sonuna \"?format=json\" eklendiğinde sonuçlar JSON biçiminde alınabilir.",
     "Last 24 hours" : "Son 24 saat",
     "Last 1 hour" : "Son 1 saat",
     "Last 5 mins" : "Son 5 dakika",
