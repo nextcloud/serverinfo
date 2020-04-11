@@ -65,6 +65,7 @@ OC.L10N.register(
     "Size:" : "Величина:",
     "External monitoring tool" : "Спољни алати за праћење система",
     "You can connect an external monitoring tool by using this end point:" : "Можете повезати спољни алат за праћење система користећи следећу тачку повезивања:",
+    "Appending \"?format=json\" at the end of the URL gives you the result in JSON." : "Ако додате \"?format=json\" на крај адресе, добићете резултате у JSON формату.",
     "Last 24 hours" : "Последња 24 сата",
     "Last 1 hour" : "Последњих 1 сат",
     "Last 5 mins" : "Последњих 5 минута",
