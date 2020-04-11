@@ -54,7 +54,7 @@ OC.L10N.register(
     "IPv6" : "IPv6",
     "Active users" : "Aktywni użytkownicy",
     "Total users:" : "Ilość użytkowników:",
-    "Shares" : "Udziały",
+    "Shares" : "Udostępnienia",
     "PHP" : "PHP",
     "Version:" : "Wersja:",
     "Memory Limit:" : "Limit pamięci:",
