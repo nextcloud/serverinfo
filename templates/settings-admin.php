@@ -26,11 +26,11 @@ script('serverinfo', 'Chart.min');
 style('serverinfo', 'style');
 
 function FormatBytes($byte) {
-	$unim  = array('B', 'KB', 'MB', 'GB', 'TB', 'PB');
-	$count = 1;
+	$unim = array('B', 'KB', 'MB', 'GB', 'TB', 'PB');
+	$count = 0;
 	while ($byte >= 1024) {
 		$count++;
-		$byte = $byte / 1024;
+		$byte /= 1024;
 	}
 	return number_format($byte, 2, '.', '.') . ' ' . $unim[$count];
 }
@@ -58,26 +58,11 @@ function FormatBytes($byte) {
 						</tr>
 						<tr>
 							<td><?php p($l->t('CPU')); ?>:</td>
-							<td>
-								<?php
-									$cpu_name_output = [];
-									$splitted_cpu_name = explode(PHP_EOL, $_['cpu']);
-									if (sizeof($splitted_cpu_name) > 0):
-										foreach ($splitted_cpu_name as $cpu_name_part):
-											if (!in_array($cpu_name_part, $cpu_name_output)):
-												if (!is_numeric($cpu_name_part)):
-													$cpu_name_output[] = $cpu_name_part;
-												endif;
-											endif;
-										endforeach;
-									endif;
-									p(implode('', $cpu_name_output));
-								?>
-							</td>
+							<td><?php p($_['cpu']) ?></td>
 						</tr>
 						<tr>
 							<td><?php p($l->t('Memory')); ?>:</td>
-							<td><?php p($_['memory']); ?></td>
+							<td><?php p(FormatBytes($_['memory']['MemTotal'])) ?></td>
 						</tr>
 						<tr>
 							<td><?php p($l->t('Server time')); ?>:</td>

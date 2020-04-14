@@ -18,7 +18,7 @@
  *
  */
 
-namespace OCA\Serverinfo\OperatingSystems;
+namespace OCA\ServerInfo\OperatingSystems;
 /**
  * Class Ubuntu
  *
@@ -26,7 +26,14 @@ namespace OCA\Serverinfo\OperatingSystems;
  */
 class DefaultOs {
 
-	public function __construct() {}
+	/** @var string */
+	protected $cpuinfo;
+
+	/** @var string */
+	protected $meminfo;
+
+	/** @var string */
+	protected $uptime;
 
 	/**
 	 * @return bool
@@ -36,40 +43,80 @@ class DefaultOs {
 	}
 
 	/**
-	 * @return string
+	 * Get memory will return a list key => value where all values are in bytes.
+	 * [MemTotal => 0, MemFree => 0, MemAvailable => 0, SwapTotal => 0, SwapFree => 0].
+	 *
+	 * @return array
 	 */
-	public function getHostname() {
-		$hostname = shell_exec('hostname');
-		return $hostname;
-	}
+	public function getMemory(): array {
+		$data = ['MemTotal' => -1, 'MemFree' => -1, 'MemAvailable' => -1, 'SwapTotal' => -1, 'SwapFree' => -1];
 
-	/**
-	 * @return string
-	 */
-	public function getMemory() {
-		$memory = shell_exec('cat /proc/meminfo  | grep -i \'MemTotal\' | cut -f 2 -d ":" | awk \'{$1=$1}1\'');
-		$memory = explode(' ', $memory);
-		$memory = round($memory[0] / 1024);
-		if ($memory < 1024) {
-			$memory = $memory . ' MB';
-		} else {
-			$memory = round($memory / 1024, 1) . ' GB';
+		if ($this->meminfo === null) {
+			$this->meminfo = $this->readContent('/proc/meminfo');
 		}
-		return $memory;
+
+		if ($this->meminfo === '') {
+			return $data;
+		}
+
+		$matches = [];
+		$pattern = '/(?<Key>(?:MemTotal|MemFree|MemAvailable|SwapTotal|SwapFree)+):\s+(?<Value>\d+)\s+(?<Unit>\w{2})/';
+
+		if (preg_match_all($pattern, $this->meminfo, $matches) === false) {
+			return $data;
+		}
+
+		$keys = array_map('trim', $matches['Key']);
+		$values = array_map('trim', $matches['Value']);
+		$units = array_map('trim', $matches['Unit']);
+
+		foreach ($keys as $i => $key) {
+			$value = (int)$values[$i];
+			$unit = $units[$i];
+
+			if ($unit === 'kB') {
+				$value *= 1024;
+			}
+
+			$data[$key] = $value;
+		}
+
+		return $data;
 	}
 
 	/**
+	 * Get name of the processor
+	 *
 	 * @return string
 	 */
-	public function getCPUName() {
-		$cpu   = shell_exec('cat /proc/cpuinfo  | grep -i \'Model name\' | cut -f 2 -d ":" | awk \'{$1=$1}1\' | head -1');
-		$cores = shell_exec('cat /proc/cpuinfo  | grep -i \'cpu cores\' | cut -f 2 -d ":" | awk \'{$1=$1}1\' | head -1');
+	public function getCPUName(): string {
+		$data = 'Unknown Processor';
+
+		if ($this->cpuinfo === null) {
+			$this->cpuinfo = $this->readContent('/proc/cpuinfo');
+		}
+
+		if ($this->cpuinfo === '') {
+			return $data;
+		}
+
+		$matches = [];
+		$pattern = '/model name\s:\s(.+)/';
+
+		if (preg_match_all($pattern, $this->cpuinfo, $matches) === false) {
+			return $data;
+		}
+
+		$model = $matches[1][0];
+		$cores = count($matches[1]);
+
 		if ($cores === 1) {
-			$cores = ' (' . $cores . ' core)';
+			$data = $model . ' (1 core)';
 		} else {
-			$cores = ' (' . $cores . ' cores)';
+			$data = $model . ' (' . $cores . ' cores)';
 		}
-		return $cpu . ' ' . $cores;
+
+		return $data;
 	}
 
 	/**
@@ -81,10 +128,23 @@ class DefaultOs {
 	}
 
 	/**
-	 * @return string
+	 * Get the total number of seconds the system has been up or -1 on failure.
+	 *
+	 * @return int
 	 */
-	public function getUptime() {
-		$uptime = shell_exec('uptime -p');
+	public function getUptime(): int {
+		$data = -1;
+
+		if ($this->uptime === null) {
+			$this->uptime = $this->readContent('/proc/uptime');
+		}
+
+		if ($this->uptime === '') {
+			return $data;
+		}
+
+		[$uptime,] = array_map('intval', explode(' ', $this->uptime));
+
 		return $uptime;
 	}
 
@@ -163,8 +223,8 @@ class DefaultOs {
 				$items = [];
 				$items['device']    = $entry[0];
 				$items['fs']        = $entry[1];
-				$items['used']      = $entry[3];
-				$items['available'] = $entry[4];
+				$items['used']      = $entry[3] * 1024;
+				$items['available'] = $entry[4] * 1024;
 				$items['percent']   = $entry[5];
 				$items['mount']     = $entry[6];
 				$result[] = $items;
@@ -173,4 +233,10 @@ class DefaultOs {
 		return $result;
 	}
 
+	protected function readContent(string $filename): string {
+		if (is_readable($filename)) {
+			return file_get_contents($filename);
+		}
+		return '';
+	}
 }

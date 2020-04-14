@@ -22,7 +22,6 @@ namespace OCA\ServerInfo;
 
 use bantu\IniGetWrapper\IniGetWrapper;
 use OCA\ServerInfo\OperatingSystems\DefaultOs;
-use OCP\AppFramework\Http;
 use OCP\Http\Client\IClientService;
 use OCP\IConfig;
 use OCP\IDBConnection;
@@ -47,9 +46,6 @@ class Os {
 
 	/** @var */
 	protected $backend;
-
-	/** @var */
-	protected $osname;
 
 	/**
 	 * Os constructor.
@@ -85,32 +81,33 @@ class Os {
 	 * @return string
 	 */
 	public function getHostname() {
-		$data = $this->backend->getHostname();
-		return $data;
+		return (string)gethostname();
 	}
 
 	/**
 	 * @return string
 	 */
-	public function getOSName() {
-		$data = $this->osname;
-		return $data;
+	public function getOSName(): string {
+		return PHP_OS . ' ' . php_uname('r') . ' ' . php_uname('m');
 	}
 
 	/**
-	 * @return string
+	 * Get memory will return a list key => value where all values are in bytes.
+	 * [MemTotal => 0, MemFree => 0, MemAvailable => 0, SwapTotal => 0, SwapFree => 0].
+	 *
+	 * @return array
 	 */
-	public function getMemory() {
-		$data = $this->backend->getMemory();
-		return $data;
+	public function getMemory(): array {
+		return $this->backend->getMemory();
 	}
 
 	/**
+	 * Get name of the processor
+	 *
 	 * @return string
 	 */
-	public function getCPUName() {
-		$data = $this->backend->getCPUName();
-		return $data;
+	public function getCPUName(): string {
+		return $this->backend->getCPUName();
 	}
 
 	/**
@@ -122,11 +119,12 @@ class Os {
 	}
 
 	/**
-	 * @return string
+	 * Get the total number of seconds the system has been up
+	 *
+	 * @return int
 	 */
-	public function getUptime() {
-		$data = $this->backend->getUptime();
-		return $data;
+	public function getUptime(): int {
+		return $this->backend->getUptime();
 	}
 
 	/**
@@ -146,22 +144,24 @@ class Os {
 	}
 
 	/**
-	 * @return string
+	 * Get diskdata will return a numerical list with two elements for each disk (used and available) where all values are in gigabyte.
+	 * [
+	 *        [used => 0, available => 0],
+	 *        [used => 0, available => 0],
+	 * ]
+	 *
+	 * @return array
 	 */
-	public function getDiskData() {
+	public function getDiskData(): array {
+		$data = [];
 		$disks = $this->backend->getDiskInfo();
-		$data = array();
-		$i = 0;
-		foreach ($disks as $disk) {
-			$data[$i] = [
-				round(($disk['used']) / 1024 / 1024, 1),
-				round($disk['available'] / 1024 / 1024, 1)
-			];
-			$i++;
-		}
 
-//		debug data
-		//		$data = array('0'=>array(1,2),'1'=>array(4,5),'2'=>array(3,1));
+		foreach ($disks as $disk) {
+			$data[] = [
+				round($disk['used'] / 1024 / 1024 / 1024, 1),
+				round($disk['available'] / 1024 / 1024 / 1024, 1)
+			];
+		}
 
 		return $data;
 	}
