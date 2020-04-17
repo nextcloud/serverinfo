@@ -27,19 +27,10 @@ namespace OCA\ServerInfo\OperatingSystems;
  */
 class DefaultOs {
 
-	/** @var string */
-	protected $cpuinfo;
-
-	/** @var string */
-	protected $meminfo;
-
-	/** @var string */
-	protected $uptime;
-
 	/**
 	 * @return bool
 	 */
-	public function supported() {
+	public function supported(): bool {
 		return true;
 	}
 
@@ -52,28 +43,23 @@ class DefaultOs {
 	public function getMemory(): array {
 		$data = ['MemTotal' => -1, 'MemFree' => -1, 'MemAvailable' => -1, 'SwapTotal' => -1, 'SwapFree' => -1];
 
-		if ($this->meminfo === null) {
-			$this->meminfo = $this->readContent('/proc/meminfo');
-		}
-
-		if ($this->meminfo === '') {
+		try {
+			$meminfo = $this->readContent('/proc/meminfo');
+		} catch (\RuntimeException $e) {
 			return $data;
 		}
 
 		$matches = [];
 		$pattern = '/(?<Key>(?:MemTotal|MemFree|MemAvailable|SwapTotal|SwapFree)+):\s+(?<Value>\d+)\s+(?<Unit>\w{2})/';
 
-		if (preg_match_all($pattern, $this->meminfo, $matches) === false) {
+		$result = preg_match_all($pattern, $meminfo, $matches);
+		if ($result === 0 || $result === false) {
 			return $data;
 		}
 
-		$keys = array_map('trim', $matches['Key']);
-		$values = array_map('trim', $matches['Value']);
-		$units = array_map('trim', $matches['Unit']);
-
-		foreach ($keys as $i => $key) {
-			$value = (int)$values[$i];
-			$unit = $units[$i];
+		foreach ($matches['Key'] as $i => $key) {
+			$value = (int)$matches['Value'][$i];
+			$unit = $matches['Unit'][$i];
 
 			if ($unit === 'kB') {
 				$value *= 1024;
@@ -93,18 +79,17 @@ class DefaultOs {
 	public function getCPUName(): string {
 		$data = 'Unknown Processor';
 
-		if ($this->cpuinfo === null) {
-			$this->cpuinfo = $this->readContent('/proc/cpuinfo');
-		}
-
-		if ($this->cpuinfo === '') {
+		try {
+			$cpuinfo = $this->readContent('/proc/cpuinfo');
+		} catch (\RuntimeException $e) {
 			return $data;
 		}
 
 		$matches = [];
 		$pattern = '/model name\s:\s(.+)/';
 
-		if (preg_match_all($pattern, $this->cpuinfo, $matches) === false) {
+		$result = preg_match_all($pattern, $cpuinfo, $matches);
+		if ($result === 0 || $result === false) {
 			return $data;
 		}
 
@@ -136,17 +121,15 @@ class DefaultOs {
 	public function getUptime(): int {
 		$data = -1;
 
-		if ($this->uptime === null) {
-			$this->uptime = $this->readContent('/proc/uptime');
-		}
-
-		if ($this->uptime === '') {
+		try {
+			$uptime = $this->readContent('/proc/uptime');
+		} catch (\RuntimeException $e) {
 			return $data;
 		}
 
-		[$uptime,] = array_map('intval', explode(' ', $this->uptime));
+		[$uptimeInSeconds,] = array_map('intval', explode(' ', $uptime));
 
-		return $uptime;
+		return $uptimeInSeconds;
 	}
 
 	/**
@@ -255,10 +238,11 @@ class DefaultOs {
 	}
 
 	protected function readContent(string $filename): string {
-		if (is_readable($filename)) {
-			return file_get_contents($filename);
+		$data = @file_get_contents($filename);
+		if ($data === false || $data === '') {
+			throw new \RuntimeException('Unable to read: "' . $filename . '"');
 		}
-		return '';
+		return $data;
 	}
 
 	protected function executeCommand(string $command): string {

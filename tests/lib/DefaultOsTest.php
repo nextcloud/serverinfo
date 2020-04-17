@@ -69,6 +69,22 @@ class DefaultOsTest extends TestCase {
 		$this->assertEquals(917756 * 1024, $memory['SwapFree']);
 	}
 
+	public function testGetMemoryNoData(): void {
+		$this->os->method('readContent')
+			->with('/proc/meminfo')
+			->willThrowException(new \RuntimeException('Unable to read: "/proc/meminfo"'));
+
+		$this->assertSame(['MemTotal' => -1, 'MemFree' => -1, 'MemAvailable' => -1, 'SwapTotal' => -1, 'SwapFree' => -1], $this->os->getMemory());
+	}
+
+	public function testGetMemoryInvalidData(): void {
+		$this->os->method('readContent')
+			->with('/proc/meminfo')
+			->willReturn('invalid_data');
+
+		$this->assertSame(['MemTotal' => -1, 'MemFree' => -1, 'MemAvailable' => -1, 'SwapTotal' => -1, 'SwapFree' => -1], $this->os->getMemory());
+	}
+
 	public function testGetCPUName(): void {
 		$this->os->method('readContent')
 			->with('/proc/cpuinfo')
@@ -77,12 +93,44 @@ class DefaultOsTest extends TestCase {
 		$this->assertEquals('Intel(R) Core(TM) i5-6500 CPU @ 3.20GHz (4 cores)', $this->os->getCPUName());
 	}
 
+	public function testGetCPUNameOneCore(): void {
+		$this->os->method('readContent')
+			->with('/proc/cpuinfo')
+			->willReturn(file_get_contents(__DIR__ . '/../data/cpuinfo_one_core'));
+
+		$this->assertEquals('Intel(R) Core(TM) i5-6500 CPU @ 3.20GHz (1 core)', $this->os->getCPUName());
+	}
+
+	public function testGetCPUNameNoData(): void {
+		$this->os->method('readContent')
+			->with('/proc/cpuinfo')
+			->willThrowException(new \RuntimeException('Unable to read: "/proc/cpuinfo"'));
+
+		$this->assertEquals('Unknown Processor', $this->os->getCPUName());
+	}
+
+	public function testGetCPUNameInvalidData(): void {
+		$this->os->method('readContent')
+			->with('/proc/cpuinfo')
+			->willReturn('invalid_data');
+
+		$this->assertEquals('Unknown Processor', $this->os->getCPUName());
+	}
+
 	public function testGetUptime(): void {
 		$this->os->method('readContent')
 			->with('/proc/uptime')
 			->willReturn(file_get_contents(__DIR__ . '/../data/uptime'));
 
 		$this->assertEquals(13278, $this->os->getUptime());
+	}
+
+	public function testGetUptimeNoData(): void {
+		$this->os->method('readContent')
+			->with('/proc/uptime')
+			->willThrowException(new \RuntimeException('Unable to read: "/proc/uptime"'));
+
+		$this->assertEquals(-1, $this->os->getUptime());
 	}
 
 	public function testGetDiskInfo(): void {
@@ -142,5 +190,9 @@ class DefaultOsTest extends TestCase {
 			->willReturn('invalid_data');
 
 		$this->assertSame([], $this->os->getDiskInfo());
+	}
+
+	public function testSupported(): void {
+		$this->assertTrue($this->os->supported());
 	}
 }
