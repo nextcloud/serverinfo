@@ -136,11 +136,16 @@ class Os {
 	}
 
 	/**
-	 * @return string
+	 * Get diskInfo will return a list of disks. Used and Available in bytes.
+	 *
+	 * [
+	 * 	[device => /dev/mapper/homestead--vg-root, fs => ext4, used => 6205468, available => 47321220, percent => 12%, mount => /]
+	 * ]
+	 *
+	 * @return array
 	 */
-	public function getDiskInfo() {
-		$data = $this->backend->getDiskInfo();
-		return $data;
+	public function getDiskInfo(): array {
+		return $this->backend->getDiskInfo();
 	}
 
 	/**

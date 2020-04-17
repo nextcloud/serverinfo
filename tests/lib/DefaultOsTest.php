@@ -45,7 +45,7 @@ class DefaultOsTest extends TestCase {
 			->disableOriginalClone()
 			->disableArgumentCloning()
 			->disallowMockingUnknownTypes()
-			->setMethods(['readContent'])
+			->setMethods(['readContent', 'executeCommand'])
 			->getMock();
 	}
 
@@ -83,6 +83,65 @@ class DefaultOsTest extends TestCase {
 			->willReturn(file_get_contents(__DIR__ . '/../data/uptime'));
 
 		$this->assertEquals(13278, $this->os->getUptime());
+	}
+
+	public function testGetDiskInfo(): void {
+		$this->os->method('executeCommand')
+			->with('df -TP')
+			->willReturn(file_get_contents(__DIR__ . '/../data/df_tp'));
+
+		$disks = [
+			[
+				'device' => '/dev/mapper/homestead--vg-root',
+				'fs' => 'ext4',
+				'used' => 6354399232,
+				'available' => 48456929280,
+				'percent' => '12%',
+				'mount' => '/',
+			],
+			[
+				'device' => '/dev/mapper/homestead--vg-mysql--master',
+				'fs' => 'ext4',
+				'used' => 263385088,
+				'available' => 63388057600,
+				'percent' => '1%',
+				'mount' => '/homestead-vg/master',
+			],
+			[
+				'device' => 'vagrant',
+				'fs' => 'vboxsf',
+				'used' => 629587079168,
+				'available' => 351531044864,
+				'percent' => '65%',
+				'mount' => '/vagrant',
+			],
+			[
+				'device' => 'home_vagrant_code',
+				'fs' => 'vboxsf',
+				'used' => 629587079168,
+				'available' => 351531044864,
+				'percent' => '65%',
+				'mount' => '/home/vagrant/code',
+			],
+		];
+
+		$this->assertSame($disks, $this->os->getDiskInfo());
+	}
+
+	public function testGetDiskInfoNoCommandOutput(): void {
+		$this->os->method('executeCommand')
+			->with('df -TP')
+			->willThrowException(new \RuntimeException('No output for command "df -TP"'));
+
+		$this->assertSame([], $this->os->getDiskInfo());
+	}
+
+	public function testGetDiskInfoInvalidCommandOutput(): void {
+		$this->os->method('executeCommand')
+			->with('df -TP')
+			->willReturn('invalid_data');
+
+		$this->assertSame([], $this->os->getDiskInfo());
 	}
 
 }

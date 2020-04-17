@@ -210,27 +210,47 @@ class DefaultOs {
 	}
 
 	/**
+	 * Get diskInfo will return a list of disks. Used and Available in bytes.
+	 *
+	 * [
+	 * 	[device => /dev/mapper/homestead--vg-root, fs => ext4, used => 6205468, available => 47321220, percent => 12%, mount => /]
+	 * ]
+	 *
 	 * @return array
 	 */
-	public function getDiskInfo() {
-		$blacklist = ['', 'Type', 'tmpfs', 'devtmpfs'];
-		$data  = shell_exec('df -TP');
-		$lines = preg_split('/[\r\n]+/', $data);
+	public function getDiskInfo(): array {
+		$data = [];
 
-		foreach ($lines as $line) {
-			$entry = preg_split('/\s+/', trim($line));
-			if (isset($entry[1]) && !in_array($entry[1], $blacklist)) {
-				$items = [];
-				$items['device']    = $entry[0];
-				$items['fs']        = $entry[1];
-				$items['used']      = $entry[3] * 1024;
-				$items['available'] = $entry[4] * 1024;
-				$items['percent']   = $entry[5];
-				$items['mount']     = $entry[6];
-				$result[] = $items;
-			}
+		try {
+			$disks = $this->executeCommand('df -TP');
+		} catch (\RuntimeException $e) {
+			return $data;
 		}
-		return $result;
+
+		$matches = [];
+		$pattern = '/^(?<Filesystem>[\w\/-]+)\s*(?<Type>\w+)\s*(?<Blocks>\d+)\s*(?<Used>\d+)\s*(?<Available>\d+)\s*(?<Capacity>\d+%)\s*(?<Mounted>[\w\/-]+)$/m';
+
+		$result = preg_match_all($pattern, $disks, $matches);
+		if ($result === 0 || $result === false) {
+			return $data;
+		}
+
+		foreach ($matches['Filesystem'] as $i => $filesystem) {
+			if (in_array($matches['Type'][$i], ['tmpfs', 'devtmpfs'], false)) {
+				continue;
+			}
+
+			$data[] = [
+				'device' => $filesystem,
+				'fs' => $matches['Type'][$i],
+				'used' => (int)$matches['Used'][$i] * 1024,
+				'available' => (int)$matches['Available'][$i] * 1024,
+				'percent' => $matches['Capacity'][$i],
+				'mount' => $matches['Mounted'][$i],
+			];
+		}
+
+		return $data;
 	}
 
 	protected function readContent(string $filename): string {
@@ -238,5 +258,13 @@ class DefaultOs {
 			return file_get_contents($filename);
 		}
 		return '';
+	}
+
+	protected function executeCommand(string $command): string {
+		$output = @shell_exec(escapeshellcmd($command));
+		if ($output === null || $output === '') {
+			throw new \RuntimeException('No output for command: "' . $command . '"');
+		}
+		return $output;
 	}
 }
