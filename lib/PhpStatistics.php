@@ -22,7 +22,6 @@
 
 namespace OCA\ServerInfo;
 
-
 use bantu\IniGetWrapper\IniGetWrapper;
 
 /**

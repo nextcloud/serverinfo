@@ -22,9 +22,7 @@
 
 namespace OCA\ServerInfo;
 
-
 use OCP\AppFramework\Utility\ITimeFactory;
-use OCP\DB\QueryBuilder\IQueryBuilder;
 use OCP\IDBConnection;
 
 /**
@@ -76,7 +74,6 @@ class SessionStatistics {
 	 * @return int
 	 */
 	private function getNumberOfActiveUsers($offset) {
-
 		$query = $this->connection->getQueryBuilder();
 		$query->select('uid')
 			->from('authtoken')
@@ -91,5 +88,4 @@ class SessionStatistics {
 
 		return count($activeUsers);
 	}
-
 }

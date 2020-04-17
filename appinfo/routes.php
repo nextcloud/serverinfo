@@ -29,9 +29,9 @@
  */
 
 return [
-    'routes' => [
-	   ['name' => 'page#update', 'url' => '/update', 'verb' => 'GET'],
-    ],
+	'routes' => [
+		['name' => 'page#update', 'url' => '/update', 'verb' => 'GET'],
+	],
 	'ocs' => [
 		['name' => 'api#info', 'url' => '/api/v1/info', 'verb' => 'GET'],
 		['name' => 'api#DiskData', 'url' => '/api/v1/diskdata', 'verb' => 'GET'],

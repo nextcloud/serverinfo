@@ -26,7 +26,7 @@ script('serverinfo', 'Chart.min');
 style('serverinfo', 'style');
 
 function FormatBytes($byte) {
-	$unim = array('B', 'KB', 'MB', 'GB', 'TB', 'PB');
+	$unim = ['B', 'KB', 'MB', 'GB', 'TB', 'PB'];
 	$count = 0;
 	while ($byte >= 1024) {
 		$count++;

@@ -22,7 +22,6 @@
 
 namespace OCA\ServerInfo\Settings;
 
-
 use OCP\IL10N;
 use OCP\IURLGenerator;
 use OCP\Settings\IIconSection;

@@ -94,7 +94,6 @@ class ApiController extends OCSController {
 	 * @return DataResponse
 	 */
 	public function info() {
-
 		return new DataResponse([
 			'nextcloud' => [
 				'system'  => $this->systemStatistics->getSystemStatistics(),
@@ -108,7 +107,6 @@ class ApiController extends OCSController {
 			],
 			'activeUsers' => $this->sessionStatistics->getSessionStatistics()
 		]);
-
 	}
 
 	/**

@@ -102,20 +102,20 @@ class AdminSettings implements ISettings {
 	public function getForm() {
 		$monitoringEndPoint = $this->urlGenerator->getAbsoluteURL('ocs/v2.php/apps/serverinfo/api/v1/info');
 		$params = [
-				'hostname' => $this-> os -> getHostname(),
-				'osname' => $this-> os -> getOSName(),
-				'memory' => $this-> os -> getMemory(),
-				'cpu' => $this-> os -> getCPUName(),
-				'diskinfo' => $this-> os -> getDiskInfo(),
-				'networkinfo' => $this-> os -> getNetworkInfo(),
-				'networkinterfaces' => $this-> os -> getNetworkInterfaces(),
-				'ocs' => $monitoringEndPoint,
-				'storage' => $this->storageStatistics->getStorageStatistics(),
-				'shares' => $this->shareStatistics->getShareStatistics(),
-				'php' => $this->phpStatistics->getPhpStatistics(),
-				'database' => $this->databaseStatistics->getDatabaseStatistics(),
-				'activeUsers' => $this->sessionStatistics->getSessionStatistics(),
-				'system' => $this->systemStatistics->getSystemStatistics()
+			'hostname' => $this-> os -> getHostname(),
+			'osname' => $this-> os -> getOSName(),
+			'memory' => $this-> os -> getMemory(),
+			'cpu' => $this-> os -> getCPUName(),
+			'diskinfo' => $this-> os -> getDiskInfo(),
+			'networkinfo' => $this-> os -> getNetworkInfo(),
+			'networkinterfaces' => $this-> os -> getNetworkInterfaces(),
+			'ocs' => $monitoringEndPoint,
+			'storage' => $this->storageStatistics->getStorageStatistics(),
+			'shares' => $this->shareStatistics->getShareStatistics(),
+			'php' => $this->phpStatistics->getPhpStatistics(),
+			'database' => $this->databaseStatistics->getDatabaseStatistics(),
+			'activeUsers' => $this->sessionStatistics->getSessionStatistics(),
+			'system' => $this->systemStatistics->getSystemStatistics()
 		];
 
 		return new TemplateResponse('serverinfo', 'settings-admin', $params);
@@ -138,5 +138,4 @@ class AdminSettings implements ISettings {
 	public function getPriority() {
 		return 0;
 	}
-
 }

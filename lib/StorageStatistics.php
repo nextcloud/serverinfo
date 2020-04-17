@@ -89,9 +89,9 @@ class StorageStatistics {
 			->from('storages');
 		if ($type === 'home') {
 			$query->where($query->expr()->like('id', $query->createNamedParameter('home::%')));
-		} else if ($type === 'local') {
+		} elseif ($type === 'local') {
 			$query->where($query->expr()->like('id', $query->createNamedParameter('local::%')));
-		} else if ($type === 'other') {
+		} elseif ($type === 'other') {
 			$query->where($query->expr()->notLike('id', $query->createNamedParameter('home::%')));
 			$query->andWhere($query->expr()->notLike('id', $query->createNamedParameter('local::%')));
 		}
@@ -100,5 +100,4 @@ class StorageStatistics {
 		$result->closeCursor();
 		return (int) $row['num_entries'];
 	}
-
 }

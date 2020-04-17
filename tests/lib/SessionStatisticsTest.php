@@ -22,7 +22,6 @@
 
 namespace OCA\ServerInfo\Tests;
 
-
 use OCA\ServerInfo\SessionStatistics;
 use OCP\AppFramework\Utility\ITimeFactory;
 use OCP\IDBConnection;
@@ -77,7 +76,7 @@ class SessionStatisticsTest extends TestCase {
 			$query = $this->connection->getQueryBuilder();
 			$query->insert($this->table)
 				->values(
-					array(
+					[
 						'uid' => $query->createNamedParameter('user-' . ($numOfEntries + $i % 2)),
 						'login_name' => $query->createNamedParameter('user-' . ($numOfEntries + $i % 2)),
 						'password' => $query->createNamedParameter('password'),
@@ -86,7 +85,7 @@ class SessionStatisticsTest extends TestCase {
 						'type' => $query->createNamedParameter(0),
 						'last_activity' => $query->createNamedParameter($lastActivity),
 						'last_check' => $query->createNamedParameter($lastActivity),
-					)
+					]
 				);
 			$query->execute();
 		}
@@ -103,9 +102,5 @@ class SessionStatisticsTest extends TestCase {
 		$this->assertSame(2, $result['last5minutes']);
 		$this->assertSame(4, $result['last1hour']);
 		$this->assertSame(6, $result['last24hours']);
-
 	}
-
-
-
 }
