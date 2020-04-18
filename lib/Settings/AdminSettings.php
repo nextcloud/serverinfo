@@ -22,17 +22,17 @@
 
 namespace OCA\ServerInfo\Settings;
 
-use OCA\ServerInfo\Os;
-use OCP\AppFramework\Http\TemplateResponse;
-use OCP\IL10N;
-use OCP\IURLGenerator;
-use OCP\Settings\ISettings;
 use OCA\ServerInfo\DatabaseStatistics;
+use OCA\ServerInfo\Os;
 use OCA\ServerInfo\PhpStatistics;
 use OCA\ServerInfo\SessionStatistics;
 use OCA\ServerInfo\ShareStatistics;
 use OCA\ServerInfo\StorageStatistics;
 use OCA\ServerInfo\SystemStatistics;
+use OCP\AppFramework\Http\TemplateResponse;
+use OCP\IL10N;
+use OCP\IURLGenerator;
+use OCP\Settings\ISettings;
 
 class AdminSettings implements ISettings {
 
@@ -102,13 +102,13 @@ class AdminSettings implements ISettings {
 	public function getForm() {
 		$monitoringEndPoint = $this->urlGenerator->getAbsoluteURL('ocs/v2.php/apps/serverinfo/api/v1/info');
 		$params = [
-			'hostname' => $this-> os -> getHostname(),
-			'osname' => $this-> os -> getOSName(),
-			'memory' => $this-> os -> getMemory(),
-			'cpu' => $this-> os -> getCPUName(),
-			'diskinfo' => $this-> os -> getDiskInfo(),
-			'networkinfo' => $this-> os -> getNetworkInfo(),
-			'networkinterfaces' => $this-> os -> getNetworkInterfaces(),
+			'hostname' => $this->os->getHostname(),
+			'osname' => $this->os->getOSName(),
+			'memory' => $this->os->getMemory(),
+			'cpu' => $this->os->getCPUName(),
+			'diskinfo' => $this->os->getDiskInfo(),
+			'networkinfo' => $this->os->getNetworkInfo(),
+			'networkinterfaces' => $this->os->getNetworkInterfaces(),
 			'ocs' => $monitoringEndPoint,
 			'storage' => $this->storageStatistics->getStorageStatistics(),
 			'shares' => $this->shareStatistics->getShareStatistics(),
