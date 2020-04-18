@@ -23,11 +23,8 @@ namespace OCA\ServerInfo\Controller;
 
 use OCP\AppFramework\Http\JSONResponse;
 use OCP\IRequest;
-use OCP\AppFramework\Http\TemplateResponse;
-use OCP\AppFramework\Http\DataResponse;
 use OCP\AppFramework\Controller;
 use OCA\ServerInfo\SystemStatistics;
-use OCP\IURLGenerator;
 
 class PageController extends Controller {
 
@@ -56,13 +53,10 @@ class PageController extends Controller {
 	 * @return JSONResponse
 	 */
 	public function update() {
-
 		$data = [
 			'system' => $this->systemStatistics->getSystemStatistics()
 		];
 
 		return new JSONResponse($data);
 	}
-
-
 }

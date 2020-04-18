@@ -186,5 +186,4 @@ class Os {
 		$data = $this->backend->getNetworkInterfaces();
 		return $data;
 	}
-
 }

@@ -143,5 +143,4 @@ class DefaultOsTest extends TestCase {
 
 		$this->assertSame([], $this->os->getDiskInfo());
 	}
-
 }
