@@ -42,7 +42,6 @@ OC.L10N.register(
     "Size:" : "Tamaño:",
     "External monitoring tool" : "Herramienta de monitoreo externa",
     "You can connect an external monitoring tool by using this end point:" : "Puede conectar una herramienta de monitoreo externo usando esta terminal:",
-    "Did you know?" : "¿Sabía usted?",
     "Last 24 hours" : "Últimas 24 horas",
     "Last 1 hour" : "Última hora",
     "Last 5 mins" : "Últimos 5 minutos",
@@ -52,6 +51,7 @@ OC.L10N.register(
     "Users:" : "Usuarios:",
     "Nextcloud" : "Nextcloud",
     "Apps installed:" : "Aplicaciones instaladas:",
-    "Apps updates available:" : "Actualizaciones disponibles para aplicaciones:"
+    "Apps updates available:" : "Actualizaciones disponibles para aplicaciones:",
+    "Did you know?" : "¿Sabía usted?"
 },
 "nplurals=2; plural=(n != 1);");

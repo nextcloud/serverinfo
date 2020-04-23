@@ -51,7 +51,7 @@
     "IPv4" : "IPv4",
     "IPv6" : "IPv6",
     "Active users" : "Aktive Benutzer",
-    "Total users:" : "Nutzer gesamt:",
+    "Total users:" : "Benutzer gesamt:",
     "Shares" : "Freigaben",
     "PHP" : "PHP",
     "Version:" : "Version:",
@@ -63,8 +63,7 @@
     "Size:" : "Größe:",
     "External monitoring tool" : "Externes Überwachungsprogramm",
     "You can connect an external monitoring tool by using this end point:" : "Durch Verwendung des folgenden Zugangspunktes kann ein externes Überwachungsprogramm verwendet werden: ",
-    "Did you know?" : "Wussten Sie schon?",
-    "Appending \"?format=json\" at the end of the URL gives you the result in JSON format!" : "Das Anhängen von \"?format=json\" am Ende der URL liefert Ihnen das Ergebnis im JSON-Format!",
+    "Appending \"?format=json\" at the end of the URL gives you the result in JSON." : "Wenn Sie \"?format=json\" am Ende der URL anhängen, erhalten Sie das Ergebnis in JSON.",
     "Last 24 hours" : "Letzte 24 Stunden",
     "Last 1 hour" : "Letzte Stunde",
     "Last 5 mins" : "Letzte 5 Minuten",
@@ -74,6 +73,8 @@
     "Users:" : "Benutzer:",
     "Nextcloud" : "Nextcloud",
     "Apps installed:" : "Installierte Apps:",
-    "Apps updates available:" : "Apps mit verfügbaren Aktualisierungen:"
+    "Apps updates available:" : "Apps mit verfügbaren Aktualisierungen:",
+    "Did you know?" : "Wussten Sie schon?",
+    "Appending \"?format=json\" at the end of the URL gives you the result in JSON format!" : "Das Anhängen von \"?format=json\" am Ende der URL liefert Ihnen das Ergebnis im JSON-Format!"
 },"pluralForm" :"nplurals=2; plural=(n != 1);"
 }

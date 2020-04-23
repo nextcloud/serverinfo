@@ -13,7 +13,7 @@ OC.L10N.register(
     "Mails" : "Mails",
     "Federated sent" : "Gefedereerd verstuurd",
     "Federated received" : "Gefedereerd ontvangen",
-    "Talk conversations" : "Talk gesprek",
+    "Talk conversations" : "Talk-gesprekken",
     "24 hours" : "24 uur",
     "1 hour" : "1 uur",
     "5 mins" : "5 min",
@@ -65,8 +65,7 @@ OC.L10N.register(
     "Size:" : "Grootte:",
     "External monitoring tool" : "Externe monitoring tool",
     "You can connect an external monitoring tool by using this end point:" : "Je kunt een externe monitor-tool verbinden door dit end point te gebruiken:",
-    "Did you know?" : "Wist je dat?",
-    "Appending \"?format=json\" at the end of the URL gives you the result in JSON format!" : "Door \"?format=json\" aan het eind van de URL te zetten, krijg je het resultaat in JSON formaat!",
+    "Appending \"?format=json\" at the end of the URL gives you the result in JSON." : "Wanneer je \"?format=json\" toevoegt aan het einde van de URL ontvang je het resultaat in JSON",
     "Last 24 hours" : "Laatste 24 uur",
     "Last 1 hour" : "Laatste uur",
     "Last 5 mins" : "Laatste 5 minuten",
@@ -76,6 +75,8 @@ OC.L10N.register(
     "Users:" : "Gebruikers:",
     "Nextcloud" : "Nextcloud",
     "Apps installed:" : "Apps geïnstalleerd:",
-    "Apps updates available:" : "App updates beschikbaar:"
+    "Apps updates available:" : "App updates beschikbaar:",
+    "Did you know?" : "Wist je dat?",
+    "Appending \"?format=json\" at the end of the URL gives you the result in JSON format!" : "Door \"?format=json\" aan het eind van de URL te zetten, krijg je het resultaat in JSON formaat!"
 },
 "nplurals=2; plural=(n != 1);");

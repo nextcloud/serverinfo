@@ -65,8 +65,7 @@ OC.L10N.register(
     "Size:" : "大小：",
     "External monitoring tool" : "外部监控工具",
     "You can connect an external monitoring tool by using this end point:" : "此地址可用于外部监控工具：",
-    "Did you know?" : "您知道吗？",
-    "Appending \"?format=json\" at the end of the URL gives you the result in JSON format!" : "在 URL 最后附加 \"?format=json\" 参数可以获得 JSON 格式的结果！",
+    "Appending \"?format=json\" at the end of the URL gives you the result in JSON." : "在 URL 末尾附加 \"?format=json\" 会为您提供 JSON 结果。",
     "Last 24 hours" : "最近 24 小时",
     "Last 1 hour" : "最近 1 小时",
     "Last 5 mins" : "最近 5 分钟",
@@ -76,6 +75,8 @@ OC.L10N.register(
     "Users:" : "用户：",
     "Nextcloud" : "Nextcloud",
     "Apps installed:" : "已安装应用：",
-    "Apps updates available:" : "可更新应用："
+    "Apps updates available:" : "可更新应用：",
+    "Did you know?" : "您知道吗？",
+    "Appending \"?format=json\" at the end of the URL gives you the result in JSON format!" : "在 URL 最后附加 \"?format=json\" 参数可以获得 JSON 格式的结果！"
 },
 "nplurals=1; plural=0;");

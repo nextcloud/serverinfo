@@ -25,6 +25,7 @@ OC.L10N.register(
     "Storages:" : "Сховищ:",
     "Free Space:" : "Вільно:",
     "Hostname" : "Ім'я хоста",
+    "Status" : "Статус",
     "Active users" : "Активні користувачі",
     "Shares" : "Ресурси спільного доступу",
     "PHP" : "PHP",

@@ -65,8 +65,7 @@ OC.L10N.register(
     "Size:" : "גודל:",
     "External monitoring tool" : "כלי מעקב חיצוני",
     "You can connect an external monitoring tool by using this end point:" : "ניתן לחבר לכלי מעקב חיצוני דרך נקודת הגישה הזאת:",
-    "Did you know?" : "הידעת?",
-    "Appending \"?format=json\" at the end of the URL gives you the result in JSON format!" : "הוספת „‎?format=json” לסוף הכתובת מציגה את התוצאות בתצורת JSON!",
+    "Appending \"?format=json\" at the end of the URL gives you the result in JSON." : "הוספת „‎?format=json” לסוף הכתובת יעניק לך את התוצאה ב־JSON.",
     "Last 24 hours" : "24 השעות האחרונות",
     "Last 1 hour" : "השעה האחרונה",
     "Last 5 mins" : "5 הדקות האחרונות",
@@ -76,6 +75,8 @@ OC.L10N.register(
     "Users:" : "משתמשים:",
     "Nextcloud" : "Nextcloud",
     "Apps installed:" : "יישומים מותקנים:",
-    "Apps updates available:" : "עדכונים זמינים ליישומים:"
+    "Apps updates available:" : "עדכונים זמינים ליישומים:",
+    "Did you know?" : "הידעת?",
+    "Appending \"?format=json\" at the end of the URL gives you the result in JSON format!" : "הוספת „‎?format=json” לסוף הכתובת מציגה את התוצאות בתצורת JSON!"
 },
 "nplurals=4; plural=(n == 1 && n % 1 == 0) ? 0 : (n == 2 && n % 1 == 0) ? 1: (n % 10 == 0 && n % 1 == 0 && n > 10) ? 2 : 3;");
