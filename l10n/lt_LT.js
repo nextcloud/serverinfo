@@ -25,6 +25,7 @@ OC.L10N.register(
     "Disk" : "Diskas",
     "Filesystem" : "Failų sistema",
     "Size" : "Dydis",
+    "Available" : "Prieinamas",
     "You will get a notification once one of your disks is nearly full." : "Gausite pranešimą, kai kuris nors iš jūsų diskų bus beveik pilnas.",
     "Files:" : "Failai:",
     "Storages:" : "Saugyklos:",
