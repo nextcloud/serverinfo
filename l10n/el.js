@@ -13,7 +13,7 @@ OC.L10N.register(
     "Mails" : "Ηλ.Αλληλογραφία",
     "Federated sent" : "Το Federated απεστάλη",
     "Federated received" : "Λήφθηκε το Federated",
-    "Talk conversations" : "Συνομιλίες",
+    "Talk conversations" : "Συνομιλίες με Talk",
     "24 hours" : "24 ωρών",
     "1 hour" : "1 ώρα",
     "5 mins" : "5 λεπτά",
