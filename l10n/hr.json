@@ -63,6 +63,7 @@
     "Size:" : "Veličina:",
     "External monitoring tool" : "Vanjski alat za praćenje",
     "You can connect an external monitoring tool by using this end point:" : "Možete povezati vanjski alat za praćenje s pomoću ove krajnje točke:",
+    "Appending \"?format=json\" at the end of the URL gives you the result in JSON." : "Dodavanjem „?format = json” na kraj URL-a dobije se rezultat u JSON-u.",
     "Last 24 hours" : "Posljednja 24 sata",
     "Last 1 hour" : "Posljednji sat",
     "Last 5 mins" : "Posljednjih 5 min",
