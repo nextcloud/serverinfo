@@ -18,7 +18,8 @@
  *
  */
 
-namespace OCA\Serverinfo\OperatingSystems;
+namespace OCA\ServerInfo\OperatingSystems;
+
 /**
  * Class Ubuntu
  *
@@ -26,50 +27,82 @@ namespace OCA\Serverinfo\OperatingSystems;
  */
 class DefaultOs {
 
-	public function __construct() {}
-
 	/**
 	 * @return bool
 	 */
-	public function supported() {
+	public function supported(): bool {
 		return true;
 	}
 
 	/**
-	 * @return string
+	 * Get memory will return a list key => value where all values are in bytes.
+	 * [MemTotal => 0, MemFree => 0, MemAvailable => 0, SwapTotal => 0, SwapFree => 0].
+	 *
+	 * @return array
 	 */
-	public function getHostname() {
-		$hostname = shell_exec('hostname');
-		return $hostname;
-	}
+	public function getMemory(): array {
+		$data = ['MemTotal' => -1, 'MemFree' => -1, 'MemAvailable' => -1, 'SwapTotal' => -1, 'SwapFree' => -1];
 
-	/**
-	 * @return string
-	 */
-	public function getMemory() {
-		$memory = shell_exec('cat /proc/meminfo  | grep -i \'MemTotal\' | cut -f 2 -d ":" | awk \'{$1=$1}1\'');
-		$memory = explode(' ', $memory);
-		$memory = round($memory[0] / 1024);
-		if ($memory < 1024) {
-			$memory = $memory . ' MB';
-		} else {
-			$memory = round($memory / 1024, 1) . ' GB';
+		try {
+			$meminfo = $this->readContent('/proc/meminfo');
+		} catch (\RuntimeException $e) {
+			return $data;
 		}
-		return $memory;
+
+		$matches = [];
+		$pattern = '/(?<Key>(?:MemTotal|MemFree|MemAvailable|SwapTotal|SwapFree)+):\s+(?<Value>\d+)\s+(?<Unit>\w{2})/';
+
+		$result = preg_match_all($pattern, $meminfo, $matches);
+		if ($result === 0 || $result === false) {
+			return $data;
+		}
+
+		foreach ($matches['Key'] as $i => $key) {
+			$value = (int)$matches['Value'][$i];
+			$unit = $matches['Unit'][$i];
+
+			if ($unit === 'kB') {
+				$value *= 1024;
+			}
+
+			$data[$key] = $value;
+		}
+
+		return $data;
 	}
 
 	/**
+	 * Get name of the processor
+	 *
 	 * @return string
 	 */
-	public function getCPUName() {
-		$cpu   = shell_exec('cat /proc/cpuinfo  | grep -i \'Model name\' | cut -f 2 -d ":" | awk \'{$1=$1}1\'');
-		$cores = shell_exec('cat /proc/cpuinfo  | grep -i \'cpu cores\' | cut -f 2 -d ":" | awk \'{$1=$1}1\'');
+	public function getCPUName(): string {
+		$data = 'Unknown Processor';
+
+		try {
+			$cpuinfo = $this->readContent('/proc/cpuinfo');
+		} catch (\RuntimeException $e) {
+			return $data;
+		}
+
+		$matches = [];
+		$pattern = '/model name\s:\s(.+)/';
+
+		$result = preg_match_all($pattern, $cpuinfo, $matches);
+		if ($result === 0 || $result === false) {
+			return $data;
+		}
+
+		$model = $matches[1][0];
+		$cores = count($matches[1]);
+
 		if ($cores === 1) {
-			$cores = ' (' . $cores . ' core)';
+			$data = $model . ' (1 core)';
 		} else {
-			$cores = ' (' . $cores . ' cores)';
+			$data = $model . ' (' . $cores . ' cores)';
 		}
-		return $cpu . ' ' . $cores;
+
+		return $data;
 	}
 
 	/**
@@ -81,11 +114,22 @@ class DefaultOs {
 	}
 
 	/**
-	 * @return string
+	 * Get the total number of seconds the system has been up or -1 on failure.
+	 *
+	 * @return int
 	 */
-	public function getUptime() {
-		$uptime = shell_exec('uptime -p');
-		return $uptime;
+	public function getUptime(): int {
+		$data = -1;
+
+		try {
+			$uptime = $this->readContent('/proc/uptime');
+		} catch (\RuntimeException $e) {
+			return $data;
+		}
+
+		[$uptimeInSeconds,] = array_map('intval', explode(' ', $uptime));
+
+		return $uptimeInSeconds;
 	}
 
 	/**
@@ -150,27 +194,62 @@ class DefaultOs {
 	}
 
 	/**
+	 * Get diskInfo will return a list of disks. Used and Available in bytes.
+	 *
+	 * [
+	 * 	[device => /dev/mapper/homestead--vg-root, fs => ext4, used => 6205468, available => 47321220, percent => 12%, mount => /]
+	 * ]
+	 *
 	 * @return array
 	 */
-	public function getDiskInfo() {
-		$blacklist = ['', 'Type', 'tmpfs', 'devtmpfs'];
-		$data  = shell_exec('df -TP');
-		$lines = preg_split('/[\r\n]+/', $data);
+	public function getDiskInfo(): array {
+		$data = [];
 
-		foreach ($lines as $line) {
-			$entry = preg_split('/\s+/', trim($line));
-			if (isset($entry[1]) && !in_array($entry[1], $blacklist)) {
-				$items = [];
-				$items['device']    = $entry[0];
-				$items['fs']        = $entry[1];
-				$items['used']      = $entry[3];
-				$items['available'] = $entry[4];
-				$items['percent']   = $entry[5];
-				$items['mount']     = $entry[6];
-				$result[] = $items;
-			}
+		try {
+			$disks = $this->executeCommand('df -TP');
+		} catch (\RuntimeException $e) {
+			return $data;
 		}
-		return $result;
+
+		$matches = [];
+		$pattern = '/^(?<Filesystem>[\w\/-]+)\s*(?<Type>\w+)\s*(?<Blocks>\d+)\s*(?<Used>\d+)\s*(?<Available>\d+)\s*(?<Capacity>\d+%)\s*(?<Mounted>[\w\/-]+)$/m';
+
+		$result = preg_match_all($pattern, $disks, $matches);
+		if ($result === 0 || $result === false) {
+			return $data;
+		}
+
+		foreach ($matches['Filesystem'] as $i => $filesystem) {
+			if (in_array($matches['Type'][$i], ['tmpfs', 'devtmpfs'], false)) {
+				continue;
+			}
+
+			$data[] = [
+				'device' => $filesystem,
+				'fs' => $matches['Type'][$i],
+				'used' => (int)$matches['Used'][$i] * 1024,
+				'available' => (int)$matches['Available'][$i] * 1024,
+				'percent' => $matches['Capacity'][$i],
+				'mount' => $matches['Mounted'][$i],
+			];
+		}
+
+		return $data;
 	}
 
+	protected function readContent(string $filename): string {
+		$data = @file_get_contents($filename);
+		if ($data === false || $data === '') {
+			throw new \RuntimeException('Unable to read: "' . $filename . '"');
+		}
+		return $data;
+	}
+
+	protected function executeCommand(string $command): string {
+		$output = @shell_exec(escapeshellcmd($command));
+		if ($output === null || $output === '') {
+			throw new \RuntimeException('No output for command: "' . $command . '"');
+		}
+		return $output;
+	}
 }

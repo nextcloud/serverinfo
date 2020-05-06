@@ -65,8 +65,6 @@ OC.L10N.register(
     "Size:" : "Izmērs:",
     "External monitoring tool" : "Ārējās uzraudzības instruments",
     "You can connect an external monitoring tool by using this end point:" : "Ārējo pārraudzības rīku var savienot, izmantojot šo beigu punktu:",
-    "Did you know?" : "Vai tu zināji?",
-    "Appending \"?format=json\" at the end of the URL gives you the result in JSON format!" : "Pievienotais \"?format=json\" URL beigās sniedz rezultātu JSON formātā!",
     "Last 24 hours" : "Pēdējās 24 stundas",
     "Last 1 hour" : "Pēdēja 1 stunda",
     "Last 5 mins" : "Pēdējās 5 minūtes",
@@ -76,6 +74,8 @@ OC.L10N.register(
     "Users:" : "Lietotāji:",
     "Nextcloud" : "Nextcloud",
     "Apps installed:" : "Instalētās lietotnes:",
-    "Apps updates available:" : "Pieejami lietotņu atjauninājumi:"
+    "Apps updates available:" : "Pieejami lietotņu atjauninājumi:",
+    "Did you know?" : "Vai tu zināji?",
+    "Appending \"?format=json\" at the end of the URL gives you the result in JSON format!" : "Pievienotais \"?format=json\" URL beigās sniedz rezultātu JSON formātā!"
 },
 "nplurals=3; plural=(n%10==1 && n%100!=11 ? 0 : n != 0 ? 1 : 2);");

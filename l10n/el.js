@@ -13,7 +13,7 @@ OC.L10N.register(
     "Mails" : "Ηλ.Αλληλογραφία",
     "Federated sent" : "Το Federated απεστάλη",
     "Federated received" : "Λήφθηκε το Federated",
-    "Talk conversations" : "Συνομιλίες",
+    "Talk conversations" : "Συνομιλίες με Talk",
     "24 hours" : "24 ωρών",
     "1 hour" : "1 ώρα",
     "5 mins" : "5 λεπτά",
@@ -65,8 +65,7 @@ OC.L10N.register(
     "Size:" : "Μέγεθος:",
     "External monitoring tool" : "Εξωτερικό εργαλείο παρακολούθησης",
     "You can connect an external monitoring tool by using this end point:" : "Συνδεθείτε σε εξωτερικό εργαλείο παρακολούθησης με χρήση αυτού του σημείου:",
-    "Did you know?" : "Γνωρίζεται?",
-    "Appending \"?format=json\" at the end of the URL gives you the result in JSON format!" : "Προσθέτοντας το \"?format=json\" στο τέλος των URL σας δίνει αποτέλεσμα σε μορφή JSON!",
+    "Appending \"?format=json\" at the end of the URL gives you the result in JSON." : "Προσθέτοντας το \"?format=json\" στο τέλος των URL σας δίνει αποτέλεσμα σε JSON!",
     "Last 24 hours" : "Τελευταίες 24 ώρες",
     "Last 1 hour" : "Τελευταία 1 ώρα",
     "Last 5 mins" : "Τελευταία 5 λεπτά",
@@ -76,6 +75,8 @@ OC.L10N.register(
     "Users:" : "Χρήστες:",
     "Nextcloud" : "Nextcloud",
     "Apps installed:" : "Εγκατεστημένες εφαρμογές:",
-    "Apps updates available:" : "Διαθέσιμες αναβαθμίσεις εφαρμογών:"
+    "Apps updates available:" : "Διαθέσιμες αναβαθμίσεις εφαρμογών:",
+    "Did you know?" : "Γνωρίζεται?",
+    "Appending \"?format=json\" at the end of the URL gives you the result in JSON format!" : "Προσθέτοντας το \"?format=json\" στο τέλος των URL σας δίνει αποτέλεσμα σε μορφή JSON!"
 },
 "nplurals=2; plural=(n != 1);");

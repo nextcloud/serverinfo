@@ -54,7 +54,7 @@ OC.L10N.register(
     "IPv6" : "IPv6",
     "Active users" : "Aktywni użytkownicy",
     "Total users:" : "Ilość użytkowników:",
-    "Shares" : "Udziały",
+    "Shares" : "Udostępnienia",
     "PHP" : "PHP",
     "Version:" : "Wersja:",
     "Memory Limit:" : "Limit pamięci:",
@@ -65,8 +65,7 @@ OC.L10N.register(
     "Size:" : "Wielkość:",
     "External monitoring tool" : "Zewnętrzne narzędzie monitorujące",
     "You can connect an external monitoring tool by using this end point:" : "Możesz połączyć się z zewnętrznym narzędziem monitorującym używając tej końcówki: ",
-    "Did you know?" : "Czy wiesz?",
-    "Appending \"?format=json\" at the end of the URL gives you the result in JSON format!" : "Dołączenie \"?format=json\" na końcu URL daje wynik w formacie JSON!",
+    "Appending \"?format=json\" at the end of the URL gives you the result in JSON." : "Dołączenie \"?format=json\" na końcu adresu URL daje wynik w formacie JSON.",
     "Last 24 hours" : "Ostatnie 24 godziny",
     "Last 1 hour" : "Ostatnia 1 godzina",
     "Last 5 mins" : "Ostatnie 5 minut",
@@ -76,6 +75,8 @@ OC.L10N.register(
     "Users:" : "Użytkownicy:",
     "Nextcloud" : "Nextcloud",
     "Apps installed:" : "Zainstalowane aplikacje: ",
-    "Apps updates available:" : "Dostępne aktualizacje aplikacji: "
+    "Apps updates available:" : "Dostępne aktualizacje aplikacji: ",
+    "Did you know?" : "Czy wiesz?",
+    "Appending \"?format=json\" at the end of the URL gives you the result in JSON format!" : "Dołączenie \"?format=json\" na końcu URL daje wynik w formacie JSON!"
 },
 "nplurals=4; plural=(n==1 ? 0 : (n%10>=2 && n%10<=4) && (n%100<12 || n%100>14) ? 1 : n!=1 && (n%10>=0 && n%10<=1) || (n%10>=5 && n%10<=9) || (n%100>=12 && n%100<=14) ? 2 : 3);");

@@ -104,7 +104,7 @@ class SystemStatistics {
 			exec("/usr/sbin/swapinfo", $return, $status);
 			if ($status === 0 && count($return) > 1) {
 				$line = preg_split("/[\s]+/", $return[1]);
-				if(count($line) > 3) {
+				if (count($line) > 3) {
 					$swapTotal = (int)$line[3];
 					$swapFree = $swapTotal - (int)$line[2];
 				}
@@ -133,7 +133,7 @@ class SystemStatistics {
 		// the last value is a empty string after explode, skip it
 		$values = array_slice($array, 0, count($array) - 1);
 		$data = [];
-		foreach($values as $value) {
+		foreach ($values as $value) {
 			list($k, $v) = preg_split('/[\s:]+/', $value);
 			$data[$k] = $v;
 		}
@@ -172,7 +172,7 @@ class SystemStatistics {
 		$info['num_installed'] = \count($apps);
 
 		// iteriate through all installed apps.
-		foreach($apps as $appId) {
+		foreach ($apps as $appId) {
 			// check if there is any new version available for that specific app
 			$newVersion = $this->installer->isUpdateAvailable($appId);
 			if ($newVersion) {
@@ -222,5 +222,4 @@ class SystemStatistics {
 			'loadavg' => $loadavg
 		];
 	}
-
 }

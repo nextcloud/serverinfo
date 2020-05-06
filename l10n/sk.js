@@ -65,8 +65,7 @@ OC.L10N.register(
     "Size:" : "Veľkosť:",
     "External monitoring tool" : "Externý sledovací nástroj",
     "You can connect an external monitoring tool by using this end point:" : "Pre pripojenie externého sledovacieho nástroja použite tento koncový bod:",
-    "Did you know?" : "Vedeli ste?",
-    "Appending \"?format=json\" at the end of the URL gives you the result in JSON format!" : "Pridaním \"?format=json\" na koniec URL získate výsledok vo formáte JSON!",
+    "Appending \"?format=json\" at the end of the URL gives you the result in JSON." : "Ak na koniec adresy URL pridáte „?format = json“, získate výsledok v JSON.",
     "Last 24 hours" : "Posledných 24 hodín",
     "Last 1 hour" : "Posledná 1 hodina",
     "Last 5 mins" : "Posledných 5 minút",
@@ -76,6 +75,8 @@ OC.L10N.register(
     "Users:" : "Používatelia:",
     "Nextcloud" : "Nextcloud",
     "Apps installed:" : "Nainštalované aplikácie:",
-    "Apps updates available:" : "Dostupné aktualizácie aplikácií:"
+    "Apps updates available:" : "Dostupné aktualizácie aplikácií:",
+    "Did you know?" : "Vedeli ste?",
+    "Appending \"?format=json\" at the end of the URL gives you the result in JSON format!" : "Pridaním \"?format=json\" na koniec URL získate výsledok vo formáte JSON!"
 },
 "nplurals=4; plural=(n % 1 == 0 && n == 1 ? 0 : n % 1 == 0 && n >= 2 && n <= 4 ? 1 : n % 1 != 0 ? 2: 3);");

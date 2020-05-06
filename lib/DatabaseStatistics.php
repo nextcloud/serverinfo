@@ -22,7 +22,6 @@
 
 namespace OCA\ServerInfo;
 
-
 use OCP\IConfig;
 use OCP\IDBConnection;
 
@@ -123,8 +122,7 @@ class DatabaseStatistics {
 				$result->closeCursor();
 				if ($row['proname'] === 'pg_database_size') {
 					$database = $this->config->getSystemValue('dbname');
-					if (strpos($database, '.') !== false)
-					{
+					if (strpos($database, '.') !== false) {
 						list($database, ) = explode('.', $database);
 					}
 					$sql = "SELECT oid
@@ -166,6 +164,4 @@ class DatabaseStatistics {
 		}
 		return $version;
 	}
-
-
 }
