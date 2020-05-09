@@ -34,14 +34,6 @@ OC.L10N.register(
     "Database" : "Databazë",
     "Type:" : "Lloji:",
     "Size:" : "Madhësia:",
-    "External monitoring tool" : "Mjet i kontrollit të jashtëm",
-    "Last 24 hours" : "24 orët e fundit",
-    "Last 1 hour" : "Zgjat 1 orë",
-    "Last 5 mins" : "5 minutat e fundit",
-    "CPU load" : "ngarkesa CPU ",
-    "Memory usage" : "Përdorimi i kujtesës",
-    "Storage" : "Depozit",
-    "Users:" : "Përdoruesit:",
-    "Nextcloud" : "Nextcloud"
+    "External monitoring tool" : "Mjet i kontrollit të jashtëm"
 },
 "nplurals=2; plural=(n != 1);");

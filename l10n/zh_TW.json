@@ -39,16 +39,6 @@
     "Type:" : "類型:",
     "Size:" : "大小:",
     "External monitoring tool" : "外部監控工具",
-    "You can connect an external monitoring tool by using this end point:" : "您可以使用此終端連接外部監視工具：",
-    "Last 24 hours" : "24小時前",
-    "Last 1 hour" : "1小時前",
-    "Last 5 mins" : "5分鐘前",
-    "CPU load" : "CPU負載",
-    "Memory usage" : "記憶體使用量",
-    "Storage" : "儲存",
-    "Users:" : "使用者:",
-    "Nextcloud" : "Nextcloud",
-    "Apps installed:" : "已安裝應用程式：",
-    "Apps updates available:" : "可升級的應用程式："
+    "You can connect an external monitoring tool by using this end point:" : "您可以使用此終端連接外部監視工具："
 },"pluralForm" :"nplurals=1; plural=0;"
 }

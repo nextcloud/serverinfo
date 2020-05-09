@@ -29,14 +29,6 @@
     "Database" : "Base de datos",
     "Type:" : "Typo:",
     "Size:" : "Dimension:",
-    "External monitoring tool" : "Instrumento de controlo externe",
-    "Last 24 hours" : "Ultime 24 horas",
-    "Last 1 hour" : "Ultime 1 hora",
-    "Last 5 mins" : "Ultime 5 minutas",
-    "CPU load" : "Carga del CPU",
-    "Memory usage" : "Uso del memoria",
-    "Storage" : "Immagazinage",
-    "Users:" : "Usatores:",
-    "Nextcloud" : "Nextcloud"
+    "External monitoring tool" : "Instrumento de controlo externe"
 },"pluralForm" :"nplurals=2; plural=(n != 1);"
 }

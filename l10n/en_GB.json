@@ -33,14 +33,6 @@
     "Database" : "Database",
     "Type:" : "Type:",
     "Size:" : "Size:",
-    "External monitoring tool" : "External monitoring tool",
-    "Last 24 hours" : "Last 24 hours",
-    "Last 1 hour" : "Last 1 hour",
-    "Last 5 mins" : "Last 5 mins",
-    "CPU load" : "CPU load",
-    "Memory usage" : "Memory usage",
-    "Storage" : "Storage",
-    "Users:" : "Users:",
-    "Nextcloud" : "Nextcloud"
+    "External monitoring tool" : "External monitoring tool"
 },"pluralForm" :"nplurals=2; plural=(n != 1);"
 }
