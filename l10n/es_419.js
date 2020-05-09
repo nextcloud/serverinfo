@@ -34,14 +34,6 @@ OC.L10N.register(
     "Database" : "Base de datos",
     "Type:" : "Tipo:",
     "Size:" : "Tamaño:",
-    "External monitoring tool" : "Herramienta de monitoreo externa",
-    "Last 24 hours" : "Últimas 24 horas",
-    "Last 1 hour" : "Última hora",
-    "Last 5 mins" : "Últimos 5 minutos",
-    "CPU load" : "Carga del CPU",
-    "Memory usage" : "Uso de memoria",
-    "Storage" : "Almacenamiento",
-    "Users:" : "Usuarios:",
-    "Nextcloud" : "Nextcloud"
+    "External monitoring tool" : "Herramienta de monitoreo externa"
 },
 "nplurals=2; plural=(n != 1);");

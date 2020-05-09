@@ -28,13 +28,6 @@ OC.L10N.register(
     "Database" : "Cơ sở dữ liệu",
     "Type:" : "Loại:",
     "Size:" : "Kích thước:",
-    "External monitoring tool" : "Công cụ giám sát ngoài",
-    "Last 24 hours" : "24 giờ trước",
-    "Last 1 hour" : "1 giờ trước",
-    "Last 5 mins" : "5 phút trước",
-    "CPU load" : "CPU tải",
-    "Memory usage" : "Bộ nhớ sử dụng",
-    "Storage" : "Lưu trữ",
-    "Users:" : "Người dùng:"
+    "External monitoring tool" : "Công cụ giám sát ngoài"
 },
 "nplurals=1; plural=0;");

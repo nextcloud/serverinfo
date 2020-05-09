@@ -62,16 +62,6 @@
     "Type:" : "Mota:",
     "Size:" : "Tamaina:",
     "External monitoring tool" : "Kanpo jarraipen tresna",
-    "Last 24 hours" : "Azken 24 orduak",
-    "Last 1 hour" : "Azken ordu 1",
-    "Last 5 mins" : "Azken 5 minutuak",
-    "CPU load" : "CPU erabilera",
-    "Memory usage" : "Memoria erabilera",
-    "Storage" : "Biltegiratzea",
-    "Users:" : "Erabiltzaileak:",
-    "Nextcloud" : "Nextcloud",
-    "Apps installed:" : "Instalatutako aplikazioak:",
-    "Apps updates available:" : "Aplikazio eguneraketak eskuragarri:",
     "Did you know?" : "Ba al zenekien?"
 },"pluralForm" :"nplurals=2; plural=(n != 1);"
 }
