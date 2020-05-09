@@ -20,12 +20,6 @@ OC.L10N.register(
     "Memory Limit:" : "Geheuelimiet:",
     "Database" : "Databasis",
     "Type:" : "Tipe:",
-    "Size:" : "Grootte:",
-    "Last 24 hours" : "Afgelope 24 uur",
-    "Last 1 hour" : "Afgelope 1 uur",
-    "Last 5 mins" : "Afgelope 5 min",
-    "Memory usage" : "Geheuegebruik",
-    "Users:" : "Gebruikers:",
-    "Nextcloud" : "Nextcloud"
+    "Size:" : "Grootte:"
 },
 "nplurals=2; plural=(n != 1);");

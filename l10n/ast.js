@@ -34,14 +34,6 @@ OC.L10N.register(
     "Database" : "Base de datos",
     "Type:" : "Triba:",
     "Size:" : "Tamañu:",
-    "External monitoring tool" : "Ferramienta esterna de monitorización",
-    "Last 24 hours" : "Les 24 hores pasaes",
-    "Last 1 hour" : "La hora pasada",
-    "Last 5 mins" : "Los 5 minutos pasaos",
-    "CPU load" : "Carga de CPU",
-    "Memory usage" : "Usu de memoria",
-    "Storage" : "Almacenamientu",
-    "Users:" : "Usuarios:",
-    "Nextcloud" : "Nextcloud"
+    "External monitoring tool" : "Ferramienta esterna de monitorización"
 },
 "nplurals=2; plural=(n != 1);");

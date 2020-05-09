@@ -28,13 +28,6 @@ OC.L10N.register(
     "Database" : "Database",
     "Type:" : "Tipe",
     "Size:" : "Ukuran:",
-    "External monitoring tool" : "Alat pemantauan eksternal",
-    "Last 24 hours" : "24 Jam lalu",
-    "Last 1 hour" : "1 Jam lalu",
-    "Last 5 mins" : "5 Menit lalu",
-    "Memory usage" : "Penggunaan Memori",
-    "Storage" : "Penyimpanan",
-    "Users:" : "Pengguna:",
-    "Nextcloud" : "Nextcloud"
+    "External monitoring tool" : "Alat pemantauan eksternal"
 },
 "nplurals=1; plural=0;");
