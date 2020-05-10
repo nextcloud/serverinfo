@@ -10,7 +10,7 @@ OC.L10N.register(
     "Users" : "Usuarios",
     "Groups" : "Grupos",
     "Links" : "Enlaces",
-    "Mails" : "Correos electrónicos",
+    "Mails" : "Mails",
     "Federated sent" : "Federado enviado",
     "Federated received" : "Federado recibido",
     "Talk conversations" : "Conversaciones Talk",
@@ -65,8 +65,8 @@ OC.L10N.register(
     "Size:" : "Tamaño:",
     "External monitoring tool" : "Herramienta externa de monitorización",
     "You can connect an external monitoring tool by using this end point:" : "Puedes conectar una herramienta de monitorización externa usando este endpoint:",
-    "Appending \"?format=json\" at the end of the URL gives you the result in JSON." : "Añadiendo \"?format=json\" al final de la URL devuelve el resultado en formato JSON.",
+    "Appending \"?format=json\" at the end of the URL gives you the result in JSON." : "Añadiendo \"?format=json\" al final de la URL, devuelve el resultado en formato JSON.",
     "Did you know?" : "Sabías que...?",
-    "Appending \"?format=json\" at the end of the URL gives you the result in JSON format!" : "¡Añadir \"?format=json\" al final de la URL devuelve el resultado en formato JSON!"
+    "Appending \"?format=json\" at the end of the URL gives you the result in JSON format!" : "¡Añadiendo \"?format=json\" al final de la URL, devuelve el resultado en formato JSON.!"
 },
 "nplurals=2; plural=(n != 1);");
