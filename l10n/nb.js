@@ -35,16 +35,6 @@ OC.L10N.register(
     "Database" : "Database",
     "Type:" : "Type:",
     "Size:" : "Størrelse:",
-    "External monitoring tool" : "Eksternt overvåkingsverktøy",
-    "Last 24 hours" : "Siste 24 timer",
-    "Last 1 hour" : "Siste time",
-    "Last 5 mins" : "Siste 5 minutter",
-    "CPU load" : "CPU last",
-    "Memory usage" : "Minnebruk",
-    "Storage" : "Lagring",
-    "Users:" : "Brukere:",
-    "Nextcloud" : "Nextcloud",
-    "Apps installed:" : "Apper installert:",
-    "Apps updates available:" : "App-oppdateringer tilgjengelig:"
+    "External monitoring tool" : "Eksternt overvåkingsverktøy"
 },
 "nplurals=2; plural=(n != 1);");

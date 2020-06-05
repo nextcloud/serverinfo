@@ -28,14 +28,6 @@ OC.L10N.register(
     "Memory Limit:" : "Санах ойн хязгаар:",
     "Database" : "Өгөгдлийн сан",
     "Type:" : "Төрөл:",
-    "Size:" : "Хэмжээ:",
-    "Last 24 hours" : "Сүүлийн 24 цаг",
-    "Last 1 hour" : "Сүүлийн 1 цаг",
-    "Last 5 mins" : "Сүүлийн 5 минут",
-    "CPU load" : "CPU ачаалалт",
-    "Memory usage" : "Санах ойн хэрэглээ",
-    "Storage" : "Багтаамж",
-    "Users:" : "Хэрэглэгчид:",
-    "Nextcloud" : "Nextcloud"
+    "Size:" : "Хэмжээ:"
 },
 "nplurals=2; plural=(n != 1);");

@@ -31,14 +31,6 @@
     "Database" : "Andmebaas",
     "Type:" : "Tüüp:",
     "Size:" : "Suurus:",
-    "External monitoring tool" : "Väline monitoorimistööriist",
-    "Last 24 hours" : "Viimased 24 tundi",
-    "Last 1 hour" : "Viimane 1 tund",
-    "Last 5 mins" : "Viimased 5 minutit",
-    "CPU load" : "CPU koormus",
-    "Memory usage" : "Mälukasutus",
-    "Storage" : "Andmehoidlad",
-    "Users:" : "Kasutajaid:",
-    "Nextcloud" : "Nextcloud"
+    "External monitoring tool" : "Väline monitoorimistööriist"
 },"pluralForm" :"nplurals=2; plural=(n != 1);"
 }

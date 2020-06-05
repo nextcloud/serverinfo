@@ -23,13 +23,6 @@ OC.L10N.register(
     "Database" : "Database",
     "Type:" : "Type:",
     "Size:" : "Storleik:",
-    "External monitoring tool" : "Eksternt monoitor verktøy",
-    "Last 24 hours" : "Siste 24 timer",
-    "Last 1 hour" : "Siste time",
-    "Last 5 mins" : "Siste 5 minutt",
-    "Memory usage" : "Minne bruk",
-    "Storage" : "Lagring",
-    "Users:" : "Brukarare:",
-    "Nextcloud" : "Nextcloud"
+    "External monitoring tool" : "Eksternt monoitor verktøy"
 },
 "nplurals=2; plural=(n != 1);");

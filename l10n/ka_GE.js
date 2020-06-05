@@ -34,14 +34,6 @@ OC.L10N.register(
     "Database" : "მონაცემთა ბაზა",
     "Type:" : "ტიპი:",
     "Size:" : "ზომა:",
-    "External monitoring tool" : "გარე მონიტორინგის ხელსაწყო",
-    "Last 24 hours" : "ბოლო 24 საათი",
-    "Last 1 hour" : "ბოლო 1 საათი",
-    "Last 5 mins" : "ბოლო 5 წუთი",
-    "CPU load" : "CPU-ს დატვირთვა",
-    "Memory usage" : "მეხსიერების მოხმარება",
-    "Storage" : "საცავი",
-    "Users:" : "მომხმარებლები:",
-    "Nextcloud" : "Nextcloud-ი"
+    "External monitoring tool" : "გარე მონიტორინგის ხელსაწყო"
 },
 "nplurals=2; plural=(n!=1);");
