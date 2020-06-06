@@ -48,18 +48,18 @@ class FreeBSD {
                 $line = preg_split("/[\s]+/", $swapinfo);
                 if (count($line) > 3) {
                         $data['SwapTotal'] = (int)$line[3];
-                        $data['SwapFree'] = $swapTotal - (int)$line[2];
+                        $data['SwapFree'] = $data['SwapTotal'] - (int)$line[2];
                 }
 
                 $memTotal = shell_exec('/sbin/sysctl -n hw.physmem');
-                $data['MemTotal'] = $memTotal;
+                $data['MemTotal'] = (int)$memTotal;
 
                 $pagesize = shell_exec('/sbin/sysctl -n hw.pagesize');
                 $inactiveMem = shell_exec('/sbin/sysctl -n vm.stats.vm.v_inactive_count');
                 $cachedMem = shell_exec('/sbin/sysctl -n vm.stats.vm.v_cache_count');
                 $freeMem = shell_exec('/sbin/sysctl -n vm.stats.vm.v_free_count');
 
-                $data['MemAvailable'] = (int)$pagesize * ($inactiveMem + $cachedMem + $freeMem);
+                $data['MemAvailable'] = (int)$pagesize * ((int)$inactiveMem + (int)$cachedMem + (int)$freeMem);
 		
                 return $data;
         }
@@ -70,14 +70,7 @@ class FreeBSD {
          * @return string
          */
         public function getCPUName(): string {
-                $data = 'Unknown Processor';
-
-                try {
-                        $data = shell_exec('/sbin/sysctl -n hw.model');
-                } catch (\RuntimeException $e) {
-                        return $data;
-                }
-
+                $data = shell_exec('/sbin/sysctl -n hw.model');
                 return $data;
         }
 
@@ -95,16 +88,10 @@ class FreeBSD {
          * @return int
          */
         public function getUptime(): int {
-                $data = -1;
+                $uptime = shell_exec('/sbin/sysctl -n kern.boottime | tr -d \',\' | cut -d \' \' -f4');
+		$time = shell_exec('date +%s');
+		$uptimeInSeconds = (int)$uptime - (int)$time;
                 
-                try {
-                        $uptime = shell_exec('/sbin/sysctl -n kern.boottime | tr -d \',\' | cut -d \' \' -f4');
-				                $time = shell_exec('date +%s');
-                        $uptimeInSeconds = (int)$uptime - (int)$time;
-                } catch (\RuntimeException $e) {
-                        return $data;
-                }
-
                 return $uptimeInSeconds;
         }
 
