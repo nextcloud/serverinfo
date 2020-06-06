@@ -43,32 +43,24 @@ class FreeBSD {
         public function getMemory(): array {
                 $data = ['MemTotal' => -1, 'MemFree' => -1, 'MemAvailable' => -1, 'SwapTotal' => -1, 'SwapFree' => -1];
 
-                try {
-                        $memTotal = shell_exec('/sbin/sysctl -n hw.physmem');
-                        $data['MemTotal'] = round($memTotal,0);
-                } catch (\RuntimeException $e) {
-                        return $data;
+		$swapinfo = shell_exec('/usr/sbin/swapinfo');
+
+                $line = preg_split("/[\s]+/", $swapinfo);
+                if (count($line) > 3) {
+                        $data['SwapTotal'] = (int)$line[3];
+                        $data['SwapFree'] = $swapTotal - (int)$line[2];
                 }
 
-                $matches = [];
-                $pattern = '/(?<Key>(?:MemTotal|MemFree|MemAvailable|SwapTotal|SwapFree)+):\s+(?<Value>\d+)\s+(?<Unit>\w{2})/';
+                $memTotal = shell_exec('/sbin/sysctl -n hw.physmem');
+                $data['MemTotal'] = $memTotal;
 
-                $result = preg_match_all($pattern, $meminfo, $matches);
-                if ($result === 0 || $result === false) {
-                        return $data;
-                }
+                $pagesize = shell_exec('/sbin/sysctl -n hw.pagesize');
+                $inactiveMem = shell_exec('/sbin/sysctl -n vm.stats.vm.v_inactive_count');
+                $cachedMem = shell_exec('/sbin/sysctl -n vm.stats.vm.v_cache_count');
+                $freeMem = shell_exec('/sbin/sysctl -n vm.stats.vm.v_free_count');
 
-                foreach ($matches['Key'] as $i => $key) {
-                        $value = (int)$matches['Value'][$i];
-                        $unit = $matches['Unit'][$i];
-
-                        if ($unit === 'kB') {
-                                $value *= 1024;
-                        }
-
-                        $data[$key] = $value;
-                }
-
+                $data['MemAvailable'] = (int)$pagesize * ($inactiveMem + $cachedMem + $freeMem);
+		
                 return $data;
         }
 
