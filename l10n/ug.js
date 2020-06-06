@@ -7,4 +7,4 @@ OC.L10N.register(
     "Type:" : "تىپى:",
     "Size:" : "چوڭلۇقى:"
 },
-"nplurals=1; plural=0;");
+"nplurals=2; plural=(n != 1);");
