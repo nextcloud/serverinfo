@@ -133,7 +133,7 @@ class FreeBSD {
                 $result['hostname'] = \gethostname();
                 $dns = shell_exec('cat /etc/resolv.conf |grep -i \'^nameserver\'|head -n1|cut -d \' \' -f2');
                 $result['dns'] = $dns;
-                $gw = shell_exec('
+                $gw = shell_exec('netstat -rn | grep default | cut -d \' \' -f13');
                 $result['gateway'] = $gw;
                 return $result;
         }
