@@ -43,8 +43,6 @@ class FreeBSD {
         public function getMemory(): array {
                 $data = ['MemTotal' => -1, 'MemFree' => -1, 'MemAvailable' => -1, 'SwapTotal' => -1, 'SwapFree' => -1];
 
-                
-
                 try {
                         $memTotal = shell_exec('/sbin/sysctl -n hw.physmem');
                         $data['MemTotal'] = round($memTotal,0);
@@ -83,27 +81,9 @@ class FreeBSD {
                 $data = 'Unknown Processor';
 
                 try {
-                        $cpuinfo = $this->readContent('/proc/cpuinfo');
+                        $data = shell_exec('/sbin/sysctl -n hw.model');
                 } catch (\RuntimeException $e) {
                         return $data;
-                }
-
-
-                $matches = [];
-                $pattern = '/model name\s:\s(.+)/';
-
-                $result = preg_match_all($pattern, $cpuinfo, $matches);
-                if ($result === 0 || $result === false) {
-                        return $data;
-                }
-
-                $model = $matches[1][0];
-                $cores = count($matches[1]);
-
-                if ($cores === 1) {
-                        $data = $model . ' (1 core)';
-                } else {
-                        $data = $model . ' (' . $cores . ' cores)';
                 }
 
                 return $data;
