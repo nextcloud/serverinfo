@@ -121,16 +121,19 @@ class FreeBSD {
          * @return string
          */
         public function getNetworkInterfaces() {
-                $interfaces = glob('/sys/class/net/*');
                 $result = [];
-
+		
+		if (\OC_Helper::is_function_enabled('exec')) {
+                        exec("/sbin/ifconfig -a | cut -d$'\t' -f1 | cut -d ':' -f1 | grep -v -e '^$'", $interfaces, $status);
+                }
+	
                 foreach ($interfaces as $interface) {
                         $iface              = [];
-                        $iface['interface'] = basename($interface);
-                        $iface['mac']       = shell_exec('ip addr show dev ' . $iface['interface'] . ' | grep "link/ether " | cut -d \' \' -f 6  | cut -f 1 -d \'/\'');
-                        $iface['ipv4']      = shell_exec('ip addr show dev ' . $iface['interface'] . ' | grep "inet " | cut -d \' \' -f 6  | cut -f 1 -d \'/\'');
-                        $iface['ipv6']      = shell_exec('ip -o -6 addr show ' . $iface['interface'] . ' | sed -e \'s/^.*inet6 \([^ ]\+\).*/\1/\'');
-                        if ($iface['interface'] !== 'lo') {
+                        $iface['interface'] = $interface;
+			$iface['mac']       = shell_exec('/sbin/ifconfig ' . $iface['interface'] . ' | grep "ether" | cut -f2 -d$\'\t\' |cut -f 2 -d \' \'');
+                        $iface['ipv4']      = shell_exec('/sbin/ifconfig ' . $iface['interface'] . ' | grep "inet " | cut -f2 -d$\'\t\' |cut -f 2 -d \' \'');
+                        $iface['ipv6']      = shell_exec('/sbin/ifconfig ' . $iface['interface'] . ' | grep "inet6" | cut -f2 -d$\'\t\' |cut -f 2 -d \' \' | cut -f1 -d \'%\'');
+                        if ($iface['interface'] !== 'lo0') {
                                 $iface['status'] = shell_exec('cat /sys/class/net/' . $iface['interface'] . '/operstate');
                                 $iface['speed']  = shell_exec('cat /sys/class/net/' . $iface['interface'] . '/speed');
                                 if ($iface['speed'] !== '') {
