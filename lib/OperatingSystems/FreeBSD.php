@@ -42,25 +42,22 @@ class FreeBSD {
          */
         public function getMemory(): array {
                 $data = ['MemTotal' => -1, 'MemFree' => -1, 'MemAvailable' => -1, 'SwapTotal' => -1, 'SwapFree' => -1];
-
-		$swapinfo = shell_exec('/usr/sbin/swapinfo');
-
+ 
+                $swapinfo = shell_exec('/usr/sbin/swapinfo');
+ 
                 $line = preg_split("/[\s]+/", $swapinfo);
                 if (count($line) > 3) {
                         $data['SwapTotal'] = (int)$line[3];
                         $data['SwapFree'] = $data['SwapTotal'] - (int)$line[2];
                 }
-
-                $memTotal = shell_exec('/sbin/sysctl -n hw.physmem');
-                $data['MemTotal'] = (int)$memTotal;
-
-                $pagesize = shell_exec('/sbin/sysctl -n hw.pagesize');
-                $inactiveMem = shell_exec('/sbin/sysctl -n vm.stats.vm.v_inactive_count');
-                $cachedMem = shell_exec('/sbin/sysctl -n vm.stats.vm.v_cache_count');
-                $freeMem = shell_exec('/sbin/sysctl -n vm.stats.vm.v_free_count');
-
-                $data['MemAvailable'] = (int)$pagesize * ((int)$inactiveMem + (int)$cachedMem + (int)$freeMem);
 		
+                if (\OC_Helper::is_function_enabled('exec')) {
+                        exec("/sbin/sysctl -n hw.physmem hw.pagesize vm.stats.vm.v_inactive_count vm.stats.vm.v_cache_count vm.stats.vm.v_free_count", $return, $status);
+
+                        $data['MemTotal'] = (int)$return[0];
+                        $data['MemAvailable'] = (int)$return[1] * ((int)$return[2] + (int)$return[3] + (int)$return[4]);
+                }
+
                 return $data;
         }
 
@@ -91,7 +88,6 @@ class FreeBSD {
                 $uptime = shell_exec('/sbin/sysctl -n kern.boottime | tr -d \',\' | cut -d \' \' -f4');
 		$time = shell_exec('date +%s');
 		$uptimeInSeconds = (int)$uptime - (int)$time;
-                
                 return $uptimeInSeconds;
         }
 
