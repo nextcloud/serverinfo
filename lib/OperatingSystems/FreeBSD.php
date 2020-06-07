@@ -19,7 +19,6 @@
  */
 
 namespace OCA\ServerInfo\OperatingSystems;
-use bantu\IniGetWrapper\IniGetWrapper;
 
 /**
  * Class FreeBSD
@@ -27,19 +26,7 @@ use bantu\IniGetWrapper\IniGetWrapper;
  * @package OCA\ServerInfo\OperatingSystems
  */
 class FreeBSD {
-	
-	/** @var IniGetWrapper */
-	protected $phpIni;
 
-	/**
-	 * FreeBSD constructor.
-	 *
-	 * @param IniGetWrapper $phpIni
-	 */
-	public function _construct(IniGetWrapper $phpIni) {
-		$this->phpIni = $phpIni;
-	}
-	
 	/**
 	 * @return bool
 	 */
@@ -64,7 +51,7 @@ class FreeBSD {
 			$data['SwapFree'] = $data['SwapTotal'] - (int)$line[2];
 		}
 		
-		if (this->is_function_enabled('exec')) {
+		if (\OC_Helper::is_function_enabled('exec')) {
 			exec("/sbin/sysctl -n hw.physmem hw.pagesize vm.stats.vm.v_inactive_count vm.stats.vm.v_cache_count vm.stats.vm.v_free_count", $return, $status);
 			$data['MemTotal'] = (int)$return[0];
 			$data['MemAvailable'] = (int)$return[1] * ((int)$return[2] + (int)$return[3] + (int)$return[4]);
@@ -130,7 +117,7 @@ class FreeBSD {
 	public function getNetworkInterfaces() {
 		$result = [];
 		
-		if (this->is_function_enabled('exec')) {
+		if (\OC_Helper::is_function_enabled('exec')) {
 			exec("/sbin/ifconfig -a | cut -d$'\t' -f1 | cut -d ':' -f1 | grep -v -e '^$'", $interfaces, $status);
 		}
 
@@ -216,22 +203,5 @@ class FreeBSD {
 			throw new \RuntimeException('No output for command: "' . $command . '"');
 		}
 		return $output;
-	}
-	
-	/**
-	 * Checks if a function is available. Borrowed from
-	 * https://github.com/nextcloud/server/blob/2e36069e24406455ad3f3998aa25e2a949d1402a/lib/private/legacy/helper.php#L475
-	 *
-	 * @param string $function_name
-	 * @return bool
-	 */
-	public function is_function_enabled($function_name) {
-		if (!function_exists($function_name)) {
-			return false;
-		}
-		if ($this->phpIni->listContains('disable_functions', $function_name)) {
-			return false;
-		}
-		return true;
 	}
 }
