@@ -68,7 +68,7 @@ class Os {
 		$this->phpIni        = $phpIni;
 		$this->l             = $l;
 		if (PHP_OS === 'FreeBSD') {
-			$this->backend = new FreeBSD();
+			$this->backend = new FreeBSD($phpIni);
 		} else {
 			$this->backend = new DefaultOs();
 		}
