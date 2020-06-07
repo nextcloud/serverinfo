@@ -143,7 +143,7 @@ class FreeBSD {
 					$iface['duplex'] = '';
 				}
 			} else {
-				$iface['status'] = 'up';
+				$iface['status'] = 'active';
 				$iface['speed']  = 'unknown';
 				$iface['duplex'] = '';
 			}
