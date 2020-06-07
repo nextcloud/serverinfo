@@ -19,6 +19,7 @@
  */
 
 namespace OCA\ServerInfo\OperatingSystems;
+
 use bantu\IniGetWrapper\IniGetWrapper;
 
 /**
