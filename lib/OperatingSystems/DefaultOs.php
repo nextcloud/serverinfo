@@ -80,12 +80,7 @@ class DefaultOs {
 		$data = 'Unknown Processor';
 
 		try {
-			if (PHP_OS === 'FreeBSD') {
-				$data = shell_exec('/sbin/sysctl -n hw.model');
-				return $data;
-			} else {
-				$cpuinfo = $this->readContent('/proc/cpuinfo');
-			}
+			$cpuinfo = $this->readContent('/proc/cpuinfo');
 		} catch (\RuntimeException $e) {
 			return $data;
 		}
@@ -127,13 +122,7 @@ class DefaultOs {
 		$data = -1;
 
 		try {
-			if (PHP_OS === 'FreeBSD') {
-				$uptime = shell_exec('/sbin/sysctl -n kern.boottime | tr -d \',\' | cut -d \' \' -f4');
-				$time = shell_exec('date +%s');
-				return $time-$uptime;
-			} else {
-				$uptime = $this->readContent('/proc/uptime');
-			}
+			$uptime = $this->readContent('/proc/uptime');
 		} catch (\RuntimeException $e) {
 			return $data;
 		}
