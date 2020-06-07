@@ -134,15 +134,15 @@ class FreeBSD {
                         $iface['ipv4']      = shell_exec('/sbin/ifconfig ' . $iface['interface'] . ' | grep "inet " | cut -f2 -d$\'\t\' |cut -f 2 -d \' \'');
                         $iface['ipv6']      = shell_exec('/sbin/ifconfig ' . $iface['interface'] . ' | grep "inet6" | cut -f2 -d$\'\t\' |cut -f 2 -d \' \' | cut -f1 -d \'%\'');
                         if ($iface['interface'] !== 'lo0') {
-                                $iface['status'] = shell_exec('cat /sys/class/net/' . $iface['interface'] . '/operstate');
-                                $iface['speed']  = shell_exec('cat /sys/class/net/' . $iface['interface'] . '/speed');
+                                $iface['status'] = shell_exec('/sbin/ifconfig ' . $iface['interface'] . ' | grep "status" | cut -f2 -d$\'\t\' | cut -f2 -d \' \'');
+                                $iface['speed']  = shell_exec('/sbin/ifconfig ' . $iface['interface'] . ' | grep "media" | cut -d \' \' -f3 | cut -f1 -d \'b\'');
                                 if ($iface['speed'] !== '') {
-                                        $iface['speed'] = $iface['speed'] . 'Mbps';
+                                        $iface['speed'] = $iface['speed'];
                                 } else {
                                         $iface['speed'] = 'unknown';
                                 }
 
-                                $duplex = shell_exec('cat /sys/class/net/' . $iface['interface'] . '/duplex');
+                                $duplex = shell_exec('/sbin/ifconfig ' . $iface['interface'] . ' | grep "media" | cut -d \'<\' -f2 | cut -d \'-\' -f1');
                                 if ($duplex !== '') {
                                         $iface['duplex'] = 'Duplex: ' . $duplex;
                                 } else {
@@ -200,14 +200,6 @@ class FreeBSD {
                         ];
                 }
 
-                return $data;
-        }
-
-        protected function readContent(string $filename): string {
-                $data = @file_get_contents($filename);
-                if ($data === false || $data === '') {
-                        throw new \RuntimeException('Unable to read: "' . $filename . '"');
-                }
                 return $data;
         }
 
