@@ -20,6 +20,8 @@
 
 namespace OCA\ServerInfo\OperatingSystems;
 
+use bantu\IniGetWrapper\IniGetWrapper;
+
 /**
  * Class FreeBSD
  *
@@ -130,8 +132,8 @@ class FreeBSD {
 			if ($iface['interface'] !== 'lo0') {
 				$iface['status'] = shell_exec('/sbin/ifconfig ' . $iface['interface'] . ' | grep "status" | cut -f2 -d$\'\t\' | cut -f2 -d \' \'');
 				$iface['speed']  = shell_exec('/sbin/ifconfig ' . $iface['interface'] . ' | grep "media" | cut -d \' \' -f3 | cut -f1 -d \'b\'');
-					if ($iface['speed'] !== '') {
-				$iface['speed'] = $iface['speed'];
+				if ($iface['speed'] !== '') {
+					$iface['speed'] = $iface['speed'];
 				} else {
 					$iface['speed'] = 'unknown';
 				}
@@ -149,7 +151,7 @@ class FreeBSD {
 			}
 			$result[] = $iface;
 		}
-
+		
 		return $result;
 	}
 
