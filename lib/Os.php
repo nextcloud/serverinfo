@@ -22,6 +22,7 @@ namespace OCA\ServerInfo;
 
 use bantu\IniGetWrapper\IniGetWrapper;
 use OCA\ServerInfo\OperatingSystems\DefaultOs;
+use OCA\ServerInfo\OperatingSystems\FreeBSD;
 use OCP\Http\Client\IClientService;
 use OCP\IConfig;
 use OCP\IDBConnection;
@@ -66,7 +67,11 @@ class Os {
 		$this->connection    = $connection;
 		$this->phpIni        = $phpIni;
 		$this->l             = $l;
-		$this->backend = new DefaultOs();
+		if (PHP_OS === 'FreeBSD') {
+			$this->backend = new FreeBSD($phpIni);
+		} else {
+			$this->backend = new DefaultOs();
+		}
 	}
 
 	/**
