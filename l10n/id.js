@@ -19,6 +19,7 @@ OC.L10N.register(
     "Size" : "Ukuran",
     "Files:" : "Berkas:",
     "Hostname" : "Nama Host",
+    "Status" : "Status",
     "Active users" : "Pengguna aktif",
     "Shares" : "Dibagikan",
     "PHP" : "PHP",
