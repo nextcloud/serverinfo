@@ -48,6 +48,7 @@ class PhpStatistics {
 			'max_execution_time' => $this->phpIni->getNumeric('max_execution_time'),
 			'upload_max_filesize' => $this->phpIni->getBytes('upload_max_filesize'),
 			'opcache' => $this->getOPcacheStatus(),
+			'apcu' => $this->getAPCuStatus(),
 		];
 	}
 
@@ -90,5 +91,43 @@ class PhpStatistics {
 			// returning back zeroes to prevent any errors on JS side.
 			return 'N/A';
 		}
+	}
+
+	/**
+	 * Get status information about the cache from the APCu extension
+	 *
+	 * @return array with an array of state information about the cache instance
+	 */
+	protected function getAPCuStatus() {
+		// Test if the APCu module is installed
+		if (!extension_loaded('apcu')) {
+		    // module not loaded
+			// returning back zeroes to prevent any errors on JS side.
+			return 'N/A';
+		}
+
+		// get cached information from APCu data store 
+		$cache_info = apcu_cache_info(true);
+
+		// get APCu Shared Memory Allocation information
+		$sma_info = apcu_sma_info(true);
+
+		if (!is_array($cache_info)) {
+			// no array
+			// returning back zeroes to prevent any errors on JS side.
+			$cache_info = 'N/A';
+		}
+
+		if (!is_array($sma_info)) {
+			// no array
+			// returning back zeroes to prevent any errors on JS side.
+			$sma_info = 'N/A';
+		}
+
+		// return the array
+		return [
+			'cache' => $cache_info,
+			'sma' => $sma_info,
+		];
 	}
 }
