@@ -75,7 +75,7 @@ class PhpStatistics {
 	protected function getOPcacheStatus() {
 		// Test if the OPcache module is installed
 		if (!extension_loaded('Zend OPcache')) {
-		    // module not loaded
+			// module not loaded
 			// returning back zeroes to prevent any errors on JS side.
 			return 'N/A';
 		}
@@ -85,8 +85,7 @@ class PhpStatistics {
 
 		if (is_array($status)) {
 			return $status;
-		}
-		else {
+		} else {
 			// no array
 			// returning back zeroes to prevent any errors on JS side.
 			return 'N/A';
@@ -101,12 +100,12 @@ class PhpStatistics {
 	protected function getAPCuStatus() {
 		// Test if the APCu module is installed
 		if (!extension_loaded('apcu')) {
-		    // module not loaded
+			// module not loaded
 			// returning back zeroes to prevent any errors on JS side.
 			return 'N/A';
 		}
 
-		// get cached information from APCu data store 
+		// get cached information from APCu data store
 		$cache_info = apcu_cache_info(true);
 
 		// get APCu Shared Memory Allocation information
