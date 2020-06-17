@@ -1,4 +1,5 @@
 <?php
+
 declare(strict_types=1);
 /**
  * @author Matthew Wener <matthew@wener.org>
@@ -64,8 +65,7 @@ class FreeBSD {
 			$data['MemAvailable'] = (int)$return[1] * ((int)$return[2] + (int)$return[3] + (int)$return[4]);
 		} catch (\RuntimeException $e) {
 			return $data;
-		} 
-
+		}
 		return $data;
 	}
 
