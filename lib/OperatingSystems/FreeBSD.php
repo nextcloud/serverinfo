@@ -62,7 +62,6 @@ class FreeBSD {
 
 			$data['MemTotal'] = (int)$return[0];
 			$data['MemAvailable'] = (int)$return[1] * ((int)$return[2] + (int)$return[3] + (int)$return[4]);
-
 		} catch (\RuntimeException $e) {
 			return $data;
 		} 
@@ -101,7 +100,7 @@ class FreeBSD {
 	 *
 	 * @return int
 	 */
-	public function getUptime(): int {		
+	public function getUptime(): int {
 		try {
 			$uptime = $this->executeCommand('/sbin/sysctl -n kern.boottime | tr -d \',\' | cut -d \' \' -f4');
 			$time = $this->executeCommand('date +%s');
