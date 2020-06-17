@@ -1,6 +1,7 @@
 <?php
+declare(strict_types=1);
 /**
- * @author Frank Karlitschek <frank@nextcloud.com>
+ * @author Matthew Wener <matthew@wener.org>
  *
  * @license AGPL-3.0
  *
@@ -20,33 +21,18 @@
 
 namespace OCA\ServerInfo\OperatingSystems;
 
-use bantu\IniGetWrapper\IniGetWrapper;
-
 /**
  * Class FreeBSD
  *
  * @package OCA\ServerInfo\OperatingSystems
  */
 class FreeBSD {
-
-	/** @var IniGetWrapper */
-	protected $phpIni;
-	
-	/**
-	 * FreeBSD constructor.
-	 *
-	 * @param IniGetWrapper $phpIni
-	 * @throws \Exception
-	 */
-	public function __construct(IniGetWrapper $phpIni) {
-		$this->phpIni = $phpIni;
-	}
 	
 	/**
 	 * @return bool
 	 */
 	public function supported(): bool {
-		return true;
+		return false;
 	}
 
 	/**
@@ -57,20 +43,29 @@ class FreeBSD {
 	 */
 	public function getMemory(): array {
 		$data = ['MemTotal' => -1, 'MemFree' => -1, 'MemAvailable' => -1, 'SwapTotal' => -1, 'SwapFree' => -1];
- 
-		$swapinfo = shell_exec('/usr/sbin/swapinfo');
- 
+
+		try {
+			$swapinfo = $this->executeCommand('/usr/sbin/swapinfo');
+		} catch (\RuntimeException $e) {
+			return $data;
+		}
+
 		$line = preg_split("/[\s]+/", $swapinfo);
 		if (count($line) > 3) {
 			$data['SwapTotal'] = (int)$line[3];
 			$data['SwapFree'] = $data['SwapTotal'] - (int)$line[2];
 		}
-		
-		if ($this->is_function_enabled('exec')) {
-			exec("/sbin/sysctl -n hw.physmem hw.pagesize vm.stats.vm.v_inactive_count vm.stats.vm.v_cache_count vm.stats.vm.v_free_count", $return, $status);
+
+		try {
+			$return = $this->executeCommand('/sbin/sysctl -n hw.physmem hw.pagesize vm.stats.vm.v_inactive_count vm.stats.vm.v_cache_count vm.stats.vm.v_free_count');
+			$return = preg_split('/\s+/', trim($return));
+
 			$data['MemTotal'] = (int)$return[0];
 			$data['MemAvailable'] = (int)$return[1] * ((int)$return[2] + (int)$return[3] + (int)$return[4]);
-		}
+
+		} catch (\RuntimeException $e) {
+			return $data;
+		} 
 
 		return $data;
 	}
@@ -81,7 +76,11 @@ class FreeBSD {
 	 * @return string
 	 */
 	public function getCPUName(): string {
-		$data = shell_exec('/sbin/sysctl -n hw.model');
+		try {
+			$data = $this->executeCommand('/sbin/sysctl -n hw.model');
+		} catch (\RuntimeException $e) {
+			return $data;
+		}
 		return $data;
 	}
 
@@ -89,7 +88,11 @@ class FreeBSD {
 	 * @return string
 	 */
 	public function getTime() {
-		$uptime = shell_exec('date');
+		try {
+			$uptime = $this->executeCommand('date');
+		} catch (\RuntimeException $e) {
+			return $uptime;
+		}
 		return $uptime;
 	}
 
@@ -98,10 +101,14 @@ class FreeBSD {
 	 *
 	 * @return int
 	 */
-	public function getUptime(): int {
-		$uptime = shell_exec('/sbin/sysctl -n kern.boottime | tr -d \',\' | cut -d \' \' -f4');
-		$time = shell_exec('date +%s');
-		$uptimeInSeconds = (int)$uptime - (int)$time;
+	public function getUptime(): int {		
+		try {
+			$uptime = $this->executeCommand('/sbin/sysctl -n kern.boottime | tr -d \',\' | cut -d \' \' -f4');
+			$time = $this->executeCommand('date +%s');
+			$uptimeInSeconds = (int)$uptime - (int)$time;
+		} catch (\RuntimeException $e) {
+			return $uptimeInSeconds;
+		}
 		return $uptimeInSeconds;
 	}
 
@@ -109,7 +116,11 @@ class FreeBSD {
 	 * @return string
 	 */
 	public function getTimeServers() {
-		$servers = shell_exec('cat /etc/ntp.conf 2>/dev/null |grep  \'^pool\' | cut -f 2 -d " "');
+		try {
+			$servers = $this->executeCommand('cat /etc/ntp.conf 2>/dev/null |grep  \'^pool\' | cut -f 2 -d " "');
+		} catch (\RuntimeException $e) {
+			return $servers;
+		}
 		return $servers;
 	}
 
@@ -119,10 +130,15 @@ class FreeBSD {
 	public function getNetworkInfo() {
 		$result = [];
 		$result['hostname'] = \gethostname();
-		$dns = shell_exec('cat /etc/resolv.conf |grep -i \'^nameserver\'|head -n1|cut -d \' \' -f2');
-		$result['dns'] = $dns;
-		$gw = shell_exec('netstat -rn | grep default | cut -d \' \' -f13');
-		$result['gateway'] = $gw;
+		
+		try {
+			$dns = $this->executeCommand('cat /etc/resolv.conf |grep -i \'^nameserver\'|head -n1|cut -d \' \' -f2');
+			$result['dns'] = $dns;
+			$gw = $this->executeCommand('netstat -rn | grep default | cut -d \' \' -f13');
+			$result['gateway'] = $gw;
+		} catch (\RuntimeException $e) {
+			return $result;
+		}
 		return $result;
 	}
 
@@ -132,26 +148,25 @@ class FreeBSD {
 	public function getNetworkInterfaces() {
 		$result = [];
 		
-		if ($this->is_function_enabled('exec')) {
-			exec("/sbin/ifconfig -a | cut -d$'\t' -f1 | cut -d ':' -f1 | grep -v -e '^$'", $interfaces, $status);
-		}
+		$interfaces = $this->executeCommand('/sbin/ifconfig -a | cut -d$\'\t\' -f1 | cut -d \':\' -f1 | grep -v -e \'^$\'');
+		$interfaces = preg_split('/\s+/', trim($interfaces));
 
 		foreach ($interfaces as $interface) {
 			$iface              = [];
 			$iface['interface'] = $interface;
-			$iface['mac']       = shell_exec('/sbin/ifconfig ' . $iface['interface'] . ' | grep "ether" | cut -f2 -d$\'\t\' |cut -f 2 -d \' \'');
-			$iface['ipv4']      = shell_exec('/sbin/ifconfig ' . $iface['interface'] . ' | grep "inet " | cut -f2 -d$\'\t\' |cut -f 2 -d \' \'');
-			$iface['ipv6']      = shell_exec('/sbin/ifconfig ' . $iface['interface'] . ' | grep "inet6" | cut -f2 -d$\'\t\' |cut -f 2 -d \' \' | cut -f1 -d \'%\'');
+			$iface['ipv4']      = $this->executeCommand('/sbin/ifconfig ' . $iface['interface'] . ' | grep \'inet \' | cut -f2 -d$\'\t\' | cut -f 2 -d \' \'');
+			$iface['ipv6']      = $this->executeCommand('/sbin/ifconfig ' . $iface['interface'] . ' | grep inet6 | cut -f2 -d$\'\t\' | cut -f 2 -d \' \' | cut -f1 -d \'%\'');
 			if ($iface['interface'] !== 'lo0') {
-				$iface['status'] = shell_exec('/sbin/ifconfig ' . $iface['interface'] . ' | grep "status" | cut -f2 -d$\'\t\' | cut -f2 -d \' \'');
-				$iface['speed']  = shell_exec('/sbin/ifconfig ' . $iface['interface'] . ' | grep "media" | cut -d \' \' -f3 | cut -f1 -d \'b\'');
+				$iface['mac']       = $this->executeCommand('/sbin/ifconfig ' . $iface['interface'] . ' | grep ether | cut -f2 -d$\'\t\' | cut -f2 -d \' \'');
+				$iface['status'] = $this->executeCommand('/sbin/ifconfig ' . $iface['interface'] . ' | grep status | cut -f2 -d$\'\t\' | cut -f2 -d \' \'');
+				$iface['speed']  = $this->executeCommand('/sbin/ifconfig ' . $iface['interface'] . ' | grep media | cut -d \' \' -f3 | cut -f1 -d \'b\'');
 				if ($iface['speed'] !== '') {
 					$iface['speed'] = $iface['speed'];
 				} else {
 					$iface['speed'] = 'unknown';
 				}
 
-				$duplex = shell_exec('/sbin/ifconfig ' . $iface['interface'] . ' | grep "media" | cut -d \'<\' -f2 | cut -d \'-\' -f1');
+				$duplex = $this->executeCommand('/sbin/ifconfig ' . $iface['interface'] . ' | grep media | cut -d \'<\' -f2 | cut -d \'-\' -f1');
 				if ($duplex !== '') {
 					$iface['duplex'] = 'Duplex: ' . $duplex;
 				} else {
@@ -213,27 +228,10 @@ class FreeBSD {
 	}
 
 	protected function executeCommand(string $command): string {
-		$output = @shell_exec(escapeshellcmd($command));
+		$output = @shell_exec($command);
 		if ($output === null || $output === '') {
 			throw new \RuntimeException('No output for command: "' . $command . '"');
 		}
 		return $output;
-	}
-
-	/**
-	 * Checks if a function is available. Borrowed from
-	 * https://github.com/nextcloud/server/blob/2e36069e24406455ad3f3998aa25e2a949d1402a/lib/private/legacy/helper.php#L475
-	 *
-	 * @param string $function_name
-	 * @return bool
-	 */
-	public function is_function_enabled($function_name) {
-		if (!function_exists($function_name)) {
-			return false;
-		}
-		if ($this->phpIni->listContains('disable_functions', $function_name)) {
-			return false;
-		}
-		return true;
 	}
 }
