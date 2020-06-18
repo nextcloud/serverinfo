@@ -106,27 +106,27 @@ class PhpStatistics {
 		}
 
 		// get cached information from APCu data store
-		$cache_info = apcu_cache_info(true);
+		$cacheInfo = apcu_cache_info(true);
 
 		// get APCu Shared Memory Allocation information
-		$sma_info = apcu_sma_info(true);
+		$smaInfo = apcu_sma_info(true);
 
-		if (!is_array($cache_info)) {
+		if (!is_array($cacheInfo)) {
 			// no array
 			// returning back zeroes to prevent any errors on JS side.
-			$cache_info = 'N/A';
+			$cacheInfo = 'N/A';
 		}
 
-		if (!is_array($sma_info)) {
+		if (!is_array($smaInfo)) {
 			// no array
 			// returning back zeroes to prevent any errors on JS side.
-			$sma_info = 'N/A';
+			$smaInfo = 'N/A';
 		}
 
 		// return the array
 		return [
-			'cache' => $cache_info,
-			'sma' => $sma_info,
+			'cache' => $cacheInfo,
+			'sma' => $smaInfo,
 		];
 	}
 }
