@@ -88,7 +88,7 @@ class FreeBSD {
 	 * @return string
 	 */
 	public function getTime() {
-		$time = " ";
+		$time = '';
 
 		try {
 			$time = $this->executeCommand('date');
