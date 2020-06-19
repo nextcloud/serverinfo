@@ -72,23 +72,21 @@ class PhpStatistics {
 	 *
 	 * @return array with an array of state information about the cache instance
 	 */
-	protected function getOPcacheStatus() {
+	protected function getOPcacheStatus(): array {
 		// Test if the OPcache module is installed
 		if (!extension_loaded('Zend OPcache')) {
-			// module not loaded
-			// returning back zeroes to prevent any errors on JS side.
-			return 'N/A';
+			// module not loaded, returning back empty array to prevent any errors on JS side.
+			return [];
 		}
 
 		// get status information about the cache
 		$status = opcache_get_status(false);
 
-		if (is_array($status)) {
+		if ($status !== false) {
 			return $status;
 		} else {
-			// no array
-			// returning back zeroes to prevent any errors on JS side.
-			return 'N/A';
+			// no array, returning back empty array to prevent any errors on JS side.
+			return [];
 		}
 	}
 
@@ -97,12 +95,11 @@ class PhpStatistics {
 	 *
 	 * @return array with an array of state information about the cache instance
 	 */
-	protected function getAPCuStatus() {
+	protected function getAPCuStatus(): array {
 		// Test if the APCu module is installed
 		if (!extension_loaded('apcu')) {
-			// module not loaded
-			// returning back zeroes to prevent any errors on JS side.
-			return 'N/A';
+			// module not loaded, returning back empty array to prevent any errors on JS side.
+			return [];
 		}
 
 		// get cached information from APCu data store
@@ -112,15 +109,13 @@ class PhpStatistics {
 		$smaInfo = apcu_sma_info(true);
 
 		if (!is_array($cacheInfo)) {
-			// no array
-			// returning back zeroes to prevent any errors on JS side.
-			$cacheInfo = 'N/A';
+			// no array, returning back empty array to prevent any errors on JS side.
+			$cacheInfo = [];
 		}
 
 		if (!is_array($smaInfo)) {
-			// no array
-			// returning back zeroes to prevent any errors on JS side.
-			$smaInfo = 'N/A';
+			// no array, returning back empty array to prevent any errors on JS side.
+			$smaInfo = [];
 		}
 
 		// return the array
