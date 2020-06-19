@@ -102,9 +102,10 @@ class FreeBSD {
 	 */
 	public function getUptime(): int {
 		try {
-			$uptime = $this->executeCommand('/sbin/sysctl -n kern.boottime | tr -d \',\' | cut -d \' \' -f4');
+			$shell_boot = $this->executeCommand('/sbin/sysctl -n kern.boottime');
+			preg_match("/[\d]+/", $shell_boot, $boottime);
 			$time = $this->executeCommand('date +%s');
-			$uptimeInSeconds = (int)$uptime - (int)$time;
+			$uptimeInSeconds = (int)$time - (int)$boottime[0];
 		} catch (\RuntimeException $e) {
 			return $uptimeInSeconds;
 		}
@@ -116,11 +117,13 @@ class FreeBSD {
 	 */
 	public function getTimeServers() {
 		try {
-			$servers = $this->executeCommand('cat /etc/ntp.conf 2>/dev/null |grep  \'^pool\' | cut -f 2 -d " "');
+			$servers = $this->executeCommand('cat /etc/ntp.conf 2>/dev/null');
+			preg_match_all("/(?<=^pool ).\S*/m", $servers, $matches);
+			$allservers = implode(' ', $matches[0]);
 		} catch (\RuntimeException $e) {
 			return $servers;
 		}
-		return $servers;
+		return $allservers;
 	}
 
 	/**
@@ -131,10 +134,13 @@ class FreeBSD {
 		$result['hostname'] = \gethostname();
 		
 		try {
-			$dns = $this->executeCommand('cat /etc/resolv.conf |grep -i \'^nameserver\'|head -n1|cut -d \' \' -f2');
-			$result['dns'] = $dns;
-			$gw = $this->executeCommand('netstat -rn | grep default | cut -d \' \' -f13');
-			$result['gateway'] = $gw;
+			$dns = $this->executeCommand('cat /etc/resolv.conf 2>/dev/null');
+			preg_match_all("/(?<=^nameserver ).\S*/m", $dns, $matches);
+			$alldns = implode(' ', $matches[0]);
+			$result['dns'] = $alldns;
+			$netstat = $this->executeCommand('netstat -rn');
+			preg_match("/(?<=^default).*\b\d/m", $netstat, $gw);
+			$result['gateway'] = $gw[0];
 		} catch (\RuntimeException $e) {
 			return $result;
 		}
@@ -147,27 +153,36 @@ class FreeBSD {
 	public function getNetworkInterfaces() {
 		$result = [];
 		
-		$interfaces = $this->executeCommand('/sbin/ifconfig -a | cut -d$\'\t\' -f1 | cut -d \':\' -f1 | grep -v -e \'^$\'');
-		$interfaces = preg_split('/\s+/', trim($interfaces));
-
-		foreach ($interfaces as $interface) {
+		$ifconfig = $this->executeCommand('/sbin/ifconfig -a');
+		preg_match_all("/^(?<=(?!\t)).*(?=:)/m", $ifconfig, $interfaces);
+		
+		foreach ($interfaces[0] as $interface) {
 			$iface              = [];
 			$iface['interface'] = $interface;
-			$iface['ipv4']      = $this->executeCommand('/sbin/ifconfig ' . $iface['interface'] . ' | grep \'inet \' | cut -f2 -d$\'\t\' | cut -f 2 -d \' \'');
-			$iface['ipv6']      = $this->executeCommand('/sbin/ifconfig ' . $iface['interface'] . ' | grep inet6 | cut -f2 -d$\'\t\' | cut -f 2 -d \' \' | cut -f1 -d \'%\'');
+			$intface            = $this->executeCommand('/sbin/ifconfig ' . $iface['interface']);
+			preg_match_all("/(?<=inet ).\S*/m", $intface, $ipv4);
+			preg_match_all("/(?<=inet6 ).*(?=%)/m", $intface, $ipv6);
+			$iface['ipv4']      = implode(' ', $ipv4[0]);
+			$iface['ipv6']      = implode(' ', $ipv6[0]);
+
 			if ($iface['interface'] !== 'lo0') {
-				$iface['mac']       = $this->executeCommand('/sbin/ifconfig ' . $iface['interface'] . ' | grep ether | cut -f2 -d$\'\t\' | cut -f2 -d \' \'');
-				$iface['status'] = $this->executeCommand('/sbin/ifconfig ' . $iface['interface'] . ' | grep status | cut -f2 -d$\'\t\' | cut -f2 -d \' \'');
-				$iface['speed']  = $this->executeCommand('/sbin/ifconfig ' . $iface['interface'] . ' | grep media | cut -d \' \' -f3 | cut -f1 -d \'b\'');
+				preg_match_all("/(?<=ether ).*/m", $intface, $mac);
+				preg_match("/(?<=status: ).*/m", $intface, $status);
+				preg_match("/(?<=\().*(?=b)/m", $intface, $speed);
+				preg_match("/(?<=\<).*(?=-)/m", $intface, $duplex);
+				
+				$iface['mac'] = implode(' ', $mac[0]);
+				$iface['status'] = $status[0];
+				$iface['speed']  = $speed[0];
+				
 				if ($iface['speed'] !== '') {
 					$iface['speed'] = $iface['speed'];
 				} else {
 					$iface['speed'] = 'unknown';
 				}
 
-				$duplex = $this->executeCommand('/sbin/ifconfig ' . $iface['interface'] . ' | grep media | cut -d \'<\' -f2 | cut -d \'-\' -f1');
-				if ($duplex !== '') {
-					$iface['duplex'] = 'Duplex: ' . $duplex;
+				if ($duplex[0] !== '') {
+					$iface['duplex'] = 'Duplex: ' . $duplex[0];
 				} else {
 					$iface['duplex'] = '';
 				}
@@ -227,7 +242,7 @@ class FreeBSD {
 	}
 
 	protected function executeCommand(string $command): string {
-		$output = @shell_exec($command);
+		$output = @shell_exec(escapeshellcmd($command));
 		if ($output === null || $output === '') {
 			throw new \RuntimeException('No output for command: "' . $command . '"');
 		}
