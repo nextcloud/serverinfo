@@ -47,25 +47,24 @@ class FreeBSD {
 
 		try {
 			$swapinfo = $this->executeCommand('/usr/sbin/swapinfo');
+ 			$line = preg_split("/[\s]+/", $swapinfo);
+
+			if (count($line) > 3) {
+				$data['SwapTotal'] = (int)$line[3];
+				$data['SwapFree'] = $data['SwapTotal'] - (int)$line[2];
+			}
+			
+			$meminfo = $this->executeCommand('/sbin/sysctl -n hw.physmem hw.pagesize vm.stats.vm.v_inactive_count vm.stats.vm.v_cache_count vm.stats.vm.v_free_count');
+
+			$line = preg_split('/\s+/', trim($meminfo));
+			if (count($line) > 4) {
+				$data['MemTotal'] = (int)$line[0];
+				$data['MemAvailable'] = (int)$line[1] * ((int)$line[2] + (int)$line[3] + (int)$line[4]);
+			}
 		} catch (\RuntimeException $e) {
 			return $data;
 		}
 
-		$line = preg_split("/[\s]+/", $swapinfo);
-		if (count($line) > 3) {
-			$data['SwapTotal'] = (int)$line[3];
-			$data['SwapFree'] = $data['SwapTotal'] - (int)$line[2];
-		}
-
-		try {
-			$return = $this->executeCommand('/sbin/sysctl -n hw.physmem hw.pagesize vm.stats.vm.v_inactive_count vm.stats.vm.v_cache_count vm.stats.vm.v_free_count');
-			$return = preg_split('/\s+/', trim($return));
-
-			$data['MemTotal'] = (int)$return[0];
-			$data['MemAvailable'] = (int)$return[1] * ((int)$return[2] + (int)$return[3] + (int)$return[4]);
-		} catch (\RuntimeException $e) {
-			return $data;
-		}
 		return $data;
 	}
 
@@ -75,6 +74,8 @@ class FreeBSD {
 	 * @return string
 	 */
 	public function getCPUName(): string {
+		$data = 'Unknown Processor';
+
 		try {
 			$data = $this->executeCommand('/sbin/sysctl -n hw.model');
 		} catch (\RuntimeException $e) {
@@ -87,12 +88,14 @@ class FreeBSD {
 	 * @return string
 	 */
 	public function getTime() {
+		$time = " ";
+
 		try {
-			$uptime = $this->executeCommand('date');
+			$time = $this->executeCommand('date');
 		} catch (\RuntimeException $e) {
-			return $uptime;
+			return $time;
 		}
-		return $uptime;
+		return $time;
 	}
 
 	/**
@@ -101,21 +104,25 @@ class FreeBSD {
 	 * @return int
 	 */
 	public function getUptime(): int {
+		$uptime = -1;
+
 		try {
 			$shell_boot = $this->executeCommand('/sbin/sysctl -n kern.boottime');
 			preg_match("/[\d]+/", $shell_boot, $boottime);
 			$time = $this->executeCommand('date +%s');
-			$uptimeInSeconds = (int)$time - (int)$boottime[0];
+			$uptime = (int)$time - (int)$boottime[0];
 		} catch (\RuntimeException $e) {
-			return $uptimeInSeconds;
+			return $uptime;
 		}
-		return $uptimeInSeconds;
+		return $uptime;
 	}
 
 	/**
 	 * @return string
 	 */
 	public function getTimeServers() {
+		$servers = " ";
+
 		try {
 			$servers = $this->executeCommand('cat /etc/ntp.conf 2>/dev/null');
 			preg_match_all("/(?<=^pool ).\S*/m", $servers, $matches);
