@@ -54,7 +54,7 @@ class FreeBSD {
 				$data['SwapFree'] = $data['SwapTotal'] - (int)$line[2];
 			}
 			
-			$meminfo = $this->executeCommand('/sbin/sysctl -n hw.physmem hw.pagesize vm.stats.vm.v_inactive_count vm.stats.vm.v_cache_count vm.stats.vm.v_free_count');
+			$meminfo = $this->executeCommand('/sbin/sysctl -n hw.realmem hw.pagesize vm.stats.vm.v_inactive_count vm.stats.vm.v_cache_count vm.stats.vm.v_free_count');
 
 			$line = preg_split('/\s+/', trim($meminfo));
 			if (count($line) > 4) {
@@ -77,7 +77,14 @@ class FreeBSD {
 		$data = 'Unknown Processor';
 
 		try {
-			$data = $this->executeCommand('/sbin/sysctl -n hw.model');
+			$model = $this->executeCommand('/sbin/sysctl -n hw.model');
+			$cores = $this->executeCommand('/sbin/sysctl -n kern.smp.cpus');
+
+			if ($cores === 1) {
+				$data = $model . ' (1 core)';
+			} else {
+				$data = $model . ' (' . $cores . ' cores)';
+			}
 		} catch (\RuntimeException $e) {
 			return $data;
 		}
@@ -217,7 +224,7 @@ class FreeBSD {
 		$data = [];
 
 		try {
-			$disks = $this->executeCommand('df -TP');
+			$disks = $this->executeCommand('df -TPk');
 		} catch (\RuntimeException $e) {
 			return $data;
 		}
