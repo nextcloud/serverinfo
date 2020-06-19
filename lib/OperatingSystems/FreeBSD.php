@@ -47,7 +47,7 @@ class FreeBSD {
 
 		try {
 			$swapinfo = $this->executeCommand('/usr/sbin/swapinfo');
- 			$line = preg_split("/[\s]+/", $swapinfo);
+			$line = preg_split("/[\s]+/", $swapinfo);
 
 			if (count($line) > 3) {
 				$data['SwapTotal'] = (int)$line[3];
