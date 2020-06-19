@@ -161,7 +161,7 @@ class FreeBSD {
 			$iface['interface'] = $interface;
 			$intface            = $this->executeCommand('/sbin/ifconfig ' . $iface['interface']);
 			preg_match_all("/(?<=inet ).\S*/m", $intface, $ipv4);
-			preg_match_all("/(?<=inet6 ).*(?=%)/m", $intface, $ipv6);
+			preg_match_all("/(?<=inet6 )((.*(?=%))|(.\S*))/m", $intface, $ipv6);
 			$iface['ipv4']      = implode(' ', $ipv4[0]);
 			$iface['ipv6']      = implode(' ', $ipv6[0]);
 
