@@ -65,6 +65,7 @@ OC.L10N.register(
     "Size:" : "サイズ:",
     "External monitoring tool" : "外部モニタリングツール",
     "You can connect an external monitoring tool by using this end point:" : "このエンドポイントを利用して外部モニタリングツールに接続することが可能です：",
+    "Appending \"?format=json\" at the end of the URL gives you the result in JSON." : "URLの最後に \"?format=json\" を追加すると、JSONの結果が得られます。",
     "Did you know?" : "知ってますか？",
     "Appending \"?format=json\" at the end of the URL gives you the result in JSON format!" : "URLの最後に \"?format=json\" を追加すると、JSON形式の結果が得られます。"
 },
