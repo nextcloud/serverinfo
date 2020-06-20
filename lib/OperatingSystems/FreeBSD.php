@@ -46,7 +46,7 @@ class FreeBSD {
 		$data = ['MemTotal' => -1, 'MemFree' => -1, 'MemAvailable' => -1, 'SwapTotal' => -1, 'SwapFree' => -1];
 
 		try {
-			$swapinfo = $this->executeCommand('/usr/sbin/swapinfo');
+			$swapinfo = $this->executeCommand('/usr/sbin/swapinfo -k');
 			$line = preg_split("/[\s]+/", $swapinfo);
 
 			if (count($line) > 3) {
@@ -54,7 +54,7 @@ class FreeBSD {
 				$data['SwapFree'] = $data['SwapTotal'] - (int)$line[2];
 			}
 			
-			$meminfo = $this->executeCommand('/sbin/sysctl -n hw.physmem hw.pagesize vm.stats.vm.v_inactive_count vm.stats.vm.v_cache_count vm.stats.vm.v_free_count');
+			$meminfo = $this->executeCommand('/sbin/sysctl -n hw.realmem hw.pagesize vm.stats.vm.v_inactive_count vm.stats.vm.v_cache_count vm.stats.vm.v_free_count');
 
 			$line = preg_split('/\s+/', trim($meminfo));
 			if (count($line) > 4) {
@@ -77,7 +77,14 @@ class FreeBSD {
 		$data = 'Unknown Processor';
 
 		try {
-			$data = $this->executeCommand('/sbin/sysctl -n hw.model');
+			$model = $this->executeCommand('/sbin/sysctl -n hw.model');
+			$cores = $this->executeCommand('/sbin/sysctl -n kern.smp.cpus');
+
+			if ($cores === 1) {
+				$data = $model . ' (1 core)';
+			} else {
+				$data = $model . ' (' . $cores . ' cores)';
+			}
 		} catch (\RuntimeException $e) {
 			return $data;
 		}
@@ -175,7 +182,7 @@ class FreeBSD {
 			if ($iface['interface'] !== 'lo0') {
 				preg_match_all("/(?<=ether ).*/m", $intface, $mac);
 				preg_match("/(?<=status: ).*/m", $intface, $status);
-				preg_match("/(?<=\().*(?=b)/m", $intface, $speed);
+				preg_match("/\b[0-9].*?(?=base)/m", $intface, $speed);
 				preg_match("/(?<=\<).*(?=-)/m", $intface, $duplex);
 				
 				$iface['mac'] = implode(' ', $mac[0]);
@@ -183,7 +190,12 @@ class FreeBSD {
 				$iface['speed']  = $speed[0];
 				
 				if ($iface['speed'] !== '') {
-					$iface['speed'] = $iface['speed'];
+					if (strpos($iface['speed'], 'G')) {
+						$iface['speed'] = rtrim($iface['speed'], 'G');
+						$iface['speed'] = $iface['speed'] . ' Gbps';
+					} else {
+						$iface['speed'] = $iface['speed'] . ' Mbps';
+					}
 				} else {
 					$iface['speed'] = 'unknown';
 				}
@@ -217,7 +229,7 @@ class FreeBSD {
 		$data = [];
 
 		try {
-			$disks = $this->executeCommand('df -TP');
+			$disks = $this->executeCommand('df -TPk');
 		} catch (\RuntimeException $e) {
 			return $data;
 		}

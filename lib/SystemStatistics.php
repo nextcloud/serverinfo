@@ -101,7 +101,7 @@ class SystemStatistics {
 		//If FreeBSD is used and exec()-usage is allowed
 		if (PHP_OS === 'FreeBSD' && $this->is_function_enabled('exec')) {
 			//Read Swap usage:
-			exec("/usr/sbin/swapinfo", $return, $status);
+			exec("/usr/sbin/swapinfo -k", $return, $status);
 			if ($status === 0 && count($return) > 1) {
 				$line = preg_split("/[\s]+/", $return[1]);
 				if (count($line) > 3) {
