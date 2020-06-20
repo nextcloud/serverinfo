@@ -182,7 +182,7 @@ class FreeBSD {
 			if ($iface['interface'] !== 'lo0') {
 				preg_match_all("/(?<=ether ).*/m", $intface, $mac);
 				preg_match("/(?<=status: ).*/m", $intface, $status);
-				preg_match("/(?<=\().*(?=b)/m", $intface, $speed);
+				preg_match("/\b[0-9].*?(?=base)/m", $intface, $speed);
 				preg_match("/(?<=\<).*(?=-)/m", $intface, $duplex);
 				
 				$iface['mac'] = implode(' ', $mac[0]);
@@ -190,7 +190,12 @@ class FreeBSD {
 				$iface['speed']  = $speed[0];
 				
 				if ($iface['speed'] !== '') {
-					$iface['speed'] = $iface['speed'];
+					if (strpos($iface['speed'], 'G')) {
+						$iface['speed'] = rtrim($iface['speed'], 'G');
+						$iface['speed'] = $iface['speed'] . ' Gbps';
+					} else {
+						$iface['speed'] = $iface['speed'] . ' Mbps';
+					}
 				} else {
 					$iface['speed'] = 'unknown';
 				}
