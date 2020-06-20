@@ -46,7 +46,7 @@ class FreeBSD {
 		$data = ['MemTotal' => -1, 'MemFree' => -1, 'MemAvailable' => -1, 'SwapTotal' => -1, 'SwapFree' => -1];
 
 		try {
-			$swapinfo = $this->executeCommand('/usr/sbin/swapinfo');
+			$swapinfo = $this->executeCommand('/usr/sbin/swapinfo -k');
 			$line = preg_split("/[\s]+/", $swapinfo);
 
 			if (count($line) > 3) {
