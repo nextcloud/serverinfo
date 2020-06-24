@@ -28,7 +28,7 @@ namespace OCA\ServerInfo\OperatingSystems;
  * @package OCA\ServerInfo\OperatingSystems
  */
 class FreeBSD {
-	
+
 	/**
 	 * @return bool
 	 */
@@ -47,23 +47,34 @@ class FreeBSD {
 
 		try {
 			$swapinfo = $this->executeCommand('/usr/sbin/swapinfo -k');
-			$line = preg_split("/[\s]+/", $swapinfo);
-
-			if (count($line) > 3) {
-				$data['SwapTotal'] = (int)$line[3];
-				$data['SwapFree'] = $data['SwapTotal'] - (int)$line[2];
-			}
-			
-			$meminfo = $this->executeCommand('/sbin/sysctl -n hw.realmem hw.pagesize vm.stats.vm.v_inactive_count vm.stats.vm.v_cache_count vm.stats.vm.v_free_count');
-
-			$line = preg_split('/\s+/', trim($meminfo));
-			if (count($line) > 4) {
-				$data['MemTotal'] = (int)$line[0];
-				$data['MemAvailable'] = (int)$line[1] * ((int)$line[2] + (int)$line[3] + (int)$line[4]);
-			}
 		} catch (\RuntimeException $e) {
-			return $data;
+			$swapinfo = '';
 		}
+
+		$matches = [];
+		$pattern = '/(?>\/dev\/\w+)\s+(?>\d+)\s+(?<Used>\d+)\s+(?<Avail>\d+)\s+(?<Capacity>\d+)/';
+
+		$result = preg_match_all($pattern, $swapinfo, $matches);
+		if ($result === 1) {
+			$data['SwapTotal'] = (int)$matches['Avail'][0];
+			$data['SwapFree'] = $data['SwapTotal'] - (int)$matches['Used'][0];
+		}
+
+		unset($matches, $result);
+
+		try {
+			$meminfo = $this->executeCommand('/sbin/sysctl -n hw.physmem hw.pagesize vm.stats.vm.v_inactive_count vm.stats.vm.v_cache_count vm.stats.vm.v_free_count');
+		} catch (\RuntimeException $e) {
+			$meminfo = '';
+		}
+
+		$lines = explode("\n", $meminfo);
+		if (count($lines) > 4) {
+			$data['MemTotal'] = (int)$lines[0];
+			$data['MemAvailable'] = (int)$lines[1] * ((int)$lines[2] + (int)$lines[3] + (int)$lines[4]);
+		}
+
+		unset($lines);
 
 		return $data;
 	}
@@ -146,7 +157,7 @@ class FreeBSD {
 	public function getNetworkInfo() {
 		$result = [];
 		$result['hostname'] = \gethostname();
-		
+
 		try {
 			$dns = $this->executeCommand('cat /etc/resolv.conf 2>/dev/null');
 			preg_match_all("/(?<=^nameserver ).\S*/m", $dns, $matches);
@@ -166,10 +177,10 @@ class FreeBSD {
 	 */
 	public function getNetworkInterfaces() {
 		$result = [];
-		
+
 		$ifconfig = $this->executeCommand('/sbin/ifconfig -a');
 		preg_match_all("/^(?<=(?!\t)).*(?=:)/m", $ifconfig, $interfaces);
-		
+
 		foreach ($interfaces[0] as $interface) {
 			$iface              = [];
 			$iface['interface'] = $interface;
@@ -184,11 +195,11 @@ class FreeBSD {
 				preg_match("/(?<=status: ).*/m", $intface, $status);
 				preg_match("/\b[0-9].*?(?=base)/m", $intface, $speed);
 				preg_match("/(?<=\<).*(?=-)/m", $intface, $duplex);
-				
+
 				$iface['mac'] = implode(' ', $mac[0]);
 				$iface['status'] = $status[0];
 				$iface['speed']  = $speed[0];
-				
+
 				if ($iface['speed'] !== '') {
 					if (strpos($iface['speed'], 'G')) {
 						$iface['speed'] = rtrim($iface['speed'], 'G');
