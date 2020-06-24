@@ -20,53 +20,18 @@
 
 namespace OCA\ServerInfo;
 
-use bantu\IniGetWrapper\IniGetWrapper;
 use OCA\ServerInfo\OperatingSystems\DefaultOs;
 use OCA\ServerInfo\OperatingSystems\FreeBSD;
-use OCP\Http\Client\IClientService;
-use OCP\IConfig;
-use OCP\IDBConnection;
-use OCP\IL10N;
 
 class Os {
-
-	/** @var IClientService */
-	protected $clientService;
-
-	/** @var IConfig */
-	protected $config;
-
-	/** @var IDBConnection */
-	protected $connection;
-
-	/** @var IniGetWrapper */
-	protected $phpIni;
-
-	/** @var \OCP\IL10N */
-	protected $l;
 
 	/** @var */
 	protected $backend;
 
 	/**
 	 * Os constructor.
-	 *
-	 * @param IClientService $clientService
-	 * @param IConfig $config
-	 * @param IDBConnection $connection
-	 * @param IniGetWrapper $phpIni
-	 * @param IL10N $l
 	 */
-	public function __construct(IClientService $clientService,
-								IConfig $config,
-								IDBConnection $connection,
-								IniGetWrapper $phpIni,
-								IL10N $l) {
-		$this->clientService = $clientService;
-		$this->config        = $config;
-		$this->connection    = $connection;
-		$this->phpIni        = $phpIni;
-		$this->l             = $l;
+	public function __construct() {
 		if (PHP_OS === 'FreeBSD') {
 			$this->backend = new FreeBSD();
 		} else {
@@ -144,7 +109,7 @@ class Os {
 	 * Get diskInfo will return a list of disks. Used and Available in bytes.
 	 *
 	 * [
-	 * 	[device => /dev/mapper/homestead--vg-root, fs => ext4, used => 6205468, available => 47321220, percent => 12%, mount => /]
+	 *    [device => /dev/mapper/homestead--vg-root, fs => ext4, used => 6205468, available => 47321220, percent => 12%, mount => /]
 	 * ]
 	 *
 	 * @return array
