@@ -82,12 +82,12 @@ class PhpStatistics {
 		// get status information about the cache
 		$status = opcache_get_status(false);
 
-		if ($status !== false) {
-			return $status;
-		} else {
+		if ($status === false) {
 			// no array, returning back empty array to prevent any errors on JS side.
-			return [];
+			$status = [];
 		}
+
+		return $status;
 	}
 
 	/**
@@ -108,14 +108,14 @@ class PhpStatistics {
 		// get APCu Shared Memory Allocation information
 		$smaInfo = apcu_sma_info(true);
 
-		if (!is_array($cacheInfo)) {
-			// no array, returning back empty array to prevent any errors on JS side.
-			$cacheInfo = [];
+		if ($cacheInfo === false) {
+			// no array, returning back N/A to prevent any errors on JS side.
+			$cacheInfo = 'N/A';
 		}
 
-		if (!is_array($smaInfo)) {
-			// no array, returning back empty array to prevent any errors on JS side.
-			$smaInfo = [];
+		if ($smaInfo === false) {
+			// no array, returning back N/A to prevent any errors on JS side.
+			$smaInfo = 'N/A';
 		}
 
 		// return the array
