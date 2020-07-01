@@ -1,6 +1,7 @@
 OC.L10N.register(
     "serverinfo",
     {
+    "Users" : "Implijer",
     "Copy" : "Eilañ",
     "Copied!" : "Eilet eo !",
     "Not supported!" : "Diembreget eo ! ",
