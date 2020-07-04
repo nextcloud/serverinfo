@@ -2,6 +2,7 @@ OC.L10N.register(
     "serverinfo",
     {
     "Users" : "Implijer",
+    "Groups" : "Strolladoù",
     "Copy" : "Eilañ",
     "Copied!" : "Eilet eo !",
     "Not supported!" : "Diembreget eo ! ",
