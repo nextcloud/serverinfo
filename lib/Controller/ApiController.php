@@ -162,8 +162,8 @@ class ApiController extends OCSController {
 		}
 
 		$interval = $boot->diff(new \DateTime());
-		if ($interval->d > 0) {
-			return $interval->format('%d days, %h hours, %i minutes, %s seconds');
+		if ($interval->days > 0) {
+			return $interval->format('%a days, %h hours, %i minutes, %s seconds');
 		}
 		return $interval->format('%h hours, %i minutes, %s seconds');
 	}
