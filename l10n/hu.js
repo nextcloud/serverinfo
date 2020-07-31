@@ -64,6 +64,7 @@ OC.L10N.register(
     "Size:" : "Méret:",
     "External monitoring tool" : "Külső monitorozó eszköz",
     "You can connect an external monitoring tool by using this end point:" : "Ennek a végpontnak a használatával külső monitorozó eszközt csatlakoztathatsz:",
+    "Appending \"?format=json\" at the end of the URL gives you the result in JSON." : "Az URL végéhez \"?format=json\" hozzáfűzésével az eredményt JSON formátumban kapod meg!",
     "Did you know?" : "Tudtad?",
     "Appending \"?format=json\" at the end of the URL gives you the result in JSON format!" : "Az URL végéhez \"?format=json\" hozzáfűzésével az eredményt JSON formátumban kapod meg!"
 },
