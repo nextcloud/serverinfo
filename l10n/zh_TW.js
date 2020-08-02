@@ -23,6 +23,7 @@ OC.L10N.register(
     "Monitoring app with useful server information" : "使用有用的伺服器訊息以監控應用程式",
     "Provides useful server information, such as CPU load, RAM usage, disk usage, number of users, etc." : "提供有用的伺服器訊息，例如CPU負載、記憶體使用情況、磁碟使用情況、用戶數等。",
     "Size" : "大小",
+    "Available" : "可用",
     "Files:" : "檔案:",
     "Storages:" : "儲存設備：",
     "Free Space:" : "可用空間：",
