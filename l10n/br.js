@@ -9,6 +9,7 @@ OC.L10N.register(
     "Press ⌘-C to copy." : "Pouezañ war ⌘-C evit eilañ. ",
     "Press Ctrl-C to copy." : "Pouezañ war Ctrl-C evit eilañ. ",
     "Size" : "Ment",
+    "Network" : "Rouedad",
     "Status" : "Stad",
     "Shares" : "Rannañ"
 },
