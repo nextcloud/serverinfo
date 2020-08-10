@@ -20,12 +20,9 @@
 
 namespace OCA\ServerInfo\OperatingSystems;
 
-/**
- * Class Ubuntu
- *
- * @package OCA\ServerInfo\OperatingSystems
- */
-class DefaultOs {
+use OCA\ServerInfo\Resources\Memory;
+
+class DefaultOs implements IOperatingSystem {
 
 	/**
 	 * @return bool
@@ -34,14 +31,8 @@ class DefaultOs {
 		return true;
 	}
 
-	/**
-	 * Get memory will return a list key => value where all values are in bytes.
-	 * [MemTotal => 0, MemFree => 0, MemAvailable => 0, SwapTotal => 0, SwapFree => 0].
-	 *
-	 * @return array
-	 */
-	public function getMemory(): array {
-		$data = ['MemTotal' => -1, 'MemFree' => -1, 'MemAvailable' => -1, 'SwapTotal' => -1, 'SwapFree' => -1];
+	public function getMemory(): Memory {
+		$data = new Memory();
 
 		try {
 			$meminfo = $this->readContent('/proc/meminfo');
@@ -65,17 +56,28 @@ class DefaultOs {
 				$value *= 1024;
 			}
 
-			$data[$key] = $value;
+			switch ($key) {
+				case 'MemTotal':
+					$data->setMemTotal($value);
+					break;
+				case 'MemFree':
+					$data->setMemFree($value);
+					break;
+				case 'MemAvailable':
+					$data->setMemAvailable($value);
+					break;
+				case 'SwapTotal':
+					$data->setSwapTotal($value);
+					break;
+				case 'SwapFree':
+					$data->setSwapFree($value);
+					break;
+			}
 		}
 
 		return $data;
 	}
 
-	/**
-	 * Get name of the processor
-	 *
-	 * @return string
-	 */
 	public function getCPUName(): string {
 		$data = 'Unknown Processor';
 
@@ -113,11 +115,6 @@ class DefaultOs {
 		return $uptime;
 	}
 
-	/**
-	 * Get the total number of seconds the system has been up or -1 on failure.
-	 *
-	 * @return int
-	 */
 	public function getUptime(): int {
 		$data = -1;
 

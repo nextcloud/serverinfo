@@ -22,8 +22,10 @@ namespace OCA\ServerInfo;
 
 use OCA\ServerInfo\OperatingSystems\DefaultOs;
 use OCA\ServerInfo\OperatingSystems\FreeBSD;
+use OCA\ServerInfo\OperatingSystems\IOperatingSystem;
+use OCA\ServerInfo\Resources\Memory;
 
-class Os {
+class Os implements IOperatingSystem {
 
 	/** @var */
 	protected $backend;
@@ -61,21 +63,10 @@ class Os {
 		return PHP_OS . ' ' . php_uname('r') . ' ' . php_uname('m');
 	}
 
-	/**
-	 * Get memory will return a list key => value where all values are in bytes.
-	 * [MemTotal => 0, MemFree => 0, MemAvailable => 0, SwapTotal => 0, SwapFree => 0].
-	 *
-	 * @return array
-	 */
-	public function getMemory(): array {
+	public function getMemory(): Memory {
 		return $this->backend->getMemory();
 	}
 
-	/**
-	 * Get name of the processor
-	 *
-	 * @return string
-	 */
 	public function getCPUName(): string {
 		return $this->backend->getCPUName();
 	}
@@ -88,11 +79,6 @@ class Os {
 		return $data;
 	}
 
-	/**
-	 * Get the total number of seconds the system has been up
-	 *
-	 * @return int
-	 */
 	public function getUptime(): int {
 		return $this->backend->getUptime();
 	}

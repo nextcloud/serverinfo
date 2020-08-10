@@ -24,6 +24,7 @@
 namespace OCA\ServerInfo\Tests;
 
 use OCA\ServerInfo\OperatingSystems\FreeBSD;
+use OCA\ServerInfo\Resources\Memory;
 use PHPUnit\Framework\MockObject\MockObject;
 use Test\TestCase;
 
@@ -58,17 +59,11 @@ class FreeBSDTest extends TestCase {
 
 		$memory = $this->os->getMemory();
 
-		$this->assertArrayHasKey('MemTotal', $memory);
-		$this->assertArrayHasKey('MemFree', $memory);
-		$this->assertArrayHasKey('MemAvailable', $memory);
-		$this->assertArrayHasKey('SwapTotal', $memory);
-		$this->assertArrayHasKey('SwapFree', $memory);
-
-		$this->assertEquals(68569628672, $memory['MemTotal']);
-		$this->assertEquals(-1, $memory['MemFree']);
-		$this->assertEquals(15809376256, $memory['MemAvailable']);
-		$this->assertEquals(3744300, $memory['SwapTotal']);
-		$this->assertEquals(3744300, $memory['SwapFree']);
+		$this->assertEquals(68569628672, $memory->getMemTotal());
+		$this->assertEquals(-1, $memory->getMemFree());
+		$this->assertEquals(15809376256, $memory->getMemAvailable());
+		$this->assertEquals(3744300, $memory->getSwapTotal());
+		$this->assertEquals(3744300, $memory->getSwapFree());
 	}
 
 	public function testGetMemoryNoSwapinfo(): void {
@@ -84,24 +79,18 @@ class FreeBSDTest extends TestCase {
 
 		$memory = $this->os->getMemory();
 
-		$this->assertArrayHasKey('MemTotal', $memory);
-		$this->assertArrayHasKey('MemFree', $memory);
-		$this->assertArrayHasKey('MemAvailable', $memory);
-		$this->assertArrayHasKey('SwapTotal', $memory);
-		$this->assertArrayHasKey('SwapFree', $memory);
-
-		$this->assertEquals(68569628672, $memory['MemTotal']);
-		$this->assertEquals(-1, $memory['MemFree']);
-		$this->assertEquals(15809376256, $memory['MemAvailable']);
-		$this->assertEquals(-1, $memory['SwapTotal']);
-		$this->assertEquals(-1, $memory['SwapFree']);
+		$this->assertEquals(68569628672, $memory->getMemTotal());
+		$this->assertEquals(-1, $memory->getMemFree());
+		$this->assertEquals(15809376256, $memory->getMemAvailable());
+		$this->assertEquals(-1, $memory->getSwapTotal());
+		$this->assertEquals(-1, $memory->getSwapFree());
 	}
 
 	public function testGetMemoryNoData(): void {
 		$this->os->method('executeCommand')
 			->willThrowException(new \RuntimeException('No output for command: xxx'));
 
-		$this->assertSame(['MemTotal' => -1, 'MemFree' => -1, 'MemAvailable' => -1, 'SwapTotal' => -1, 'SwapFree' => -1], $this->os->getMemory());
+		$this->assertEquals(new Memory(), $this->os->getMemory());
 	}
 
 	public function testSupported(): void {
