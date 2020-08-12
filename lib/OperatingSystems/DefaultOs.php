@@ -78,7 +78,7 @@ class DefaultOs implements IOperatingSystem {
 		return $data;
 	}
 
-	public function getCPUName(): string {
+	public function getCpuName(): string {
 		$data = 'Unknown Processor';
 
 		try {

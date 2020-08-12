@@ -40,7 +40,7 @@ interface IOperatingSystem {
 	 *
 	 * @return string
 	 */
-	public function getCPUName(): string;
+	public function getCpuName(): string;
 
 	/**
 	 * Get the total number of seconds the system has been up or -1 on failure.

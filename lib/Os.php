@@ -67,8 +67,8 @@ class Os implements IOperatingSystem {
 		return $this->backend->getMemory();
 	}
 
-	public function getCPUName(): string {
-		return $this->backend->getCPUName();
+	public function getCpuName(): string {
+		return $this->backend->getCpuName();
 	}
 
 	/**

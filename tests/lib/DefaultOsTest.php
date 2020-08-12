@@ -85,7 +85,7 @@ class DefaultOsTest extends TestCase {
 			->with('/proc/cpuinfo')
 			->willReturn(file_get_contents(__DIR__ . '/../data/cpuinfo'));
 
-		$this->assertEquals('Intel(R) Core(TM) i5-6500 CPU @ 3.20GHz (4 cores)', $this->os->getCPUName());
+		$this->assertEquals('Intel(R) Core(TM) i5-6500 CPU @ 3.20GHz (4 cores)', $this->os->getCpuName());
 	}
 
 	public function testGetCPUNameOneCore(): void {
@@ -93,7 +93,7 @@ class DefaultOsTest extends TestCase {
 			->with('/proc/cpuinfo')
 			->willReturn(file_get_contents(__DIR__ . '/../data/cpuinfo_one_core'));
 
-		$this->assertEquals('Intel(R) Core(TM) i5-6500 CPU @ 3.20GHz (1 core)', $this->os->getCPUName());
+		$this->assertEquals('Intel(R) Core(TM) i5-6500 CPU @ 3.20GHz (1 core)', $this->os->getCpuName());
 	}
 
 	public function testGetCPUNameNoData(): void {
@@ -101,7 +101,7 @@ class DefaultOsTest extends TestCase {
 			->with('/proc/cpuinfo')
 			->willThrowException(new \RuntimeException('Unable to read: "/proc/cpuinfo"'));
 
-		$this->assertEquals('Unknown Processor', $this->os->getCPUName());
+		$this->assertEquals('Unknown Processor', $this->os->getCpuName());
 	}
 
 	public function testGetCPUNameInvalidData(): void {
@@ -109,7 +109,7 @@ class DefaultOsTest extends TestCase {
 			->with('/proc/cpuinfo')
 			->willReturn('invalid_data');
 
-		$this->assertEquals('Unknown Processor', $this->os->getCPUName());
+		$this->assertEquals('Unknown Processor', $this->os->getCpuName());
 	}
 
 	public function testGetUptime(): void {
