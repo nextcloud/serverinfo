@@ -20,6 +20,7 @@
 
 namespace OCA\ServerInfo\OperatingSystems;
 
+use OCA\ServerInfo\Resources\Disk;
 use OCA\ServerInfo\Resources\Memory;
 
 class DefaultOs implements IOperatingSystem {
@@ -190,15 +191,6 @@ class DefaultOs implements IOperatingSystem {
 		return $result;
 	}
 
-	/**
-	 * Get diskInfo will return a list of disks. Used and Available in bytes.
-	 *
-	 * [
-	 * 	[device => /dev/mapper/homestead--vg-root, fs => ext4, used => 6205468, available => 47321220, percent => 12%, mount => /]
-	 * ]
-	 *
-	 * @return array
-	 */
 	public function getDiskInfo(): array {
 		$data = [];
 
@@ -221,14 +213,15 @@ class DefaultOs implements IOperatingSystem {
 				continue;
 			}
 
-			$data[] = [
-				'device' => $filesystem,
-				'fs' => $matches['Type'][$i],
-				'used' => (int)$matches['Used'][$i] * 1024,
-				'available' => (int)$matches['Available'][$i] * 1024,
-				'percent' => $matches['Capacity'][$i],
-				'mount' => $matches['Mounted'][$i],
-			];
+			$disk = new Disk();
+			$disk->setDevice($filesystem);
+			$disk->setFs($matches['Type'][$i]);
+			$disk->setUsed((int)$matches['Used'][$i] * 1024);
+			$disk->setAvailable((int)$matches['Available'][$i] * 1024);
+			$disk->setPercent($matches['Capacity'][$i]);
+			$disk->setMount($matches['Mounted'][$i]);
+
+			$data[] = $disk;
 		}
 
 		return $data;

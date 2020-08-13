@@ -37,6 +37,8 @@ function FormatBytes($byte) {
 
 /** @var \OCA\ServerInfo\Resources\Memory $memory */
 $memory = $_['memory'];
+/** @var \OCA\ServerInfo\Resources\Disk[] $disks */
+$disks = $_['diskinfo'];
 ?>
 
 <div class="server-info-wrapper">
@@ -122,7 +124,7 @@ $memory = $_['memory'];
 					<?php p($l->t('Disk')); ?>
 				</h2>
 			</div>
-			<?php foreach ($_['diskinfo'] as $disk): ?>
+			<?php foreach ($disks as $disk): ?>
 				<div class="col col-4 col-xl-6 col-m-12">
 					<div class="infobox">
 						<div class="diskchart-container">
@@ -130,17 +132,17 @@ $memory = $_['memory'];
 									height="200"></canvas>
 						</div>
 						<div class="diskinfo-container">
-							<h3><?php p(basename($disk['device'])); ?></h3>
+							<h3><?php p(basename($disk->getDevice())); ?></h3>
 							<?php p($l->t('Mount')); ?> :
-							<span class="info"><?php p($disk['mount']); ?></span><br>
+							<span class="info"><?php p($disk->getMount()); ?></span><br>
 							<?php p($l->t('Filesystem')); ?> :
-							<span class="info"><?php p($disk['fs']); ?></span><br>
+							<span class="info"><?php p($disk->getFs()); ?></span><br>
 							<?php p($l->t('Size')); ?> :
-							<span class="info"><?php p(FormatBytes($disk['used'] + $disk['available'])); ?></span><br>
+							<span class="info"><?php p(FormatBytes($disk->getUsed() + $disk->getAvailable())); ?></span><br>
 							<?php p($l->t('Available')); ?> :
-							<span class="info"><?php p(FormatBytes($disk['available'])); ?></span><br>
+							<span class="info"><?php p(FormatBytes($disk->getAvailable())); ?></span><br>
 							<?php p($l->t('Used')); ?> :
-							<span class="info"><?php p($disk['percent']); ?></span><br>
+							<span class="info"><?php p($disk->getPercent()); ?></span><br>
 						</div>
 					</div>
 				</div>
