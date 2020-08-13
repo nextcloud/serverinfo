@@ -25,22 +25,30 @@ declare(strict_types=1);
 
 namespace OCA\ServerInfo\OperatingSystems;
 
+use OCA\ServerInfo\Resources\Disk;
 use OCA\ServerInfo\Resources\Memory;
 
 interface IOperatingSystem {
-	/**
-	 * Get memory returns a Memory object. All values are in bytes.
-	 *
-	 * @return Memory
-	 */
-	public function getMemory(): Memory;
-
 	/**
 	 * Get name of the processor
 	 *
 	 * @return string
 	 */
 	public function getCpuName(): string;
+
+	/**
+	 * Get disk info returns a list of Disk objects. Used and Available in bytes.
+	 *
+	 * @return Disk[]
+	 */
+	public function getDiskInfo(): array;
+
+	/**
+	 * Get memory returns a Memory object. All values are in bytes.
+	 *
+	 * @return Memory
+	 */
+	public function getMemory(): Memory;
 
 	/**
 	 * Get the total number of seconds the system has been up or -1 on failure.

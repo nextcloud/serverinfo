@@ -91,15 +91,6 @@ class Os implements IOperatingSystem {
 		return explode("\n", $data);
 	}
 
-	/**
-	 * Get diskInfo will return a list of disks. Used and Available in bytes.
-	 *
-	 * [
-	 *    [device => /dev/mapper/homestead--vg-root, fs => ext4, used => 6205468, available => 47321220, percent => 12%, mount => /]
-	 * ]
-	 *
-	 * @return array
-	 */
 	public function getDiskInfo(): array {
 		return $this->backend->getDiskInfo();
 	}
@@ -115,12 +106,11 @@ class Os implements IOperatingSystem {
 	 */
 	public function getDiskData(): array {
 		$data = [];
-		$disks = $this->backend->getDiskInfo();
 
-		foreach ($disks as $disk) {
+		foreach ($this->backend->getDiskInfo() as $disk) {
 			$data[] = [
-				round($disk['used'] / 1024 / 1024 / 1024, 1),
-				round($disk['available'] / 1024 / 1024 / 1024, 1)
+				round($disk->getUsed() / 1024 / 1024 / 1024, 1),
+				round($disk->getAvailable() / 1024 / 1024 / 1024, 1)
 			];
 		}
 

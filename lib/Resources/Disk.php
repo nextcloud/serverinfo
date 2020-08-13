@@ -1,0 +1,83 @@
+<?php
+
+declare(strict_types=1);
+/**
+ * @copyright Copyright (c) 2020 Daniel Kesselberg <mail@danielkesselberg.de>
+ *
+ * @author Daniel Kesselberg <mail@danielkesselberg.de>
+ *
+ * @license GNU AGPL version 3 or any later version
+ *
+ * This program is free software: you can redistribute it and/or modify
+ * it under the terms of the GNU Affero General Public License as
+ * published by the Free Software Foundation, either version 3 of the
+ * License, or (at your option) any later version.
+ *
+ * This program is distributed in the hope that it will be useful,
+ * but WITHOUT ANY WARRANTY; without even the implied warranty of
+ * MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE.  See the
+ * GNU Affero General Public License for more details.
+ *
+ * You should have received a copy of the GNU Affero General Public License
+ * along with this program. If not, see <http://www.gnu.org/licenses/>.
+ *
+ */
+
+namespace OCA\ServerInfo\Resources;
+
+class Disk {
+	private $device = '';
+	private $fs = '';
+	private $used = 0;
+	private $available = 0;
+	private $percent = '';
+	private $mount = '';
+
+	public function getDevice(): string {
+		return $this->device;
+	}
+
+	public function setDevice(string $device): void {
+		$this->device = $device;
+	}
+
+	public function getFs(): string {
+		return $this->fs;
+	}
+
+	public function setFs(string $fs): void {
+		$this->fs = $fs;
+	}
+
+	public function getUsed(): int {
+		return $this->used;
+	}
+
+	public function setUsed(int $used): void {
+		$this->used = $used;
+	}
+
+	public function getAvailable(): int {
+		return $this->available;
+	}
+
+	public function setAvailable(int $available): void {
+		$this->available = $available;
+	}
+
+	public function getPercent(): string {
+		return $this->percent;
+	}
+
+	public function setPercent(string $percent): void {
+		$this->percent = $percent;
+	}
+
+	public function getMount(): string {
+		return $this->mount;
+	}
+
+	public function setMount(string $mount): void {
+		$this->mount = $mount;
+	}
+}
