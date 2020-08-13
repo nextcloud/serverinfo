@@ -24,6 +24,7 @@
 namespace OCA\ServerInfo\Tests;
 
 use OCA\ServerInfo\OperatingSystems\DefaultOs;
+use OCA\ServerInfo\Resources\Memory;
 use PHPUnit\Framework\MockObject\MockObject;
 use Test\TestCase;
 
@@ -56,17 +57,11 @@ class DefaultOsTest extends TestCase {
 
 		$memory = $this->os->getMemory();
 
-		$this->assertArrayHasKey('MemTotal', $memory);
-		$this->assertArrayHasKey('MemFree', $memory);
-		$this->assertArrayHasKey('MemAvailable', $memory);
-		$this->assertArrayHasKey('SwapTotal', $memory);
-		$this->assertArrayHasKey('SwapFree', $memory);
-
-		$this->assertEquals(16330252 * 1024, $memory['MemTotal']);
-		$this->assertEquals(2443908 * 1024, $memory['MemFree']);
-		$this->assertEquals(7675276 * 1024, $memory['MemAvailable']);
-		$this->assertEquals(999420 * 1024, $memory['SwapTotal']);
-		$this->assertEquals(917756 * 1024, $memory['SwapFree']);
+		$this->assertEquals(16330252 * 1024, $memory->getMemTotal());
+		$this->assertEquals(2443908 * 1024, $memory->getMemFree());
+		$this->assertEquals(7675276 * 1024, $memory->getMemAvailable());
+		$this->assertEquals(999420 * 1024, $memory->getSwapTotal());
+		$this->assertEquals(917756 * 1024, $memory->getSwapFree());
 	}
 
 	public function testGetMemoryNoData(): void {
@@ -74,7 +69,7 @@ class DefaultOsTest extends TestCase {
 			->with('/proc/meminfo')
 			->willThrowException(new \RuntimeException('Unable to read: "/proc/meminfo"'));
 
-		$this->assertSame(['MemTotal' => -1, 'MemFree' => -1, 'MemAvailable' => -1, 'SwapTotal' => -1, 'SwapFree' => -1], $this->os->getMemory());
+		$this->assertEquals(new Memory(), $this->os->getMemory());
 	}
 
 	public function testGetMemoryInvalidData(): void {
@@ -82,7 +77,7 @@ class DefaultOsTest extends TestCase {
 			->with('/proc/meminfo')
 			->willReturn('invalid_data');
 
-		$this->assertSame(['MemTotal' => -1, 'MemFree' => -1, 'MemAvailable' => -1, 'SwapTotal' => -1, 'SwapFree' => -1], $this->os->getMemory());
+		$this->assertEquals(new Memory(), $this->os->getMemory());
 	}
 
 	public function testGetCPUName(): void {
@@ -90,7 +85,7 @@ class DefaultOsTest extends TestCase {
 			->with('/proc/cpuinfo')
 			->willReturn(file_get_contents(__DIR__ . '/../data/cpuinfo'));
 
-		$this->assertEquals('Intel(R) Core(TM) i5-6500 CPU @ 3.20GHz (4 cores)', $this->os->getCPUName());
+		$this->assertEquals('Intel(R) Core(TM) i5-6500 CPU @ 3.20GHz (4 cores)', $this->os->getCpuName());
 	}
 
 	public function testGetCPUNameOneCore(): void {
@@ -98,7 +93,7 @@ class DefaultOsTest extends TestCase {
 			->with('/proc/cpuinfo')
 			->willReturn(file_get_contents(__DIR__ . '/../data/cpuinfo_one_core'));
 
-		$this->assertEquals('Intel(R) Core(TM) i5-6500 CPU @ 3.20GHz (1 core)', $this->os->getCPUName());
+		$this->assertEquals('Intel(R) Core(TM) i5-6500 CPU @ 3.20GHz (1 core)', $this->os->getCpuName());
 	}
 
 	public function testGetCPUNameNoData(): void {
@@ -106,7 +101,7 @@ class DefaultOsTest extends TestCase {
 			->with('/proc/cpuinfo')
 			->willThrowException(new \RuntimeException('Unable to read: "/proc/cpuinfo"'));
 
-		$this->assertEquals('Unknown Processor', $this->os->getCPUName());
+		$this->assertEquals('Unknown Processor', $this->os->getCpuName());
 	}
 
 	public function testGetCPUNameInvalidData(): void {
@@ -114,7 +109,7 @@ class DefaultOsTest extends TestCase {
 			->with('/proc/cpuinfo')
 			->willReturn('invalid_data');
 
-		$this->assertEquals('Unknown Processor', $this->os->getCPUName());
+		$this->assertEquals('Unknown Processor', $this->os->getCpuName());
 	}
 
 	public function testGetUptime(): void {

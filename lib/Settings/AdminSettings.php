@@ -105,7 +105,7 @@ class AdminSettings implements ISettings {
 			'hostname' => $this->os->getHostname(),
 			'osname' => $this->os->getOSName(),
 			'memory' => $this->os->getMemory(),
-			'cpu' => $this->os->getCPUName(),
+			'cpu' => $this->os->getCpuName(),
 			'diskinfo' => $this->os->getDiskInfo(),
 			'networkinfo' => $this->os->getNetworkInfo(),
 			'networkinterfaces' => $this->os->getNetworkInterfaces(),

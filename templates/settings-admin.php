@@ -35,6 +35,8 @@ function FormatBytes($byte) {
 	return number_format($byte, 2, '.', '.') . ' ' . $unim[$count];
 }
 
+/** @var \OCA\ServerInfo\Resources\Memory $memory */
+$memory = $_['memory'];
 ?>
 
 <div class="server-info-wrapper">
@@ -62,7 +64,7 @@ function FormatBytes($byte) {
 						</tr>
 						<tr>
 							<td><?php p($l->t('Memory')); ?>:</td>
-							<td><?php p(FormatBytes($_['memory']['MemTotal'])) ?></td>
+							<td><?php p(FormatBytes($memory->getMemTotal())) ?></td>
 						</tr>
 						<tr>
 							<td><?php p($l->t('Server time')); ?>:</td>

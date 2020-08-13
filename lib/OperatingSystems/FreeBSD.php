@@ -22,12 +22,14 @@ declare(strict_types=1);
 
 namespace OCA\ServerInfo\OperatingSystems;
 
+use OCA\ServerInfo\Resources\Memory;
+
 /**
  * Class FreeBSD
  *
  * @package OCA\ServerInfo\OperatingSystems
  */
-class FreeBSD {
+class FreeBSD implements IOperatingSystem {
 
 	/**
 	 * @return bool
@@ -36,14 +38,8 @@ class FreeBSD {
 		return false;
 	}
 
-	/**
-	 * Get memory will return a list key => value where all values are in bytes.
-	 * [MemTotal => 0, MemFree => 0, MemAvailable => 0, SwapTotal => 0, SwapFree => 0].
-	 *
-	 * @return array
-	 */
-	public function getMemory(): array {
-		$data = ['MemTotal' => -1, 'MemFree' => -1, 'MemAvailable' => -1, 'SwapTotal' => -1, 'SwapFree' => -1];
+	public function getMemory(): Memory {
+		$data = new Memory();
 
 		try {
 			$swapinfo = $this->executeCommand('/usr/sbin/swapinfo -k');
@@ -56,8 +52,8 @@ class FreeBSD {
 
 		$result = preg_match_all($pattern, $swapinfo, $matches);
 		if ($result === 1) {
-			$data['SwapTotal'] = (int)$matches['Avail'][0];
-			$data['SwapFree'] = $data['SwapTotal'] - (int)$matches['Used'][0];
+			$data->setSwapTotal((int)$matches['Avail'][0]);
+			$data->setSwapFree($data->getSwapTotal() - (int)$matches['Used'][0]);
 		}
 
 		unset($matches, $result);
@@ -70,8 +66,8 @@ class FreeBSD {
 
 		$lines = explode("\n", $meminfo);
 		if (count($lines) > 4) {
-			$data['MemTotal'] = (int)$lines[0];
-			$data['MemAvailable'] = (int)$lines[1] * ((int)$lines[2] + (int)$lines[3] + (int)$lines[4]);
+			$data->setMemTotal((int)$lines[0]);
+			$data->setMemAvailable((int)$lines[1] * ((int)$lines[2] + (int)$lines[3] + (int)$lines[4]));
 		}
 
 		unset($lines);
@@ -79,12 +75,7 @@ class FreeBSD {
 		return $data;
 	}
 
-	/**
-	 * Get name of the processor
-	 *
-	 * @return string
-	 */
-	public function getCPUName(): string {
+	public function getCpuName(): string {
 		$data = 'Unknown Processor';
 
 		try {
@@ -116,11 +107,6 @@ class FreeBSD {
 		return $time;
 	}
 
-	/**
-	 * Get the total number of seconds the system has been up or -1 on failure.
-	 *
-	 * @return int
-	 */
 	public function getUptime(): int {
 		$uptime = -1;
 
