@@ -209,7 +209,7 @@ class DefaultOs implements IOperatingSystem {
 		}
 
 		$matches = [];
-		$pattern = '/^(?<Filesystem>[\w\/-]+)\s*(?<Type>\w+)\s*(?<Blocks>\d+)\s*(?<Used>\d+)\s*(?<Available>\d+)\s*(?<Capacity>\d+%)\s*(?<Mounted>[\w\/-]+)$/m';
+		$pattern = '/^(?<Filesystem>[\S]+)\s*(?<Type>\w+)\s*(?<Blocks>\d+)\s*(?<Used>\d+)\s*(?<Available>\d+)\s*(?<Capacity>\d+%)\s*(?<Mounted>[\w\/-]+)$/m';
 
 		$result = preg_match_all($pattern, $disks, $matches);
 		if ($result === 0 || $result === false) {
