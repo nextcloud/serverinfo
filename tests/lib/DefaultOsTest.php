@@ -171,6 +171,14 @@ class DefaultOsTest extends TestCase {
 				'percent' => '65%',
 				'mount' => '/home/vagrant/code',
 			],
+			[
+				'device' => 'nfs.example.com:/export',
+				'fs' => 'nfs4',
+				'used' => 0,
+				'available' => 1259520,
+				'percent' => '0%',
+				'mount' => '/nfs',
+			]
 		];
 
 		$this->assertSame($disks, $this->os->getDiskInfo());
