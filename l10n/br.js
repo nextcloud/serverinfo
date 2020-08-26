@@ -8,9 +8,11 @@ OC.L10N.register(
     "Not supported!" : "Diembreget eo ! ",
     "Press ⌘-C to copy." : "Pouezañ war ⌘-C evit eilañ. ",
     "Press Ctrl-C to copy." : "Pouezañ war Ctrl-C evit eilañ. ",
+    "System" : "Sistem",
     "Size" : "Ment",
     "Available" : "Vak",
     "Network" : "Rouedad",
+    "Hostname" : "Anv-ost",
     "Status" : "Stad",
     "Shares" : "Rannañ"
 },
