@@ -53,8 +53,8 @@ class FreeBSD implements IOperatingSystem {
 
 		$result = preg_match_all($pattern, $swapinfo, $matches);
 		if ($result === 1) {
-			$data->setSwapTotal((int)$matches['Avail'][0]);
-			$data->setSwapFree($data->getSwapTotal() - (int)$matches['Used'][0]);
+			$data->setSwapTotal((int)($matches['Avail'][0] / 1024));
+			$data->setSwapFree(($data->getSwapTotal() - (int)($matches['Used'][0]) / 1024));
 		}
 
 		unset($matches, $result);
@@ -67,8 +67,8 @@ class FreeBSD implements IOperatingSystem {
 
 		$lines = explode("\n", $meminfo);
 		if (count($lines) > 4) {
-			$data->setMemTotal((int)$lines[0]);
-			$data->setMemAvailable((int)$lines[1] * ((int)$lines[2] + (int)$lines[3] + (int)$lines[4]));
+			$data->setMemTotal((int)($lines[0] / 1024 / 1024));
+			$data->setMemAvailable((int)(($lines[1] * ($lines[2] + $lines[3] + $lines[4])) / 1024 / 1024));
 		}
 
 		unset($lines);
@@ -239,8 +239,8 @@ class FreeBSD implements IOperatingSystem {
 			$disk = new Disk();
 			$disk->setDevice($filesystem);
 			$disk->setFs($matches['Type'][$i]);
-			$disk->setUsed((int)$matches['Used'][$i] * 1024);
-			$disk->setAvailable((int)$matches['Available'][$i] * 1024);
+			$disk->setUsed((int)($matches['Used'][$i] / 1024));
+			$disk->setAvailable((int)($matches['Available'][$i] / 1024));
 			$disk->setPercent($matches['Capacity'][$i]);
 			$disk->setMount($matches['Mounted'][$i]);
 

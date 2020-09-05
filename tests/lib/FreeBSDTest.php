@@ -59,11 +59,11 @@ class FreeBSDTest extends TestCase {
 
 		$memory = $this->os->getMemory();
 
-		$this->assertEquals(68569628672, $memory->getMemTotal());
+		$this->assertEquals(65393, $memory->getMemTotal());
 		$this->assertEquals(-1, $memory->getMemFree());
-		$this->assertEquals(15809376256, $memory->getMemAvailable());
-		$this->assertEquals(3744300, $memory->getSwapTotal());
-		$this->assertEquals(3744300, $memory->getSwapFree());
+		$this->assertEquals(15076, $memory->getMemAvailable());
+		$this->assertEquals(3656, $memory->getSwapTotal());
+		$this->assertEquals(3656, $memory->getSwapFree());
 	}
 
 	public function testGetMemoryNoSwapinfo(): void {
@@ -79,9 +79,9 @@ class FreeBSDTest extends TestCase {
 
 		$memory = $this->os->getMemory();
 
-		$this->assertEquals(68569628672, $memory->getMemTotal());
+		$this->assertEquals(65393, $memory->getMemTotal());
 		$this->assertEquals(-1, $memory->getMemFree());
-		$this->assertEquals(15809376256, $memory->getMemAvailable());
+		$this->assertEquals(15076, $memory->getMemAvailable());
 		$this->assertEquals(-1, $memory->getSwapTotal());
 		$this->assertEquals(-1, $memory->getSwapFree());
 	}
