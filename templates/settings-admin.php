@@ -25,8 +25,8 @@ script('serverinfo', 'Chart.min');
 
 style('serverinfo', 'style');
 
-function FormatBytes($byte) {
-	$unim = ['B', 'KB', 'MB', 'GB', 'TB', 'PB'];
+function FormatMegabytes($byte) {
+	$unim = ['MB', 'GB', 'TB', 'PB'];
 	$count = 0;
 	while ($byte >= 1024) {
 		$count++;
@@ -66,7 +66,7 @@ $disks = $_['diskinfo'];
 						</tr>
 						<tr>
 							<td><?php p($l->t('Memory')); ?>:</td>
-							<td><?php p(FormatBytes($memory->getMemTotal())) ?></td>
+							<td><?php p(FormatMegabytes($memory->getMemTotal())) ?></td>
 						</tr>
 						<tr>
 							<td><?php p($l->t('Server time')); ?>:</td>
@@ -138,9 +138,9 @@ $disks = $_['diskinfo'];
 							<?php p($l->t('Filesystem')); ?> :
 							<span class="info"><?php p($disk->getFs()); ?></span><br>
 							<?php p($l->t('Size')); ?> :
-							<span class="info"><?php p(FormatBytes($disk->getUsed() + $disk->getAvailable())); ?></span><br>
+							<span class="info"><?php p(FormatMegabytes($disk->getUsed() + $disk->getAvailable())); ?></span><br>
 							<?php p($l->t('Available')); ?> :
-							<span class="info"><?php p(FormatBytes($disk->getAvailable())); ?></span><br>
+							<span class="info"><?php p(FormatMegabytes($disk->getAvailable())); ?></span><br>
 							<?php p($l->t('Used')); ?> :
 							<span class="info"><?php p($disk->getPercent()); ?></span><br>
 						</div>

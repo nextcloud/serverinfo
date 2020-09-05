@@ -58,11 +58,11 @@ class DefaultOsTest extends TestCase {
 
 		$memory = $this->os->getMemory();
 
-		$this->assertEquals(16330252 * 1024, $memory->getMemTotal());
-		$this->assertEquals(2443908 * 1024, $memory->getMemFree());
-		$this->assertEquals(7675276 * 1024, $memory->getMemAvailable());
-		$this->assertEquals(999420 * 1024, $memory->getSwapTotal());
-		$this->assertEquals(917756 * 1024, $memory->getSwapFree());
+		$this->assertEquals(15947, $memory->getMemTotal());
+		$this->assertEquals(2386, $memory->getMemFree());
+		$this->assertEquals(7495, $memory->getMemAvailable());
+		$this->assertEquals(975, $memory->getSwapTotal());
+		$this->assertEquals(896, $memory->getSwapFree());
 	}
 
 	public function testGetMemoryNoData(): void {
@@ -131,38 +131,38 @@ class DefaultOsTest extends TestCase {
 
 	public function testGetDiskInfo(): void {
 		$this->os->method('executeCommand')
-			->with('df -TP')
+			->with('df -TPk')
 			->willReturn(file_get_contents(__DIR__ . '/../data/df_tp'));
 
 		$disk1 = new Disk();
 		$disk1->setDevice('/dev/mapper/homestead--vg-root');
 		$disk1->setFs('ext4');
-		$disk1->setUsed(6354399232);
-		$disk1->setAvailable(48456929280);
+		$disk1->setUsed(6060);
+		$disk1->setAvailable(46212);
 		$disk1->setPercent('12%');
 		$disk1->setMount('/');
 
 		$disk2 = new Disk();
 		$disk2->setDevice('/dev/mapper/homestead--vg-mysql--master');
 		$disk2->setFs('ext4');
-		$disk2->setUsed(263385088);
-		$disk2->setAvailable(63388057600);
+		$disk2->setUsed(251);
+		$disk2->setAvailable(60451);
 		$disk2->setPercent('1%');
 		$disk2->setMount('/homestead-vg/master');
 
 		$disk3 = new Disk();
 		$disk3->setDevice('vagrant');
 		$disk3->setFs('vboxsf');
-		$disk3->setUsed(629587079168);
-		$disk3->setAvailable(351531044864);
+		$disk3->setUsed(600421);
+		$disk3->setAvailable(335246);
 		$disk3->setPercent('65%');
 		$disk3->setMount('/vagrant');
 
 		$disk4 = new Disk();
 		$disk4->setDevice('home_vagrant_code');
 		$disk4->setFs('vboxsf');
-		$disk4->setUsed(629587079168);
-		$disk4->setAvailable(351531044864);
+		$disk4->setUsed(600421);
+		$disk4->setAvailable(335246);
 		$disk4->setPercent('65%');
 		$disk4->setMount('/home/vagrant/code');
 
@@ -170,7 +170,7 @@ class DefaultOsTest extends TestCase {
 		$disk5->setDevice('nfs.example.com:/export');
 		$disk5->setFs('nfs4');
 		$disk5->setUsed(0);
-		$disk5->setAvailable(1259520);
+		$disk5->setAvailable(1);
 		$disk5->setPercent('0%');
 		$disk5->setMount('/nfs');
 
