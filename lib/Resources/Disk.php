@@ -49,18 +49,30 @@ class Disk {
 		$this->fs = $fs;
 	}
 
+	/**
+	 * @return int in MB
+	 */
 	public function getUsed(): int {
 		return $this->used;
 	}
 
+	/**
+	 * @param int $used in MB
+	 */
 	public function setUsed(int $used): void {
 		$this->used = $used;
 	}
 
+	/**
+	 * @return int in MB
+	 */
 	public function getAvailable(): int {
 		return $this->available;
 	}
 
+	/**
+	 * @param int $available in MB
+	 */
 	public function setAvailable(int $available): void {
 		$this->available = $available;
 	}
