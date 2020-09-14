@@ -22,6 +22,7 @@ OC.L10N.register(
     "Monitoring" : "Overvåker",
     "Provides useful server information, such as CPU load, RAM usage, disk usage, number of users, etc." : "Gir nyttig serverinformasjon, som CPU-belastning, RAM-bruk, diskbruk, antall brukere, ned mere.",
     "Size" : "Størrelse",
+    "Available" : "Tilgjengelig",
     "Files:" : "Filer:",
     "Hostname" : "Servernavn",
     "Status" : "Status",
