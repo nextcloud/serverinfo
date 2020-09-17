@@ -109,8 +109,8 @@ class Os implements IOperatingSystem {
 
 		foreach ($this->backend->getDiskInfo() as $disk) {
 			$data[] = [
-				round($disk->getUsed() / 1024 / 1024 / 1024, 1),
-				round($disk->getAvailable() / 1024 / 1024 / 1024, 1)
+				round($disk->getUsed() / 1024 , 1),
+				round($disk->getAvailable() / 1024, 1)
 			];
 		}
 
