@@ -41,26 +41,26 @@
 
 .info {
 	font-weight: bold;
-	color: var(--color-text-light);
 }
 
 .smallinfo {
-	color: var(--color-text-light);
-	font-size: 11px;
+	color: var(--color-text-maxcontrast);
 }
 
 .infobox {
 	display: flex;
 	flex-wrap: nowrap;
 	align-items: center;
+	padding: 16px;
+	margin: 16px 0;
+	background-color: var(--color-main-background);
+	border: 2px solid var(--color-border);
+	border-radius: var(--border-radius-large);
 
-	border: 1px solid var(--color-border);
-	padding: 15px;
-	margin: 15px 0;
-	color: var(--color-text-lighter);
-	background-color: var(--color-background-dark);
-	border-radius: 6px;
-	box-shadow: 1px 1px 9px 1px var(--color-box-shadow);
+	&.cpuSection,
+	&.memorySection {
+		padding: 16px 0 0 0;
+	}
 }
 
 .diskchart-container {
@@ -82,17 +82,7 @@
 	flex: 1 0 auto;
 }
 
-.infobox h2 {
-	color: #555;
-	font-size: 18px;
-	font-weight: bold;
-	padding: 5px;
-	margin: 0;
-}
-
 .infobox h3 {
-	color: #555;
-	font-size: 22px;
 	font-weight: bold;
 	padding: 5px 0 10px 0;
 	margin: 0;
@@ -208,7 +198,7 @@
 	min-width: 100%;
 }
 
-
+/*
 @media only screen and (max-width: 1200px) {
 	.col-xl-6 {
 		flex-basis: 50%;
@@ -244,3 +234,4 @@
 		min-width: 100%;
 	}
 }
+*/
