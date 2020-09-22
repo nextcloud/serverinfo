@@ -13,7 +13,7 @@ OC.L10N.register(
     "Mails" : "E-postalar",
     "Federated sent" : "Birleşik gönderilen",
     "Federated received" : "Birleşik alınan",
-    "Talk conversations" : "Sohbet görüşmeleri",
+    "Talk conversations" : "Talk görüşmeleri",
     "24 hours" : "24 saat",
     "1 hour" : "1 saat",
     "5 mins" : "5 dakika",
