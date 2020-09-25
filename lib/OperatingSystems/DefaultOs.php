@@ -129,9 +129,72 @@ class DefaultOs implements IOperatingSystem {
 	/**
 	 * @return string
 	 */
+	public function procExists($procName) {
+		exec("pgrep {$procName}", $output, $returnCode);
+
+		$pids = '';
+
+		# Just in case there are more Procs running
+		for ($i = 0, $size = count($output); $i < $size; ++$i)  {
+			if ($pids == '' || $pids == '&') {
+				$pids .= $output[$i];
+			} else {
+				$pids .= ', ' . $output[$i];
+			}
+		}
+
+		return array($pids, $returnCode);
+	}
+
+	/**
+	 * @return string
+	 */
 	public function getTimeServers() {
-		$servers = shell_exec('cat /etc/ntp.conf 2>/dev/null |grep  \'^pool\' | cut -f 2 -d " "');
-		$servers .= ' ' . shell_exec('cat /etc/systemd/timesyncd.conf 2>/dev/null |grep  \'^NTP=\' | cut -f 2 -d " "');
+		$ntpConf = "/etc/ntp.conf";
+		$timeConf = "/etc/systemd/timesyncd.conf";
+		$chronyConf = "/etc/chrony.conf";
+
+		$servers = '';
+
+		if (is_readable($ntpConf) && filesize($ntpConf) > 16 && !empty(trim(file_get_contents($ntpConf)))) {
+			list($pids, $returnCode) = procExists('ntpd');
+
+			if ($returnCode == 0 && $pids != NULL) {
+				preg_match_all("/^server(.*(?=iburst))|^pool(.*(?=iburst))/m", file_get_contents($ntpConf), $ntpMatches);
+
+				for ($i = 0, $size = count($ntpMatches['1']); $i < $size; ++$i)  {
+					$servers .= $ntpMatches['1'][$i];
+				}
+			}
+
+		}
+
+		if (is_readable($timeConf) && filesize($timeConf) > 16 && !empty(trim(file_get_contents($timeConf)))) {
+			list($pids, $returnCode) = procExists('systemd-timesyncd');
+
+			if ($returnCode == 0 && $pids != NULL) {
+				preg_match_all("/^NTP=(.*)/", file_get_contents($timeConf), $timeMatches);
+
+				for ($i = 0, $size = count($timeMatches['1']); $i < $size; ++$i)  {
+					$servers .= $timeMatches['1'][$i];
+				}
+			}
+
+		}
+
+		if (is_readable($chronyConf) && filesize($chronyConf) > 16 && !empty(trim(file_get_contents($chronyConf)))) {
+			list($pids, $returnCode) = procExists('chronyd');
+
+			if ($returnCode == 0 && $pids != NULL) {
+				preg_match_all("/^server(.*(?=iburst))|^pool(.*(?=iburst))/m", file_get_contents($chronyConf), $chronyMatches);
+
+				for ($i = 0, $size = count($chronyMatches['1']); $i < $size; ++$i)  {
+					$servers .= $chronyMatches['1'][$i];
+				}
+			}
+
+		}
+
 		return $servers;
 	}
 
