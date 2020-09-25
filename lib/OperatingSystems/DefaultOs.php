@@ -135,7 +135,7 @@ class DefaultOs implements IOperatingSystem {
 		$pids = '';
 
 		# Just in case there are more Procs running
-		for ($i = 0, $size = count($output); $i < $size; ++$i)  {
+		for ($i = 0, $size = count($output); $i < $size; ++$i) {
 			if ($pids == '' || $pids == '&') {
 				$pids .= $output[$i];
 			} else {
@@ -162,7 +162,7 @@ class DefaultOs implements IOperatingSystem {
 			if ($returnCode == 0 && $pids != NULL) {
 				preg_match_all("/^server(.*(?=iburst))|^pool(.*(?=iburst))/m", file_get_contents($ntpConf), $ntpMatches);
 
-				for ($i = 0, $size = count($ntpMatches['1']); $i < $size; ++$i)  {
+				for ($i = 0, $size = count($ntpMatches['1']); $i < $size; ++$i) {
 					$servers .= $ntpMatches['1'][$i];
 				}
 			}
@@ -175,7 +175,7 @@ class DefaultOs implements IOperatingSystem {
 			if ($returnCode == 0 && $pids != NULL) {
 				preg_match_all("/^NTP=(.*)/", file_get_contents($timeConf), $timeMatches);
 
-				for ($i = 0, $size = count($timeMatches['1']); $i < $size; ++$i)  {
+				for ($i = 0, $size = count($timeMatches['1']); $i < $size; ++$i) {
 					$servers .= $timeMatches['1'][$i];
 				}
 			}
@@ -188,7 +188,7 @@ class DefaultOs implements IOperatingSystem {
 			if ($returnCode == 0 && $pids != NULL) {
 				preg_match_all("/^server(.*(?=iburst))|^pool(.*(?=iburst))/m", file_get_contents($chronyConf), $chronyMatches);
 
-				for ($i = 0, $size = count($chronyMatches['1']); $i < $size; ++$i)  {
+				for ($i = 0, $size = count($chronyMatches['1']); $i < $size; ++$i) {
 					$servers .= $chronyMatches['1'][$i];
 				}
 			}
