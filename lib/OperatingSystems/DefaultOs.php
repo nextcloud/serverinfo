@@ -23,6 +23,7 @@ namespace OCA\ServerInfo\OperatingSystems;
 use OCA\ServerInfo\Resources\Disk;
 use OCA\ServerInfo\Resources\Memory;
 
+<<<<<<< HEAD
 class DefaultOs implements IOperatingSystem
 {
 
@@ -311,4 +312,284 @@ class DefaultOs implements IOperatingSystem
         }
         return $output;
     }
+=======
+class DefaultOs implements IOperatingSystem {
+
+	/**
+	 * @return bool
+	 */
+	public function supported(): bool {
+		return true;
+	}
+
+	public function getMemory(): Memory {
+		$data = new Memory();
+
+		try {
+			$meminfo = $this->readContent('/proc/meminfo');
+		} catch (\RuntimeException $e) {
+			return $data;
+		}
+
+		$matches = [];
+		$pattern = '/(?<Key>(?:MemTotal|MemFree|MemAvailable|SwapTotal|SwapFree)+):\s+(?<Value>\d+)\s+(?<Unit>\w{2})/';
+
+		$result = preg_match_all($pattern, $meminfo, $matches);
+		if ($result === 0 || $result === false) {
+			return $data;
+		}
+
+		foreach ($matches['Key'] as $i => $key) {
+			// Value is always in KB: https://github.com/torvalds/linux/blob/c70672d8d316ebd46ea447effadfe57ab7a30a50/fs/proc/meminfo.c#L58-L60
+			$value = (int)($matches['Value'][$i] / 1024);
+
+			switch ($key) {
+				case 'MemTotal':
+					$data->setMemTotal($value);
+					break;
+				case 'MemFree':
+					$data->setMemFree($value);
+					break;
+				case 'MemAvailable':
+					$data->setMemAvailable($value);
+					break;
+				case 'SwapTotal':
+					$data->setSwapTotal($value);
+					break;
+				case 'SwapFree':
+					$data->setSwapFree($value);
+					break;
+			}
+		}
+
+		return $data;
+	}
+
+	public function getCpuName(): string {
+		$data = 'Unknown Processor';
+
+		try {
+			$cpuinfo = $this->readContent('/proc/cpuinfo');
+		} catch (\RuntimeException $e) {
+			return $data;
+		}
+
+		$matches = [];
+		$pattern = '/model name\s:\s(.+)/';
+
+		$result = preg_match_all($pattern, $cpuinfo, $matches);
+		if ($result === 0 || $result === false) {
+			return $data;
+		}
+
+		$model = $matches[1][0];
+		$cores = count($matches[1]);
+
+		if ($cores === 1) {
+			$data = $model . ' (1 core)';
+		} else {
+			$data = $model . ' (' . $cores . ' cores)';
+		}
+
+		return $data;
+	}
+
+	/**
+	 * @return string
+	 */
+	public function getTime() {
+		$uptime = shell_exec('date');
+		return $uptime;
+	}
+
+	public function getUptime(): int {
+		$data = -1;
+
+		try {
+			$uptime = $this->readContent('/proc/uptime');
+		} catch (\RuntimeException $e) {
+			return $data;
+		}
+
+		[$uptimeInSeconds,] = array_map('intval', explode(' ', $uptime));
+
+		return $uptimeInSeconds;
+	}
+
+	/**
+	 * @return string
+	 */
+	public function procExists($procName) {
+		exec("pgrep {$procName}", $output, $returnCode);
+
+		$pids = '';
+
+		# Just in case there are more Procs running
+		for ($i = 0, $size = count($output); $i < $size; ++$i) {
+			if ($pids == '' || $pids == '&') {
+				$pids .= $output[$i];
+			} else {
+				$pids .= ', ' . $output[$i];
+			}
+		}
+
+		return array($pids, $returnCode);
+	}
+
+	/**
+	 * @return string
+	 */
+	public function getTimeServers() {
+		$ntpConf = "/etc/ntp.conf";
+		$timeConf = "/etc/systemd/timesyncd.conf";
+		$chronyConf = "/etc/chrony.conf";
+
+		$servers = '';
+
+		if (is_readable($ntpConf) && filesize($ntpConf) > 16 && !empty(trim(file_get_contents($ntpConf)))) {
+			list($pids, $returnCode) = procExists('ntpd');
+
+			if ($returnCode == 0 && $pids != NULL) {
+				preg_match_all("/^server(.*(?=iburst))|^pool(.*(?=iburst))/m", file_get_contents($ntpConf), $ntpMatches);
+
+				for ($i = 0, $size = count($ntpMatches['1']); $i < $size; ++$i) {
+					$servers .= $ntpMatches['1'][$i];
+				}
+			}
+
+		}
+
+		if (is_readable($timeConf) && filesize($timeConf) > 16 && !empty(trim(file_get_contents($timeConf)))) {
+			list($pids, $returnCode) = procExists('systemd-timesyncd');
+
+			if ($returnCode == 0 && $pids != NULL) {
+				preg_match_all("/^NTP=(.*)/", file_get_contents($timeConf), $timeMatches);
+
+				for ($i = 0, $size = count($timeMatches['1']); $i < $size; ++$i) {
+					$servers .= $timeMatches['1'][$i];
+				}
+			}
+
+		}
+
+		if (is_readable($chronyConf) && filesize($chronyConf) > 16 && !empty(trim(file_get_contents($chronyConf)))) {
+			list($pids, $returnCode) = procExists('chronyd');
+
+			if ($returnCode == 0 && $pids != NULL) {
+				preg_match_all("/^server(.*(?=iburst))|^pool(.*(?=iburst))/m", file_get_contents($chronyConf), $chronyMatches);
+
+				for ($i = 0, $size = count($chronyMatches['1']); $i < $size; ++$i) {
+					$servers .= $chronyMatches['1'][$i];
+				}
+			}
+
+		}
+
+		return $servers;
+	}
+
+	/**
+	 * @return string
+	 */
+	public function getNetworkInfo() {
+		$result = [];
+		$result['hostname'] = \gethostname();
+		$dns = shell_exec('cat /etc/resolv.conf |grep -i \'^nameserver\'|head -n1|cut -d \' \' -f2');
+		$result['dns'] = $dns;
+		$gw = shell_exec('ip route | awk \'/default/ { print $3 }\'');
+		$result['gateway'] = $gw;
+		return $result;
+	}
+
+	/**
+	 * @return string
+	 */
+	public function getNetworkInterfaces() {
+		$interfaces = glob('/sys/class/net/*');
+		$result = [];
+
+		foreach ($interfaces as $interface) {
+			$iface              = [];
+			$iface['interface'] = basename($interface);
+			$iface['mac']       = shell_exec('ip addr show dev ' . $iface['interface'] . ' | grep "link/ether " | cut -d \' \' -f 6  | cut -f 1 -d \'/\'');
+			$iface['ipv4']      = shell_exec('ip addr show dev ' . $iface['interface'] . ' | grep "inet " | cut -d \' \' -f 6  | cut -f 1 -d \'/\'');
+			$iface['ipv6']      = shell_exec('ip -o -6 addr show ' . $iface['interface'] . ' | sed -e \'s/^.*inet6 \([^ ]\+\).*/\1/\'');
+			if ($iface['interface'] !== 'lo') {
+				$iface['status'] = shell_exec('cat /sys/class/net/' . $iface['interface'] . '/operstate');
+				$iface['speed']  = shell_exec('cat /sys/class/net/' . $iface['interface'] . '/speed');
+				if ($iface['speed'] !== '') {
+					$iface['speed'] = $iface['speed'] . 'Mbps';
+				} else {
+					$iface['speed'] = 'unknown';
+				}
+
+				$duplex = shell_exec('cat /sys/class/net/' . $iface['interface'] . '/duplex');
+				if ($duplex !== '') {
+					$iface['duplex'] = 'Duplex: ' . $duplex;
+				} else {
+					$iface['duplex'] = '';
+				}
+			} else {
+				$iface['status'] = 'up';
+				$iface['speed']  = 'unknown';
+				$iface['duplex'] = '';
+			}
+			$result[] = $iface;
+		}
+
+		return $result;
+	}
+
+	public function getDiskInfo(): array {
+		$data = [];
+
+		try {
+			$disks = $this->executeCommand('df -TPk');
+		} catch (\RuntimeException $e) {
+			return $data;
+		}
+
+		$matches = [];
+		$pattern = '/^(?<Filesystem>[\S]+)\s*(?<Type>\w+)\s*(?<Blocks>\d+)\s*(?<Used>\d+)\s*(?<Available>\d+)\s*(?<Capacity>\d+%)\s*(?<Mounted>[\w\/-]+)$/m';
+
+		$result = preg_match_all($pattern, $disks, $matches);
+		if ($result === 0 || $result === false) {
+			return $data;
+		}
+
+		foreach ($matches['Filesystem'] as $i => $filesystem) {
+			if (in_array($matches['Type'][$i], ['tmpfs', 'devtmpfs'], false)) {
+				continue;
+			}
+
+			$disk = new Disk();
+			$disk->setDevice($filesystem);
+			$disk->setFs($matches['Type'][$i]);
+			$disk->setUsed((int)($matches['Used'][$i] / 1024));
+			$disk->setAvailable((int)($matches['Available'][$i] / 1024));
+			$disk->setPercent($matches['Capacity'][$i]);
+			$disk->setMount($matches['Mounted'][$i]);
+
+			$data[] = $disk;
+		}
+
+		return $data;
+	}
+
+	protected function readContent(string $filename): string {
+		$data = @file_get_contents($filename);
+		if ($data === false || $data === '') {
+			throw new \RuntimeException('Unable to read: "' . $filename . '"');
+		}
+		return $data;
+	}
+
+	protected function executeCommand(string $command): string {
+		$output = @shell_exec(escapeshellcmd($command));
+		if ($output === null || $output === '') {
+			throw new \RuntimeException('No output for command: "' . $command . '"');
+		}
+		return $output;
+	}
+>>>>>>> parent of ad12758... Update DefaultOs.php
 }
