@@ -143,7 +143,7 @@ class DefaultOs implements IOperatingSystem {
 			}
 		}
 
-		return array($pids, $returnCode);
+		return [$pids, $returnCode];
 	}
 
 	/**
@@ -159,7 +159,7 @@ class DefaultOs implements IOperatingSystem {
 		if (is_readable($ntpConf) && filesize($ntpConf) > 16 && !empty(trim(file_get_contents($ntpConf)))) {
 			list($pids, $returnCode) = procExists('ntpd');
 
-			if ($returnCode == 0 && $pids != NULL) {
+			if ($returnCode == 0 && $pids != null) {
 				preg_match_all("/^server(.*(?=iburst))|^pool(.*(?=iburst))/m", file_get_contents($ntpConf), $ntpMatches);
 
 				for ($i = 0, $size = count($ntpMatches['1']); $i < $size; ++$i) {
@@ -172,7 +172,7 @@ class DefaultOs implements IOperatingSystem {
 		if (is_readable($timeConf) && filesize($timeConf) > 16 && !empty(trim(file_get_contents($timeConf)))) {
 			list($pids, $returnCode) = procExists('systemd-timesyncd');
 
-			if ($returnCode == 0 && $pids != NULL) {
+			if ($returnCode == 0 && $pids != null) {
 				preg_match_all("/^NTP=(.*)/", file_get_contents($timeConf), $timeMatches);
 
 				for ($i = 0, $size = count($timeMatches['1']); $i < $size; ++$i) {
@@ -185,7 +185,7 @@ class DefaultOs implements IOperatingSystem {
 		if (is_readable($chronyConf) && filesize($chronyConf) > 16 && !empty(trim(file_get_contents($chronyConf)))) {
 			list($pids, $returnCode) = procExists('chronyd');
 
-			if ($returnCode == 0 && $pids != NULL) {
+			if ($returnCode == 0 && $pids != null) {
 				preg_match_all("/^server(.*(?=iburst))|^pool(.*(?=iburst))/m", file_get_contents($chronyConf), $chronyMatches);
 
 				for ($i = 0, $size = count($chronyMatches['1']); $i < $size; ++$i) {
