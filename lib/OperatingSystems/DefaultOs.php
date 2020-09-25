@@ -135,10 +135,7 @@ class DefaultOs implements IOperatingSystem {
 		$pids = '';
 
 		# Just in case there are more Procs running
-<<<<<<< HEAD
 		for ($i = 0, $size = count($output); $i < $size; ++$i) {
-=======
-		for ($i = 0, $size = count($output); $i < $size; ++$i)  {
 			if ($pids == '' || $pids == '&') {
 				$pids .= $output[$i];
 			} else {
