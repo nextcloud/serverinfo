@@ -200,7 +200,6 @@ class DefaultOs implements IOperatingSystem
                 }
             }
         }
-
         return $servers;
     }
 
