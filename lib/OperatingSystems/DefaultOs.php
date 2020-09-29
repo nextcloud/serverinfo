@@ -166,8 +166,12 @@ class DefaultOs implements IOperatingSystem {
 					$servers .= $ntpMatches['1'][$i];
 				}
 			}
+<<<<<<< HEAD
 
     }
+=======
+		}
+>>>>>>> fixed styling
 
 		if (is_readable($timeConf) && filesize($timeConf) > 16 && !empty(trim(file_get_contents($timeConf)))) {
 			list($pids, $returnCode) = procExists('systemd-timesyncd');
@@ -191,9 +195,7 @@ class DefaultOs implements IOperatingSystem {
 					$servers .= $chronyMatches['1'][$i];
 				}
 			}
-
 		}
-
 		return $servers;
 	}
 
