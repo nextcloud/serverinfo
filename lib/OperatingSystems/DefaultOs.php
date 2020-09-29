@@ -130,7 +130,7 @@ class DefaultOs implements IOperatingSystem {
 	 * @return string
 	 */
 	public function procExists($procName) {
-		exec("pgrep {$procName}", $output, $returnCode);
+		$this->executeCommand("pgrep {$procName}", $output, $returnCode);
 
 		$pids = '';
 
