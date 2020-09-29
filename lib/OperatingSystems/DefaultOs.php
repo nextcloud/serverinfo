@@ -167,7 +167,7 @@ class DefaultOs implements IOperatingSystem {
 				}
 			}
 
-		}
+    }
 
 		if (is_readable($timeConf) && filesize($timeConf) > 16 && !empty(trim(file_get_contents($timeConf)))) {
 			list($pids, $returnCode) = procExists('systemd-timesyncd');
@@ -179,7 +179,6 @@ class DefaultOs implements IOperatingSystem {
 					$servers .= $timeMatches['1'][$i];
 				}
 			}
-
 		}
 
 		if (is_readable($chronyConf) && filesize($chronyConf) > 16 && !empty(trim(file_get_contents($chronyConf)))) {
@@ -301,5 +300,4 @@ class DefaultOs implements IOperatingSystem {
 		}
 		return $output;
 	}
->>>>>>> parent of ad12758... Update DefaultOs.php
 }
