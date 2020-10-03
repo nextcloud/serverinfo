@@ -54,7 +54,7 @@ class FreeBSD implements IOperatingSystem {
 		$result = preg_match_all($pattern, $swapinfo, $matches);
 		if ($result === 1) {
 			$data->setSwapTotal((int)($matches['Avail'][0] / 1024));
-			$data->setSwapFree((int)($data->getSwapTotal() - (int)($matches['Used'][0]) / 1024));
+			$data->setSwapFree(($data->getSwapTotal() - (int)($matches['Used'][0] / 1024)));
 		}
 
 		unset($matches, $result);
