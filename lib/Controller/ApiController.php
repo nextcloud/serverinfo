@@ -115,12 +115,10 @@ class ApiController extends OCSController {
 	public function BasicData(): DataResponse {
 		$servertime  = $this->os->getTime();
 		$uptime      = $this->formatUptime($this->os->getUptime());
-		$timeservers = $this->os->getTimeServers()[0];
 
 		return new DataResponse([
 			'servertime' => $servertime,
-			'uptime' => $uptime,
-			'timeservers' => $timeservers
+			'uptime' => $uptime
 		]);
 	}
 

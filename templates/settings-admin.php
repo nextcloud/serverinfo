@@ -76,10 +76,6 @@ $disks = $_['diskinfo'];
 							<td><?php p($l->t('Uptime')); ?>:</td>
 							<td><span class="info" id="uptime"></span></td>
 						</tr>
-						<tr>
-							<td><?php p($l->t('Time Servers')); ?>:</td>
-							<td><span class="info" id="timeservers"></span></td>
-						</tr>
 						</tbody>
 					</table>
 				</div>
