@@ -43,28 +43,13 @@ class PhpStatistics {
 
 	public function getPhpStatistics() {
 		return [
-			'version' => $this->cleanVersion(PHP_VERSION),
+			'version' => PHP_MAJOR_VERSION . '.' . PHP_MINOR_VERSION . '.' . PHP_RELEASE_VERSION,
 			'memory_limit' => $this->phpIni->getBytes('memory_limit'),
 			'max_execution_time' => $this->phpIni->getNumeric('max_execution_time'),
 			'upload_max_filesize' => $this->phpIni->getBytes('upload_max_filesize'),
 			'opcache' => $this->getOPcacheStatus(),
 			'apcu' => $this->getAPCuStatus(),
 		];
-	}
-
-	/**
-	 * Try to strip away additional information
-	 *
-	 * @param string $version E.g. `5.5.30-1+deb.sury.org~trusty+1`
-	 * @return string `5.5.30`
-	 */
-	protected function cleanVersion($version) {
-		$matches = [];
-		preg_match('/^(\d+)(\.\d+)(\.\d+)/', $version, $matches);
-		if (isset($matches[0])) {
-			return $matches[0];
-		}
-		return $version;
 	}
 
 	/**
