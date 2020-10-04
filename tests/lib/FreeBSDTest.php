@@ -54,7 +54,7 @@ class FreeBSDTest extends TestCase {
 		$this->os->method('executeCommand')
 			->willReturnMap([
 				['/usr/sbin/swapinfo -k', file_get_contents(__DIR__ . '/../data/freebsd_swapinfo')],
-				['/sbin/sysctl -n hw.physmem hw.pagesize vm.stats.vm.v_inactive_count vm.stats.vm.v_cache_count vm.stats.vm.v_free_count', file_get_contents(__DIR__ . '/../data/freebsd_meminfo')],
+				['/sbin/sysctl -n hw.realmem hw.pagesize vm.stats.vm.v_inactive_count vm.stats.vm.v_cache_count vm.stats.vm.v_free_count', file_get_contents(__DIR__ . '/../data/freebsd_meminfo')],
 			]);
 
 		$memory = $this->os->getMemory();
@@ -72,7 +72,7 @@ class FreeBSDTest extends TestCase {
 				if ($command === '/usr/sbin/swapinfo -k') {
 					throw new \RuntimeException('No output for command: /usr/sbin/swapinfo');
 				}
-				if ($command === '/sbin/sysctl -n hw.physmem hw.pagesize vm.stats.vm.v_inactive_count vm.stats.vm.v_cache_count vm.stats.vm.v_free_count') {
+				if ($command === '/sbin/sysctl -n hw.realmem hw.pagesize vm.stats.vm.v_inactive_count vm.stats.vm.v_cache_count vm.stats.vm.v_free_count') {
 					return file_get_contents(__DIR__ . '/../data/freebsd_meminfo');
 				}
 			});
