@@ -437,7 +437,6 @@
 					var data = response.ocs.data;
 					document.getElementById("servertime").innerHTML = data.servertime;
 					document.getElementById("uptime").innerHTML = data.uptime;
-					document.getElementById("timeservers").innerHTML = data.timeservers;
 				},
 				error: function (data) {
 					console.log(data);

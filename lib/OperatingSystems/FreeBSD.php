@@ -125,22 +125,6 @@ class FreeBSD implements IOperatingSystem {
 	/**
 	 * @return string
 	 */
-	public function getTimeServers() {
-		$servers = " ";
-
-		try {
-			$servers = $this->executeCommand('cat /etc/ntp.conf 2>/dev/null');
-			preg_match_all("/(?<=^pool ).\S*/m", $servers, $matches);
-			$allservers = implode(' ', $matches[0]);
-		} catch (\RuntimeException $e) {
-			return $servers;
-		}
-		return $allservers;
-	}
-
-	/**
-	 * @return string
-	 */
 	public function getNetworkInfo() {
 		$result = [];
 		$result['hostname'] = \gethostname();

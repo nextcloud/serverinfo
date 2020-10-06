@@ -83,14 +83,6 @@ class Os implements IOperatingSystem {
 		return $this->backend->getUptime();
 	}
 
-	/**
-	 * @return string
-	 */
-	public function getTimeServers() {
-		$data = $this->backend->getTimeServers();
-		return explode("\n", $data);
-	}
-
 	public function getDiskInfo(): array {
 		return $this->backend->getDiskInfo();
 	}
