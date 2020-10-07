@@ -90,17 +90,17 @@ class ShareStatistics {
 
 	/**
 	 * @param int $type
-	 * @param bool $noShareWith
+	 * @param bool $noPassword
 	 * @return int
 	 */
-	protected function countShares($type, $noShareWith = false) {
+	protected function countShares($type, $noPassword = false) {
 		$query = $this->connection->getQueryBuilder();
 		$query->selectAlias($query->createFunction('COUNT(*)'), 'num_entries')
 			->from('share')
 			->where($query->expr()->eq('share_type', $query->createNamedParameter($type)));
 
-		if ($noShareWith) {
-			$query->andWhere($query->expr()->isNull('share_with'));
+		if ($noPassword) {
+			$query->andWhere($query->expr()->isNull('password'));
 		}
 
 		$result = $query->execute();
