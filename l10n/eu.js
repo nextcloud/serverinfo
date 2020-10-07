@@ -31,7 +31,6 @@ OC.L10N.register(
     "Memory" : "Memoria",
     "Server time" : "Zerbitzariaren ordua",
     "Uptime" : "Denbora aktibo",
-    "Time Servers" : "Denbora-zerbitzariak",
     "Load" : "Karga",
     "Disk" : "Diskoa",
     "Mount" : "Muntatzea",
@@ -66,6 +65,7 @@ OC.L10N.register(
     "External monitoring tool" : "Kanpo jarraipen tresna",
     "You can connect an external monitoring tool by using this end point:" : " Kanpoko kontrol-tresna konektatu daiteke amaiera-puntu hau erabiliz:",
     "Appending \"?format=json\" at the end of the URL gives you the result in JSON." : "URL-aren amaieran \"?format=json\" eransteak emaitza JSON-en ematen du.",
+    "Time Servers" : "Denbora-zerbitzariak",
     "Did you know?" : "Ba al zenekien?",
     "Appending \"?format=json\" at the end of the URL gives you the result in JSON format!" : "URLaren amaieran \"?format=json\" eransteak emaitza JSON formatuan ematen du!"
 },

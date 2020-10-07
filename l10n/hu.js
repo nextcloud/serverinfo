@@ -30,7 +30,6 @@ OC.L10N.register(
     "CPU" : "CPU",
     "Memory" : "Memória",
     "Server time" : "Kiszolgáló idő",
-    "Time Servers" : "Időkiszolgálók",
     "Load" : "Terhelés",
     "Disk" : "Lemez",
     "Mount" : "Csatolás",
@@ -65,6 +64,7 @@ OC.L10N.register(
     "External monitoring tool" : "Külső monitorozó eszköz",
     "You can connect an external monitoring tool by using this end point:" : "Ennek a végpontnak a használatával külső monitorozó eszközt csatlakoztathatsz:",
     "Appending \"?format=json\" at the end of the URL gives you the result in JSON." : "Az URL végéhez \"?format=json\" hozzáfűzésével az eredményt JSON formátumban kapod meg!",
+    "Time Servers" : "Időkiszolgálók",
     "Did you know?" : "Tudtad?",
     "Appending \"?format=json\" at the end of the URL gives you the result in JSON format!" : "Az URL végéhez \"?format=json\" hozzáfűzésével az eredményt JSON formátumban kapod meg!"
 },

@@ -31,7 +31,6 @@ OC.L10N.register(
     "Memory" : "Vinnsluminni",
     "Server time" : "Tími á þjóni",
     "Uptime" : "Keyrslutími",
-    "Time Servers" : "Tímaþjónar",
     "Load" : "Hlaða inn",
     "Disk" : "Diskur",
     "Mount" : "Tengja í skráarkerfi",
@@ -66,6 +65,7 @@ OC.L10N.register(
     "External monitoring tool" : "Utanaðkomandi vöktunartól",
     "You can connect an external monitoring tool by using this end point:" : "Þú getur tengt utanaðkomandi vöktunartól með því að nota þennan endapunkt: ",
     "Appending \"?format=json\" at the end of the URL gives you the result in JSON." : "Að með því að bæta \"?format=json\" við enda URL-slóðar, muntu fá niðurstöðurnar á JSON-sniði.",
+    "Time Servers" : "Tímaþjónar",
     "Did you know?" : "Vissirðu?",
     "Appending \"?format=json\" at the end of the URL gives you the result in JSON format!" : "Að með því að bæta \"?format=json\" við enda URL-slóðar, muntu fá niðurstöðurnar á JSON-sniði!"
 },
