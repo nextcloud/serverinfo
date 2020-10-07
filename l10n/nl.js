@@ -31,7 +31,6 @@ OC.L10N.register(
     "Memory" : "Geheugen",
     "Server time" : "Servertijd",
     "Uptime" : "Uptime",
-    "Time Servers" : "Tijdservers",
     "Load" : "Belasting",
     "Disk" : "Schijf",
     "Mount" : "Koppeling",
@@ -66,6 +65,7 @@ OC.L10N.register(
     "External monitoring tool" : "Externe monitoring tool",
     "You can connect an external monitoring tool by using this end point:" : "Je kunt een externe monitor-tool verbinden door dit end point te gebruiken:",
     "Appending \"?format=json\" at the end of the URL gives you the result in JSON." : "Wanneer je \"?format=json\" toevoegt aan het einde van de URL ontvang je het resultaat in JSON",
+    "Time Servers" : "Tijdservers",
     "Did you know?" : "Wist je dat?",
     "Appending \"?format=json\" at the end of the URL gives you the result in JSON format!" : "Door \"?format=json\" aan het eind van de URL te zetten, krijg je het resultaat in JSON formaat!"
 },

@@ -31,7 +31,6 @@ OC.L10N.register(
     "Memory" : "Pamäť",
     "Server time" : "Čas servera",
     "Uptime" : "Doba behu",
-    "Time Servers" : "Servery času",
     "Load" : "Záťaž",
     "Disk" : "Disk",
     "Mount" : "Prípojný bod",
@@ -66,6 +65,7 @@ OC.L10N.register(
     "External monitoring tool" : "Externý sledovací nástroj",
     "You can connect an external monitoring tool by using this end point:" : "Pre pripojenie externého sledovacieho nástroja použite tento koncový bod:",
     "Appending \"?format=json\" at the end of the URL gives you the result in JSON." : "Ak na koniec adresy URL pridáte „?format = json“, získate výsledok v JSON.",
+    "Time Servers" : "Servery času",
     "Did you know?" : "Vedeli ste?",
     "Appending \"?format=json\" at the end of the URL gives you the result in JSON format!" : "Pridaním \"?format=json\" na koniec URL získate výsledok vo formáte JSON!"
 },

@@ -31,7 +31,6 @@ OC.L10N.register(
     "Memory" : "Speicher",
     "Server time" : "Server-Zeit",
     "Uptime" : "Betriebszeit",
-    "Time Servers" : "Zeitserver",
     "Load" : "Auslastung",
     "Disk" : "Disk",
     "Mount" : "Mount",
@@ -66,6 +65,7 @@ OC.L10N.register(
     "External monitoring tool" : "Externes Überwachungsprogramm",
     "You can connect an external monitoring tool by using this end point:" : "Durch Verwendung des folgenden Zugangspunktes kann ein externes Überwachungsprogramm verwendet werden: ",
     "Appending \"?format=json\" at the end of the URL gives you the result in JSON." : "Wenn Sie \"?format=json\" am Ende der URL anhängen, erhalten Sie das Ergebnis in JSON.",
+    "Time Servers" : "Zeitserver",
     "Did you know?" : "Wussten Sie schon?",
     "Appending \"?format=json\" at the end of the URL gives you the result in JSON format!" : "Das Anhängen von \"?format=json\" am Ende der URL liefert Ihnen das Ergebnis im JSON-Format!"
 },

@@ -31,7 +31,6 @@ OC.L10N.register(
     "Memory" : "Память",
     "Server time" : "Серверное время",
     "Uptime" : "Время работы",
-    "Time Servers" : "Серверы времени",
     "Load" : "Нагрузка",
     "Disk" : "Диск",
     "Mount" : "Монтирование",
@@ -66,6 +65,7 @@ OC.L10N.register(
     "External monitoring tool" : "Внешний мониторинг",
     "You can connect an external monitoring tool by using this end point:" : "Вы можете подключить внешний мониторинг используя этот адрес:",
     "Appending \"?format=json\" at the end of the URL gives you the result in JSON." : "Если к строке URL добавить «?format=json», то ответ сервера будет в формате JSON.",
+    "Time Servers" : "Серверы времени",
     "Did you know?" : "Совет:",
     "Appending \"?format=json\" at the end of the URL gives you the result in JSON format!" : "Если к строке URL добавить «?format=json», то ответ сервера будет в формате JSON."
 },
