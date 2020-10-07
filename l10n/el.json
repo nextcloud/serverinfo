@@ -29,7 +29,6 @@
     "Memory" : "Μνήμη",
     "Server time" : "Ώρα διακομιστή",
     "Uptime" : "Διάρκεια λειτουργίας",
-    "Time Servers" : "Διακομιστές Χρόνου",
     "Load" : "Χρήση",
     "Disk" : "Δίσκος",
     "Mount" : "Σύνδεση",
@@ -64,6 +63,7 @@
     "External monitoring tool" : "Εξωτερικό εργαλείο παρακολούθησης",
     "You can connect an external monitoring tool by using this end point:" : "Συνδεθείτε σε εξωτερικό εργαλείο παρακολούθησης με χρήση αυτού του σημείου:",
     "Appending \"?format=json\" at the end of the URL gives you the result in JSON." : "Προσθέτοντας το \"?format=json\" στο τέλος των URL σας δίνει αποτέλεσμα σε JSON!",
+    "Time Servers" : "Διακομιστές Χρόνου",
     "Did you know?" : "Γνωρίζεται?",
     "Appending \"?format=json\" at the end of the URL gives you the result in JSON format!" : "Προσθέτοντας το \"?format=json\" στο τέλος των URL σας δίνει αποτέλεσμα σε μορφή JSON!"
 },"pluralForm" :"nplurals=2; plural=(n != 1);"
