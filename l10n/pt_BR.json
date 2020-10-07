@@ -29,7 +29,6 @@
     "Memory" : "Memória",
     "Server time" : "Hora do servidor",
     "Uptime" : "Tempo ativo",
-    "Time Servers" : "Servidores de Horário",
     "Load" : "Carregar",
     "Disk" : "Disco",
     "Mount" : "Montar",
@@ -64,6 +63,7 @@
     "External monitoring tool" : "Ferramenta de monitoramento externo",
     "You can connect an external monitoring tool by using this end point:" : "Você pode conectar uma ferramenta de monitoramento externa usando este ponto final:",
     "Appending \"?format=json\" at the end of the URL gives you the result in JSON." : "Adicionar \"?format=json\" no final da URL dá a você o resultado em JSON.",
+    "Time Servers" : "Servidores de Horário",
     "Did you know?" : "Você sabia?",
     "Appending \"?format=json\" at the end of the URL gives you the result in JSON format!" : "Acrescentar \"?format=json\" no final da URL fornece o resultado no formato JSON!"
 },"pluralForm" :"nplurals=2; plural=(n > 1);"
