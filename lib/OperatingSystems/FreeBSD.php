@@ -184,8 +184,13 @@ class FreeBSD implements IOperatingSystem {
 				preg_match("/(?<=\<).*(?=-)/m", $intface, $duplex);
 
 				$iface['mac'] = implode(' ', $mac[0]);
-				$iface['status'] = $status[0];
 				$iface['speed']  = $speed[0];
+
+				if ($status[0] !== null) {
+					$iface['status'] = $status[0];
+				} else {
+					$iface['status'] = 'active';
+				}
 
 				if ($iface['speed'] !== null) {
 					if (strpos($iface['speed'], 'G')) {
