@@ -187,7 +187,7 @@ class FreeBSD implements IOperatingSystem {
 				$iface['status'] = $status[0];
 				$iface['speed']  = $speed[0];
 
-				if ($iface['speed'] !== '') {
+				if ($iface['speed'] !== null) {
 					if (strpos($iface['speed'], 'G')) {
 						$iface['speed'] = rtrim($iface['speed'], 'G');
 						$iface['speed'] = $iface['speed'] . ' Gbps';
@@ -198,7 +198,7 @@ class FreeBSD implements IOperatingSystem {
 					$iface['speed'] = 'unknown';
 				}
 
-				if ($duplex[0] !== '') {
+				if ($duplex[0] !== null) {
 					$iface['duplex'] = 'Duplex: ' . $duplex[0];
 				} else {
 					$iface['duplex'] = '';
