@@ -168,10 +168,15 @@ class FreeBSD implements IOperatingSystem {
 				preg_match("/(?<=\<).*(?=-)/m", $intface, $duplex);
 
 				$iface['mac'] = implode(' ', $mac[0]);
-				$iface['status'] = $status[0];
 				$iface['speed']  = $speed[0];
 
-				if ($iface['speed'] !== '') {
+				if (isset($status[0])) {
+					$iface['status'] = $status[0];
+				} else {
+					$iface['status'] = 'active';
+				}
+
+				if (isset($iface['speed'])) {
 					if (strpos($iface['speed'], 'G')) {
 						$iface['speed'] = rtrim($iface['speed'], 'G');
 						$iface['speed'] = $iface['speed'] . ' Gbps';
@@ -182,7 +187,7 @@ class FreeBSD implements IOperatingSystem {
 					$iface['speed'] = 'unknown';
 				}
 
-				if ($duplex[0] !== '') {
+				if (isset($duplex[0])) {
 					$iface['duplex'] = 'Duplex: ' . $duplex[0];
 				} else {
 					$iface['duplex'] = '';
