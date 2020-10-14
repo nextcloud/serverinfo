@@ -31,7 +31,6 @@ OC.L10N.register(
     "Memory" : "Pomnilnik",
     "Server time" : "Čas strežnika",
     "Uptime" : "Čas delovanja",
-    "Time Servers" : "Časovni strežniki",
     "Load" : "Obremenitev",
     "Disk" : "Disk",
     "Mount" : "Prilop",
@@ -66,6 +65,7 @@ OC.L10N.register(
     "External monitoring tool" : "Zunanje orodje za nadzor",
     "You can connect an external monitoring tool by using this end point:" : "Povezava do zunanjega orodja za spremljanje delovanja prek končne točke:",
     "Appending \"?format=json\" at the end of the URL gives you the result in JSON." : "Pripenjanje zapisa » ?format=json « na konec naslova URL omogoči izpis podatkov v zapisu JSON.",
+    "Time Servers" : "Časovni strežniki",
     "Did you know?" : "Ali ste vedeli?",
     "Appending \"?format=json\" at the end of the URL gives you the result in JSON format!" : "Pripenjanje zapisa » ?format=json « na konec naslova URL omogoči izpis podatkov v zapisu JSON!"
 },

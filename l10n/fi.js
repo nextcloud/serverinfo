@@ -31,7 +31,6 @@ OC.L10N.register(
     "Memory" : "Muisti",
     "Server time" : "Palvelimen aika",
     "Uptime" : "Käynnissäoloaika",
-    "Time Servers" : "Aikapalvelimet",
     "Load" : "Kuorma",
     "Disk" : "Levy",
     "Mount" : "Liitospiste",
@@ -66,6 +65,7 @@ OC.L10N.register(
     "External monitoring tool" : "Ulkopuolinen valvontatyökalu",
     "You can connect an external monitoring tool by using this end point:" : "Voit yhdistää ulkopuolisen valvontatyökalun käyttämällä tätä liityntäkohtaa:",
     "Appending \"?format=json\" at the end of the URL gives you the result in JSON." : "Lisää \"?format=json\" URL-osoitteen loppuun saadaksesi tuloksen JSON-muodossa.",
+    "Time Servers" : "Aikapalvelimet",
     "Did you know?" : "Tiesitkö?",
     "Appending \"?format=json\" at the end of the URL gives you the result in JSON format!" : "Lisäämällä \"?format=json\" URL-osoitteen loppuun saat tulokset JSON-muodossa!"
 },

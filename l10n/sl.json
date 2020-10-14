@@ -29,7 +29,6 @@
     "Memory" : "Pomnilnik",
     "Server time" : "Čas strežnika",
     "Uptime" : "Čas delovanja",
-    "Time Servers" : "Časovni strežniki",
     "Load" : "Obremenitev",
     "Disk" : "Disk",
     "Mount" : "Prilop",
@@ -64,6 +63,7 @@
     "External monitoring tool" : "Zunanje orodje za nadzor",
     "You can connect an external monitoring tool by using this end point:" : "Povezava do zunanjega orodja za spremljanje delovanja prek končne točke:",
     "Appending \"?format=json\" at the end of the URL gives you the result in JSON." : "Pripenjanje zapisa » ?format=json « na konec naslova URL omogoči izpis podatkov v zapisu JSON.",
+    "Time Servers" : "Časovni strežniki",
     "Did you know?" : "Ali ste vedeli?",
     "Appending \"?format=json\" at the end of the URL gives you the result in JSON format!" : "Pripenjanje zapisa » ?format=json « na konec naslova URL omogoči izpis podatkov v zapisu JSON!"
 },"pluralForm" :"nplurals=4; plural=(n%100==1 ? 0 : n%100==2 ? 1 : n%100==3 || n%100==4 ? 2 : 3);"

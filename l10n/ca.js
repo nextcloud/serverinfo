@@ -31,7 +31,6 @@ OC.L10N.register(
     "Memory" : "Memòria",
     "Server time" : "Hora del servidor",
     "Uptime" : "Temps de funcionament",
-    "Time Servers" : "Servidors d'hora",
     "Load" : "Càrrega",
     "Disk" : "Disc",
     "Mount" : "Muntatge",
@@ -66,6 +65,7 @@ OC.L10N.register(
     "External monitoring tool" : "Eina externa de monitorització",
     "You can connect an external monitoring tool by using this end point:" : "Podeu connectar una eina externa de monitorització fent servir aquest punt final:",
     "Appending \"?format=json\" at the end of the URL gives you the result in JSON." : "Afegint \"?format=json\" al final de la URL rebreu el resultat en format JSON.",
+    "Time Servers" : "Servidors d'hora",
     "Did you know?" : "Ho sabíeu?",
     "Appending \"?format=json\" at the end of the URL gives you the result in JSON format!" : "Afegint \"?format=json\" al final de l’URL us proporciona el resultat en format JSON!"
 },

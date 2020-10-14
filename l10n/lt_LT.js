@@ -28,7 +28,6 @@ OC.L10N.register(
     "CPU" : "Procesorius",
     "Memory" : "Atmintis",
     "Server time" : "Serverio laikas",
-    "Time Servers" : "Laiko serveriai",
     "Load" : "Apkrova",
     "Disk" : "Diskas",
     "Filesystem" : "Failų sistema",
@@ -58,6 +57,7 @@ OC.L10N.register(
     "Type:" : "Tipas:",
     "Size:" : "Dydis:",
     "External monitoring tool" : "Išorinis stebėjimo įrankis",
+    "Time Servers" : "Laiko serveriai",
     "Did you know?" : "Ar žinojote?"
 },
 "nplurals=4; plural=(n % 10 == 1 && (n % 100 > 19 || n % 100 < 11) ? 0 : (n % 10 >= 2 && n % 10 <=9) && (n % 100 > 19 || n % 100 < 11) ? 1 : n % 1 != 0 ? 2: 3);");

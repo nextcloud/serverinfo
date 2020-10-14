@@ -31,7 +31,6 @@ OC.L10N.register(
     "Memory" : "זיכרון",
     "Server time" : "זמן השרת",
     "Uptime" : "זמן פעילות",
-    "Time Servers" : "שרתי זמן",
     "Load" : "עומס",
     "Disk" : "כונן",
     "Mount" : "עגינה",
@@ -66,6 +65,7 @@ OC.L10N.register(
     "External monitoring tool" : "כלי מעקב חיצוני",
     "You can connect an external monitoring tool by using this end point:" : "ניתן לחבר לכלי מעקב חיצוני דרך נקודת הגישה הזאת:",
     "Appending \"?format=json\" at the end of the URL gives you the result in JSON." : "הוספת „‎?format=json” לסוף הכתובת יעניק לך את התוצאה ב־JSON.",
+    "Time Servers" : "שרתי זמן",
     "Did you know?" : "הידעת?",
     "Appending \"?format=json\" at the end of the URL gives you the result in JSON format!" : "הוספת „‎?format=json” לסוף הכתובת מציגה את התוצאות בתצורת JSON!"
 },
