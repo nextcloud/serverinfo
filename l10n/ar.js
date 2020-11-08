@@ -10,6 +10,7 @@ OC.L10N.register(
     "Groups" : "المجموعات:",
     "Links" : "الروابط",
     "Mails" : "الرسائل",
+    "Talk conversations" : "محادثات",
     "24 hours" : "24 ساعة",
     "1 hour" : "ساعة",
     "5 mins" : "5 دقائق",
