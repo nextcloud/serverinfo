@@ -38,7 +38,7 @@ OC.L10N.register(
     "Size" : "Големина",
     "Available" : "Достапно",
     "Used" : "Искористено",
-    "You will get a notification once one of your disks is nearly full." : "Ќе добиете известување кога дискот ќе пред исполнување",
+    "You will get a notification once one of your disks is nearly full." : "Ќе добиете известување кога дискот е пред исполнување",
     "Files:" : "Датотеки:",
     "Storages:" : "Складишта:",
     "Free Space:" : "Слободен простор:",
