@@ -143,7 +143,7 @@ class DefaultOs implements IOperatingSystem {
 	 * @return string
 	 */
 	public function getNetworkInterfaces() {
-		$interfaces = array_diff(scandir("/sys/class/net"), array('.', '..'));  // remove dot directories
+		$interfaces = array_diff(scandir("/sys/class/net"), ['.', '..']);  // remove dot directories
 		$result = [];
 
 		foreach ($interfaces as $interface) {
