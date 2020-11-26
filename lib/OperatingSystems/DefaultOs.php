@@ -143,19 +143,19 @@ class DefaultOs implements IOperatingSystem {
 	 * @return string
 	 */
 	public function getNetworkInterfaces() {
-		$interfaces = glob('/sys/class/net/*');
+		$interfaces = array_diff(scandir("/sys/class/net"), array('.', '..'));  // remove dot directories
 		$result = [];
 
 		foreach ($interfaces as $interface) {
 			$iface              = [];
-			$iface['interface'] = basename($interface);
+			$iface['interface'] = $interface;
 			$iface['mac']       = shell_exec('ip addr show dev ' . $iface['interface'] . ' | grep "link/ether " | cut -d \' \' -f 6  | cut -f 1 -d \'/\'');
 			$iface['ipv4']      = shell_exec('ip addr show dev ' . $iface['interface'] . ' | grep "inet " | cut -d \' \' -f 6  | cut -f 1 -d \'/\'');
 			$iface['ipv6']      = shell_exec('ip -o -6 addr show ' . $iface['interface'] . ' | sed -e \'s/^.*inet6 \([^ ]\+\).*/\1/\'');
 			if ($iface['interface'] !== 'lo') {
 				$iface['status'] = shell_exec('cat /sys/class/net/' . $iface['interface'] . '/operstate');
 				$iface['speed']  = shell_exec('cat /sys/class/net/' . $iface['interface'] . '/speed');
-				if ($iface['speed'] !== '') {
+				if ($iface['speed'] !== '' and substr($iface['speed'], 0, 1) != "-") {
 					$iface['speed'] = $iface['speed'] . 'Mbps';
 				} else {
 					$iface['speed'] = 'unknown';
