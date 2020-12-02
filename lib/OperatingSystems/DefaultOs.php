@@ -143,7 +143,7 @@ class DefaultOs implements IOperatingSystem {
 	 * @return string
 	 */
 	public function getNetworkInterfaces() {
-		$interfaces = array_diff(scandir("/sys/class/net"), ['.', '..']);  // remove dot directories
+		$interfaces = array_diff(scandir('/sys/class/net'), ['.', '..']);  // remove dot directories
 		$result = [];
 
 		foreach ($interfaces as $interface) {
@@ -155,7 +155,7 @@ class DefaultOs implements IOperatingSystem {
 			if ($iface['interface'] !== 'lo') {
 				$iface['status'] = shell_exec('cat /sys/class/net/' . $iface['interface'] . '/operstate');
 				$iface['speed']  = shell_exec('cat /sys/class/net/' . $iface['interface'] . '/speed');
-				if ($iface['speed'] !== '' and substr($iface['speed'], 0, 1) != "-") {
+				if ($iface['speed'] !== '' && trim($iface['speed']) !== '-1') {
 					$iface['speed'] = $iface['speed'] . 'Mbps';
 				} else {
 					$iface['speed'] = 'unknown';
