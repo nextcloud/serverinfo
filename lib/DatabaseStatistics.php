@@ -22,6 +22,7 @@
 
 namespace OCA\ServerInfo;
 
+use Doctrine\DBAL\DBALException;
 use OCP\IConfig;
 use OCP\IDBConnection;
 
@@ -60,7 +61,7 @@ class DatabaseStatistics {
 				$sql = 'SELECT sqlite_version() AS version';
 				break;
 			case 'oci':
-				$sql = 'SELECT version FROM v$instance';
+				$sql = 'SELECT VERSION FROM PRODUCT_COMPONENT_VERSION';
 				break;
 			case 'mysql':
 			case 'pgsql':
@@ -68,11 +69,14 @@ class DatabaseStatistics {
 				$sql = 'SELECT VERSION() AS version';
 				break;
 		}
-		$result = $this->connection->executeQuery($sql);
-		$row = $result->fetch();
-		$result->closeCursor();
-		if ($row) {
-			return $this->cleanVersion($row['version']);
+		try {
+			$result = $this->connection->executeQuery($sql);
+			$version = $result->fetchColumn();
+			$result->closeCursor();
+			if ($version) {
+				return $this->cleanVersion($version);
+			}
+		} catch (DBALException $e) {
 		}
 		return 'N/A';
 	}
@@ -143,7 +147,7 @@ class DatabaseStatistics {
 				$sql = 'SELECT SUM(bytes) as dbsize
 					FROM user_segments';
 				$result = $this->connection->executeQuery($sql);
-				$database_size = ($row = $result->fetch()) ? $row['dbsize'] : false;
+				$database_size = ($row = $result->fetchColumn()) ? (int)$row : false;
 				$result->closeCursor();
 				break;
 		}
