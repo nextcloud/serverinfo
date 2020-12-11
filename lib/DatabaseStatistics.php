@@ -95,12 +95,13 @@ class DatabaseStatistics {
 		// This code is heavily influenced by a similar routine in phpMyAdmin 2.2.0
 		switch ($this->config->getSystemValue('dbtype')) {
 			case 'mysql':
+				$mysqlEngine = ['MyISAM', 'InnoDB', 'Aria'];
 				$db_name = $this->config->getSystemValue('dbname');
 				$sql = 'SHOW TABLE STATUS FROM `' . $db_name . '`';
 				$result = $this->connection->executeQuery($sql);
 				$database_size = 0;
 				while ($row = $result->fetch()) {
-					if ((isset($row['Type']) && $row['Type'] !== 'MRG_MyISAM') || (isset($row['Engine']) && ($row['Engine'] === 'MyISAM' || $row['Engine'] === 'InnoDB'))) {
+					if (isset($row['Engine']) && in_array($row['Engine'], $mysqlEngine)) {
 						$database_size += $row['Data_length'] + $row['Index_length'];
 					}
 				}
