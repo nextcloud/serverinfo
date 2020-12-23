@@ -38,7 +38,7 @@ OC.L10N.register(
     "Size" : "Größe",
     "Available" : "Verfügbar",
     "Used" : "Verwendet",
-    "You will get a notification once one of your disks is nearly full." : "Du erhältst eine Benachrichtigung sobald eine Deiner Speichermedien fast voll ist.",
+    "You will get a notification once one of your disks is nearly full." : "Du erhältst eine Benachrichtigung sobald eines Deiner Speichermedien fast voll ist.",
     "Files:" : "Dateien:",
     "Storages:" : "Speicher:",
     "Free Space:" : "Freier Speicherplatz:",
