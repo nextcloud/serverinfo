@@ -13,7 +13,7 @@ OC.L10N.register(
     "Mails" : "E-Mails",
     "Federated sent" : "Federated gesendet",
     "Federated received" : "Federated empfangen",
-    "Talk conversations" : "Talk Unterhaltungen",
+    "Talk conversations" : "Talk-Unterhaltungen",
     "24 hours" : "24 Stunden",
     "1 hour" : "1 Stunde",
     "5 mins" : "5 Minuten",
