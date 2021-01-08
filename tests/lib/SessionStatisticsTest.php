@@ -50,9 +50,13 @@ class SessionStatisticsTest extends TestCase {
 
 	private $offset1Hour = 3600;
 
-	private $offset1Day = 86400;
+    private $offset1Day = 86400;
+    
+    private $offset7Days = 604800;
+    
+    private $offset30Days = 2592000;
 
-	private $currentTime = 100000;
+    private $currentTime = 10000000;
 
 	protected function setUp(): void {
 		parent::setUp();
@@ -68,7 +72,9 @@ class SessionStatisticsTest extends TestCase {
 	private function addDummyValues() {
 		$this->addDummyValuesWithLastLogin($this->currentTime - $this->offset5Minutes +1, 10);
 		$this->addDummyValuesWithLastLogin($this->currentTime - $this->offset1Hour +1, 20);
-		$this->addDummyValuesWithLastLogin($this->currentTime - $this->offset1Day +1, 30);
+        $this->addDummyValuesWithLastLogin($this->currentTime - $this->offset1Day +1, 30);
+        $this->addDummyValuesWithLastLogin($this->currentTime - $this->offset7Days +1, 40);
+        $this->addDummyValuesWithLastLogin($this->currentTime - $this->offset30Days +1, 50);
 	}
 
 	private function addDummyValuesWithLastLogin($lastActivity, $numOfEntries) {
@@ -101,6 +107,8 @@ class SessionStatisticsTest extends TestCase {
 		$this->assertSame(3, count($result));
 		$this->assertSame(2, $result['last5minutes']);
 		$this->assertSame(4, $result['last1hour']);
-		$this->assertSame(6, $result['last24hours']);
+        $this->assertSame(6, $result['last24hours']);
+        $this->assertSame(8, $result['last7days']);
+        $this->assertSame(10, $result['last7days']);
 	}
 }
