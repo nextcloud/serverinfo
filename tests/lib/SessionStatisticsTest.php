@@ -46,7 +46,7 @@ class SessionStatisticsTest extends TestCase {
 
 	private $table = 'authtoken';
 
-	private $offset5Minutes = 300;
+	private $5Minutes = 300;
 
 	private $offset1Hour = 3600;
 
