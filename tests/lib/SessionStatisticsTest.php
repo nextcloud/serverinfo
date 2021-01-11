@@ -70,11 +70,11 @@ class SessionStatisticsTest extends TestCase {
 	}
 
 	private function addDummyValues() {
-		$this->addDummyValuesWithLastLogin($this->currentTime - $this->offset5Minutes +1, 10);
-		$this->addDummyValuesWithLastLogin($this->currentTime - $this->offset1Hour +1, 20);
-		$this->addDummyValuesWithLastLogin($this->currentTime - $this->offset1Day +1, 30);
-		$this->addDummyValuesWithLastLogin($this->currentTime - $this->offset7Days +1, 40);
-		$this->addDummyValuesWithLastLogin($this->currentTime - $this->offset30Days +1, 50);
+		$this->addDummyValuesWithLastLogin($this->currentTime - $this->offset5Minutes + 1, 10);
+		$this->addDummyValuesWithLastLogin($this->currentTime - $this->offset1Hour + 1, 20);
+		$this->addDummyValuesWithLastLogin($this->currentTime - $this->offset1Day + 1, 30);
+		$this->addDummyValuesWithLastLogin($this->currentTime - $this->offset7Days + 1, 40);
+		$this->addDummyValuesWithLastLogin($this->currentTime - $this->offset30Days + 1, 50);
 	}
 
 	private function addDummyValuesWithLastLogin($lastActivity, $numOfEntries) {
@@ -87,7 +87,7 @@ class SessionStatisticsTest extends TestCase {
 						'login_name' => $query->createNamedParameter('user-' . ($numOfEntries + $i % 2)),
 						'password' => $query->createNamedParameter('password'),
 						'name' => $query->createNamedParameter('user agent'),
-						'token' => $query->createNamedParameter('token-' . ($i + $numOfEntries*10)),
+						'token' => $query->createNamedParameter('token-' . ($i + $numOfEntries * 10)),
 						'type' => $query->createNamedParameter(0),
 						'last_activity' => $query->createNamedParameter($lastActivity),
 						'last_check' => $query->createNamedParameter($lastActivity),
