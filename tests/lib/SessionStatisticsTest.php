@@ -46,7 +46,7 @@ class SessionStatisticsTest extends TestCase {
 
 	private $table = 'authtoken';
 
-	private $5Minutes = 300;
+	private $offset5Minutes = 300;
 
 	private $offset1Hour = 3600;
 
@@ -109,6 +109,6 @@ class SessionStatisticsTest extends TestCase {
 		$this->assertSame(4, $result['last1hour']);
 		$this->assertSame(6, $result['last24hours']);
 		$this->assertSame(8, $result['last7days']);
-		$this->assertSame(10, $result['last30days']);
+		$this->assertSame(10, $result['last7days']);
 	}
 }
