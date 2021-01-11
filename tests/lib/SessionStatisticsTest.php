@@ -104,7 +104,7 @@ class SessionStatisticsTest extends TestCase {
 
 		$result = $this->instance->getSessionStatistics();
 
-		$this->assertSame(3, count($result));
+		$this->assertSame(5, count($result));
 		$this->assertSame(2, $result['last5minutes']);
 		$this->assertSame(4, $result['last1hour']);
         $this->assertSame(6, $result['last24hours']);
