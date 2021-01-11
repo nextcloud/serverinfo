@@ -33,23 +33,22 @@ use Test\TestCase;
  * @group DB
  * @package OCA\ServerInfo\Tests
  */
-class SessionStatisticsTest extends TestCase
-{
+class SessionStatisticsTest extends TestCase {
 
-    /** @var  ITimeFactory | \PHPUnit_Framework_MockObject_MockObject */
-    private $timeFactory;
+	/** @var  ITimeFactory | \PHPUnit_Framework_MockObject_MockObject */
+	private $timeFactory;
 
-    /** @var  IDBConnection */
-    private $connection;
+	/** @var  IDBConnection */
+	private $connection;
 
-    /** @var  SessionStatistics */
-    private $instance;
+	/** @var  SessionStatistics */
+	private $instance;
 
-    private $table = 'authtoken';
+	private $table = 'authtoken';
 
-    private $offset5Minutes = 300;
+	private $offset5Minutes = 300;
 
-    private $offset1Hour = 3600;
+	private $offset1Hour = 3600;
 
 	private $offset1Day = 86400;
 	

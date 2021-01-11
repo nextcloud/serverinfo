@@ -65,7 +65,7 @@ class SessionStatistics {
 	public function getSessionStatistics() {
 		return [
 			'last5minutes' => $this->getNumberOfActiveUsers($this->offset5Minutes),
-			'last1hour' => $this->getNumberOfActiveUsers($this->offset1Hour),			
+			'last1hour' => $this->getNumberOfActiveUsers($this->offset1Hour),
 			'last24hours' => $this->getNumberOfActiveUsers($this->offset1Day),
 			'last7days' => $this->getNumberOfActiveUsers($this->offset7Days),
 			'last30days' => $this->getNumberOfActiveUsers($this->offset30Days)
