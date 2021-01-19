@@ -333,6 +333,13 @@ $disks = $_['diskinfo'];
 				<p class="settings-hint">
 					<?php p($l->t('Appending "?format=json" at the end of the URL gives you the result in JSON.')); ?>
 				</p>
+				<p>
+					<?php p($l->t('To use an access token please generate one then set it using the following command:')); ?>
+					<div><i>occ config:app:set serverinfo token --value yourtoken</i></div>
+				</p>
+				<p>
+					<?php p($l->t('Then pass the token with the "OC-Token" header when querying the above URL.')); ?>
+				</p>
 			</div>
 		</div>
 	</div>

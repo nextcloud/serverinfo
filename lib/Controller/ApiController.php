@@ -28,14 +28,27 @@ use OCA\ServerInfo\SessionStatistics;
 use OCA\ServerInfo\ShareStatistics;
 use OCA\ServerInfo\StorageStatistics;
 use OCA\ServerInfo\SystemStatistics;
+use OCP\AppFramework\Http;
 use OCP\AppFramework\Http\DataResponse;
 use OCP\AppFramework\OCSController;
+use OCP\IConfig;
+use OCP\IGroupManager;
 use OCP\IRequest;
+use OCP\IUserSession;
 
 class ApiController extends OCSController {
 
 	/** @var Os */
 	private $os;
+
+	/** @var IConfig */
+	private $config;
+
+	/** @var IGroupManager */
+	private $groupManager;
+
+	/** @var IUserSession */
+	private $userSession;
 
 	/** @var SystemStatistics */
 	private $systemStatistics;
@@ -60,6 +73,9 @@ class ApiController extends OCSController {
 	 *
 	 * @param string $appName
 	 * @param IRequest $request
+	 * @param IConfig $config
+	 * @param IGroupManager $groupManager
+	 * @param IUserSession $userSession
 	 * @param Os $os
 	 * @param SystemStatistics $systemStatistics
 	 * @param StorageStatistics $storageStatistics
@@ -70,6 +86,9 @@ class ApiController extends OCSController {
 	 */
 	public function __construct($appName,
 								IRequest $request,
+								IConfig $config,
+								IGroupManager $groupManager,
+								?IUserSession $userSession,
 								Os $os,
 								SystemStatistics $systemStatistics,
 								StorageStatistics $storageStatistics,
@@ -79,6 +98,9 @@ class ApiController extends OCSController {
 								SessionStatistics $sessionStatistics) {
 		parent::__construct($appName, $request);
 
+		$this->config             = $config;
+		$this->groupManager       = $groupManager;
+		$this->userSession        = $userSession;
 		$this->os                 = $os;
 		$this->systemStatistics   = $systemStatistics;
 		$this->storageStatistics  = $storageStatistics;
@@ -88,12 +110,45 @@ class ApiController extends OCSController {
 		$this->sessionStatistics  = $sessionStatistics;
 	}
 
+	private function checkAuthorized() {
+		$token = $this->request->getHeader('NC-Token');
+		if (!empty($token)) {
+			$storedToken = $this->config->getAppValue('serverinfo', 'token', null);
+			if (hash_equals($storedToken, $token)) {
+				return true;
+			}
+		}
+
+		$userSession = $this->userSession;
+		if ($userSession === null) {
+			return false;
+		}
+
+		$user = $userSession->getUser();
+		if ($user === null) {
+			return false;
+		}
+
+		if (!$this->groupManager->isAdmin($user->getUID())) {
+			return false;
+		};
+
+		return true;
+	}
+
 	/**
 	 * @NoCSRFRequired
+	 * @NoAdminRequired
+	 * @PublicPage
 	 *
 	 * @return DataResponse
 	 */
 	public function info() {
+		if (!$this->checkAuthorized()) {
+			$response = new DataResponse(['message' => 'Unauthorized']);
+			$response->setStatus(Http::STATUS_UNAUTHORIZED);
+			return $response;
+		}
 		return new DataResponse([
 			'nextcloud' => [
 				'system'  => $this->systemStatistics->getSystemStatistics(),
