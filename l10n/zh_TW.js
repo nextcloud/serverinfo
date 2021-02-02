@@ -65,8 +65,6 @@ OC.L10N.register(
     "External monitoring tool" : "外部監控工具",
     "You can connect an external monitoring tool by using this end point:" : "您可以使用此終端連接外部監視工具：",
     "Appending \"?format=json\" at the end of the URL gives you the result in JSON." : "在URL後面連接參數 \"?format=json\" 將會得到json格式的回傳結果。",
-    "Time Servers" : "時間伺服器",
-    "Did you know?" : "您知道嗎？",
-    "Appending \"?format=json\" at the end of the URL gives you the result in JSON format!" : "在 URL 的結尾附上 \"?format=json\" 將會給您 JSON 格式的結果！"
+    "Time Servers" : "時間伺服器"
 },
 "nplurals=1; plural=0;");

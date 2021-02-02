@@ -65,8 +65,6 @@ OC.L10N.register(
     "External monitoring tool" : "Vanjski alat za praćenje",
     "You can connect an external monitoring tool by using this end point:" : "Možete povezati vanjski alat za praćenje s pomoću ove krajnje točke:",
     "Appending \"?format=json\" at the end of the URL gives you the result in JSON." : "Dodavanjem „?format = json” na kraj URL-a dobije se rezultat u JSON-u.",
-    "Time Servers" : "Poslužitelji za vrijeme",
-    "Did you know?" : "Jeste li to znali?",
-    "Appending \"?format=json\" at the end of the URL gives you the result in JSON format!" : "Dodavanjem „?format = json” na kraj URL-a dobije se rezultat u formatu JSON!"
+    "Time Servers" : "Poslužitelji za vrijeme"
 },
 "nplurals=3; plural=n%10==1 && n%100!=11 ? 0 : n%10>=2 && n%10<=4 && (n%100<10 || n%100>=20) ? 1 : 2;");

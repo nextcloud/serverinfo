@@ -64,8 +64,6 @@ OC.L10N.register(
     "Size:" : "Grando:",
     "External monitoring tool" : "Ekstera observa ilo",
     "You can connect an external monitoring tool by using this end point:" : "Vi povas konekti eksteran observan ilon per tiu adreso:",
-    "Time Servers" : "Temposerviloj",
-    "Did you know?" : "Ĉu vi sciis?",
-    "Appending \"?format=json\" at the end of the URL gives you the result in JSON format!" : "Postaldoni „?format=json“ fine de la adreso liveras al vi la rezulton en JSON-formo!"
+    "Time Servers" : "Temposerviloj"
 },
 "nplurals=2; plural=(n != 1);");
