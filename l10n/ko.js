@@ -64,8 +64,6 @@ OC.L10N.register(
     "Size:" : "크기:",
     "External monitoring tool" : "외부 모니터링 도구",
     "You can connect an external monitoring tool by using this end point:" : "이 종단점으로 외부 모니터링 도구에 연결할 수 있습니다:",
-    "Time Servers" : "시간 서버",
-    "Did you know?" : "알고 계십니까?",
-    "Appending \"?format=json\" at the end of the URL gives you the result in JSON format!" : "URL 끝에 \"?format=json\" 문자열을 추가하면 JSON 형식으로 데이터를 볼 수 있습니다!"
+    "Time Servers" : "시간 서버"
 },
 "nplurals=1; plural=0;");
