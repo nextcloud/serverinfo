@@ -42,8 +42,6 @@ OC.L10N.register(
     "Type:" : "Type:",
     "Size:" : "Størrelse:",
     "External monitoring tool" : "Eksternt monitoreringsværktøj",
-    "You can connect an external monitoring tool by using this end point:" : "Du kan forbinde et eksternt monitoreringsprogram ved at bruge dette endepunkt:",
-    "Did you know?" : "Vidste du?",
-    "Appending \"?format=json\" at the end of the URL gives you the result in JSON format!" : "Tilføj \"?format=json\" til slutningen af URLen for at hente resultatet i JSON format!"
+    "You can connect an external monitoring tool by using this end point:" : "Du kan forbinde et eksternt monitoreringsprogram ved at bruge dette endepunkt:"
 },
 "nplurals=2; plural=(n != 1);");

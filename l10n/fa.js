@@ -64,8 +64,6 @@ OC.L10N.register(
     "Size:" : "اندازه",
     "External monitoring tool" : "ابزار نظارت خارجی",
     "You can connect an external monitoring tool by using this end point:" : "با استفاده از این نقطه پایانی می توانید یک ابزار نظارت خارجی را به هم متصل شدن:",
-    "Time Servers" : "زمان سرور",
-    "Did you know?" : "میدونی؟",
-    "Appending \"?format=json\" at the end of the URL gives you the result in JSON format!" : "افزودن \"؟ format = json\" در انتهای URL نتیجه را با فرمت JSON می دهد!"
+    "Time Servers" : "زمان سرور"
 },
 "nplurals=2; plural=(n > 1);");

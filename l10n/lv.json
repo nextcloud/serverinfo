@@ -62,8 +62,6 @@
     "Size:" : "Izmērs:",
     "External monitoring tool" : "Ārējās uzraudzības instruments",
     "You can connect an external monitoring tool by using this end point:" : "Ārējo pārraudzības rīku var savienot, izmantojot šo beigu punktu:",
-    "Time Servers" : "Laika serveri",
-    "Did you know?" : "Vai tu zināji?",
-    "Appending \"?format=json\" at the end of the URL gives you the result in JSON format!" : "Pievienotais \"?format=json\" URL beigās sniedz rezultātu JSON formātā!"
+    "Time Servers" : "Laika serveri"
 },"pluralForm" :"nplurals=3; plural=(n%10==1 && n%100!=11 ? 0 : n != 0 ? 1 : 2);"
 }

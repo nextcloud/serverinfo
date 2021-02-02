@@ -50,7 +50,6 @@ OC.L10N.register(
     "Type:" : "Тип:",
     "Size:" : "Размер:",
     "External monitoring tool" : "Външно средство за мониторинг",
-    "You can connect an external monitoring tool by using this end point:" : "Можете да свържете външен софтуер за мониторинг, чрез следния URL:",
-    "Did you know?" : "Известно ли ви е?"
+    "You can connect an external monitoring tool by using this end point:" : "Можете да свържете външен софтуер за мониторинг, чрез следния URL:"
 },
 "nplurals=2; plural=(n != 1);");

@@ -65,8 +65,6 @@ OC.L10N.register(
     "External monitoring tool" : "Kanpo jarraipen tresna",
     "You can connect an external monitoring tool by using this end point:" : " Kanpoko kontrol-tresna konektatu daiteke amaiera-puntu hau erabiliz:",
     "Appending \"?format=json\" at the end of the URL gives you the result in JSON." : "URL-aren amaieran \"?format=json\" eransteak emaitza JSON-en ematen du.",
-    "Time Servers" : "Denbora-zerbitzariak",
-    "Did you know?" : "Ba al zenekien?",
-    "Appending \"?format=json\" at the end of the URL gives you the result in JSON format!" : "URLaren amaieran \"?format=json\" eransteak emaitza JSON formatuan ematen du!"
+    "Time Servers" : "Denbora-zerbitzariak"
 },
 "nplurals=2; plural=(n != 1);");

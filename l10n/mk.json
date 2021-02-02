@@ -63,8 +63,6 @@
     "External monitoring tool" : "Надворешен уред за следење",
     "You can connect an external monitoring tool by using this end point:" : "Можете да поврзете надорешен уред за следење со користење на:",
     "Appending \"?format=json\" at the end of the URL gives you the result in JSON." : "Доколку сакате преглед во JSON формат додадете \"?format=json\" на крај на адресата.",
-    "Time Servers" : "Сервери за време",
-    "Did you know?" : "Дали сте знаеле?",
-    "Appending \"?format=json\" at the end of the URL gives you the result in JSON format!" : "Доколку сакате преглед во JSON формат додадете \"?format=json\" на крај на адресата!"
+    "Time Servers" : "Сервери за време"
 },"pluralForm" :"nplurals=2; plural=(n % 10 == 1 && n % 100 != 11) ? 0 : 1;"
 }
