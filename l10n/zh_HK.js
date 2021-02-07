@@ -13,7 +13,7 @@ OC.L10N.register(
     "Mails" : "郵件",
     "Federated sent" : "聯盟發送",
     "Federated received" : "聯盟接收",
-    "Talk conversations" : "Talk 交談",
+    "Talk conversations" : "Talk 對話",
     "24 hours" : "24小時",
     "1 hour" : "1小時",
     "5 mins" : "5分鐘",
