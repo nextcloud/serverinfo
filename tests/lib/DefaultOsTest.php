@@ -174,7 +174,15 @@ class DefaultOsTest extends TestCase {
 		$disk5->setPercent('0%');
 		$disk5->setMount('/nfs');
 
-		$this->assertEquals([$disk1, $disk2, $disk3, $disk4, $disk5], $this->os->getDiskInfo());
+		$disk6 = new Disk();
+		$disk6->setDevice('198.51.100.42:/storage');
+		$disk6->setFs('fuse.sshfs');
+		$disk6->setUsed(51);
+		$disk6->setAvailable(44354);
+		$disk6->setPercent('1%');
+		$disk6->setMount('/mnt/sshfs');
+
+		$this->assertEquals([$disk1, $disk2, $disk3, $disk4, $disk5, $disk6], $this->os->getDiskInfo());
 	}
 
 	public function testGetDiskInfoNoCommandOutput(): void {
