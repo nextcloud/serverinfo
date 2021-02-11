@@ -10,3 +10,4 @@ vagrant                                 vboxsf     958123168 614831132 343292036
 home_vagrant_code                       vboxsf     958123168 614831132 343292036      65% /home/vagrant/code
 tmpfs                                   tmpfs         816800         0    816800       0% /run/user/1000
 nfs.example.com:/export                 nfs4           14820         0      1230       0% /nfs
+198.51.100.42:/storage                  fuse.sshfs  47929956     53116  45419052       1% /mnt/sshfs
