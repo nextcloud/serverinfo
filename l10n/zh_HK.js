@@ -7,7 +7,7 @@ OC.L10N.register(
     "Memory info not available" : "記憶體資訊暫時無法使用",
     "Total" : "總計",
     "Current usage" : "目前使用量",
-    "Users" : "使用者",
+    "Users" : "用戶",
     "Groups" : "群組",
     "Links" : "連結",
     "Mails" : "郵件",
