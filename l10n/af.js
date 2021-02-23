@@ -6,6 +6,7 @@ OC.L10N.register(
     "Users" : "Gebruikers",
     "Groups" : "Groepe",
     "Links" : "Skakels",
+    "1 hour" : "1 uur",
     "Copy" : "Kopieer",
     "Copied!" : "Gekopieer!",
     "Not supported!" : "Word nie ondersteun nie!",
