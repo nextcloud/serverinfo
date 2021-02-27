@@ -112,7 +112,7 @@ class DatabaseStatistics {
 				if (file_exists($this->config->getSystemValue('dbhost'))) {
 					$database_size = filesize($this->config->getSystemValue('dbhost'));
 				} else {
-					$params = $this->connection->getParams();
+					$params = $this->connection->getInner()->getParams();
 					if (file_exists($params['path'])) {
 						$database_size = filesize($params['path']);
 					}
