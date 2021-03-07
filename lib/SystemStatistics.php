@@ -24,9 +24,8 @@ namespace OCA\ServerInfo;
 
 use OC\Files\View;
 use OC\Installer;
-use OCP\IConfig;
 use OCP\App\IAppManager;
-use bantu\IniGetWrapper\IniGetWrapper;
+use OCP\IConfig;
 
 class SystemStatistics {
 
@@ -38,8 +37,8 @@ class SystemStatistics {
 	private $appManager;
 	/** @var Installer */
 	private $installer;
-	/** @var IniGetWrapper */
-	protected $phpIni;
+	/** @var Os */
+	protected $os;
 
 	/**
 	 * SystemStatistics constructor.
@@ -47,15 +46,15 @@ class SystemStatistics {
 	 * @param IConfig $config
 	 * @param IAppManager $appManager
 	 * @param Installer $installer
-	 * @param IniGetWrapper $phpIni
+	 * @param Os $os
 	 * @throws \Exception
 	 */
-	public function __construct(IConfig $config, IAppManager $appManager, Installer $installer, IniGetWrapper $phpIni) {
+	public function __construct(IConfig $config, IAppManager $appManager, Installer $installer, Os $os) {
 		$this->config = $config;
 		$this->view = new View();
 		$this->appManager = $appManager;
 		$this->installer = $installer;
-		$this->phpIni = $phpIni;
+		$this->os = $os;
 	}
 
 	/**
@@ -66,7 +65,7 @@ class SystemStatistics {
 	 */
 	public function getSystemStatistics() {
 		$processorUsage = $this->getProcessorUsage();
-		$memoryUsage = $this->getMemoryUsage();
+		$memoryUsage = $this->os->getMemory();
 		return [
 			'version' => $this->config->getSystemValue('version'),
 			'theme' => $this->config->getSystemValue('theme', 'none'),
@@ -79,77 +78,11 @@ class SystemStatistics {
 			'debug' => $this->config->getSystemValue('debug', false) ? 'yes' : 'no',
 			'freespace' => $this->view->free_space(),
 			'cpuload' => $processorUsage['loadavg'],
-			'mem_total' => $memoryUsage['mem_total'],
-			'mem_free' => $memoryUsage['mem_free'],
-			'swap_total' => $memoryUsage['swap_total'],
-			'swap_free' => $memoryUsage['swap_free'],
+			'mem_total' => $memoryUsage['MemTotal'],
+			'mem_free' => $memoryUsage['MemFree'],
+			'swap_total' => $memoryUsage['SwapTotal'],
+			'swap_free' => $memoryUsage['SwapFree'],
 			'apps' => $this->getAppsInfo()
-		];
-	}
-
-	/**
-	 * Get available and free memory including both RAM and Swap
-	 *
-	 * @return array with the two values 'mem_free' and 'mem_total'
-	 */
-	protected function getMemoryUsage() {
-		$memoryUsage = false;
-		if (@is_readable('/proc/meminfo')) {
-			// read meminfo from OS
-			$memoryUsage = file_get_contents('/proc/meminfo');
-		}
-		//If FreeBSD is used and exec()-usage is allowed
-		if (PHP_OS === 'FreeBSD' && $this->is_function_enabled('exec')) {
-			//Read Swap usage:
-			exec("/usr/sbin/swapinfo -k", $return, $status);
-			if ($status === 0 && count($return) > 1) {
-				$line = preg_split("/[\s]+/", $return[1]);
-				if (count($line) > 3) {
-					$swapTotal = (int)$line[3];
-					$swapFree = $swapTotal - (int)$line[2];
-				}
-			}
-			unset($status);
-			unset($return);
-			//Read Memory Usage
-			exec("/sbin/sysctl -n hw.physmem hw.pagesize vm.stats.vm.v_inactive_count vm.stats.vm.v_cache_count vm.stats.vm.v_free_count", $return, $status);
-			if ($status === 0) {
-				$return = array_map('intval', $return);
-				if ($return === array_filter($return, 'is_int')) {
-					return [
-						'mem_total' => (int)$return[0]/1024,
-						'mem_free' => (int)$return[1] * ($return[2] + $return[3] + $return[4]) / 1024,
-						'swap_free' => (isset($swapFree)) ? $swapFree : 'N/A',
-						'swap_total' => (isset($swapTotal)) ? $swapTotal : 'N/A'
-					];
-				}
-			}
-		}
-		// check if determining memoryUsage failed
-		if ($memoryUsage === false) {
-			return ['mem_free' => 'N/A', 'mem_total' => 'N/A', 'swap_free' => 'N/A', 'swap_total' => 'N/A'];
-		}
-		$array = explode(PHP_EOL, $memoryUsage);
-		// the last value is a empty string after explode, skip it
-		$values = array_slice($array, 0, count($array) - 1);
-		$data = [];
-		foreach ($values as $value) {
-			list($k, $v) = preg_split('/[\s:]+/', $value);
-			$data[$k] = $v;
-		}
-
-		if (array_key_exists('MemAvailable', $data)) {
-			// MemAvailable is only present in newer kernels (after 2014).
-			$available = $data['MemAvailable'];
-		} else {
-			$available = $data['MemFree'];
-		}
-
-		return [
-			'mem_free' => (int)$available,
-			'mem_total' => (int)$data['MemTotal'],
-			'swap_free' => (int)$data['SwapFree'],
-			'swap_total' => (int)$data['SwapTotal']
 		];
 	}
 
@@ -183,23 +116,6 @@ class SystemStatistics {
 		}
 
 		return $info;
-	}
-
-	/**
-	 * Checks if a function is available. Borrowed from
-	 * https://github.com/nextcloud/server/blob/2e36069e24406455ad3f3998aa25e2a949d1402a/lib/private/legacy/helper.php#L475
-	 *
-	 * @param string $function_name
-	 * @return bool
-	 */
-	public function is_function_enabled($function_name) {
-		if (!function_exists($function_name)) {
-			return false;
-		}
-		if ($this->phpIni->listContains('disable_functions', $function_name)) {
-			return false;
-		}
-		return true;
 	}
 
 	/**
