@@ -280,7 +280,7 @@
 	function updateActiveUsersStatistics() {
 
 		var activeUsers = $('#activeuserscanvas').data('users'),
-			activeUsersData = [activeUsers.last24hours, activeUsers.last1hour, activeUsers.last5minutes],
+			activeUsersData = [activeUsers.last30days, activeUsers.last7days, activeUsers.last24hours, activeUsers.last1hour, activeUsers.last5minutes],
 			stepSize = 0;
 
 		if (Math.max.apply(null, activeUsersData) < 10) {
@@ -294,6 +294,8 @@
 				type: 'line',
 				data: {
 					labels: [
+						t('serverinfo', '30 days'),
+						t('serverinfo', '7 days'),
 						t('serverinfo', '24 hours'),
 						t('serverinfo', '1 hour'),
 						t('serverinfo', '5 mins')

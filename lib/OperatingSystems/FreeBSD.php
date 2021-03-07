@@ -153,13 +153,13 @@ class FreeBSD implements IOperatingSystem {
 		preg_match_all("/^(?<=(?!\t)).*(?=:)/m", $ifconfig, $interfaces);
 
 		foreach ($interfaces[0] as $interface) {
-			$iface              = [];
+			$iface = [];
 			$iface['interface'] = $interface;
-			$intface            = $this->executeCommand('/sbin/ifconfig ' . $iface['interface']);
+			$intface = $this->executeCommand('/sbin/ifconfig ' . $iface['interface']);
 			preg_match_all("/(?<=inet ).\S*/m", $intface, $ipv4);
 			preg_match_all("/(?<=inet6 )((.*(?=%))|(.\S*))/m", $intface, $ipv6);
-			$iface['ipv4']      = implode(' ', $ipv4[0]);
-			$iface['ipv6']      = implode(' ', $ipv6[0]);
+			$iface['ipv4'] = implode(' ', $ipv4[0]);
+			$iface['ipv6'] = implode(' ', $ipv6[0]);
 
 			if ($iface['interface'] !== 'lo0') {
 				preg_match_all("/(?<=ether ).*/m", $intface, $mac);
@@ -168,7 +168,7 @@ class FreeBSD implements IOperatingSystem {
 				preg_match("/(?<=\<).*(?=-)/m", $intface, $duplex);
 
 				$iface['mac'] = implode(' ', $mac[0]);
-				$iface['speed']  = $speed[0];
+				$iface['speed'] = $speed[0];
 
 				if (isset($status[0])) {
 					$iface['status'] = $status[0];
@@ -194,7 +194,7 @@ class FreeBSD implements IOperatingSystem {
 				}
 			} else {
 				$iface['status'] = 'active';
-				$iface['speed']  = 'unknown';
+				$iface['speed'] = 'unknown';
 				$iface['duplex'] = '';
 			}
 			$result[] = $iface;
