@@ -64,7 +64,7 @@ OC.L10N.register(
     "Size:" : "Velikost:",
     "External monitoring tool" : "Externí nástroj pro dohledování",
     "You can connect an external monitoring tool by using this end point:" : "Externí dohledovací nástroj je možné napojit pomocí tohoto koncového bodu:",
-    "Appending \"?format=json\" at the end of the URL gives you the result in JSON." : "Připojení \"?format=json\" na konec URL poskytne výsledek ve formátu JSON.",
+    "Appending \"?format=json\" at the end of the URL gives you the result in JSON." : "Připojení „?format=json“ na konec URL poskytne výsledek ve formátu JSON.",
     "Time Servers" : "Časové servery"
 },
 "nplurals=4; plural=(n == 1 && n % 1 == 0) ? 0 : (n >= 2 && n <= 4 && n % 1 == 0) ? 1: (n % 1 != 0 ) ? 2 : 3;");
