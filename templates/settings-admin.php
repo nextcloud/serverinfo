@@ -338,7 +338,7 @@ $disks = $_['diskinfo'];
 					<div><i>occ config:app:set serverinfo token --value yourtoken</i></div>
 				</p>
 				<p>
-					<?php p($l->t('Then pass the token with the "OC-Token" header when querying the above URL.')); ?>
+					<?php p($l->t('Then pass the token with the "NC-Token" header when querying the above URL.')); ?>
 				</p>
 			</div>
 		</div>
