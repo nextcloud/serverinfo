@@ -65,6 +65,8 @@ OC.L10N.register(
     "External monitoring tool" : "外部监控工具",
     "You can connect an external monitoring tool by using this end point:" : "此地址可用于外部监控工具：",
     "Appending \"?format=json\" at the end of the URL gives you the result in JSON." : "在 URL 末尾附加 \"?format=json\" 会为您提供 JSON 结果。",
+    "To use an access token please generate one then set it using the following command:" : "要使用一个访问令牌，请生成一个，然后使用以下命令设置它：",
+    "Then pass the token with the \"NC-Token\" header when querying the above URL." : "然后在查询上述 URL 时传递带有 “NC-Token” 头的令牌。",
     "Time Servers" : "时间服务器"
 },
 "nplurals=1; plural=0;");
