@@ -178,6 +178,14 @@ class DefaultOsTest extends TestCase {
 				'available' => 1259520,
 				'percent' => '0%',
 				'mount' => '/nfs',
+			],
+			[
+				'device' => '198.51.100.42:/storage',
+				'fs' => 'fuse.sshfs',
+				'used' => 54390784,
+				'available' => 46509109248,
+				'percent' => '1%',
+				'mount' => '/mnt/sshfs',
 			]
 		];
 
