@@ -24,7 +24,7 @@ OC.L10N.register(
     "Press Ctrl-C to copy." : "Zkopírujete stisknutím Ctrl+C.",
     "System" : "Systém",
     "Monitoring" : "Dohledování",
-    "Monitoring app with useful server information" : "Dohledovací aplikace s užitečnými informacemi o serveru",
+    "Monitoring app with useful server information" : "Dohledovací aplikace, poskytující užitečné informace o serveru",
     "Provides useful server information, such as CPU load, RAM usage, disk usage, number of users, etc." : "Poskytuje užitečné informace o serveru, jako vytížení procesoru, využití operační paměti, obsazenost datového úložiště, počet uživatelů, atd.",
     "Operating System" : "Operační systém",
     "CPU" : "Procesor",
