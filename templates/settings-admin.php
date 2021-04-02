@@ -229,12 +229,12 @@ $disks = $_['diskinfo'];
 									width="300" height="300"
 							></canvas>
 						</div>
-						<p>
-							<?php p($l->t('Total users:')); ?>
-							<em id="numUsersStorage"><?php p($_['storage']['num_users']); ?></em>
-						</p>
 					</div>
 				</div>
+			        <p>
+				        <?php p($l->t('Total users:')); ?>
+				        <em id="numUsersStorage"><?php p($_['storage']['num_users']); ?></em>
+				</p>
 			</div>
 
 			<div class="col col-6 col-m-12">
