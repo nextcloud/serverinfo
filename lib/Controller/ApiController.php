@@ -35,8 +35,12 @@ use OCP\IConfig;
 use OCP\IGroupManager;
 use OCP\IRequest;
 use OCP\IUserSession;
+use OCP\IL10N;
 
 class ApiController extends OCSController {
+
+	/** @var IL10N */
+	private $l;
 
 	/** @var Os */
 	private $os;
@@ -76,6 +80,7 @@ class ApiController extends OCSController {
 	 * @param IConfig $config
 	 * @param IGroupManager $groupManager
 	 * @param IUserSession $userSession
+	 * @param IL10N $l
 	 * @param Os $os
 	 * @param SystemStatistics $systemStatistics
 	 * @param StorageStatistics $storageStatistics
@@ -89,6 +94,7 @@ class ApiController extends OCSController {
 								IConfig $config,
 								IGroupManager $groupManager,
 								?IUserSession $userSession,
+								IL10N $l,
 								Os $os,
 								SystemStatistics $systemStatistics,
 								StorageStatistics $storageStatistics,
@@ -98,6 +104,7 @@ class ApiController extends OCSController {
 								SessionStatistics $sessionStatistics) {
 		parent::__construct($appName, $request);
 
+		$this->l                  = $l;
 		$this->config             = $config;
 		$this->groupManager       = $groupManager;
 		$this->userSession        = $userSession;
@@ -215,9 +222,16 @@ class ApiController extends OCSController {
 		}
 
 		$interval = $boot->diff(new \DateTime());
+		$hours = $this->l->n('%n hour', '%n hours', $interval->format('%h'));
+		$minutes = $this->l->n('%n minute', '%n minutes', $interval->format('%i'));
+		$seconds = $this->l->n('%n second', '%n seconds', $interval->format('%s'));
+		$result = $hours . ' ' . $minutes . ' ' . $seconds;
+
 		if ($interval->days > 0) {
-			return $interval->format('%a days, %h hours, %i minutes, %s seconds');
+			$days = $this->l->n('%n day', '%n days', $interval->format('%a'));
+			$result = $days . ' ' . $result;
 		}
-		return $interval->format('%h hours, %i minutes, %s seconds');
+		
+		return $result;
 	}
 }
