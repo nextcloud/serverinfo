@@ -2,7 +2,7 @@ OC.L10N.register(
     "serverinfo",
     {
     "CPU info not available" : "Informação da CPU não disponível",
-    "Load average" : "Carregamento médio",
+    "Load average" : "Carga média",
     "Last minute" : "Último minuto",
     "Memory info not available" : "Informações de memória não disponíveis",
     "Total" : "Total",
@@ -31,7 +31,7 @@ OC.L10N.register(
     "Memory" : "Memória",
     "Server time" : "Hora do servidor",
     "Uptime" : "Tempo ativo",
-    "Load" : "Carregar",
+    "Load" : "Carga",
     "Disk" : "Disco",
     "Mount" : "Montar",
     "Filesystem" : "Sistema de arquivos",
