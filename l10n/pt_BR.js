@@ -33,7 +33,7 @@ OC.L10N.register(
     "Uptime" : "Tempo ativo",
     "Load" : "Carga",
     "Disk" : "Disco",
-    "Mount" : "Montar",
+    "Mount" : "Montagem",
     "Filesystem" : "Sistema de arquivos",
     "Size" : "Tamanho",
     "Available" : "Disponível",
