@@ -24,6 +24,7 @@ namespace OCA\ServerInfo;
 
 use OC\Files\View;
 use OC\Installer;
+use OCP\Files\FileInfo;
 use OCP\IConfig;
 use OCP\App\IAppManager;
 use bantu\IniGetWrapper\IniGetWrapper;
@@ -77,7 +78,7 @@ class SystemStatistics {
 			'filelocking.enabled' => $this->config->getSystemValue('filelocking.enabled', true) ? 'yes' : 'no',
 			'memcache.locking' => $this->config->getSystemValue('memcache.locking', 'none'),
 			'debug' => $this->config->getSystemValue('debug', false) ? 'yes' : 'no',
-			'freespace' => $this->view->free_space(),
+			'freespace' => $this->getFreeSpace(),
 			'cpuload' => $processorUsage['loadavg'],
 			'mem_total' => $memoryUsage['mem_total'],
 			'mem_free' => $memoryUsage['mem_free'],
@@ -221,5 +222,21 @@ class SystemStatistics {
 		return [
 			'loadavg' => $loadavg
 		];
+	}
+
+	/**
+	 * Get free space if it can be calculated.
+	 *
+	 * @return mixed free space or null
+	 * @throws \OCP\Files\InvalidPathException
+	 */
+	protected function getFreeSpace() {
+		$free_space = $this->view->free_space();
+		if ($free_space === FileInfo::SPACE_UNKNOWN
+			|| $free_space === FileInfo::SPACE_UNLIMITED
+			|| $free_space === FileInfo::SPACE_NOT_COMPUTED) {
+			return null;
+		}
+		return $free_space;
 	}
 }
