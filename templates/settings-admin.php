@@ -151,8 +151,9 @@ $disks = $_['diskinfo'];
 
 		<p><?php p($l->t('Files:')); ?> <strong id="numFilesStorage"><?php p($_['storage']['num_files']); ?></strong></p>
 		<p><?php p($l->t('Storages:')); ?> <strong id="numFilesStorages"><?php p($_['storage']['num_storages']); ?></strong></p>
-		<p><?php p($l->t('Free Space:')); ?> <strong id="systemDiskFreeSpace"><?php p($_['system']['freespace']); ?></strong>
-		</p>
+		<?php if ($_['system']['freespace'] !== null): ?>
+			<p><?php p($l->t('Free Space:')); ?> <strong id="systemDiskFreeSpace"><?php p($_['system']['freespace']); ?></strong></p>
+		<?php endif; ?>
 	</div>
 
 	<!-- NETWORK -->
