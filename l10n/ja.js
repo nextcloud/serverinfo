@@ -19,7 +19,7 @@ OC.L10N.register(
     "5 mins" : "5分",
     "Copy" : "コピー",
     "Copied!" : "コピー完了",
-    "Not supported!" : "未対応",
+    "Not supported!" : "対応していません！",
     "Press ⌘-C to copy." : "⌘-C でコピーします。",
     "Press Ctrl-C to copy." : "Ctrl-Cを押してコピーします。",
     "System" : "システム",
