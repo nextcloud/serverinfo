@@ -107,3 +107,23 @@ https://<nextcloud-fqdn>/ocs/v2.php/apps/serverinfo/api/v1/info
 ```
 {"ocs":{"meta":{"status":"ok","statuscode":200,"message":"OK"},"data":{"nextcloud":{"system":{"version":"15.0.4.0","theme":"","enable_avatars":"yes","enable_previews":"yes","memcache.local":"OC\\Memcache\\APCu","memcache.distributed":"none","filelocking.enabled":"yes","memcache.locking":"OC\\Memcache\\Redis","debug":"no","freespace":48472944640,"cpuload":[0.84999999999999997779553950749686919152736663818359375,1.04000000000000003552713678800500929355621337890625,1.1699999999999999289457264239899814128875732421875],"mem_total":8183664,"mem_free":5877156,"swap_total":0,"swap_free":0,"apps":{"num_installed":53,"num_updates_available":1,"app_updates":{"files_antivirus":"2.0.1"}}},"storage":{"num_users":7,"num_files":708860,"num_storages":125,"num_storages_local":7,"num_storages_home":7,"num_storages_other":111},"shares":{"num_shares":1,"num_shares_user":0,"num_shares_groups":0,"num_shares_link":0,"num_shares_link_no_password":0,"num_fed_shares_sent":0,"num_fed_shares_received":0,"permissions_4_1":"1"}},"server":{"webserver":"Apache\/2.4","php":{"version":"7.2.14","memory_limit":536870912,"max_execution_time":3600,"upload_max_filesize":535822336},"database":{"type":"mysql","version":"10.2.21","size":331382784}},"activeUsers":{"last5minutes":2,"last1hour":3,"last24hours":5}}}}
 ```
+
+## Configuration
+
+Since collecting storage statistics might take time and cause slow downs, they are updated in the background. A background job runs once every three hours to update the number of storages and files. The interval can be overridden per app settings (the value is specified in seconds):
+
+``php occ config:app:set --value=3600 serverinfo job_interval_storage_stats``
+
+It is also possible to trigger the update manually per occ call. With verbose mode enabled, the current values are being printed.
+
+```
+php occ serverinfo:update-storage-statistics -v --output=json_pretty
+{
+    "num_users": 80,
+    "num_files": 3934,
+    "num_storages": 2545,
+    "num_storages_local": 2,
+    "num_storages_home": 2510,
+    "num_storages_other": 33
+}
+```
