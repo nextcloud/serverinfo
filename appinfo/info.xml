@@ -17,6 +17,12 @@
     <dependencies>
 		<nextcloud min-version="21" max-version="21" />
     </dependencies>
+	<background-jobs>
+		<job>OCA\ServerInfo\Jobs\UpdateStorageStats</job>
+	</background-jobs>
+	<commands>
+		<command>OCA\ServerInfo\Commands\UpdateStorageStats</command>
+	</commands>
     <settings>
         <admin>OCA\ServerInfo\Settings\AdminSettings</admin>
         <admin-section>OCA\ServerInfo\Settings\AdminSection</admin-section>
