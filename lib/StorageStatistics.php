@@ -90,7 +90,7 @@ class StorageStatistics {
 			$storageCount++;
 			$fileQuery->setParameter('storageId', $storageRow['id']);
 			$fileResult = $fileQuery->execute();
-			$fileCount += (int)$fileResult->fetchOne();
+			$fileCount += (int)$fileResult->fetchColumn();
 			$fileResult->closeCursor();
 		}
 		$storageResult->closeCursor();
