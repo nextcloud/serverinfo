@@ -22,27 +22,31 @@
 
 namespace OCA\ServerInfo;
 
+use OCP\IConfig;
 use OCP\IDBConnection;
 
 class StorageStatistics {
 
 	/** @var  IDBConnection */
 	private $connection;
+	/** @var IConfig */
+	private $config;
 
 	/**
 	 * SystemStatistics constructor.
 	 *
 	 * @param IDBConnection $connection
 	 */
-	public function __construct(IDBConnection $connection) {
+	public function __construct(IDBConnection $connection, IConfig $config) {
 		$this->connection = $connection;
+		$this->config = $config;
 	}
 
 	public function getStorageStatistics() {
 		return [
 			'num_users' => $this->countUserEntries(),
-			'num_files' => $this->countEntries('filecache'),
-			'num_storages' => $this->countEntries('storages'),
+			'num_files' => $this->getCountOf('filecache'),
+			'num_storages' => $this->getCountOf('storages'),
 			'num_storages_local' => $this->countStorages('local'),
 			'num_storages_home' => $this->countStorages('home'),
 			'num_storages_other' => $this->countStorages('other'),
@@ -65,18 +69,34 @@ class StorageStatistics {
 		return (int) $row['num_entries'];
 	}
 
-	/**
-	 * @param string $tableName
-	 * @return int
-	 */
-	protected function countEntries($tableName) {
-		$query = $this->connection->getQueryBuilder();
-		$query->selectAlias($query->createFunction('COUNT(*)'), 'num_entries')
-			->from($tableName);
-		$result = $query->execute();
-		$row = $result->fetch();
-		$result->closeCursor();
-		return (int) $row['num_entries'];
+	protected function getCountOf(string $table): int {
+		return (int)$this->config->getAppValue('serverinfo', 'cached_count_' . $table, '0');
+	}
+
+	public function updateStorageCounts(): void {
+		$storageCount = 0;
+		$fileCount = 0;
+
+		$fileQuery = $this->connection->getQueryBuilder();
+		$fileQuery->select($fileQuery->func()->count())
+			->from('filecache')
+			->where($fileQuery->expr()->eq('storage', $fileQuery->createParameter('storageId')));
+
+		$storageQuery = $this->connection->getQueryBuilder();
+		$storageQuery->selectAlias('numeric_id', 'id')
+			->from('storages');
+		$storageResult = $storageQuery->execute();
+		while ($storageRow = $storageResult->fetch()) {
+			$storageCount++;
+			$fileQuery->setParameter('storageId', $storageRow['id']);
+			$fileResult = $fileQuery->execute();
+			$fileCount += (int)$fileResult->fetchColumn();
+			$fileResult->closeCursor();
+		}
+		$storageResult->closeCursor();
+
+		$this->config->setAppValue('serverinfo', 'cached_count_filecache' , (string)$fileCount);
+		$this->config->setAppValue('serverinfo', 'cached_count_storages', (string)$storageCount);
 	}
 
 	/**
