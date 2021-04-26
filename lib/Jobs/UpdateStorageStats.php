@@ -1,6 +1,7 @@
 <?php
 
 declare(strict_types=1);
+
 /**
  * @copyright Copyright (c) 2020 Arthur Schiwon <blizzz@arthur-schiwon.de>
  *
@@ -45,7 +46,7 @@ class UpdateStorageStats extends TimedJob {
 	/**
 	 * @inheritDoc
 	 */
-	protected function run($argument) {
+	protected function run($argument): void {
 		$this->storageStatistics->updateStorageCounts();
 	}
 }

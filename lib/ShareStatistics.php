@@ -1,4 +1,7 @@
 <?php
+
+declare(strict_types=1);
+
 /**
  * @copyright Copyright (c) 2016 Bjoern Schiessle <bjoern@schiessle.org>
  *
@@ -45,7 +48,7 @@ class ShareStatistics {
 	/**
 	 * @return array (string => string|int)
 	 */
-	public function getShareStatistics() {
+	public function getShareStatistics(): array {
 		$query = $this->connection->getQueryBuilder();
 		$query->selectAlias($query->createFunction('COUNT(*)'), 'num_entries')
 			->addSelect(['permissions', 'share_type'])
@@ -77,7 +80,7 @@ class ShareStatistics {
 	 * @param string $tableName
 	 * @return int
 	 */
-	protected function countEntries($tableName) {
+	protected function countEntries(string $tableName): int {
 		$query = $this->connection->getQueryBuilder();
 		$query->selectAlias($query->createFunction('COUNT(*)'), 'num_entries')
 			->from($tableName);
@@ -93,7 +96,7 @@ class ShareStatistics {
 	 * @param bool $noPassword
 	 * @return int
 	 */
-	protected function countShares($type, $noPassword = false) {
+	protected function countShares(int $type, bool $noPassword = false): int {
 		$query = $this->connection->getQueryBuilder();
 		$query->selectAlias($query->createFunction('COUNT(*)'), 'num_entries')
 			->from('share')

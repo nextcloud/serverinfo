@@ -1,4 +1,7 @@
 <?php
+
+declare(strict_types=1);
+
 /**
  * @copyright Copyright (c) 2016 Bjoern Schiessle <bjoern@schiessle.org>
  *
@@ -44,9 +47,9 @@ class DatabaseStatistics {
 	}
 
 	/**
-	 * @return array (string => string|int)
+	 * @return array (string => string)
 	 */
-	public function getDatabaseStatistics() {
+	public function getDatabaseStatistics(): array {
 		return [
 			'type' => $this->config->getSystemValue('dbtype'),
 			'version' => $this->databaseVersion(),
@@ -54,7 +57,7 @@ class DatabaseStatistics {
 		];
 	}
 
-	protected function databaseVersion() {
+	protected function databaseVersion(): string {
 		switch ($this->config->getSystemValue('dbtype')) {
 			case 'sqlite':
 			case 'sqlite3':
@@ -88,9 +91,9 @@ class DatabaseStatistics {
 	 * @copyright (c) phpBB Limited <https://www.phpbb.com>
 	 * @license GNU General Public License, version 2 (GPL-2.0)
 	 *
-	 * @return int|string
+	 * @return string
 	 */
-	protected function databaseSize() {
+	protected function databaseSize(): string {
 		$database_size = false;
 		// This code is heavily influenced by a similar routine in phpMyAdmin 2.2.0
 		switch ($this->config->getSystemValue('dbtype')) {
@@ -152,7 +155,7 @@ class DatabaseStatistics {
 				$result->closeCursor();
 				break;
 		}
-		return ($database_size !== false) ? $database_size : 'N/A';
+		return ($database_size !== false) ? (string) $database_size : 'N/A';
 	}
 
 	/**
@@ -161,7 +164,7 @@ class DatabaseStatistics {
 	 * @param string $version E.g. `5.6.27-0ubuntu0.14.04.1`
 	 * @return string `5.6.27`
 	 */
-	protected function cleanVersion($version) {
+	protected function cleanVersion(string $version): string {
 		$matches = [];
 		preg_match('/^(\d+)(\.\d+)(\.\d+)/', $version, $matches);
 		if (isset($matches[0])) {

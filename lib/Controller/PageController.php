@@ -1,4 +1,7 @@
 <?php
+
+declare(strict_types=1);
+
 /**
  * @copyright Copyright (c) 2016 Bjoern Schiessle <bjoern@schiessle.org>
  *
@@ -52,7 +55,7 @@ class PageController extends Controller {
 	 *
 	 * @return JSONResponse
 	 */
-	public function update() {
+	public function update(): JSONResponse {
 		$data = [
 			'system' => $this->systemStatistics->getSystemStatistics()
 		];

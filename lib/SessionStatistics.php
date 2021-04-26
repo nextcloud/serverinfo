@@ -1,4 +1,7 @@
 <?php
+
+declare(strict_types=1);
+
 /**
  * @copyright Copyright (c) 2016 Bjoern Schiessle <bjoern@schiessle.org>
  *
@@ -34,18 +37,15 @@ use OCP\IDBConnection;
  * @package OCA\ServerInfo
  */
 class SessionStatistics {
+	private const OFFSET_5MIN = 300;
+	private const OFFSET_1HOUR = 3600;
+	private const OFFSET_1DAY = 86400;
 
 	/** @var IDBConnection */
 	private $connection;
 
 	/** @var ITimeFactory */
 	private $timeFactory;
-
-	private $offset5Minutes = 300;
-
-	private $offset1Hour = 3600;
-
-	private $offset1Day = 86400;
 
 	/**
 	 * SessionStatistics constructor.
@@ -58,12 +58,11 @@ class SessionStatistics {
 		$this->timeFactory = $timeFactory;
 	}
 
-
-	public function getSessionStatistics() {
+	public function getSessionStatistics(): array {
 		return [
-			'last5minutes' => $this->getNumberOfActiveUsers($this->offset5Minutes),
-			'last1hour' => $this->getNumberOfActiveUsers($this->offset1Hour),
-			'last24hours' => $this->getNumberOfActiveUsers($this->offset1Day)
+			'last5minutes' => $this->getNumberOfActiveUsers(self::OFFSET_5MIN),
+			'last1hour' => $this->getNumberOfActiveUsers(self::OFFSET_1HOUR),
+			'last24hours' => $this->getNumberOfActiveUsers(self::OFFSET_1DAY),
 		];
 	}
 
@@ -73,7 +72,7 @@ class SessionStatistics {
 	 * @param int $offset seconds
 	 * @return int
 	 */
-	private function getNumberOfActiveUsers($offset) {
+	private function getNumberOfActiveUsers(int $offset): int {
 		$query = $this->connection->getQueryBuilder();
 		$query->select('uid')
 			->from('authtoken')

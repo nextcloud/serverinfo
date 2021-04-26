@@ -1,6 +1,7 @@
 <?php
 
 declare(strict_types=1);
+
 /**
  * @author Matthew Wener <matthew@wener.org>
  *
@@ -97,7 +98,7 @@ class FreeBSD implements IOperatingSystem {
 	/**
 	 * @return string
 	 */
-	public function getTime() {
+	public function getTime(): string {
 		$time = '';
 
 		try {
@@ -123,9 +124,9 @@ class FreeBSD implements IOperatingSystem {
 	}
 
 	/**
-	 * @return string
+	 * @return array
 	 */
-	public function getNetworkInfo() {
+	public function getNetworkInfo(): array {
 		$result = [];
 		$result['hostname'] = \gethostname();
 
@@ -144,9 +145,9 @@ class FreeBSD implements IOperatingSystem {
 	}
 
 	/**
-	 * @return string
+	 * @return array
 	 */
-	public function getNetworkInterfaces() {
+	public function getNetworkInterfaces(): array {
 		$result = [];
 
 		$ifconfig = $this->executeCommand('/sbin/ifconfig -a');

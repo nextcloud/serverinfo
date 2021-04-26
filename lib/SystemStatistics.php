@@ -1,4 +1,7 @@
 <?php
+
+declare(strict_types=1);
+
 /**
  * @copyright Copyright (c) 2016 Bjoern Schiessle <bjoern@schiessle.org>
  *
@@ -65,7 +68,7 @@ class SystemStatistics {
 	 * @return array with with of data
 	 * @throws \OCP\Files\InvalidPathException
 	 */
-	public function getSystemStatistics() {
+	public function getSystemStatistics(): array {
 		$processorUsage = $this->getProcessorUsage();
 		$memoryUsage = $this->getMemoryUsage();
 		return [
@@ -93,7 +96,7 @@ class SystemStatistics {
 	 *
 	 * @return array with the two values 'mem_free' and 'mem_total'
 	 */
-	protected function getMemoryUsage() {
+	protected function getMemoryUsage(): array {
 		$memoryUsage = false;
 		if (@is_readable('/proc/meminfo')) {
 			// read meminfo from OS
@@ -159,7 +162,7 @@ class SystemStatistics {
 	 *
 	 * @return array data about apps
 	 */
-	protected function getAppsInfo() {
+	protected function getAppsInfo(): array {
 
 		// sekeleton about the data we return back
 		$info = [
@@ -193,7 +196,7 @@ class SystemStatistics {
 	 * @param string $function_name
 	 * @return bool
 	 */
-	public function is_function_enabled($function_name) {
+	public function is_function_enabled(string $function_name): bool {
 		if (!function_exists($function_name)) {
 			return false;
 		}
@@ -208,7 +211,7 @@ class SystemStatistics {
 	 *
 	 * @return array load average with three values, 1/5/15 minutes average.
 	 */
-	protected function getProcessorUsage() {
+	protected function getProcessorUsage(): array {
 		// get current system load average.
 		$loadavg = sys_getloadavg();
 

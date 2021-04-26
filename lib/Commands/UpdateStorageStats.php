@@ -1,6 +1,7 @@
 <?php
 
 declare(strict_types=1);
+
 /**
  * @copyright Copyright (c) 2020 Arthur Schiwon <blizzz@arthur-schiwon.de>
  *
@@ -40,13 +41,13 @@ class UpdateStorageStats extends Base {
 		$this->storageStatistics = $storageStatistics;
 	}
 
-	public function configure() {
+	public function configure(): void {
 		parent::configure();
 		$this->setName('serverinfo:update-storage-statistics')
 			->setDescription('Triggers an update of the counts related to storages used in serverinfo');
 	}
 
-	public function execute(InputInterface $input, OutputInterface $output) {
+	public function execute(InputInterface $input, OutputInterface $output): int {
 		if ($output->isVeryVerbose()) {
 			$this->writeMixedInOutputFormat($input, $output, 'Updating database counts. This might take a while.');
 		}

@@ -1,4 +1,7 @@
 <?php
+
+declare(strict_types=1);
+
 /**
  * @copyright Copyright (c) 2021 Vincent Petry <vincent@nextcloud.com>
  *
