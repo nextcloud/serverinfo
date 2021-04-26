@@ -1,4 +1,7 @@
 <?php
+
+declare(strict_types=1);
+
 /**
  * @author Frank Karlitschek <frank@nextcloud.com>
  *
@@ -107,9 +110,9 @@ class DefaultOs implements IOperatingSystem {
 	/**
 	 * @return string
 	 */
-	public function getTime() {
-		$uptime = shell_exec('date');
-		return $uptime;
+	public function getTime(): string {
+		$date = shell_exec('date');
+		return $date;
 	}
 
 	public function getUptime(): int {
@@ -127,9 +130,9 @@ class DefaultOs implements IOperatingSystem {
 	}
 
 	/**
-	 * @return string
+	 * @return array
 	 */
-	public function getNetworkInfo() {
+	public function getNetworkInfo(): array {
 		$result = [];
 		$result['hostname'] = \gethostname();
 		$dns = shell_exec('cat /etc/resolv.conf |grep -i \'^nameserver\'|head -n1|cut -d \' \' -f2');
@@ -140,9 +143,9 @@ class DefaultOs implements IOperatingSystem {
 	}
 
 	/**
-	 * @return string
+	 * @return array
 	 */
-	public function getNetworkInterfaces() {
+	public function getNetworkInterfaces(): array {
 		$interfaces = glob('/sys/class/net/*');
 		$result = [];
 

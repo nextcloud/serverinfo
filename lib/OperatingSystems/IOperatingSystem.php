@@ -1,6 +1,7 @@
 <?php
 
 declare(strict_types=1);
+
 /**
  * @copyright Copyright (c) 2020 Daniel Kesselberg <mail@danielkesselberg.de>
  *
@@ -29,8 +30,10 @@ use OCA\ServerInfo\Resources\Disk;
 use OCA\ServerInfo\Resources\Memory;
 
 interface IOperatingSystem {
+	public function supported(): bool;
+
 	/**
-	 * Get name of the processor
+	 * Get name of the processor.
 	 *
 	 * @return string
 	 */
@@ -49,6 +52,45 @@ interface IOperatingSystem {
 	 * @return Memory
 	 */
 	public function getMemory(): Memory;
+
+	/**
+	 * Get info about network connection.
+	 *
+	 * [
+	 *        'dns' => string,
+	 *        'gateway' => string,
+	 *        'hostname' => string,
+	 * ]
+	 *
+	 * @return array
+	 */
+	public function getNetworkInfo(): array;
+
+	/**
+	 * Get info about available network interfaces.
+	 *
+	 * [
+	 *       [
+	 *             'duplex' => string,
+	 *             'interface' => string,
+	 *             'ipv4' => string,
+	 *             'ipv6' => string,
+	 *             'mac' => string,
+	 *             'speed' => string,
+	 *             'status' => string,
+	 *       ],
+	 * ]
+	 *
+	 * @return array
+	 */
+	public function getNetworkInterfaces(): array;
+
+	/**
+	 * Get system time and timezone.
+	 *
+	 * @return Memory
+	 */
+	public function getTime(): string;
 
 	/**
 	 * Get the total number of seconds the system has been up or -1 on failure.

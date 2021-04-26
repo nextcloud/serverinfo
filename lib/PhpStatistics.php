@@ -1,4 +1,7 @@
 <?php
+
+declare(strict_types=1);
+
 /**
  * @copyright Copyright (c) 2016 Bjoern Schiessle <bjoern@schiessle.org>
  *
@@ -41,7 +44,7 @@ class PhpStatistics {
 		$this->phpIni = $phpIni;
 	}
 
-	public function getPhpStatistics() {
+	public function getPhpStatistics(): array {
 		return [
 			'version' => PHP_MAJOR_VERSION . '.' . PHP_MINOR_VERSION . '.' . PHP_RELEASE_VERSION,
 			'memory_limit' => $this->phpIni->getBytes('memory_limit'),

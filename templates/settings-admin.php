@@ -1,4 +1,7 @@
 <?php
+
+declare(strict_types=1);
+
 /**
  * @copyright Copyright (c) 2016 Bjoern Schiessle <bjoern@schiessle.org>
  *
@@ -25,7 +28,7 @@ script('serverinfo', 'Chart.min');
 
 style('serverinfo', 'style');
 
-function FormatMegabytes($byte) {
+function FormatMegabytes(int $byte): string {
 	$unim = ['MB', 'GB', 'TB', 'PB'];
 	$count = 0;
 	while ($byte >= 1024) {

@@ -1,4 +1,7 @@
 <?php
+
+declare(strict_types=1);
+
 /**
  * @copyright Copyright (c) 2016 Bjoern Schiessle <bjoern@schiessle.org>
  *
@@ -43,7 +46,7 @@ class AdminSection implements IIconSection {
 	 *
 	 * @returns string
 	 */
-	public function getID() {
+	public function getID(): string {
 		return 'serverinfo';
 	}
 
@@ -53,7 +56,7 @@ class AdminSection implements IIconSection {
 	 *
 	 * @return string
 	 */
-	public function getName() {
+	public function getName(): string {
 		return $this->l->t('System');
 	}
 
@@ -64,14 +67,14 @@ class AdminSection implements IIconSection {
 	 *
 	 * keep the server setting at the top, right after "overview" and "basic settings"
 	 */
-	public function getPriority() {
+	public function getPriority(): int {
 		return 90;
 	}
 
 	/**
 	 * {@inheritdoc}
 	 */
-	public function getIcon() {
+	public function getIcon(): string {
 		return $this->url->imagePath('serverinfo', 'app-dark.svg');
 	}
 }

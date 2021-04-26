@@ -1,4 +1,7 @@
 <?php
+
+declare(strict_types=1);
+
 /**
  * @author Frank Karlitschek <frank@nextcloud.com>
  *
@@ -27,7 +30,7 @@ use OCA\ServerInfo\Resources\Memory;
 
 class Os implements IOperatingSystem {
 
-	/** @var */
+	/** @var IOperatingSystem */
 	protected $backend;
 
 	/**
@@ -44,7 +47,7 @@ class Os implements IOperatingSystem {
 	/**
 	 * @return bool
 	 */
-	public function supported() {
+	public function supported(): bool {
 		$data = $this->backend->supported();
 		return $data;
 	}
@@ -52,21 +55,29 @@ class Os implements IOperatingSystem {
 	/**
 	 * @return string
 	 */
-	public function getHostname() {
+	public function getHostname(): string {
 		return (string)gethostname();
 	}
 
 	/**
+	 * Get name of the operating system.
+	 *
 	 * @return string
 	 */
 	public function getOSName(): string {
 		return PHP_OS . ' ' . php_uname('r') . ' ' . php_uname('m');
 	}
 
+	/**
+	 * @return Memory
+	 */
 	public function getMemory(): Memory {
 		return $this->backend->getMemory();
 	}
 
+	/**
+	 * @return string
+	 */
 	public function getCpuName(): string {
 		return $this->backend->getCpuName();
 	}
@@ -74,15 +85,21 @@ class Os implements IOperatingSystem {
 	/**
 	 * @return string
 	 */
-	public function getTime() {
+	public function getTime(): string {
 		$data = $this->backend->getTime();
 		return $data;
 	}
 
+	/**
+	 * @return string
+	 */
 	public function getUptime(): int {
 		return $this->backend->getUptime();
 	}
 
+	/**
+	 * @return array
+	 */
 	public function getDiskInfo(): array {
 		return $this->backend->getDiskInfo();
 	}
@@ -110,17 +127,17 @@ class Os implements IOperatingSystem {
 	}
 
 	/**
-	 * @return string
+	 * @return array
 	 */
-	public function getNetworkInfo() {
+	public function getNetworkInfo(): array {
 		$data = $this->backend->getNetworkInfo();
 		return $data;
 	}
 
 	/**
-	 * @return string
+	 * @return array
 	 */
-	public function getNetworkInterfaces() {
+	public function getNetworkInterfaces(): array {
 		$data = $this->backend->getNetworkInterfaces();
 		return $data;
 	}

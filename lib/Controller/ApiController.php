@@ -1,4 +1,7 @@
 <?php
+
+declare(strict_types=1);
+
 /**
  * @copyright Copyright (c) 2016 Bjoern Schiessle <bjoern@schiessle.org>
  *
@@ -110,7 +113,12 @@ class ApiController extends OCSController {
 		$this->sessionStatistics  = $sessionStatistics;
 	}
 
-	private function checkAuthorized() {
+	/**
+	 * Check if authorized to view serverinfo API.
+	 *
+	 * @return DataResponse
+	 */
+	private function checkAuthorized(): bool {
 		$token = $this->request->getHeader('NC-Token');
 		if (!empty($token)) {
 			$storedToken = $this->config->getAppValue('serverinfo', 'token', null);
@@ -143,7 +151,7 @@ class ApiController extends OCSController {
 	 *
 	 * @return DataResponse
 	 */
-	public function info() {
+	public function info(): DataResponse {
 		if (!$this->checkAuthorized()) {
 			$response = new DataResponse(['message' => 'Unauthorized']);
 			$response->setStatus(Http::STATUS_UNAUTHORIZED);
@@ -190,7 +198,7 @@ class ApiController extends OCSController {
 	 *
 	 * @return string
 	 */
-	private function getWebserver() {
+	private function getWebserver(): string {
 		if (isset($_SERVER['SERVER_SOFTWARE'])) {
 			return $_SERVER['SERVER_SOFTWARE'];
 		}

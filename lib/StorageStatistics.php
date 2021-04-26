@@ -1,4 +1,7 @@
 <?php
+
+declare(strict_types=1);
+
 /**
  * @copyright Copyright (c) 2016 Bjoern Schiessle <bjoern@schiessle.org>
  *
@@ -27,7 +30,7 @@ use OCP\IDBConnection;
 
 class StorageStatistics {
 
-	/** @var  IDBConnection */
+	/** @var IDBConnection */
 	private $connection;
 	/** @var IConfig */
 	private $config;
@@ -42,7 +45,10 @@ class StorageStatistics {
 		$this->config = $config;
 	}
 
-	public function getStorageStatistics() {
+	/**
+	 * @return array
+	 */
+	public function getStorageStatistics(): array {
 		return [
 			'num_users' => $this->countUserEntries(),
 			'num_files' => $this->getCountOf('filecache'),
@@ -58,7 +64,7 @@ class StorageStatistics {
 	 *
 	 * @return int
 	 */
-	protected function countUserEntries() {
+	protected function countUserEntries(): int {
 		$query = $this->connection->getQueryBuilder();
 		$query->selectAlias($query->createFunction('COUNT(*)'), 'num_entries')
 			->from('preferences')
@@ -103,7 +109,7 @@ class StorageStatistics {
 	 * @param string $type
 	 * @return int
 	 */
-	protected function countStorages($type) {
+	protected function countStorages(string $type): int {
 		$query = $this->connection->getQueryBuilder();
 		$query->selectAlias($query->createFunction('COUNT(*)'), 'num_entries')
 			->from('storages');
