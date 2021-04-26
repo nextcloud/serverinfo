@@ -119,6 +119,7 @@ class ApiController extends OCSController {
 	 * @return DataResponse
 	 */
 	private function checkAuthorized(): bool {
+		// check for monitoring privilege
 		$token = $this->request->getHeader('NC-Token');
 		if (!empty($token)) {
 			$storedToken = $this->config->getAppValue('serverinfo', 'token', null);
@@ -127,6 +128,7 @@ class ApiController extends OCSController {
 			}
 		}
 
+		// fallback to admin privilege
 		$userSession = $this->userSession;
 		if ($userSession === null) {
 			return false;
@@ -137,11 +139,7 @@ class ApiController extends OCSController {
 			return false;
 		}
 
-		if (!$this->groupManager->isAdmin($user->getUID())) {
-			return false;
-		};
-
-		return true;
+		return $this->groupManager->isAdmin($user->getUID());
 	}
 
 	/**
