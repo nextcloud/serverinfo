@@ -158,14 +158,14 @@ class DefaultOs implements IOperatingSystem {
 			if ($iface['interface'] !== 'lo') {
 				$iface['status'] = shell_exec('cat /sys/class/net/' . $iface['interface'] . '/operstate');
 				$iface['speed']  = shell_exec('cat /sys/class/net/' . $iface['interface'] . '/speed');
-				if ($iface['speed'] !== '') {
+				if (isset($iface['speed']) && $iface['speed'] !== '') {
 					$iface['speed'] = $iface['speed'] . 'Mbps';
 				} else {
 					$iface['speed'] = 'unknown';
 				}
 
 				$duplex = shell_exec('cat /sys/class/net/' . $iface['interface'] . '/duplex');
-				if ($duplex !== '') {
+				if (isset($duplex) && $duplex !== '') {
 					$iface['duplex'] = 'Duplex: ' . $duplex;
 				} else {
 					$iface['duplex'] = '';
