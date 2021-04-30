@@ -65,6 +65,8 @@ OC.L10N.register(
     "External monitoring tool" : "Kanpo jarraipen tresna",
     "You can connect an external monitoring tool by using this end point:" : " Kanpoko kontrol-tresna konektatu daiteke amaiera-puntu hau erabiliz:",
     "Appending \"?format=json\" at the end of the URL gives you the result in JSON." : "URL-aren amaieran \"?format=json\" eransteak emaitza JSON-en ematen du.",
+    "To use an access token please generate one then set it using the following command:" : "Sarbide token bat erabiltzeko, sortu eta ezarri komando hau erabiliz:",
+    "Then pass the token with the \"NC-Token\" header when querying the above URL." : "Ondoren, pasatu token-a \"NC-Token\" goiburuarekin goiko URLa kontsultatzerakoan.",
     "Time Servers" : "Denbora-zerbitzariak"
 },
 "nplurals=2; plural=(n != 1);");
