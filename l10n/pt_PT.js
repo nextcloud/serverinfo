@@ -1,6 +1,7 @@
 OC.L10N.register(
     "serverinfo",
     {
+    "CPU info not available" : "Informação do CPU indisponível",
     "Load average" : "Carga média",
     "Last minute" : "Ultimo minuto",
     "Memory info not available" : "Informação de memória não disponível",
@@ -9,6 +10,10 @@ OC.L10N.register(
     "Users" : "Utilizadores",
     "Groups" : "Grupos",
     "Links" : "Hiperligações",
+    "Mails" : "Mensagens",
+    "Federated sent" : "Federada enviada",
+    "Federated received" : "Federada recebida",
+    "Talk conversations" : "Conversas no Talk",
     "24 hours" : "24 horas",
     "1 hour" : "1 hora",
     "5 mins" : "5 minutos",
@@ -19,6 +24,8 @@ OC.L10N.register(
     "Press Ctrl-C to copy." : "Pressionar Ctrl-C para copiar.",
     "System" : "Sistema",
     "Monitoring" : "Monitorização",
+    "Monitoring app with useful server information" : "Aplicação de monitorização com informação útil do servidor",
+    "Provides useful server information, such as CPU load, RAM usage, disk usage, number of users, etc." : "Disponibiliza informação útil do servidor como a carga do CPU, utilização da RAM, utilização do disco, número de utilizadores, etc.",
     "Operating System" : "Sistema operativo",
     "CPU" : "CPU",
     "Memory" : "Memória",
@@ -31,6 +38,7 @@ OC.L10N.register(
     "Size" : "Tamanho",
     "Available" : "Disponível",
     "Used" : "Usado",
+    "You will get a notification once one of your disks is nearly full." : "Receberá uma notificação logo que um dos seus discos esteja perto de estar cheio.",
     "Files:" : "Ficheiros:",
     "Storages:" : "Armazenamentos:",
     "Free Space:" : "Espaço livre:",
@@ -43,6 +51,7 @@ OC.L10N.register(
     "IPv4" : "IPv4",
     "IPv6" : "IPv6",
     "Active users" : "Utilizadores activos",
+    "Total users:" : "Total de utilizadores:",
     "Shares" : "Partilhas",
     "PHP" : "PHP",
     "Version:" : "Versão:",
@@ -53,6 +62,7 @@ OC.L10N.register(
     "Type:" : "Tipo:",
     "Size:" : "Tamanho:",
     "External monitoring tool" : "Ferramenta externa de monitorização",
+    "You can connect an external monitoring tool by using this end point:" : "Pode ligar uma ferramenta de monitorização externa ao usar \"endpoint\":",
     "Time Servers" : "Servidores de hora"
 },
 "nplurals=2; plural=(n != 1);");
