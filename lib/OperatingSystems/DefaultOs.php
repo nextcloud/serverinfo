@@ -196,7 +196,7 @@ class DefaultOs implements IOperatingSystem {
 		}
 
 		foreach ($matches['Filesystem'] as $i => $filesystem) {
-			if (in_array($matches['Type'][$i], ['tmpfs', 'devtmpfs'], false)) {
+			if (in_array($matches['Type'][$i], ['tmpfs', 'devtmpfs', 'squashfs', 'overlay'], false)) {
 				continue;
 			}
 
