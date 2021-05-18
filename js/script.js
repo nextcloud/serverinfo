@@ -261,7 +261,7 @@
 					}]
 				},
 				options: {
-					legend: {display: false},
+					plugins: { legend: { display: false } },
 					scales: {
 						yAxes: [{
 							ticks: {
@@ -319,7 +319,7 @@
 					}]
 				},
 				options: {
-					legend: {display: false},
+					plugins: { legend: { display: false } },
 					scales: {
 						yAxes: [{
 							ticks: {
@@ -412,9 +412,7 @@
 						type: 'doughnut',
 						data: chartdata,
 						options: {
-							legend: {
-								display: false,
-							},
+							plugins: { legend: { display: false } },
 							tooltips: {
 								enabled: true,
 							},
