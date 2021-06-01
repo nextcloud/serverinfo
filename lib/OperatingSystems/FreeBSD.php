@@ -17,7 +17,7 @@ declare(strict_types=1);
  * GNU Affero General Public License for more details.
  *
  * You should have received a copy of the GNU Affero General Public License, version 3,
- * along with this program.  If not, see <http://www.gnu.org/licenses/>
+ * along with this program.  If not, see <https://www.gnu.org/licenses/>
  *
  */
 
@@ -150,13 +150,24 @@ class FreeBSD implements IOperatingSystem {
 	public function getNetworkInterfaces(): array {
 		$result = [];
 
-		$ifconfig = $this->executeCommand('/sbin/ifconfig -a');
+		try {
+			$ifconfig = $this->executeCommand('/sbin/ifconfig -a');
+		} catch (\RuntimeException $e) {
+			return $result;
+		}
+
 		preg_match_all("/^(?<=(?!\t)).*(?=:)/m", $ifconfig, $interfaces);
 
 		foreach ($interfaces[0] as $interface) {
 			$iface              = [];
 			$iface['interface'] = $interface;
-			$intface            = $this->executeCommand('/sbin/ifconfig ' . $iface['interface']);
+
+			try {
+				$intface = $this->executeCommand('/sbin/ifconfig ' . $iface['interface']);
+			} catch (\RuntimeException $e) {
+				continue;
+			}
+
 			preg_match_all("/(?<=inet ).\S*/m", $intface, $ipv4);
 			preg_match_all("/(?<=inet6 )((.*(?=%))|(.\S*))/m", $intface, $ipv6);
 			$iface['ipv4']      = implode(' ', $ipv4[0]);
