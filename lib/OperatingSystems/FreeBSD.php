@@ -214,15 +214,16 @@ class FreeBSD implements IOperatingSystem {
 		}
 
 		$matches = [];
-		$pattern = '/^(?<Filesystem>[\w\/-]+)\s*(?<Type>\w+)\s*(?<Blocks>\d+)\s*(?<Used>\d+)\s*(?<Available>\d+)\s*(?<Capacity>\d+%)\s*(?<Mounted>[\w\/-]+)$/m';
+		$pattern = '/^(?<Filesystem>[\S]+)\s*(?<Type>[\S]+)\s*(?<Blocks>\d+)\s*(?<Used>\d+)\s*(?<Available>\d+)\s*(?<Capacity>\d+%)\s*(?<Mounted>[\w\/-]+)$/m';
 
 		$result = preg_match_all($pattern, $disks, $matches);
 		if ($result === 0 || $result === false) {
 			return $data;
 		}
 
+		$excluded = ['devfs', 'fdescfs', 'tmpfs', 'devtmpfs', 'procfs', 'linprocfs', 'linsysfs'];
 		foreach ($matches['Filesystem'] as $i => $filesystem) {
-			if (in_array($matches['Type'][$i], ['tmpfs', 'devtmpfs'], false)) {
+			if (in_array($matches['Type'][$i], $excluded, false)) {
 				continue;
 			}
 
