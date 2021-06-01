@@ -146,12 +146,14 @@ class ApiController extends OCSController {
 	 * @NoCSRFRequired
 	 * @NoAdminRequired
 	 * @PublicPage
+	 * @BruteForceProtection(action=serverinfo)
 	 *
 	 * @return DataResponse
 	 */
 	public function info(): DataResponse {
 		if (!$this->checkAuthorized()) {
 			$response = new DataResponse(['message' => 'Unauthorized']);
+			$response->throttle();
 			$response->setStatus(Http::STATUS_UNAUTHORIZED);
 			return $response;
 		}
