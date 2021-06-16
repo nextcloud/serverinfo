@@ -263,12 +263,12 @@
 				options: {
 					plugins: { legend: { display: false } },
 					scales: {
-						yAxes: [{
+						yAxes: {
 							ticks: {
 								min: 0,
 								stepSize: stepSize
 							}
-						}]
+						}
 					}
 				}
 			});
@@ -321,12 +321,12 @@
 				options: {
 					plugins: { legend: { display: false } },
 					scales: {
-						yAxes: [{
+						yAxes: {
 							ticks: {
 								min: 0,
 								stepSize: stepSize
 							}
-						}]
+						}
 					}
 				}
 			});
