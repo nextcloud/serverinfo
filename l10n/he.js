@@ -65,6 +65,8 @@ OC.L10N.register(
     "External monitoring tool" : "כלי מעקב חיצוני",
     "You can connect an external monitoring tool by using this end point:" : "ניתן לחבר לכלי מעקב חיצוני דרך נקודת הגישה הזאת:",
     "Appending \"?format=json\" at the end of the URL gives you the result in JSON." : "הוספת „‎?format=json” לסוף הכתובת יעניק לך את התוצאה ב־JSON.",
+    "To use an access token please generate one then set it using the following command:" : "כדי להשתמש באסימון גישה נא לייצור אחד ואז להגדיר אותו באמצעות הפקודה הבאה:",
+    "Then pass the token with the \"NC-Token\" header when querying the above URL." : "לאחר מכן יש להעביר את האסימון עם כותרת „NC-Token” בעת תשאול הכתובת שלעיל.",
     "Time Servers" : "שרתי זמן"
 },
 "nplurals=4; plural=(n == 1 && n % 1 == 0) ? 0 : (n == 2 && n % 1 == 0) ? 1: (n % 10 == 0 && n % 1 == 0 && n > 10) ? 2 : 3;");
