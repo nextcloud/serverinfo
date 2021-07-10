@@ -51,7 +51,7 @@ OC.L10N.register(
     "MAC" : "MAC",
     "IPv4" : "IPv4",
     "IPv6" : "IPv6",
-    "Active users" : "Aktívni používatelia",
+    "Active users" : "Aktívni užívatelia",
     "Total users:" : "Užívateľov celkom:",
     "Shares" : "Sprístupnené položky",
     "PHP" : "PHP",
@@ -65,6 +65,7 @@ OC.L10N.register(
     "External monitoring tool" : "Externý sledovací nástroj",
     "You can connect an external monitoring tool by using this end point:" : "Pre pripojenie externého sledovacieho nástroja použite tento koncový bod:",
     "Appending \"?format=json\" at the end of the URL gives you the result in JSON." : "Ak na koniec adresy URL pridáte „?format = json“, získate výsledok v JSON.",
+    "To use an access token please generate one then set it using the following command:" : "Pre používanie prístupového tokenu prosím vygenerujte ho a potom nastavte použitím nasledujúceho príkazu:",
     "Time Servers" : "Servery času"
 },
 "nplurals=4; plural=(n % 1 == 0 && n == 1 ? 0 : n % 1 == 0 && n >= 2 && n <= 4 ? 1 : n % 1 != 0 ? 2: 3);");
