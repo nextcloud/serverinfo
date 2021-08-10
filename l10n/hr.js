@@ -65,6 +65,8 @@ OC.L10N.register(
     "External monitoring tool" : "Vanjski alat za praćenje",
     "You can connect an external monitoring tool by using this end point:" : "Možete povezati vanjski alat za praćenje s pomoću ove krajnje točke:",
     "Appending \"?format=json\" at the end of the URL gives you the result in JSON." : "Dodavanjem „?format = json” na kraj URL-a dobije se rezultat u JSON-u.",
+    "To use an access token please generate one then set it using the following command:" : "Kako biste se koristili tokenom za pristup, prvo ga generirajte i zatim ga postavite s pomoću sljedeće naredbe:",
+    "Then pass the token with the \"NC-Token\" header when querying the above URL." : "Zatim proslijedite token sa zaglavljem „NC-Token“ prilikom slanja upita za gornji URL.",
     "Time Servers" : "Poslužitelji za vrijeme"
 },
 "nplurals=3; plural=n%10==1 && n%100!=11 ? 0 : n%10>=2 && n%10<=4 && (n%100<10 || n%100>=20) ? 1 : 2;");
