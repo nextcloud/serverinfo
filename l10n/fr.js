@@ -65,6 +65,8 @@ OC.L10N.register(
     "External monitoring tool" : "Outil de surveillance externe",
     "You can connect an external monitoring tool by using this end point:" : "Vous pouvez connecter un outil de surveillance externe en utilisant ce point d'extrémité :",
     "Appending \"?format=json\" at the end of the URL gives you the result in JSON." : "Ajoutez \"?format=json\" à la fin de l'URL pour obtenir le résultat au format JSON. ",
+    "To use an access token please generate one then set it using the following command:" : "Pour utiliser un jeton d'accès, merci de bien vouloir en générer un puis l'utiliser avec la commande suivante : ",
+    "Then pass the token with the \"NC-Token\" header when querying the above URL." : "Puis transmettez le jeton avec l'entête \"NC-Token\" lorsque vous appelez l'URL.",
     "Time Servers" : "Serveurs de temps"
 },
 "nplurals=2; plural=(n > 1);");
