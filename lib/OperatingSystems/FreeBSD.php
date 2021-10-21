@@ -136,8 +136,9 @@ class FreeBSD implements IOperatingSystem {
 			$alldns = implode(' ', $matches[0]);
 			$result['dns'] = $alldns;
 			$netstat = $this->executeCommand('netstat -rn');
-			preg_match("/(?<=^default).*\b\d/m", $netstat, $gw);
-			$result['gateway'] = $gw[0];
+			preg_match_all("/^default\s+([[:xdigit:].:]+)\b/m", $netstat, $matches);
+			$allgateways = implode(' ', $matches[1]);
+			$result['gateway'] = $allgateways;
 		} catch (\RuntimeException $e) {
 			return $result;
 		}

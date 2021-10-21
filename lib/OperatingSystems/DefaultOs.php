@@ -137,8 +137,10 @@ class DefaultOs implements IOperatingSystem {
 		$result['hostname'] = \gethostname();
 		$dns = shell_exec('cat /etc/resolv.conf |grep -i \'^nameserver\'|head -n1|cut -d \' \' -f2');
 		$result['dns'] = $dns;
-		$gw = shell_exec('ip route | awk \'/default/ { print $3 }\'');
-		$result['gateway'] = $gw;
+		$ip_route = $this->executeCommand('ip route');
+		preg_match_all("/^default.*\bvia ([[:xdigit:].:]+)\b/m", $ip_route, $matches);
+		$allgateways = implode(' ', $matches[1]);
+		$result['gateway'] = $allgateways;
 		return $result;
 	}
 
