@@ -145,10 +145,12 @@
 
 	function updateMemoryStatistics(memTotal, memFree, swapTotal, swapFree) {
 		var $memFooterInfo = $('#memFooterInfo');
+		var $swapFooterInfo = $('#swapFooterInfo');
 		var $memoryCanvas = $('#memorycanvas');
 
 		if (memTotal === 'N/A' || memFree === 'N/A') {
 			$memFooterInfo.text(t('serverinfo', 'Memory info not available'));
+			$swapFooterInfo.text(t('serverinfo', 'Memory info not available'));
 			$memoryCanvas.addClass('hidden');
 			return;
 
