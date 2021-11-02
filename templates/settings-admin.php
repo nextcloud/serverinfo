@@ -270,11 +270,11 @@ $disks = $_['diskinfo'];
 							<em id="phpVersion"><?php p($_['php']['version']); ?></em>
 						</p>
 						<p>
-							<?php p($l->t('Memory Limit').':'); ?>
+							<?php p($l->t('Memory limit').':'); ?>
 							<em id="phpMemLimit"><?php p($_['php']['memory_limit']); ?></em>
 						</p>
 						<p>
-							<?php p($l->t('Max Execution Time').':'); ?>
+							<?php p($l->t('Max execution time').':'); ?>
 							<em id="phpMaxExecTime"><?php p($_['php']['max_execution_time']); ?></em>
 						</p>
 						<p>
