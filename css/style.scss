@@ -5,6 +5,9 @@
 .monitoring-wrapper {
 	display: -webkit-flex;
 	display: flex;
+	position: left;
+	max-width: 50%;
+	min-width: 50%;
 }
 
 .monitoring-wrapper > input {
