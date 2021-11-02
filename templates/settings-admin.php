@@ -57,6 +57,7 @@ $disks = $_['diskinfo'];
 			</div>
 			<div class="col col-12">			
 				<p><?php p($l->t('Operating System').':'); ?> <strong id="numFilesStorage"><?php p($_['osname']); ?></strong></p>
+				<p><?php p($l->t('CPU').':'); ?>
 				<?php if ($_['cpu'] !== 'Unknown Processor'): ?>
 				<strong id="numFilesStorage"><?php p($_['cpu']) ?></strong></p>
 				<?php else: ?>
