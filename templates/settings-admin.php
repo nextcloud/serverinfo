@@ -314,7 +314,7 @@ $disks = $_['diskinfo'];
 	<!-- EXTERNAL MONITORING-->
 	<div class="section monitoring">
 		<div class="row">
-			<div class="col col-6 col-m-12">
+			<div class="col col-m-12">
 				<!-- OCS ENDPOINT -->
 				<h2><?php p($l->t('External monitoring tool')); ?></h2>
 				<p>
