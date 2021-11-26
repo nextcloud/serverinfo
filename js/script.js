@@ -139,7 +139,7 @@
 			});
 		}
 
-		$cpuFooterInfo.text(t('serverinfo', 'Load average') + ": " + cpu1 + " (" + t('serverinfo', 'last minute') + ")");
+		$cpuFooterInfo.text(t('serverinfo', 'Load average {cpu} (last minute)', { cpu: cpu1 }));
 		cpuLoadLine.append(new Date().getTime(), cpu1);
 	}
 
