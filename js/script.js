@@ -139,22 +139,30 @@
 			});
 		}
 
-		$cpuFooterInfo.text(t('serverinfo', 'Load average') + ": " + cpu1 + " (" + t('serverinfo', 'Last minute') + ")");
+		$cpuFooterInfo.text(t('serverinfo', 'Load average: {cpu} (last minute)', { cpu: cpu1 }));
 		cpuLoadLine.append(new Date().getTime(), cpu1);
+	}
+	
+	function isMemoryStat(memTotal, memFree) {
+		if (memTotal === 'N/A' || memFree === 'N/A') {
+			return false;
+		} else {
+			return true;
+		}
+	}
+	
+	function isSwapStat(swapTotal, swapFree) {
+		if (swapTotal === 'N/A' || swapFree === 'N/A') {
+			return false;
+		} else {
+			return true;
+		}
 	}
 
 	function updateMemoryStatistics(memTotal, memFree, swapTotal, swapFree) {
 		var $memFooterInfo = $('#memFooterInfo');
+		var $swapFooterInfo = $('#swapFooterInfo');
 		var $memoryCanvas = $('#memorycanvas');
-
-		if (memTotal === 'N/A' || memFree === 'N/A') {
-			$memFooterInfo.text(t('serverinfo', 'Memory info not available'));
-			$memoryCanvas.addClass('hidden');
-			return;
-
-		} else if ($memoryCanvas.hasClass('hidden')) {
-			$memoryCanvas.removeClass('hidden');
-		}
 
 		var memTotalBytes = memTotal * 1024,
 			memUsageBytes = (memTotal - memFree) * 1024,
@@ -196,12 +204,24 @@
 			});
 		}
 
-		$memFooterInfo
-			.text("RAM: " + t('serverinfo', 'Total') + ": " + OC.Util.humanFileSize(memTotalBytes) + " - " + t('serverinfo', 'Current usage') + ": " + OC.Util.humanFileSize(memUsageBytes));
-		memoryUsageLine.append(new Date().getTime(), memUsageGB);
-		$('#swapFooterInfo')
-			.text("SWAP: " + t('serverinfo', 'Total') + ": " + OC.Util.humanFileSize(swapTotalBytes) + " - " + t('serverinfo', 'Current usage') + ": " + OC.Util.humanFileSize(swapUsageBytes));
-		swapUsageLine.append(new Date().getTime(), swapUsageGB);
+		if (isMemoryStat(memTotal, memFree)) {
+			$memFooterInfo.text(t('serverinfo','RAM: Total: {memTotalBytes}/Current usage: {memUsageBytes}', { memTotalBytes: OC.Util.humanFileSize(memTotalBytes), memUsageBytes: OC.Util.humanFileSize(memUsageBytes) }));
+			memoryUsageLine.append(new Date().getTime(), memUsageGB);
+			
+			if ($memoryCanvas.hasClass('hidden')) {
+				$memoryCanvas.removeClass('hidden');
+			}
+		} else {
+			$memFooterInfo.text(t('serverinfo', 'RAM info not available'));
+			$memoryCanvas.addClass('hidden');
+		}
+				
+		if (isSwapStat(swapTotal, swapFree)) {
+			$swapFooterInfo.text(t('serverinfo','SWAP: Total: {swapTotalBytes}/Current usage: {swapUsageBytes}', { swapTotalBytes: OC.Util.humanFileSize(swapTotalBytes), swapUsageBytes: OC.Util.humanFileSize(swapUsageBytes) }));
+			swapUsageLine.append(new Date().getTime(), swapUsageGB);
+		} else {
+			$swapFooterInfo.text(t('serverinfo', 'SWAP info not available'));
+		}
 	}
 
 	function updateShareStatistics() {
@@ -231,7 +251,7 @@
 						t('serverinfo', 'Users'),
 						t('serverinfo', 'Groups'),
 						t('serverinfo', 'Links'),
-						t('serverinfo', 'Mails'),
+						t('serverinfo', 'Emails'),
 						t('serverinfo', 'Federated sent'),
 						t('serverinfo', 'Federated received'),
 						t('serverinfo', 'Talk conversations'),

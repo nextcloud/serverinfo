@@ -2,21 +2,12 @@
 	max-width: 100vw;
 }
 
-.table-wrapper {
-	overflow-x: auto;
-}
-
-.server-infos-table {
-	margin-bottom: 25px;
-}
-
-.server-infos-table td:first-child {
-	width: 120px;
-}
-
 .monitoring-wrapper {
 	display: -webkit-flex;
 	display: flex;
+	position: left;
+	max-width: 50%;
+	min-width: 50%;
 }
 
 .monitoring-wrapper > input {
