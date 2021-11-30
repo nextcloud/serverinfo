@@ -251,7 +251,7 @@
 						t('serverinfo', 'Users'),
 						t('serverinfo', 'Groups'),
 						t('serverinfo', 'Links'),
-						t('serverinfo', 'Mails'),
+						t('serverinfo', 'Emails'),
 						t('serverinfo', 'Federated sent'),
 						t('serverinfo', 'Federated received'),
 						t('serverinfo', 'Talk conversations'),
