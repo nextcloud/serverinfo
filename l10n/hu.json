@@ -64,7 +64,6 @@
     "Upload max size:" : "Maximális feltöltési méret:",
     "Type:" : "Típus:",
     "Size:" : "Méret:",
-    "You can connect an external monitoring tool by using this end point:" : "Ennek a végpontnak a használatával külső monitorozó eszközt csatlakoztathatsz:",
-    "To use an access token please generate one then set it using the following command:" : "Hozzáférési token használatához kérjük, hozzon létre egyet, majd állítsa be a következő paranccsal:"
+    "You can connect an external monitoring tool by using this end point:" : "Ennek a végpontnak a használatával külső monitorozó eszközt csatlakoztathatsz:"
 },"pluralForm" :"nplurals=2; plural=(n != 1);"
 }

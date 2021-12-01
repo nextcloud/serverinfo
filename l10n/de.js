@@ -47,6 +47,7 @@ OC.L10N.register(
     "PHP" : "PHP",
     "Database" : "Datenbank",
     "External monitoring tool" : "Externes Überwachungsprogramm",
+    "You can connect an external monitoring tool by using this end point" : "Du kannst ein externes Überwachungsprogramm mit diesem Zugangspunktes verwenden",
     "Appending \"?format=json\" at the end of the URL gives you the result in JSON." : "Wenn Du \"?format=json\" am Ende der URL anhängst, erhältst Du das Ergebnis in JSON.",
     "Then pass the token with the \"NC-Token\" header when querying the above URL." : "Übergebe dann das Token mit dem \"NC-Token\"-Header bei der Abfrage der obigen URL.",
     "Load average" : "Durchschnittsauslastung",
@@ -66,7 +67,6 @@ OC.L10N.register(
     "Upload max size:" : "Maximale Größe zum Hochladen:",
     "Type:" : "Art:",
     "Size:" : "Größe:",
-    "You can connect an external monitoring tool by using this end point:" : "Durch Verwendung des folgenden Zugangspunktes kann ein externes Überwachungsprogramm verwendet werden: ",
-    "To use an access token please generate one then set it using the following command:" : "Um einen Zugriffstoken zu verwenden, erzeuge bitte einen und setze  ihn dann mit dem folgenden Befehl:"
+    "You can connect an external monitoring tool by using this end point:" : "Durch Verwendung des folgenden Zugangspunktes kann ein externes Überwachungsprogramm verwendet werden: "
 },
 "nplurals=2; plural=(n != 1);");
