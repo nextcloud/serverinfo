@@ -1,8 +1,6 @@
 OC.L10N.register(
     "serverinfo",
     {
-    "Load average" : "O'rtacha yuk",
-    "Total" : "Jami",
     "Users" : "Foydalanuvchilar",
     "Groups" : "Guruhlar",
     "Copy" : "Nusxalash",
@@ -10,6 +8,8 @@ OC.L10N.register(
     "Not supported!" : "Qo'llab-quvvatlanmaydi!",
     "Press ⌘-C to copy." : "Ko'chirib olish uchun ⌘-C tugmasini bosing.",
     "Press Ctrl-C to copy." : "Nusxalash uchun Ctrl-C tugmalarini bosing.",
-    "System" : "Tizim"
+    "System" : "Tizim",
+    "Load average" : "O'rtacha yuk",
+    "Total" : "Jami"
 },
 "nplurals=1; plural=0;");

@@ -1,9 +1,4 @@
 { "translations": {
-    "Load average" : "Keskmine koormus",
-    "Last minute" : "Viimane minut",
-    "Memory info not available" : "Mälu info pole saadaval",
-    "Total" : "Kokku",
-    "Current usage" : "Praegune kasutus",
     "Users" : "Kasutajad",
     "Groups" : "Grupid",
     "Links" : "Lingid",
@@ -18,19 +13,24 @@
     "Monitoring" : "Monitooring",
     "Provides useful server information, such as CPU load, RAM usage, disk usage, number of users, etc." : "Näitab kasulikku infot serveri kohta, näiteks protsessori koormus, mälukasutus, kettaruum, kasutajate arv jne.",
     "Size" : "Suurus",
-    "Files:" : "Faile:",
     "Hostname" : "Hostinimi",
     "Status" : "Staatus",
     "Active users" : "Aktiivseid kasutajaid",
     "Shares" : "Jagamisi",
     "PHP" : "PHP",
+    "Database" : "Andmebaas",
+    "External monitoring tool" : "Väline monitoorimistööriist",
+    "Load average" : "Keskmine koormus",
+    "Last minute" : "Viimane minut",
+    "Memory info not available" : "Mälu info pole saadaval",
+    "Total" : "Kokku",
+    "Current usage" : "Praegune kasutus",
+    "Files:" : "Faile:",
     "Version:" : "Versioon:",
     "Memory Limit:" : "Mälupiirang:",
     "Max Execution Time:" : "Maksimaalne käivitusaeg:",
     "Upload max size:" : "Maksimaalne üleslaadimissuurus:",
-    "Database" : "Andmebaas",
     "Type:" : "Tüüp:",
-    "Size:" : "Suurus:",
-    "External monitoring tool" : "Väline monitoorimistööriist"
+    "Size:" : "Suurus:"
 },"pluralForm" :"nplurals=2; plural=(n != 1);"
 }
