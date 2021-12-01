@@ -1,10 +1,6 @@
 OC.L10N.register(
     "serverinfo",
     {
-    "Last minute" : "Siste minutt",
-    "Memory info not available" : "Minne informasjon ikkje tilgjengleg",
-    "Total" : "Totalt",
-    "Current usage" : "Nåverende bruk",
     "Users" : "Brukarare",
     "Groups" : "Grupper",
     "Links" : "Lenker",
@@ -14,15 +10,19 @@ OC.L10N.register(
     "Press Ctrl-C to copy." : "Trykk Ctrl-C for å kopiere.",
     "Monitoring" : "Overvåker",
     "Size" : "Storleik",
-    "Files:" : "Filar:",
     "Status" : "Status",
     "Active users" : "Aktive brukarare",
     "Shares" : "Delingar",
+    "Database" : "Database",
+    "External monitoring tool" : "Eksternt monoitor verktøy",
+    "Last minute" : "Siste minutt",
+    "Memory info not available" : "Minne informasjon ikkje tilgjengleg",
+    "Total" : "Totalt",
+    "Current usage" : "Nåverende bruk",
+    "Files:" : "Filar:",
     "Memory Limit:" : "Minne grense:",
     "Upload max size:" : "Maks opplastning storleik:",
-    "Database" : "Database",
     "Type:" : "Type:",
-    "Size:" : "Storleik:",
-    "External monitoring tool" : "Eksternt monoitor verktøy"
+    "Size:" : "Storleik:"
 },
 "nplurals=2; plural=(n != 1);");
