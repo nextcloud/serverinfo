@@ -66,7 +66,6 @@ OC.L10N.register(
     "Upload max size:" : "最大アップロードサイズ:",
     "Type:" : "タイプ:",
     "Size:" : "サイズ:",
-    "You can connect an external monitoring tool by using this end point:" : "このエンドポイントを利用して外部モニタリングツールに接続することが可能です：",
-    "To use an access token please generate one then set it using the following command:" : "アクセストークンを使用するには、トークンを生成してから、次のコマンドを使用して設定してください:"
+    "You can connect an external monitoring tool by using this end point:" : "このエンドポイントを利用して外部モニタリングツールに接続することが可能です："
 },
 "nplurals=1; plural=0;");

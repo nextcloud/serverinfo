@@ -66,7 +66,6 @@ OC.L10N.register(
     "Upload max size:" : "Максимално време за качване:",
     "Type:" : "Тип:",
     "Size:" : "Размер:",
-    "You can connect an external monitoring tool by using this end point:" : "Можете да свържете външен софтуер за мониторинг, чрез следния URL:",
-    "To use an access token please generate one then set it using the following command:" : "За да използвате токен за достъп, моля, генерирайте такъв, след което го задайте с помощта на следната команда:"
+    "You can connect an external monitoring tool by using this end point:" : "Можете да свържете външен софтуер за мониторинг, чрез следния URL:"
 },
 "nplurals=2; plural=(n != 1);");

@@ -66,7 +66,6 @@ OC.L10N.register(
     "Upload max size:" : "Taille de téléversement maximale :",
     "Type:" : "Type :",
     "Size:" : "Taille :",
-    "You can connect an external monitoring tool by using this end point:" : "Vous pouvez connecter un outil de surveillance externe en utilisant ce point d'extrémité :",
-    "To use an access token please generate one then set it using the following command:" : "Pour utiliser un jeton d'accès, merci de bien vouloir en générer un puis l'utiliser avec la commande suivante : "
+    "You can connect an external monitoring tool by using this end point:" : "Vous pouvez connecter un outil de surveillance externe en utilisant ce point d'extrémité :"
 },
 "nplurals=2; plural=(n > 1);");
