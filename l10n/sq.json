@@ -1,9 +1,4 @@
 { "translations": {
-    "Load average" : "Ngarkesa mesatare",
-    "Last minute" : "Minuta e fundit",
-    "Memory info not available" : "Nuk ka informacion në dispozicion për kujtesën",
-    "Total" : "Total",
-    "Current usage" : "Perdorimi aktual",
     "Users" : "Përdoruesit",
     "Groups" : "Grupet",
     "Links" : "Lidhje",
@@ -19,19 +14,24 @@
     "System" : "Sistem",
     "Monitoring" : "Vëzhgim",
     "Size" : "Madhësi",
-    "Files:" : "Skedarët: ",
     "Hostname" : "Strehëemër",
     "Status" : "Status",
     "Active users" : "Përdoruesit aktivë",
     "Shares" : "Shpërndarje",
     "PHP" : "PHP",
+    "Database" : "Databazë",
+    "External monitoring tool" : "Mjet i kontrollit të jashtëm",
+    "Load average" : "Ngarkesa mesatare",
+    "Last minute" : "Minuta e fundit",
+    "Memory info not available" : "Nuk ka informacion në dispozicion për kujtesën",
+    "Total" : "Total",
+    "Current usage" : "Perdorimi aktual",
+    "Files:" : "Skedarët: ",
     "Version:" : "Versioni: ",
     "Memory Limit:" : "Limiti i kujtesës: ",
     "Max Execution Time:" : "Koha maksimale e ekzekutimit: ",
     "Upload max size:" : "Ngarkoni madhësinë maksimale: ",
-    "Database" : "Databazë",
     "Type:" : "Lloji:",
-    "Size:" : "Madhësia:",
-    "External monitoring tool" : "Mjet i kontrollit të jashtëm"
+    "Size:" : "Madhësia:"
 },"pluralForm" :"nplurals=2; plural=(n != 1);"
 }
