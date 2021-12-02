@@ -66,7 +66,6 @@ OC.L10N.register(
     "Upload max size:" : "Max uploadomvang:",
     "Type:" : "Type:",
     "Size:" : "Grootte:",
-    "You can connect an external monitoring tool by using this end point:" : "Je kunt een externe monitor-tool verbinden door dit end point te gebruiken:",
-    "To use an access token please generate one then set it using the following command:" : "Om een toegangstoken te gebruiken, genereer je er een en stel je deze in met behulp van de volgende opdracht:"
+    "You can connect an external monitoring tool by using this end point:" : "Je kunt een externe monitor-tool verbinden door dit end point te gebruiken:"
 },
 "nplurals=2; plural=(n != 1);");

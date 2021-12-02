@@ -66,7 +66,6 @@ OC.L10N.register(
     "Upload max size:" : "Tamaño máximo de envío:",
     "Type:" : "Tipo:",
     "Size:" : "Tamaño:",
-    "You can connect an external monitoring tool by using this end point:" : "Pode conectar unha ferramenta externa de seguimento usando este punto final:",
-    "To use an access token please generate one then set it using the following command:" : "Para usar un testemuño de acceso, xéreo e configúreo usando a seguinte orde:"
+    "You can connect an external monitoring tool by using this end point:" : "Pode conectar unha ferramenta externa de seguimento usando este punto final:"
 },
 "nplurals=2; plural=(n != 1);");

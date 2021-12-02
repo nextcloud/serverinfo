@@ -66,7 +66,6 @@ OC.L10N.register(
     "Upload max size:" : "גודל העלאה מרבי:",
     "Type:" : "סוג:",
     "Size:" : "גודל:",
-    "You can connect an external monitoring tool by using this end point:" : "ניתן לחבר לכלי מעקב חיצוני דרך נקודת הגישה הזאת:",
-    "To use an access token please generate one then set it using the following command:" : "כדי להשתמש באסימון גישה נא לייצור אחד ואז להגדיר אותו באמצעות הפקודה הבאה:"
+    "You can connect an external monitoring tool by using this end point:" : "ניתן לחבר לכלי מעקב חיצוני דרך נקודת הגישה הזאת:"
 },
 "nplurals=4; plural=(n == 1 && n % 1 == 0) ? 0 : (n == 2 && n % 1 == 0) ? 1: (n % 10 == 0 && n % 1 == 0 && n > 10) ? 2 : 3;");

@@ -66,7 +66,6 @@ OC.L10N.register(
     "Upload max size:" : "Максимальный размер для отправки:",
     "Type:" : "Тип:",
     "Size:" : "Размер:",
-    "You can connect an external monitoring tool by using this end point:" : "Вы можете подключить внешний мониторинг используя этот адрес:",
-    "To use an access token please generate one then set it using the following command:" : "Чтобы использовать токен доступа, сгенерируйте его, а затем установите с помощью следующей команды:"
+    "You can connect an external monitoring tool by using this end point:" : "Вы можете подключить внешний мониторинг используя этот адрес:"
 },
 "nplurals=4; plural=(n%10==1 && n%100!=11 ? 0 : n%10>=2 && n%10<=4 && (n%100<12 || n%100>14) ? 1 : n%10==0 || (n%10>=5 && n%10<=9) || (n%100>=11 && n%100<=14)? 2 : 3);");
