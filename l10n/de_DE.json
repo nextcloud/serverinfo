@@ -63,6 +63,7 @@
     "External monitoring tool" : "Externes Überwachungsprogramm",
     "You can connect an external monitoring tool by using this end point" : "Durch Verwendung des folgenden Zugangspunktes kann ein externes Überwachungsprogramm verwendet werden",
     "Appending \"?format=json\" at the end of the URL gives you the result in JSON." : "Wenn Sie \"?format=json\" am Ende der URL anhängen, erhalten Sie das Ergebnis in JSON.",
+    "To use an access token, please generate one then set it using the following command" : "Um ein Zugriffstoken zu verwenden, generieren Sie bitte eines und legen Sie es mit dem folgenden Befehl fest",
     "Then pass the token with the \"NC-Token\" header when querying the above URL." : "Übergeben Sie dann das Token mit dem Header \"NC-Token\" durch Aufrufen der obige URL.",
     "Load average" : "Durchschnittsauslastung",
     "Last minute" : "Letzte Minute",
