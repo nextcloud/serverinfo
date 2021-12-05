@@ -65,6 +65,7 @@ OC.L10N.register(
     "External monitoring tool" : "Dış izleme aracı",
     "You can connect an external monitoring tool by using this end point" : "Bu uç noktasını kullanarak bir dış izleme aracı bağlayabilirsiniz",
     "Appending \"?format=json\" at the end of the URL gives you the result in JSON." : "Adresin sonuna \"?format=json\" eklendiğinde sonuçlar JSON biçiminde alınabilir.",
+    "To use an access token, please generate one then set it using the following command" : "Bir erişim kodu kullanmak için, erişim kodunu üretin ve şu komutu yürüterek ayarlayın",
     "Then pass the token with the \"NC-Token\" header when querying the above URL." : "Ardından yukarıdaki adresi sorgularken kodu \"NC-Token\" üst bilgisi ile gönderin.",
     "Load average" : "Yük ortalaması",
     "Last minute" : "Son dakika",
