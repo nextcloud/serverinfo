@@ -57,7 +57,7 @@ OC.L10N.register(
     "Shares" : "Freigaben",
     "PHP" : "PHP",
     "Version" : "Version",
-    "Memory limit" : "Speichergrenze",
+    "Memory limit" : "Speicherlimit",
     "Max execution time" : "Maximale Ausführungszeit",
     "Upload max size" : "Maximale Größe zum Hochladen",
     "Database" : "Datenbank",
