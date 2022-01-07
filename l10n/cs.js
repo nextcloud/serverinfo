@@ -84,7 +84,6 @@ OC.L10N.register(
     "Upload max size:" : "Nejvyšší umožněná velikost nahrávaného souboru:",
     "Type:" : "Typ:",
     "Size:" : "Velikost:",
-    "You can connect an external monitoring tool by using this end point:" : "Externí dohledovací nástroj je možné napojit pomocí tohoto koncového bodu:",
-    "To use an access token please generate one then set it using the following command:" : "Aby bylo možné použít přístupový token, vytvořte ho a pak nastavte pomocí následujícího příkazu:"
+    "You can connect an external monitoring tool by using this end point:" : "Externí dohledovací nástroj je možné napojit pomocí tohoto koncového bodu:"
 },
 "nplurals=4; plural=(n == 1 && n % 1 == 0) ? 0 : (n >= 2 && n <= 4 && n % 1 == 0) ? 1: (n % 1 != 0 ) ? 2 : 3;");
