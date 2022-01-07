@@ -84,7 +84,6 @@ OC.L10N.register(
     "Upload max size:" : "最大上传大小：",
     "Type:" : "类型：",
     "Size:" : "大小：",
-    "You can connect an external monitoring tool by using this end point:" : "此地址可用于外部监控工具：",
-    "To use an access token please generate one then set it using the following command:" : "要使用一个访问令牌，请生成一个，然后使用以下命令设置它："
+    "You can connect an external monitoring tool by using this end point:" : "此地址可用于外部监控工具："
 },
 "nplurals=1; plural=0;");
