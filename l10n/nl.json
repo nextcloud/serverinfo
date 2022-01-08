@@ -82,7 +82,6 @@
     "Upload max size:" : "Max uploadomvang:",
     "Type:" : "Type:",
     "Size:" : "Grootte:",
-    "You can connect an external monitoring tool by using this end point:" : "Je kunt een externe monitor-tool verbinden door dit end point te gebruiken:",
-    "To use an access token please generate one then set it using the following command:" : "Om een toegangstoken te gebruiken, genereer er a.u.b een en stel deze in via het volgende commando:"
+    "You can connect an external monitoring tool by using this end point:" : "Je kunt een externe monitor-tool verbinden door dit end point te gebruiken:"
 },"pluralForm" :"nplurals=2; plural=(n != 1);"
 }
