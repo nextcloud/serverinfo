@@ -84,6 +84,7 @@ OC.L10N.register(
     "Upload max size:" : "Limit wielkości przesyłanego pliku (upload_max_filesize):",
     "Type:" : "Rodzaj:",
     "Size:" : "Wielkość:",
-    "You can connect an external monitoring tool by using this end point:" : "Możesz podłączyć zewnętrzne narzędzie do monitorowania, używając tego punktu końcowego:"
+    "You can connect an external monitoring tool by using this end point:" : "Możesz podłączyć zewnętrzne narzędzie do monitorowania, używając tego punktu końcowego:",
+    "To use an access token please generate one then set it using the following command:" : "Aby użyć tokena dostępu, wygeneruj go, a następnie ustaw za pomocą następującego polecenia:"
 },
 "nplurals=4; plural=(n==1 ? 0 : (n%10>=2 && n%10<=4) && (n%100<12 || n%100>14) ? 1 : n!=1 && (n%10>=0 && n%10<=1) || (n%10>=5 && n%10<=9) || (n%100>=12 && n%100<=14) ? 2 : 3);");
