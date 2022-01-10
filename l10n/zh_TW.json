@@ -82,6 +82,7 @@
     "Upload max size:" : "上傳至多:",
     "Type:" : "類型:",
     "Size:" : "大小:",
-    "You can connect an external monitoring tool by using this end point:" : "您可以使用此終端連接外部監視工具："
+    "You can connect an external monitoring tool by using this end point:" : "您可以使用此終端連接外部監視工具：",
+    "To use an access token please generate one then set it using the following command:" : "要使用存取權杖，請先生成一個，然後使用以下指令來設定："
 },"pluralForm" :"nplurals=1; plural=0;"
 }
