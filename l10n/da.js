@@ -55,7 +55,6 @@ OC.L10N.register(
     "Total" : "Total",
     "Current usage" : "Nuværende forbrug",
     "Mails" : "Mails",
-    "Time Servers" : "Time Servers",
     "Files:" : "Filer:",
     "Storages:" : "Lagre:",
     "Free Space:" : "Ledig plads:",

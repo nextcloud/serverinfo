@@ -54,7 +54,6 @@ OC.L10N.register(
     "Total" : "Укупно",
     "Current usage" : "Тренутна употреба",
     "Mails" : "Поруке е-поште",
-    "Time Servers" : "Сервери за време",
     "Files:" : "Фајлова:",
     "Storages:" : "Складишта:",
     "Free Space:" : "Слободно место:",

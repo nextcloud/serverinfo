@@ -53,7 +53,6 @@ OC.L10N.register(
     "Total" : "Kopā",
     "Current usage" : "Pašreizējā izmantošana",
     "Mails" : "E-pasta sūtījumi",
-    "Time Servers" : "Laika serveri",
     "Files:" : "Datnes:",
     "Storages:" : "Glabātavas:",
     "Free Space:" : "Brīva vieta:",
