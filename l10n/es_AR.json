@@ -1,9 +1,4 @@
 { "translations": {
-    "Load average" : "Carga promedio",
-    "Last minute" : "Último minuto",
-    "Memory info not available" : "Información de la memoria no disponible",
-    "Total" : "Total",
-    "Current usage" : "Uso actual",
     "Users" : "Ususarios",
     "Groups" : "Grupos",
     "Links" : "Links",
@@ -19,19 +14,24 @@
     "System" : "Sistema",
     "Monitoring" : "Monitoreo",
     "Size" : "Tamaño",
-    "Files:" : "Archivos:",
     "Hostname" : "Nombre del servidor",
     "Status" : "Estatus",
     "Active users" : "Usuarios activos",
     "Shares" : "Elementos compartido",
     "PHP" : "PHP",
+    "Database" : "Base de datos",
+    "External monitoring tool" : "Herramienta de montoreo externa",
+    "Load average" : "Carga promedio",
+    "Last minute" : "Último minuto",
+    "Memory info not available" : "Información de la memoria no disponible",
+    "Total" : "Total",
+    "Current usage" : "Uso actual",
+    "Files:" : "Archivos:",
     "Version:" : "Versión:",
     "Memory Limit:" : "Límite de Memoria:",
     "Max Execution Time:" : "Tiempo Max de Ejecución:",
     "Upload max size:" : "Tamaño máximo de carga:",
-    "Database" : "Base de datos",
     "Type:" : "Tipo:",
-    "Size:" : "Tamaño:",
-    "External monitoring tool" : "Herramienta de montoreo externa"
+    "Size:" : "Tamaño:"
 },"pluralForm" :"nplurals=2; plural=(n != 1);"
 }

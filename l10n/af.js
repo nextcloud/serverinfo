@@ -1,8 +1,6 @@
 OC.L10N.register(
     "serverinfo",
     {
-    "Total" : "Totaal",
-    "Current usage" : "Huidige gebruik",
     "Users" : "Gebruikers",
     "Groups" : "Groepe",
     "Links" : "Skakels",
@@ -14,12 +12,14 @@ OC.L10N.register(
     "Press Ctrl-C to copy." : "Druk Ctrl-C om te kopieer.",
     "System" : "Stelsel",
     "Size" : "Grootte",
-    "Files:" : "Lêers",
     "Active users" : "Aktiewe gebruikers",
     "PHP" : "PHP",
+    "Database" : "Databasis",
+    "Total" : "Totaal",
+    "Current usage" : "Huidige gebruik",
+    "Files:" : "Lêers",
     "Version:" : "Weergawe:",
     "Memory Limit:" : "Geheuelimiet:",
-    "Database" : "Databasis",
     "Type:" : "Tipe:",
     "Size:" : "Grootte:"
 },
