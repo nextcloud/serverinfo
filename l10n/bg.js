@@ -55,7 +55,6 @@ OC.L10N.register(
     "Total" : "Общо",
     "Current usage" : "Текуща употреба",
     "Mails" : "Пощи",
-    "Time Servers" : "Времеви сървъри",
     "Files:" : "Файлове:",
     "Storages:" : "Хранилища:",
     "Free Space:" : "Свободно място:",

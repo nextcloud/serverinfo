@@ -53,7 +53,6 @@ OC.L10N.register(
     "Total" : "Sumo",
     "Current usage" : "Nuna uzado",
     "Mails" : "Retpoŝtoj",
-    "Time Servers" : "Temposerviloj",
     "Files:" : "Dosieroj:",
     "Storages:" : "Konservejoj:",
     "Free Space:" : "Libera spaco:",

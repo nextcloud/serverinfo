@@ -71,7 +71,6 @@ OC.L10N.register(
     "Total" : "Всего",
     "Current usage" : "Текущая нагрузка",
     "Mails" : "Почты",
-    "Time Servers" : "Серверы времени",
     "Files:" : "Файлы:",
     "Storages:" : "Хранилища:",
     "Free Space:" : "Свободно:",

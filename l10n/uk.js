@@ -53,7 +53,6 @@ OC.L10N.register(
     "Total" : "Разом",
     "Current usage" : "Поточне використання",
     "Mails" : "Пошта",
-    "Time Servers" : "Сервери часу",
     "Files:" : "Файлів:",
     "Storages:" : "Сховищ:",
     "Free Space:" : "Вільно:",

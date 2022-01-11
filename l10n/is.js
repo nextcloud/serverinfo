@@ -54,7 +54,6 @@ OC.L10N.register(
     "Total" : "Alls",
     "Current usage" : "Núverandi notkun",
     "Mails" : "Póstar",
-    "Time Servers" : "Tímaþjónar",
     "Files:" : "Skrár:",
     "Storages:" : "Gagnageymslur",
     "Free Space:" : "Laust diskapláss:",

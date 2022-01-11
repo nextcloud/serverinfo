@@ -73,7 +73,6 @@ OC.L10N.register(
     "Total" : "Toplam",
     "Current usage" : "Güncel kullanım",
     "Mails" : "E-postalar",
-    "Time Servers" : "Saat sunucuları",
     "Files:" : "Dosyalar:",
     "Storages:" : "Depolama birimleri:",
     "Free Space:" : "Boş alan:",
@@ -84,6 +83,7 @@ OC.L10N.register(
     "Upload max size:" : "En büyük yükleme boyutu:",
     "Type:" : "Tür:",
     "Size:" : "Boyut:",
-    "You can connect an external monitoring tool by using this end point:" : "Bu uç noktasını kullanarak bir dış izleme aracı bağlayabilirsiniz:"
+    "You can connect an external monitoring tool by using this end point:" : "Bu uç noktasını kullanarak bir dış izleme aracı bağlayabilirsiniz:",
+    "To use an access token please generate one then set it using the following command:" : "Erişim kodunu kullanmak için yeni bir kod üretip şu komutu yürüterek ayarlayın:"
 },
 "nplurals=2; plural=(n > 1);");

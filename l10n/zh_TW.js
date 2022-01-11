@@ -73,7 +73,6 @@ OC.L10N.register(
     "Total" : "總計",
     "Current usage" : "目前使用量",
     "Mails" : "郵件",
-    "Time Servers" : "時間伺服器",
     "Files:" : "檔案:",
     "Storages:" : "儲存設備：",
     "Free Space:" : "可用空間：",

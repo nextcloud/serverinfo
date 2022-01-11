@@ -53,7 +53,6 @@ OC.L10N.register(
     "Total" : "جمع",
     "Current usage" : "مصرف کنونی",
     "Mails" : "نامه",
-    "Time Servers" : "زمان سرور",
     "Files:" : "فایل ها:",
     "Storages:" : "انبارها:",
     "Free Space:" : "فضای خالی:",

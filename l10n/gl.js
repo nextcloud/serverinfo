@@ -55,7 +55,6 @@ OC.L10N.register(
     "Total" : "Total",
     "Current usage" : "Uso actual",
     "Mails" : "Correos",
-    "Time Servers" : "Servidores de hora",
     "Files:" : "Ficheiros:",
     "Storages:" : "Almacenamentos:",
     "Free Space:" : "Espazo libre:",

@@ -71,7 +71,6 @@ OC.L10N.register(
     "Total" : "Guztira",
     "Current usage" : "Gaur egungo erabilera",
     "Mails" : "Posta",
-    "Time Servers" : "Denbora-zerbitzariak",
     "Files:" : "Fitxategiak:",
     "Storages:" : "Biltegiak:",
     "Free Space:" : "Leku librea:",
