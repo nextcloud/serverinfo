@@ -54,7 +54,6 @@ OC.L10N.register(
     "Total" : "Yhteensä",
     "Current usage" : "Tämänhetkinen kulutus",
     "Mails" : "Sähköpostit",
-    "Time Servers" : "Aikapalvelimet",
     "Files:" : "Tiedostoja:",
     "Storages:" : "Tallennustilat:",
     "Free Space:" : "Vapaata tilaa:",

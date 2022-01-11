@@ -73,7 +73,6 @@ OC.L10N.register(
     "Total" : "总量",
     "Current usage" : "当前用量",
     "Mails" : "邮件",
-    "Time Servers" : "时间服务器",
     "Files:" : "文件：",
     "Storages:" : "存储设备：",
     "Free Space:" : "剩余空间：",

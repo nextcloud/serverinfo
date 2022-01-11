@@ -47,7 +47,6 @@ OC.L10N.register(
     "Total" : "Iš viso",
     "Current usage" : "Dabartinis sunaudojimas",
     "Mails" : "El. laiškai",
-    "Time Servers" : "Laiko serveriai",
     "Files:" : "Failai:",
     "Storages:" : "Saugyklos:",
     "Free Space:" : "Laisva vieta:",

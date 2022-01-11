@@ -54,7 +54,6 @@ OC.L10N.register(
     "Total" : "Skupaj",
     "Current usage" : "Trenutna zasedenost",
     "Mails" : "Sporočila",
-    "Time Servers" : "Časovni strežniki",
     "Files:" : "Datoteke:",
     "Storages:" : "Shrambe:",
     "Free Space:" : "Prostor:",

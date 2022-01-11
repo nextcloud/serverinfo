@@ -54,7 +54,6 @@ OC.L10N.register(
     "Total" : "Totalt",
     "Current usage" : "Nuvarande användning",
     "Mails" : "E-post",
-    "Time Servers" : "Tidservrar",
     "Files:" : "Filer:",
     "Storages:" : "Lagring:",
     "Free Space:" : "Ledigt utrymme:",

@@ -73,7 +73,6 @@ OC.L10N.register(
     "Total" : "Gesamt",
     "Current usage" : "Aktuelle Nutzung",
     "Mails" : "E-Mails",
-    "Time Servers" : "Zeitserver",
     "Files:" : "Dateien:",
     "Storages:" : "Speicher:",
     "Free Space:" : "Freier Speicherplatz:",

@@ -55,7 +55,6 @@ OC.L10N.register(
     "Total" : "Összes",
     "Current usage" : "Aktuális használat",
     "Mails" : "Levelek",
-    "Time Servers" : "Időkiszolgálók",
     "Files:" : "Fájlok:",
     "Storages:" : "Tárhelyek:",
     "Free Space:" : "Szabad hely:",

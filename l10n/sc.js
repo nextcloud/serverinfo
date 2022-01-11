@@ -55,7 +55,6 @@ OC.L10N.register(
     "Total" : "Totale",
     "Current usage" : "Impreu atuale",
     "Mails" : "Messàgios de posta",
-    "Time Servers" : "Serbidores de s'ora",
     "Files:" : "Archìviu:",
     "Storages:" : "Archiviatziones:",
     "Free Space:" : "Logu lìberu:",

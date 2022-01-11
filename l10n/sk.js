@@ -73,7 +73,6 @@ OC.L10N.register(
     "Total" : "Celkovo",
     "Current usage" : "Aktuálne využitie",
     "Mails" : "Maily",
-    "Time Servers" : "Servery času",
     "Files:" : "Súbory:",
     "Storages:" : "Úložiská:",
     "Free Space:" : "Voľné miesto:",

@@ -55,7 +55,6 @@ OC.L10N.register(
     "Total" : "סך הכול",
     "Current usage" : "שימוש נוכחי",
     "Mails" : "פריטי דוא״ל",
-    "Time Servers" : "שרתי זמן",
     "Files:" : "קבצים",
     "Storages:" : "אמצעי אחסון:",
     "Free Space:" : "מקום פנוי:",

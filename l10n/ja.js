@@ -65,7 +65,6 @@ OC.L10N.register(
     "Total" : "合計",
     "Current usage" : "現在の利用量",
     "Mails" : "メール",
-    "Time Servers" : "タイムサーバー",
     "Files:" : "ファイル数:",
     "Storages:" : "ストレージ：",
     "Free Space:" : "空き容量：",

@@ -73,7 +73,6 @@ OC.L10N.register(
     "Total" : "Totale",
     "Current usage" : "Utilizzo attuale",
     "Mails" : "Messaggi di posta",
-    "Time Servers" : "Server dell'ora",
     "Files:" : "File:",
     "Storages:" : "Archiviazioni:",
     "Free Space:" : "Spazio libero:",
@@ -84,6 +83,7 @@ OC.L10N.register(
     "Upload max size:" : "Dimensione massima caricamento:",
     "Type:" : "Tipo:",
     "Size:" : "Dimensione:",
-    "You can connect an external monitoring tool by using this end point:" : "Puoi collegare uno strumento di controllo esterno utilizzando questo terminatore: "
+    "You can connect an external monitoring tool by using this end point:" : "Puoi collegare uno strumento di controllo esterno utilizzando questo terminatore: ",
+    "To use an access token please generate one then set it using the following command:" : "Per usare un token di accesso, generane uno e poi impostalo con il comando seguente:"
 },
 "nplurals=2; plural=(n != 1);");
