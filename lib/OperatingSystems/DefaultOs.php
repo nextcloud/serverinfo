@@ -166,13 +166,16 @@ class DefaultOs implements IOperatingSystem {
 			$iface['ipv6']      = shell_exec('ip -o -6 addr show ' . $iface['interface'] . ' | sed -e \'s/^.*inet6 \([^ ]\+\).*/\1/\'');
 			if ($iface['interface'] !== 'lo') {
 				$iface['status'] = shell_exec('cat /sys/class/net/' . $iface['interface'] . '/operstate');
-				$iface['speed']  = shell_exec('cat /sys/class/net/' . $iface['interface'] . '/speed');
-				if (isset($iface['speed']) && $iface['speed'] !== '') {
-					$iface['speed'] = $iface['speed'] . 'Mbps';
+				$iface['speed']  = (int)shell_exec('cat /sys/class/net/' . $iface['interface'] . '/speed');
+				if (isset($iface['speed']) && $iface['speed'] > 0) {
+					if ($iface['speed'] >= 1000) {
+						$iface['speed'] = $iface['speed'] / 1000 . ' Gbps';
+					} else {
+						$iface['speed'] = $iface['speed'] . ' Mbps';
+					}
 				} else {
 					$iface['speed'] = 'unknown';
 				}
-
 				$duplex = shell_exec('cat /sys/class/net/' . $iface['interface'] . '/duplex');
 				if (isset($duplex) && $duplex !== '') {
 					$iface['duplex'] = 'Duplex: ' . $duplex;
