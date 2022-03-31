@@ -68,7 +68,6 @@ class PhpStatistics {
 		}
 
 		// get status information about the cache
-		// $status = opcache_get_status(false);
 		$status = (function_exists('opcache_get_status')) ? opcache_get_status(false) : false;
 
 		if ($status === false) {
