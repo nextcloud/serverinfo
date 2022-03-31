@@ -8,7 +8,7 @@ on:
       - stable*
 
 env:
-  APP_NAME: recommendations
+  APP_NAME: serverinfo
 
 jobs:
   oci:
@@ -54,7 +54,7 @@ jobs:
         with:
           php-version: "${{ matrix.php-versions }}"
           extensions: mbstring, iconv, fileinfo, intl, oci8
-          tools: phpunit:8.5.2
+          tools: phpunit:9
           coverage: none
 
       - name: Set up PHPUnit
