@@ -159,14 +159,14 @@ class DefaultOs implements IOperatingSystem {
 		$result = [];
 
 		foreach ($interfaces as $interface) {
-			$iface              = [];
+			$iface = [];
 			$iface['interface'] = basename($interface);
-			$iface['mac']       = shell_exec('ip addr show dev ' . $iface['interface'] . ' | grep "link/ether " | cut -d \' \' -f 6  | cut -f 1 -d \'/\'');
-			$iface['ipv4']      = shell_exec('ip addr show dev ' . $iface['interface'] . ' | grep "inet " | cut -d \' \' -f 6  | cut -f 1 -d \'/\'');
-			$iface['ipv6']      = shell_exec('ip -o -6 addr show ' . $iface['interface'] . ' | sed -e \'s/^.*inet6 \([^ ]\+\).*/\1/\'');
+			$iface['mac'] = shell_exec('ip addr show dev ' . $iface['interface'] . ' | grep "link/ether " | cut -d \' \' -f 6  | cut -f 1 -d \'/\'');
+			$iface['ipv4'] = shell_exec('ip addr show dev ' . $iface['interface'] . ' | grep "inet " | cut -d \' \' -f 6  | cut -f 1 -d \'/\'');
+			$iface['ipv6'] = shell_exec('ip -o -6 addr show ' . $iface['interface'] . ' | sed -e \'s/^.*inet6 \([^ ]\+\).*/\1/\'');
 			if ($iface['interface'] !== 'lo') {
 				$iface['status'] = shell_exec('cat /sys/class/net/' . $iface['interface'] . '/operstate');
-				$iface['speed']  = (int)shell_exec('cat /sys/class/net/' . $iface['interface'] . '/speed');
+				$iface['speed'] = (int)shell_exec('cat /sys/class/net/' . $iface['interface'] . '/speed');
 				if (isset($iface['speed']) && $iface['speed'] > 0) {
 					if ($iface['speed'] >= 1000) {
 						$iface['speed'] = $iface['speed'] / 1000 . ' Gbps';
@@ -184,7 +184,7 @@ class DefaultOs implements IOperatingSystem {
 				}
 			} else {
 				$iface['status'] = 'up';
-				$iface['speed']  = 'unknown';
+				$iface['speed'] = 'unknown';
 				$iface['duplex'] = '';
 			}
 			$result[] = $iface;

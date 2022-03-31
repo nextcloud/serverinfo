@@ -101,16 +101,16 @@ class ApiController extends OCSController {
 								SessionStatistics $sessionStatistics) {
 		parent::__construct($appName, $request);
 
-		$this->config             = $config;
-		$this->groupManager       = $groupManager;
-		$this->userSession        = $userSession;
-		$this->os                 = $os;
-		$this->systemStatistics   = $systemStatistics;
-		$this->storageStatistics  = $storageStatistics;
-		$this->phpStatistics      = $phpStatistics;
+		$this->config = $config;
+		$this->groupManager = $groupManager;
+		$this->userSession = $userSession;
+		$this->os = $os;
+		$this->systemStatistics = $systemStatistics;
+		$this->storageStatistics = $storageStatistics;
+		$this->phpStatistics = $phpStatistics;
 		$this->databaseStatistics = $databaseStatistics;
-		$this->shareStatistics    = $shareStatistics;
-		$this->sessionStatistics  = $sessionStatistics;
+		$this->shareStatistics = $shareStatistics;
+		$this->sessionStatistics = $sessionStatistics;
 	}
 
 	/**
@@ -159,14 +159,14 @@ class ApiController extends OCSController {
 		}
 		return new DataResponse([
 			'nextcloud' => [
-				'system'  => $this->systemStatistics->getSystemStatistics(),
+				'system' => $this->systemStatistics->getSystemStatistics(),
 				'storage' => $this->storageStatistics->getStorageStatistics(),
-				'shares'  => $this->shareStatistics->getShareStatistics()
+				'shares' => $this->shareStatistics->getShareStatistics()
 			],
 			'server' => [
 				'webserver' => $this->getWebserver(),
-				'php'       => $this->phpStatistics->getPhpStatistics(),
-				'database'  => $this->databaseStatistics->getDatabaseStatistics()
+				'php' => $this->phpStatistics->getPhpStatistics(),
+				'database' => $this->databaseStatistics->getDatabaseStatistics()
 			],
 			'activeUsers' => $this->sessionStatistics->getSessionStatistics()
 		]);
@@ -176,8 +176,8 @@ class ApiController extends OCSController {
 	 * @return DataResponse
 	 */
 	public function BasicData(): DataResponse {
-		$servertime  = $this->os->getTime();
-		$uptime      = $this->formatUptime($this->os->getUptime());
+		$servertime = $this->os->getTime();
+		$uptime = $this->formatUptime($this->os->getUptime());
 
 		return new DataResponse([
 			'servertime' => $servertime,
