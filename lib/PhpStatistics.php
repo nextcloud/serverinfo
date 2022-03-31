@@ -120,7 +120,7 @@ class PhpStatistics {
 	 * @return string as csv list of loaded extensions
 	 */
 	protected function getLoadedPhpExtensions(): string {
-		$extensions = get_loaded_extensions();
+		$extensions = (function_exists('get_loaded_extensions') ? get_loaded_extensions() : ['Unable to list extensions']);
 		return implode(', ', $extensions);
 	}
 }
