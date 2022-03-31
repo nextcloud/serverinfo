@@ -1,10 +1,24 @@
 {
 	"require-dev": {
 		"nextcloud/coding-standard": "^0.4.0",
+		"christophwurst/nextcloud": "dev-master@dev",
+		"psalm/phar": "^4.22",
 		"phpunit/phpunit": "^9.5"
 	},
 	"scripts": {
 		"cs:check": "php-cs-fixer fix --dry-run --diff",
-		"cs:fix": "php-cs-fixer fix"
+		"cs:fix": "php-cs-fixer fix",
+		"psalm": "psalm.phar --threads=1",
+		"psalm:update-baseline": "psalm.phar --threads=1 --update-baseline --set-baseline=tests/psalm-baseline.xml",
+		"psalm:clear": "psalm.phar --clear-cache && psalm --clear-global-cache",
+		"psalm:fix": "psalm.phar --alter --issues=InvalidReturnType,InvalidNullableReturnType,MissingParamType,InvalidFalsableReturnType"
+	},
+	"config": {
+		"allow-plugins": {
+			"composer/package-versions-deprecated": true
+		},
+		"platform": {
+			"php": "7.4"
+		}
 	}
 }

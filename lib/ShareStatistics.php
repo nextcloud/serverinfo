@@ -59,13 +59,13 @@ class ShareStatistics {
 
 		$data = [
 			'num_shares' => $this->countEntries('share'),
-			'num_shares_user' => $this->countShares(\OCP\Share::SHARE_TYPE_USER),
-			'num_shares_groups' => $this->countShares(\OCP\Share::SHARE_TYPE_GROUP),
-			'num_shares_link' => $this->countShares(\OCP\Share::SHARE_TYPE_LINK),
-			'num_shares_mail' => $this->countShares(\OCP\Share::SHARE_TYPE_EMAIL),
-			'num_shares_room' => $this->countShares(\OCP\Share::SHARE_TYPE_ROOM),
-			'num_shares_link_no_password' => $this->countShares(\OCP\Share::SHARE_TYPE_LINK, true),
-			'num_fed_shares_sent' => $this->countShares(\OCP\Share::SHARE_TYPE_REMOTE),
+			'num_shares_user' => $this->countShares(\OCP\Share\IShare::TYPE_USER),
+			'num_shares_groups' => $this->countShares(\OCP\Share\IShare::TYPE_GROUP),
+			'num_shares_link' => $this->countShares(\OCP\Share\IShare::TYPE_LINK),
+			'num_shares_mail' => $this->countShares(\OCP\Share\IShare::TYPE_EMAIL),
+			'num_shares_room' => $this->countShares(\OCP\Share\IShare::TYPE_ROOM),
+			'num_shares_link_no_password' => $this->countShares(\OCP\Share\IShare::TYPE_LINK, true),
+			'num_fed_shares_sent' => $this->countShares(\OCP\Share\IShare::TYPE_REMOTE),
 			'num_fed_shares_received' => $this->countEntries('share_external'),
 		];
 		while ($row = $result->fetch()) {

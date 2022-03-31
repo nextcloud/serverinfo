@@ -27,10 +27,6 @@ use OCA\ServerInfo\Resources\Disk;
 use OCA\ServerInfo\Resources\Memory;
 
 class DefaultOs implements IOperatingSystem {
-
-	/**
-	 * @return bool
-	 */
 	public function supported(): bool {
 		return true;
 	}
@@ -116,12 +112,8 @@ class DefaultOs implements IOperatingSystem {
 		return $data;
 	}
 
-	/**
-	 * @return string
-	 */
-	public function getTime(): string {
-		$date = shell_exec('date');
-		return $date;
+	public function getTime(): ?string {
+		return shell_exec('date');
 	}
 
 	public function getUptime(): int {
@@ -138,9 +130,6 @@ class DefaultOs implements IOperatingSystem {
 		return $uptimeInSeconds;
 	}
 
-	/**
-	 * @return array
-	 */
 	public function getNetworkInfo(): array {
 		$result = [];
 		$result['hostname'] = \gethostname();
@@ -151,9 +140,6 @@ class DefaultOs implements IOperatingSystem {
 		return $result;
 	}
 
-	/**
-	 * @return array
-	 */
 	public function getNetworkInterfaces(): array {
 		$interfaces = glob('/sys/class/net/*');
 		$result = [];

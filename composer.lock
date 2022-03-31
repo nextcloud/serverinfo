@@ -4,9 +4,89 @@
         "Read more about it at https://getcomposer.org/doc/01-basic-usage.md#installing-dependencies",
         "This file is @generated automatically"
     ],
-    "content-hash": "de2e77413a42aef8e24db1a8a76324c8",
-    "packages": [],
+    "content-hash": "eb9d2ce7e9356c9321500e08bfc16f25",
+    "packages": [
+        {
+            "name": "psalm/phar",
+            "version": "4.22.0",
+            "source": {
+                "type": "git",
+                "url": "https://github.com/psalm/phar.git",
+                "reference": "feebed09c9782d9aaa819b794d880c2671ba0e4c"
+            },
+            "dist": {
+                "type": "zip",
+                "url": "https://api.github.com/repos/psalm/phar/zipball/feebed09c9782d9aaa819b794d880c2671ba0e4c",
+                "reference": "feebed09c9782d9aaa819b794d880c2671ba0e4c",
+                "shasum": ""
+            },
+            "require": {
+                "php": "^7.1 || ^8.0"
+            },
+            "conflict": {
+                "vimeo/psalm": "*"
+            },
+            "bin": [
+                "psalm.phar"
+            ],
+            "type": "library",
+            "notification-url": "https://packagist.org/downloads/",
+            "license": [
+                "MIT"
+            ],
+            "description": "Composer-based Psalm Phar",
+            "support": {
+                "issues": "https://github.com/psalm/phar/issues",
+                "source": "https://github.com/psalm/phar/tree/4.22.0"
+            },
+            "time": "2022-02-27T11:01:37+00:00"
+        }
+    ],
     "packages-dev": [
+        {
+            "name": "christophwurst/nextcloud",
+            "version": "dev-master",
+            "source": {
+                "type": "git",
+                "url": "https://github.com/ChristophWurst/nextcloud_composer.git",
+                "reference": "dca072ad12ea0ff201fa46da18f46dd1928eb139"
+            },
+            "dist": {
+                "type": "zip",
+                "url": "https://api.github.com/repos/ChristophWurst/nextcloud_composer/zipball/dca072ad12ea0ff201fa46da18f46dd1928eb139",
+                "reference": "dca072ad12ea0ff201fa46da18f46dd1928eb139",
+                "shasum": ""
+            },
+            "require": {
+                "php": "^7.4 || ~8.0 || ~8.1",
+                "psr/container": "^1.0",
+                "psr/event-dispatcher": "^1.0",
+                "psr/log": "^1.1"
+            },
+            "default-branch": true,
+            "type": "library",
+            "extra": {
+                "branch-alias": {
+                    "dev-master": "24.0.0-dev"
+                }
+            },
+            "notification-url": "https://packagist.org/downloads/",
+            "license": [
+                "AGPL-3.0-or-later"
+            ],
+            "authors": [
+                {
+                    "name": "Christoph Wurst",
+                    "email": "christoph@winzerhof-wurst.at"
+                }
+            ],
+            "description": "Composer package containing Nextcloud's public API (classes, interfaces)",
+            "support": {
+                "issues": "https://github.com/ChristophWurst/nextcloud_composer/issues",
+                "source": "https://github.com/ChristophWurst/nextcloud_composer/tree/master"
+            },
+            "time": "2022-03-30T01:48:24+00:00"
+        },
         {
             "name": "composer/pcre",
             "version": "1.0.1",
@@ -4249,10 +4329,15 @@
     ],
     "aliases": [],
     "minimum-stability": "stable",
-    "stability-flags": [],
+    "stability-flags": {
+        "christophwurst/nextcloud": 20
+    },
     "prefer-stable": false,
     "prefer-lowest": false,
     "platform": [],
     "platform-dev": [],
-    "plugin-api-version": "2.1.0"
+    "platform-overrides": {
+        "php": "7.4"
+    },
+    "plugin-api-version": "2.2.0"
 }
