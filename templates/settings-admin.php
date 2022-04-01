@@ -281,6 +281,10 @@ $disks = $_['diskinfo'];
 							<?php p($l->t('Upload max size').':'); ?>
 							<em id="phpUploadMaxSize"><?php p($_['php']['upload_max_filesize']); ?></em>
 						</p>
+						<p>
+							<?php p($l->t('Extensions:')); ?>
+							<em id="phpExtensions"><?php p($_['php']['extensions']); ?></em>
+						</p>
 					</div>
 				</div>
 			</div>

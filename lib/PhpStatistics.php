@@ -47,6 +47,7 @@ class PhpStatistics {
 			'upload_max_filesize' => $this->phpIni->getBytes('upload_max_filesize'),
 			'opcache' => $this->getOPcacheStatus(),
 			'apcu' => $this->getAPCuStatus(),
+			'extensions' => $this->getLoadedPhpExtensions(),
 		];
 	}
 
@@ -106,5 +107,15 @@ class PhpStatistics {
 			'cache' => $cacheInfo,
 			'sma' => $smaInfo,
 		];
+	}
+
+	/**
+	 * Get all loaded php extensions
+	 *
+	 * @return string as csv list of loaded extensions
+	 */
+	protected function getLoadedPhpExtensions(): string {
+		$extensions = (function_exists('get_loaded_extensions') ? get_loaded_extensions() : ['Unable to list extensions']);
+		return implode(', ', $extensions);
 	}
 }
