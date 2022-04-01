@@ -43,7 +43,7 @@ class ApiController extends OCSController {
 	private Os $os;
 	private IConfig $config;
 	private IGroupManager $groupManager;
-	private IUserSession $userSession;
+	private ?IUserSession $userSession;
 	private SystemStatistics $systemStatistics;
 	private StorageStatistics $storageStatistics;
 	private PhpStatistics $phpStatistics;
