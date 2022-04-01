@@ -11,18 +11,6 @@
     </UndefinedInterfaceMethod>
   </file>
   <file src="lib/OperatingSystems/DefaultOs.php">
-    <ForbiddenCode occurrences="10">
-      <code>shell_exec('cat /etc/resolv.conf |grep -i \'^nameserver\'|head -n1|cut -d \' \' -f2')</code>
-      <code>shell_exec('cat /sys/class/net/' . $iface['interface'] . '/duplex')</code>
-      <code>shell_exec('cat /sys/class/net/' . $iface['interface'] . '/operstate')</code>
-      <code>shell_exec('cat /sys/class/net/' . $iface['interface'] . '/speed')</code>
-      <code>shell_exec('date')</code>
-      <code>shell_exec('ip -o -6 addr show ' . $iface['interface'] . ' | sed -e \'s/^.*inet6 \([^ ]\+\).*/\1/\'')</code>
-      <code>shell_exec('ip addr show dev ' . $iface['interface'] . ' | grep "inet " | cut -d \' \' -f 6  | cut -f 1 -d \'/\'')</code>
-      <code>shell_exec('ip addr show dev ' . $iface['interface'] . ' | grep "link/ether " | cut -d \' \' -f 6  | cut -f 1 -d \'/\'')</code>
-      <code>shell_exec('ip route | awk \'/default/ { print $3 }\'')</code>
-      <code>shell_exec(escapeshellcmd($command))</code>
-    </ForbiddenCode>
     <InvalidOperand occurrences="3">
       <code>$matches['Available'][$i]</code>
       <code>$matches['Used'][$i]</code>
@@ -30,9 +18,6 @@
     </InvalidOperand>
   </file>
   <file src="lib/OperatingSystems/FreeBSD.php">
-    <ForbiddenCode occurrences="1">
-      <code>shell_exec(escapeshellcmd($command))</code>
-    </ForbiddenCode>
     <InvalidOperand occurrences="8">
       <code>$lines[0]</code>
       <code>$lines[1]</code>

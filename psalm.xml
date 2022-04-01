@@ -53,5 +53,6 @@
 				<referencedClass name="OC\Security\CSP\ContentSecurityPolicyNonceManager" />
 			</errorLevel>
 		</UndefinedDocblockClass>
+		<ForbiddenCode errorLevel="suppress"/>
 	</issueHandlers>
 </psalm>
