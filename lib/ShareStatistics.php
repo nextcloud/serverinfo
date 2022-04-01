@@ -25,22 +25,11 @@ declare(strict_types=1);
 
 namespace OCA\ServerInfo;
 
-use OC\Files\View;
 use OCP\IDBConnection;
 
 class ShareStatistics {
+	protected IDBConnection $connection;
 
-	/** @var IDBConnection */
-	protected $connection;
-
-	/** @var  View on data/ */
-	protected $view;
-
-	/**
-	 * ShareStatistics constructor.
-	 *
-	 * @param IDBConnection $connection
-	 */
 	public function __construct(IDBConnection $connection) {
 		$this->connection = $connection;
 	}
@@ -55,17 +44,17 @@ class ShareStatistics {
 			->from('share')
 			->addGroupBy('permissions')
 			->addGroupBy('share_type');
-		$result = $query->execute();
+		$result = $query->executeQuery();
 
 		$data = [
 			'num_shares' => $this->countEntries('share'),
-			'num_shares_user' => $this->countShares(\OCP\Share::SHARE_TYPE_USER),
-			'num_shares_groups' => $this->countShares(\OCP\Share::SHARE_TYPE_GROUP),
-			'num_shares_link' => $this->countShares(\OCP\Share::SHARE_TYPE_LINK),
-			'num_shares_mail' => $this->countShares(\OCP\Share::SHARE_TYPE_EMAIL),
-			'num_shares_room' => $this->countShares(\OCP\Share::SHARE_TYPE_ROOM),
-			'num_shares_link_no_password' => $this->countShares(\OCP\Share::SHARE_TYPE_LINK, true),
-			'num_fed_shares_sent' => $this->countShares(\OCP\Share::SHARE_TYPE_REMOTE),
+			'num_shares_user' => $this->countShares(\OCP\Share\IShare::TYPE_USER),
+			'num_shares_groups' => $this->countShares(\OCP\Share\IShare::TYPE_GROUP),
+			'num_shares_link' => $this->countShares(\OCP\Share\IShare::TYPE_LINK),
+			'num_shares_mail' => $this->countShares(\OCP\Share\IShare::TYPE_EMAIL),
+			'num_shares_room' => $this->countShares(\OCP\Share\IShare::TYPE_ROOM),
+			'num_shares_link_no_password' => $this->countShares(\OCP\Share\IShare::TYPE_LINK, true),
+			'num_fed_shares_sent' => $this->countShares(\OCP\Share\IShare::TYPE_REMOTE),
 			'num_fed_shares_received' => $this->countEntries('share_external'),
 		];
 		while ($row = $result->fetch()) {
@@ -84,7 +73,7 @@ class ShareStatistics {
 		$query = $this->connection->getQueryBuilder();
 		$query->selectAlias($query->createFunction('COUNT(*)'), 'num_entries')
 			->from($tableName);
-		$result = $query->execute();
+		$result = $query->executeQuery();
 		$row = $result->fetch();
 		$result->closeCursor();
 
@@ -106,7 +95,7 @@ class ShareStatistics {
 			$query->andWhere($query->expr()->isNull('password'));
 		}
 
-		$result = $query->execute();
+		$result = $query->executeQuery();
 		$row = $result->fetch();
 		$result->closeCursor();
 

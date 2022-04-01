@@ -61,8 +61,6 @@ interface IOperatingSystem {
 	 *        'gateway' => string,
 	 *        'hostname' => string,
 	 * ]
-	 *
-	 * @return array
 	 */
 	public function getNetworkInfo(): array;
 
@@ -80,22 +78,17 @@ interface IOperatingSystem {
 	 *             'status' => string,
 	 *       ],
 	 * ]
-	 *
-	 * @return array
 	 */
 	public function getNetworkInterfaces(): array;
 
 	/**
 	 * Get system time and timezone.
-	 *
-	 * @return Memory
+	 * Empty string in case of errors
 	 */
 	public function getTime(): string;
 
 	/**
 	 * Get the total number of seconds the system has been up or -1 on failure.
-	 *
-	 * @return int
 	 */
 	public function getUptime(): int;
 }

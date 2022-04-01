@@ -25,33 +25,25 @@ declare(strict_types=1);
 
 namespace OCA\ServerInfo;
 
-use Doctrine\DBAL\DBALException;
 use OCP\IConfig;
 use OCP\IDBConnection;
+use OCP\DB\Exception;
 
 class DatabaseStatistics {
+	protected IConfig $config;
+	protected IDBConnection $connection;
 
-	/** @var \OCP\IConfig */
-	protected $config;
-
-	/** @var \OCP\IDBConnection */
-	protected $connection;
-
-	/**
-	 * @param IConfig $config
-	 * @param IDBConnection $connection
-	 */
 	public function __construct(IConfig $config, IDBConnection $connection) {
 		$this->config = $config;
 		$this->connection = $connection;
 	}
 
 	/**
-	 * @return array (string => string)
+	 * @return array{type: string, version: string, size: string}
 	 */
 	public function getDatabaseStatistics(): array {
 		return [
-			'type' => $this->config->getSystemValue('dbtype'),
+			'type' => $this->config->getSystemValueString('dbtype'),
 			'version' => $this->databaseVersion(),
 			'size' => $this->databaseSize(),
 		];
@@ -79,7 +71,7 @@ class DatabaseStatistics {
 			if ($version) {
 				return $this->cleanVersion($version);
 			}
-		} catch (DBALException $e) {
+		} catch (Exception $e) {
 		}
 		return 'N/A';
 	}
@@ -90,8 +82,6 @@ class DatabaseStatistics {
 	 *
 	 * @copyright (c) phpBB Limited <https://www.phpbb.com>
 	 * @license GNU General Public License, version 2 (GPL-2.0)
-	 *
-	 * @return string
 	 */
 	protected function databaseSize(): string {
 		$database_size = false;

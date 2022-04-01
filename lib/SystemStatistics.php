@@ -33,27 +33,12 @@ use OCP\App\IAppManager;
 use bantu\IniGetWrapper\IniGetWrapper;
 
 class SystemStatistics {
+	private IConfig $config;
+	private View $view;
+	private IAppManager $appManager;
+	private Installer $installer;
+	protected IniGetWrapper $phpIni;
 
-	/** @var IConfig */
-	private $config;
-	/** @var View view on data/ */
-	private $view;
-	/** @var IAppManager */
-	private $appManager;
-	/** @var Installer */
-	private $installer;
-	/** @var IniGetWrapper */
-	protected $phpIni;
-
-	/**
-	 * SystemStatistics constructor.
-	 *
-	 * @param IConfig $config
-	 * @param IAppManager $appManager
-	 * @param Installer $installer
-	 * @param IniGetWrapper $phpIni
-	 * @throws \Exception
-	 */
 	public function __construct(IConfig $config, IAppManager $appManager, Installer $installer, IniGetWrapper $phpIni) {
 		$this->config = $config;
 		$this->view = new View();
@@ -65,7 +50,6 @@ class SystemStatistics {
 	/**
 	 * Get statistics about the system
 	 *
-	 * @return array with with of data
 	 * @throws \OCP\Files\InvalidPathException
 	 */
 	public function getSystemStatistics(): array {
@@ -119,14 +103,12 @@ class SystemStatistics {
 			exec("/sbin/sysctl -n hw.physmem hw.pagesize vm.stats.vm.v_inactive_count vm.stats.vm.v_cache_count vm.stats.vm.v_free_count", $return, $status);
 			if ($status === 0) {
 				$return = array_map('intval', $return);
-				if ($return === array_filter($return, 'is_int')) {
-					return [
-						'mem_total' => (int)$return[0] / 1024,
-						'mem_free' => (int)$return[1] * ($return[2] + $return[3] + $return[4]) / 1024,
-						'swap_free' => (isset($swapFree)) ? $swapFree : 'N/A',
-						'swap_total' => (isset($swapTotal)) ? $swapTotal : 'N/A'
-					];
-				}
+				return [
+					'mem_total' => $return[0] / 1024,
+					'mem_free' => $return[1] * ($return[2] + $return[3] + $return[4]) / 1024,
+					'swap_free' => $swapFree ?? 'N/A',
+					'swap_total' => $swapTotal ?? 'N/A',
+				];
 			}
 		}
 		// check if determining memoryUsage failed
@@ -192,9 +174,6 @@ class SystemStatistics {
 	/**
 	 * Checks if a function is available. Borrowed from
 	 * https://github.com/nextcloud/server/blob/2e36069e24406455ad3f3998aa25e2a949d1402a/lib/private/legacy/helper.php#L475
-	 *
-	 * @param string $function_name
-	 * @return bool
 	 */
 	public function is_function_enabled(string $function_name): bool {
 		if (!function_exists($function_name)) {
@@ -209,14 +188,14 @@ class SystemStatistics {
 	/**
 	 * Get current CPU load average
 	 *
-	 * @return array load average with three values, 1/5/15 minutes average.
+	 * @return array{loadavg: array|string} load average with three values, 1/5/15 minutes average.
 	 */
 	protected function getProcessorUsage(): array {
 		// get current system load average.
 		$loadavg = sys_getloadavg();
 
 		// check if we got any values back.
-		if (!(is_array($loadavg) && count($loadavg) === 3)) {
+		if ($loadavg === false || count($loadavg) !== 3) {
 			// either no array or too few array keys.
 			// returning back zeroes to prevent any errors on JS side.
 			$loadavg = 'N/A';

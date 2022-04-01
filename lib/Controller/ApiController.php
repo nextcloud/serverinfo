@@ -40,54 +40,21 @@ use OCP\IRequest;
 use OCP\IUserSession;
 
 class ApiController extends OCSController {
-
-	/** @var Os */
-	private $os;
-
-	/** @var IConfig */
-	private $config;
-
-	/** @var IGroupManager */
-	private $groupManager;
-
-	/** @var IUserSession */
-	private $userSession;
-
-	/** @var SystemStatistics */
-	private $systemStatistics;
-
-	/** @var StorageStatistics */
-	private $storageStatistics;
-
-	/** @var PhpStatistics */
-	private $phpStatistics;
-
-	/** @var DatabaseStatistics  */
-	private $databaseStatistics;
-
-	/** @var ShareStatistics */
-	private $shareStatistics;
-
-	/** @var SessionStatistics */
-	private $sessionStatistics;
+	private Os $os;
+	private IConfig $config;
+	private IGroupManager $groupManager;
+	private ?IUserSession $userSession;
+	private SystemStatistics $systemStatistics;
+	private StorageStatistics $storageStatistics;
+	private PhpStatistics $phpStatistics;
+	private DatabaseStatistics $databaseStatistics;
+	private ShareStatistics $shareStatistics;
+	private SessionStatistics $sessionStatistics;
 
 	/**
 	 * ApiController constructor.
-	 *
-	 * @param string $appName
-	 * @param IRequest $request
-	 * @param IConfig $config
-	 * @param IGroupManager $groupManager
-	 * @param IUserSession $userSession
-	 * @param Os $os
-	 * @param SystemStatistics $systemStatistics
-	 * @param StorageStatistics $storageStatistics
-	 * @param PhpStatistics $phpStatistics
-	 * @param DatabaseStatistics $databaseStatistics
-	 * @param ShareStatistics $shareStatistics
-	 * @param SessionStatistics $sessionStatistics
 	 */
-	public function __construct($appName,
+	public function __construct(string $appName,
 								IRequest $request,
 								IConfig $config,
 								IGroupManager $groupManager,
@@ -115,14 +82,12 @@ class ApiController extends OCSController {
 
 	/**
 	 * Check if authorized to view serverinfo API.
-	 *
-	 * @return DataResponse
 	 */
 	private function checkAuthorized(): bool {
 		// check for monitoring privilege
 		$token = $this->request->getHeader('NC-Token');
 		if (!empty($token)) {
-			$storedToken = $this->config->getAppValue('serverinfo', 'token', null);
+			$storedToken = $this->config->getAppValue('serverinfo', 'token', '');
 			if (hash_equals($storedToken, $token)) {
 				return true;
 			}
@@ -147,8 +112,6 @@ class ApiController extends OCSController {
 	 * @NoAdminRequired
 	 * @PublicPage
 	 * @BruteForceProtection(action=serverinfo)
-	 *
-	 * @return DataResponse
 	 */
 	public function info(): DataResponse {
 		if (!$this->checkAuthorized()) {
@@ -172,9 +135,6 @@ class ApiController extends OCSController {
 		]);
 	}
 
-	/**
-	 * @return DataResponse
-	 */
 	public function BasicData(): DataResponse {
 		$servertime = $this->os->getTime();
 		$uptime = $this->formatUptime($this->os->getUptime());
@@ -185,18 +145,13 @@ class ApiController extends OCSController {
 		]);
 	}
 
-	/**
-	 * @return DataResponse
-	 */
 	public function DiskData(): DataResponse {
 		$result = $this->os->getDiskData();
 		return new DataResponse($result);
 	}
 
 	/**
-	 * get webserver
-	 *
-	 * @return string
+	 * Get webserver information
 	 */
 	private function getWebserver(): string {
 		if (isset($_SERVER['SERVER_SOFTWARE'])) {
@@ -207,9 +162,6 @@ class ApiController extends OCSController {
 
 	/**
 	 * Return the uptime of the system as human readable value
-	 *
-	 * @param int $uptime
-	 * @return string
 	 */
 	private function formatUptime(int $uptime): string {
 		if ($uptime === -1) {

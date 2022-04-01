@@ -27,10 +27,6 @@ use OCA\ServerInfo\Resources\Disk;
 use OCA\ServerInfo\Resources\Memory;
 
 class DefaultOs implements IOperatingSystem {
-
-	/**
-	 * @return bool
-	 */
 	public function supported(): bool {
 		return true;
 	}
@@ -54,7 +50,7 @@ class DefaultOs implements IOperatingSystem {
 
 		foreach ($matches['Key'] as $i => $key) {
 			// Value is always in KB: https://github.com/torvalds/linux/blob/c70672d8d316ebd46ea447effadfe57ab7a30a50/fs/proc/meminfo.c#L58-L60
-			$value = (int)($matches['Value'][$i] / 1024);
+			$value = (int)((int)$matches['Value'][$i] / 1024);
 
 			switch ($key) {
 				case 'MemTotal':
@@ -116,12 +112,8 @@ class DefaultOs implements IOperatingSystem {
 		return $data;
 	}
 
-	/**
-	 * @return string
-	 */
 	public function getTime(): string {
-		$date = shell_exec('date');
-		return $date;
+		return (string)shell_exec('date');
 	}
 
 	public function getUptime(): int {
@@ -138,9 +130,6 @@ class DefaultOs implements IOperatingSystem {
 		return $uptimeInSeconds;
 	}
 
-	/**
-	 * @return array
-	 */
 	public function getNetworkInfo(): array {
 		$result = [];
 		$result['hostname'] = \gethostname();
@@ -151,9 +140,6 @@ class DefaultOs implements IOperatingSystem {
 		return $result;
 	}
 
-	/**
-	 * @return array
-	 */
 	public function getNetworkInterfaces(): array {
 		$interfaces = glob('/sys/class/net/*');
 		$result = [];
@@ -218,8 +204,8 @@ class DefaultOs implements IOperatingSystem {
 			$disk = new Disk();
 			$disk->setDevice($filesystem);
 			$disk->setFs($matches['Type'][$i]);
-			$disk->setUsed((int)($matches['Used'][$i] / 1024));
-			$disk->setAvailable((int)($matches['Available'][$i] / 1024));
+			$disk->setUsed((int)((int)$matches['Used'][$i] / 1024));
+			$disk->setAvailable((int)((int)$matches['Available'][$i] / 1024));
 			$disk->setPercent($matches['Capacity'][$i]);
 			$disk->setMount($matches['Mounted'][$i]);
 

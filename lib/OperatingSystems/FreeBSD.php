@@ -26,16 +26,7 @@ namespace OCA\ServerInfo\OperatingSystems;
 use OCA\ServerInfo\Resources\Disk;
 use OCA\ServerInfo\Resources\Memory;
 
-/**
- * Class FreeBSD
- *
- * @package OCA\ServerInfo\OperatingSystems
- */
 class FreeBSD implements IOperatingSystem {
-
-	/**
-	 * @return bool
-	 */
 	public function supported(): bool {
 		return false;
 	}
@@ -54,8 +45,8 @@ class FreeBSD implements IOperatingSystem {
 
 		$result = preg_match_all($pattern, $swapinfo, $matches);
 		if ($result === 1) {
-			$data->setSwapTotal((int)($matches['Avail'][0] / 1024));
-			$data->setSwapFree(($data->getSwapTotal() - (int)($matches['Used'][0] / 1024)));
+			$data->setSwapTotal((int)((int)$matches['Avail'][0] / 1024));
+			$data->setSwapFree(($data->getSwapTotal() - (int)((int)$matches['Used'][0] / 1024)));
 		}
 
 		unset($matches, $result);
@@ -66,7 +57,7 @@ class FreeBSD implements IOperatingSystem {
 			$meminfo = '';
 		}
 
-		$lines = explode("\n", $meminfo);
+		$lines = array_map('intval', explode("\n", $meminfo));
 		if (count($lines) > 4) {
 			$data->setMemTotal((int)($lines[0] / 1024 / 1024));
 			$data->setMemAvailable((int)(($lines[1] * ($lines[2] + $lines[3] + $lines[4])) / 1024 / 1024));
@@ -84,7 +75,7 @@ class FreeBSD implements IOperatingSystem {
 			$model = $this->executeCommand('/sbin/sysctl -n hw.model');
 			$cores = $this->executeCommand('/sbin/sysctl -n kern.smp.cpus');
 
-			if ($cores === 1) {
+			if ((int)$cores === 1) {
 				$data = $model . ' (1 core)';
 			} else {
 				$data = $model . ' (' . $cores . ' cores)';
@@ -95,18 +86,12 @@ class FreeBSD implements IOperatingSystem {
 		return $data;
 	}
 
-	/**
-	 * @return string
-	 */
 	public function getTime(): string {
-		$time = '';
-
 		try {
-			$time = $this->executeCommand('date');
+			return $this->executeCommand('date');
 		} catch (\RuntimeException $e) {
-			return $time;
+			return '';
 		}
-		return $time;
 	}
 
 	public function getUptime(): int {
@@ -123,9 +108,6 @@ class FreeBSD implements IOperatingSystem {
 		return $uptime;
 	}
 
-	/**
-	 * @return array
-	 */
 	public function getNetworkInfo(): array {
 		$result = [];
 		$result['hostname'] = \gethostname();
@@ -144,9 +126,6 @@ class FreeBSD implements IOperatingSystem {
 		return $result;
 	}
 
-	/**
-	 * @return array
-	 */
 	public function getNetworkInterfaces(): array {
 		$result = [];
 
@@ -240,8 +219,8 @@ class FreeBSD implements IOperatingSystem {
 			$disk = new Disk();
 			$disk->setDevice($filesystem);
 			$disk->setFs($matches['Type'][$i]);
-			$disk->setUsed((int)($matches['Used'][$i] / 1024));
-			$disk->setAvailable((int)($matches['Available'][$i] / 1024));
+			$disk->setUsed((int)((int)$matches['Used'][$i] / 1024));
+			$disk->setAvailable((int)((int)$matches['Available'][$i] / 1024));
 			$disk->setPercent($matches['Capacity'][$i]);
 			$disk->setMount($matches['Mounted'][$i]);
 
@@ -253,7 +232,7 @@ class FreeBSD implements IOperatingSystem {
 
 	protected function executeCommand(string $command): string {
 		$output = @shell_exec(escapeshellcmd($command));
-		if ($output === null || $output === '') {
+		if ($output === null || $output === '' || $output === false) {
 			throw new \RuntimeException('No output for command: "' . $command . '"');
 		}
 		return $output;

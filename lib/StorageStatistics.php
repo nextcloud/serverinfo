@@ -29,25 +29,14 @@ use OCP\IConfig;
 use OCP\IDBConnection;
 
 class StorageStatistics {
+	private IDBConnection $connection;
+	private IConfig $config;
 
-	/** @var IDBConnection */
-	private $connection;
-	/** @var IConfig */
-	private $config;
-
-	/**
-	 * SystemStatistics constructor.
-	 *
-	 * @param IDBConnection $connection
-	 */
 	public function __construct(IDBConnection $connection, IConfig $config) {
 		$this->connection = $connection;
 		$this->config = $config;
 	}
 
-	/**
-	 * @return array
-	 */
 	public function getStorageStatistics(): array {
 		return [
 			'num_users' => $this->countUserEntries(),
@@ -61,15 +50,13 @@ class StorageStatistics {
 
 	/**
 	 * count number of users
-	 *
-	 * @return int
 	 */
 	protected function countUserEntries(): int {
 		$query = $this->connection->getQueryBuilder();
 		$query->selectAlias($query->createFunction('COUNT(*)'), 'num_entries')
 			->from('preferences')
 			->where($query->expr()->eq('configkey', $query->createNamedParameter('lastLogin')));
-		$result = $query->execute();
+		$result = $query->executeQuery();
 		$row = $result->fetch();
 		$result->closeCursor();
 		return (int) $row['num_entries'];
@@ -91,11 +78,11 @@ class StorageStatistics {
 		$storageQuery = $this->connection->getQueryBuilder();
 		$storageQuery->selectAlias('numeric_id', 'id')
 			->from('storages');
-		$storageResult = $storageQuery->execute();
+		$storageResult = $storageQuery->executeQuery();
 		while ($storageRow = $storageResult->fetch()) {
 			$storageCount++;
 			$fileQuery->setParameter('storageId', $storageRow['id']);
-			$fileResult = $fileQuery->execute();
+			$fileResult = $fileQuery->executeQuery();
 			$fileCount += (int)$fileResult->fetchOne();
 			$fileResult->closeCursor();
 		}
@@ -105,10 +92,6 @@ class StorageStatistics {
 		$this->config->setAppValue('serverinfo', 'cached_count_storages', (string)$storageCount);
 	}
 
-	/**
-	 * @param string $type
-	 * @return int
-	 */
 	protected function countStorages(string $type): int {
 		$query = $this->connection->getQueryBuilder();
 		$query->selectAlias($query->createFunction('COUNT(*)'), 'num_entries')
@@ -121,7 +104,7 @@ class StorageStatistics {
 			$query->where($query->expr()->notLike('id', $query->createNamedParameter('home::%')));
 			$query->andWhere($query->expr()->notLike('id', $query->createNamedParameter('local::%')));
 		}
-		$result = $query->execute();
+		$result = $query->executeQuery();
 		$row = $result->fetch();
 		$result->closeCursor();
 		return (int) $row['num_entries'];

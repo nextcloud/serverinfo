@@ -41,18 +41,9 @@ class SessionStatistics {
 	private const OFFSET_1HOUR = 3600;
 	private const OFFSET_1DAY = 86400;
 
-	/** @var IDBConnection */
-	private $connection;
+	private IDBConnection $connection;
+	private ITimeFactory $timeFactory;
 
-	/** @var ITimeFactory */
-	private $timeFactory;
-
-	/**
-	 * SessionStatistics constructor.
-	 *
-	 * @param IDBConnection $connection
-	 * @param ITimeFactory $timeFactory
-	 */
 	public function __construct(IDBConnection $connection, ITimeFactory $timeFactory) {
 		$this->connection = $connection;
 		$this->timeFactory = $timeFactory;
@@ -70,7 +61,6 @@ class SessionStatistics {
 	 * get number of active user in a given time span
 	 *
 	 * @param int $offset seconds
-	 * @return int
 	 */
 	private function getNumberOfActiveUsers(int $offset): int {
 		$query = $this->connection->getQueryBuilder();
@@ -81,7 +71,7 @@ class SessionStatistics {
 				$query->createNamedParameter($this->timeFactory->getTime() - $offset)
 			))->groupBy('uid');
 
-		$result = $query->execute();
+		$result = $query->executeQuery();
 		$activeUsers = $result->fetchAll();
 		$result->closeCursor();
 

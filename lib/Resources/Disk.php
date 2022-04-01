@@ -26,12 +26,12 @@ declare(strict_types=1);
 namespace OCA\ServerInfo\Resources;
 
 class Disk {
-	private $device = '';
-	private $fs = '';
-	private $used = 0;
-	private $available = 0;
-	private $percent = '';
-	private $mount = '';
+	private string $device = '';
+	private string $fs = '';
+	private int $used = 0;
+	private int $available = 0;
+	private string $percent = '';
+	private string $mount = '';
 
 	public function getDevice(): string {
 		return $this->device;

@@ -38,46 +38,16 @@ use OCP\IURLGenerator;
 use OCP\Settings\ISettings;
 
 class AdminSettings implements ISettings {
+	private Os $os;
+	private IL10N $l;
+	private IURLGenerator $urlGenerator;
+	private StorageStatistics $storageStatistics;
+	private PhpStatistics $phpStatistics;
+	private DatabaseStatistics $databaseStatistics;
+	private ShareStatistics $shareStatistics;
+	private SessionStatistics $sessionStatistics;
+	private SystemStatistics $systemStatistics;
 
-	/** @var Os */
-	private $os;
-
-	/** @var IL10N */
-	private $l;
-
-	/** @var IURLGenerator */
-	private $urlGenerator;
-
-	/** @var StorageStatistics */
-	private $storageStatistics;
-
-	/** @var PhpStatistics */
-	private $phpStatistics;
-
-	/** @var DatabaseStatistics  */
-	private $databaseStatistics;
-
-	/** @var ShareStatistics */
-	private $shareStatistics;
-
-	/** @var SessionStatistics */
-	private $sessionStatistics;
-
-	/** @var SystemStatistics */
-	private $systemStatistics;
-
-	/**
-	 * Admin constructor.
-	 *
-	 * @param IL10N $l
-	 * @param IURLGenerator $urlGenerator
-	 * @param StorageStatistics $storageStatistics
-	 * @param PhpStatistics $phpStatistics
-	 * @param DatabaseStatistics $databaseStatistics
-	 * @param ShareStatistics $shareStatistics
-	 * @param SessionStatistics $sessionStatistics
-	 * @param SystemStatistics $systemStatistics
-	 */
 	public function __construct(Os $os,
 								IL10N $l,
 								IURLGenerator $urlGenerator,
@@ -99,9 +69,6 @@ class AdminSettings implements ISettings {
 		$this->systemStatistics = $systemStatistics;
 	}
 
-	/**
-	 * @return TemplateResponse
-	 */
 	public function getForm(): TemplateResponse {
 		$monitoringEndPoint = $this->urlGenerator->getAbsoluteURL('ocs/v2.php/apps/serverinfo/api/v1/info');
 		$params = [
