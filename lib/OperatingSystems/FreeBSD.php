@@ -95,18 +95,12 @@ class FreeBSD implements IOperatingSystem {
 		return $data;
 	}
 
-	/**
-	 * @return string
-	 */
 	public function getTime(): string {
-		$time = '';
-
 		try {
-			$time = $this->executeCommand('date');
+			return $this->executeCommand('date');
 		} catch (\RuntimeException $e) {
-			return $time;
+			return '';
 		}
-		return $time;
 	}
 
 	public function getUptime(): int {
@@ -253,7 +247,7 @@ class FreeBSD implements IOperatingSystem {
 
 	protected function executeCommand(string $command): string {
 		$output = @shell_exec(escapeshellcmd($command));
-		if ($output === null || $output === '') {
+		if ($output === null || $output === '' || $output === false) {
 			throw new \RuntimeException('No output for command: "' . $command . '"');
 		}
 		return $output;

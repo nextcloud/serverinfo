@@ -112,8 +112,8 @@ class DefaultOs implements IOperatingSystem {
 		return $data;
 	}
 
-	public function getTime(): ?string {
-		return shell_exec('date');
+	public function getTime(): string {
+		return (string)shell_exec('date');
 	}
 
 	public function getUptime(): int {

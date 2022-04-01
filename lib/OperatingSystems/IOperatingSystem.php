@@ -83,8 +83,9 @@ interface IOperatingSystem {
 
 	/**
 	 * Get system time and timezone.
+	 * Empty string in case of errors
 	 */
-	public function getTime(): ?string;
+	public function getTime(): string;
 
 	/**
 	 * Get the total number of seconds the system has been up or -1 on failure.

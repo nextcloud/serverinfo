@@ -67,8 +67,7 @@ class Os implements IOperatingSystem {
 	}
 
 	public function getTime(): string {
-		$data = $this->backend->getTime();
-		return $data;
+		return $this->backend->getTime();
 	}
 
 	public function getUptime(): int {
