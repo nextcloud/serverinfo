@@ -50,7 +50,7 @@ class DefaultOs implements IOperatingSystem {
 
 		foreach ($matches['Key'] as $i => $key) {
 			// Value is always in KB: https://github.com/torvalds/linux/blob/c70672d8d316ebd46ea447effadfe57ab7a30a50/fs/proc/meminfo.c#L58-L60
-			$value = (int)($matches['Value'][$i] / 1024);
+			$value = (int)((int)$matches['Value'][$i] / 1024);
 
 			switch ($key) {
 				case 'MemTotal':
@@ -204,8 +204,8 @@ class DefaultOs implements IOperatingSystem {
 			$disk = new Disk();
 			$disk->setDevice($filesystem);
 			$disk->setFs($matches['Type'][$i]);
-			$disk->setUsed((int)($matches['Used'][$i] / 1024));
-			$disk->setAvailable((int)($matches['Available'][$i] / 1024));
+			$disk->setUsed((int)((int)$matches['Used'][$i] / 1024));
+			$disk->setAvailable((int)((int)$matches['Available'][$i] / 1024));
 			$disk->setPercent($matches['Capacity'][$i]);
 			$disk->setMount($matches['Mounted'][$i]);
 

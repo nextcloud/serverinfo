@@ -87,7 +87,7 @@ class ApiController extends OCSController {
 		// check for monitoring privilege
 		$token = $this->request->getHeader('NC-Token');
 		if (!empty($token)) {
-			$storedToken = $this->config->getAppValue('serverinfo', 'token', null);
+			$storedToken = $this->config->getAppValue('serverinfo', 'token', '');
 			if (hash_equals($storedToken, $token)) {
 				return true;
 			}

@@ -58,7 +58,7 @@ class FreeBSD implements IOperatingSystem {
 			$meminfo = '';
 		}
 
-		$lines = explode("\n", $meminfo);
+		$lines = array_map('intval', explode("\n", $meminfo));
 		if (count($lines) > 4) {
 			$data->setMemTotal((int)($lines[0] / 1024 / 1024));
 			$data->setMemAvailable((int)(($lines[1] * ($lines[2] + $lines[3] + $lines[4])) / 1024 / 1024));

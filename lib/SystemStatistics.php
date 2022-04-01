@@ -103,14 +103,12 @@ class SystemStatistics {
 			exec("/sbin/sysctl -n hw.physmem hw.pagesize vm.stats.vm.v_inactive_count vm.stats.vm.v_cache_count vm.stats.vm.v_free_count", $return, $status);
 			if ($status === 0) {
 				$return = array_map('intval', $return);
-				if ($return === array_filter($return, 'is_int')) {
-					return [
-						'mem_total' => $return[0] / 1024,
-						'mem_free' => $return[1] * ($return[2] + $return[3] + $return[4]) / 1024,
-						'swap_free' => (isset($swapFree)) ? $swapFree : 'N/A',
-						'swap_total' => (isset($swapTotal)) ? $swapTotal : 'N/A'
-					];
-				}
+				return [
+					'mem_total' => $return[0] / 1024,
+					'mem_free' => $return[1] * ($return[2] + $return[3] + $return[4]) / 1024,
+					'swap_free' => $swapFree ?? 'N/A',
+					'swap_total' => $swapTotal ?? 'N/A',
+				];
 			}
 		}
 		// check if determining memoryUsage failed
