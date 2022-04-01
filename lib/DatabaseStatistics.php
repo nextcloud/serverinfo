@@ -43,7 +43,7 @@ class DatabaseStatistics {
 	 */
 	public function getDatabaseStatistics(): array {
 		return [
-			'type' => $this->config->getSystemValue('dbtype'),
+			'type' => $this->config->getSystemValueString('dbtype'),
 			'version' => $this->databaseVersion(),
 			'size' => $this->databaseSize(),
 		];

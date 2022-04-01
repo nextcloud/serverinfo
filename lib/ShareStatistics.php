@@ -45,7 +45,7 @@ class ShareStatistics {
 			->from('share')
 			->addGroupBy('permissions')
 			->addGroupBy('share_type');
-		$result = $query->execute();
+		$result = $query->executeQuery();
 
 		$data = [
 			'num_shares' => $this->countEntries('share'),
@@ -74,7 +74,7 @@ class ShareStatistics {
 		$query = $this->connection->getQueryBuilder();
 		$query->selectAlias($query->createFunction('COUNT(*)'), 'num_entries')
 			->from($tableName);
-		$result = $query->execute();
+		$result = $query->executeQuery();
 		$row = $result->fetch();
 		$result->closeCursor();
 
@@ -96,7 +96,7 @@ class ShareStatistics {
 			$query->andWhere($query->expr()->isNull('password'));
 		}
 
-		$result = $query->execute();
+		$result = $query->executeQuery();
 		$row = $result->fetch();
 		$result->closeCursor();
 

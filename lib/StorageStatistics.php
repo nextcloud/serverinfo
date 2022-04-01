@@ -57,7 +57,7 @@ class StorageStatistics {
 		$query->selectAlias($query->createFunction('COUNT(*)'), 'num_entries')
 			->from('preferences')
 			->where($query->expr()->eq('configkey', $query->createNamedParameter('lastLogin')));
-		$result = $query->execute();
+		$result = $query->executeQuery();
 		$row = $result->fetch();
 		$result->closeCursor();
 		return (int) $row['num_entries'];
@@ -79,11 +79,11 @@ class StorageStatistics {
 		$storageQuery = $this->connection->getQueryBuilder();
 		$storageQuery->selectAlias('numeric_id', 'id')
 			->from('storages');
-		$storageResult = $storageQuery->execute();
+		$storageResult = $storageQuery->executeQuery();
 		while ($storageRow = $storageResult->fetch()) {
 			$storageCount++;
 			$fileQuery->setParameter('storageId', $storageRow['id']);
-			$fileResult = $fileQuery->execute();
+			$fileResult = $fileQuery->executeQuery();
 			$fileCount += (int)$fileResult->fetchOne();
 			$fileResult->closeCursor();
 		}
@@ -105,7 +105,7 @@ class StorageStatistics {
 			$query->where($query->expr()->notLike('id', $query->createNamedParameter('home::%')));
 			$query->andWhere($query->expr()->notLike('id', $query->createNamedParameter('local::%')));
 		}
-		$result = $query->execute();
+		$result = $query->executeQuery();
 		$row = $result->fetch();
 		$result->closeCursor();
 		return (int) $row['num_entries'];

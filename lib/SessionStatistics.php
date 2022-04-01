@@ -71,7 +71,7 @@ class SessionStatistics {
 				$query->createNamedParameter($this->timeFactory->getTime() - $offset)
 			))->groupBy('uid');
 
-		$result = $query->execute();
+		$result = $query->executeQuery();
 		$activeUsers = $result->fetchAll();
 		$result->closeCursor();
 
