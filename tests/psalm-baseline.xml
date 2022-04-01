@@ -4,9 +4,6 @@
     <NullArgument occurrences="1">
       <code>null</code>
     </NullArgument>
-    <TypeDoesNotContainNull occurrences="1">
-      <code>$userSession === null</code>
-    </TypeDoesNotContainNull>
   </file>
   <file src="lib/DatabaseStatistics.php">
     <UndefinedInterfaceMethod occurrences="1">
@@ -31,17 +28,11 @@
       <code>$matches['Used'][$i]</code>
       <code>$matches['Value'][$i]</code>
     </InvalidOperand>
-    <MethodSignatureMismatch occurrences="1">
-      <code>DefaultOs</code>
-    </MethodSignatureMismatch>
   </file>
   <file src="lib/OperatingSystems/FreeBSD.php">
     <ForbiddenCode occurrences="1">
       <code>shell_exec(escapeshellcmd($command))</code>
     </ForbiddenCode>
-    <ImplementedReturnTypeMismatch occurrences="1">
-      <code>string</code>
-    </ImplementedReturnTypeMismatch>
     <InvalidOperand occurrences="8">
       <code>$lines[0]</code>
       <code>$lines[1]</code>
@@ -57,29 +48,14 @@
       <code>$cores === 1</code>
     </TypeDoesNotContainType>
   </file>
-  <file src="lib/OperatingSystems/IOperatingSystem.php">
-    <MismatchingDocblockReturnType occurrences="1">
-      <code>Memory</code>
-    </MismatchingDocblockReturnType>
-  </file>
-  <file src="lib/Os.php">
-    <InvalidReturnStatement occurrences="1">
-      <code>$data</code>
-    </InvalidReturnStatement>
-    <InvalidReturnType occurrences="1">
-      <code>string</code>
-    </InvalidReturnType>
-  </file>
   <file src="lib/PhpStatistics.php">
-    <UndefinedClass occurrences="1">
+    <UndefinedClass occurrences="5">
+      <code>$this-&gt;phpIni</code>
+      <code>$this-&gt;phpIni</code>
+      <code>$this-&gt;phpIni</code>
+      <code>IniGetWrapper</code>
       <code>IniGetWrapper</code>
     </UndefinedClass>
-    <UndefinedDocblockClass occurrences="4">
-      <code>$this-&gt;phpIni</code>
-      <code>$this-&gt;phpIni</code>
-      <code>$this-&gt;phpIni</code>
-      <code>IniGetWrapper</code>
-    </UndefinedDocblockClass>
   </file>
   <file src="lib/SystemStatistics.php">
     <RedundantCondition occurrences="1">
