@@ -33,8 +33,7 @@ use OCP\IConfig;
 
 class UpdateStorageStats extends TimedJob {
 
-	/** @var StorageStatistics */
-	private $storageStatistics;
+	private StorageStatistics $storageStatistics;
 
 	public function __construct(ITimeFactory $time, StorageStatistics $storageStatistics, IConfig $config) {
 		$this->setInterval((int)$config->getAppValue('serverinfo', 'job_interval_storage_stats', (string)(60 * 60 * 3)));

@@ -31,17 +31,12 @@ use OCA\ServerInfo\SystemStatistics;
 
 class PageController extends Controller {
 
-	/** @var SystemStatistics */
-	private $systemStatistics;
+	private SystemStatistics $systemStatistics;
 
 	/**
 	 * ApiController constructor.
-	 *
-	 * @param string $appName
-	 * @param IRequest $request
-	 * @param SystemStatistics $systemStatistics
 	 */
-	public function __construct($appName,
+	public function __construct(string $appName,
 								IRequest $request,
 								SystemStatistics $systemStatistics
 	) {
@@ -52,8 +47,6 @@ class PageController extends Controller {
 
 	/**
 	 * request data update
-	 *
-	 * @return JSONResponse
 	 */
 	public function update(): JSONResponse {
 		$data = [

@@ -31,10 +31,8 @@ use OCP\Settings\IIconSection;
 
 class AdminSection implements IIconSection {
 
-	/** @var IL10N */
-	private $l;
-	/** @var IURLGenerator */
-	private $url;
+	private IL10N $l;
+	private IURLGenerator $url;
 
 	public function __construct(IL10N $l, IURLGenerator $url) {
 		$this->l = $l;
@@ -43,8 +41,6 @@ class AdminSection implements IIconSection {
 
 	/**
 	 * returns the ID of the section. It is supposed to be a lower case string
-	 *
-	 * @returns string
 	 */
 	public function getID(): string {
 		return 'serverinfo';
@@ -53,8 +49,6 @@ class AdminSection implements IIconSection {
 	/**
 	 * returns the translated name as it should be displayed, e.g. 'LDAP / AD
 	 * integration'. Use the L10N service to translate it.
-	 *
-	 * @return string
 	 */
 	public function getName(): string {
 		return $this->l->t('System');

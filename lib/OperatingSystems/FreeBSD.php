@@ -33,9 +33,6 @@ use OCA\ServerInfo\Resources\Memory;
  */
 class FreeBSD implements IOperatingSystem {
 
-	/**
-	 * @return bool
-	 */
 	public function supported(): bool {
 		return false;
 	}
@@ -117,9 +114,6 @@ class FreeBSD implements IOperatingSystem {
 		return $uptime;
 	}
 
-	/**
-	 * @return array
-	 */
 	public function getNetworkInfo(): array {
 		$result = [];
 		$result['hostname'] = \gethostname();
@@ -138,9 +132,6 @@ class FreeBSD implements IOperatingSystem {
 		return $result;
 	}
 
-	/**
-	 * @return array
-	 */
 	public function getNetworkInterfaces(): array {
 		$result = [];
 

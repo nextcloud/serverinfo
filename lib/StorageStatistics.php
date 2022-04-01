@@ -30,24 +30,14 @@ use OCP\IDBConnection;
 
 class StorageStatistics {
 
-	/** @var IDBConnection */
-	private $connection;
-	/** @var IConfig */
-	private $config;
+	private IDBConnection $connection;
+	private IConfig $config;
 
-	/**
-	 * SystemStatistics constructor.
-	 *
-	 * @param IDBConnection $connection
-	 */
 	public function __construct(IDBConnection $connection, IConfig $config) {
 		$this->connection = $connection;
 		$this->config = $config;
 	}
 
-	/**
-	 * @return array
-	 */
 	public function getStorageStatistics(): array {
 		return [
 			'num_users' => $this->countUserEntries(),
@@ -61,8 +51,6 @@ class StorageStatistics {
 
 	/**
 	 * count number of users
-	 *
-	 * @return int
 	 */
 	protected function countUserEntries(): int {
 		$query = $this->connection->getQueryBuilder();
@@ -105,10 +93,6 @@ class StorageStatistics {
 		$this->config->setAppValue('serverinfo', 'cached_count_storages', (string)$storageCount);
 	}
 
-	/**
-	 * @param string $type
-	 * @return int
-	 */
 	protected function countStorages(string $type): int {
 		$query = $this->connection->getQueryBuilder();
 		$query->selectAlias($query->createFunction('COUNT(*)'), 'num_entries')

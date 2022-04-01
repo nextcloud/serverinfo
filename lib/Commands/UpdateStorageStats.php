@@ -32,8 +32,7 @@ use Symfony\Component\Console\Input\InputInterface;
 use Symfony\Component\Console\Output\OutputInterface;
 
 class UpdateStorageStats extends Base {
-	/** @var StorageStatistics */
-	private $storageStatistics;
+	private StorageStatistics $storageStatistics;
 
 	public function __construct(StorageStatistics $storageStatistics) {
 		parent::__construct();

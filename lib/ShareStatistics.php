@@ -25,22 +25,12 @@ declare(strict_types=1);
 
 namespace OCA\ServerInfo;
 
-use OC\Files\View;
 use OCP\IDBConnection;
 
 class ShareStatistics {
 
-	/** @var IDBConnection */
-	protected $connection;
+	protected IDBConnection $connection;
 
-	/** @var  View on data/ */
-	protected $view;
-
-	/**
-	 * ShareStatistics constructor.
-	 *
-	 * @param IDBConnection $connection
-	 */
 	public function __construct(IDBConnection $connection) {
 		$this->connection = $connection;
 	}

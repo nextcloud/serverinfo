@@ -34,12 +34,8 @@ use bantu\IniGetWrapper\IniGetWrapper;
  */
 class PhpStatistics {
 
-	/** @var IniGetWrapper */
-	protected $phpIni;
+	protected IniGetWrapper $phpIni;
 
-	/**
-	 * @param IniGetWrapper $phpIni
-	 */
 	public function __construct(IniGetWrapper $phpIni) {
 		$this->phpIni = $phpIni;
 	}

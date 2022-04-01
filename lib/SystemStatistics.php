@@ -39,9 +39,6 @@ class SystemStatistics {
 	private Installer $installer;
 	protected IniGetWrapper $phpIni;
 
-	/**
-	 * SystemStatistics constructor.
-	 */
 	public function __construct(IConfig $config, IAppManager $appManager, Installer $installer, IniGetWrapper $phpIni) {
 		$this->config = $config;
 		$this->view = new View();
@@ -53,7 +50,6 @@ class SystemStatistics {
 	/**
 	 * Get statistics about the system
 	 *
-	 * @return array with with of data
 	 * @throws \OCP\Files\InvalidPathException
 	 */
 	public function getSystemStatistics(): array {
@@ -180,9 +176,6 @@ class SystemStatistics {
 	/**
 	 * Checks if a function is available. Borrowed from
 	 * https://github.com/nextcloud/server/blob/2e36069e24406455ad3f3998aa25e2a949d1402a/lib/private/legacy/helper.php#L475
-	 *
-	 * @param string $function_name
-	 * @return bool
 	 */
 	public function is_function_enabled(string $function_name): bool {
 		if (!function_exists($function_name)) {

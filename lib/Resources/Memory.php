@@ -26,11 +26,11 @@ declare(strict_types=1);
 namespace OCA\ServerInfo\Resources;
 
 class Memory {
-	private $memTotal = -1;
-	private $memFree = -1;
-	private $memAvailable = -1;
-	private $swapTotal = -1;
-	private $swapFree = -1;
+	private int $memTotal = -1;
+	private int $memFree = -1;
+	private int $memAvailable = -1;
+	private int $swapTotal = -1;
+	private int $swapFree = -1;
 
 	/**
 	 * @return int in MB
