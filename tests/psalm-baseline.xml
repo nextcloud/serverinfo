@@ -28,19 +28,6 @@
       <code>$matches['Used'][$i]</code>
       <code>$matches['Used'][0]</code>
     </InvalidOperand>
-    <TypeDoesNotContainType occurrences="2">
-      <code>$cores === 1</code>
-      <code>$cores === 1</code>
-    </TypeDoesNotContainType>
-  </file>
-  <file src="lib/PhpStatistics.php">
-    <UndefinedClass occurrences="5">
-      <code>$this-&gt;phpIni</code>
-      <code>$this-&gt;phpIni</code>
-      <code>$this-&gt;phpIni</code>
-      <code>IniGetWrapper</code>
-      <code>IniGetWrapper</code>
-    </UndefinedClass>
   </file>
   <file src="lib/SystemStatistics.php">
     <RedundantCondition occurrences="1">
@@ -49,11 +36,8 @@
     <TypeDoesNotContainType occurrences="1">
       <code>$loadavg === false</code>
     </TypeDoesNotContainType>
-    <UndefinedClass occurrences="6">
+    <UndefinedClass occurrences="3">
       <code>$this-&gt;installer</code>
-      <code>$this-&gt;phpIni</code>
-      <code>IniGetWrapper</code>
-      <code>IniGetWrapper</code>
       <code>Installer</code>
       <code>Installer</code>
     </UndefinedClass>

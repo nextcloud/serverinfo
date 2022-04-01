@@ -3,6 +3,7 @@
 		"nextcloud/coding-standard": "^0.4.0",
 		"christophwurst/nextcloud": "dev-master@dev",
 		"psalm/phar": "^4.22",
+		"bantu/ini-get-wrapper": "v1.0.1",
 		"phpunit/phpunit": "^9.5"
 	},
 	"scripts": {

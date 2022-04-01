@@ -26,11 +26,6 @@ namespace OCA\ServerInfo\OperatingSystems;
 use OCA\ServerInfo\Resources\Disk;
 use OCA\ServerInfo\Resources\Memory;
 
-/**
- * Class FreeBSD
- *
- * @package OCA\ServerInfo\OperatingSystems
- */
 class FreeBSD implements IOperatingSystem {
 
 	public function supported(): bool {
@@ -81,7 +76,7 @@ class FreeBSD implements IOperatingSystem {
 			$model = $this->executeCommand('/sbin/sysctl -n hw.model');
 			$cores = $this->executeCommand('/sbin/sysctl -n kern.smp.cpus');
 
-			if ($cores === 1) {
+			if ((int)$cores === 1) {
 				$data = $model . ' (1 core)';
 			} else {
 				$data = $model . ' (' . $cores . ' cores)';

@@ -4,45 +4,43 @@
         "Read more about it at https://getcomposer.org/doc/01-basic-usage.md#installing-dependencies",
         "This file is @generated automatically"
     ],
-    "content-hash": "eb9d2ce7e9356c9321500e08bfc16f25",
-    "packages": [
+    "content-hash": "9cbe498b6f9c23f2761a96ab3e879849",
+    "packages": [],
+    "packages-dev": [
         {
-            "name": "psalm/phar",
-            "version": "4.22.0",
+            "name": "bantu/ini-get-wrapper",
+            "version": "v1.0.1",
             "source": {
                 "type": "git",
-                "url": "https://github.com/psalm/phar.git",
-                "reference": "feebed09c9782d9aaa819b794d880c2671ba0e4c"
+                "url": "https://github.com/bantuXorg/php-ini-get-wrapper.git",
+                "reference": "4770c7feab370c62e23db4f31c112b7c6d90aee2"
             },
             "dist": {
                 "type": "zip",
-                "url": "https://api.github.com/repos/psalm/phar/zipball/feebed09c9782d9aaa819b794d880c2671ba0e4c",
-                "reference": "feebed09c9782d9aaa819b794d880c2671ba0e4c",
+                "url": "https://api.github.com/repos/bantuXorg/php-ini-get-wrapper/zipball/4770c7feab370c62e23db4f31c112b7c6d90aee2",
+                "reference": "4770c7feab370c62e23db4f31c112b7c6d90aee2",
                 "shasum": ""
             },
-            "require": {
-                "php": "^7.1 || ^8.0"
+            "require-dev": {
+                "phpunit/phpunit": "3.7.*"
             },
-            "conflict": {
-                "vimeo/psalm": "*"
-            },
-            "bin": [
-                "psalm.phar"
-            ],
             "type": "library",
+            "autoload": {
+                "psr-4": {
+                    "bantu\\IniGetWrapper\\": "src/"
+                }
+            },
             "notification-url": "https://packagist.org/downloads/",
             "license": [
                 "MIT"
             ],
-            "description": "Composer-based Psalm Phar",
+            "description": "Convenience wrapper around ini_get()",
             "support": {
-                "issues": "https://github.com/psalm/phar/issues",
-                "source": "https://github.com/psalm/phar/tree/4.22.0"
+                "issues": "https://github.com/bantuXorg/php-ini-get-wrapper/issues",
+                "source": "https://github.com/bantuXorg/php-ini-get-wrapper/tree/v1.0.1"
             },
-            "time": "2022-02-27T11:01:37+00:00"
-        }
-    ],
-    "packages-dev": [
+            "time": "2014-09-15T13:12:35+00:00"
+        },
         {
             "name": "christophwurst/nextcloud",
             "version": "dev-master",
@@ -1601,6 +1599,41 @@
                 }
             ],
             "time": "2022-03-15T09:57:31+00:00"
+        },
+        {
+            "name": "psalm/phar",
+            "version": "4.22.0",
+            "source": {
+                "type": "git",
+                "url": "https://github.com/psalm/phar.git",
+                "reference": "feebed09c9782d9aaa819b794d880c2671ba0e4c"
+            },
+            "dist": {
+                "type": "zip",
+                "url": "https://api.github.com/repos/psalm/phar/zipball/feebed09c9782d9aaa819b794d880c2671ba0e4c",
+                "reference": "feebed09c9782d9aaa819b794d880c2671ba0e4c",
+                "shasum": ""
+            },
+            "require": {
+                "php": "^7.1 || ^8.0"
+            },
+            "conflict": {
+                "vimeo/psalm": "*"
+            },
+            "bin": [
+                "psalm.phar"
+            ],
+            "type": "library",
+            "notification-url": "https://packagist.org/downloads/",
+            "license": [
+                "MIT"
+            ],
+            "description": "Composer-based Psalm Phar",
+            "support": {
+                "issues": "https://github.com/psalm/phar/issues",
+                "source": "https://github.com/psalm/phar/tree/4.22.0"
+            },
+            "time": "2022-02-27T11:01:37+00:00"
         },
         {
             "name": "psr/cache",
@@ -4339,5 +4372,5 @@
     "platform-overrides": {
         "php": "7.4"
     },
-    "plugin-api-version": "2.2.0"
+    "plugin-api-version": "2.1.0"
 }
