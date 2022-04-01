@@ -33,7 +33,6 @@ use bantu\IniGetWrapper\IniGetWrapper;
  * @package OCA\Survey_Client\Categories
  */
 class PhpStatistics {
-
 	protected IniGetWrapper $phpIni;
 
 	public function __construct(IniGetWrapper $phpIni) {

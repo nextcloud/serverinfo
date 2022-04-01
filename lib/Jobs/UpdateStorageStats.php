@@ -32,7 +32,6 @@ use OCP\BackgroundJob\TimedJob;
 use OCP\IConfig;
 
 class UpdateStorageStats extends TimedJob {
-
 	private StorageStatistics $storageStatistics;
 
 	public function __construct(ITimeFactory $time, StorageStatistics $storageStatistics, IConfig $config) {

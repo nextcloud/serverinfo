@@ -29,7 +29,6 @@ use OCP\IConfig;
 use OCP\IDBConnection;
 
 class StorageStatistics {
-
 	private IDBConnection $connection;
 	private IConfig $config;
 

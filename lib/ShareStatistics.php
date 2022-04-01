@@ -28,7 +28,6 @@ namespace OCA\ServerInfo;
 use OCP\IDBConnection;
 
 class ShareStatistics {
-
 	protected IDBConnection $connection;
 
 	public function __construct(IDBConnection $connection) {

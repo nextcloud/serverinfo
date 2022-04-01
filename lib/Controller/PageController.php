@@ -30,7 +30,6 @@ use OCP\AppFramework\Controller;
 use OCA\ServerInfo\SystemStatistics;
 
 class PageController extends Controller {
-
 	private SystemStatistics $systemStatistics;
 
 	/**

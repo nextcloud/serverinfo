@@ -27,7 +27,6 @@ use OCA\ServerInfo\Resources\Disk;
 use OCA\ServerInfo\Resources\Memory;
 
 class FreeBSD implements IOperatingSystem {
-
 	public function supported(): bool {
 		return false;
 	}

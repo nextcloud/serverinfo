@@ -38,7 +38,6 @@ use OCP\IURLGenerator;
 use OCP\Settings\ISettings;
 
 class AdminSettings implements ISettings {
-
 	private Os $os;
 	private IL10N $l;
 	private IURLGenerator $urlGenerator;
