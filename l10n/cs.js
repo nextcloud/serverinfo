@@ -60,6 +60,7 @@ OC.L10N.register(
     "Memory limit" : "Limit paměti",
     "Max execution time" : "Nejdelší umožněný čas vykonávání",
     "Upload max size" : "Nejvyšší umožněná velikost nahrávaného souboru",
+    "Extensions:" : "Rozšíření:",
     "Database" : "Databáze",
     "Type" : "Typ",
     "External monitoring tool" : "Externí nástroj pro dohledování",
