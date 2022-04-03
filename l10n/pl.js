@@ -60,6 +60,7 @@ OC.L10N.register(
     "Memory limit" : "Limit pamięci",
     "Max execution time" : "Maksymalny czas wykonania",
     "Upload max size" : "Limit wielkości przesyłanego pliku",
+    "Extensions:" : "Rozszerzenia:",
     "Database" : "Baza danych",
     "Type" : "Rodzaj",
     "External monitoring tool" : "Zewnętrzne narzędzie monitorujące",
