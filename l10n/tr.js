@@ -60,6 +60,7 @@ OC.L10N.register(
     "Memory limit" : "Bellek sınırı",
     "Max execution time" : "En uzun çalışma süresi",
     "Upload max size" : "En büyük yükleme boyutu",
+    "Extensions:" : "Eklentiler:",
     "Database" : "Veritabanı",
     "Type" : "Tür",
     "External monitoring tool" : "Dış izleme aracı",
