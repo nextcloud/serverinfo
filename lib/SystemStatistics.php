@@ -66,10 +66,10 @@ class SystemStatistics {
 			'debug' => $this->config->getSystemValue('debug', false) ? 'yes' : 'no',
 			'freespace' => $this->getFreeSpace(),
 			'cpuload' => $processorUsage['loadavg'],
-			'mem_total' => $memoryUsage['MemTotal'],
-			'mem_free' => $memoryUsage['MemFree'],
-			'swap_total' => $memoryUsage['SwapTotal'],
-			'swap_free' => $memoryUsage['SwapFree'],
+			'mem_total' => $memoryUsage->getMemTotal() * 1024,
+			'mem_free' => $memoryUsage->getMemAvailable() * 1024,
+			'swap_total' => $memoryUsage->getSwapTotal() * 1024,
+			'swap_free' => $memoryUsage->getSwapFree() * 1024,
 			'apps' => $this->getAppsInfo()
 		];
 	}
