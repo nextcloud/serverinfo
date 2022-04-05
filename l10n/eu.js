@@ -60,6 +60,7 @@ OC.L10N.register(
     "Memory limit" : "Memoria muga",
     "Max execution time" : "Gehienezko exekuzio denbora",
     "Upload max size" : "Kargatzeko gehienezko tamaina",
+    "Extensions:" : "Hedapenak:",
     "Database" : "Datu-basea",
     "Type" : "Mota",
     "External monitoring tool" : "Kanpo jarraipen tresna",
