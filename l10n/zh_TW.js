@@ -60,6 +60,7 @@ OC.L10N.register(
     "Memory limit" : "記憶體限制",
     "Max execution time" : "最長執行時間",
     "Upload max size" : "最大上傳大小",
+    "Extensions:" : "副檔名：",
     "Database" : "資料庫",
     "Type" : "類型",
     "External monitoring tool" : "外部監控工具",
