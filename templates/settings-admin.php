@@ -283,7 +283,7 @@ $disks = $_['diskinfo'];
 						</p>
 						<p>
 							<?php p($l->t('Extensions:')); ?>
-							<em id="phpExtensions"><?php p($_['php']['extensions']); ?></em>
+							<em id="phpExtensions"><?php p(implode(', ', $_['php']['extensions'])); ?></em>
 						</p>
 					</div>
 				</div>
