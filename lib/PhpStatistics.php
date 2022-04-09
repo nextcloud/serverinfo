@@ -114,7 +114,7 @@ class PhpStatistics {
 	 *
 	 * @return array of strings with the names of the loaded extensions
 	 */
-	protected function getLoadedPhpExtensions(): array {
-		return (function_exists('get_loaded_extensions') ? get_loaded_extensions() : ['Unable to list extensions']);
+	protected function getLoadedPhpExtensions(): ?array {
+		return (function_exists('get_loaded_extensions') ? get_loaded_extensions() : null);
 	}
 }
