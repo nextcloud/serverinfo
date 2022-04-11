@@ -61,6 +61,7 @@ OC.L10N.register(
     "Max execution time" : "Maximale Ausführungszeit",
     "Upload max size" : "Maximale Größe zum Hochladen",
     "Extensions:" : "Erweiterungen:",
+    "Unable to list extensions" : "Erweiterung konnte nicht aufgeführt werden",
     "Database" : "Datenbank",
     "Type" : "Typ",
     "External monitoring tool" : "Externes Überwachungsprogramm",

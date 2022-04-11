@@ -61,6 +61,7 @@ OC.L10N.register(
     "Max execution time" : "Nejdelší umožněný čas vykonávání",
     "Upload max size" : "Nejvyšší umožněná velikost nahrávaného souboru",
     "Extensions:" : "Rozšíření:",
+    "Unable to list extensions" : "Nepodařilo se vypsat rozšíření",
     "Database" : "Databáze",
     "Type" : "Typ",
     "External monitoring tool" : "Externí nástroj pro dohledování",

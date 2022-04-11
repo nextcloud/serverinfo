@@ -61,6 +61,7 @@ OC.L10N.register(
     "Max execution time" : "最長執行時間",
     "Upload max size" : "最大上傳大小",
     "Extensions:" : "副檔名：",
+    "Unable to list extensions" : "無法列出擴充套件",
     "Database" : "資料庫",
     "Type" : "類型",
     "External monitoring tool" : "外部監控工具",
