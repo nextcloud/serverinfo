@@ -61,6 +61,7 @@ OC.L10N.register(
     "Max execution time" : "En uzun çalışma süresi",
     "Upload max size" : "En büyük yükleme boyutu",
     "Extensions:" : "Eklentiler:",
+    "Unable to list extensions" : "Eklentiler listelenemedi",
     "Database" : "Veritabanı",
     "Type" : "Tür",
     "External monitoring tool" : "Dış izleme aracı",
