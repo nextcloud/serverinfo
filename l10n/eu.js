@@ -61,10 +61,13 @@ OC.L10N.register(
     "Max execution time" : "Gehienezko exekuzio denbora",
     "Upload max size" : "Kargatzeko gehienezko tamaina",
     "Extensions:" : "Hedapenak:",
+    "Unable to list extensions" : "Ezin dira zerrendatu luzapenak",
     "Database" : "Datu-basea",
     "Type" : "Mota",
     "External monitoring tool" : "Kanpo jarraipen tresna",
+    "You can connect an external monitoring tool by using this end point" : "Kanpoko kontrol-tresna konektatu daiteke amaiera-puntu hau erabiliz",
     "Appending \"?format=json\" at the end of the URL gives you the result in JSON." : "URL-aren amaieran \"?format=json\" eransteak emaitza JSON-en ematen du.",
+    "To use an access token, please generate one then set it using the following command" : "Sarbide token bat erabiltzeko, sortu eta ezarri komando hau erabiliz",
     "Then pass the token with the \"NC-Token\" header when querying the above URL." : "Ondoren, pasatu token-a \"NC-Token\" goiburuarekin goiko URLa kontsultatzerakoan.",
     "Load average" : "Batez besteko karga",
     "Last minute" : "Azken minutuan",
@@ -82,6 +85,7 @@ OC.L10N.register(
     "Upload max size:" : "Igotzeko gehienezko tamaina:",
     "Type:" : "Mota:",
     "Size:" : "Tamaina:",
-    "You can connect an external monitoring tool by using this end point:" : " Kanpoko kontrol-tresna konektatu daiteke amaiera-puntu hau erabiliz:"
+    "You can connect an external monitoring tool by using this end point:" : " Kanpoko kontrol-tresna konektatu daiteke amaiera-puntu hau erabiliz:",
+    "To use an access token please generate one then set it using the following command:" : "Sarbide token bat erabiltzeko, sortu eta ezarri komando hau erabiliz:"
 },
 "nplurals=2; plural=(n != 1);");
