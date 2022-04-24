@@ -57,6 +57,7 @@ OC.L10N.register(
     "Max execution time" : "最大実行時間",
     "Upload max size" : "最大アップロードサイズ",
     "Database" : "データベース",
+    "Type" : "タイプ",
     "External monitoring tool" : "外部モニタリングツール",
     "Appending \"?format=json\" at the end of the URL gives you the result in JSON." : "URLの最後に \"?format=json\" を追加すると、JSONの結果が得られます。",
     "Then pass the token with the \"NC-Token\" header when querying the above URL." : "次に、上記のURLをクエリするときに、\"NC-Token\" ヘッダーでトークンを渡します。",
@@ -76,6 +77,7 @@ OC.L10N.register(
     "Upload max size:" : "最大アップロードサイズ:",
     "Type:" : "タイプ:",
     "Size:" : "サイズ:",
-    "You can connect an external monitoring tool by using this end point:" : "このエンドポイントを利用して外部モニタリングツールに接続することが可能です："
+    "You can connect an external monitoring tool by using this end point:" : "このエンドポイントを利用して外部モニタリングツールに接続することが可能です：",
+    "To use an access token please generate one then set it using the following command:" : "アクセストークンを使用するには、トークンを生成してから、次のコマンドを使用して設定してください:"
 },
 "nplurals=1; plural=0;");

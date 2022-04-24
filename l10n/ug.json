@@ -2,6 +2,9 @@
     "Users" : "ئىشلەتكۈچىلەر",
     "Groups" : "گۇرۇپپا",
     "Size" : "چوڭلۇقى",
+    "Files" : "ھۆججەتلەر",
+    "Version" : "نەشرى",
+    "Type" : "Type",
     "Type:" : "تىپى:",
     "Size:" : "چوڭلۇقى:"
 },"pluralForm" :"nplurals=2; plural=(n != 1);"

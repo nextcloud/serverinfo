@@ -5,6 +5,9 @@ OC.L10N.register(
     "Groups" : "Grwpiau",
     "Copy" : "Copïo",
     "Size" : "Maint",
+    "Files" : "Ffeiliau",
+    "Version" : "Fersiwn",
+    "Type" : "Math",
     "Type:" : "Math:",
     "Size:" : "Maint:"
 },
