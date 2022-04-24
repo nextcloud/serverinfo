@@ -5,6 +5,7 @@ OC.L10N.register(
     "Users" : "משתמשים",
     "Groups" : "קבוצות",
     "Links" : "קישורים",
+    "Emails" : "כתובות דוא״ל",
     "Federated sent" : "בקשת איגוד נשלחה",
     "Federated received" : "בקשת איגוד התקבלה",
     "Talk conversations" : "דיוני שיח",
@@ -33,6 +34,7 @@ OC.L10N.register(
     "Available" : "זמינות",
     "Used" : "מנוצלים",
     "You will get a notification once one of your disks is nearly full." : "תישלח אליך התראה כשהכונן עומד להתמלא לחלוטין.",
+    "Files" : "קבצים",
     "Network" : "רשת",
     "Hostname" : "שם מארח",
     "DNS" : "DNS",
@@ -45,7 +47,9 @@ OC.L10N.register(
     "Active users" : "משתמשים פעילים",
     "Shares" : "שיתופים",
     "PHP" : "PHP",
+    "Version" : "גרסה",
     "Database" : "מסד נתונים",
+    "Type" : "סוג",
     "External monitoring tool" : "כלי מעקב חיצוני",
     "Appending \"?format=json\" at the end of the URL gives you the result in JSON." : "הוספת „‎?format=json” לסוף הכתובת יעניק לך את התוצאה ב־JSON.",
     "Then pass the token with the \"NC-Token\" header when querying the above URL." : "לאחר מכן יש להעביר את האסימון עם כותרת „NC-Token” בעת תשאול הכתובת שלעיל.",
@@ -65,6 +69,7 @@ OC.L10N.register(
     "Upload max size:" : "גודל העלאה מרבי:",
     "Type:" : "סוג:",
     "Size:" : "גודל:",
-    "You can connect an external monitoring tool by using this end point:" : "ניתן לחבר לכלי מעקב חיצוני דרך נקודת הגישה הזאת:"
+    "You can connect an external monitoring tool by using this end point:" : "ניתן לחבר לכלי מעקב חיצוני דרך נקודת הגישה הזאת:",
+    "To use an access token please generate one then set it using the following command:" : "כדי להשתמש באסימון גישה נא לייצור אחד ואז להגדיר אותו באמצעות הפקודה הבאה:"
 },
 "nplurals=4; plural=(n == 1 && n % 1 == 0) ? 0 : (n == 2 && n % 1 == 0) ? 1: (n % 10 == 0 && n % 1 == 0 && n > 10) ? 2 : 3;");

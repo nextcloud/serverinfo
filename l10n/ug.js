@@ -4,6 +4,9 @@ OC.L10N.register(
     "Users" : "ئىشلەتكۈچىلەر",
     "Groups" : "گۇرۇپپا",
     "Size" : "چوڭلۇقى",
+    "Files" : "ھۆججەتلەر",
+    "Version" : "نەشرى",
+    "Type" : "Type",
     "Type:" : "تىپى:",
     "Size:" : "چوڭلۇقى:"
 },
