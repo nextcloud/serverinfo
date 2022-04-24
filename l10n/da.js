@@ -5,6 +5,7 @@ OC.L10N.register(
     "Users" : "Brugere",
     "Groups" : "Grupper",
     "Links" : "Links",
+    "Emails" : "Emails",
     "Federated sent" : "Fødereret sendt",
     "Federated received" : "Fødereret modtaget",
     "Talk conversations" : "Snak samtaler",
@@ -33,6 +34,7 @@ OC.L10N.register(
     "Available" : "Tilgængelig",
     "Used" : "Forbrugt",
     "You will get a notification once one of your disks is nearly full." : "Du får en meddelelse, når en af dine diske er næsten fuld.",
+    "Files" : "Filer",
     "Network" : "Netværk",
     "Hostname" : "Værtsnavn",
     "DNS" : "DNS",
@@ -45,7 +47,9 @@ OC.L10N.register(
     "Active users" : "Aktive brugere",
     "Shares" : "Delinger",
     "PHP" : "PHP",
+    "Version" : "Version",
     "Database" : "Database",
+    "Type" : "Type",
     "External monitoring tool" : "Eksternt monitoreringsværktøj",
     "Appending \"?format=json\" at the end of the URL gives you the result in JSON." : "Ved at tilføje \"?format=json\" i slutningen af URL'en får du resultatet i JSON.",
     "Then pass the token with the \"NC-Token\" header when querying the above URL." : "Send derefter tokenet med \"NC-Token\"-headeren, når du forespørger på ovenstående URL.",
@@ -65,6 +69,7 @@ OC.L10N.register(
     "Upload max size:" : "Max upload størrelse:",
     "Type:" : "Type:",
     "Size:" : "Størrelse:",
-    "You can connect an external monitoring tool by using this end point:" : "Du kan forbinde et eksternt monitoreringsprogram ved at bruge dette endepunkt:"
+    "You can connect an external monitoring tool by using this end point:" : "Du kan forbinde et eksternt monitoreringsprogram ved at bruge dette endepunkt:",
+    "To use an access token please generate one then set it using the following command:" : "For at bruge et adgangstoken skal du generere et og derefter indstille det ved hjælp af følgende kommando:"
 },
 "nplurals=2; plural=(n != 1);");

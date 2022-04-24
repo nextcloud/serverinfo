@@ -9,6 +9,7 @@ OC.L10N.register(
     "Press ⌘-C to copy." : "Ko'chirib olish uchun ⌘-C tugmasini bosing.",
     "Press Ctrl-C to copy." : "Nusxalash uchun Ctrl-C tugmalarini bosing.",
     "System" : "Tizim",
+    "Files" : "Fayllar",
     "Load average" : "O'rtacha yuk",
     "Total" : "Jami"
 },

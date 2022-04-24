@@ -5,6 +5,7 @@ OC.L10N.register(
     "Users" : "Korisnici",
     "Groups" : "Grupe",
     "Links" : "Poveznice",
+    "Emails" : "E-pošta",
     "Federated sent" : "Udruženo poslano",
     "Federated received" : "Udruženo primljeno",
     "Talk conversations" : "Razgovori u alatu Talk",
@@ -33,6 +34,7 @@ OC.L10N.register(
     "Available" : "Dostupno",
     "Used" : "Iskorišteno",
     "You will get a notification once one of your disks is nearly full." : "Primit ćete obavijest kada je jedan od vaših diskova skoro pun.",
+    "Files" : "Datoteke",
     "Network" : "Mreža",
     "Hostname" : "Naziv poslužitelja",
     "DNS" : "DNS",
@@ -45,7 +47,9 @@ OC.L10N.register(
     "Active users" : "Aktivni korisnici",
     "Shares" : "Dijeljenja",
     "PHP" : "PHP",
+    "Version" : "Inačica",
     "Database" : "Baza podataka",
+    "Type" : "Vrsta",
     "External monitoring tool" : "Vanjski alat za praćenje",
     "Appending \"?format=json\" at the end of the URL gives you the result in JSON." : "Dodavanjem „?format = json” na kraj URL-a dobije se rezultat u JSON-u.",
     "Then pass the token with the \"NC-Token\" header when querying the above URL." : "Zatim proslijedite token sa zaglavljem „NC-Token“ prilikom slanja upita za gornji URL.",
@@ -65,6 +69,7 @@ OC.L10N.register(
     "Upload max size:" : "Maksimalna veličina za otpremu:",
     "Type:" : "Vrsta:",
     "Size:" : "Veličina:",
-    "You can connect an external monitoring tool by using this end point:" : "Možete povezati vanjski alat za praćenje s pomoću ove krajnje točke:"
+    "You can connect an external monitoring tool by using this end point:" : "Možete povezati vanjski alat za praćenje s pomoću ove krajnje točke:",
+    "To use an access token please generate one then set it using the following command:" : "Kako biste se koristili tokenom za pristup, prvo ga generirajte i zatim ga postavite s pomoću sljedeće naredbe:"
 },
 "nplurals=3; plural=n%10==1 && n%100!=11 ? 0 : n%10>=2 && n%10<=4 && (n%100<10 || n%100>=20) ? 1 : 2;");

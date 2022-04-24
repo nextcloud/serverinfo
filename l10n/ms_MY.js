@@ -8,7 +8,9 @@ OC.L10N.register(
     "Press ⌘-C to copy." : "Tekan ⌘-C untuk menyalin.",
     "Press Ctrl-C to copy." : "Tekan Ctrl-C untuk menyalin.",
     "Size" : "Saiz",
+    "Files" : "Fail",
     "Shares" : "Kongsi",
+    "Type" : "Jenis",
     "Type:" : "Jenis",
     "Size:" : "Saiz"
 },
