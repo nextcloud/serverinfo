@@ -56,6 +56,7 @@ OC.L10N.register(
     "Version" : "Versjon",
     "Memory limit" : "Minnegrense",
     "Database" : "Database",
+    "Type" : "Type",
     "External monitoring tool" : "Eksternt overvåkingsverktøy",
     "Load average" : "Snittbelastning",
     "Last minute" : "Siste minutt",

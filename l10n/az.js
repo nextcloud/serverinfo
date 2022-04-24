@@ -5,8 +5,11 @@ OC.L10N.register(
     "Groups" : "Qruplar",
     "System" : "Sistem",
     "Size" : "Həcm",
+    "Files" : "Fayllar",
     "Hostname" : "Sahibadı",
     "Shares" : "Yayımlanmalar",
+    "Version" : "Versiya",
+    "Type" : "Type",
     "Type:" : "Tip:",
     "Size:" : "Həcm:"
 },

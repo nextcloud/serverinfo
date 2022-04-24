@@ -5,6 +5,7 @@ OC.L10N.register(
     "Users" : "Usuarios",
     "Groups" : "Grupos",
     "Links" : "Ligazóns",
+    "Emails" : "Correos",
     "Federated sent" : "Federados enviados",
     "Federated received" : "Federados recibidos",
     "Talk conversations" : "Conversas co Talk",
@@ -33,6 +34,7 @@ OC.L10N.register(
     "Available" : "Dispoñíbel",
     "Used" : "Usado",
     "You will get a notification once one of your disks is nearly full." : "Recibirá unha notificación cando un dos seus discos estea case completo.",
+    "Files" : "Ficheiros",
     "Network" : "Rede",
     "Hostname" : "Nome de máquina",
     "DNS" : "DNS",
@@ -45,7 +47,9 @@ OC.L10N.register(
     "Active users" : "Usuarios activos",
     "Shares" : "Comparticións",
     "PHP" : "PHP",
+    "Version" : "Versión",
     "Database" : "Base de datos",
+    "Type" : "Tipo",
     "External monitoring tool" : "Ferramenta externa de supervisión",
     "Appending \"?format=json\" at the end of the URL gives you the result in JSON." : "Engadindo «?format=json» na fin do URL devolve o resultado en JSON.",
     "Then pass the token with the \"NC-Token\" header when querying the above URL." : "A continuación, pase o testemuño coa cabeceira «Token NC» ao consultar o URL anterior.",
@@ -65,6 +69,7 @@ OC.L10N.register(
     "Upload max size:" : "Tamaño máximo de envío:",
     "Type:" : "Tipo:",
     "Size:" : "Tamaño:",
-    "You can connect an external monitoring tool by using this end point:" : "Pode conectar unha ferramenta externa de seguimento usando este punto final:"
+    "You can connect an external monitoring tool by using this end point:" : "Pode conectar unha ferramenta externa de seguimento usando este punto final:",
+    "To use an access token please generate one then set it using the following command:" : "Para usar un testemuño de acceso, xéreo e configúreo usando a seguinte orde:"
 },
 "nplurals=2; plural=(n != 1);");

@@ -5,6 +5,7 @@ OC.L10N.register(
     "Users" : "Utentes",
     "Groups" : "Grupos",
     "Links" : "Ligòngios",
+    "Emails" : "Indiritzos de posta eletrònica",
     "Federated sent" : "Federados imbiados",
     "Federated received" : "Federados retzidos",
     "Talk conversations" : "Resonadas de Talk",
@@ -33,6 +34,7 @@ OC.L10N.register(
     "Available" : "A disponimentu",
     "Used" : "Impreados",
     "You will get a notification once one of your disks is nearly full." : "As a retzire una notìfica cando unu de is discos tuos est acanta de si prènere de su totu.",
+    "Files" : "Archìvios",
     "Network" : "Rete",
     "Hostname" : "Nùmene retzidore",
     "DNS" : "DNS",
@@ -45,7 +47,9 @@ OC.L10N.register(
     "Active users" : "Utèntzias ativas",
     "Shares" : "Cumpartziduras",
     "PHP" : "PHP",
+    "Version" : "Versione",
     "Database" : "Base de datos",
+    "Type" : "Genia",
     "External monitoring tool" : "Trastu de controllu esternu",
     "Appending \"?format=json\" at the end of the URL gives you the result in JSON." : "S'agiunta de \"?format=json\" a sa fine de s'URL ti frunit su resurtadu in JSON.",
     "Then pass the token with the \"NC-Token\" header when querying the above URL." : "A pustis passa su token cun s'intestatzione \"NC-Token\" cando rechedes s'URL in subra.",
@@ -65,6 +69,7 @@ OC.L10N.register(
     "Upload max size:" : "Mannària màssima de carrigamentu",
     "Type:" : "Genia:",
     "Size:" : "Mannària:",
-    "You can connect an external monitoring tool by using this end point:" : "Podes collegare unu trastu de controllu esternu impreende custu terminadore:"
+    "You can connect an external monitoring tool by using this end point:" : "Podes collegare unu trastu de controllu esternu impreende custu terminadore:",
+    "To use an access token please generate one then set it using the following command:" : "Pro impreare unu token de intrada, genera·nde unu e a pustis imposta·ddu cun su cumandu in fatu:"
 },
 "nplurals=2; plural=(n != 1);");

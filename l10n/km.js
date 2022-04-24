@@ -4,7 +4,10 @@ OC.L10N.register(
     "Users" : "អ្នកប្រើ",
     "Groups" : "ក្រុ",
     "Size" : "ទំហំ",
+    "Files" : "ឯកសារ",
     "Shares" : "ចែក​រំលែក",
+    "Version" : "កំណែ",
+    "Type" : "Type",
     "Type:" : "ប្រភេទ៖",
     "Size:" : "ទំហំ៖"
 },

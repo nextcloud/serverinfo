@@ -3,8 +3,11 @@
     "Groups" : "Qruplar",
     "System" : "Sistem",
     "Size" : "Həcm",
+    "Files" : "Fayllar",
     "Hostname" : "Sahibadı",
     "Shares" : "Yayımlanmalar",
+    "Version" : "Versiya",
+    "Type" : "Type",
     "Type:" : "Tip:",
     "Size:" : "Həcm:"
 },"pluralForm" :"nplurals=2; plural=(n != 1);"
