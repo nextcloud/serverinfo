@@ -60,6 +60,8 @@ OC.L10N.register(
     "Memory limit" : "Speicherlimit",
     "Max execution time" : "Maximale Ausführungszeit",
     "Upload max size" : "Maximale Größe zum Hochladen",
+    "Extensions:" : "Erweiterungen:",
+    "Unable to list extensions" : "Erweiterungen konnten nicht aufgeführt werden",
     "Database" : "Datenbank",
     "Type" : "Typ",
     "External monitoring tool" : "Externes Überwachungsprogramm",
