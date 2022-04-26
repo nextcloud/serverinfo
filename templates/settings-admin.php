@@ -122,15 +122,15 @@ $disks = $_['diskinfo'];
 						</div>
 						<div class="diskinfo-container">
 							<h3><?php p(basename($disk->getDevice())); ?></h3>
-							<?php p($l->t('Mount')); ?>:
+							<?php p($l->t('Mount:')); ?>
 							<span class="info"><?php p($disk->getMount()); ?></span><br>
-							<?php p($l->t('Filesystem')); ?>:
+							<?php p($l->t('Filesystem:')); ?>
 							<span class="info"><?php p($disk->getFs()); ?></span><br>
-							<?php p($l->t('Size')); ?>:
+							<?php p($l->t('Size:')); ?>
 							<span class="info"><?php p(FormatMegabytes($disk->getUsed() + $disk->getAvailable())); ?></span><br>
-							<?php p($l->t('Available')); ?>:
+							<?php p($l->t('Available:')); ?>
 							<span class="info"><?php p(FormatMegabytes($disk->getAvailable())); ?></span><br>
-							<?php p($l->t('Used')); ?>:
+							<?php p($l->t('Used:')); ?>
 							<span class="info"><?php p($disk->getPercent()); ?></span><br>
 						</div>
 					</div>
@@ -160,15 +160,15 @@ $disks = $_['diskinfo'];
 			</div>
 
 			<div class="col col-12">
-				<?php p($l->t('Hostname')); ?>:
+				<?php p($l->t('Hostname:')); ?>
 				<span class="info"><?php p($_['networkinfo']['hostname']); ?></span>
 			</div>
 			<div class="col col-12">
-				<?php p($l->t('DNS')); ?>:
+				<?php p($l->t('DNS:')); ?>
 				<span class="info"><?php p($_['networkinfo']['dns']); ?></span>
 			</div>
 			<div class="col col-12">
-				<?php p($l->t('Gateway')); ?>:
+				<?php p($l->t('Gateway:')); ?>
 				<span class="info"><?php p($_['networkinfo']['gateway']); ?></span>
 			</div>
 			<div class="col col-12">
@@ -179,18 +179,18 @@ $disks = $_['diskinfo'];
 							<div class="infobox">
 								<div class="interface-wrapper">
 									<h3><?php p($interface['interface']) ?></h3>
-									<?php p($l->t('Status')); ?>:
+									<?php p($l->t('Status:')); ?>
 									<span class="info"><?php p($interface['status']) ?></span><br>
-									<?php p($l->t('Speed')); ?>:
+									<?php p($l->t('Speed:')); ?>
 									<span
 										class="info"><?php p($interface['speed'] . ' ' . $interface['duplex']) ?></span><br>
 									<?php if (!empty($interface['mac'])): ?>
-										<?php p($l->t('MAC')); ?>:
+										<?php p($l->t('MAC:')); ?>
 										<span class="info"><?php p($interface['mac']) ?></span><br>
 									<?php endif; ?>
-									<?php p($l->t('IPv4')); ?>:
+									<?php p($l->t('IPv4:')); ?>
 									<span class="info"><?php p($interface['ipv4']) ?></span><br>
-									<?php p($l->t('IPv6')); ?>:
+									<?php p($l->t('IPv6:')); ?>
 									<span class="info"><?php p($interface['ipv6']) ?></span>
 								</div>
 							</div>
