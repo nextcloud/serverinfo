@@ -56,18 +56,18 @@ $disks = $_['diskinfo'];
 				</h2>
 			</div>
 			<div class="col col-12">			
-				<p><?php p($l->t('Operating System').':'); ?> <strong id="numFilesStorage"><?php p($_['osname']); ?></strong></p>
-				<p><?php p($l->t('CPU').':'); ?>
+				<p><?php p($l->t('Operating System:')); ?> <strong id="numFilesStorage"><?php p($_['osname']); ?></strong></p>
+				<p><?php p($l->t('CPU:')); ?>
 				<?php if ($_['cpu'] !== 'Unknown Processor'): ?>
 				<strong id="numFilesStorage"><?php p($_['cpu']) ?></strong></p>
 				<?php else: ?>
 				<strong id="numFilesStorage"><?php p($l->t('Unknown Processor')) ?></strong></p>
 				<?php endif; ?>
-				<p><?php p($l->t('Memory').':'); ?>
+				<p><?php p($l->t('Memory:')); ?>
 				<?php if ($memory->getMemTotal() > 0): ?> <strong id="numFilesStorage"><?php p(FormatMegabytes($memory->getMemTotal())) ?></strong></p>
 				<?php endif; ?>
-				<p><?php p($l->t('Server time').':'); ?> <strong id="numFilesStorage"><span class="info" id="servertime"></span></strong></p>
-				<p><?php p($l->t('Uptime').':'); ?> <strong id="numFilesStorage"><span class="info" id="uptime"></span></strong></p>
+				<p><?php p($l->t('Server time:')); ?> <strong id="numFilesStorage"><span class="info" id="servertime"></span></strong></p>
+				<p><?php p($l->t('Uptime:')); ?> <strong id="numFilesStorage"><span class="info" id="uptime"></span></strong></p>
 			</div>
 		</div>
 	</div>
@@ -122,15 +122,15 @@ $disks = $_['diskinfo'];
 						</div>
 						<div class="diskinfo-container">
 							<h3><?php p(basename($disk->getDevice())); ?></h3>
-							<?php p($l->t('Mount')); ?>:
+							<?php p($l->t('Mount:')); ?>
 							<span class="info"><?php p($disk->getMount()); ?></span><br>
-							<?php p($l->t('Filesystem')); ?>:
+							<?php p($l->t('Filesystem:')); ?>
 							<span class="info"><?php p($disk->getFs()); ?></span><br>
-							<?php p($l->t('Size')); ?>:
+							<?php p($l->t('Size:')); ?>
 							<span class="info"><?php p(FormatMegabytes($disk->getUsed() + $disk->getAvailable())); ?></span><br>
-							<?php p($l->t('Available')); ?>:
+							<?php p($l->t('Available:')); ?>
 							<span class="info"><?php p(FormatMegabytes($disk->getAvailable())); ?></span><br>
-							<?php p($l->t('Used')); ?>:
+							<?php p($l->t('Used:')); ?>
 							<span class="info"><?php p($disk->getPercent()); ?></span><br>
 						</div>
 					</div>
@@ -142,10 +142,10 @@ $disks = $_['diskinfo'];
 			<?php p($l->t('You will get a notification once one of your disks is nearly full.')); ?>
 		</div>
 
-		<p><?php p($l->t('Files').':'); ?> <strong id="numFilesStorage"><?php p($_['storage']['num_files']); ?></strong></p>
-		<p><?php p($l->t('Storages').':'); ?> <strong id="numFilesStorages"><?php p($_['storage']['num_storages']); ?></strong></p>
+		<p><?php p($l->t('Files:')); ?> <strong id="numFilesStorage"><?php p($_['storage']['num_files']); ?></strong></p>
+		<p><?php p($l->t('Storages:')); ?> <strong id="numFilesStorages"><?php p($_['storage']['num_storages']); ?></strong></p>
 		<?php if ($_['system']['freespace'] !== null): ?>
-			<p><?php p($l->t('Free Space').':'); ?> <strong id="systemDiskFreeSpace"><?php p($_['system']['freespace']); ?></strong></p>
+			<p><?php p($l->t('Free Space:')); ?> <strong id="systemDiskFreeSpace"><?php p($_['system']['freespace']); ?></strong></p>
 		<?php endif; ?>
 	</div>
 
@@ -160,15 +160,15 @@ $disks = $_['diskinfo'];
 			</div>
 
 			<div class="col col-12">
-				<?php p($l->t('Hostname')); ?>:
+				<?php p($l->t('Hostname:')); ?>
 				<span class="info"><?php p($_['networkinfo']['hostname']); ?></span>
 			</div>
 			<div class="col col-12">
-				<?php p($l->t('DNS')); ?>:
+				<?php p($l->t('DNS:')); ?>
 				<span class="info"><?php p($_['networkinfo']['dns']); ?></span>
 			</div>
 			<div class="col col-12">
-				<?php p($l->t('Gateway')); ?>:
+				<?php p($l->t('Gateway:')); ?>
 				<span class="info"><?php p($_['networkinfo']['gateway']); ?></span>
 			</div>
 			<div class="col col-12">
@@ -179,18 +179,18 @@ $disks = $_['diskinfo'];
 							<div class="infobox">
 								<div class="interface-wrapper">
 									<h3><?php p($interface['interface']) ?></h3>
-									<?php p($l->t('Status')); ?>:
+									<?php p($l->t('Status:')); ?>
 									<span class="info"><?php p($interface['status']) ?></span><br>
-									<?php p($l->t('Speed')); ?>:
+									<?php p($l->t('Speed:')); ?>
 									<span
 										class="info"><?php p($interface['speed'] . ' ' . $interface['duplex']) ?></span><br>
 									<?php if (!empty($interface['mac'])): ?>
-										<?php p($l->t('MAC')); ?>:
+										<?php p($l->t('MAC:')); ?>
 										<span class="info"><?php p($interface['mac']) ?></span><br>
 									<?php endif; ?>
-									<?php p($l->t('IPv4')); ?>:
+									<?php p($l->t('IPv4:')); ?>
 									<span class="info"><?php p($interface['ipv4']) ?></span><br>
-									<?php p($l->t('IPv6')); ?>:
+									<?php p($l->t('IPv6:')); ?>
 									<span class="info"><?php p($interface['ipv6']) ?></span>
 								</div>
 							</div>
@@ -224,7 +224,7 @@ $disks = $_['diskinfo'];
 							></canvas>
 						</div>
 						<p>
-							<?php p($l->t('Total users').':'); ?>
+							<?php p($l->t('Total users:')); ?>
 							<em id="numUsersStorage"><?php p($_['storage']['num_users']); ?></em>
 						</p>
 					</div>
@@ -266,19 +266,19 @@ $disks = $_['diskinfo'];
 				<div class="infobox">
 					<div class="phpinfo-wrapper">
 						<p>
-							<?php p($l->t('Version').':'); ?>
+							<?php p($l->t('Version:')); ?>
 							<em id="phpVersion"><?php p($_['php']['version']); ?></em>
 						</p>
 						<p>
-							<?php p($l->t('Memory limit').':'); ?>
+							<?php p($l->t('Memory limit:')); ?>
 							<em id="phpMemLimit"><?php p($_['php']['memory_limit']); ?></em>
 						</p>
 						<p>
-							<?php p($l->t('Max execution time').':'); ?>
+							<?php p($l->t('Max execution time:')); ?>
 							<em id="phpMaxExecTime"><?php p($_['php']['max_execution_time']); ?></em>
 						</p>
 						<p>
-							<?php p($l->t('Upload max size').':'); ?>
+							<?php p($l->t('Upload max size:')); ?>
 							<em id="phpUploadMaxSize"><?php p($_['php']['upload_max_filesize']); ?></em>
 						</p>
 						<p>
@@ -298,15 +298,15 @@ $disks = $_['diskinfo'];
 				<div class="infobox">
 					<div class="database-wrapper">
 						<p>
-							<?php p($l->t('Type').':'); ?>
+							<?php p($l->t('Type:')); ?>
 							<em id="databaseType"><?php p($_['database']['type']); ?></em>
 						</p>
 						<p>
-							<?php p($l->t('Version').':'); ?>
+							<?php p($l->t('Version:')); ?>
 							<em id="databaseVersion"><?php p($_['database']['version']); ?></em>
 						</p>
 						<p>
-							<?php p($l->t('Size').':'); ?>
+							<?php p($l->t('Size:')); ?>
 							<em id="databaseSize"><?php p($_['database']['size']); ?></em>
 						</p>
 					</div>
@@ -322,7 +322,7 @@ $disks = $_['diskinfo'];
 				<!-- OCS ENDPOINT -->
 				<h2><?php p($l->t('External monitoring tool')); ?></h2>
 				<p>
-					<?php p($l->t('You can connect an external monitoring tool by using this end point').':'); ?>
+					<?php p($l->t('You can connect an external monitoring tool by using this end point:')); ?>
 				</p>
 				<div class="monitoring-wrapper">
 					<input type="text" readonly="readonly" id="monitoring-endpoint-url" value="<?php echo p($_['ocs']); ?>"/>
@@ -332,7 +332,7 @@ $disks = $_['diskinfo'];
 					<?php p($l->t('Appending "?format=json" at the end of the URL gives you the result in JSON.')); ?>
 				</p>
 				<p>
-					<?php p($l->t('To use an access token, please generate one then set it using the following command').':'); ?>
+					<?php p($l->t('To use an access token, please generate one then set it using the following command:')); ?>
 					<div><i>occ config:app:set serverinfo token --value yourtoken</i></div>
 				</p>
 				<p>
@@ -343,3 +343,4 @@ $disks = $_['diskinfo'];
 	</div>
 
 </div>
+
