@@ -4,9 +4,6 @@ OC.L10N.register(
     "Users" : "﻿ಬಳಕೆದಾರರು",
     "Groups" : "﻿ಗುಂಪುಗಳು",
     "Copy" : "ನಕಲಿಸಿ",
-    "Size" : "﻿ ಗಾತ್ರ",
-    "Files" : "ಕಡತಗಳು",
-    "Version" : "﻿ಆವೃತ್ತಿ",
-    "Type" : "Type"
+    "Size" : "﻿ ಗಾತ್ರ"
 },
 "nplurals=2; plural=(n > 1);");

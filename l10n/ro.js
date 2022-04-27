@@ -11,16 +11,13 @@ OC.L10N.register(
     "Press ⌘-C to copy." : "Apasă ⌘-C pentru copiere.",
     "Press Ctrl-C to copy." : "Apasă Ctrl-C pentru copiere.",
     "System" : "Sistem",
+    "Size:" : "Mărime:",
+    "Shares" : "Partajări",
+    "Type:" : "Tip:",
+    "Mails" : "Mailuri",
     "Size" : "Mărime",
     "Available" : "Disponibil",
-    "Files" : "Fișiere",
     "Hostname" : "Nume mașină",
-    "Status" : "Stare",
-    "Shares" : "Partajări",
-    "Version" : "Versiune",
-    "Type" : "Tip",
-    "Mails" : "Mailuri",
-    "Type:" : "Tip:",
-    "Size:" : "Mărime:"
+    "Status" : "Stare"
 },
 "nplurals=3; plural=(n==1?0:(((n%100>19)||((n%100==0)&&(n!=0)))?2:1));");
