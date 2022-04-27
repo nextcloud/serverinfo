@@ -10,15 +10,12 @@ OC.L10N.register(
     "Press ⌘-C to copy." : "กด ⌘-C เพื่อคัดลอก",
     "Press Ctrl-C to copy." : "กด Ctrl-C เพื่อคัดลอก",
     "System" : "ระบบ",
-    "Size" : "ขนาด",
-    "Files" : "ไฟล์",
-    "Hostname" : "ชื่อโฮสต์",
-    "Status" : "สถานะ",
+    "Size:" : "ขนาด:",
     "Active users" : "ผู้ใช้ที่ใช้งานอยู่",
     "Shares" : "แชร์",
-    "Version" : "รุ่น",
-    "Type" : "ประเภท",
     "Type:" : "ชนิด:",
-    "Size:" : "ขนาด:"
+    "Size" : "ขนาด",
+    "Hostname" : "ชื่อโฮสต์",
+    "Status" : "สถานะ"
 },
 "nplurals=1; plural=0;");

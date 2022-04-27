@@ -3,11 +3,8 @@ OC.L10N.register(
     {
     "Groups" : "Խմբեր",
     "Copy" : "պատճենահանել",
-    "Size" : "Չափս",
-    "Files" : "Ֆայլեր",
-    "Version" : "Տարբերակ",
-    "Type" : "Տիպ",
+    "Size:" : "Չափս.",
     "Type:" : "Տիպ.",
-    "Size:" : "Չափս."
+    "Size" : "Չափս"
 },
 "nplurals=2; plural=(n != 1);");

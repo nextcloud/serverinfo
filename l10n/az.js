@@ -4,13 +4,10 @@ OC.L10N.register(
     "Users" : "İstifadəçilər",
     "Groups" : "Qruplar",
     "System" : "Sistem",
-    "Size" : "Həcm",
-    "Files" : "Fayllar",
-    "Hostname" : "Sahibadı",
+    "Size:" : "Həcm:",
     "Shares" : "Yayımlanmalar",
-    "Version" : "Versiya",
-    "Type" : "Type",
     "Type:" : "Tip:",
-    "Size:" : "Həcm:"
+    "Size" : "Həcm",
+    "Hostname" : "Sahibadı"
 },
 "nplurals=2; plural=(n != 1);");

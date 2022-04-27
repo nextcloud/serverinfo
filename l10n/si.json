@@ -9,11 +9,9 @@
     "Press ⌘-C to copy." : "පිටපත් කිරීමට ⌘-C ඔබන්න.",
     "Press Ctrl-C to copy." : "පිටපත් කිරීමට Ctrl-C ඔබන්න.",
     "System" : "පද්ධතිය",
+    "Shares" : "බෙදාගැනීම්",
     "Size" : "ප්‍රමාණය",
     "Available" : "ඇත",
-    "Files" : "ගොනු",
-    "Hostname" : "ධාරක නාමය",
-    "Shares" : "බෙදාගැනීම්",
-    "Version" : "අනුවාදය"
+    "Hostname" : "ධාරක නාමය"
 },"pluralForm" :"nplurals=2; plural=(n != 1);"
 }
