@@ -1,11 +1,8 @@
 { "translations": {
     "Users" : "ئىشلەتكۈچىلەر",
     "Groups" : "گۇرۇپپا",
-    "Size" : "چوڭلۇقى",
-    "Files" : "ھۆججەتلەر",
-    "Version" : "نەشرى",
-    "Type" : "Type",
+    "Size:" : "چوڭلۇقى:",
     "Type:" : "تىپى:",
-    "Size:" : "چوڭلۇقى:"
+    "Size" : "چوڭلۇقى"
 },"pluralForm" :"nplurals=2; plural=(n != 1);"
 }

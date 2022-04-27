@@ -7,13 +7,10 @@ OC.L10N.register(
     "Not supported!" : "সমর্থিত নয়! ",
     "Press ⌘-C to copy." : "অনুলিপি করতে ⌘-C টিপুন।",
     "Press Ctrl-C to copy." : "অনুলিপি করতে Ctrl-C টিপুন।",
-    "Size" : "আকার",
-    "Files" : "ফাইল",
-    "Hostname" : "হোস্টনেম",
+    "Size:" : "আয়তনঃ",
     "Shares" : "ভাগাভাগি",
-    "Version" : "ভার্সন",
-    "Type" : "ধরণ",
     "Type:" : "ধরণঃ",
-    "Size:" : "আয়তনঃ"
+    "Size" : "আকার",
+    "Hostname" : "হোস্টনেম"
 },
 "nplurals=2; plural=(n != 1);");

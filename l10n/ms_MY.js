@@ -7,11 +7,9 @@ OC.L10N.register(
     "Not supported!" : "Tidak menyokong!",
     "Press ⌘-C to copy." : "Tekan ⌘-C untuk menyalin.",
     "Press Ctrl-C to copy." : "Tekan Ctrl-C untuk menyalin.",
-    "Size" : "Saiz",
-    "Files" : "Fail",
+    "Size:" : "Saiz",
     "Shares" : "Kongsi",
-    "Type" : "Jenis",
     "Type:" : "Jenis",
-    "Size:" : "Saiz"
+    "Size" : "Saiz"
 },
 "nplurals=1; plural=0;");
