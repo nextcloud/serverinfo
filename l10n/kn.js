@@ -1,9 +1,0 @@
-OC.L10N.register(
-    "serverinfo",
-    {
-    "Users" : "﻿ಬಳಕೆದಾರರು",
-    "Groups" : "﻿ಗುಂಪುಗಳು",
-    "Copy" : "ನಕಲಿಸಿ",
-    "Size" : "﻿ ಗಾತ್ರ"
-},
-"nplurals=2; plural=(n > 1);");
