@@ -1,8 +1,9 @@
 { "translations": {
     "Users" : "பயனாளர்",
     "Groups" : "குழுக்கள்",
-    "Size" : "அளவு",
+    "Copy" : "Copy",
+    "Size:" : "அளவு:",
     "Type:" : "வகை:",
-    "Size:" : "அளவு:"
+    "Size" : "அளவு"
 },"pluralForm" :"nplurals=2; plural=(n != 1);"
 }

@@ -3,10 +3,17 @@ OC.L10N.register(
     {
     "Users" : "ব্যবহারকারী",
     "Groups" : "গোষ্ঠীসমূহ",
-    "Size" : "আকার",
-    "Hostname" : "হোস্টনেম",
+    "Copied!" : "অনুলিপি!",
+    "Not supported!" : "সমর্থিত নয়! ",
+    "Press ⌘-C to copy." : "অনুলিপি করতে ⌘-C টিপুন।",
+    "Press Ctrl-C to copy." : "অনুলিপি করতে Ctrl-C টিপুন।",
+    "Size:" : "আয়তনঃ",
     "Shares" : "ভাগাভাগি",
     "Type:" : "ধরণঃ",
-    "Size:" : "আয়তনঃ"
+    "Size" : "আকার",
+    "Hostname" : "হোস্টনেম",
+    "Files" : "ফাইল",
+    "Version" : "ভার্সন",
+    "Type" : "ধরণ"
 },
 "nplurals=2; plural=(n != 1);");

@@ -3,8 +3,9 @@ OC.L10N.register(
     {
     "Users" : "ئىشلەتكۈچىلەر",
     "Groups" : "گۇرۇپپا",
-    "Size" : "چوڭلۇقى",
+    "Size:" : "چوڭلۇقى:",
     "Type:" : "تىپى:",
-    "Size:" : "چوڭلۇقى:"
+    "Size" : "چوڭلۇقى",
+    "Version" : "نەشرى"
 },
 "nplurals=2; plural=(n != 1);");
