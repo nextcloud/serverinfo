@@ -34,6 +34,9 @@ OC.L10N.register(
     "Hostname" : "Nome d'agospiu",
     "Status" : "Estáu",
     "Memory Limit:" : "Llende de memoria:",
-    "Max Execution Time:" : "Tiempu máximo d'execución:"
+    "Max Execution Time:" : "Tiempu máximo d'execución:",
+    "Files" : "Ficheros",
+    "Version" : "Versión",
+    "Type" : "Type"
 },
 "nplurals=2; plural=(n != 1);");

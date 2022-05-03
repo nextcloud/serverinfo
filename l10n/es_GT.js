@@ -35,6 +35,9 @@ OC.L10N.register(
     "Hostname" : "Nombre del servidor",
     "Status" : "Estatus",
     "Memory Limit:" : "Límite de Memoria:",
-    "Max Execution Time:" : "Tiempo Max de Ejecución:"
+    "Max Execution Time:" : "Tiempo Max de Ejecución:",
+    "Files" : "Archivos",
+    "Version" : "Versión",
+    "Type" : "Tipo"
 },
 "nplurals=2; plural=(n != 1);");

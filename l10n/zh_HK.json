@@ -93,6 +93,17 @@
     "IPv6" : "IPv6",
     "Memory Limit:" : "記憶體限制：",
     "Max Execution Time:" : "最長執行時間：",
-    "To use an access token please generate one then set it using the following command:" : "要使用存取權杖，請生成一個權杖，然後使用以下命令對其進行設置："
+    "To use an access token please generate one then set it using the following command:" : "要使用存取權杖，請生成一個權杖，然後使用以下命令對其進行設置：",
+    "Files" : "檔案",
+    "Storages" : "儲存",
+    "Free Space" : "可用空間",
+    "Total users" : "總用戶",
+    "Version" : "版本",
+    "Memory limit" : "記憶體限制",
+    "Max execution time" : "最長執行時間",
+    "Upload max size" : "最大上傳大小",
+    "Type" : "類型",
+    "You can connect an external monitoring tool by using this end point" : "您可以使用此終端連接外部監視工具",
+    "To use an access token, please generate one then set it using the following command" : "要使用存取權杖，請生成一個權杖，然後使用以下命令對其進行設置"
 },"pluralForm" :"nplurals=1; plural=0;"
 }

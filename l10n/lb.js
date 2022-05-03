@@ -9,6 +9,8 @@ OC.L10N.register(
     "Press Ctrl-C to copy." : "Dréck CTRL-C fir ze kopéieren.",
     "Size:" : "Gréisst:",
     "Type:" : "Typ:",
-    "Size" : "Gréisst"
+    "Size" : "Gréisst",
+    "Files" : "Fichieren",
+    "Type" : "Typ"
 },
 "nplurals=2; plural=(n != 1);");

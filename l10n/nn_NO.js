@@ -24,6 +24,9 @@ OC.L10N.register(
     "Current usage" : "Nåverende bruk",
     "Size" : "Storleik",
     "Status" : "Status",
-    "Memory Limit:" : "Minne grense:"
+    "Memory Limit:" : "Minne grense:",
+    "Files" : "Filer",
+    "Version" : "Utgåve",
+    "Type" : "Type"
 },
 "nplurals=2; plural=(n != 1);");

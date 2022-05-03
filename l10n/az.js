@@ -8,6 +8,9 @@ OC.L10N.register(
     "Shares" : "Yayımlanmalar",
     "Type:" : "Tip:",
     "Size" : "Həcm",
-    "Hostname" : "Sahibadı"
+    "Hostname" : "Sahibadı",
+    "Files" : "Fayllar",
+    "Version" : "Versiya",
+    "Type" : "Type"
 },
 "nplurals=2; plural=(n != 1);");

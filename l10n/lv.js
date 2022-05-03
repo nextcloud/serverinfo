@@ -63,6 +63,9 @@ OC.L10N.register(
     "IPv4" : "IPv4",
     "IPv6" : "IPv6",
     "Memory Limit:" : "Atmiņas limits:",
-    "Max Execution Time:" : "Maksimālais izpildes laiks:"
+    "Max Execution Time:" : "Maksimālais izpildes laiks:",
+    "Files" : "Datnes",
+    "Version" : "Versija",
+    "Type" : "Tips"
 },
 "nplurals=3; plural=(n%10==1 && n%100!=11 ? 0 : n != 0 ? 1 : 2);");

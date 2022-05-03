@@ -63,6 +63,12 @@ OC.L10N.register(
     "IPv4" : "IPv4",
     "IPv6" : "IPv6",
     "Memory Limit:" : "Minnegrense:",
-    "Max Execution Time:" : "Maks. kjøringstid:"
+    "Max Execution Time:" : "Maks. kjøringstid:",
+    "Files" : "Filer",
+    "Storages" : "Lagringer",
+    "Free Space" : "Ledig plass",
+    "Version" : "Versjon",
+    "Memory limit" : "Minnegrense",
+    "Type" : "Type"
 },
 "nplurals=2; plural=(n != 1);");

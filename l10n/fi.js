@@ -73,6 +73,15 @@ OC.L10N.register(
     "IPv4" : "IPv4",
     "IPv6" : "IPv6",
     "Memory Limit:" : "Muistin raja:",
-    "Max Execution Time:" : "Suurin suoritusaika:"
+    "Max Execution Time:" : "Suurin suoritusaika:",
+    "Files" : "Tiedostot",
+    "Storages" : "Tallennustilat",
+    "Free Space" : "Vapaa tila",
+    "Total users" : "Käyttäjiä yhteensä",
+    "Version" : "Versio",
+    "Memory limit" : "Muistin raja",
+    "Max execution time" : "Suoritusaika enintään",
+    "Upload max size" : "Lähetyksen enimmäiskoko",
+    "Type" : "Tyyppi"
 },
 "nplurals=2; plural=(n != 1);");

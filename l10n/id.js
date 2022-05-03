@@ -29,6 +29,9 @@ OC.L10N.register(
     "Size" : "Ukuran",
     "Hostname" : "Nama Host",
     "Status" : "Status",
-    "Memory Limit:" : "Batas Memori"
+    "Memory Limit:" : "Batas Memori",
+    "Files" : "Berkas",
+    "Version" : "Versi",
+    "Type" : "tipe"
 },
 "nplurals=1; plural=0;");

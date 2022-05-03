@@ -5,6 +5,9 @@ OC.L10N.register(
     "Copy" : "պատճենահանել",
     "Size:" : "Չափս.",
     "Type:" : "Տիպ.",
-    "Size" : "Չափս"
+    "Size" : "Չափս",
+    "Files" : "Ֆայլեր",
+    "Version" : "Տարբերակ",
+    "Type" : "Տիպ"
 },
 "nplurals=2; plural=(n != 1);");

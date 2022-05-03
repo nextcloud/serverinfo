@@ -7,6 +7,8 @@
     "Press Ctrl-C to copy." : "Dréck CTRL-C fir ze kopéieren.",
     "Size:" : "Gréisst:",
     "Type:" : "Typ:",
-    "Size" : "Gréisst"
+    "Size" : "Gréisst",
+    "Files" : "Fichieren",
+    "Type" : "Typ"
 },"pluralForm" :"nplurals=2; plural=(n != 1);"
 }

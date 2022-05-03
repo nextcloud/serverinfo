@@ -21,6 +21,9 @@ OC.L10N.register(
     "Available" : "Disponible",
     "Status" : "Estat",
     "IPv4" : "IPv4",
-    "IPv6" : "IPv6"
+    "IPv6" : "IPv6",
+    "Files" : "Fichièrs",
+    "Version" : "Version",
+    "Type" : "Tipe"
 },
 "nplurals=2; plural=(n > 1);");

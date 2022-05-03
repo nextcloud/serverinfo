@@ -64,6 +64,9 @@ OC.L10N.register(
     "IPv4" : "IPv4",
     "IPv6" : "IPv6",
     "Memory Limit:" : "메모리 한도:",
-    "Max Execution Time:" : "최대 실행 시간:"
+    "Max Execution Time:" : "최대 실행 시간:",
+    "Files" : "파일",
+    "Version" : "버전",
+    "Type" : "종류"
 },
 "nplurals=1; plural=0;");

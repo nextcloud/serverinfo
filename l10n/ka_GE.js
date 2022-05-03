@@ -34,6 +34,9 @@ OC.L10N.register(
     "Hostname" : "ჰოსტი",
     "Status" : "სტატუსი",
     "Memory Limit:" : "მეხსიერების ლიმიტი:",
-    "Max Execution Time:" : "მაქს. გაშვების დრო:"
+    "Max Execution Time:" : "მაქს. გაშვების დრო:",
+    "Files" : "ფაილები",
+    "Version" : "ვერსია",
+    "Type" : "სახეობა"
 },
 "nplurals=2; plural=(n!=1);");
