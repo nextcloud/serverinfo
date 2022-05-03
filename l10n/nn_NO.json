@@ -22,6 +22,9 @@
     "Current usage" : "Nåverende bruk",
     "Size" : "Storleik",
     "Status" : "Status",
-    "Memory Limit:" : "Minne grense:"
+    "Memory Limit:" : "Minne grense:",
+    "Files" : "Filer",
+    "Version" : "Utgåve",
+    "Type" : "Type"
 },"pluralForm" :"nplurals=2; plural=(n != 1);"
 }

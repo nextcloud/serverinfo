@@ -32,6 +32,9 @@
     "Hostname" : "Nome d'agospiu",
     "Status" : "Estáu",
     "Memory Limit:" : "Llende de memoria:",
-    "Max Execution Time:" : "Tiempu máximo d'execución:"
+    "Max Execution Time:" : "Tiempu máximo d'execución:",
+    "Files" : "Ficheros",
+    "Version" : "Versión",
+    "Type" : "Type"
 },"pluralForm" :"nplurals=2; plural=(n != 1);"
 }

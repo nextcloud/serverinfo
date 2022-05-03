@@ -32,6 +32,9 @@ OC.L10N.register(
     "Available" : "khả dụng",
     "Status" : "Trạng thái",
     "Memory Limit:" : "Giới hạn bộ nhớ:",
-    "Max Execution Time:" : "Thời gian thực thi tối đa:"
+    "Max Execution Time:" : "Thời gian thực thi tối đa:",
+    "Files" : "Tệp",
+    "Version" : "Phiên bản",
+    "Type" : "Loại"
 },
 "nplurals=1; plural=0;");

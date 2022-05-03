@@ -6,6 +6,9 @@
     "Shares" : "Yayımlanmalar",
     "Type:" : "Tip:",
     "Size" : "Həcm",
-    "Hostname" : "Sahibadı"
+    "Hostname" : "Sahibadı",
+    "Files" : "Fayllar",
+    "Version" : "Versiya",
+    "Type" : "Type"
 },"pluralForm" :"nplurals=2; plural=(n != 1);"
 }

@@ -29,6 +29,9 @@ OC.L10N.register(
     "Size" : "Хэмжээ",
     "Available" : "Боломжтой",
     "Status" : "төлөв",
-    "Memory Limit:" : "Санах ойн хязгаар:"
+    "Memory Limit:" : "Санах ойн хязгаар:",
+    "Files" : "файлууд",
+    "Version" : "төрөл",
+    "Type" : "Төрөл"
 },
 "nplurals=2; plural=(n != 1);");

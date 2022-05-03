@@ -5,6 +5,7 @@ OC.L10N.register(
     "Groups" : "گۇرۇپپا",
     "Size:" : "چوڭلۇقى:",
     "Type:" : "تىپى:",
-    "Size" : "چوڭلۇقى"
+    "Size" : "چوڭلۇقى",
+    "Version" : "نەشرى"
 },
 "nplurals=2; plural=(n != 1);");

@@ -95,6 +95,17 @@ OC.L10N.register(
     "IPv6" : "IPv6",
     "Memory Limit:" : "記憶體限制:",
     "Max Execution Time:" : "最大執行時間:",
-    "To use an access token please generate one then set it using the following command:" : "要使用存取權杖，請先生成一個，然後使用以下指令來設定："
+    "To use an access token please generate one then set it using the following command:" : "要使用存取權杖，請先生成一個，然後使用以下指令來設定：",
+    "Files" : "檔案",
+    "Storages" : "儲存空間",
+    "Free Space" : "可用空間",
+    "Total users" : "總使用者",
+    "Version" : "版本",
+    "Memory limit" : "記憶體限制",
+    "Max execution time" : "最長執行時間",
+    "Upload max size" : "最大上傳大小",
+    "Type" : "類型",
+    "You can connect an external monitoring tool by using this end point" : "您可以使用此端點來連線至外部監視工具",
+    "To use an access token, please generate one then set it using the following command" : "要使用存取權杖，請先生成一個，然後使用以下指令來設定"
 },
 "nplurals=1; plural=0;");

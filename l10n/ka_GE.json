@@ -32,6 +32,9 @@
     "Hostname" : "ჰოსტი",
     "Status" : "სტატუსი",
     "Memory Limit:" : "მეხსიერების ლიმიტი:",
-    "Max Execution Time:" : "მაქს. გაშვების დრო:"
+    "Max Execution Time:" : "მაქს. გაშვების დრო:",
+    "Files" : "ფაილები",
+    "Version" : "ვერსია",
+    "Type" : "სახეობა"
 },"pluralForm" :"nplurals=2; plural=(n!=1);"
 }

@@ -6,6 +6,8 @@ OC.L10N.register(
     "Copy" : "ສຳເນົາ",
     "Shares" : "ການແບ່ງປັນ",
     "Size" : "ຂະຫນາດ",
-    "Available" : "ມີຢູ່"
+    "Available" : "ມີຢູ່",
+    "Files" : "ຟາຍ",
+    "Type" : "ພິມ"
 },
 "nplurals=1; plural=0;");

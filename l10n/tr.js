@@ -95,6 +95,17 @@ OC.L10N.register(
     "IPv6" : "IPv6",
     "Memory Limit:" : "Bellek sınırı:",
     "Max Execution Time:" : "En uzun çalışma süresi:",
-    "To use an access token please generate one then set it using the following command:" : "Erişim kodunu kullanmak için yeni bir kod üretip şu komutu yürüterek ayarlayın:"
+    "To use an access token please generate one then set it using the following command:" : "Erişim kodunu kullanmak için yeni bir kod üretip şu komutu yürüterek ayarlayın:",
+    "Files" : "Dosyalar",
+    "Storages" : "Depolama birimleri",
+    "Free Space" : "Boş alan",
+    "Total users" : "Kullanıcı sayısı",
+    "Version" : "Sürüm",
+    "Memory limit" : "Bellek sınırı",
+    "Max execution time" : "En uzun çalışma süresi",
+    "Upload max size" : "En büyük yükleme boyutu",
+    "Type" : "Tür",
+    "You can connect an external monitoring tool by using this end point" : "Bu uç noktasını kullanarak bir dış izleme aracı bağlayabilirsiniz",
+    "To use an access token, please generate one then set it using the following command" : "Bir erişim kodu kullanmak için, erişim kodunu üretin ve şu komutu yürüterek ayarlayın"
 },
 "nplurals=2; plural=(n > 1);");

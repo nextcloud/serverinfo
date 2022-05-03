@@ -63,6 +63,9 @@ OC.L10N.register(
     "IPv4" : "IPv4",
     "IPv6" : "IPv6",
     "Memory Limit:" : "Memorlimo:",
-    "Max Execution Time:" : "Maksimuma tempo de rulado:"
+    "Max Execution Time:" : "Maksimuma tempo de rulado:",
+    "Files" : "Dosieroj",
+    "Version" : "Versio",
+    "Type" : "Tipo"
 },
 "nplurals=2; plural=(n != 1);");

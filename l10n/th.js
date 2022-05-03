@@ -16,6 +16,9 @@ OC.L10N.register(
     "Type:" : "ชนิด:",
     "Size" : "ขนาด",
     "Hostname" : "ชื่อโฮสต์",
-    "Status" : "สถานะ"
+    "Status" : "สถานะ",
+    "Files" : "ไฟล์",
+    "Version" : "รุ่น",
+    "Type" : "ประเภท"
 },
 "nplurals=1; plural=0;");

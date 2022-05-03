@@ -10,6 +10,8 @@ OC.L10N.register(
     "Size:" : "Saiz",
     "Shares" : "Kongsi",
     "Type:" : "Jenis",
-    "Size" : "Saiz"
+    "Size" : "Saiz",
+    "Files" : "Fail",
+    "Type" : "Jenis"
 },
 "nplurals=1; plural=0;");

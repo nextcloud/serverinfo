@@ -31,6 +31,9 @@ OC.L10N.register(
     "Size" : "Dimension",
     "Hostname" : "Nomine de Hospite",
     "Memory Limit:" : "Limite de Memoria:",
-    "Max Execution Time:" : "Tempore Maxime de Execution:"
+    "Max Execution Time:" : "Tempore Maxime de Execution:",
+    "Files" : "Files",
+    "Version" : "Version",
+    "Type" : "Typo"
 },
 "nplurals=2; plural=(n != 1);");

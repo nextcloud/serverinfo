@@ -69,6 +69,15 @@ OC.L10N.register(
     "IPv6" : "IPv6",
     "Memory Limit:" : "メモリ制限:",
     "Max Execution Time:" : "最大実行時間:",
-    "To use an access token please generate one then set it using the following command:" : "アクセストークンを使用するには、トークンを生成してから、次のコマンドを使用して設定してください:"
+    "To use an access token please generate one then set it using the following command:" : "アクセストークンを使用するには、トークンを生成してから、次のコマンドを使用して設定してください:",
+    "Files" : "ファイル",
+    "Storages" : "ストレージ",
+    "Free Space" : "空き容量",
+    "Total users" : "総ユーザー数",
+    "Version" : "バージョン",
+    "Memory limit" : "メモリ制限",
+    "Max execution time" : "最大実行時間",
+    "Upload max size" : "最大アップロードサイズ",
+    "Type" : "タイプ"
 },
 "nplurals=1; plural=0;");

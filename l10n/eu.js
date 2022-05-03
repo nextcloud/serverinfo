@@ -75,6 +75,12 @@ OC.L10N.register(
     "IPv6" : "IPv6",
     "Memory Limit:" : "Memoria muga:",
     "Max Execution Time:" : "Gehienezko exekuzio denbora:",
-    "To use an access token please generate one then set it using the following command:" : "Sarbide token bat erabiltzeko, sortu eta ezarri komando hau erabiliz:"
+    "To use an access token please generate one then set it using the following command:" : "Sarbide token bat erabiltzeko, sortu eta ezarri komando hau erabiliz:",
+    "Storages" : "Biltegiak",
+    "Total users" : "Erabiltzaileak guztira",
+    "Version" : "Bertsioa",
+    "Memory limit" : "Memoria muga",
+    "Upload max size" : "Kargatzeko gehienezko tamaina",
+    "To use an access token, please generate one then set it using the following command" : "Sarbide token bat erabiltzeko, sortu eta ezarri komando hau erabiliz"
 },
 "nplurals=2; plural=(n != 1);");

@@ -65,6 +65,9 @@ OC.L10N.register(
     "IPv4" : "IPv4",
     "IPv6" : "IPv6",
     "Memory Limit:" : "Όριο μνήμης:",
-    "Max Execution Time:" : "Μέγιστος χρόνος εκτέλεσης:"
+    "Max Execution Time:" : "Μέγιστος χρόνος εκτέλεσης:",
+    "Files" : "Αρχεία",
+    "Version" : "Έκδοση",
+    "Type" : "Τύπος"
 },
 "nplurals=2; plural=(n != 1);");

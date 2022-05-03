@@ -85,6 +85,17 @@ OC.L10N.register(
     "IPv6" : "IPv6",
     "Memory Limit:" : "Arbeitspeicher-Grenzwert:",
     "Max Execution Time:" : "Maximale Ausführungszeit:",
-    "To use an access token please generate one then set it using the following command:" : "Um ein Zugriffstoken zu verwenden, erzeuge bitte einen und lege ihn dann mit dem folgenden Befehl fest:"
+    "To use an access token please generate one then set it using the following command:" : "Um ein Zugriffstoken zu verwenden, erzeuge bitte einen und lege ihn dann mit dem folgenden Befehl fest:",
+    "Files" : "Dateien",
+    "Storages" : "Speicher",
+    "Free Space" : "Freier Speicherplatz",
+    "Total users" : "Benutzer gesamt",
+    "Version" : "Version",
+    "Memory limit" : "Speicherlimit",
+    "Max execution time" : "Maximale Ausführungszeit",
+    "Upload max size" : "Maximale Größe zum Hochladen",
+    "Type" : "Typ",
+    "You can connect an external monitoring tool by using this end point" : "Du kannst ein externes Überwachungsprogramm mit diesem Zugangspunktes verwenden",
+    "To use an access token, please generate one then set it using the following command" : "Um ein Zugriffstoken zu verwenden, erzeuge bitte einen und lege ihn dann mit folgendem Befehl fest"
 },
 "nplurals=2; plural=(n != 1);");
