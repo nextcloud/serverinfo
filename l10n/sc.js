@@ -67,6 +67,9 @@ OC.L10N.register(
     "IPv6" : "IPv6",
     "Memory Limit:" : "Lìmite memòria:",
     "Max Execution Time:" : "Tempus màssimu de esecutzione",
-    "To use an access token please generate one then set it using the following command:" : "Pro impreare unu token de intrada, genera·nde unu e a pustis imposta·ddu cun su cumandu in fatu:"
+    "To use an access token please generate one then set it using the following command:" : "Pro impreare unu token de intrada, genera·nde unu e a pustis imposta·ddu cun su cumandu in fatu:",
+    "Files" : "Archìvios",
+    "Version" : "Versione",
+    "Type" : "Genia"
 },
 "nplurals=2; plural=(n != 1);");

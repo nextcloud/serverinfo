@@ -67,6 +67,9 @@ OC.L10N.register(
     "IPv6" : "IPv6",
     "Memory Limit:" : "Hukommelses begrænsning:",
     "Max Execution Time:" : "Max Kørsels Tid:",
-    "To use an access token please generate one then set it using the following command:" : "For at bruge et adgangstoken skal du generere et og derefter indstille det ved hjælp af følgende kommando:"
+    "To use an access token please generate one then set it using the following command:" : "For at bruge et adgangstoken skal du generere et og derefter indstille det ved hjælp af følgende kommando:",
+    "Files" : "Filer",
+    "Version" : "Version",
+    "Type" : "Type"
 },
 "nplurals=2; plural=(n != 1);");

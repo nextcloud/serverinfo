@@ -23,6 +23,7 @@ OC.L10N.register(
     "Size" : "Grootte",
     "Available" : "Beskikbaar",
     "Status" : "Status",
-    "Memory Limit:" : "Geheuelimiet:"
+    "Memory Limit:" : "Geheuelimiet:",
+    "Version" : "Weergawe"
 },
 "nplurals=2; plural=(n != 1);");

@@ -34,6 +34,9 @@
     "Hostname" : "Hostname",
     "Status" : "Status",
     "Memory Limit:" : "Memory Limit:",
-    "Max Execution Time:" : "Max Execution Time:"
+    "Max Execution Time:" : "Max Execution Time:",
+    "Files" : "Files",
+    "Version" : "Version",
+    "Type" : "Type"
 },"pluralForm" :"nplurals=2; plural=(n != 1);"
 }

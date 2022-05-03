@@ -33,6 +33,9 @@ OC.L10N.register(
     "Hostname" : "Hostinimi",
     "Status" : "Staatus",
     "Memory Limit:" : "Mälupiirang:",
-    "Max Execution Time:" : "Maksimaalne käivitusaeg:"
+    "Max Execution Time:" : "Maksimaalne käivitusaeg:",
+    "Files" : "Failid",
+    "Version" : "Versioon",
+    "Type" : "Tüüp"
 },
 "nplurals=2; plural=(n != 1);");

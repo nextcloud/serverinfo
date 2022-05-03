@@ -95,6 +95,17 @@ OC.L10N.register(
     "IPv6" : "IPv6",
     "Memory Limit:" : "Memóriakorlát:",
     "Max Execution Time:" : "Maximális végrehajtási idő:",
-    "To use an access token please generate one then set it using the following command:" : "A hozzáférési token használatához hozzon létre egyet, majd állítsa be a következő paranccsal:"
+    "To use an access token please generate one then set it using the following command:" : "A hozzáférési token használatához hozzon létre egyet, majd állítsa be a következő paranccsal:",
+    "Files" : "Fájlok",
+    "Storages" : "Tároló",
+    "Free Space" : "Szabad hely",
+    "Total users" : "Összes felhasználó",
+    "Version" : "Verzió",
+    "Memory limit" : "Memória korlát",
+    "Max execution time" : "Maximális végrehajtási idő",
+    "Upload max size" : "Maximális feltöltési méret",
+    "Type" : "Típus",
+    "You can connect an external monitoring tool by using this end point" : "Ennek a végpontnak a használatával külső rendszerfelügyeleti eszközt csatlakoztathat",
+    "To use an access token, please generate one then set it using the following command" : "A hozzáférési token használatához hozzon létre egyet, majd állítsa be a következő paranccsal"
 },
 "nplurals=2; plural=(n != 1);");

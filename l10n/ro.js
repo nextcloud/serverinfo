@@ -18,6 +18,7 @@ OC.L10N.register(
     "Size" : "Mărime",
     "Available" : "Disponibil",
     "Hostname" : "Nume mașină",
-    "Status" : "Stare"
+    "Status" : "Stare",
+    "Version" : "Versiune"
 },
 "nplurals=3; plural=(n==1?0:(((n%100>19)||((n%100==0)&&(n!=0)))?2:1));");

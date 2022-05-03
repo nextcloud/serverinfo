@@ -73,6 +73,17 @@
     "IPv6" : "IPv6",
     "Memory Limit:" : "Лимит за памет:",
     "Max Execution Time:" : "Максимално време за изпълнение:",
-    "To use an access token please generate one then set it using the following command:" : "За да използвате токен за достъп, моля, генерирайте такъв, след което го задайте с помощта на следната команда:"
+    "To use an access token please generate one then set it using the following command:" : "За да използвате токен за достъп, моля, генерирайте такъв, след което го задайте с помощта на следната команда:",
+    "Files" : "Файлове",
+    "Storages" : "Хранилища",
+    "Free Space" : "Свободно пространство",
+    "Total users" : "Общо потребители",
+    "Version" : "Версия",
+    "Memory limit" : "Лимит на паметта",
+    "Max execution time" : "Максимално време за изпълнение",
+    "Upload max size" : "Максимален размер за качване:",
+    "Type" : "Тип",
+    "You can connect an external monitoring tool by using this end point" : "Можете да свържете външен инструмент за наблюдение, като използвате тази крайна точка",
+    "To use an access token, please generate one then set it using the following command" : "За да използвате токен за достъп, моля, генерирайте такъв, след което го задайте с помощта на следната команда"
 },"pluralForm" :"nplurals=2; plural=(n != 1);"
 }

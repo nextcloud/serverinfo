@@ -73,6 +73,17 @@
     "IPv6" : "IPv6",
     "Memory Limit:" : "Limite de memória:",
     "Max Execution Time:" : "Tempo máximo de execução:",
-    "To use an access token please generate one then set it using the following command:" : "Para usar um token de acesso, gere um e defina-o usando o seguinte comando:"
+    "To use an access token please generate one then set it using the following command:" : "Para usar um token de acesso, gere um e defina-o usando o seguinte comando:",
+    "Files" : "Arquivos",
+    "Storages" : "Armazenamentos",
+    "Free Space" : "Espaço livre",
+    "Total users" : "Total de usuários",
+    "Version" : "Versão",
+    "Memory limit" : "Limite de memória",
+    "Max execution time" : "Tempo máximo de execução",
+    "Upload max size" : "Tamanho máximo para envio",
+    "Type" : "Tipo",
+    "You can connect an external monitoring tool by using this end point" : "Você pode conectar uma ferramenta de monitoramento externa usando este ponto final",
+    "To use an access token, please generate one then set it using the following command" : "Para usar um token de acesso, gere um e defina-o usando o seguinte comando"
 },"pluralForm" :"nplurals=2; plural=(n > 1);"
 }

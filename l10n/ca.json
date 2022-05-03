@@ -72,6 +72,17 @@
     "IPv6" : "IPv6",
     "Memory Limit:" : "Límit de la Memòria:",
     "Max Execution Time:" : "Temps màxim de l'execució:",
-    "To use an access token please generate one then set it using the following command:" : "Per utilitzar un testimoni d'accés, genereu-ne un i, a continuació, establiu-lo amb la comanda següent:"
+    "To use an access token please generate one then set it using the following command:" : "Per utilitzar un testimoni d'accés, genereu-ne un i, a continuació, establiu-lo amb la comanda següent:",
+    "Files" : "Fitxers",
+    "Storages" : "Magatzems",
+    "Free Space" : "Espai lliure",
+    "Total users" : "Total d'usuaris",
+    "Version" : "Versió",
+    "Memory limit" : "Límit de memòria",
+    "Max execution time" : "Temps màxim d'execució",
+    "Upload max size" : "Mida màxima de pujada",
+    "Type" : "Tipus",
+    "You can connect an external monitoring tool by using this end point" : "Podeu connectar una eina de monitorització externa mitjançant aquest punt d’accés",
+    "To use an access token, please generate one then set it using the following command" : "Per utilitzar un testimoni d'accés, genereu-ne un i, a continuació, definiu-lo amb la comanda següent"
 },"pluralForm" :"nplurals=2; plural=(n != 1);"
 }

@@ -34,6 +34,7 @@ OC.L10N.register(
     "Hostname" : "Strehëemër",
     "Status" : "Status",
     "Memory Limit:" : "Limiti i kujtesës: ",
-    "Max Execution Time:" : "Koha maksimale e ekzekutimit: "
+    "Max Execution Time:" : "Koha maksimale e ekzekutimit: ",
+    "Version" : "Versioni"
 },
 "nplurals=2; plural=(n != 1);");

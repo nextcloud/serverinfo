@@ -89,6 +89,17 @@ OC.L10N.register(
     "IPv6" : "IPv6",
     "Memory Limit:" : "Limite de mémoire :",
     "Max Execution Time:" : "Temps d’exécution maximal :",
-    "To use an access token please generate one then set it using the following command:" : "Pour utiliser un jeton d'accès, merci de bien vouloir en générer un puis l'utiliser avec la commande suivante : "
+    "To use an access token please generate one then set it using the following command:" : "Pour utiliser un jeton d'accès, merci de bien vouloir en générer un puis l'utiliser avec la commande suivante : ",
+    "Files" : "Fichiers",
+    "Storages" : "Stockages",
+    "Free Space" : "Espace disponible",
+    "Total users" : "Nombre total d'utilisateurs",
+    "Version" : "Version",
+    "Memory limit" : "Limite de mémoire",
+    "Max execution time" : "Temps d'exécution maximum",
+    "Upload max size" : "Taille maximale du téléchargement",
+    "Type" : "Type",
+    "You can connect an external monitoring tool by using this end point" : "Vous pouvez connecter un outil de surveillance externe en utilisant ce point de terminaison.",
+    "To use an access token, please generate one then set it using the following command" : "Pour utiliser un token d'accès, veuillez en générer un puis le définir en utilisant la commande suivante"
 },
 "nplurals=2; plural=(n > 1);");

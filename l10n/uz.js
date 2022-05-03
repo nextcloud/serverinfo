@@ -10,6 +10,7 @@ OC.L10N.register(
     "Press Ctrl-C to copy." : "Nusxalash uchun Ctrl-C tugmalarini bosing.",
     "System" : "Tizim",
     "Load average" : "O'rtacha yuk",
-    "Total" : "Jami"
+    "Total" : "Jami",
+    "Files" : "Fayllar"
 },
 "nplurals=1; plural=0;");

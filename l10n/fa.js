@@ -64,6 +64,9 @@ OC.L10N.register(
     "IPv4" : "IPv4",
     "IPv6" : "IPv6",
     "Memory Limit:" : "حد حافظه:",
-    "Max Execution Time:" : "حداکثر زمان اجرا:"
+    "Max Execution Time:" : "حداکثر زمان اجرا:",
+    "Files" : "فایل ها",
+    "Version" : "نسخه",
+    "Type" : "نوع"
 },
 "nplurals=2; plural=(n > 1);");

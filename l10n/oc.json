@@ -19,6 +19,9 @@
     "Available" : "Disponible",
     "Status" : "Estat",
     "IPv4" : "IPv4",
-    "IPv6" : "IPv6"
+    "IPv6" : "IPv6",
+    "Files" : "Fichièrs",
+    "Version" : "Version",
+    "Type" : "Tipe"
 },"pluralForm" :"nplurals=2; plural=(n > 1);"
 }

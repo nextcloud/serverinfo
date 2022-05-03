@@ -73,6 +73,17 @@ OC.L10N.register(
     "IPv6" : "IPv6",
     "Memory Limit:" : "Obmedzenie pamäte:",
     "Max Execution Time:" : "Maximálny čas pre spustenie:",
-    "To use an access token please generate one then set it using the following command:" : "Pre používanie prístupového tokenu ho vygenerujte a potom ho nastavte použitím nasledujúceho príkazu"
+    "To use an access token please generate one then set it using the following command:" : "Pre používanie prístupového tokenu ho vygenerujte a potom ho nastavte použitím nasledujúceho príkazu",
+    "Files" : "Súbory",
+    "Storages" : "Úložiská",
+    "Free Space" : "Voľné miesto",
+    "Total users" : "Užívateľov celkom",
+    "Version" : "Verzia",
+    "Memory limit" : "Obmedzenie pamäte",
+    "Max execution time" : "Maximálny čas spustenia",
+    "Upload max size" : "Maximálna veľkosť pre nahrávanie",
+    "Type" : "Typ",
+    "You can connect an external monitoring tool by using this end point" : "Pre pripojenie externého sledovacieho nástroja použite tento koncový bod",
+    "To use an access token, please generate one then set it using the following command" : "Pre používanie prístupového tokenu ho vygenerujte a potom ho nastavte použitím nasledujúceho príkazu"
 },
 "nplurals=4; plural=(n % 1 == 0 && n == 1 ? 0 : n % 1 == 0 && n >= 2 && n <= 4 ? 1 : n % 1 != 0 ? 2: 3);");

@@ -67,6 +67,9 @@ OC.L10N.register(
     "IPv6" : "IPv6",
     "Memory Limit:" : "Límite de memoria:",
     "Max Execution Time:" : "Tempo máximo de execución:",
-    "To use an access token please generate one then set it using the following command:" : "Para usar un testemuño de acceso, xéreo e configúreo usando a seguinte orde:"
+    "To use an access token please generate one then set it using the following command:" : "Para usar un testemuño de acceso, xéreo e configúreo usando a seguinte orde:",
+    "Files" : "Ficheiros",
+    "Version" : "Versión",
+    "Type" : "Tipo"
 },
 "nplurals=2; plural=(n != 1);");
