@@ -6,6 +6,8 @@ OC.L10N.register(
     "Copy" : "Copy",
     "Size:" : "அளவு:",
     "Type:" : "வகை:",
-    "Size" : "அளவு"
+    "Size" : "அளவு",
+    "Files" : "கோப்புகள்",
+    "Type" : "வகை"
 },
 "nplurals=2; plural=(n != 1);");

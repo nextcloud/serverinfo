@@ -65,6 +65,9 @@ OC.L10N.register(
     "IPv4" : "IPv4",
     "IPv6" : "IPv6",
     "Memory Limit:" : "Меморијски лимит:",
-    "Max Execution Time:" : "Максимално време извршавања:"
+    "Max Execution Time:" : "Максимално време извршавања:",
+    "Files" : "Фајлови",
+    "Version" : "Верзија",
+    "Type" : "Тип"
 },
 "nplurals=3; plural=(n%10==1 && n%100!=11 ? 0 : n%10>=2 && n%10<=4 && (n%100<10 || n%100>=20) ? 1 : 2);");

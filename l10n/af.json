@@ -22,6 +22,8 @@
     "Available" : "Beskikbaar",
     "Status" : "Status",
     "Memory Limit:" : "Geheuelimiet:",
-    "Version" : "Weergawe"
+    "Files" : " Lêers",
+    "Version" : "Weergawe",
+    "Type" : "Tipe"
 },"pluralForm" :"nplurals=2; plural=(n != 1);"
 }
