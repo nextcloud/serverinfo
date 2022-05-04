@@ -19,6 +19,8 @@ OC.L10N.register(
     "Available" : "Disponibil",
     "Hostname" : "Nume mașină",
     "Status" : "Stare",
-    "Version" : "Versiune"
+    "Files" : "Fișiere",
+    "Version" : "Versiune",
+    "Type" : "Tip"
 },
 "nplurals=3; plural=(n==1?0:(((n%100>19)||((n%100==0)&&(n!=0)))?2:1));");

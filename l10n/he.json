@@ -65,6 +65,9 @@
     "IPv6" : "IPv6",
     "Memory Limit:" : "מגבלת זיכרון:",
     "Max Execution Time:" : "זמן ההפעלה המרבי:",
-    "To use an access token please generate one then set it using the following command:" : "כדי להשתמש באסימון גישה נא לייצור אחד ואז להגדיר אותו באמצעות הפקודה הבאה:"
+    "To use an access token please generate one then set it using the following command:" : "כדי להשתמש באסימון גישה נא לייצור אחד ואז להגדיר אותו באמצעות הפקודה הבאה:",
+    "Files" : "קבצים",
+    "Version" : "גרסה",
+    "Type" : "סוג"
 },"pluralForm" :"nplurals=4; plural=(n == 1 && n % 1 == 0) ? 0 : (n == 2 && n % 1 == 0) ? 1: (n % 10 == 0 && n % 1 == 0 && n > 10) ? 2 : 3;"
 }

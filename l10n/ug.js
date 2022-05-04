@@ -6,6 +6,8 @@ OC.L10N.register(
     "Size:" : "چوڭلۇقى:",
     "Type:" : "تىپى:",
     "Size" : "چوڭلۇقى",
-    "Version" : "نەشرى"
+    "Files" : "ھۆججەتلەر",
+    "Version" : "نەشرى",
+    "Type" : "Type"
 },
 "nplurals=2; plural=(n != 1);");
