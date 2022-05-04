@@ -24,6 +24,8 @@ OC.L10N.register(
     "Available" : "Beskikbaar",
     "Status" : "Status",
     "Memory Limit:" : "Geheuelimiet:",
-    "Version" : "Weergawe"
+    "Files" : " Lêers",
+    "Version" : "Weergawe",
+    "Type" : "Tipe"
 },
 "nplurals=2; plural=(n != 1);");

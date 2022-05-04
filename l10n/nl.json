@@ -71,6 +71,17 @@
     "IPv6" : "IPv6",
     "Memory Limit:" : "Geheugenlimiet:",
     "Max Execution Time:" : "Max verwerkingstijd:",
-    "To use an access token please generate one then set it using the following command:" : "Om een toegangstoken te gebruiken, genereer er a.u.b een en stel deze in via het volgende commando:"
+    "To use an access token please generate one then set it using the following command:" : "Om een toegangstoken te gebruiken, genereer er a.u.b een en stel deze in via het volgende commando:",
+    "Files" : "Bestanden",
+    "Storages" : "Oplsag",
+    "Free Space" : "Vrije Ruimte",
+    "Total users" : "Totaal aantal gebruikers",
+    "Version" : "Versie",
+    "Memory limit" : "Geheugenlimiet",
+    "Max execution time" : "Maximale uitvoeringstijd",
+    "Upload max size" : "Maximale upload-grootte",
+    "Type" : "Type",
+    "You can connect an external monitoring tool by using this end point" : "Je kunt een externe monitoringtool aansluiten door deze end point te gebruiken",
+    "To use an access token, please generate one then set it using the following command" : "Om een toegangstoken te gebruiken, genereer er a.u.b een en stel deze in via het volgende commando"
 },"pluralForm" :"nplurals=2; plural=(n != 1);"
 }
