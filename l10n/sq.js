@@ -35,6 +35,8 @@ OC.L10N.register(
     "Status" : "Status",
     "Memory Limit:" : "Limiti i kujtesës: ",
     "Max Execution Time:" : "Koha maksimale e ekzekutimit: ",
-    "Version" : "Versioni"
+    "Files" : "Skedarët",
+    "Version" : "Versioni",
+    "Type" : "Shtyp"
 },
 "nplurals=2; plural=(n != 1);");
