@@ -96,6 +96,57 @@ class FreeBSDTest extends TestCase {
 		$this->assertEquals(new Memory(), $this->os->getMemory());
 	}
 
+	public function testGetNetworkInterfaces(): void {
+		$this->os->method('executeCommand')
+			->willReturnCallback(static function ($command) {
+				if ($command === '/sbin/ifconfig -a') {
+					return file_get_contents(__DIR__ . '/../data/freebsd_interfaces');
+				}
+				if ($command === '/sbin/ifconfig lo0') {
+					return file_get_contents(__DIR__ . '/../data/freebsd_interface_lo0');
+				}
+				if ($command === '/sbin/ifconfig pflog0') {
+					return file_get_contents(__DIR__ . '/../data/freebsd_interface_pflog0');
+				}
+				if ($command === '/sbin/ifconfig epair0b') {
+					return file_get_contents(__DIR__ . '/../data/freebsd_interface_epair0b');
+				}
+
+				// Regex matches way more than the interface names, so if it doesn't match any of the defined ones, throw.
+				throw new \RuntimeException();
+			});
+
+		$interfaces = $this->os->getNetworkInterfaces();
+		$this->assertEquals([
+			[
+				"interface" => "lo0",
+				"ipv4" => "127.0.0.1",
+				"ipv6" => "::1 fe80::1",
+				"status" => "active",
+				"speed" => "unknown",
+				"duplex" => "",
+			],
+			[
+				"interface" => "pflog0",
+				"ipv4" => "",
+				"ipv6" => "",
+				"mac" => "",
+				"status" => "active",
+				"speed" => "unknown",
+				"duplex" => "",
+			],
+			[
+				"interface" => "epair0b",
+				"ipv4" => "192.168.178.150",
+				"ipv6" => "",
+				"mac" => "1a:c0:4d:ba:b5:82",
+				"speed" => "10 Gbps",
+				"status" => "active",
+				"duplex" => "Duplex: full",
+			]
+		], $interfaces);
+	}
+
 	public function testSupported(): void {
 		$this->assertFalse($this->os->supported());
 	}
