@@ -1,0 +1,2 @@
+pflog0: flags=0<> metric 0 mtu 33160
+        groups: pflog
