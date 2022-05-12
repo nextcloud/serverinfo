@@ -160,8 +160,13 @@ class FreeBSD implements IOperatingSystem {
 				preg_match("/\b[0-9].*?(?=base)/m", $intface, $speed);
 				preg_match("/(?<=\<).*(?=-)/m", $intface, $duplex);
 
-				$iface['mac'] = implode(' ', $mac[0]);
-				$iface['speed'] = $speed[0];
+				if (isset($mac[0])) {
+					$iface['mac'] = implode(' ', $mac[0]);
+				}
+
+				if (isset($speed[0])) {
+					$iface['speed'] = $speed[0];
+				}
 
 				if (isset($status[0])) {
 					$iface['status'] = $status[0];
