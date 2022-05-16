@@ -1,0 +1,9 @@
+epair0b: flags=8843<UP,BROADCAST,RUNNING,SIMPLEX,MULTICAST> metric 0 mtu 1500
+        options=8<VLAN_MTU>
+        ether 1a:c0:4d:ba:b5:82
+        hwaddr 02:60:e8:04:f6:0b
+        inet 192.168.178.150 netmask 0xffffff00 broadcast 192.168.178.255
+        groups: epair
+        media: Ethernet 10Gbase-T (10Gbase-T <full-duplex>)
+        status: active
+        nd6 options=1<PERFORMNUD>
