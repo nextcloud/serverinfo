@@ -47,15 +47,13 @@ $disks = $_['diskinfo'];
 <div class="server-info-wrapper">
 
 	<!-- SERVER INFOS -->
-	<div class="section server-infos">
+	<div class="section server-infos-two">
 		<div class="row">
-			<div class="col col-12">
+			<div class="col col-6 col-l-12">
 				<h2>
 					<img class="infoicon" src="<?php p(image_path('core', 'actions/screen.svg')); ?>">
 					<?php p($_['hostname']); ?>
 				</h2>
-			</div>
-			<div class="col col-12">			
 				<p><?php p($l->t('Operating System:')); ?> <strong id="numFilesStorage"><?php p($_['osname']); ?></strong></p>
 				<p><?php p($l->t('CPU:')); ?>
 				<?php if ($_['cpu'] !== 'Unknown Processor'): ?>
@@ -68,6 +66,27 @@ $disks = $_['diskinfo'];
 				<?php endif; ?>
 				<p><?php p($l->t('Server time:')); ?> <strong id="numFilesStorage"><span class="info" id="servertime"></span></strong></p>
 				<p><?php p($l->t('Uptime:')); ?> <strong id="numFilesStorage"><span class="info" id="uptime"></span></strong></p>
+			</div>
+
+			<div class="col col-6 col-l-12">
+				<h2>
+					<img class="infoicon" src="<?php p(image_path('serverinfo', 'app-dark.svg')); ?>">
+					<?php p($l->t('Temperature')); ?>
+				</h2>
+				<div class="table-wrapper">
+					<table class="server-infos-table">
+						<thead>
+						</thead>
+						<tbody>
+						<?php foreach ($_['thermalzones'] as $thermalzone): ?>
+						<tr>
+							<td><?php p($thermalzone['type']) ?>:</td>
+							<td><span class="info" id="<?php p($thermalzone['type']) ?>_temp"></span>°C</td>
+						</tr>
+						<?php endforeach; ?>
+						</tbody>
+					</table>
+				</div>
 			</div>
 		</div>
 	</div>
