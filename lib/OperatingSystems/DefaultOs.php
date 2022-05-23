@@ -141,7 +141,7 @@ class DefaultOs implements IOperatingSystem {
 	}
 
 	public function getNetworkInterfaces(): array {
-		$interfaces = glob('/sys/class/net/*');
+		$interfaces = glob('/sys/class/net/*') ?: [];
 		$result = [];
 
 		foreach ($interfaces as $interface) {
