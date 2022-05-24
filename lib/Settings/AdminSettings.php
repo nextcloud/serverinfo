@@ -85,7 +85,8 @@ class AdminSettings implements ISettings {
 			'php' => $this->phpStatistics->getPhpStatistics(),
 			'database' => $this->databaseStatistics->getDatabaseStatistics(),
 			'activeUsers' => $this->sessionStatistics->getSessionStatistics(),
-			'system' => $this->systemStatistics->getSystemStatistics()
+			'system' => $this->systemStatistics->getSystemStatistics(),
+			'thermalzones' => $this->os->getThermalZones()
 		];
 
 		return new TemplateResponse('serverinfo', 'settings-admin', $params);

@@ -215,6 +215,25 @@ class DefaultOs implements IOperatingSystem {
 		return $data;
 	}
 
+	public function getThermalZones(): array {
+		$thermalZones = glob('/sys/class/thermal/thermal_zone*') ?: [];
+		$result = [];
+
+		foreach ($thermalZones as $thermalZone) {
+			$tzone = [];
+			try {
+				$tzone['hash'] = md5($thermalZone);
+				$tzone['type'] = $this->readContent($thermalZone . '/type');
+				$tzone['temp'] = (float)((int)($this->readContent($thermalZone . '/temp')) / 1000);
+			} catch (\RuntimeException $e) {
+				continue;
+			}
+			$result[] = $tzone;
+		}
+
+		return $result;
+	}
+
 	protected function readContent(string $filename): string {
 		$data = @file_get_contents($filename);
 		if ($data === false || $data === '') {

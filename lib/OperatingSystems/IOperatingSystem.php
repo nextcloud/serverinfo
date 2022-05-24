@@ -91,4 +91,17 @@ interface IOperatingSystem {
 	 * Get the total number of seconds the system has been up or -1 on failure.
 	 */
 	public function getUptime(): int;
+
+	/**
+	 * Get info about available thermal zones.
+	 *
+	 * [
+	 *       [
+	 *             'hash' => string,
+	 *             'type' => string,
+	 *             'temp' => float,
+	 *       ],
+	 * ]
+	 */
+	public function getThermalZones(): array;
 }
