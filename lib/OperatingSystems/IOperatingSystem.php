@@ -102,8 +102,6 @@ interface IOperatingSystem {
 	 *             'temp' => float,
 	 *       ],
 	 * ]
-	 *
-	 * @return array
 	 */
 	public function getThermalZones(): array;
 }

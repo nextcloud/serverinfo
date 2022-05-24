@@ -80,8 +80,8 @@ $disks = $_['diskinfo'];
 						<tbody>
 						<?php foreach ($_['thermalzones'] as $thermalzone): ?>
 						<tr>
-							<td><?php p($thermalzone['type']) ?>:</td>
-							<td><span class="info" id="<?php p($thermalzone['type']) ?>_temp"></span>°C</td>
+							<td><?php p($thermalzone['type'] . ':') ?></td>
+							<td><span class="info" id="<?php p($thermalzone['hash']) ?>"></span>°C</td>
 						</tr>
 						<?php endforeach; ?>
 						</tbody>

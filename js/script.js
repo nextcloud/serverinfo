@@ -456,7 +456,7 @@
 					document.getElementById("servertime").innerHTML = data.servertime;
 					document.getElementById("uptime").innerHTML = data.uptime;
 					for (i in data.thermalzones) {
-						document.getElementById(data.thermalzones[i]['type'] + "_temp").innerHTML = data.thermalzones[i]['temp'];
+						document.getElementById(data.thermalzones[i]['hash']).innerHTML = data.thermalzones[i]['temp'];
 					}
 				},
 				error: function (data) {
