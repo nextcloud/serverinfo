@@ -4,6 +4,7 @@ OC.L10N.register(
     "Users" : "Pengguna",
     "Groups" : "Grup",
     "Links" : "Link",
+    "1 hour" : "1 jam",
     "Copy" : "Salin",
     "Copied!" : "Tersalin!",
     "Not supported!" : "Tidak didukung!",
