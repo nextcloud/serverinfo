@@ -88,4 +88,4 @@ OC.L10N.register(
     "You can connect an external monitoring tool by using this end point" : "Puoi collegare uno strumento di controllo esterno utilizzando questo terminatore",
     "To use an access token, please generate one then set it using the following command" : "Per usare un token di accesso, generane uno e poi impostalo con il comando seguente"
 },
-"nplurals=2; plural=(n != 1);");
+"nplurals=3; plural=n == 1 ? 0 : n != 0 && n % 1000000 == 0 ? 1 : 2;");
