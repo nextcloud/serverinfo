@@ -222,7 +222,7 @@ class DefaultOs implements IOperatingSystem {
 		foreach ($thermalZones as $thermalZone) {
 			$tzone = [];
 			try {
-				$tzone['zone'] = md5($thermalZone);
+				$tzone['hash'] = md5($thermalZone);
 				$tzone['type'] = $this->readContent($thermalZone . '/type');
 				$tzone['temp'] = (float)((int)($this->readContent($thermalZone . '/temp')) / 1000);
 			} catch (\RuntimeException $e) {

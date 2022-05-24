@@ -97,6 +97,7 @@ interface IOperatingSystem {
 	 *
 	 * [
 	 *       [
+	 *             'hash' => string,
 	 *             'type' => string,
 	 *             'temp' => float,
 	 *       ],
