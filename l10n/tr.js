@@ -32,6 +32,7 @@ OC.L10N.register(
     "Memory:" : "Bellek:",
     "Server time:" : "Sunucu zamanı:",
     "Uptime:" : "Çalışma süresi:",
+    "Temperature" : "Sıcaklık",
     "Load" : "Yük",
     "Memory" : "Bellek",
     "Disk" : "Disk",

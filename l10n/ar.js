@@ -15,6 +15,7 @@ OC.L10N.register(
     "Press Ctrl-C to copy." : "إضغط Ctrl-C للنسخ.",
     "System" : "النظام",
     "Monitoring" : "المراقبة",
+    "Temperature" : "درجة الحرارة",
     "Memory" : "الذاكرة",
     "Size:" : "الحجم:",
     "Files:" : "الملفات:",

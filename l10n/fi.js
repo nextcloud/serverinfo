@@ -27,6 +27,7 @@ OC.L10N.register(
     "Monitoring app with useful server information" : "Valvontasovellus sisältäen hyödyllisiä tietoja palvelimesta",
     "Provides useful server information, such as CPU load, RAM usage, disk usage, number of users, etc." : "Näyttää hyödyllisiä tietoja palvelimesta, kuten suorittimen kuorman, muistin ja levytilan käytön, käyttäjien määrän jne.",
     "Unknown Processor" : "Tuntematon suoritin",
+    "Temperature" : "Lämpötila",
     "Load" : "Kuorma",
     "Memory" : "Muisti",
     "Disk" : "Levy",

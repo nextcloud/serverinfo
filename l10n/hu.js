@@ -32,6 +32,7 @@ OC.L10N.register(
     "Memory:" : "Memória:",
     "Server time:" : "Kiszolgálóidő:",
     "Uptime:" : "Működési idő:",
+    "Temperature" : "Testhőmérséklet",
     "Load" : "Terhelés",
     "Memory" : "Memória",
     "Disk" : "Lemez",

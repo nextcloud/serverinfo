@@ -21,6 +21,7 @@ OC.L10N.register(
     "Monitoring" : "Παρακολούθηση",
     "Monitoring app with useful server information" : "Εφαρμογή παρακολούθησης πληροφοριών διακομιστή",
     "Provides useful server information, such as CPU load, RAM usage, disk usage, number of users, etc." : "Εμφανίζει χρήσιμες πληροφορίες του διακομιστή, όπως χρήση CPU, RAM, σκληρού δίσκου, αριθμός χρηστών, κλτ.",
+    "Temperature" : "Θερμοκρασία",
     "Load" : "Χρήση",
     "Memory" : "Μνήμη",
     "Disk" : "Δίσκος",

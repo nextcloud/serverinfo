@@ -18,6 +18,7 @@ OC.L10N.register(
     "System" : "Sistema",
     "Monitoring" : "Stebėjimas",
     "Monitoring app with useful server information" : "Stebėjimo programėlė su naudinga serverio informacija",
+    "Temperature" : "Temperatūra",
     "Load" : "Apkrova",
     "Memory" : "Atmintis",
     "Disk" : "Diskas",

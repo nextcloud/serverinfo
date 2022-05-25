@@ -20,6 +20,7 @@ OC.L10N.register(
     "Monitoring" : "Vöktun",
     "Monitoring app with useful server information" : "Vöktunarforrit sem nær í ýmsar notadrjúgar upplýsingar um þjón",
     "Provides useful server information, such as CPU load, RAM usage, disk usage, number of users, etc." : "Gefur nytsamlegar upplýsingar um vefþjón, svo sem álag á örgjörva, diskanotkun, fjölda notenda, o.s.frv.",
+    "Temperature" : "Hitastig",
     "Load" : "Hlaða inn",
     "Memory" : "Vinnsluminni",
     "Disk" : "Diskur",

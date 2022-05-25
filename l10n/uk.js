@@ -20,6 +20,7 @@ OC.L10N.register(
     "Monitoring" : "Моніторинг",
     "Monitoring app with useful server information" : "Застосунок моніторингу з корисною інформацією про сервер",
     "Provides useful server information, such as CPU load, RAM usage, disk usage, number of users, etc." : "Надає корисну інформацію про сервер, таку як навантаження ЦПУ, використання пам'яті, використання диску, кількість користувачів тощо.",
+    "Temperature" : "Температура",
     "Load" : "Навантаження",
     "Memory" : "Пам'ять",
     "Disk" : "Диск",

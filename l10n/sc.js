@@ -21,6 +21,7 @@ OC.L10N.register(
     "Monitoring" : "Controllende",
     "Monitoring app with useful server information" : "Aplicatzione pro controllu cun informatziones ùtiles subra de su serbidore",
     "Provides useful server information, such as CPU load, RAM usage, disk usage, number of users, etc." : "Frunit informatziones ùtiles subra de su serbidore. comente càrrigu de CPU, impreu de RAM, impreu de discu, nùmeru de utentes, etc.",
+    "Temperature" : "Temperadura",
     "Load" : "Càrrigu",
     "Memory" : "Memòria",
     "Disk" : "Discu",

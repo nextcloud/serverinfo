@@ -15,6 +15,7 @@ OC.L10N.register(
     "Press Ctrl-C to copy." : "Shtyp Ctrl-C për të kopjuar",
     "System" : "Sistem",
     "Monitoring" : "Vëzhgim",
+    "Temperature" : "Temperatura",
     "Size:" : "Madhësia:",
     "Files:" : "Skedarët: ",
     "Active users" : "Përdoruesit aktivë",
