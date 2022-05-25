@@ -21,6 +21,7 @@ OC.L10N.register(
     "Monitoring" : "Sistemska dejavnost",
     "Monitoring app with useful server information" : "Program za spremljanje delovanja sistema z različnimi podrobnostmi obremenitve strežnika",
     "Provides useful server information, such as CPU load, RAM usage, disk usage, number of users, etc." : "Omogoča prikaz različnih podrobnosti strežnika, kot so obremenitev CPE, zasedenost pomnilnika in prostora, števila uporabnikov in drugo.",
+    "Temperature" : "Temperatura",
     "Load" : "Obremenitev",
     "Memory" : "Pomnilnik",
     "Disk" : "Disk",

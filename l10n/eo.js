@@ -20,6 +20,7 @@ OC.L10N.register(
     "Monitoring" : "Observado",
     "Monitoring app with useful server information" : "Observa aplikaĵo kun utilaj informoj pri la servilo",
     "Provides useful server information, such as CPU load, RAM usage, disk usage, number of users, etc." : "Montras utilajn servilajn informojn, kiel ŝarĝon de la ĉefprocesoro, ĉefmemoran uzadon, diskan uzadon, nombrojn de uzantoj, k.t.p.",
+    "Temperature" : "Temperaturo",
     "Load" : "Ŝarĝo",
     "Memory" : "Ĉefmemoro",
     "Disk" : "Disko",

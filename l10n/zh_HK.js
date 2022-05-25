@@ -32,6 +32,7 @@ OC.L10N.register(
     "Memory:" : "記憶體：",
     "Server time:" : "伺服器時間：",
     "Uptime:" : "運行時間：",
+    "Temperature" : "體溫",
     "Load" : "負載",
     "Memory" : "記憶體",
     "Disk" : "硬碟",

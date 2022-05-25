@@ -32,6 +32,7 @@ OC.L10N.register(
     "Memory:" : "Speicher:",
     "Server time:" : "Server-Zeit:",
     "Uptime:" : "Betriebszeit:",
+    "Temperature" : "Temperatur",
     "Load" : "Auslastung",
     "Memory" : "Speicher",
     "Disk" : "Festplatte",

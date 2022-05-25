@@ -27,6 +27,7 @@ OC.L10N.register(
     "Monitoring app with useful server information" : "Monitor app met nuttige serverinformatie",
     "Provides useful server information, such as CPU load, RAM usage, disk usage, number of users, etc." : "Toont nuttige serverinformatie, zoals CPU belasting, RAM gebruik, disk gebruik, aantal gebruikers, etc.",
     "Unknown Processor" : "Onbekende Processor",
+    "Temperature" : "Temperatuur",
     "Load" : "Belasting",
     "Memory" : "Geheugen",
     "Disk" : "Schijf",

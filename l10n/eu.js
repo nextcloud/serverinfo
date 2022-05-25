@@ -32,6 +32,7 @@ OC.L10N.register(
     "Memory:" : "Memoria:",
     "Server time:" : "Zerbitzariaren ordua:",
     "Uptime:" : "Denbora aktibo:",
+    "Temperature" : "Tenperatura",
     "Load" : "Karga",
     "Memory" : "Memoria",
     "Disk" : "Diskoa",

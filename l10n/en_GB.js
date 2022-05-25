@@ -16,6 +16,7 @@ OC.L10N.register(
     "System" : "System",
     "Monitoring" : "Monitoring",
     "Provides useful server information, such as CPU load, RAM usage, disk usage, number of users, etc." : "Provides useful server information, such as CPU load, RAM usage, disk usage, number of users, etc.",
+    "Temperature" : "Temperature",
     "Size:" : "Size:",
     "Files:" : "Files:",
     "Active users" : "Active users",

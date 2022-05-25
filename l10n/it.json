@@ -25,6 +25,7 @@
     "Monitoring app with useful server information" : "Applicazione di monitoraggio con informazioni utili sul server",
     "Provides useful server information, such as CPU load, RAM usage, disk usage, number of users, etc." : "Fornisce informazioni utili sul server, come carico della CPU, utilizzo della memoria, utilizzo del disco, numero di utenti, ecc.",
     "Unknown Processor" : "Processore sconosciuto",
+    "Temperature" : "Temperatura",
     "Load" : "Carico",
     "Memory" : "Memoria",
     "Disk" : "Disco",

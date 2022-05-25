@@ -20,6 +20,7 @@ OC.L10N.register(
     "Monitoring" : "Uzraudzība",
     "Monitoring app with useful server information" : "Monitoringa lietotne ar noderīgu servera informāciju",
     "Provides useful server information, such as CPU load, RAM usage, disk usage, number of users, etc." : "Sniedz noderīgu servera informāciju, piemēram, CPU ielādi, RAM lietojumu, diska lietojumu, lietotāju skaitu utt.",
+    "Temperature" : "Temperatūra",
     "Load" : "Noslogojums",
     "Memory" : "Atmiņa",
     "Disk" : "Disks",

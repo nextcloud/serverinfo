@@ -19,6 +19,7 @@
     "Monitoring" : "Праћење система",
     "Monitoring app with useful server information" : "Апликација праћења система са корисним серверским информацијама",
     "Provides useful server information, such as CPU load, RAM usage, disk usage, number of users, etc." : "Даје корисне информације о серверу, као што су оптерећење процесора, употреба RAM-а, употреба диска, број корисника, итд.",
+    "Temperature" : "Температура",
     "Load" : "Оптерећење",
     "Memory" : "Меморија",
     "Disk" : "Диск",
