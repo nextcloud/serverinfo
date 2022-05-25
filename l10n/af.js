@@ -11,6 +11,7 @@ OC.L10N.register(
     "Press ⌘-C to copy." : "Druk ⌘-C om te kopieer.",
     "Press Ctrl-C to copy." : "Druk Ctrl-C om te kopieer.",
     "System" : "Stelsel",
+    "Temperature" : "Temperatuur",
     "Size:" : "Grootte:",
     "Files:" : "Lêers",
     "Active users" : "Aktiewe gebruikers",

@@ -21,6 +21,7 @@ OC.L10N.register(
     "Monitoring" : "מעקב",
     "Monitoring app with useful server information" : "יישום מעקב עם פרטים חשובים על השרת",
     "Provides useful server information, such as CPU load, RAM usage, disk usage, number of users, etc." : "מספק פרטים חיוניים על השרת כגון העומס על המעבד, ניצולת הזיכרון, ניצולת נפח הכונן מספר המשתמשים וכו׳",
+    "Temperature" : "טמפרטורה",
     "Load" : "עומס",
     "Memory" : "זיכרון",
     "Disk" : "כונן",

@@ -28,6 +28,7 @@ OC.L10N.register(
     "CPU:" : "CPU:",
     "Unknown Processor" : "Processeur inconnu",
     "Memory:" : "Mémoire :",
+    "Temperature" : "Température",
     "Load" : "Charge",
     "Memory" : "Mémoire",
     "Disk" : "Disque",

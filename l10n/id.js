@@ -12,6 +12,7 @@ OC.L10N.register(
     "Press Ctrl-C to copy." : "Tekan CTRL-C untuk menyalin.",
     "System" : "Sistem",
     "Monitoring" : "Pemantauan",
+    "Temperature" : "Suhu",
     "Size:" : "Ukuran:",
     "Files:" : "Berkas:",
     "Active users" : "Pengguna aktif",

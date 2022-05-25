@@ -27,6 +27,7 @@ OC.L10N.register(
     "Monitoring app with useful server information" : "Monitoring app 监控有用的服务器信息",
     "Provides useful server information, such as CPU load, RAM usage, disk usage, number of users, etc." : "提供有用的服务器信息，例如 CPU 负载、内存占用、硬盘占用、在线用户数等。",
     "Unknown Processor" : "位置处理器",
+    "Temperature" : "温度",
     "Load" : "负载",
     "Memory" : "内存",
     "Disk" : "磁盘",

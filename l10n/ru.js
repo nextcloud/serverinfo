@@ -27,6 +27,7 @@ OC.L10N.register(
     "Monitoring app with useful server information" : "Приложение мониторинга с полезной информацией о сервере",
     "Provides useful server information, such as CPU load, RAM usage, disk usage, number of users, etc." : "Предоставляет полезную информацию о сервере, такую как загрузка процессора, использование ОЗУ, диска, количество пользователей и т.д.",
     "Unknown Processor" : "Неизвестный процессор",
+    "Temperature" : "Температура",
     "Load" : "Нагрузка",
     "Memory" : "Память",
     "Disk" : "Диск",

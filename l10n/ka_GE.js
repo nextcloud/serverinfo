@@ -15,6 +15,7 @@ OC.L10N.register(
     "Press Ctrl-C to copy." : "კოპირებისთვის დააჭირეთ Ctrl-C-ს.",
     "System" : "სისტემა",
     "Monitoring" : "მონიტორინგი",
+    "Temperature" : "ტემპერატურა",
     "Size:" : "ზომა:",
     "Files:" : "ფაილები",
     "Active users" : "აქტიური მომხმარებლები",
