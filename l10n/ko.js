@@ -21,6 +21,7 @@ OC.L10N.register(
     "Monitoring" : "모니터링",
     "Monitoring app with useful server information" : "서버 정보를 표시하는 모니터링 앱",
     "Provides useful server information, such as CPU load, RAM usage, disk usage, number of users, etc." : "CPU 부하, RAM 사용, 디스크 사용, 사용자 수 등 유용한 서버 정보를 제공합니다.",
+    "Temperature" : "기온",
     "Load" : "부하",
     "Memory" : "메모리",
     "Disk" : "디스크",

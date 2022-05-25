@@ -21,6 +21,7 @@ OC.L10N.register(
     "Monitoring" : "Seguimento",
     "Monitoring app with useful server information" : "Aplicación de seguimento con información útil do servidor",
     "Provides useful server information, such as CPU load, RAM usage, disk usage, number of users, etc." : "Fornece información útil do servidor, como a carga da CPU, o uso da memoria RAM, o uso do disco, o número de usuarios, etc.",
+    "Temperature" : "Temperatura",
     "Load" : "Carga",
     "Memory" : "Memoria",
     "Disk" : "Disco",

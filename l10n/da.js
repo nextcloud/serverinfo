@@ -21,6 +21,7 @@ OC.L10N.register(
     "Monitoring" : "Monitorering",
     "Monitoring app with useful server information" : "Monitoreringsapp med serverinformation",
     "Provides useful server information, such as CPU load, RAM usage, disk usage, number of users, etc." : "Viser serverinformation som CPU belastning, RAM forbrug, lagerforbrug, antal brugere osv.",
+    "Temperature" : "Temperatur",
     "Load" : "Belastning",
     "Memory" : "Hukommelse",
     "Disk" : "Disk",

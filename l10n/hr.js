@@ -21,6 +21,7 @@ OC.L10N.register(
     "Monitoring" : "Praćenje",
     "Monitoring app with useful server information" : "Aplikacija za praćenje s korisnim informacijama o poslužitelju",
     "Provides useful server information, such as CPU load, RAM usage, disk usage, number of users, etc." : "Pruža korisne informacije o poslužitelju, kao što su opterećenje CPU-a, korištenje RAM-a, korištenje diska, broj korisnika itd.",
+    "Temperature" : "Temperatura",
     "Load" : "Opterećenje",
     "Memory" : "Memorija",
     "Disk" : "Disk",

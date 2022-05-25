@@ -14,6 +14,7 @@ OC.L10N.register(
     "System" : "Süsteem",
     "Monitoring" : "Monitooring",
     "Provides useful server information, such as CPU load, RAM usage, disk usage, number of users, etc." : "Näitab kasulikku infot serveri kohta, näiteks protsessori koormus, mälukasutus, kettaruum, kasutajate arv jne.",
+    "Temperature" : "Temperatuur",
     "Size:" : "Suurus:",
     "Files:" : "Faile:",
     "Active users" : "Aktiivseid kasutajaid",
