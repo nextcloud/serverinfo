@@ -32,6 +32,7 @@ OC.L10N.register(
     "Memory:" : "Operační paměť:",
     "Server time:" : "Čas na serveru:",
     "Uptime:" : "Doba chodu od minulého zapnutí:",
+    "Temperature" : "Teplota",
     "Load" : "Vytížení",
     "Memory" : "Operační paměť",
     "Disk" : "Úložiště",
