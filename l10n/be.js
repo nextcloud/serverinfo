@@ -1,10 +1,11 @@
 OC.L10N.register(
     "serverinfo",
     {
+    "Copy" : "Капіяваць",
     "Copied!" : "Скапіявана!",
     "Not supported!" : "Не падтрымліваецца!",
-    "Press ⌘-C to copy." : "Націсніце ⌘-C для капіравання.",
-    "Press Ctrl-C to copy." : "Націсніце Ctrl-C для капіравання.",
+    "Press ⌘-C to copy." : "Націсніце ⌘-C для капіявання.",
+    "Press Ctrl-C to copy." : "Націсніце Ctrl-C для капіявання.",
     "Size:" : "Памер:",
     "Type:" : "Тып:",
     "Files" : "Файлы",
