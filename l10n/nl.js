@@ -76,7 +76,7 @@ OC.L10N.register(
     "Max Execution Time:" : "Max verwerkingstijd:",
     "To use an access token please generate one then set it using the following command:" : "Om een toegangstoken te gebruiken, genereer er a.u.b een en stel deze in via het volgende commando:",
     "Files" : "Bestanden",
-    "Storages" : "Oplsag",
+    "Storages" : "Opslag",
     "Free Space" : "Vrije Ruimte",
     "Total users" : "Totaal aantal gebruikers",
     "Version" : "Versie",
