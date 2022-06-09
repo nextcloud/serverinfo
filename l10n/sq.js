@@ -32,6 +32,7 @@ OC.L10N.register(
     "Total" : "Total",
     "Current usage" : "Perdorimi aktual",
     "Size" : "Madhësi",
+    "Available" : "i disponueshëm",
     "Hostname" : "Strehëemër",
     "Status" : "Status",
     "Memory Limit:" : "Limiti i kujtesës: ",
