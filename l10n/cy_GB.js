@@ -7,6 +7,8 @@ OC.L10N.register(
     "Size:" : "Maint:",
     "Type:" : "Math:",
     "Size" : "Maint",
+    "Available" : "Ar gael?",
+    "Status" : "Statws",
     "Files" : "Ffeiliau",
     "Version" : "Fersiwn",
     "Type" : "Math"
