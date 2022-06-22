@@ -25,7 +25,7 @@ OC.L10N.register(
     "System" : "System",
     "Monitoring" : "Information",
     "Monitoring app with useful server information" : "Monitoring-App mit nützlichen Serverinformationen",
-    "Provides useful server information, such as CPU load, RAM usage, disk usage, number of users, etc." : "Zeigt nützliche Informationen des Servers an wie z.B. CPU-Last, Arbeitsspeicherauslastung, Massenspeicherauslastung, Anzahl der Benutzer, usw.",
+    "Provides useful server information, such as CPU load, RAM usage, disk usage, number of users, etc." : "Zeigt nützliche Informationen des Servers an wie z. B. CPU-Last, Arbeitsspeicherauslastung, Massenspeicherauslastung, Anzahl der Benutzer, usw.",
     "CPU:" : "Prozessor:",
     "Unknown Processor" : "Unbekannter Prozessor",
     "Memory:" : "Speicher:",
