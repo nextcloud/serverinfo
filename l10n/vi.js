@@ -1,6 +1,12 @@
 OC.L10N.register(
     "serverinfo",
     {
+    "CPU info not available" : "Không lấy được thông tin CPU",
+    "Load average: {cpu} (last minute)" : "Tải trung bình:{cpu} (phút trước)",
+    "RAM: Total: {memTotalBytes}/Current usage: {memUsageBytes}" : "RAM: Tổng: {memTotalBytes}/Đang sử dụng:  {memUsageBytes}",
+    "RAM info not available" : "Không lấy được thông tin RAM",
+    "SWAP: Total: {swapTotalBytes}/Current usage: {swapUsageBytes}" : "SWAP: Tổng: {swapTotalBytes}/Đang sử dụng: {swapUsageBytes}",
+    "SWAP info not available" : "Không lấy được thông tin SWAP",
     "Users" : "Người dùng",
     "Groups" : "Nhóm",
     "Links" : "Đường dẫn",
@@ -29,7 +35,7 @@ OC.L10N.register(
     "Current usage" : "Sử dụng hiện tại",
     "Mails" : "Thư",
     "Size" : "Kích cỡ",
-    "Available" : "khả dụng",
+    "Available" : "Khả dụng",
     "Status" : "Trạng thái",
     "Memory Limit:" : "Giới hạn bộ nhớ:",
     "Max Execution Time:" : "Thời gian thực thi tối đa:",
