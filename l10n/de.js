@@ -69,6 +69,7 @@ OC.L10N.register(
     "External monitoring tool" : "Externes Überwachungsprogramm",
     "You can connect an external monitoring tool by using this end point:" : "Durch Verwendung des folgenden Zugangspunktes kann ein externes Überwachungsprogramm verwendet werden: ",
     "Appending \"?format=json\" at the end of the URL gives you the result in JSON." : "Wenn Du \"?format=json\" am Ende der URL anhängst, erhältst Du das Ergebnis in JSON.",
+    "To use an access token, please generate one then set it using the following command:" : "Um ein Zugriffstoken zu verwenden, generieren Sie bitte eines und legen Sie es mit dem folgenden Befehl fest:",
     "Then pass the token with the \"NC-Token\" header when querying the above URL." : "Übergebe dann das Token mit dem \"NC-Token\"-Header bei der Abfrage der obigen URL.",
     "Load average" : "Durchschnittsauslastung",
     "Last minute" : "Letzte Minute",
