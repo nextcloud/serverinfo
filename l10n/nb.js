@@ -47,6 +47,7 @@ OC.L10N.register(
     "Memory info not available" : "Minneinformasjon er ikke tilgjengelig",
     "Total" : "Totalt",
     "Current usage" : "Nåværende bruk",
+    "Mails" : "Epost",
     "Operating System" : "Operativsystem",
     "CPU" : "CPU",
     "Server time" : "Server tid",
