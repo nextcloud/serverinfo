@@ -56,6 +56,7 @@
 
 .diskchart-container {
 	width: 100px;
+	margin-right: 25px;
 	border: 1px var(--color-border);
 }
 
