@@ -2,16 +2,8 @@
 	max-width: 100vw;
 }
 
-.monitoring-wrapper {
-	display: -webkit-flex;
-	display: flex;
-	position: left;
-	max-width: 50%;
-	min-width: 50%;
-}
-
 .monitoring-wrapper > input {
-	flex: 1 0 auto;
+	width: calc(100% - 28px);
 }
 
 .monitoring-wrapper + .settings-hint {
@@ -189,7 +181,6 @@
 	min-width: 100%;
 }
 
-/*
 @media only screen and (max-width: 1200px) {
 	.col-xl-6 {
 		flex-basis: 50%;
@@ -225,4 +216,3 @@
 		min-width: 100%;
 	}
 }
-*/
