@@ -246,7 +246,7 @@ class DefaultOs implements IOperatingSystem {
 
 	protected function executeCommand(string $command): string {
 		$output = @shell_exec(escapeshellcmd($command));
-		if ($output === null || $output === '') {
+		if ($output === false || $output === null || $output === '') {
 			throw new \RuntimeException('No output for command: "' . $command . '"');
 		}
 		return $output;
