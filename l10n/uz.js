@@ -11,6 +11,7 @@ OC.L10N.register(
     "System" : "Tizim",
     "Load average" : "O'rtacha yuk",
     "Total" : "Jami",
+    "Size" : "Hajmi",
     "Files" : "Fayllar"
 },
 "nplurals=1; plural=0;");
