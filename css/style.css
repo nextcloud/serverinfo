@@ -84,6 +84,7 @@
 	width: 28px;
 	float: left;
 	padding: 5px;
+	filter: var(--background-invert-if-dark);
 }
 
 .chart-container {
