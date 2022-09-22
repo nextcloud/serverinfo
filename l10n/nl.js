@@ -58,6 +58,7 @@ OC.L10N.register(
     "Version:" : "Versie:",
     "Memory limit:" : "Geheugen limiet:",
     "Upload max size:" : "Max uploadomvang:",
+    "Extensions:" : "Extensies:",
     "Database" : "Database",
     "Type:" : "Type:",
     "External monitoring tool" : "Externe monitoring tool",
