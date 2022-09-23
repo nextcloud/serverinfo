@@ -2,7 +2,7 @@ OC.L10N.register(
     "serverinfo",
     {
     "CPU info not available" : "Information CPU non disponible",
-    "Load average: {cpu} (last minute)" : "Moyenne de la charge : (CPU) (dernière minute)",
+    "Load average: {cpu} (last minute)" : "Moyenne de la charge : {cpu} (dernière minute)",
     "RAM: Total: {memTotalBytes}/Current usage: {memUsageBytes}" : "RAM : Total : {memTotalBytes}/Utilisation actuelle : {memUsageBytes}",
     "RAM info not available" : "Informations sur la RAM non disponibles",
     "SWAP: Total: {swapTotalBytes}/Current usage: {swapUsageBytes}" : "SWAP : Total : {swapTotalBytes}/Utilisation actuelle : {swapUsageBytes}",
