@@ -1,10 +1,10 @@
 {
 	"require-dev": {
 		"nextcloud/coding-standard": "^0.4.0",
-		"christophwurst/nextcloud": "dev-master@dev",
 		"psalm/phar": "^4.22",
 		"bantu/ini-get-wrapper": "v1.0.1",
-		"phpunit/phpunit": "^9.5"
+		"phpunit/phpunit": "^9.5",
+		"nextcloud/ocp": "dev-stable25"
 	},
 	"scripts": {
 		"cs:check": "php-cs-fixer fix --dry-run --diff",
@@ -20,6 +20,11 @@
 		},
 		"platform": {
 			"php": "7.4"
+		}
+	},
+	"autoload-dev": {
+		"psr-4": {
+			"OCP\\": "vendor/nextcloud/ocp/OCP"
 		}
 	}
 }
