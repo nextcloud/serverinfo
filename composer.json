@@ -1,9 +1,15 @@
 {
 	"require-dev": {
-		"nextcloud/coding-standard": "^0.3.0"
+		"nextcloud/coding-standard": "^0.3.0",
+		"nextcloud/ocp": "dev-stable23"
 	},
 	"scripts": {
 		"cs:check": "php-cs-fixer fix --dry-run --diff",
 		"cs:fix": "php-cs-fixer fix"
+	},
+	"autoload-dev": {
+		"psr-4": {
+			"OCP\\": "vendor/nextcloud/ocp/OCP"
+		}
 	}
 }
