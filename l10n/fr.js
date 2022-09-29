@@ -76,7 +76,7 @@ OC.L10N.register(
     "Memory info not available" : "Informations mémoire non disponibles",
     "Total" : "Total",
     "Current usage" : "Utilisation actuelle",
-    "Mails" : "Courriels",
+    "Mails" : "E-mails",
     "Operating System" : "Système d'exploitation",
     "CPU" : "CPU",
     "Server time" : "Heure du serveur",
