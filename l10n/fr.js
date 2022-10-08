@@ -10,7 +10,7 @@ OC.L10N.register(
     "Users" : "Utilisateurs",
     "Groups" : "Groupes",
     "Links" : "Liens",
-    "Emails" : "Emails",
+    "Emails" : "E-mails",
     "Federated sent" : "Federated envoyé",
     "Federated received" : "Federated reçu",
     "Talk conversations" : "Conversations orales",
