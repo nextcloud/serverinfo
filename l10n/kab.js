@@ -1,6 +1,7 @@
 OC.L10N.register(
     "serverinfo",
     {
+    "Users" : "Iseqdacen",
     "1 hour" : "1 n usrag",
     "Copy" : "Nɣel",
     "Copied!" : "Yenɣel!",
@@ -8,6 +9,7 @@ OC.L10N.register(
     "Press ⌘-C to copy." : "Senned ɣef ⌘-C akken ad tneɣleḍ.",
     "Press Ctrl-C to copy." : "Senned ɣef Ctrl-C akken ad tneɣleḍ.",
     "Temperature" : "Lḥamu",
+    "Size" : "Teɣzi",
     "Files" : "Ifuyla",
     "Type" : "Anaw"
 },
