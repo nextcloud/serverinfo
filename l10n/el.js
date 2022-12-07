@@ -53,6 +53,8 @@ OC.L10N.register(
     "External monitoring tool" : "Εξωτερικό εργαλείο παρακολούθησης",
     "You can connect an external monitoring tool by using this end point:" : "Συνδεθείτε σε εξωτερικό εργαλείο παρακολούθησης με χρήση αυτού του σημείου:",
     "Appending \"?format=json\" at the end of the URL gives you the result in JSON." : "Προσθέτοντας το \"?format=json\" στο τέλος των URL σας δίνει αποτέλεσμα σε JSON!",
+    "To use an access token, please generate one then set it using the following command:" : "Για να χρησιμοποιήσετε ένα αναγνωριστικό πρόσβασης (token), δημιουργήστε ένα και ορίστε το χρησιμοποιώντας την ακόλουθη εντολή:",
+    "Then pass the token with the \"NC-Token\" header when querying the above URL." : "Στη συνέχεια, περάστε το αναγνωριστικό με την κεφαλίδα \"NC-Token\" όταν υποβάλετε ερώτημα στην παραπάνω διεύθυνση URL.",
     "Load average" : "Μέσος όρος φόρτωσης",
     "Last minute" : "Τελευταίο λεπτό",
     "Memory info not available" : "Η πληροφορία μνήμης δεν είναι διαθέσιμη",
