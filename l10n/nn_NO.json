@@ -17,15 +17,10 @@
     "Database" : "Database",
     "Type:" : "Type:",
     "External monitoring tool" : "Eksternt monoitor verktøy",
-    "Last minute" : "Siste minutt",
-    "Memory info not available" : "Minne informasjon ikkje tilgjengleg",
-    "Total" : "Totalt",
-    "Current usage" : "Nåverende bruk",
     "Size" : "Storleik",
+    "Files" : "Filer",
     "Hostname" : "Vertsnamn",
     "Status" : "Status",
-    "Memory Limit:" : "Minne grense:",
-    "Files" : "Filer",
     "Version" : "Utgåve",
     "Type" : "Type"
 },"pluralForm" :"nplurals=2; plural=(n != 1);"

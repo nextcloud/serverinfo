@@ -8,8 +8,8 @@ OC.L10N.register(
     "Shares" : "Yayımlanmalar",
     "Type:" : "Tip:",
     "Size" : "Həcm",
-    "Hostname" : "Sahibadı",
     "Files" : "Fayllar",
+    "Hostname" : "Sahibadı",
     "Version" : "Versiya",
     "Type" : "Type"
 },

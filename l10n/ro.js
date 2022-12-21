@@ -14,12 +14,11 @@ OC.L10N.register(
     "Size:" : "Mărime:",
     "Shares" : "Partajări",
     "Type:" : "Tip:",
-    "Mails" : "Mailuri",
     "Size" : "Mărime",
     "Available" : "Disponibil",
+    "Files" : "Fișiere",
     "Hostname" : "Nume mașină",
     "Status" : "Stare",
-    "Files" : "Fișiere",
     "Version" : "Versiune",
     "Type" : "Tip"
 },

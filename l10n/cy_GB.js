@@ -8,8 +8,8 @@ OC.L10N.register(
     "Type:" : "Math:",
     "Size" : "Maint",
     "Available" : "Ar gael?",
-    "Status" : "Statws",
     "Files" : "Ffeiliau",
+    "Status" : "Statws",
     "Version" : "Fersiwn",
     "Type" : "Math"
 },

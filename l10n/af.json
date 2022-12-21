@@ -17,13 +17,10 @@
     "Version:" : "Weergawe:",
     "Database" : "Databasis",
     "Type:" : "Tipe:",
-    "Total" : "Totaal",
-    "Current usage" : "Huidige gebruik",
     "Size" : "Grootte",
     "Available" : "Beskikbaar",
-    "Status" : "Status",
-    "Memory Limit:" : "Geheuelimiet:",
     "Files" : " Lêers",
+    "Status" : "Status",
     "Version" : "Weergawe",
     "Type" : "Tipe"
 },"pluralForm" :"nplurals=2; plural=(n != 1);"

@@ -21,16 +21,10 @@
     "Database" : "Database",
     "Type:" : "Tipe",
     "External monitoring tool" : "Alat pemantauan eksternal",
-    "Load average" : "Rata-rata Proses",
-    "Last minute" : "Menit lalu",
-    "Memory info not available" : "Info Memori tidak tersedia",
-    "Total" : "Total",
-    "Current usage" : "Penggunaan terakhir",
     "Size" : "Ukuran",
+    "Files" : "Berkas",
     "Hostname" : "Nama Host",
     "Status" : "Status",
-    "Memory Limit:" : "Batas Memori",
-    "Files" : "Berkas",
     "Version" : "Versi",
     "Type" : "tipe"
 },"pluralForm" :"nplurals=1; plural=0;"

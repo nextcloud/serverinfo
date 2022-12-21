@@ -19,16 +19,10 @@
     "Version:" : "Хувилбар:",
     "Database" : "Өгөгдлийн сан",
     "Type:" : "Төрөл:",
-    "Load average" : "Дундаж ачаалал",
-    "Last minute" : "Сүүлийн минутанд",
-    "Memory info not available" : "Санах ойн мэдээлэл идэвхгүй байна",
-    "Total" : "Нийт",
-    "Current usage" : "Тухайн ашиглалт",
     "Size" : "Хэмжээ",
     "Available" : "Боломжтой",
-    "Status" : "төлөв",
-    "Memory Limit:" : "Санах ойн хязгаар:",
     "Files" : "файлууд",
+    "Status" : "төлөв",
     "Version" : "төрөл",
     "Type" : "Төрөл"
 },"pluralForm" :"nplurals=2; plural=(n != 1);"
