@@ -15,9 +15,9 @@ OC.L10N.register(
     "Shares" : "แชร์",
     "Type:" : "ชนิด:",
     "Size" : "ขนาด",
+    "Files" : "ไฟล์",
     "Hostname" : "ชื่อโฮสต์",
     "Status" : "สถานะ",
-    "Files" : "ไฟล์",
     "Version" : "รุ่น",
     "Type" : "ประเภท"
 },

@@ -21,16 +21,9 @@
     "Database" : "Base de datos",
     "Type:" : "Typo:",
     "External monitoring tool" : "Instrumento de controlo externe",
-    "Load average" : "Carga medie",
-    "Last minute" : "Ultime minuta",
-    "Memory info not available" : "Information del memoria non es disponibile",
-    "Total" : "Total",
-    "Current usage" : "Uso actual",
     "Size" : "Dimension",
-    "Hostname" : "Nomine de Hospite",
-    "Memory Limit:" : "Limite de Memoria:",
-    "Max Execution Time:" : "Tempore Maxime de Execution:",
     "Files" : "Files",
+    "Hostname" : "Nomine de Hospite",
     "Version" : "Version",
     "Type" : "Typo"
 },"pluralForm" :"nplurals=2; plural=(n != 1);"

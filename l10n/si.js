@@ -14,8 +14,8 @@ OC.L10N.register(
     "Shares" : "බෙදාගැනීම්",
     "Size" : "ප්‍රමාණය",
     "Available" : "ඇත",
-    "Hostname" : "ධාරක නාමය",
     "Files" : "ගොනු",
+    "Hostname" : "ධාරක නාමය",
     "Version" : "අනුවාදය"
 },
 "nplurals=2; plural=(n != 1);");

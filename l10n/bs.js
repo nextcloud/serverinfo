@@ -5,8 +5,8 @@ OC.L10N.register(
     "Groups" : "Grupe",
     "Copied!" : "Kopirano",
     "Size" : "Veličina",
-    "Status" : "Status",
     "Files" : "Datoteke",
+    "Status" : "Status",
     "Version" : "Verzija",
     "Type" : "Type"
 },
