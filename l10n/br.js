@@ -13,9 +13,9 @@ OC.L10N.register(
     "Shares" : "Rannañ",
     "Size" : "Ment",
     "Available" : "Vak",
+    "Files" : "Restroù",
     "Hostname" : "Anv-ost",
     "Status" : "Stad",
-    "Files" : "Restroù",
     "Version" : "Stumm",
     "Type" : "Stumm"
 },

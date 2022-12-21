@@ -24,17 +24,10 @@
     "Database" : "მონაცემთა ბაზა",
     "Type:" : "ტიპი:",
     "External monitoring tool" : "გარე მონიტორინგის ხელსაწყო",
-    "Load average" : "საშუალო დატვირთვა",
-    "Last minute" : "ბოლო წუთი",
-    "Memory info not available" : "მეხსიერების ინფორმაცია ხელმიუწვდომელია",
-    "Total" : "სულ",
-    "Current usage" : "ამჟამინდელი მოხმარება",
     "Size" : "ზომა",
+    "Files" : "ფაილები",
     "Hostname" : "ჰოსტი",
     "Status" : "სტატუსი",
-    "Memory Limit:" : "მეხსიერების ლიმიტი:",
-    "Max Execution Time:" : "მაქს. გაშვების დრო:",
-    "Files" : "ფაილები",
     "Version" : "ვერსია",
     "Type" : "სახეობა"
 },"pluralForm" :"nplurals=2; plural=(n!=1);"

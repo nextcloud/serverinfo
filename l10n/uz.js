@@ -10,10 +10,8 @@ OC.L10N.register(
     "Press ⌘-C to copy." : "Press ⌘-C to copy.",
     "Press Ctrl-C to copy." : "Press Ctrl-C to copy.",
     "System" : "System",
-    "Load average" : "Load average",
-    "Total" : "Total",
     "Size" : "Size",
-    "Status" : "Status",
-    "Files" : "Files"
+    "Files" : "Files",
+    "Status" : "Status"
 },
 "nplurals=1; plural=0;");

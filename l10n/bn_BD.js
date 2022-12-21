@@ -12,8 +12,8 @@ OC.L10N.register(
     "Shares" : "ভাগাভাগি",
     "Type:" : "ধরণঃ",
     "Size" : "আকার",
-    "Hostname" : "হোস্টনেম",
     "Files" : "ফাইল",
+    "Hostname" : "হোস্টনেম",
     "Version" : "ভার্সন",
     "Type" : "ধরণ"
 },
