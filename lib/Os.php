@@ -106,8 +106,7 @@ class Os implements IOperatingSystem {
 	}
 
 	public function getNetworkInterfaces(): array {
-		$data = $this->backend->getNetworkInterfaces();
-		return $data;
+		return $this->backend->getNetworkInterfaces();
 	}
 
 	public function getThermalZones(): array {

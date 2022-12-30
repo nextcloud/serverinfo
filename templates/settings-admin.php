@@ -22,6 +22,11 @@ declare(strict_types=1);
  *
  */
 
+use OCA\ServerInfo\Resources\Disk;
+use OCA\ServerInfo\Resources\Memory;
+use OCA\ServerInfo\Resources\NetInterface;
+use OCP\Util;
+
 script('serverinfo', 'script');
 script('serverinfo', 'smoothie');
 script('serverinfo', 'Chart.min');
@@ -38,10 +43,13 @@ function FormatMegabytes(int $byte): string {
 	return number_format($byte, 2, '.', '.') . ' ' . $unim[$count];
 }
 
-/** @var \OCA\ServerInfo\Resources\Memory $memory */
+/** @var Memory $memory */
 $memory = $_['memory'];
-/** @var \OCA\ServerInfo\Resources\Disk[] $disks */
+/** @var Disk[] $disks */
 $disks = $_['diskinfo'];
+/** @var NetInterface[] $interfaces */
+$interfaces = $_['networkinterfaces'];
+
 ?>
 
 <div class="server-info-wrapper">
@@ -90,8 +98,8 @@ $disks = $_['diskinfo'];
 			</div>
 		</div>
 	</div>
-	
-	<div class="section server-infos-two">	
+
+	<div class="section server-infos-two">
 		<div class="row">
 			<div class="col col-6 col-l-12">
 				<h2>
@@ -192,25 +200,25 @@ $disks = $_['diskinfo'];
 			</div>
 			<div class="col col-12">
 				<div class="row">
-					<?php foreach ($_['networkinterfaces'] as $interface): ?>
+					<?php foreach ($interfaces as $interface): ?>
 
 						<div class="col col-4 col-l-6 col-m-12">
 							<div class="infobox">
 								<div class="interface-wrapper">
-									<h3><?php p($interface['interface']) ?></h3>
+									<h3><?php p($interface->getName()) ?></h3>
 									<?php p($l->t('Status:')); ?>
-									<span class="info"><?php p($interface['status']) ?></span><br>
+									<span class="info"><?= $interface->isUp() ? 'up' : 'down'; ?></span><br>
 									<?php p($l->t('Speed:')); ?>
-									<span
-										class="info"><?php p($interface['speed'] . ' ' . $interface['duplex']) ?></span><br>
-									<?php if (!empty($interface['mac'])): ?>
+									<span class="info"><?php p($interface->getSpeed()) ?> (<?php p($l->t('Duplex:') . ' ' . $interface->getDuplex()) ?>)</span><br>
+									<?php if (!empty($interface->getMAC())): ?>
 										<?php p($l->t('MAC:')); ?>
-										<span class="info"><?php p($interface['mac']) ?></span><br>
+										<span class="info"><?php p($interface->getMAC()) ?></span><br>
 									<?php endif; ?>
 									<?php p($l->t('IPv4:')); ?>
-									<span class="info"><?php p($interface['ipv4']) ?></span><br>
+									<span class="info"><?= implode(', ', Util::sanitizeHTML($interface->getIPv4())); ?>
+									</span><br>
 									<?php p($l->t('IPv6:')); ?>
-									<span class="info"><?php p($interface['ipv6']) ?></span>
+									<span class="info"><?= implode(', ', Util::sanitizeHTML($interface->getIPv6())); ?>
 								</div>
 							</div>
 						</div>

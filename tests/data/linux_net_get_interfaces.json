@@ -1,0 +1,45 @@
+{
+    "lo": {
+        "unicast": [
+            {
+                "flags": 65609,
+                "family": 17
+            },
+            {
+                "flags": 65609,
+                "family": 2,
+                "address": "127.0.0.1",
+                "netmask": "255.0.0.0"
+            },
+            {
+                "flags": 65609,
+                "family": 10,
+                "address": "::1",
+                "netmask": "ffff:ffff:ffff:ffff:ffff:ffff:ffff:ffff"
+            }
+        ],
+        "up": true
+    },
+    "eth0": {
+        "unicast": [
+            {
+                "flags": 69699,
+                "family": 17
+            },
+            {
+                "flags": 69699,
+                "family": 2,
+                "address": "10.0.2.15",
+                "netmask": "255.255.255.0",
+                "broadcast": "10.0.2.255"
+            },
+            {
+                "flags": 69699,
+                "family": 10,
+                "address": "fe80::a00:27ff:fe91:f84b",
+                "netmask": "ffff:ffff:ffff:ffff::"
+            }
+        ],
+        "up": true
+    }
+}
