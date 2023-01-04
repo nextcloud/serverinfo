@@ -41,7 +41,7 @@ OC.L10N.register(
     "Size:" : "Größe:",
     "Available:" : "Verfügbar:",
     "Used:" : "Verwendet:",
-    "You will get a notification once one of your disks is nearly full." : "Du erhältst eine Benachrichtigung sobald eines deiner Speichermedien fast voll ist.",
+    "You will get a notification once one of your disks is nearly full." : "Du erhältst eine Benachrichtigung, sobald eines deiner Speichermedien fast voll ist.",
     "Files:" : "Dateien:",
     "Storages:" : "Speicher:",
     "Free Space:" : "Freier Speicherplatz:",
@@ -69,8 +69,8 @@ OC.L10N.register(
     "External monitoring tool" : "Externes Überwachungsprogramm",
     "You can connect an external monitoring tool by using this end point:" : "Durch Verwendung des folgenden Zugangspunktes kann ein externes Überwachungsprogramm verwendet werden: ",
     "Appending \"?format=json\" at the end of the URL gives you the result in JSON." : "Wenn du \"?format=json\" am Ende der URL anhängst, erhältst du das Ergebnis in JSON.",
-    "To use an access token, please generate one then set it using the following command:" : "Um ein Zugriffstoken zu verwenden, generiere bitte eines und lege es mit dem folgenden Befehl fest:",
-    "Then pass the token with the \"NC-Token\" header when querying the above URL." : "Übergebe dann das Token mit dem \"NC-Token\"-Header bei der Abfrage der obigen URL.",
+    "To use an access token, please generate one then set it using the following command:" : "Um ein Zugriffstoken zu verwenden, generiere bitte ein Token und lege es mit dem folgenden Befehl fest:",
+    "Then pass the token with the \"NC-Token\" header when querying the above URL." : "Übergib dann das Token mit dem \"NC-Token\"-Header bei der Abfrage der obigen URL.",
     "Operating System" : "Betriebssystem",
     "CPU" : "Prozessor",
     "Server time" : "Server-Zeit",
@@ -97,7 +97,7 @@ OC.L10N.register(
     "Max execution time" : "Maximale Ausführungszeit",
     "Upload max size" : "Maximale Größe zum Hochladen",
     "Type" : "Typ",
-    "You can connect an external monitoring tool by using this end point" : "Du kannst ein externes Überwachungsprogramm mit diesem Zugangspunktes verwenden.",
-    "To use an access token, please generate one then set it using the following command" : "Um ein Zugriffstoken zu verwenden, erzeuge bitte einen und lege ihn dann mit folgendem Befehl fest"
+    "You can connect an external monitoring tool by using this end point" : "Du kannst ein externes Überwachungsprogramm mit diesem Zugangspunkt verwenden.",
+    "To use an access token, please generate one then set it using the following command" : "Um ein Zugriffstoken zu verwenden, erzeuge bitte eines und lege es dann mit folgendem Befehl fest"
 },
 "nplurals=2; plural=(n != 1);");
