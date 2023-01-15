@@ -1,4 +1,7 @@
 <?php
+
+declare(strict_types=1);
+
 /**
  * @copyright Copyright (c) 2016 Bjoern Schiessle <bjoern@schiessle.org>
  *
@@ -35,46 +38,16 @@ use OCP\IURLGenerator;
 use OCP\Settings\ISettings;
 
 class AdminSettings implements ISettings {
+	private Os $os;
+	private IL10N $l;
+	private IURLGenerator $urlGenerator;
+	private StorageStatistics $storageStatistics;
+	private PhpStatistics $phpStatistics;
+	private DatabaseStatistics $databaseStatistics;
+	private ShareStatistics $shareStatistics;
+	private SessionStatistics $sessionStatistics;
+	private SystemStatistics $systemStatistics;
 
-	/** @var Os */
-	private $os;
-
-	/** @var IL10N */
-	private $l;
-
-	/** @var IURLGenerator */
-	private $urlGenerator;
-
-	/** @var StorageStatistics */
-	private $storageStatistics;
-
-	/** @var PhpStatistics */
-	private $phpStatistics;
-
-	/** @var DatabaseStatistics  */
-	private $databaseStatistics;
-
-	/** @var ShareStatistics */
-	private $shareStatistics;
-
-	/** @var SessionStatistics */
-	private $sessionStatistics;
-
-	/** @var SystemStatistics */
-	private $systemStatistics;
-
-	/**
-	 * Admin constructor.
-	 *
-	 * @param IL10N $l
-	 * @param IURLGenerator $urlGenerator
-	 * @param StorageStatistics $storageStatistics
-	 * @param PhpStatistics $phpStatistics
-	 * @param DatabaseStatistics $databaseStatistics
-	 * @param ShareStatistics $shareStatistics
-	 * @param SessionStatistics $sessionStatistics
-	 * @param SystemStatistics $systemStatistics
-	 */
 	public function __construct(Os $os,
 								IL10N $l,
 								IURLGenerator $urlGenerator,
@@ -96,10 +69,7 @@ class AdminSettings implements ISettings {
 		$this->systemStatistics = $systemStatistics;
 	}
 
-	/**
-	 * @return TemplateResponse
-	 */
-	public function getForm() {
+	public function getForm(): TemplateResponse {
 		$monitoringEndPoint = $this->urlGenerator->getAbsoluteURL('ocs/v2.php/apps/serverinfo/api/v1/info');
 		$params = [
 			'hostname' => $this->os->getHostname(),
@@ -115,7 +85,8 @@ class AdminSettings implements ISettings {
 			'php' => $this->phpStatistics->getPhpStatistics(),
 			'database' => $this->databaseStatistics->getDatabaseStatistics(),
 			'activeUsers' => $this->sessionStatistics->getSessionStatistics(),
-			'system' => $this->systemStatistics->getSystemStatistics()
+			'system' => $this->systemStatistics->getSystemStatistics(),
+			'thermalzones' => $this->os->getThermalZones()
 		];
 
 		return new TemplateResponse('serverinfo', 'settings-admin', $params);
@@ -124,7 +95,7 @@ class AdminSettings implements ISettings {
 	/**
 	 * @return string the section ID, e.g. 'sharing'
 	 */
-	public function getSection() {
+	public function getSection(): string {
 		return 'serverinfo';
 	}
 
@@ -135,7 +106,7 @@ class AdminSettings implements ISettings {
 	 *
 	 * keep the server setting at the top, right after "server settings"
 	 */
-	public function getPriority() {
+	public function getPriority(): int {
 		return 0;
 	}
 }

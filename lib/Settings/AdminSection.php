@@ -1,4 +1,7 @@
 <?php
+
+declare(strict_types=1);
+
 /**
  * @copyright Copyright (c) 2016 Bjoern Schiessle <bjoern@schiessle.org>
  *
@@ -27,11 +30,8 @@ use OCP\IURLGenerator;
 use OCP\Settings\IIconSection;
 
 class AdminSection implements IIconSection {
-
-	/** @var IL10N */
-	private $l;
-	/** @var IURLGenerator */
-	private $url;
+	private IL10N $l;
+	private IURLGenerator $url;
 
 	public function __construct(IL10N $l, IURLGenerator $url) {
 		$this->l = $l;
@@ -40,20 +40,16 @@ class AdminSection implements IIconSection {
 
 	/**
 	 * returns the ID of the section. It is supposed to be a lower case string
-	 *
-	 * @returns string
 	 */
-	public function getID() {
+	public function getID(): string {
 		return 'serverinfo';
 	}
 
 	/**
 	 * returns the translated name as it should be displayed, e.g. 'LDAP / AD
 	 * integration'. Use the L10N service to translate it.
-	 *
-	 * @return string
 	 */
-	public function getName() {
+	public function getName(): string {
 		return $this->l->t('System');
 	}
 
@@ -64,14 +60,14 @@ class AdminSection implements IIconSection {
 	 *
 	 * keep the server setting at the top, right after "overview" and "basic settings"
 	 */
-	public function getPriority() {
+	public function getPriority(): int {
 		return 90;
 	}
 
 	/**
 	 * {@inheritdoc}
 	 */
-	public function getIcon() {
+	public function getIcon(): string {
 		return $this->url->imagePath('serverinfo', 'app-dark.svg');
 	}
 }

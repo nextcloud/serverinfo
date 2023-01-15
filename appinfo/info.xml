@@ -5,7 +5,7 @@
     <name>Monitoring</name>
     <summary>Monitoring app with useful server information</summary>
     <description>Provides useful server information, such as CPU load, RAM usage, disk usage, number of users, etc.</description>
-    <version>1.11.0</version>
+    <version>1.16.0</version>
     <licence>agpl</licence>
     <author>Bjoern Schiessle</author>
     <author>Ivan Sein Santiago</author>
@@ -15,8 +15,14 @@
     <category>monitoring</category>
     <bugs>https://github.com/nextcloud/serverinfo/issues</bugs>
     <dependencies>
-		<nextcloud min-version="21" max-version="21" />
+		<nextcloud min-version="26" max-version="26" />
     </dependencies>
+	<background-jobs>
+		<job>OCA\ServerInfo\Jobs\UpdateStorageStats</job>
+	</background-jobs>
+	<commands>
+		<command>OCA\ServerInfo\Commands\UpdateStorageStats</command>
+	</commands>
     <settings>
         <admin>OCA\ServerInfo\Settings\AdminSettings</admin>
         <admin-section>OCA\ServerInfo\Settings\AdminSection</admin-section>

@@ -3,9 +3,15 @@ OC.L10N.register(
     {
     "Users" : "អ្នកប្រើ",
     "Groups" : "ក្រុ",
-    "Size" : "ទំហំ",
+    "Copied!" : "បានចម្លង",
+    "Press ⌘-C to copy." : " ចុច ⌘-C ដើម្បីចម្លង",
+    "Press Ctrl-C to copy." : "ចុច Ctrl-C ដើម្បីចម្លង",
+    "Size:" : "ទំហំ៖",
     "Shares" : "ចែក​រំលែក",
     "Type:" : "ប្រភេទ៖",
-    "Size:" : "ទំហំ៖"
+    "Size" : "ទំហំ",
+    "Files" : "ឯកសារ",
+    "Version" : "កំណែ",
+    "Type" : "Type"
 },
 "nplurals=1; plural=0;");

@@ -1,4 +1,7 @@
 <?php
+
+declare(strict_types=1);
+
 /**
  * @copyright Copyright (c) 2016 Bjoern Schiessle <bjoern@schiessle.org>
  *
@@ -28,48 +31,34 @@ use OCA\ServerInfo\SessionStatistics;
 use OCA\ServerInfo\ShareStatistics;
 use OCA\ServerInfo\StorageStatistics;
 use OCA\ServerInfo\SystemStatistics;
+use OCP\AppFramework\Http;
 use OCP\AppFramework\Http\DataResponse;
 use OCP\AppFramework\OCSController;
+use OCP\IConfig;
+use OCP\IGroupManager;
 use OCP\IRequest;
+use OCP\IUserSession;
 
 class ApiController extends OCSController {
-
-	/** @var Os */
-	private $os;
-
-	/** @var SystemStatistics */
-	private $systemStatistics;
-
-	/** @var StorageStatistics */
-	private $storageStatistics;
-
-	/** @var PhpStatistics */
-	private $phpStatistics;
-
-	/** @var DatabaseStatistics  */
-	private $databaseStatistics;
-
-	/** @var ShareStatistics */
-	private $shareStatistics;
-
-	/** @var SessionStatistics */
-	private $sessionStatistics;
+	private Os $os;
+	private IConfig $config;
+	private IGroupManager $groupManager;
+	private ?IUserSession $userSession;
+	private SystemStatistics $systemStatistics;
+	private StorageStatistics $storageStatistics;
+	private PhpStatistics $phpStatistics;
+	private DatabaseStatistics $databaseStatistics;
+	private ShareStatistics $shareStatistics;
+	private SessionStatistics $sessionStatistics;
 
 	/**
 	 * ApiController constructor.
-	 *
-	 * @param string $appName
-	 * @param IRequest $request
-	 * @param Os $os
-	 * @param SystemStatistics $systemStatistics
-	 * @param StorageStatistics $storageStatistics
-	 * @param PhpStatistics $phpStatistics
-	 * @param DatabaseStatistics $databaseStatistics
-	 * @param ShareStatistics $shareStatistics
-	 * @param SessionStatistics $sessionStatistics
 	 */
-	public function __construct($appName,
+	public function __construct(string $appName,
 								IRequest $request,
+								IConfig $config,
+								IGroupManager $groupManager,
+								?IUserSession $userSession,
 								Os $os,
 								SystemStatistics $systemStatistics,
 								StorageStatistics $storageStatistics,
@@ -79,63 +68,94 @@ class ApiController extends OCSController {
 								SessionStatistics $sessionStatistics) {
 		parent::__construct($appName, $request);
 
-		$this->os                 = $os;
-		$this->systemStatistics   = $systemStatistics;
-		$this->storageStatistics  = $storageStatistics;
-		$this->phpStatistics      = $phpStatistics;
+		$this->config = $config;
+		$this->groupManager = $groupManager;
+		$this->userSession = $userSession;
+		$this->os = $os;
+		$this->systemStatistics = $systemStatistics;
+		$this->storageStatistics = $storageStatistics;
+		$this->phpStatistics = $phpStatistics;
 		$this->databaseStatistics = $databaseStatistics;
-		$this->shareStatistics    = $shareStatistics;
-		$this->sessionStatistics  = $sessionStatistics;
+		$this->shareStatistics = $shareStatistics;
+		$this->sessionStatistics = $sessionStatistics;
+	}
+
+	/**
+	 * Check if authorized to view serverinfo API.
+	 */
+	private function checkAuthorized(): bool {
+		// check for monitoring privilege
+		$token = $this->request->getHeader('NC-Token');
+		if (!empty($token)) {
+			$storedToken = $this->config->getAppValue('serverinfo', 'token', '');
+			if (hash_equals($storedToken, $token)) {
+				return true;
+			}
+		}
+
+		// fallback to admin privilege
+		$userSession = $this->userSession;
+		if ($userSession === null) {
+			return false;
+		}
+
+		$user = $userSession->getUser();
+		if ($user === null) {
+			return false;
+		}
+
+		return $this->groupManager->isAdmin($user->getUID());
 	}
 
 	/**
 	 * @NoCSRFRequired
-	 *
-	 * @return DataResponse
+	 * @NoAdminRequired
+	 * @PublicPage
+	 * @BruteForceProtection(action=serverinfo)
 	 */
-	public function info() {
+	public function info(): DataResponse {
+		if (!$this->checkAuthorized()) {
+			$response = new DataResponse(['message' => 'Unauthorized']);
+			$response->throttle();
+			$response->setStatus(Http::STATUS_UNAUTHORIZED);
+			return $response;
+		}
 		return new DataResponse([
 			'nextcloud' => [
-				'system'  => $this->systemStatistics->getSystemStatistics(),
+				'system' => $this->systemStatistics->getSystemStatistics(),
 				'storage' => $this->storageStatistics->getStorageStatistics(),
-				'shares'  => $this->shareStatistics->getShareStatistics()
+				'shares' => $this->shareStatistics->getShareStatistics()
 			],
 			'server' => [
 				'webserver' => $this->getWebserver(),
-				'php'       => $this->phpStatistics->getPhpStatistics(),
-				'database'  => $this->databaseStatistics->getDatabaseStatistics()
+				'php' => $this->phpStatistics->getPhpStatistics(),
+				'database' => $this->databaseStatistics->getDatabaseStatistics()
 			],
 			'activeUsers' => $this->sessionStatistics->getSessionStatistics()
 		]);
 	}
 
-	/**
-	 * @return DataResponse
-	 */
 	public function BasicData(): DataResponse {
-		$servertime  = $this->os->getTime();
-		$uptime      = $this->formatUptime($this->os->getUptime());
+		$servertime = $this->os->getTime();
+		$uptime = $this->formatUptime($this->os->getUptime());
+		$thermalzones = $this->os->getThermalZones();
 
 		return new DataResponse([
 			'servertime' => $servertime,
-			'uptime' => $uptime
+			'uptime' => $uptime,
+			'thermalzones' => $thermalzones
 		]);
 	}
 
-	/**
-	 * @return DataResponse
-	 */
 	public function DiskData(): DataResponse {
 		$result = $this->os->getDiskData();
 		return new DataResponse($result);
 	}
 
 	/**
-	 * get webserver
-	 *
-	 * @return string
+	 * Get webserver information
 	 */
-	private function getWebserver() {
+	private function getWebserver(): string {
 		if (isset($_SERVER['SERVER_SOFTWARE'])) {
 			return $_SERVER['SERVER_SOFTWARE'];
 		}
@@ -144,9 +164,6 @@ class ApiController extends OCSController {
 
 	/**
 	 * Return the uptime of the system as human readable value
-	 *
-	 * @param int $uptime
-	 * @return string
 	 */
 	private function formatUptime(int $uptime): string {
 		if ($uptime === -1) {

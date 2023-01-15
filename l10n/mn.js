@@ -1,11 +1,6 @@
 OC.L10N.register(
     "serverinfo",
     {
-    "Load average" : "Дундаж ачаалал",
-    "Last minute" : "Сүүлийн минутанд",
-    "Memory info not available" : "Санах ойн мэдээлэл идэвхгүй байна",
-    "Total" : "Нийт",
-    "Current usage" : "Тухайн ашиглалт",
     "Users" : "Хэрэглэгчид",
     "Groups" : "Бүлгүүд",
     "Links" : "Холбоосууд",
@@ -18,16 +13,19 @@ OC.L10N.register(
     "Press Ctrl-C to copy." : "Хуулахын тулд Ctrl-C дарна уу.",
     "System" : "сисмем",
     "Monitoring" : "Хяналт",
-    "Size" : "Хэмжээ",
+    "Size:" : "Хэмжээ:",
     "Files:" : "Файлууд:",
-    "Status" : "төлөв",
     "Active users" : "Идэвхтэй хэрэглэгчид",
     "Shares" : "Түгээлтүүд",
     "PHP" : "PHP",
     "Version:" : "Хувилбар:",
-    "Memory Limit:" : "Санах ойн хязгаар:",
     "Database" : "Өгөгдлийн сан",
     "Type:" : "Төрөл:",
-    "Size:" : "Хэмжээ:"
+    "Size" : "Хэмжээ",
+    "Available" : "Боломжтой",
+    "Files" : "файлууд",
+    "Status" : "төлөв",
+    "Version" : "төрөл",
+    "Type" : "Төрөл"
 },
 "nplurals=2; plural=(n != 1);");

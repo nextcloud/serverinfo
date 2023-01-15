@@ -2,21 +2,12 @@
 	max-width: 100vw;
 }
 
-.table-wrapper {
-	overflow-x: auto;
-}
-
-.server-infos-table {
-	margin-bottom: 25px;
-}
-
-.server-infos-table td:first-child {
-	width: 120px;
-}
-
 .monitoring-wrapper {
 	display: -webkit-flex;
 	display: flex;
+	position: left;
+	max-width: 50%;
+	min-width: 50%;
 }
 
 .monitoring-wrapper > input {
@@ -56,15 +47,16 @@
 	background-color: var(--color-main-background);
 	border: 2px solid var(--color-border);
 	border-radius: var(--border-radius-large);
+}
 
-	&.cpuSection,
-	&.memorySection {
-		padding: 16px 0 0 0;
-	}
+.infobox.cpuSection,
+.infobox.memorySection {
+    padding: 16px 0 0 0;
 }
 
 .diskchart-container {
 	width: 100px;
+	margin-right: 25px;
 	border: 1px var(--color-border);
 }
 
@@ -92,6 +84,7 @@
 	width: 28px;
 	float: left;
 	padding: 5px;
+	filter: var(--background-invert-if-dark);
 }
 
 .chart-container {

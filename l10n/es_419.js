@@ -1,11 +1,6 @@
 OC.L10N.register(
     "serverinfo",
     {
-    "Load average" : "Carga promedio",
-    "Last minute" : "Último minuto",
-    "Memory info not available" : "Información de la memoria no disponible",
-    "Total" : "Total",
-    "Current usage" : "Uso actual",
     "Users" : "Ususarios",
     "Groups" : "Grupos",
     "Links" : "Ligas",
@@ -20,20 +15,22 @@ OC.L10N.register(
     "Press Ctrl-C to copy." : "Presiona Ctrl-C para copiar.",
     "System" : "Sistema",
     "Monitoring" : "Monitoreo",
-    "Size" : "Tamaño",
+    "Temperature" : "Temperatura",
+    "Size:" : "Tamaño:",
     "Files:" : "Archivos:",
-    "Hostname" : "Nombre del servidor",
-    "Status" : "Estatus",
     "Active users" : "Usuarios activos",
     "Shares" : "Elementos compartido",
     "PHP" : "PHP",
     "Version:" : "Versión:",
-    "Memory Limit:" : "Límite de Memoria:",
-    "Max Execution Time:" : "Tiempo Max de Ejecución:",
     "Upload max size:" : "Tamaño máximo de carga:",
     "Database" : "Base de datos",
     "Type:" : "Tipo:",
-    "Size:" : "Tamaño:",
-    "External monitoring tool" : "Herramienta de monitoreo externa"
+    "External monitoring tool" : "Herramienta de monitoreo externa",
+    "Size" : "Tamaño",
+    "Files" : "Archivos",
+    "Hostname" : "Nombre del servidor",
+    "Status" : "Estatus",
+    "Version" : "Versión",
+    "Type" : "Tipo"
 },
-"nplurals=2; plural=(n != 1);");
+"nplurals=3; plural=n == 1 ? 0 : n != 0 && n % 1000000 == 0 ? 1 : 2;");

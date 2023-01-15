@@ -1,4 +1,7 @@
 <?php
+
+declare(strict_types=1);
+
 /**
  * @author Frank Karlitschek <frank@nextcloud.com>
  *
@@ -27,9 +30,7 @@ use OCA\ServerInfo\OperatingSystems\SunOS;
 use OCA\ServerInfo\Resources\Memory;
 
 class Os implements IOperatingSystem {
-
-	/** @var */
-	protected $backend;
+	protected IOperatingSystem $backend;
 
 	/**
 	 * Os constructor.
@@ -44,23 +45,17 @@ class Os implements IOperatingSystem {
 		}
 	}
 
-	/**
-	 * @return bool
-	 */
-	public function supported() {
+	public function supported(): bool {
 		$data = $this->backend->supported();
 		return $data;
 	}
 
-	/**
-	 * @return string
-	 */
-	public function getHostname() {
+	public function getHostname(): string {
 		return (string)gethostname();
 	}
 
 	/**
-	 * @return string
+	 * Get name of the operating system.
 	 */
 	public function getOSName(): string {
 		return PHP_OS . ' ' . php_uname('r') . ' ' . php_uname('m');
@@ -74,12 +69,8 @@ class Os implements IOperatingSystem {
 		return $this->backend->getCpuName();
 	}
 
-	/**
-	 * @return string
-	 */
-	public function getTime() {
-		$data = $this->backend->getTime();
-		return $data;
+	public function getTime(): string {
+		return $this->backend->getTime();
 	}
 
 	public function getUptime(): int {
@@ -97,7 +88,7 @@ class Os implements IOperatingSystem {
 	 *        [used => 0, available => 0],
 	 * ]
 	 *
-	 * @return array
+	 * @return array<array-key, array>
 	 */
 	public function getDiskData(): array {
 		$data = [];
@@ -112,19 +103,18 @@ class Os implements IOperatingSystem {
 		return $data;
 	}
 
-	/**
-	 * @return string
-	 */
-	public function getNetworkInfo() {
+	public function getNetworkInfo(): array {
 		$data = $this->backend->getNetworkInfo();
 		return $data;
 	}
 
-	/**
-	 * @return string
-	 */
-	public function getNetworkInterfaces() {
+	public function getNetworkInterfaces(): array {
 		$data = $this->backend->getNetworkInterfaces();
+		return $data;
+	}
+
+	public function getThermalZones(): array {
+		$data = $this->backend->getThermalZones();
 		return $data;
 	}
 }

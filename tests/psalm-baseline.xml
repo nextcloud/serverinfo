@@ -1,0 +1,21 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<files psalm-version="4.x-dev@">
+  <file src="lib/DatabaseStatistics.php">
+    <UndefinedInterfaceMethod occurrences="1">
+      <code>getInner</code>
+    </UndefinedInterfaceMethod>
+  </file>
+  <file src="lib/SystemStatistics.php">
+    <TypeDoesNotContainType occurrences="1">
+      <code>$loadavg === false</code>
+    </TypeDoesNotContainType>
+    <UndefinedClass occurrences="3">
+      <code>$this-&gt;installer</code>
+      <code>Installer</code>
+      <code>Installer</code>
+    </UndefinedClass>
+    <UndefinedMethod occurrences="1">
+      <code>free_space</code>
+    </UndefinedMethod>
+  </file>
+</files>
