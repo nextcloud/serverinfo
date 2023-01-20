@@ -18,7 +18,7 @@ jobs:
       # do not stop on another job's failure
       fail-fast: false
       matrix:
-        php-versions: ['8.0', '8.1']
+        php-versions: ['8.0', '8.1', '8.2']
         databases: ['oci']
         server-versions: ['master']
 
@@ -60,6 +60,10 @@ jobs:
       - name: Set up PHPUnit
         working-directory: apps/${{ env.APP_NAME }}
         run: composer i
+
+      - name: Patch version check for nightly PHP
+        if: ${{ matrix.php-versions == '8.2' }}
+        run: echo "<?php" > nextcloud/lib/versioncheck.php
 
       - name: Set up Nextcloud
         run: |
