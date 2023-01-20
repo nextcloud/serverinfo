@@ -1,3 +1,4 @@
-# PHP Coding Style
-vendor/
-.php_cs.cache
+/.php-cs-fixer.cache
+/.php_cs.cache
+/tests/.phpunit.result.cache
+/vendor

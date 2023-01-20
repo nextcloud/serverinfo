@@ -13,7 +13,7 @@ on:
       - main
       - stable*
 
-concurrency: 
+concurrency:
   group: psalm-${{ github.head_ref || github.run_id }}
   cancel-in-progress: true
 
@@ -29,7 +29,7 @@ jobs:
       - name: Set up php
         uses: shivammathur/setup-php@v2
         with:
-          php-version: 7.4
+          php-version: 8.0
           coverage: none
 
       - name: Install dependencies

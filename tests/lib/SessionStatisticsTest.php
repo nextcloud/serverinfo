@@ -37,7 +37,6 @@ use Test\TestCase;
  * @package OCA\ServerInfo\Tests
  */
 class SessionStatisticsTest extends TestCase {
-
 	/** @var  ITimeFactory | \PHPUnit_Framework_MockObject_MockObject */
 	private $timeFactory;
 

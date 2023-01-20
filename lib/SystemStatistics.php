@@ -80,7 +80,6 @@ class SystemStatistics {
 	 * @return array data about apps
 	 */
 	protected function getAppsInfo(): array {
-
 		// sekeleton about the data we return back
 		$info = [
 			'num_installed' => 0,
