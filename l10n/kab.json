@@ -1,5 +1,6 @@
 { "translations": {
     "Users" : "Iseqdacen",
+    "Groups" : "Igrawen",
     "1 hour" : "1 n usrag",
     "Copy" : "Nɣel",
     "Copied!" : "Yenɣel!",
@@ -9,6 +10,7 @@
     "Temperature" : "Lḥamu",
     "Size" : "Teɣzi",
     "Files" : "Ifuyla",
+    "Status" : "État",
     "Type" : "Anaw"
 },"pluralForm" :"nplurals=2; plural=(n != 1);"
 }
