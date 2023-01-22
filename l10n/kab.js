@@ -2,6 +2,7 @@ OC.L10N.register(
     "serverinfo",
     {
     "Users" : "Iseqdacen",
+    "Groups" : "Igrawen",
     "1 hour" : "1 n usrag",
     "Copy" : "Nɣel",
     "Copied!" : "Yenɣel!",
@@ -11,6 +12,7 @@ OC.L10N.register(
     "Temperature" : "Lḥamu",
     "Size" : "Teɣzi",
     "Files" : "Ifuyla",
+    "Status" : "État",
     "Type" : "Anaw"
 },
 "nplurals=2; plural=(n != 1);");
