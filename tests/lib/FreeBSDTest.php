@@ -37,7 +37,6 @@ use Test\TestCase;
  * @package OCA\ServerInfo\Tests
  */
 class FreeBSDTest extends TestCase {
-
 	/** @var FreeBSD|MockObject */
 	protected $os;
 

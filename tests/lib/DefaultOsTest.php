@@ -38,7 +38,6 @@ use Test\TestCase;
  * @package OCA\ServerInfo\Tests
  */
 class DefaultOsTest extends TestCase {
-
 	/** @var DefaultOs|MockObject */
 	protected $os;
 
