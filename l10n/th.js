@@ -12,7 +12,7 @@ OC.L10N.register(
     "System" : "ระบบ",
     "Size:" : "ขนาด:",
     "Active users" : "ผู้ใช้ที่ใช้งานอยู่",
-    "Shares" : "แชร์",
+    "Shares" : "การแชร์",
     "Type:" : "ชนิด:",
     "Size" : "ขนาด",
     "Files" : "ไฟล์",
