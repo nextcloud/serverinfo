@@ -692,12 +692,12 @@
             "source": {
                 "type": "git",
                 "url": "https://github.com/nextcloud-deps/ocp.git",
-                "reference": "55af8ca3c8530d23aa1aecf4e149bea04fa47207"
+                "reference": "891f85b611b83706d7b061a7d657415c0d2b45ea"
             },
             "dist": {
                 "type": "zip",
-                "url": "https://api.github.com/repos/nextcloud-deps/ocp/zipball/55af8ca3c8530d23aa1aecf4e149bea04fa47207",
-                "reference": "55af8ca3c8530d23aa1aecf4e149bea04fa47207",
+                "url": "https://api.github.com/repos/nextcloud-deps/ocp/zipball/891f85b611b83706d7b061a7d657415c0d2b45ea",
+                "reference": "891f85b611b83706d7b061a7d657415c0d2b45ea",
                 "shasum": ""
             },
             "require": {
@@ -724,9 +724,10 @@
             ],
             "description": "Composer package containing Nextcloud's public API (classes, interfaces)",
             "support": {
+                "issues": "https://github.com/nextcloud-deps/ocp/issues",
                 "source": "https://github.com/nextcloud-deps/ocp/tree/stable24"
             },
-            "time": "2022-08-23T02:31:47+00:00"
+            "time": "2023-01-07T00:36:55+00:00"
         },
         {
             "name": "nikic/php-parser",
