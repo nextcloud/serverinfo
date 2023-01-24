@@ -29,7 +29,9 @@ namespace OCA\ServerInfo\Tests;
 use OCA\ServerInfo\OperatingSystems\DefaultOs;
 use OCA\ServerInfo\Resources\Disk;
 use OCA\ServerInfo\Resources\Memory;
+use OCA\ServerInfo\Resources\NetInterface;
 use PHPUnit\Framework\MockObject\MockObject;
+use RuntimeException;
 use Test\TestCase;
 
 /**
@@ -38,7 +40,7 @@ use Test\TestCase;
  * @package OCA\ServerInfo\Tests
  */
 class DefaultOsTest extends TestCase {
-	/** @var DefaultOs|MockObject */
+	/** @var DefaultOs&MockObject */
 	protected $os;
 
 	protected function setUp(): void {
@@ -49,7 +51,7 @@ class DefaultOsTest extends TestCase {
 			->disableOriginalClone()
 			->disableArgumentCloning()
 			->disallowMockingUnknownTypes()
-			->setMethods(['readContent', 'executeCommand'])
+			->setMethods(['readContent', 'executeCommand', 'getNetInterfaces'])
 			->getMock();
 	}
 
@@ -70,7 +72,7 @@ class DefaultOsTest extends TestCase {
 	public function testGetMemoryNoData(): void {
 		$this->os->method('readContent')
 			->with('/proc/meminfo')
-			->willThrowException(new \RuntimeException('Unable to read: "/proc/meminfo"'));
+			->willThrowException(new RuntimeException('Unable to read: "/proc/meminfo"'));
 
 		$this->assertEquals(new Memory(), $this->os->getMemory());
 	}
@@ -102,7 +104,7 @@ class DefaultOsTest extends TestCase {
 	public function testGetCPUNameNoData(): void {
 		$this->os->method('readContent')
 			->with('/proc/cpuinfo')
-			->willThrowException(new \RuntimeException('Unable to read: "/proc/cpuinfo"'));
+			->willThrowException(new RuntimeException('Unable to read: "/proc/cpuinfo"'));
 
 		$this->assertEquals('Unknown Processor', $this->os->getCpuName());
 	}
@@ -126,7 +128,7 @@ class DefaultOsTest extends TestCase {
 	public function testGetUptimeNoData(): void {
 		$this->os->method('readContent')
 			->with('/proc/uptime')
-			->willThrowException(new \RuntimeException('Unable to read: "/proc/uptime"'));
+			->willThrowException(new RuntimeException('Unable to read: "/proc/uptime"'));
 
 		$this->assertEquals(-1, $this->os->getUptime());
 	}
@@ -190,7 +192,7 @@ class DefaultOsTest extends TestCase {
 	public function testGetDiskInfoNoCommandOutput(): void {
 		$this->os->method('executeCommand')
 			->with('df -TP')
-			->willThrowException(new \RuntimeException('No output for command "df -TP"'));
+			->willThrowException(new RuntimeException('No output for command "df -TP"'));
 
 		$this->assertEquals([], $this->os->getDiskInfo());
 	}
@@ -205,5 +207,40 @@ class DefaultOsTest extends TestCase {
 
 	public function testSupported(): void {
 		$this->assertTrue($this->os->supported());
+	}
+
+	public function testGetNetworkInterfaces(): void {
+		$this->os->method('getNetInterfaces')
+			->willReturn(json_decode(file_get_contents(__DIR__ . '/../data/linux_net_get_interfaces.json'), true, 512, JSON_THROW_ON_ERROR));
+		$this->os->method('readContent')
+			->willReturnCallback(static function ($filename) {
+				if ($filename === '/sys/class/net/eth0/address') {
+					return '02:42:ac:13:00:0a';
+				}
+				if ($filename === '/sys/class/net/eth0/speed') {
+					return '10000';
+				}
+				if ($filename === '/sys/class/net/eth0/duplex') {
+					return 'full';
+				}
+				throw new RuntimeException();
+			});
+
+
+		$net1 = new NetInterface('lo', true);
+		$net1->addIPv4('127.0.0.1');
+		$net1->addIPv6('::1');
+
+		$net2 = new NetInterface('eth0', true);
+		$net2->addIPv4('10.0.2.15');
+		$net2->addIPv6('fe80::a00:27ff:fe91:f84b');
+		$net2->setMAC('02:42:ac:13:00:0a');
+		$net2->setSpeed('10 Gbps');
+		$net2->setDuplex('full');
+
+		$expected = [$net1, $net2];
+		$actual = $this->os->getNetworkInterfaces();
+
+		$this->assertEquals($expected, $actual);
 	}
 }

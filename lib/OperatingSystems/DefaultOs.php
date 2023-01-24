@@ -25,8 +25,13 @@ namespace OCA\ServerInfo\OperatingSystems;
 
 use OCA\ServerInfo\Resources\Disk;
 use OCA\ServerInfo\Resources\Memory;
+use OCA\ServerInfo\Resources\NetInterface;
+use RuntimeException;
 
 class DefaultOs implements IOperatingSystem {
+	private const AF_INET = 2;
+	private const AF_INET6 = 10;
+
 	public function supported(): bool {
 		return true;
 	}
@@ -36,7 +41,7 @@ class DefaultOs implements IOperatingSystem {
 
 		try {
 			$meminfo = $this->readContent('/proc/meminfo');
-		} catch (\RuntimeException $e) {
+		} catch (RuntimeException $e) {
 			return $data;
 		}
 
@@ -79,7 +84,7 @@ class DefaultOs implements IOperatingSystem {
 
 		try {
 			$cpuinfo = $this->readContent('/proc/cpuinfo');
-		} catch (\RuntimeException $e) {
+		} catch (RuntimeException $e) {
 			return $data;
 		}
 
@@ -100,7 +105,7 @@ class DefaultOs implements IOperatingSystem {
 
 		$pattern = '/processor\s+:\s(.+)/';
 
-		$result = preg_match_all($pattern, $cpuinfo, $matches);
+		preg_match_all($pattern, $cpuinfo, $matches);
 		$cores = count($matches[1]);
 
 		if ($cores === 1) {
@@ -121,7 +126,7 @@ class DefaultOs implements IOperatingSystem {
 
 		try {
 			$uptime = $this->readContent('/proc/uptime');
-		} catch (\RuntimeException $e) {
+		} catch (RuntimeException $e) {
 			return $data;
 		}
 
@@ -141,42 +146,44 @@ class DefaultOs implements IOperatingSystem {
 	}
 
 	public function getNetworkInterfaces(): array {
-		$interfaces = glob('/sys/class/net/*') ?: [];
-		$result = [];
+		$data = [];
 
-		foreach ($interfaces as $interface) {
-			$iface = [];
-			$iface['interface'] = basename($interface);
-			$iface['mac'] = shell_exec('ip addr show dev ' . $iface['interface'] . ' | grep "link/ether " | cut -d \' \' -f 6  | cut -f 1 -d \'/\'');
-			$iface['ipv4'] = shell_exec('ip addr show dev ' . $iface['interface'] . ' | grep "inet " | cut -d \' \' -f 6  | cut -f 1 -d \'/\'');
-			$iface['ipv6'] = shell_exec('ip -o -6 addr show ' . $iface['interface'] . ' | sed -e \'s/^.*inet6 \([^ ]\+\).*/\1/\'');
-			if ($iface['interface'] !== 'lo') {
-				$iface['status'] = shell_exec('cat /sys/class/net/' . $iface['interface'] . '/operstate');
-				$iface['speed'] = (int)shell_exec('cat /sys/class/net/' . $iface['interface'] . '/speed');
-				if (isset($iface['speed']) && $iface['speed'] > 0) {
-					if ($iface['speed'] >= 1000) {
-						$iface['speed'] = $iface['speed'] / 1000 . ' Gbps';
-					} else {
-						$iface['speed'] = $iface['speed'] . ' Mbps';
-					}
-				} else {
-					$iface['speed'] = 'unknown';
+		foreach ($this->getNetInterfaces() as $interfaceName => $interface) {
+			$netInterface = new NetInterface($interfaceName, $interface['up']);
+			$data[] = $netInterface;
+
+			foreach ($interface['unicast'] as $unicast) {
+				if ($unicast['family'] === self::AF_INET) {
+					$netInterface->addIPv4($unicast['address']);
 				}
-				$duplex = shell_exec('cat /sys/class/net/' . $iface['interface'] . '/duplex');
-				if (isset($duplex) && $duplex !== '') {
-					$iface['duplex'] = 'Duplex: ' . $duplex;
-				} else {
-					$iface['duplex'] = '';
+				if ($unicast['family'] === self::AF_INET6) {
+					$netInterface->addIPv6($unicast['address']);
 				}
-			} else {
-				$iface['status'] = 'up';
-				$iface['speed'] = 'unknown';
-				$iface['duplex'] = '';
 			}
-			$result[] = $iface;
+
+			if ($netInterface->isLoopback()) {
+				continue;
+			}
+
+			$interfacePath = '/sys/class/net/' . $interfaceName;
+
+			try {
+				$netInterface->setMAC($this->readContent($interfacePath . '/address'));
+
+				$speed = (int)$this->readContent($interfacePath . '/speed');
+				if ($speed >= 1000) {
+					$netInterface->setSpeed($speed / 1000 . ' Gbps');
+				} else {
+					$netInterface->setSpeed($speed . ' Mbps');
+				}
+
+				$netInterface->setDuplex($this->readContent($interfacePath . '/duplex'));
+			} catch (RuntimeException $e) {
+				// unable to read interface data
+			}
 		}
 
-		return $result;
+		return $data;
 	}
 
 	public function getDiskInfo(): array {
@@ -184,7 +191,7 @@ class DefaultOs implements IOperatingSystem {
 
 		try {
 			$disks = $this->executeCommand('df -TPk');
-		} catch (\RuntimeException $e) {
+		} catch (RuntimeException $e) {
 			return $data;
 		}
 
@@ -227,7 +234,7 @@ class DefaultOs implements IOperatingSystem {
 				$tzone['hash'] = md5($thermalZone);
 				$tzone['type'] = $this->readContent($thermalZone . '/type');
 				$tzone['temp'] = (float)((int)($this->readContent($thermalZone . '/temp')) / 1000);
-			} catch (\RuntimeException $e) {
+			} catch (RuntimeException $e) {
 				continue;
 			}
 			$result[] = $tzone;
@@ -236,19 +243,35 @@ class DefaultOs implements IOperatingSystem {
 		return $result;
 	}
 
+	/**
+	 * @throws RuntimeException
+	 */
 	protected function readContent(string $filename): string {
 		$data = @file_get_contents($filename);
 		if ($data === false || $data === '') {
-			throw new \RuntimeException('Unable to read: "' . $filename . '"');
+			throw new RuntimeException('Unable to read: "' . $filename . '"');
 		}
-		return $data;
+		return trim($data);
 	}
 
 	protected function executeCommand(string $command): string {
 		$output = @shell_exec(escapeshellcmd($command));
 		if ($output === false || $output === null || $output === '') {
-			throw new \RuntimeException('No output for command: "' . $command . '"');
+			throw new RuntimeException('No output for command: "' . $command . '"');
 		}
 		return $output;
+	}
+
+	/**
+	 * Wrapper for net_get_interfaces
+	 *
+	 * @throws RuntimeException
+	 */
+	protected function getNetInterfaces(): array {
+		$data = net_get_interfaces();
+		if ($data === false) {
+			throw new RuntimeException('Unable to get network interfaces');
+		}
+		return $data;
 	}
 }
