@@ -74,7 +74,7 @@
 	}
 
 	function getThemedPassiveColor() {
-		return OCA.Theming && OCA.Theming.inverted ? 'rgb(55, 55, 55)' : 'rgb(200, 200, 200)';
+		return 'rgb(148, 148, 148)';
 	}
 
 	/**
@@ -84,24 +84,14 @@
 		var cpuCanvas = $("#cpuloadcanvas"),
 			cpuCanvasWidth = cpuCanvas.parents('.infobox').width() - 30,
 			memCanvas = $("#memorycanvas"),
-			memCanvasWidth = memCanvas.parents('.infobox').width() - 30,
-			activeUsersCanvas = $("#activeuserscanvas"),
-			activeUsersCanvasWidth = activeUsersCanvas.parents('.infobox').width() - 30,
-			shareCanvas = $("#sharecanvas"),
-			shareCanvasWidth = shareCanvas.parents('.infobox').width() - 30;
+			memCanvasWidth = memCanvas.parents('.infobox').width() - 30;
+
 
 		// We have to set css width AND attribute width
 		cpuCanvas.width(cpuCanvasWidth);
 		cpuCanvas.attr('width', cpuCanvasWidth);
 		memCanvas.width(memCanvasWidth);
 		memCanvas.attr('width', memCanvasWidth);
-		activeUsersCanvas.width(activeUsersCanvasWidth);
-		activeUsersCanvas.attr('width', activeUsersCanvasWidth);
-		shareCanvas.width(shareCanvasWidth);
-		shareCanvas.attr('width', shareCanvasWidth);
-
-		updateShareStatistics();
-		updateActiveUsersStatistics();
 	}
 
 	function updateCPUStatistics(cpuload) {
@@ -142,7 +132,7 @@
 		$cpuFooterInfo.text(t('serverinfo', 'Load average: {cpu} (last minute)', { cpu: cpu1 }));
 		cpuLoadLine.append(new Date().getTime(), cpu1);
 	}
-	
+
 	function isMemoryStat(memTotal, memFree) {
 		if (memTotal === 'N/A' || memFree === 'N/A') {
 			return false;
@@ -150,7 +140,7 @@
 			return true;
 		}
 	}
-	
+
 	function isSwapStat(swapTotal, swapFree) {
 		if (swapTotal === 'N/A' || swapFree === 'N/A') {
 			return false;
@@ -207,7 +197,7 @@
 		if (isMemoryStat(memTotal, memFree)) {
 			$memFooterInfo.text(t('serverinfo','RAM: Total: {memTotalBytes}/Current usage: {memUsageBytes}', { memTotalBytes: OC.Util.humanFileSize(memTotalBytes), memUsageBytes: OC.Util.humanFileSize(memUsageBytes) }));
 			memoryUsageLine.append(new Date().getTime(), memUsageGB);
-			
+
 			if ($memoryCanvas.hasClass('hidden')) {
 				$memoryCanvas.removeClass('hidden');
 			}
@@ -215,141 +205,12 @@
 			$memFooterInfo.text(t('serverinfo', 'RAM info not available'));
 			$memoryCanvas.addClass('hidden');
 		}
-				
+
 		if (isSwapStat(swapTotal, swapFree)) {
 			$swapFooterInfo.text(t('serverinfo','SWAP: Total: {swapTotalBytes}/Current usage: {swapUsageBytes}', { swapTotalBytes: OC.Util.humanFileSize(swapTotalBytes), swapUsageBytes: OC.Util.humanFileSize(swapUsageBytes) }));
 			swapUsageLine.append(new Date().getTime(), swapUsageGB);
 		} else {
 			$swapFooterInfo.text(t('serverinfo', 'SWAP info not available'));
-		}
-	}
-
-	function updateShareStatistics() {
-
-		var shares = $('#sharecanvas').data('shares'),
-			sharesData = [shares.num_shares_user,
-				shares.num_shares_groups,
-				shares.num_shares_link,
-				shares.num_shares_mail,
-				shares.num_fed_shares_sent,
-				shares.num_fed_shares_received,
-				shares.num_shares_room
-			],
-			stepSize = 0;
-
-		if (Math.max.apply(null, sharesData) < 10) {
-			stepSize = 1;
-		}
-
-		if (typeof sharesChart === 'undefined') {
-			var ctx = document.getElementById("sharecanvas");
-
-			sharesChart = new Chart(ctx, {
-				type: 'bar',
-				data: {
-					labels: [
-						t('serverinfo', 'Users'),
-						t('serverinfo', 'Groups'),
-						t('serverinfo', 'Links'),
-						t('serverinfo', 'Emails'),
-						t('serverinfo', 'Federated sent'),
-						t('serverinfo', 'Federated received'),
-						t('serverinfo', 'Talk conversations'),
-					],
-					datasets: [{
-						label: " ",
-						data: sharesData,
-						backgroundColor: [
-							'rgba(0, 76, 153, 0.2)',
-							'rgba(51, 153, 255, 0.2)',
-							'rgba(207, 102, 0, 0.2)',
-							'rgba(255, 178, 102, 0.2)',
-							'rgba(0, 153, 0, 0.2)',
-							'rgba(153, 255, 51, 0.2)',
-							'rgba(178, 102, 255, 0.2)'
-						],
-						borderColor: [
-							'rgba(0, 76, 153, 1)',
-							'rgba(51, 153, 255, 1)',
-							'rgba(207, 102, 0, 1)',
-							'rgba(255, 178, 102, 1)',
-							'rgba(0, 153, 0, 1)',
-							'rgba(153, 255, 51, 1)',
-							'rgba(178, 102, 255, 1)'
-						],
-						borderWidth: 1
-					}]
-				},
-				options: {
-					plugins: { legend: { display: false } },
-					scales: {
-						yAxes: {
-							ticks: {
-								min: 0,
-								stepSize: stepSize
-							}
-						}
-					}
-				}
-			});
-		}
-
-		sharesChart.update();
-	}
-
-	function updateActiveUsersStatistics() {
-
-		var activeUsers = $('#activeuserscanvas').data('users'),
-			activeUsersData = [activeUsers.last24hours, activeUsers.last1hour, activeUsers.last5minutes],
-			stepSize = 0;
-
-		if (Math.max.apply(null, activeUsersData) < 10) {
-			stepSize = 1;
-		}
-
-		if (typeof activeUsersChart === 'undefined') {
-			var ctx = document.getElementById("activeuserscanvas");
-
-			activeUsersChart = new Chart(ctx, {
-				type: 'line',
-				data: {
-					labels: [
-						t('serverinfo', '24 hours'),
-						t('serverinfo', '1 hour'),
-						t('serverinfo', '5 mins')
-					],
-					datasets: [{
-						label: " ",
-						data: activeUsersData,
-						fill: false,
-						borderColor: [getThemedPrimaryColor()],
-						borderWidth: 1,
-						borderDashOffset: 0.0,
-						borderJoinStyle: 'miter',
-						pointBorderColor: getThemedPrimaryColor(),
-						pointBackgroundColor: getThemedPassiveColor(),
-						pointBorderWidth: 1,
-						pointHoverRadius: 5,
-						pointHoverBackgroundColor: getThemedPrimaryColor(),
-						pointHoverBorderColor: getThemedPrimaryColor(),
-						pointHoverBorderWidth: 1,
-						pointRadius: 5,
-						pointHitRadius: 10,
-						lineTension: 0
-					}]
-				},
-				options: {
-					plugins: { legend: { display: false } },
-					scales: {
-						yAxes: {
-							ticks: {
-								min: 0,
-								stepSize: stepSize
-							}
-						}
-					}
-				}
-			});
 		}
 	}
 
@@ -362,27 +223,11 @@
 	}
 
 	function initMonitoringLinkToClipboard() {
-		var monAPIBox = $("#ocsEndPoint");
-		/* reused from settings/js/authtoken_view.js */
-		monAPIBox.find('.clipboardButton').tooltip({placement: 'bottom', title: t('core', 'Copy'), trigger: 'hover'});
-
-		// Clipboard!
 		var clipboard = new Clipboard('.clipboardButton');
 		clipboard.on('success', function (e) {
-			var $input = $(e.trigger);
-			$input.tooltip('hide')
-				.attr('data-original-title', t('core', 'Copied!'))
-				.tooltip('fixTitle')
-				.tooltip({placement: 'bottom', trigger: 'manual'})
-				.tooltip('show');
-			_.delay(function () {
-				$input.tooltip('hide')
-					.attr('data-original-title', t('core', 'Copy'))
-					.tooltip('fixTitle');
-			}, 3000);
+			OC.Notification.show('Copied!', { type: 'success' })
 		});
-		clipboard.on('error', function (e) {
-			var $input = $(e.trigger);
+		clipboard.on('error', function () {
 			var actionMsg = '';
 			if (/iPhone|iPad/i.test(navigator.userAgent)) {
 				actionMsg = t('core', 'Not supported!');
@@ -391,17 +236,7 @@
 			} else {
 				actionMsg = t('core', 'Press Ctrl-C to copy.');
 			}
-
-			$input.tooltip('hide')
-				.attr('data-original-title', actionMsg)
-				.tooltip('fixTitle')
-				.tooltip({placement: 'bottom', trigger: 'manual'})
-				.tooltip('show');
-			_.delay(function () {
-				$input.tooltip('hide')
-					.attr('data-original-title', t('core', 'Copy'))
-					.tooltip('fixTitle');
-			}, 3000);
+			OC.Notification.show(actionMsg, { type: 'error' })
 		});
 	}
 
@@ -415,15 +250,13 @@
 				var i;
 				for (i = 0; i < diskcharts.length; i++) {
 					var chartdata = {
-						labels: ["Used GB", "Available GB"],
 						datasets: [
 							{
 								backgroundColor: [
 									getThemedPrimaryColor(),
 									getThemedPassiveColor(),
 								],
-								borderWidth: 0,
-								data: diskdata[i]
+								data: diskdata[i],
 							}
 						]
 					};
@@ -432,7 +265,12 @@
 						type: 'doughnut',
 						data: chartdata,
 						options: {
-							plugins: { legend: { display: false } },
+							plugins: {
+								legend: { display: false },
+								tooltip: {
+									enabled: false
+								}
+							},
 							tooltips: {
 								enabled: true,
 							},
