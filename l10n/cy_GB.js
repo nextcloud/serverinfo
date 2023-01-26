@@ -1,11 +1,11 @@
 OC.L10N.register(
     "serverinfo",
     {
-    "Users" : "Defnyddwyr",
-    "Groups" : "Grwpiau",
-    "Copy" : "Copïo",
     "Size:" : "Maint:",
     "Type:" : "Math:",
+    "Copy" : "Copïo",
+    "Users" : "Defnyddwyr",
+    "Groups" : "Grwpiau",
     "Size" : "Maint",
     "Available" : "Ar gael?",
     "Files" : "Ffeiliau",
