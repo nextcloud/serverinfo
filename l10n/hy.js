@@ -1,10 +1,10 @@
 OC.L10N.register(
     "serverinfo",
     {
-    "Groups" : "Խմբեր",
-    "Copy" : "պատճենահանել",
     "Size:" : "Չափս.",
     "Type:" : "Տիպ.",
+    "Copy" : "պատճենահանել",
+    "Groups" : "Խմբեր",
     "Size" : "Չափս",
     "Files" : "Ֆայլեր",
     "Version" : "Տարբերակ",

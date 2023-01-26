@@ -1,8 +1,8 @@
 OC.L10N.register(
     "serverinfo",
     {
-    "1 hour" : "Uair a thìde",
     "Copy" : "Dèan lethbhreac",
+    "1 hour" : "Uair a thìde",
     "Files" : "Faidhlichean",
     "Version" : "Tionndadh",
     "Type" : "Seòrsa"

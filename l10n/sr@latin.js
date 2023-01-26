@@ -1,16 +1,16 @@
 OC.L10N.register(
     "serverinfo",
     {
-    "Groups" : "Grupe",
-    "24 hours" : "24 sata",
-    "1 hour" : "1 sat",
-    "Copy" : "Kopiraj",
-    "Copied!" : "Копирано!",
     "Not supported!" : "Није подржано!",
     "Press ⌘-C to copy." : "Притисни ⌘-C за копирање.",
     "Press Ctrl-C to copy." : "Притисни Ctrl-C за копирање.",
     "Size:" : "Veličina:",
     "Type:" : "Tip:",
+    "Copy" : "Kopiraj",
+    "Groups" : "Grupe",
+    "24 hours" : "24 sata",
+    "1 hour" : "1 sat",
+    "Copied!" : "Копирано!",
     "Files" : "Фајлови",
     "Version" : "Verzija",
     "Type" : "Tip"
