@@ -9,6 +9,7 @@ OC.L10N.register(
     "Size:" : "Grootte:",
     "Files:" : "Lêers",
     "Active users" : "Aktiewe gebruikers",
+    "Users:" : "Gebruikers:",
     "PHP" : "PHP",
     "Version:" : "Weergawe:",
     "Database" : "Databasis",

@@ -11,6 +11,7 @@ OC.L10N.register(
     "Files:" : "Ficheros:",
     "Active users" : "Usuarios activos",
     "Shares" : "Comparticiones",
+    "Users:" : "Usuarios:",
     "PHP" : "PHP",
     "Version:" : "Versión:",
     "Upload max size:" : "Tamañu máximu de xuba:",
