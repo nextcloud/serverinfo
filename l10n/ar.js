@@ -15,6 +15,7 @@ OC.L10N.register(
     "Active users" : "المستخدمون النشطون",
     "Total users:" : "العدد الإجمالي للمستخدمين:",
     "Shares" : "مشاركة",
+    "Users:" : "المستخدمين:",
     "PHP" : "PHP",
     "Version:" : "الأصدار:",
     "Upload max size:" : "الحجم الأقصى للرفع:",
