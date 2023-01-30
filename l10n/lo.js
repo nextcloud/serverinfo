@@ -1,10 +1,10 @@
 OC.L10N.register(
     "serverinfo",
     {
+    "Shares" : "ການແບ່ງປັນ",
+    "Copy" : "ສຳເນົາ",
     "Users" : "ຜູ້ໃຊ້",
     "1 hour" : "1 ຊົ່ວໂມງ",
-    "Copy" : "ສຳເນົາ",
-    "Shares" : "ການແບ່ງປັນ",
     "Size" : "ຂະຫນາດ",
     "Available" : "ມີຢູ່",
     "Files" : "ຟາຍ",

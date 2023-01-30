@@ -25,8 +25,13 @@ namespace OCA\ServerInfo\OperatingSystems;
 
 use OCA\ServerInfo\Resources\Disk;
 use OCA\ServerInfo\Resources\Memory;
+use OCA\ServerInfo\Resources\NetInterface;
+use RuntimeException;
 
 class FreeBSD implements IOperatingSystem {
+	private const AF_INET = 2;
+	private const AF_INET6 = 28;
+
 	public function supported(): bool {
 		return false;
 	}
@@ -36,7 +41,7 @@ class FreeBSD implements IOperatingSystem {
 
 		try {
 			$swapinfo = $this->executeCommand('/usr/sbin/swapinfo -k');
-		} catch (\RuntimeException $e) {
+		} catch (RuntimeException $e) {
 			$swapinfo = '';
 		}
 
@@ -53,7 +58,7 @@ class FreeBSD implements IOperatingSystem {
 
 		try {
 			$meminfo = $this->executeCommand('/sbin/sysctl -n hw.realmem hw.pagesize vm.stats.vm.v_inactive_count vm.stats.vm.v_cache_count vm.stats.vm.v_free_count');
-		} catch (\RuntimeException $e) {
+		} catch (RuntimeException $e) {
 			$meminfo = '';
 		}
 
@@ -80,7 +85,7 @@ class FreeBSD implements IOperatingSystem {
 			} else {
 				$data = $model . ' (' . $cores . ' cores)';
 			}
-		} catch (\RuntimeException $e) {
+		} catch (RuntimeException $e) {
 			return $data;
 		}
 		return $data;
@@ -89,7 +94,7 @@ class FreeBSD implements IOperatingSystem {
 	public function getTime(): string {
 		try {
 			return $this->executeCommand('date');
-		} catch (\RuntimeException $e) {
+		} catch (RuntimeException $e) {
 			return '';
 		}
 	}
@@ -102,7 +107,7 @@ class FreeBSD implements IOperatingSystem {
 			preg_match("/[\d]+/", $shell_boot, $boottime);
 			$time = $this->executeCommand('date +%s');
 			$uptime = (int)$time - (int)$boottime[0];
-		} catch (\RuntimeException $e) {
+		} catch (RuntimeException $e) {
 			return $uptime;
 		}
 		return $uptime;
@@ -122,83 +127,61 @@ class FreeBSD implements IOperatingSystem {
 			if (count($gw[0]) > 0) {
 				$result['gateway'] = implode(", ", array_map("trim", $gw[0]));
 			}
-		} catch (\RuntimeException $e) {
+		} catch (RuntimeException $e) {
 			return $result;
 		}
 		return $result;
 	}
 
 	public function getNetworkInterfaces(): array {
-		$result = [];
+		$data = [];
 
-		try {
-			$ifconfig = $this->executeCommand('/sbin/ifconfig -a');
-		} catch (\RuntimeException $e) {
-			return $result;
-		}
+		foreach ($this->getNetInterfaces() as $interfaceName => $interface) {
+			$netInterface = new NetInterface($interfaceName, $interface['up']);
+			$data[] = $netInterface;
 
-		preg_match_all("/^(?<=(?!\t)).*(?=:)/m", $ifconfig, $interfaces);
+			foreach ($interface['unicast'] as $unicast) {
+				if ($unicast['family'] === self::AF_INET) {
+					$netInterface->addIPv4($unicast['address']);
+				}
+				if ($unicast['family'] === self::AF_INET6) {
+					$netInterface->addIPv6($unicast['address']);
+				}
+			}
 
-		foreach ($interfaces[0] as $interface) {
-			$iface = [];
-			$iface['interface'] = $interface;
-
-			try {
-				$intface = $this->executeCommand('/sbin/ifconfig ' . $iface['interface']);
-			} catch (\RuntimeException $e) {
+			if ($netInterface->isLoopback()) {
 				continue;
 			}
 
-			preg_match_all("/(?<=inet ).\S*/m", $intface, $ipv4);
-			preg_match_all("/(?<=inet6 )((.*(?=%))|(.\S*))/m", $intface, $ipv6);
-			$iface['ipv4'] = implode(' ', $ipv4[0]);
-			$iface['ipv6'] = implode(' ', $ipv6[0]);
-
-			if ($iface['interface'] !== 'lo0') {
-				preg_match_all("/(?<=ether ).*/m", $intface, $mac);
-				preg_match("/(?<=status: ).*/m", $intface, $status);
-				preg_match("/\b[0-9].*?(?=base)/m", $intface, $speed);
-				preg_match("/(?<=\<).*(?=-)/m", $intface, $duplex);
-
-				if (isset($mac[0])) {
-					$iface['mac'] = implode(' ', $mac[0]);
-				}
-
-				if (isset($speed[0])) {
-					$iface['speed'] = $speed[0];
-				}
-
-				if (isset($status[0])) {
-					$iface['status'] = $status[0];
-				} else {
-					$iface['status'] = 'active';
-				}
-
-				if (isset($iface['speed'])) {
-					if (strpos($iface['speed'], 'G')) {
-						$iface['speed'] = rtrim($iface['speed'], 'G');
-						$iface['speed'] = $iface['speed'] . ' Gbps';
-					} else {
-						$iface['speed'] = $iface['speed'] . ' Mbps';
-					}
-				} else {
-					$iface['speed'] = 'unknown';
-				}
-
-				if (isset($duplex[0])) {
-					$iface['duplex'] = 'Duplex: ' . $duplex[0];
-				} else {
-					$iface['duplex'] = '';
-				}
-			} else {
-				$iface['status'] = 'active';
-				$iface['speed'] = 'unknown';
-				$iface['duplex'] = '';
+			try {
+				$details = $this->executeCommand('/sbin/ifconfig ' . $interfaceName);
+			} catch (RuntimeException $e) {
+				continue;
 			}
-			$result[] = $iface;
+
+			preg_match("/(?<=ether ).*/m", $details, $mac);
+			if (isset($mac[0])) {
+				$netInterface->setMAC($mac[0]);
+			}
+
+			preg_match("/\b[0-9].*?(?=base)/m", $details, $speed);
+			if (isset($speed[0])) {
+				if (substr($speed[0], -1) === 'G') {
+					$netInterface->setSpeed(rtrim($speed[0], 'G') . ' Gbps');
+				} else {
+					$netInterface->setSpeed($speed[0] . ' Mbps');
+				}
+			}
+
+			preg_match("/(?<=\<).*(?=-)/m", $details, $duplex);
+			if (isset($duplex[0])) {
+				$netInterface->setDuplex($duplex[0]);
+			}
+
+			unset($mac, $speed, $duplex);
 		}
 
-		return $result;
+		return $data;
 	}
 
 	public function getDiskInfo(): array {
@@ -206,7 +189,7 @@ class FreeBSD implements IOperatingSystem {
 
 		try {
 			$disks = $this->executeCommand('df -TPk');
-		} catch (\RuntimeException $e) {
+		} catch (RuntimeException $e) {
 			return $data;
 		}
 
@@ -245,8 +228,21 @@ class FreeBSD implements IOperatingSystem {
 	protected function executeCommand(string $command): string {
 		$output = @shell_exec(escapeshellcmd($command));
 		if ($output === null || $output === '' || $output === false) {
-			throw new \RuntimeException('No output for command: "' . $command . '"');
+			throw new RuntimeException('No output for command: "' . $command . '"');
 		}
 		return $output;
+	}
+
+	/**
+	 * Wrapper for net_get_interfaces
+	 *
+	 * @throws RuntimeException
+	 */
+	protected function getNetInterfaces(): array {
+		$data = net_get_interfaces();
+		if ($data === false) {
+			throw new RuntimeException('Unable to get network interfaces');
+		}
+		return $data;
 	}
 }

@@ -1,11 +1,11 @@
 OC.L10N.register(
     "serverinfo",
     {
-    "Users" : "பயனாளர்",
-    "Groups" : "குழுக்கள்",
-    "Copy" : "Copy",
     "Size:" : "அளவு:",
     "Type:" : "வகை:",
+    "Copy" : "Copy",
+    "Users" : "பயனாளர்",
+    "Groups" : "குழுக்கள்",
     "Size" : "அளவு",
     "Files" : "கோப்புகள்",
     "Type" : "வகை"

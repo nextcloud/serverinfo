@@ -1,0 +1,87 @@
+{
+    "epair0b": {
+        "unicast": [
+            {
+                "flags": 34915,
+                "family": 18
+            },
+            {
+                "flags": 34915,
+                "family": 28,
+                "address": "fe80::a00:27ff:fe91:f84b",
+                "netmask": "ffff:ffff:ffff:ffff::"
+            },
+            {
+                "flags": 34915,
+                "family": 2,
+                "address": "10.0.2.15",
+                "netmask": "255.255.255.0",
+                "broadcast": "10.0.2.255"
+            }
+        ],
+        "up": true
+    },
+    "pflog0": {
+        "unicast": [
+            {
+                "flags": 34915,
+                "family": 18
+            },
+            {
+                "flags": 34915,
+                "family": 2,
+                "address": "192.168.2.20",
+                "netmask": "255.255.255.0",
+                "broadcast": "192.168.2.255"
+            },
+            {
+                "flags": 34915,
+                "family": 28,
+                "address": "fe80::a00:27ff:fe8b:d03d",
+                "netmask": "ffff:ffff:ffff:ffff::"
+            },
+            {
+                "flags": 34915,
+                "family": 2,
+                "address": "192.168.2.21",
+                "netmask": "255.255.255.0",
+                "broadcast": "192.168.2.255"
+            },
+            {
+                "flags": 34915,
+                "family": 2,
+                "address": "192.168.2.22",
+                "netmask": "255.255.255.0",
+                "broadcast": "192.168.2.255"
+            }
+        ],
+        "up": true
+    },
+    "lo0": {
+        "unicast": [
+            {
+                "flags": 32841,
+                "family": 18
+            },
+            {
+                "flags": 32841,
+                "family": 28,
+                "address": "::1",
+                "netmask": "ffff:ffff:ffff:ffff:ffff:ffff:ffff:ffff"
+            },
+            {
+                "flags": 32841,
+                "family": 28,
+                "address": "fe80::1",
+                "netmask": "ffff:ffff:ffff:ffff::"
+            },
+            {
+                "flags": 32841,
+                "family": 2,
+                "address": "127.0.0.1",
+                "netmask": "255.0.0.0"
+            }
+        ],
+        "up": true
+    }
+}

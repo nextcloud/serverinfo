@@ -28,7 +28,9 @@ namespace OCA\ServerInfo\Tests;
 
 use OCA\ServerInfo\OperatingSystems\FreeBSD;
 use OCA\ServerInfo\Resources\Memory;
+use OCA\ServerInfo\Resources\NetInterface;
 use PHPUnit\Framework\MockObject\MockObject;
+use RuntimeException;
 use Test\TestCase;
 
 /**
@@ -37,8 +39,7 @@ use Test\TestCase;
  * @package OCA\ServerInfo\Tests
  */
 class FreeBSDTest extends TestCase {
-
-	/** @var FreeBSD|MockObject */
+	/** @var FreeBSD&MockObject */
 	protected $os;
 
 	protected function setUp(): void {
@@ -49,7 +50,7 @@ class FreeBSDTest extends TestCase {
 			->disableOriginalClone()
 			->disableArgumentCloning()
 			->disallowMockingUnknownTypes()
-			->setMethods(['executeCommand'])
+			->setMethods(['executeCommand', 'getNetInterfaces'])
 			->getMock();
 	}
 
@@ -97,54 +98,41 @@ class FreeBSDTest extends TestCase {
 	}
 
 	public function testGetNetworkInterfaces(): void {
+		$this->os->method('getNetInterfaces')
+			->willReturn(json_decode(file_get_contents(__DIR__ . '/../data/freebsd_net_get_interfaces.json'), true, 512, JSON_THROW_ON_ERROR));
 		$this->os->method('executeCommand')
 			->willReturnCallback(static function ($command) {
-				if ($command === '/sbin/ifconfig -a') {
-					return file_get_contents(__DIR__ . '/../data/freebsd_interfaces');
-				}
-				if ($command === '/sbin/ifconfig lo0') {
-					return file_get_contents(__DIR__ . '/../data/freebsd_interface_lo0');
-				}
 				if ($command === '/sbin/ifconfig pflog0') {
 					return file_get_contents(__DIR__ . '/../data/freebsd_interface_pflog0');
 				}
 				if ($command === '/sbin/ifconfig epair0b') {
 					return file_get_contents(__DIR__ . '/../data/freebsd_interface_epair0b');
 				}
-
-				// Regex matches way more than the interface names, so if it doesn't match any of the defined ones, throw.
-				throw new \RuntimeException();
+				throw new RuntimeException();
 			});
 
-		$interfaces = $this->os->getNetworkInterfaces();
-		$this->assertEquals([
-			[
-				"interface" => "lo0",
-				"ipv4" => "127.0.0.1",
-				"ipv6" => "::1 fe80::1",
-				"status" => "active",
-				"speed" => "unknown",
-				"duplex" => "",
-			],
-			[
-				"interface" => "pflog0",
-				"ipv4" => "",
-				"ipv6" => "",
-				"mac" => "",
-				"status" => "active",
-				"speed" => "unknown",
-				"duplex" => "",
-			],
-			[
-				"interface" => "epair0b",
-				"ipv4" => "192.168.178.150",
-				"ipv6" => "",
-				"mac" => "1a:c0:4d:ba:b5:82",
-				"speed" => "10 Gbps",
-				"status" => "active",
-				"duplex" => "Duplex: full",
-			]
-		], $interfaces);
+		$net1 = new NetInterface('epair0b', true);
+		$net1->addIPv4('10.0.2.15');
+		$net1->addIPv6('fe80::a00:27ff:fe91:f84b');
+		$net1->setMAC('1a:c0:4d:ba:b5:82');
+		$net1->setSpeed('10 Gbps');
+		$net1->setDuplex('full');
+
+		$net2 = new NetInterface('pflog0', true);
+		$net2->addIPv4('192.168.2.20');
+		$net2->addIPv6('fe80::a00:27ff:fe8b:d03d');
+		$net2->addIPv4('192.168.2.21');
+		$net2->addIPv4('192.168.2.22');
+
+		$net3 = new NetInterface('lo0', true);
+		$net3->addIPv4('127.0.0.1');
+		$net3->addIPv6('::1');
+		$net3->addIPv6('fe80::1');
+
+		$expected = [$net1, $net2, $net3];
+		$actual = $this->os->getNetworkInterfaces();
+
+		$this->assertEquals($expected, $actual);
 	}
 
 	public function testSupported(): void {

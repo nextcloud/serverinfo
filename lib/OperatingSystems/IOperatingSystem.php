@@ -28,6 +28,7 @@ namespace OCA\ServerInfo\OperatingSystems;
 
 use OCA\ServerInfo\Resources\Disk;
 use OCA\ServerInfo\Resources\Memory;
+use OCA\ServerInfo\Resources\NetInterface;
 
 interface IOperatingSystem {
 	public function supported(): bool;
@@ -67,17 +68,7 @@ interface IOperatingSystem {
 	/**
 	 * Get info about available network interfaces.
 	 *
-	 * [
-	 *       [
-	 *             'duplex' => string,
-	 *             'interface' => string,
-	 *             'ipv4' => string,
-	 *             'ipv6' => string,
-	 *             'mac' => string,
-	 *             'speed' => string,
-	 *             'status' => string,
-	 *       ],
-	 * ]
+	 * @return NetInterface[]
 	 */
 	public function getNetworkInterfaces(): array;
 

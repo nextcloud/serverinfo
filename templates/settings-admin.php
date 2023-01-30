@@ -22,6 +22,11 @@ declare(strict_types=1);
  *
  */
 
+use OCA\ServerInfo\Resources\Disk;
+use OCA\ServerInfo\Resources\Memory;
+use OCA\ServerInfo\Resources\NetInterface;
+use OCP\Util;
+
 script('serverinfo', 'script');
 script('serverinfo', 'smoothie');
 script('serverinfo', 'Chart.min');
@@ -38,10 +43,13 @@ function FormatMegabytes(int $byte): string {
 	return number_format($byte, 2, '.', '.') . ' ' . $unim[$count];
 }
 
-/** @var \OCA\ServerInfo\Resources\Memory $memory */
+/** @var Memory $memory */
 $memory = $_['memory'];
-/** @var \OCA\ServerInfo\Resources\Disk[] $disks */
+/** @var Disk[] $disks */
 $disks = $_['diskinfo'];
+/** @var NetInterface[] $interfaces */
+$interfaces = $_['networkinterfaces'];
+
 ?>
 
 <div class="server-info-wrapper">
@@ -90,8 +98,8 @@ $disks = $_['diskinfo'];
 			</div>
 		</div>
 	</div>
-	
-	<div class="section server-infos-two">	
+
+	<div class="section server-infos-two">
 		<div class="row">
 			<div class="col col-6 col-l-12">
 				<h2>
@@ -147,10 +155,10 @@ $disks = $_['diskinfo'];
 							<span class="info"><?php p($disk->getFs()); ?></span><br>
 							<?php p($l->t('Size:')); ?>
 							<span class="info"><?php p(FormatMegabytes($disk->getUsed() + $disk->getAvailable())); ?></span><br>
-							<?php p($l->t('Available:')); ?>
+							<span class="info-color-label--available"><?php p($l->t('Available:')); ?></span>
 							<span class="info"><?php p(FormatMegabytes($disk->getAvailable())); ?></span><br>
-							<?php p($l->t('Used:')); ?>
-							<span class="info"><?php p($disk->getPercent()); ?></span><br>
+							<span class="info-color-label--used"><?php p($l->t('Used:')); ?></span>
+							<span class="info"><?php p($disk->getPercent()); ?> (<?php p(FormatMegabytes($disk->getUsed())); ?>)</span></span><br>
 						</div>
 					</div>
 				</div>
@@ -192,25 +200,25 @@ $disks = $_['diskinfo'];
 			</div>
 			<div class="col col-12">
 				<div class="row">
-					<?php foreach ($_['networkinterfaces'] as $interface): ?>
+					<?php foreach ($interfaces as $interface): ?>
 
 						<div class="col col-4 col-l-6 col-m-12">
 							<div class="infobox">
 								<div class="interface-wrapper">
-									<h3><?php p($interface['interface']) ?></h3>
+									<h3><?php p($interface->getName()) ?></h3>
 									<?php p($l->t('Status:')); ?>
-									<span class="info"><?php p($interface['status']) ?></span><br>
+									<span class="info"><?= $interface->isUp() ? 'up' : 'down'; ?></span><br>
 									<?php p($l->t('Speed:')); ?>
-									<span
-										class="info"><?php p($interface['speed'] . ' ' . $interface['duplex']) ?></span><br>
-									<?php if (!empty($interface['mac'])): ?>
+									<span class="info"><?php p($interface->getSpeed()) ?> (<?php p($l->t('Duplex:') . ' ' . $interface->getDuplex()) ?>)</span><br>
+									<?php if (!empty($interface->getMAC())): ?>
 										<?php p($l->t('MAC:')); ?>
-										<span class="info"><?php p($interface['mac']) ?></span><br>
+										<span class="info"><?php p($interface->getMAC()) ?></span><br>
 									<?php endif; ?>
 									<?php p($l->t('IPv4:')); ?>
-									<span class="info"><?php p($interface['ipv4']) ?></span><br>
+									<span class="info"><?= implode(', ', Util::sanitizeHTML($interface->getIPv4())); ?>
+									</span><br>
 									<?php p($l->t('IPv6:')); ?>
-									<span class="info"><?php p($interface['ipv6']) ?></span>
+									<span class="info"><?= implode(', ', Util::sanitizeHTML($interface->getIPv6())); ?>
 								</div>
 							</div>
 						</div>
@@ -221,57 +229,106 @@ $disks = $_['diskinfo'];
 		</div>
 	</div>
 
-	<!-- ACTIVE USER & SHARES-->
-	<div class="section active-users-shares">
+	<!-- ACTIVE USERS-->
+	<div class="section network-infos">
 		<div class="row">
-
-			<div class="col col-6 col-m-12">
-				<!-- ACTIVE USERS -->
+			<div class="col col-12">
 				<h2>
 					<img class="infoicon" src="<?php p(image_path('core', 'categories/social.svg')); ?>">
 					<?php p($l->t('Active users')); ?>
 				</h2>
-				<div class="infobox">
-					<div class="active-users-wrapper">
-						<br>
-						<div class="chart-container">
-							<canvas data-users="<?php p(json_encode($_['activeUsers'])) ?>"
-									class="barchart"
-									id="activeuserscanvas"
-									style="width:100%; height:200px"
-									width="300" height="300"
-							></canvas>
-						</div>
-						<p>
-							<?php p($l->t('Total users:')); ?>
-							<em id="numUsersStorage"><?php p($_['storage']['num_users']); ?></em>
-						</p>
-					</div>
-				</div>
 			</div>
 
-			<div class="col col-6 col-m-12">
-				<!-- SHARES -->
-				<h2>
-					<img class="infoicon" src="<?php p(image_path('core', 'places/files.svg')); ?>">
-					<?php p($l->t('Shares')); ?>
-				</h2>
-				<div class="infobox">
-					<div class="shares-wrapper">
-						<br>
-						<div class="chart-container">
-							<canvas data-shares="<?php p(json_encode($_['shares'])) ?>"
-									class="barchart"
-									id="sharecanvas"
-									style="width:100%; height:200px"
-									width="300" height="300"
-							></canvas>
+			<div class="col col-12">
+				<div class="row">
+					<div class="col col-4 col-l-6 col-m-12">
+						<div class="infobox">
+							<div class="interface-wrapper">
+								<?php if ($_['storage']['num_users'] > 0) : ?>
+									<?php p($l->t('Total users:')); ?>
+									<span class="info"><?php p($_['storage']['num_users']); ?></span><br>
+								<?php endif; ?>
+
+								<?php if ($_['activeUsers']['last24hours'] > 0) : ?>
+									<?php p($l->t('24 hours:')); ?>
+									<span class="info"><?php p($_['activeUsers']['last24hours']) ?></span><br>
+								<?php endif; ?>
+
+								<?php if ($_['activeUsers']['last1hour'] > 0) : ?>
+									<?php p($l->t('1 hour:')); ?>
+									<span class="info"><?php p($_['activeUsers']['last1hour']) ?></span><br>
+								<?php endif; ?>
+
+								<?php if ($_['activeUsers']['last5minutes'] > 0) : ?>
+									<?php p($l->t('5 mins:')); ?>
+									<span class="info"><?php p($_['activeUsers']['last5minutes']) ?></span><br>
+								<?php endif; ?>
+							</div>
 						</div>
 					</div>
 				</div>
 			</div>
 		</div>
 	</div>
+
+	<!-- SHARES-->
+	<?php if ($_['shares']['num_shares'] > 0) : ?>
+	<div class="section network-infos">
+		<div class="row">
+			<div class="col col-12">
+				<h2>
+					<img class="infoicon" src="<?php p(image_path('core', 'places/files.svg')); ?>">
+					<?php p($l->t('Shares')); ?>
+				</h2>
+			</div>
+
+			<div class="col col-12">
+				<div class="row">
+					<div class="col col-4 col-l-6 col-m-12">
+						<div class="infobox">
+							<div class="interface-wrapper">
+								<?php if ($_['shares']['num_shares_user'] > 0) : ?>
+									<?php p($l->t('Users:')); ?>
+									<span class="info"><?php p($_['shares']['num_shares_user']); ?></span><br>
+								<?php endif; ?>
+
+								<?php if ($_['shares']['num_shares_groups'] > 0) : ?>
+									<?php p($l->t('Groups:')); ?>
+									<span class="info"><?php p($_['shares']['num_shares_groups']); ?></span><br>
+								<?php endif; ?>
+
+								<?php if ($_['shares']['num_shares_link'] > 0) : ?>
+									<?php p($l->t('Links:')); ?>
+									<span class="info"><?php p($_['shares']['num_shares_link']); ?></span><br>
+								<?php endif; ?>
+
+								<?php if ($_['shares']['num_shares_mail'] > 0) : ?>
+									<?php p($l->t('Emails:')); ?>
+									<span class="info"><?php p($_['shares']['num_shares_mail']); ?></span><br>
+								<?php endif; ?>
+
+								<?php if ($_['shares']['num_fed_shares_sent'] > 0) : ?>
+									<?php p($l->t('Federated sent:')); ?>
+									<span class="info"><?php p($_['shares']['num_fed_shares_sent']); ?></span><br>
+								<?php endif; ?>
+
+								<?php if ($_['shares']['num_fed_shares_received'] > 0) : ?>
+									<?php p($l->t('Federated received:')); ?>
+									<span class="info"><?php p($_['shares']['num_fed_shares_received']); ?></span><br>
+								<?php endif; ?>
+
+								<?php if ($_['shares']['num_shares_room'] > 0) : ?>
+									<?php p($l->t('Talk conversations:')); ?>
+									<span class="info"><?php p($_['shares']['num_shares_room']); ?></span><br>
+								<?php endif; ?>
+							</div>
+						</div>
+					</div>
+				</div>
+			</div>
+		</div>
+	</div>
+	<?php endif; ?>
 
 	<!-- PHP, DATABASE -->
 	<div class="section php-database">
@@ -345,7 +402,7 @@ $disks = $_['diskinfo'];
 				</p>
 				<div class="monitoring-wrapper">
 					<input type="text" readonly="readonly" id="monitoring-endpoint-url" value="<?php echo p($_['ocs']); ?>"/>
-					<a class="clipboardButton icon icon-clippy" data-clipboard-target="#monitoring-endpoint-url"></a>
+					<a class="clipboardButton icon icon-clippy" title="<?php p($l->t('Copy')); ?>" aria-label="<?php p($l->t('Copy')); ?>" data-clipboard-target="#monitoring-endpoint-url"></a>
 				</div>
 				<p class="settings-hint">
 					<?php p($l->t('Appending "?format=json" at the end of the URL gives you the result in JSON.')); ?>

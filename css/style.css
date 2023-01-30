@@ -60,6 +60,22 @@
 	border: 1px var(--color-border);
 }
 
+.info-color-label--available::before, .info-color-label--used::before {
+	content: '';
+	display: inline-block;
+	width: 10px;
+	height: 10px;
+	border-radius: 10px;
+	margin-right: 5px;
+}
+.info-color-label--available::before {
+	background-color: var(--color-border-maxcontrast);
+}
+
+.info-color-label--used::before {
+	background-color: var(--color-primary);
+}
+
 @media only screen and (max-width: $breakpoint-mobile) {
 	.infobox {
 		display: block;

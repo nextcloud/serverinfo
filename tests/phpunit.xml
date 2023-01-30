@@ -1,27 +1,23 @@
-<?xml version="1.0" encoding="utf-8" ?>
-<phpunit bootstrap="bootstrap.php"
-		 verbose="true"
-		 timeoutForSmallTests="900"
-		 timeoutForMediumTests="900"
-		 timeoutForLargeTests="900"
-		 convertDeprecationsToExceptions="true"
-		>
-	<testsuite name='Nextcloud - ServerInfo Tests'>
-		<directory suffix='Test.php'>.</directory>
-	</testsuite>
-	<!-- filters for code coverage -->
-	<filter>
-		<whitelist>
-			<directory suffix=".php">../../serverinfo/lib</directory>
-			<exclude>
-				<directory suffix=".php">../../serverinfo/l10n</directory>
-				<directory suffix=".php">../../serverinfo/lists</directory>
-				<directory suffix=".php">../../serverinfo/tests</directory>
-			</exclude>
-		</whitelist>
-	</filter>
-	<logging>
-		<!-- and this is where your report will be written -->
-		<log type="coverage-clover" target="./clover.xml"/>
-	</logging>
+<?xml version="1.0" encoding="utf-8"?>
+<phpunit xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" bootstrap="bootstrap.php" verbose="true" timeoutForSmallTests="900" timeoutForMediumTests="900" timeoutForLargeTests="900" convertDeprecationsToExceptions="true" xsi:noNamespaceSchemaLocation="https://schema.phpunit.de/9.3/phpunit.xsd">
+  <coverage>
+    <include>
+      <directory suffix=".php">../../serverinfo/lib</directory>
+    </include>
+    <exclude>
+      <directory suffix=".php">../../serverinfo/l10n</directory>
+      <directory suffix=".php">../../serverinfo/lists</directory>
+      <directory suffix=".php">../../serverinfo/tests</directory>
+    </exclude>
+    <report>
+      <clover outputFile="./clover.xml"/>
+    </report>
+  </coverage>
+  <testsuite name="Nextcloud - ServerInfo Tests">
+    <directory suffix="Test.php">.</directory>
+  </testsuite>
+  <!-- filters for code coverage -->
+  <logging>
+    <!-- and this is where your report will be written -->
+  </logging>
 </phpunit>
