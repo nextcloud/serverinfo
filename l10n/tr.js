@@ -63,7 +63,7 @@ OC.L10N.register(
     "Upload max size:" : "En büyük yükleme boyutu:",
     "Extensions:" : "Eklentiler:",
     "Unable to list extensions" : "Eklentiler listelenemedi",
-    "Database" : "Veritabanı",
+    "Database" : "Veri tabanı",
     "Type:" : "Tür:",
     "External monitoring tool" : "Dış izleme aracı",
     "You can connect an external monitoring tool by using this end point:" : "Bu uç noktasını kullanarak bir dış izleme aracı bağlayabilirsiniz:",
