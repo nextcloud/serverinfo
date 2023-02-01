@@ -18,6 +18,7 @@ OC.L10N.register(
     "CPU:" : "CPU:",
     "Unknown Processor" : "Onbekende Processor",
     "Memory:" : "Geheugen:",
+    "Server time:" : "Servertijd:",
     "Uptime:" : "Bedrijfstijd:",
     "Temperature" : "Temperatuur",
     "Load" : "Belasting",
