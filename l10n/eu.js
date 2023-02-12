@@ -53,6 +53,8 @@ OC.L10N.register(
     "Groups:" : "Taldeak:",
     "Links:" : "Estekak:",
     "Emails:" : "E-postak:",
+    "Federated sent:" : "Bidalketa federatua:",
+    "Federated received:" : "Jasoketa federatua:",
     "Talk conversations:" : "Talk elkarrizketak:",
     "PHP" : "PHP",
     "Version:" : "Bertsioa:",
