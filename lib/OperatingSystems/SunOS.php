@@ -62,13 +62,12 @@ class SunOS implements IOperatingSystem {
 			$meminfo = '';
 		}
 
-		$lines = explode("\n", $meminfo);
+		$lines = explode("\n", trim($meminfo));
 		$relevantLine = explode(" ", trim($lines[2]));
 		$data->setMemTotal((int)($relevantLine[0] / 1024 / 1024));
 		$data->setMemAvailable(((int)($relevantLine[1] / 1024 / 1024)));
 
-		unset($relevantLine);
-		unset($lines);
+		unset($lines, $relevantLine);
 
 		return $data;
 	}
@@ -77,13 +76,15 @@ class SunOS implements IOperatingSystem {
 		$data = 'Unknown Processor';
 
 		try {
-			$modelCmd = $this->executeCommand('/usr/sbin/psrinfo -pv');
-			$modelAry = explode("\n", $coresCmd);
-			$model = trim($modelAry[count($modelAry) - 1]);
-			$coresCmd = $this->executeCommand('/usr/sbin/psrinfo');
-			$cores = count(explode("\n", $coresCmd));
+			$temp1 = $this->executeCommand('/usr/sbin/psrinfo -pv');
+			$temp1 = explode("\n", trim($temp1));
+			$model = trim(array_pop($temp1));
 
-			if ($numCores === 1) {
+			$temp2 = $this->executeCommand('/usr/sbin/psrinfo');
+			$temp2 = explode("\n", trim($temp2));
+			$cores = count($temp2);
+
+			if ($cores === 1) {
 				$data = $model . ' (1 core)';
 			} else {
 				$data = $model . ' (' . $cores . ' cores)';
