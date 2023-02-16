@@ -45,6 +45,7 @@ OC.L10N.register(
     "Active users" : "Usuaris actius",
     "Total users:" : "Total d'usuaris:",
     "Shares" : "Element compartits",
+    "Users:" : "Usuaris:",
     "PHP" : "PHP",
     "Version:" : "Versió:",
     "Memory limit:" : "Límit de la Memòria:",

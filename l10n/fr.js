@@ -39,7 +39,7 @@ OC.L10N.register(
     "Gateway:" : "Passerelle :",
     "Status:" : "Statut :",
     "Speed:" : "Vitesse :",
-    "Duplex:" : "Duplex:",
+    "Duplex:" : "Duplex :",
     "MAC:" : "MAC :",
     "IPv4:" : "IPv4:",
     "IPv6:" : "IPv6:",
