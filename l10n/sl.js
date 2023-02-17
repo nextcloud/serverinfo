@@ -26,6 +26,7 @@ OC.L10N.register(
     "PHP" : "Okolje PHP",
     "Version:" : "Različica:",
     "Upload max size:" : "Omejitev velikosti pošiljanja:",
+    "Unable to list extensions" : "Ni mogoče izpisati seznama razširitev",
     "Database" : "Podatkovna zbirka",
     "Type:" : "Vrsta:",
     "External monitoring tool" : "Zunanje orodje za nadzor",
