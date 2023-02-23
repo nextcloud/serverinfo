@@ -209,6 +209,17 @@ class DefaultOs implements IOperatingSystem {
 			} elseif (in_array($matches['Mounted'][$i], ['/etc/hostname', '/etc/hosts'], false)) {
 				continue;
 			}
+			
+			// Filter system option: only relevant disks (mount point parent of html or data directory)
+			if (\OC::$server->getSystemConfig()->getValue('serverinfo.filter_disks', false)) {
+				$len = strlen($matches['Mounted'][$i]);
+				if (strncmp(__DIR__, $matches['Mounted'][$i], $len) !== 0) {
+					$datadir = \OC::$server->getSystemConfig()->getValue('datadirectory', '');
+					if (strncmp($datadir, $matches['Mounted'][$i], $len) !== 0) {
+						continue;
+					}
+				}
+			}
 
 			$disk = new Disk();
 			$disk->setDevice($filesystem);
