@@ -97,6 +97,22 @@ class FreeBSDTest extends TestCase {
 		$this->assertEquals(new Memory(), $this->os->getMemory());
 	}
 
+	public function testGetMemoryTruenasSwapinfo(): void {
+		$this->os->method('executeCommand')
+			->willReturnMap([
+				['/usr/sbin/swapinfo -k', file_get_contents(__DIR__ . '/../data/truenas_core_swapinfo')],
+				['/sbin/sysctl -n hw.realmem hw.pagesize vm.stats.vm.v_inactive_count vm.stats.vm.v_cache_count vm.stats.vm.v_free_count', file_get_contents(__DIR__ . '/../data/truenas_core_meminfo')],
+			]);
+
+		$memory = $this->os->getMemory();
+
+		$this->assertEquals(131068, $memory->getMemTotal());
+		$this->assertEquals(-1, $memory->getMemFree());
+		$this->assertEquals(25136, $memory->getMemAvailable());
+		$this->assertEquals(24576, $memory->getSwapTotal());
+		$this->assertEquals(24576, $memory->getSwapFree());
+	}
+
 	public function testGetNetworkInterfaces(): void {
 		$this->os->method('getNetInterfaces')
 			->willReturn(json_decode(file_get_contents(__DIR__ . '/../data/freebsd_net_get_interfaces.json'), true, 512, JSON_THROW_ON_ERROR));
