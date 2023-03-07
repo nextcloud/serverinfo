@@ -41,12 +41,12 @@ class FreeBSD implements IOperatingSystem {
 		}
 
 		$matches = [];
-		$pattern = '/(?>\/dev\/\w+)\s+(?>\d+)\s+(?<Used>\d+)\s+(?<Avail>\d+)\s+(?<Capacity>\d+)/';
+		$pattern = '/(?>\/dev\/\S+)\s+(?>\d+)\s+(?<Used>\d+)\s+(?<Avail>\d+)\s+(?<Capacity>\d+)/';
 
 		$result = preg_match_all($pattern, $swapinfo, $matches);
-		if ($result === 1) {
-			$data->setSwapTotal((int)((int)$matches['Avail'][0] / 1024));
-			$data->setSwapFree(($data->getSwapTotal() - (int)((int)$matches['Used'][0] / 1024)));
+		if ($result !== 0) {
+			$data->setSwapTotal((int)((int)array_sum($matches['Avail']) / 1024));
+			$data->setSwapFree(($data->getSwapTotal() - (int)((int)array_sum($matches['Used']) / 1024)));
 		}
 
 		unset($matches, $result);
