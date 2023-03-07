@@ -1,0 +1,7 @@
+Device          1K-blocks     Used    Avail Capacity
+/dev/mirror/swap0.eli   2097152        0  2097152     0%
+/dev/mirror/swap1.eli   2097152        0  2097152     0%
+/dev/mirror/swap2.eli   2097152        0  2097152     0%
+/dev/mirror/swap3.eli  16777216        0 16777216     0%
+/dev/mirror/swap4.eli   2097152        0  2097152     0%
+Total            25165824        0 25165824     0%
