@@ -69,8 +69,8 @@ OC.L10N.register(
     "You can connect an external monitoring tool by using this end point:" : "Pode conectar unha ferramenta externa de seguimento usando este punto final:",
     "Copy" : "Copiar",
     "Appending \"?format=json\" at the end of the URL gives you the result in JSON." : "Engadindo «?format=json» na fin do URL devolve o resultado en JSON.",
-    "To use an access token, please generate one then set it using the following command:" : "Para usar un token de acceso, xera un e configúrao usando o seguinte comando:",
-    "Then pass the token with the \"NC-Token\" header when querying the above URL." : "A continuación, pase o testemuño coa cabeceira «Token NC» ao consultar o URL anterior.",
+    "To use an access token, please generate one then set it using the following command:" : "Para usar un testemuño de acceso, xere un e configúreo usando a seguinte orde:",
+    "Then pass the token with the \"NC-Token\" header when querying the above URL." : "A continuación, pase o testemuño coa cabeceira «NC-Token» ao consultar o URL anterior.",
     "Users" : "Usuarios",
     "Groups" : "Grupos",
     "Links" : "Ligazóns",
@@ -109,6 +109,6 @@ OC.L10N.register(
     "Upload max size" : "Tamaño máximo de carga",
     "Type" : "Tipo",
     "You can connect an external monitoring tool by using this end point" : "Podes conectar unha ferramenta de monitorización externa usando este punto final",
-    "To use an access token, please generate one then set it using the following command" : "Para usar un token de acceso, xera un e configúrao usando o seguinte comando"
+    "To use an access token, please generate one then set it using the following command" : "Para usar un testemuño de acceso, xéreo e configúreo usando a seguinte orde:"
 },
 "nplurals=2; plural=(n != 1);");
