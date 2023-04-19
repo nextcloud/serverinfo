@@ -153,11 +153,13 @@ class DefaultOs implements IOperatingSystem {
 			$data[] = $netInterface;
 
 			foreach ($interface['unicast'] as $unicast) {
-				if ($unicast['family'] === self::AF_INET) {
-					$netInterface->addIPv4($unicast['address']);
-				}
-				if ($unicast['family'] === self::AF_INET6) {
-					$netInterface->addIPv6($unicast['address']);
+				if (isset($unicast['family'])) {
+					if ($unicast['family'] === self::AF_INET) {
+						$netInterface->addIPv4($unicast['address']);
+					}
+					if ($unicast['family'] === self::AF_INET6) {
+						$netInterface->addIPv6($unicast['address']);
+					}
 				}
 			}
 
