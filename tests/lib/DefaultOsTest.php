@@ -117,6 +117,14 @@ class DefaultOsTest extends TestCase {
 		$this->assertEquals('Raspberry Pi 4 Model B Rev 1.2 (4 cores)', $this->os->getCpuName());
 	}
 
+	public function testGetCPUNameOpenPower(): void {
+		$this->os->method('readContent')
+			->with('/proc/cpuinfo')
+			->willReturn(file_get_contents(__DIR__ . '/../data/linux_cpuinfo_openpower'));
+
+		$this->assertEquals('POWER9, altivec supported (176 cores)', $this->os->getCpuName());
+	}
+
 	public function testGetCpuNameNoData(): void {
 		$this->os->method('readContent')
 			->with('/proc/cpuinfo')

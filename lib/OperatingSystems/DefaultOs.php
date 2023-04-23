@@ -92,6 +92,8 @@ class DefaultOs implements IOperatingSystem {
 
 		if (str_contains($cpuinfo, 'Raspberry Pi')) {
 			$pattern = '/Model\s+:\s(.+)/';
+		} elseif (str_contains($cpuinfo, 'PowerNV') || str_contains($cpuinfo, 'CHRP IBM pSeries')) {
+			$pattern = '/cpu\s+:\s+(.+)/';
 		} else {
 			$pattern = '/model name\s:\s(.+)/';
 		}
