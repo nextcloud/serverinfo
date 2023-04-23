@@ -88,7 +88,7 @@ class DefaultOsTest extends TestCase {
 	public function testGetCPUName(): void {
 		$this->os->method('readContent')
 			->with('/proc/cpuinfo')
-			->willReturn(file_get_contents(__DIR__ . '/../data/cpuinfo'));
+			->willReturn(file_get_contents(__DIR__ . '/../data/linux_cpuinfo'));
 
 		$this->assertEquals('Intel(R) Core(TM) i5-6500 CPU @ 3.20GHz (4 cores)', $this->os->getCpuName());
 	}
@@ -96,9 +96,17 @@ class DefaultOsTest extends TestCase {
 	public function testGetCPUNameOneCore(): void {
 		$this->os->method('readContent')
 			->with('/proc/cpuinfo')
-			->willReturn(file_get_contents(__DIR__ . '/../data/cpuinfo_one_core'));
+			->willReturn(file_get_contents(__DIR__ . '/../data/linux_cpuinfo_one_core'));
 
 		$this->assertEquals('Intel(R) Core(TM) i5-6500 CPU @ 3.20GHz (1 core)', $this->os->getCpuName());
+	}
+
+	public function testGetCPUNamePi4b(): void {
+		$this->os->method('readContent')
+			->with('/proc/cpuinfo')
+			->willReturn(file_get_contents(__DIR__ . '/../data/linux_cpuinfo_pi4b'));
+
+		$this->assertEquals('Raspberry Pi 4 Model B Rev 1.2 (4 cores)', $this->os->getCpuName());
 	}
 
 	public function testGetCPUNameNoData(): void {
