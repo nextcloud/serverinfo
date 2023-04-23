@@ -48,8 +48,8 @@ class SunOS implements IOperatingSystem {
 
 		$result = preg_match_all($pattern, $swapinfo, $matches);
 		if ($result === 1) {
-			$data->setSwapTotal((int)($matches['Avail'][0] / 1024));
-			$data->setSwapFree(($data->getSwapTotal() - (int)($matches['Used'][0] / 1024)));
+			$data->setSwapTotal((int)((int)$matches['Avail'][0] / 1024));
+			$data->setSwapFree(($data->getSwapTotal() - (int)((int)$matches['Used'][0] / 1024)));
 		}
 
 		unset($matches, $result);
@@ -62,8 +62,8 @@ class SunOS implements IOperatingSystem {
 
 		$lines = explode("\n", $meminfo);
 		$relevantLine = explode(" ", trim($lines[2]));
-		$data->setMemTotal((int)($relevantLine[0] / 1024 / 1024));
-		$data->setMemAvailable(((int)($relevantLine[1] / 1024 / 1024)));
+		$data->setMemTotal((int)((int)$relevantLine[0] / 1024 / 1024));
+		$data->setMemAvailable(((int)((int)$relevantLine[1] / 1024 / 1024)));
 
 		unset($relevantLine);
 		unset($lines);
@@ -76,12 +76,12 @@ class SunOS implements IOperatingSystem {
 
 		try {
 			$modelCmd = $this->executeCommand('/usr/sbin/psrinfo -pv');
-			$modelAry = explode("\n", $coresCmd);
+			$modelAry = explode("\n", $modelCmd);
 			$model = trim($modelAry[count($modelAry)-1]);
 			$coresCmd = $this->executeCommand('/usr/sbin/psrinfo');
-			$cores = count(explode("\n", $coresCmd));
+			$numCores = count(explode("\n", $coresCmd));
 
-			if ($numCores === 1) {
+			if ($numCores == 1) {
 				$data = $model . ' (1 core)';
 			} else {
 				$data = $model . ' (' . $cores . ' cores)';
@@ -210,8 +210,8 @@ class SunOS implements IOperatingSystem {
 			$disk = new Disk();
 			$disk->setDevice($filesystem);
 			$disk->setFs($matches['Type'][$i]);
-			$disk->setUsed((int)($matches['Used'][$i] / 1024));
-			$disk->setAvailable((int)($matches['Available'][$i] / 1024));
+			$disk->setUsed((int)((int)$matches['Used'][$i] / 1024));
+			$disk->setAvailable((int)((int)$matches['Available'][$i] / 1024));
 			$disk->setPercent($matches['Capacity'][$i]);
 			$disk->setMount($matches['Mounted'][$i]);
 
