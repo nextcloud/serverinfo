@@ -89,16 +89,16 @@ class DefaultOs implements IOperatingSystem {
 		}
 
 		$matches = [];
-		$pattern = '/model name\s:\s(.+)/';
+
+		if (str_contains($cpuinfo, 'Raspberry Pi')) {
+			$pattern = '/Model\s+:\s(.+)/';
+		} else {
+			$pattern = '/model name\s:\s(.+)/';
+		}
 
 		$result = preg_match_all($pattern, $cpuinfo, $matches);
 		if ($result === 0 || $result === false) {
-			// For Raspberry Pi 4B
-			$pattern = '/Model\s+:\s(.+)/';
-			$result = preg_match_all($pattern, $cpuinfo, $matches);
-			if ($result === 0 || $result === false) {
-				return $data;
-			}
+			return $data;
 		}
 
 		$model = $matches[1][0];
