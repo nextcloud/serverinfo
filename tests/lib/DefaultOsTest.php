@@ -101,6 +101,14 @@ class DefaultOsTest extends TestCase {
 		$this->assertEquals('Intel(R) Core(TM) i5-6500 CPU @ 3.20GHz (1 core)', $this->os->getCpuName());
 	}
 
+	public function testGetCPUNamePi3b(): void {
+		$this->os->method('readContent')
+			->with('/proc/cpuinfo')
+			->willReturn(file_get_contents(__DIR__ . '/../data/linux_cpuinfo_pi3b'));
+
+		$this->assertEquals('Raspberry Pi 3 Model B Rev 1.2 (4 cores)', $this->os->getCpuName());
+	}
+
 	public function testGetCPUNamePi4b(): void {
 		$this->os->method('readContent')
 			->with('/proc/cpuinfo')
@@ -109,7 +117,7 @@ class DefaultOsTest extends TestCase {
 		$this->assertEquals('Raspberry Pi 4 Model B Rev 1.2 (4 cores)', $this->os->getCpuName());
 	}
 
-	public function testGetCPUNameNoData(): void {
+	public function testGetCpuNameNoData(): void {
 		$this->os->method('readContent')
 			->with('/proc/cpuinfo')
 			->willThrowException(new RuntimeException('Unable to read: "/proc/cpuinfo"'));
@@ -117,7 +125,7 @@ class DefaultOsTest extends TestCase {
 		$this->assertEquals('Unknown Processor', $this->os->getCpuName());
 	}
 
-	public function testGetCPUNameInvalidData(): void {
+	public function testGetCpuNameInvalidData(): void {
 		$this->os->method('readContent')
 			->with('/proc/cpuinfo')
 			->willReturn('invalid_data');
