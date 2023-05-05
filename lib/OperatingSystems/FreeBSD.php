@@ -126,6 +126,8 @@ class FreeBSD implements IOperatingSystem {
 			preg_match_all("/(?<=^default)\s*[0-9a-fA-f\.:]+/m", $netstat, $gw);
 			if (count($gw[0]) > 0) {
 				$result['gateway'] = implode(", ", array_map("trim", $gw[0]));
+			} else {
+				$result['gateway'] = '';
 			}
 		} catch (RuntimeException $e) {
 			return $result;
