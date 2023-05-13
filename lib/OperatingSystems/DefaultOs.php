@@ -120,7 +120,7 @@ class DefaultOs implements IOperatingSystem {
 	}
 
 	public function getTime(): string {
-		return (string)shell_exec('date');
+		return date("D M j G:i:s T Y");
 	}
 
 	public function getUptime(): int {
