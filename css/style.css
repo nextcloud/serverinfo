@@ -73,7 +73,7 @@
 }
 
 .info-color-label--used::before {
-	background-color: var(--color-primary);
+	background-color: var(--color-primary-element);
 }
 
 @media only screen and (max-width: $breakpoint-mobile) {
