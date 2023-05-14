@@ -34,7 +34,7 @@ script('serverinfo', 'Chart.min');
 style('serverinfo', 'style');
 
 function FormatMegabytes(int $byte): string {
-	$unim = ['MB', 'GB', 'TB', 'PB'];
+	$unim = ['MB', 'GB', 'TB', 'PB', 'EB'];
 	$count = 0;
 	while ($byte >= 1024) {
 		$count++;
