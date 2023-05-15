@@ -45,6 +45,10 @@ class PhpStatistics {
 			'memory_limit' => $this->phpIni->getBytes('memory_limit'),
 			'max_execution_time' => $this->phpIni->getNumeric('max_execution_time'),
 			'upload_max_filesize' => $this->phpIni->getBytes('upload_max_filesize'),
+			'opcache_revalidate_freq' => $this->phpIni->getNumeric('opcache.revalidate_freq'),
+			// NOTE: If access to add'l OPcache *config* parameters is desired consider
+			//   implementing a getOPcacheConfig() wrapper for PHP's opcache_get_configuration()
+			//   like we do for PHP's opcache_get_status() already below
 			'opcache' => $this->getOPcacheStatus(),
 			'apcu' => $this->getAPCuStatus(),
 			'extensions' => $this->getLoadedPhpExtensions(),
