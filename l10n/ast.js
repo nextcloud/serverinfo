@@ -6,6 +6,7 @@ OC.L10N.register(
     "PHP" : "PHP",
     "Version:" : "Versión:",
     "Database" : "Base de datos",
+    "Groups" : "Grupos",
     "24 hours" : "24 hores",
     "1 hour" : "1 hora",
     "Size" : "Tamañu",
