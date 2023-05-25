@@ -61,6 +61,7 @@ OC.L10N.register(
     "Memory limit:" : "Limit paměti:",
     "Max execution time:" : "Nejdelší umožněný čas vykonávání:",
     "Upload max size:" : "Nejvyšší umožněná velikost nahrávaného souboru:",
+    "OPcache Revalidate Frequency:" : "Četnost opětovného ověřování platnosti OPcache mezipaměti:",
     "Extensions:" : "Rozšíření:",
     "Unable to list extensions" : "Nepodařilo se vypsat rozšíření",
     "Database" : "Databáze",
