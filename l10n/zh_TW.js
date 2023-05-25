@@ -61,6 +61,7 @@ OC.L10N.register(
     "Memory limit:" : "記憶體限制：",
     "Max execution time:" : "最大執行時間：",
     "Upload max size:" : "上傳至多:",
+    "OPcache Revalidate Frequency:" : "OPcache 重新驗證頻率：",
     "Extensions:" : "擴充套件：",
     "Unable to list extensions" : "無法列出擴充套件",
     "Database" : "資料庫",
