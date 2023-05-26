@@ -59,6 +59,7 @@
     "Memory limit:" : "記憶體限制：",
     "Max execution time:" : "最長執行時間：",
     "Upload max size:" : "上傳至多：",
+    "OPcache Revalidate Frequency:" : "OPcache 重新驗證頻率：",
     "Extensions:" : "PHP 擴展：",
     "Unable to list extensions" : "無法列出 PHP 擴展",
     "Database" : "數據庫",
