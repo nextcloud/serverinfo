@@ -3,11 +3,6 @@ OC.L10N.register(
     {
     "Size:" : "அளவு:",
     "Type:" : "வகை:",
-    "Copy" : "Copy",
-    "Users" : "பயனாளர்",
-    "Groups" : "குழுக்கள்",
-    "Size" : "அளவு",
-    "Files" : "கோப்புகள்",
-    "Type" : "வகை"
+    "Copy" : "Copy"
 },
 "nplurals=2; plural=(n != 1);");

@@ -9,16 +9,6 @@ OC.L10N.register(
     "Active users" : "ผู้ใช้ที่ใช้งานอยู่",
     "Shares" : "การแชร์",
     "Type:" : "ชนิด:",
-    "Copy" : "คัดลอก",
-    "Users" : "ผู้ใช้งาน",
-    "Groups" : "กลุ่ม",
-    "1 hour" : "1 ชั่วโมง",
-    "Copied!" : "คัดลอกแล้ว",
-    "Size" : "ขนาด",
-    "Files" : "ไฟล์",
-    "Hostname" : "ชื่อโฮสต์",
-    "Status" : "สถานะ",
-    "Version" : "รุ่น",
-    "Type" : "ประเภท"
+    "Copy" : "คัดลอก"
 },
 "nplurals=1; plural=0;");
