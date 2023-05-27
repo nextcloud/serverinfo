@@ -17,17 +17,6 @@ OC.L10N.register(
     "Database" : "Base de datos",
     "Type:" : "Typo:",
     "External monitoring tool" : "Instrumento de controlo externe",
-    "Copy" : "Copiar",
-    "Users" : "Usatores",
-    "Groups" : "Gruppos",
-    "Links" : "Ligamines",
-    "Federated sent" : "Invio federate",
-    "Federated received" : "Reception federate",
-    "Copied!" : "Copiate!",
-    "Size" : "Dimension",
-    "Files" : "Files",
-    "Hostname" : "Nomine de Hospite",
-    "Version" : "Version",
-    "Type" : "Typo"
+    "Copy" : "Copiar"
 },
 "nplurals=2; plural=(n != 1);");

@@ -18,20 +18,6 @@ OC.L10N.register(
     "Database" : "მონაცემთა ბაზა",
     "Type:" : "ტიპი:",
     "External monitoring tool" : "გარე მონიტორინგის ხელსაწყო",
-    "Copy" : "კოპირება",
-    "Users" : "მომხმარებლები",
-    "Groups" : "ჯგუფები",
-    "Links" : "ბმულები",
-    "Federated sent" : "ფედერალური გაიგზავნა",
-    "Federated received" : "ფედერალური შემოვიდა",
-    "24 hours" : "24 საათი",
-    "1 hour" : "1 საათი",
-    "Copied!" : "კოპირებულია!",
-    "Size" : "ზომა",
-    "Files" : "ფაილები",
-    "Hostname" : "ჰოსტი",
-    "Status" : "სტატუსი",
-    "Version" : "ვერსია",
-    "Type" : "სახეობა"
+    "Copy" : "კოპირება"
 },
 "nplurals=2; plural=(n!=1);");
