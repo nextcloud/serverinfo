@@ -19,18 +19,6 @@ OC.L10N.register(
     "Database" : "Andmebaas",
     "Type:" : "Tüüp:",
     "External monitoring tool" : "Väline monitoorimistööriist",
-    "Copy" : "Kopeeri",
-    "Users" : "Kasutajad",
-    "Groups" : "Grupid",
-    "Links" : "Lingid",
-    "Federated sent" : "Liitpilve saadetud",
-    "Federated received" : "Liitpilvest vastu võetud",
-    "Copied!" : "Kopeeritud!",
-    "Size" : "Suurus",
-    "Files" : "Failid",
-    "Hostname" : "Hostinimi",
-    "Status" : "Staatus",
-    "Version" : "Versioon",
-    "Type" : "Tüüp"
+    "Copy" : "Kopeeri"
 },
 "nplurals=2; plural=(n != 1);");

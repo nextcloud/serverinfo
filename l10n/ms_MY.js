@@ -6,12 +6,6 @@ OC.L10N.register(
     "Press Ctrl-C to copy." : "Tekan Ctrl-C untuk menyalin.",
     "Size:" : "Saiz",
     "Shares" : "Kongsi",
-    "Type:" : "Jenis",
-    "Users" : "Pengguna",
-    "Groups" : "Kumpulan",
-    "Copied!" : "Disalin!",
-    "Size" : "Saiz",
-    "Files" : "Fail",
-    "Type" : "Jenis"
+    "Type:" : "Jenis"
 },
 "nplurals=1; plural=0;");

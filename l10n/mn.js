@@ -15,18 +15,6 @@ OC.L10N.register(
     "Version:" : "Хувилбар:",
     "Database" : "Өгөгдлийн сан",
     "Type:" : "Төрөл:",
-    "Copy" : "Хуулах",
-    "Users" : "Хэрэглэгчид",
-    "Groups" : "Бүлгүүд",
-    "Links" : "Холбоосууд",
-    "24 hours" : "24 цаг",
-    "1 hour" : "1 цаг",
-    "Copied!" : "Хуулсан!",
-    "Size" : "Хэмжээ",
-    "Available" : "Боломжтой",
-    "Files" : "файлууд",
-    "Status" : "төлөв",
-    "Version" : "төрөл",
-    "Type" : "Төрөл"
+    "Copy" : "Хуулах"
 },
 "nplurals=2; plural=(n != 1);");
