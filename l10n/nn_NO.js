@@ -15,16 +15,6 @@ OC.L10N.register(
     "Database" : "Database",
     "Type:" : "Type:",
     "External monitoring tool" : "Eksternt monoitor verktøy",
-    "Copy" : "Kopier",
-    "Users" : "Brukarare",
-    "Groups" : "Grupper",
-    "Links" : "Lenker",
-    "Copied!" : "Kopiert!",
-    "Size" : "Storleik",
-    "Files" : "Filer",
-    "Hostname" : "Vertsnamn",
-    "Status" : "Status",
-    "Version" : "Utgåve",
-    "Type" : "Type"
+    "Copy" : "Kopier"
 },
 "nplurals=2; plural=(n != 1);");

@@ -18,21 +18,6 @@ OC.L10N.register(
     "Database" : "Databazë",
     "Type:" : "Lloji:",
     "External monitoring tool" : "Mjet i kontrollit të jashtëm",
-    "Copy" : "Kopjo",
-    "Users" : "Përdoruesit",
-    "Groups" : "Grupet",
-    "Links" : "Lidhje",
-    "Federated sent" : "Federated dërguar",
-    "Federated received" : "Federated te marra",
-    "24 hours" : "24 orë",
-    "1 hour" : "1 orë",
-    "Copied!" : "I kopjuar!",
-    "Size" : "Madhësi",
-    "Available" : "i disponueshëm",
-    "Files" : "Skedarët",
-    "Hostname" : "Strehëemër",
-    "Status" : "Status",
-    "Version" : "Versioni",
-    "Type" : "Shtyp"
+    "Copy" : "Kopjo"
 },
 "nplurals=2; plural=(n != 1);");

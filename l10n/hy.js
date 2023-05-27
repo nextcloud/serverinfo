@@ -6,12 +6,6 @@ OC.L10N.register(
     "Press Ctrl-C to copy." : "Սեղմել  Ctrl-C պատճենելու համար։",
     "Size:" : "Չափս.",
     "Type:" : "Տիպ.",
-    "Copy" : "պատճենահանել",
-    "Groups" : "Խմբեր",
-    "Copied!" : "Պատճենված է․",
-    "Size" : "Չափս",
-    "Files" : "Ֆայլեր",
-    "Version" : "Տարբերակ",
-    "Type" : "Տիպ"
+    "Copy" : "պատճենահանել"
 },
 "nplurals=2; plural=(n != 1);");

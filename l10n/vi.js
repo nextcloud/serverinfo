@@ -23,18 +23,6 @@ OC.L10N.register(
     "Database" : "Cơ sở dữ liệu",
     "Type:" : "Loại:",
     "External monitoring tool" : "Công cụ giám sát ngoài",
-    "Copy" : "Sao chép",
-    "Users" : "Người dùng",
-    "Groups" : "Nhóm",
-    "Links" : "Đường dẫn",
-    "24 hours" : "24 tiếng",
-    "1 hour" : "1 tiếng",
-    "Copied!" : "Đã sao chép!",
-    "Size" : "Kích cỡ",
-    "Available" : "Khả dụng",
-    "Files" : "Tệp",
-    "Status" : "Trạng thái",
-    "Version" : "Phiên bản",
-    "Type" : "Loại"
+    "Copy" : "Sao chép"
 },
 "nplurals=1; plural=0;");

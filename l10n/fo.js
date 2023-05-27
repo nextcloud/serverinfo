@@ -3,9 +3,6 @@ OC.L10N.register(
     {
     "Press ⌘-C to copy." : "Trýst ⌘-C fyri at kopiera.",
     "Press Ctrl-C to copy." : "Trýst Ctrl-C fyri at kopiera.",
-    "Copy" : "Kopi",
-    "Groups" : "Bólkar",
-    "Copied!" : "Kopiera!",
-    "Files" : "fílur"
+    "Copy" : "Kopi"
 },
 "nplurals=2; plural=(n != 1);");

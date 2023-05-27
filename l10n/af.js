@@ -14,17 +14,6 @@ OC.L10N.register(
     "Version:" : "Weergawe:",
     "Database" : "Databasis",
     "Type:" : "Tipe:",
-    "Copy" : "Kopieer",
-    "Users" : "Gebruikers",
-    "Groups" : "Groepe",
-    "Links" : "Skakels",
-    "1 hour" : "1 uur",
-    "Copied!" : "Gekopieer!",
-    "Size" : "Grootte",
-    "Available" : "Beskikbaar",
-    "Files" : " Lêers",
-    "Status" : "Status",
-    "Version" : "Weergawe",
-    "Type" : "Tipe"
+    "Copy" : "Kopieer"
 },
 "nplurals=2; plural=(n != 1);");

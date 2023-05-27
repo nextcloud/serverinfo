@@ -18,17 +18,6 @@ OC.L10N.register(
     "Database" : "Database",
     "Type:" : "Tipe",
     "External monitoring tool" : "Alat pemantauan eksternal",
-    "Copy" : "Salin",
-    "Users" : "Pengguna",
-    "Groups" : "Grup",
-    "Links" : "Link",
-    "1 hour" : "1 jam",
-    "Copied!" : "Tersalin!",
-    "Size" : "Ukuran",
-    "Files" : "Berkas",
-    "Hostname" : "Nama Host",
-    "Status" : "Status",
-    "Version" : "Versi",
-    "Type" : "tipe"
+    "Copy" : "Salin"
 },
 "nplurals=1; plural=0;");
