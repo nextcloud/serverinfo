@@ -61,6 +61,7 @@ OC.L10N.register(
     "Memory limit:" : "Bellek sınırı:",
     "Max execution time:" : "En uzun çalışma süresi:",
     "Upload max size:" : "En büyük yükleme boyutu:",
+    "OPcache Revalidate Frequency:" : "OPcache yeniden doğrulama sıklığı:",
     "Extensions:" : "Eklentiler:",
     "Unable to list extensions" : "Eklentiler listelenemedi",
     "Database" : "Veri tabanı",

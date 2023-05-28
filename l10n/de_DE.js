@@ -61,6 +61,7 @@ OC.L10N.register(
     "Memory limit:" : "Speicherlimit:",
     "Max execution time:" : "Maximale Ausführungszeit:",
     "Upload max size:" : "Maximale Größe zum Hochladen:",
+    "OPcache Revalidate Frequency:" : "OPcache-Revalidierungshäufigkeit:",
     "Extensions:" : "Erweiterungen:",
     "Unable to list extensions" : "Erweiterungen können nicht aufgelistet werden",
     "Database" : "Datenbank",
