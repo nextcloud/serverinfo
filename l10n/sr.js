@@ -61,6 +61,7 @@ OC.L10N.register(
     "Memory limit:" : "Ограничење меморије:",
     "Max execution time:" : "Максимално време извршавања:",
     "Upload max size:" : "Максимална величина отпремања:",
+    "OPcache Revalidate Frequency:" : "Учесталост OPcache ревалидације:",
     "Extensions:" : "Проширења:",
     "Unable to list extensions" : "Не могу да се прикажу проширења",
     "Database" : "База података",
