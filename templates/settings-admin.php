@@ -365,6 +365,10 @@ $interfaces = $_['networkinterfaces'];
 							<?php p($l->t('Extensions:')); ?>
 							<em id="phpExtensions"><?php p($_['php']['extensions'] !== null ? implode(', ', $_['php']['extensions']) : $l->t('Unable to list extensions')); ?></em>
 						</p>
+						<p>
+							<?php p($l->t('Active PHP .ini files:')); ?>
+							<em id="phpLoadedIniFiles"><?php p($_['php']['php_ini_files'] !== null ? implode(', ', $_['php']['php_ini_files']) : $l->t('Unable to list .ini files')); ?></em>
+						</p>
 					</div>
 				</div>
 			</div>

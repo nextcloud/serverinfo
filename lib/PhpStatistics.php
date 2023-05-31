@@ -50,6 +50,7 @@ class PhpStatistics {
 			//   implementing a getOPcacheConfig() wrapper for PHP's opcache_get_configuration()
 			//   like we do for PHP's opcache_get_status() already below
 			'opcache' => $this->getOPcacheStatus(),
+			'php_ini_files' => $this->getInUsePhpIniFiles(),
 			'apcu' => $this->getAPCuStatus(),
 			'extensions' => $this->getLoadedPhpExtensions(),
 		];
@@ -120,5 +121,36 @@ class PhpStatistics {
 	 */
 	protected function getLoadedPhpExtensions(): ?array {
 		return (function_exists('get_loaded_extensions') ? get_loaded_extensions() : null);
+	}
+	
+	/**
+	 * Get all active php .ini files
+	 *
+	 * @return array of strings with the full paths of the loaded/parsed (in use) PHP .ini files
+	 */
+	protected function getInUsePhpIniFiles(): ?array {
+		// Retrieve full path to the main loaded php.ini file (if any)
+		$loadedPhpIniFile = php_ini_loaded_file();
+		// Retrieve full paths to any other loaded .ini files
+		$scannedPhpIniFiles = php_ini_scanned_files();
+
+		// where we'll collect all the active ones we find
+		$inUsePhpIniFiles = [];
+
+		// If a php.ini is discovered, include first
+		// NOTE: sometimes only scanned .ini files - e.g. community NC Docker doesn't use a php.ini
+		if ($loadedPhpIniFile !== false) {
+			$inUsePhpIniFiles[] = $loadedPhpIniFile;
+		}
+
+		if ($scannedPhpIniFiles !== false && (strlen($scannedPhpIniFiles) > 0)) {
+			$files = explode(',', $scannedPhpIniFiles);
+
+			foreach ($files as $file) {
+				$inUsePhpIniFiles[] = trim($file);
+			}
+		}
+		// return the array of discovered active ini files (if any)
+		return $inUsePhpIniFiles;
 	}
 }
