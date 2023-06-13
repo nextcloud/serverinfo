@@ -55,7 +55,7 @@ OC.L10N.register(
     "Emails:" : "Correos electrónicos:",
     "Federated sent:" : "Envíos federados:",
     "Federated received:" : "Recibidos federados:",
-    "Talk conversations:" : "Conversas de Talk:",
+    "Talk conversations:" : "Conversas co Talk:",
     "PHP" : "PHP",
     "Version:" : "Versión:",
     "Memory limit:" : "Límite de memoria:",
