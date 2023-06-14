@@ -46,11 +46,11 @@ class SunOS implements IOperatingSystem {
 			$result = preg_match($pattern, $top, $matches);
 
 			if ($result === 1) {
-				$data->setMemTotal( $this->parseHumanReadableSizeAsInt($matches['TotalMemory']) );
-				$data->setMemFree( $this->parseHumanReadableSizeAsInt($matches['FreeMemory']) );
-				$data->setMemAvailable( $this->parseHumanReadableSizeAsInt($matches['FreeMemory']) );
-				$data->setSwapTotal( $this->parseHumanReadableSizeAsInt($matches['TotalSwap']) );
-				$data->setSwapFree( $this->parseHumanReadableSizeAsInt($matches['FreeSwap']) );
+				$data->setMemTotal $this->parseHumanReadableSizeAsInt($matches['TotalMemory']));
+				$data->setMemFree($this->parseHumanReadableSizeAsInt($matches['FreeMemory']));
+				$data->setMemAvailable($this->parseHumanReadableSizeAsInt($matches['FreeMemory']));
+				$data->setSwapTotal($this->parseHumanReadableSizeAsInt($matches['TotalSwap']));
+				$data->setSwapFree($this->parseHumanReadableSizeAsInt($matches['FreeSwap']));
 			}
 
 			unset($matches, $pattern, $result);
@@ -66,7 +66,7 @@ class SunOS implements IOperatingSystem {
 		try {
 			$modelCmd = $this->executeCommand('/usr/sbin/psrinfo -pv');
 			$modelAry = array_filter(explode("\n", $modelCmd));
-			$model = trim($modelAry[count($modelAry)-1]);
+			$model = trim($modelAry[count($modelAry) - 1]);
 			
 			$coresCmd = $this->executeCommand('/usr/sbin/psrinfo');
 			$cores = count(array_filter(explode("\n", $coresCmd)));
@@ -203,10 +203,10 @@ class SunOS implements IOperatingSystem {
 			$disk = new Disk();
 			$disk->setDevice($filesystem);
 			$disk->setFs($matches['Type'][$i]);
-			$disk->setUsed( $this->parseHumanReadableSizeAsInt($matches['Used'][$i]) );
-			$disk->setAvailable( $this->parseHumanReadableSizeAsInt($matches['Available'][$i]) );
+			$disk->setUsed($this->parseHumanReadableSizeAsInt($matches['Used'][$i]));
+			$disk->setAvailable($this->parseHumanReadableSizeAsInt($matches['Available'][$i]));
 
-			$usageInPercent = round(( $this->parseHumanReadableSizeAsInt($matches['Used'][$i]) / ( $this->parseHumanReadableSizeAsInt($matches['Used'][$i]) + $this->parseHumanReadableSizeAsInt($matches['Available'][$i]) ) ) * 100, 2);
+			$usageInPercent = round(($this->parseHumanReadableSizeAsInt($matches['Used'][$i]) / ($this->parseHumanReadableSizeAsInt($matches['Used'][$i]) + $this->parseHumanReadableSizeAsInt($matches['Available'][$i]))) * 100, 2);
 			$disk->setPercent((string)$usageInPercent . '%');
 
 			$disk->setMount($matches['Mounted'][$i]);

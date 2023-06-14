@@ -38,7 +38,7 @@ class Os implements IOperatingSystem {
 	public function __construct() {
 		if (PHP_OS === 'FreeBSD') {
 			$this->backend = new FreeBSD();
-		} else if (PHP_OS === 'SunOS') {
+		} elseif (PHP_OS === 'SunOS') {
 			$this->backend = new SunOS();
 		} else {
 			$this->backend = new DefaultOs();
