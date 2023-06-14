@@ -134,8 +134,8 @@ class SystemStatistics {
 	 * @return array{loadavg: array|string} load average with three values, 1/5/15 minutes average.
 	 */
 	protected function getProcessorUsage(): array {
-		// get current system load average.
-		$loadavg = sys_getloadavg();
+		// get current system load average - if we can
+		$loadavg = (function_exists('sys_getloadavg')) ? sys_getloadavg() : false;
 
 		// check if we got any values back.
 		if ($loadavg === false || count($loadavg) !== 3) {

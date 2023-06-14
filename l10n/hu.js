@@ -61,6 +61,7 @@ OC.L10N.register(
     "Memory limit:" : "Memóriakorlát:",
     "Max execution time:" : "Maximális végrehajtási idő:",
     "Upload max size:" : "Maximális feltöltési méret:",
+    "OPcache Revalidate Frequency:" : "OPcache újraellenőrzési gyakorisága:",
     "Extensions:" : "Bővítmények:",
     "Unable to list extensions" : "Nem lehet felsorolni a bővítményeket",
     "Database" : "Adatbázis:",
