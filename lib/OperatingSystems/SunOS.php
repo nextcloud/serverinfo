@@ -46,7 +46,7 @@ class SunOS implements IOperatingSystem {
 			$result = preg_match($pattern, $top, $matches);
 
 			if ($result === 1) {
-				$data->setMemTotal $this->parseHumanReadableSizeAsInt($matches['TotalMemory']));
+				$data->setMemTotal($this->parseHumanReadableSizeAsInt($matches['TotalMemory']));
 				$data->setMemFree($this->parseHumanReadableSizeAsInt($matches['FreeMemory']));
 				$data->setMemAvailable($this->parseHumanReadableSizeAsInt($matches['FreeMemory']));
 				$data->setSwapTotal($this->parseHumanReadableSizeAsInt($matches['TotalSwap']));
