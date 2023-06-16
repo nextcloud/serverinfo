@@ -62,7 +62,7 @@ OC.L10N.register(
     "Max execution time:" : "Tempo máximo de execución:",
     "Upload max size:" : "Tamaño máximo de envío:",
     "Extensions:" : "Extensións:",
-    "Unable to list extensions" : "Non foi posíbel listar as extensións",
+    "Unable to list extensions" : "Non é posíbel listar as extensións",
     "Database" : "Base de datos",
     "Type:" : "Tipo:",
     "External monitoring tool" : "Ferramenta externa de supervisión",
