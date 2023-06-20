@@ -34,6 +34,7 @@ declare(strict_types=1);
 return [
 	'routes' => [
 		['name' => 'page#update', 'url' => '/update', 'verb' => 'GET'],
+		['name' => 'page#phpinfo', 'url' => '/phpinfo', 'verb' => 'GET'],
 	],
 	'ocs' => [
 		['name' => 'api#info', 'url' => '/api/v1/info', 'verb' => 'GET'],

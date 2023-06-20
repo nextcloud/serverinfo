@@ -127,3 +127,7 @@ php occ serverinfo:update-storage-statistics -v --output=json_pretty
     "num_storages_other": 33
 }
 ```
+
+Show phpinfo
+
+``php occ config:app:set --value=yes serverinfo phpinfo``
