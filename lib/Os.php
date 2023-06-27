@@ -25,6 +25,7 @@ namespace OCA\ServerInfo;
 
 use OCA\ServerInfo\OperatingSystems\DefaultOs;
 use OCA\ServerInfo\OperatingSystems\FreeBSD;
+use OCA\ServerInfo\OperatingSystems\SunOS;
 use OCA\ServerInfo\OperatingSystems\IOperatingSystem;
 use OCA\ServerInfo\Resources\Memory;
 
@@ -36,9 +37,11 @@ class Os implements IOperatingSystem {
 	 */
 	public function __construct() {
 		if (PHP_OS === 'FreeBSD') {
-			$this->backend = new FreeBSD();
+		    $this->backend = new FreeBSD();
+                } else if (PHP_OS === 'SunOS') {
+		    $this->backend = new SunOS();
 		} else {
-			$this->backend = new DefaultOs();
+		    $this->backend = new DefaultOs();
 		}
 	}
 
