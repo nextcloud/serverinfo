@@ -19,6 +19,7 @@ OC.L10N.register(
     "PHP" : "PHP",
     "Version:" : "الأصدار:",
     "Upload max size:" : "الحجم الأقصى للرفع:",
+    "OPcache Revalidate Frequency:" : "تواتر إعادة مصادقة ذاكرة التخزين المؤقت أو بي كاش \"OPcache\":",
     "Database" : "قاعدة البيانات",
     "Type:" : "النوع:",
     "Copy" : "نسخ"
