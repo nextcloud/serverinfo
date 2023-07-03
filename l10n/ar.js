@@ -6,6 +6,7 @@ OC.L10N.register(
     "Press Ctrl-C to copy." : "إضغط Ctrl-C للنسخ.",
     "System" : "النظام",
     "Monitoring" : "المراقبة",
+    "Provides useful server information, such as CPU load, RAM usage, disk usage, number of users, etc." : "يوفر معلومات مفيدة عن الخادم، مثل حمل وحدة المعالجة المركزية واستخدام ذاكرة الوصول العشوائي واستخدام القرص وعدد المستخدمين وما إلى ذلك.",
     "Temperature" : "درجة الحرارة",
     "Memory" : "الذاكرة",
     "Size:" : "الحجم:",
