@@ -43,12 +43,16 @@ function FormatMegabytes(int $byte): string {
 	return number_format($byte, 2, '.', '.') . ' ' . $unim[$count];
 }
 
+/** @var array $_ */
+
 /** @var Memory $memory */
 $memory = $_['memory'];
 /** @var Disk[] $disks */
 $disks = $_['diskinfo'];
 /** @var NetInterface[] $interfaces */
 $interfaces = $_['networkinterfaces'];
+/** @var bool $phpinfo */
+$phpinfo = $_['phpinfo'];
 
 ?>
 
@@ -356,7 +360,7 @@ $interfaces = $_['networkinterfaces'];
 						<p>
 							<?php p($l->t('Upload max size:')); ?>
 							<em id="phpUploadMaxSize"><?php p($_['php']['upload_max_filesize']); ?></em>
-						</p>                                               
+						</p>
 						<p>
 							<?php p($l->t('OPcache Revalidate Frequency:')); ?>
 							<em id="phpOpcacheRevalidateFreq"><?php p($_['php']['opcache_revalidate_freq']); ?></em>
@@ -365,6 +369,11 @@ $interfaces = $_['networkinterfaces'];
 							<?php p($l->t('Extensions:')); ?>
 							<em id="phpExtensions"><?php p($_['php']['extensions'] !== null ? implode(', ', $_['php']['extensions']) : $l->t('Unable to list extensions')); ?></em>
 						</p>
+						<?php if ($phpinfo): ?>
+						<p>
+							<a target="_blank" href="<?= $_['phpinfoUrl'] ?>"><?php p($l->t('Show phpinfo')) ?></a>
+						</p>
+						<?php endif; ?>
 					</div>
 				</div>
 			</div>

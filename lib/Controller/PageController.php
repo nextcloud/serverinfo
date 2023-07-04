@@ -24,24 +24,22 @@ declare(strict_types=1);
 
 namespace OCA\ServerInfo\Controller;
 
+use OCA\ServerInfo\PhpInfoResponse;
 use OCP\AppFramework\Http\JSONResponse;
+use OCP\AppFramework\Http\NotFoundResponse;
+use OCP\AppFramework\Http\Response;
+use OCP\IConfig;
 use OCP\IRequest;
 use OCP\AppFramework\Controller;
 use OCA\ServerInfo\SystemStatistics;
 
 class PageController extends Controller {
-	private SystemStatistics $systemStatistics;
-
-	/**
-	 * ApiController constructor.
-	 */
 	public function __construct(string $appName,
 								IRequest $request,
-								SystemStatistics $systemStatistics
+								private SystemStatistics $systemStatistics,
+								private IConfig $config,
 	) {
 		parent::__construct($appName, $request);
-
-		$this->systemStatistics = $systemStatistics;
 	}
 
 	/**
@@ -53,5 +51,15 @@ class PageController extends Controller {
 		];
 
 		return new JSONResponse($data);
+	}
+
+	/**
+	 * @NoCSRFRequired
+	 */
+	public function phpinfo(): Response {
+		if ($this->config->getAppValue($this->appName, 'phpinfo', 'no') === 'yes') {
+			return new PhpInfoResponse();
+		}
+		return new NotFoundResponse();
 	}
 }
