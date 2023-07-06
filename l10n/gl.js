@@ -63,6 +63,7 @@ OC.L10N.register(
     "Upload max size:" : "Tamaño máximo de envío:",
     "Extensions:" : "Extensións:",
     "Unable to list extensions" : "Non é posíbel listar as extensións",
+    "Show phpinfo" : "Amosar phpinfo",
     "Database" : "Base de datos",
     "Type:" : "Tipo:",
     "External monitoring tool" : "Ferramenta externa de supervisión",
