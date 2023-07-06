@@ -64,6 +64,7 @@ OC.L10N.register(
     "OPcache Revalidate Frequency:" : "Учесталост OPcache ревалидације:",
     "Extensions:" : "Проширења:",
     "Unable to list extensions" : "Не могу да се прикажу проширења",
+    "Show phpinfo" : "Прикажи phpinfo",
     "Database" : "База података",
     "Type:" : "Тип:",
     "External monitoring tool" : "Спољни алати за праћење система",
