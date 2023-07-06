@@ -64,6 +64,7 @@ OC.L10N.register(
     "OPcache Revalidate Frequency:" : "OPcache 重新驗證頻率：",
     "Extensions:" : "擴充套件：",
     "Unable to list extensions" : "無法列出擴充套件",
+    "Show phpinfo" : "顯示 phpinfo",
     "Database" : "資料庫",
     "Type:" : "類型:",
     "External monitoring tool" : "外部監控工具",

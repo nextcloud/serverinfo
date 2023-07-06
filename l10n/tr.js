@@ -64,6 +64,7 @@ OC.L10N.register(
     "OPcache Revalidate Frequency:" : "OPcache yeniden doğrulama sıklığı:",
     "Extensions:" : "Eklentiler:",
     "Unable to list extensions" : "Eklentiler listelenemedi",
+    "Show phpinfo" : "PHP bilgilerini görüntüle",
     "Database" : "Veri tabanı",
     "Type:" : "Tür:",
     "External monitoring tool" : "Dış izleme aracı",
