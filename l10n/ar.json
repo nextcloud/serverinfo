@@ -25,10 +25,12 @@
     "Version:" : "الأصدار:",
     "Upload max size:" : "الحجم الأقصى للرفع:",
     "OPcache Revalidate Frequency:" : "تواتر إعادة مصادقة ذاكرة التخزين المؤقت أو بي كاش \"OPcache\":",
+    "Show phpinfo" : "عرض ملف phpinfo",
     "Database" : "قاعدة البيانات",
     "Type:" : "النوع:",
     "External monitoring tool" : "أداة الرصد الخارجية",
     "You can connect an external monitoring tool by using this end point:" : "يمكنك توصيل أداة رصد خارجية باستخدام نقطة النهاية هذه:",
-    "Copy" : "نسخ"
+    "Copy" : "نسخ",
+    "Appending \"?format=json\" at the end of the URL gives you the result in JSON." : "ينتج عن إلحاق \"؟ format = json\" في نهاية عنوان URL ملف بتنسيق JSON."
 },"pluralForm" :"nplurals=6; plural=n==0 ? 0 : n==1 ? 1 : n==2 ? 2 : n%100>=3 && n%100<=10 ? 3 : n%100>=11 && n%100<=99 ? 4 : 5;"
 }

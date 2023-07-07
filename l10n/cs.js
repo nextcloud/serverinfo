@@ -64,6 +64,7 @@ OC.L10N.register(
     "OPcache Revalidate Frequency:" : "Četnost opětovného ověřování platnosti OPcache mezipaměti:",
     "Extensions:" : "Rozšíření:",
     "Unable to list extensions" : "Nepodařilo se vypsat rozšíření",
+    "Show phpinfo" : "Zobrazit phpinfo",
     "Database" : "Databáze",
     "Type:" : "Typ:",
     "External monitoring tool" : "Externí nástroj pro dohledování",
