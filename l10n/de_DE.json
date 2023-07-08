@@ -62,7 +62,7 @@
     "OPcache Revalidate Frequency:" : "OPcache-Revalidierungshäufigkeit:",
     "Extensions:" : "Erweiterungen:",
     "Unable to list extensions" : "Erweiterungen können nicht aufgelistet werden",
-    "Show phpinfo" : "Phpinfo anzeigen",
+    "Show phpinfo" : "phpinfo anzeigen",
     "Database" : "Datenbank",
     "Type:" : "Art:",
     "External monitoring tool" : "Externes Überwachungsprogramm",
