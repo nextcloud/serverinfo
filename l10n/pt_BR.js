@@ -64,6 +64,7 @@ OC.L10N.register(
     "OPcache Revalidate Frequency:" : "Frequência de revalidação do OPcache:",
     "Extensions:" : "Extensões:",
     "Unable to list extensions" : "Não foi possível listar as extensões",
+    "Show phpinfo" : "Mostrar phpinfo",
     "Database" : "Banco de Dados",
     "Type:" : "Tipo:",
     "External monitoring tool" : "Ferramenta de monitoramento externo",
