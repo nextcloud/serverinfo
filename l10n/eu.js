@@ -63,6 +63,7 @@ OC.L10N.register(
     "Upload max size:" : "Kargatzeko gehienezko tamaina:",
     "Extensions:" : "Hedapenak:",
     "Unable to list extensions" : "Ezin dira zerrendatu luzapenak",
+    "Show phpinfo" : "Erakutsi phpinfo",
     "Database" : "Datu-basea",
     "Type:" : "Mota:",
     "External monitoring tool" : "Kanpo jarraipen tresna",
