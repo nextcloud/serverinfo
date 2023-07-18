@@ -60,6 +60,7 @@ OC.L10N.register(
     "Upload max size:" : "Макс. розмір завантаження:",
     "Extensions:" : "Розширення:",
     "Unable to list extensions" : "Не вдалося створити список розширень",
+    "Show phpinfo" : "Показати phpinfo",
     "Database" : "База даних",
     "Type:" : "Тип:",
     "External monitoring tool" : "Моніторинг сторонніми засобами",
