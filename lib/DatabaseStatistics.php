@@ -25,9 +25,9 @@ declare(strict_types=1);
 
 namespace OCA\ServerInfo;
 
+use OCP\DB\Exception;
 use OCP\IConfig;
 use OCP\IDBConnection;
-use OCP\DB\Exception;
 
 class DatabaseStatistics {
 	protected IConfig $config;
