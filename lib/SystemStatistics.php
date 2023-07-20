@@ -25,11 +25,11 @@ declare(strict_types=1);
 
 namespace OCA\ServerInfo;
 
+use OC\Files\View;
+use OC\Installer;
 use OCP\App\IAppManager;
 use OCP\Files\FileInfo;
 use OCP\IConfig;
-use OC\Files\View;
-use OC\Installer;
 
 class SystemStatistics {
 	private IConfig $config;
