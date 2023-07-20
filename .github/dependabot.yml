@@ -11,3 +11,7 @@ updates:
     labels:
       - 3. to review
       - dependencies
+    commit-message:
+      prefix: fix
+      prefix-development: chore
+      include: scope
