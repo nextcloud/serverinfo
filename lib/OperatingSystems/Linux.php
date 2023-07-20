@@ -28,7 +28,7 @@ use OCA\ServerInfo\Resources\Memory;
 use OCA\ServerInfo\Resources\NetInterface;
 use RuntimeException;
 
-class DefaultOs implements IOperatingSystem {
+class Linux implements IOperatingSystem {
 	private const AF_INET = 2;
 	private const AF_INET6 = 10;
 
