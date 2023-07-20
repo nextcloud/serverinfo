@@ -40,7 +40,7 @@ class SystemStatistics {
 
 	public function __construct(IConfig $config, IAppManager $appManager, Installer $installer, Os $os) {
 		$this->config = $config;
-		$this->view = new View();
+		$this->view = new View('');
 		$this->appManager = $appManager;
 		$this->installer = $installer;
 		$this->os = $os;
