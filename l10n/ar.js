@@ -61,7 +61,7 @@ OC.L10N.register(
     "Memory limit:" : "حد الذاكرة:",
     "Max execution time:" : "أقصى زمن تنفيذ:",
     "Upload max size:" : "الحجم الأقصى للرفع:",
-    "OPcache Revalidate Frequency:" : "تواتر إعادة مصادقة ذاكرة التخزين المؤقت أو بي كاش \"OPcache\":",
+    "OPcache Revalidate Frequency:" : "تواتر إعادة مصادقة ذاكرة التخزين المؤقت OPcache:",
     "Extensions:" : "الامتدادات extensions:",
     "Unable to list extensions" : "تعذّر عرض قائمة بالامتدادات extensions:",
     "Show phpinfo" : "عرض ملف phpinfo",
