@@ -48,7 +48,7 @@ OC.L10N.register(
     "24 hours:" : "24 hores:",
     "1 hour:" : "1 hora:",
     "5 mins:" : "5 minuts:",
-    "Shares" : "Element compartits",
+    "Shares" : "Elements compartits",
     "Users:" : "Usuaris:",
     "Groups:" : "Grups:",
     "Links:" : "Enllaços:",
