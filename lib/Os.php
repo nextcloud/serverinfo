@@ -23,28 +23,23 @@ declare(strict_types=1);
 
 namespace OCA\ServerInfo;
 
-use OCA\ServerInfo\OperatingSystems\DefaultOs;
+use OCA\ServerInfo\OperatingSystems\Dummy;
 use OCA\ServerInfo\OperatingSystems\FreeBSD;
 use OCA\ServerInfo\OperatingSystems\IOperatingSystem;
+use OCA\ServerInfo\OperatingSystems\Linux;
 use OCA\ServerInfo\Resources\Memory;
+use OCP\IConfig;
 
 class Os implements IOperatingSystem {
-	protected IOperatingSystem $backend;
+	private IOperatingSystem $backend;
 
-	/**
-	 * Os constructor.
-	 */
-	public function __construct() {
-		if (PHP_OS === 'FreeBSD') {
-			$this->backend = new FreeBSD();
-		} else {
-			$this->backend = new DefaultOs();
-		}
+	public function __construct(IConfig $config) {
+		$restrictedMode = $config->getAppValue('serverinfo', 'restricted_mode', 'no') === 'yes';
+		$this->backend = $this->getBackend($restrictedMode ? 'Dummy' : PHP_OS);
 	}
 
 	public function supported(): bool {
-		$data = $this->backend->supported();
-		return $data;
+		return $this->backend->supported();
 	}
 
 	public function getHostname(): string {
@@ -101,8 +96,7 @@ class Os implements IOperatingSystem {
 	}
 
 	public function getNetworkInfo(): array {
-		$data = $this->backend->getNetworkInfo();
-		return $data;
+		return $this->backend->getNetworkInfo();
 	}
 
 	public function getNetworkInterfaces(): array {
@@ -110,7 +104,14 @@ class Os implements IOperatingSystem {
 	}
 
 	public function getThermalZones(): array {
-		$data = $this->backend->getThermalZones();
-		return $data;
+		return $this->backend->getThermalZones();
+	}
+
+	private function getBackend(string $os): IOperatingSystem {
+		return match ($os) {
+			'Linux' => new Linux(),
+			'FreeBSD' => new FreeBSD(),
+			default => new Dummy(),
+		};
 	}
 }
