@@ -110,6 +110,8 @@ https://<nextcloud-fqdn>/ocs/v2.php/apps/serverinfo/api/v1/info
 
 ## Configuration
 
+##### Background job to update storage statistics
+
 Since collecting storage statistics might take time and cause slow downs, they are updated in the background. A background job runs once every three hours to update the number of storages and files. The interval can be overridden per app settings (the value is specified in seconds):
 
 ``php occ config:app:set --value=3600 serverinfo job_interval_storage_stats``
