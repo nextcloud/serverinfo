@@ -25,6 +25,7 @@ declare(strict_types=1);
 use OCA\ServerInfo\Resources\Disk;
 use OCA\ServerInfo\Resources\Memory;
 use OCA\ServerInfo\Resources\NetInterface;
+use OCA\ServerInfo\Resources\ThermalZone;
 use OCP\Util;
 
 script('serverinfo', 'script');
@@ -51,6 +52,8 @@ $memory = $_['memory'];
 $disks = $_['diskinfo'];
 /** @var NetInterface[] $interfaces */
 $interfaces = $_['networkinterfaces'];
+/** @var ThermalZone[] $thermalZones */
+$thermalZones = $_['thermalzones'];
 /** @var bool $phpinfo */
 $phpinfo = $_['phpinfo'];
 
@@ -80,6 +83,7 @@ $phpinfo = $_['phpinfo'];
 				<p><?php p($l->t('Uptime:')); ?> <strong id="numFilesStorage"><span class="info" id="uptime"></span></strong></p>
 			</div>
 
+			<?php if (count($thermalZones) > 0): ?>
 			<div class="col col-6 col-l-12">
 				<h2>
 					<img class="infoicon" src="<?php p(image_path('serverinfo', 'app-dark.svg')); ?>">
@@ -90,16 +94,17 @@ $phpinfo = $_['phpinfo'];
 						<thead>
 						</thead>
 						<tbody>
-						<?php foreach ($_['thermalzones'] as $thermalzone): ?>
+						<?php foreach ($thermalZones as $thermalZone): ?>
 						<tr>
-							<td><?php p($thermalzone['type'] . ':') ?></td>
-							<td><span class="info" id="<?php p($thermalzone['hash']) ?>"></span>°C</td>
+							<td><?php p($thermalZone->getType()) ?>:</td>
+							<td>&nbsp;<span class="info" id="<?php p($thermalZone->getZone()) ?>"><?php p($thermalZone->getTemp()) ?></span>°C</td>
 						</tr>
 						<?php endforeach; ?>
 						</tbody>
 					</table>
 				</div>
 			</div>
+			<?php endif; ?>
 		</div>
 	</div>
 

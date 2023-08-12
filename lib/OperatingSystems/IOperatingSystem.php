@@ -29,6 +29,7 @@ namespace OCA\ServerInfo\OperatingSystems;
 use OCA\ServerInfo\Resources\Disk;
 use OCA\ServerInfo\Resources\Memory;
 use OCA\ServerInfo\Resources\NetInterface;
+use OCA\ServerInfo\Resources\ThermalZone;
 
 interface IOperatingSystem {
 	public function supported(): bool;
@@ -86,13 +87,7 @@ interface IOperatingSystem {
 	/**
 	 * Get info about available thermal zones.
 	 *
-	 * [
-	 *       [
-	 *             'hash' => string,
-	 *             'type' => string,
-	 *             'temp' => float,
-	 *       ],
-	 * ]
+	 * @return ThermalZone[]
 	 */
 	public function getThermalZones(): array;
 }
