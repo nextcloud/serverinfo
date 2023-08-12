@@ -169,10 +169,6 @@ $phpinfo = $_['phpinfo'];
 			<?php endforeach; ?>
 		</div>
 
-		<div class="smallinfo">
-			<?php p($l->t('You will get a notification once one of your disks is nearly full.')); ?>
-		</div>
-
 		<p><?php p($l->t('Files:')); ?> <strong id="numFilesStorage"><?php p($_['storage']['num_files']); ?></strong></p>
 		<p><?php p($l->t('Storages:')); ?> <strong id="numFilesStorages"><?php p($_['storage']['num_storages']); ?></strong></p>
 		<?php if ($_['system']['freespace'] !== null): ?>
