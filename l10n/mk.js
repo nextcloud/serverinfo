@@ -29,7 +29,6 @@ OC.L10N.register(
     "Size:" : "Големина:",
     "Available:" : "Достапно:",
     "Used:" : "Искористено:",
-    "You will get a notification once one of your disks is nearly full." : "Ќе добиете известување кога дискот е пред исполнување",
     "Files:" : "Датотеки:",
     "Storages:" : "Складишта:",
     "Free Space:" : "Слободен простор:",
@@ -72,6 +71,7 @@ OC.L10N.register(
     "Copy" : "Копирај",
     "Appending \"?format=json\" at the end of the URL gives you the result in JSON." : "Доколку сакате преглед во JSON формат додадете \"?format=json\" на крај на адресата.",
     "To use an access token, please generate one then set it using the following command:" : "За да користите токен за пристап, ве молиме генерирајте еден, а потоа поставете го користејќи ја следнава команда:",
-    "Then pass the token with the \"NC-Token\" header when querying the above URL." : "Потоа поминете го токенот со заглавието „NC-Token“ кога го барате горното URL."
+    "Then pass the token with the \"NC-Token\" header when querying the above URL." : "Потоа поминете го токенот со заглавието „NC-Token“ кога го барате горното URL.",
+    "You will get a notification once one of your disks is nearly full." : "Ќе добиете известување кога дискот е пред исполнување"
 },
 "nplurals=2; plural=(n % 10 == 1 && n % 100 != 11) ? 0 : 1;");

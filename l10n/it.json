@@ -27,7 +27,6 @@
     "Size:" : "Dimensione:",
     "Available:" : "Disponibile:",
     "Used:" : "Utilizzato:",
-    "You will get a notification once one of your disks is nearly full." : "Riceverai una notifica quando uno dei dischi è prossimo alla capienza massima.",
     "Files:" : "File:",
     "Storages:" : "Archiviazioni:",
     "Free Space:" : "Spazio libero:",
@@ -68,6 +67,7 @@
     "Copy" : "Copia",
     "Appending \"?format=json\" at the end of the URL gives you the result in JSON." : "L'aggiunta di \"?format=json\" alla fine dell'URL ti fornirà il risultato in JSON.",
     "To use an access token, please generate one then set it using the following command:" : "Per usare un token di accesso, generane uno e poi impostalo con il comando seguente:",
-    "Then pass the token with the \"NC-Token\" header when querying the above URL." : "Poi passa il token con l'intestazione \"NC-Token\" quando richiami l'URL qua sopra."
+    "Then pass the token with the \"NC-Token\" header when querying the above URL." : "Poi passa il token con l'intestazione \"NC-Token\" quando richiami l'URL qua sopra.",
+    "You will get a notification once one of your disks is nearly full." : "Riceverai una notifica quando uno dei dischi è prossimo alla capienza massima."
 },"pluralForm" :"nplurals=3; plural=n == 1 ? 0 : n != 0 && n % 1000000 == 0 ? 1 : 2;"
 }

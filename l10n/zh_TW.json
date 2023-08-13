@@ -27,7 +27,6 @@
     "Size:" : "大小:",
     "Available:" : "可用：",
     "Used:" : "已使用：",
-    "You will get a notification once one of your disks is nearly full." : "你將在硬碟使用量快要用完前收到一次通知。",
     "Files:" : "檔案:",
     "Storages:" : "儲存設備：",
     "Free Space:" : "可用空間：",
@@ -70,6 +69,7 @@
     "Copy" : "複製",
     "Appending \"?format=json\" at the end of the URL gives you the result in JSON." : "在 URL 結尾接上 \"?format=json\" 即可取得 JSON 格式的回傳結果。",
     "To use an access token, please generate one then set it using the following command:" : "要使用存取權杖，請產生一個，然後使用下列指令設定：",
-    "Then pass the token with the \"NC-Token\" header when querying the above URL." : "然後在查詢上面的 URL 時，將權杖與「NC-Token」標頭一起傳遞。"
+    "Then pass the token with the \"NC-Token\" header when querying the above URL." : "然後在查詢上面的 URL 時，將權杖與「NC-Token」標頭一起傳遞。",
+    "You will get a notification once one of your disks is nearly full." : "你將在硬碟使用量快要用完前收到一次通知。"
 },"pluralForm" :"nplurals=1; plural=0;"
 }

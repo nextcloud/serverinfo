@@ -29,7 +29,6 @@ OC.L10N.register(
     "Size:" : "Méret:",
     "Available:" : "Elérhető:",
     "Used:" : "Használt:",
-    "You will get a notification once one of your disks is nearly full." : "Értesítést fog kapni, ha a lemezek már majdnem megteltek.",
     "Files:" : "Fájlok:",
     "Storages:" : "Tárhelyek:",
     "Free Space:" : "Szabad hely:",
@@ -71,6 +70,7 @@ OC.L10N.register(
     "Copy" : "Másolás",
     "Appending \"?format=json\" at the end of the URL gives you the result in JSON." : "Ha hozzáfűzi a „?format=json” szöveget az URL végéhez, akkor az eredményt JSON formátumban adja meg.",
     "To use an access token, please generate one then set it using the following command:" : "A hozzáférési token használatához hozzon létre egyet, majd állítsa be a következő paranccsal:",
-    "Then pass the token with the \"NC-Token\" header when querying the above URL." : "Ezután adja át a tokent az „NC-Token” fejléccel, amikor lekérdezi a fenti URL-t."
+    "Then pass the token with the \"NC-Token\" header when querying the above URL." : "Ezután adja át a tokent az „NC-Token” fejléccel, amikor lekérdezi a fenti URL-t.",
+    "You will get a notification once one of your disks is nearly full." : "Értesítést fog kapni, ha a lemezek már majdnem megteltek."
 },
 "nplurals=2; plural=(n != 1);");

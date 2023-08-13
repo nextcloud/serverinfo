@@ -29,7 +29,6 @@ OC.L10N.register(
     "Size:" : "Розмір:",
     "Available:" : "Доступно:",
     "Used:" : "Використовується:",
-    "You will get a notification once one of your disks is nearly full." : "Ви отримаєте сповіщення, якщо один з ваших дисків буде майже заповнено.",
     "Files:" : "Файлів:",
     "Storages:" : "Сховищ:",
     "Free Space:" : "Вільно:",
@@ -71,6 +70,7 @@ OC.L10N.register(
     "Copy" : "Копіювати",
     "Appending \"?format=json\" at the end of the URL gives you the result in JSON." : "Щоби отримати результат у форматі JSON, будь ласка, додайте рядок \"?format=json\" наприкінці адреси URL.",
     "To use an access token, please generate one then set it using the following command:" : "Щоби застосувати токен для доступу, спочатку зґенеруйте його, а потім встановіть за допомогою команди:",
-    "Then pass the token with the \"NC-Token\" header when querying the above URL." : "Потім передайте токен з додаванням заголовку \"NC-Token\" під час надсилання запиту за вказаною вище адресою URL."
+    "Then pass the token with the \"NC-Token\" header when querying the above URL." : "Потім передайте токен з додаванням заголовку \"NC-Token\" під час надсилання запиту за вказаною вище адресою URL.",
+    "You will get a notification once one of your disks is nearly full." : "Ви отримаєте сповіщення, якщо один з ваших дисків буде майже заповнено."
 },
 "nplurals=4; plural=(n % 1 == 0 && n % 10 == 1 && n % 100 != 11 ? 0 : n % 1 == 0 && n % 10 >= 2 && n % 10 <= 4 && (n % 100 < 12 || n % 100 > 14) ? 1 : n % 1 == 0 && (n % 10 ==0 || (n % 10 >=5 && n % 10 <=9) || (n % 100 >=11 && n % 100 <=14 )) ? 2: 3);");

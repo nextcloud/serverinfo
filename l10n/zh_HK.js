@@ -29,7 +29,6 @@ OC.L10N.register(
     "Size:" : "大小：",
     "Available:" : "可用：",
     "Used:" : "已使用：",
-    "You will get a notification once one of your disks is nearly full." : "你將在其中一個硬碟快滿前收到通知。",
     "Files:" : "檔案：",
     "Storages:" : "儲存設備：",
     "Free Space:" : "可用空間：",
@@ -72,6 +71,7 @@ OC.L10N.register(
     "Copy" : "複製",
     "Appending \"?format=json\" at the end of the URL gives you the result in JSON." : "在URL後面連接參數 \"?format=json\" 將會得到json格式的回傳結果。",
     "To use an access token, please generate one then set it using the following command:" : "要使用存取權杖，請生成一個權杖，然後使用以下命令對其進行設置：",
-    "Then pass the token with the \"NC-Token\" header when querying the above URL." : "然後在查詢上述 URL 時將權杖與 “ NC-Token” 標頭一起傳遞。"
+    "Then pass the token with the \"NC-Token\" header when querying the above URL." : "然後在查詢上述 URL 時將權杖與 “ NC-Token” 標頭一起傳遞。",
+    "You will get a notification once one of your disks is nearly full." : "你將在其中一個硬碟快滿前收到通知。"
 },
 "nplurals=1; plural=0;");

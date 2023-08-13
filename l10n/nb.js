@@ -28,7 +28,6 @@ OC.L10N.register(
     "Size:" : "Størrelse:",
     "Available:" : "Tilgjengelig:",
     "Used:" : "Brukt:",
-    "You will get a notification once one of your disks is nearly full." : "Du vil motta et varsel når en av diskene dine er nesten full.",
     "Files:" : "Filer:",
     "Storages:" : "Lagringer:",
     "Free Space:" : "Ledig plass:",
@@ -61,6 +60,7 @@ OC.L10N.register(
     "Database" : "Database",
     "Type:" : "Type:",
     "External monitoring tool" : "Eksternt overvåkingsverktøy",
-    "Copy" : "Kopier"
+    "Copy" : "Kopier",
+    "You will get a notification once one of your disks is nearly full." : "Du vil motta et varsel når en av diskene dine er nesten full."
 },
 "nplurals=2; plural=(n != 1);");
