@@ -12,7 +12,6 @@
     "Memory" : "Vinnsluminni",
     "Disk" : "Diskur",
     "Size:" : "Stærð:",
-    "You will get a notification once one of your disks is nearly full." : "Þú færð tilkynningu um leið og einhver diskanna þinna nálgast það að vera fullur.",
     "Files:" : "Skrár:",
     "Storages:" : "Gagnageymslur",
     "Free Space:" : "Laust diskapláss:",
@@ -29,6 +28,7 @@
     "External monitoring tool" : "Utanaðkomandi vöktunartól",
     "You can connect an external monitoring tool by using this end point:" : "Þú getur tengt utanaðkomandi vöktunartól með því að nota þennan endapunkt: ",
     "Copy" : "Afrita",
-    "Appending \"?format=json\" at the end of the URL gives you the result in JSON." : "Að með því að bæta \"?format=json\" við enda URL-slóðar, muntu fá niðurstöðurnar á JSON-sniði."
+    "Appending \"?format=json\" at the end of the URL gives you the result in JSON." : "Að með því að bæta \"?format=json\" við enda URL-slóðar, muntu fá niðurstöðurnar á JSON-sniði.",
+    "You will get a notification once one of your disks is nearly full." : "Þú færð tilkynningu um leið og einhver diskanna þinna nálgast það að vera fullur."
 },"pluralForm" :"nplurals=2; plural=(n % 10 != 1 || n % 100 == 11);"
 }

@@ -29,7 +29,6 @@ OC.L10N.register(
     "Size:" : "Tamaina:",
     "Available:" : "Erabilgarri:",
     "Used:" : "Erabilia:",
-    "You will get a notification once one of your disks is nearly full." : "Jakinarazpen bat jasoko duzu zure diskoetariko bat ia beteta dagoenean.",
     "Files:" : "Fitxategiak:",
     "Storages:" : "Biltegiak:",
     "Free Space:" : "Leku librea:",
@@ -71,6 +70,7 @@ OC.L10N.register(
     "Copy" : "Kopiatu",
     "Appending \"?format=json\" at the end of the URL gives you the result in JSON." : "URL-aren amaieran \"?format=json\" eransteak emaitza JSON-en ematen du.",
     "To use an access token, please generate one then set it using the following command:" : "Sarbide-token bat erabiltzeko, sortu bat eta ezarri komando hau erabiliz:",
-    "Then pass the token with the \"NC-Token\" header when querying the above URL." : "Ondoren, pasatu token-a \"NC-Token\" goiburuarekin goiko URLa kontsultatzerakoan."
+    "Then pass the token with the \"NC-Token\" header when querying the above URL." : "Ondoren, pasatu token-a \"NC-Token\" goiburuarekin goiko URLa kontsultatzerakoan.",
+    "You will get a notification once one of your disks is nearly full." : "Jakinarazpen bat jasoko duzu zure diskoetariko bat ia beteta dagoenean."
 },
 "nplurals=2; plural=(n != 1);");

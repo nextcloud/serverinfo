@@ -14,7 +14,6 @@ OC.L10N.register(
     "Memory" : "זיכרון",
     "Disk" : "כונן",
     "Size:" : "גודל:",
-    "You will get a notification once one of your disks is nearly full." : "תישלח אליך התראה כשהכונן עומד להתמלא לחלוטין.",
     "Files:" : "קבצים",
     "Storages:" : "אמצעי אחסון:",
     "Free Space:" : "מקום פנוי:",
@@ -32,6 +31,7 @@ OC.L10N.register(
     "You can connect an external monitoring tool by using this end point:" : "ניתן לחבר לכלי מעקב חיצוני דרך נקודת הגישה הזאת:",
     "Copy" : "העתקה",
     "Appending \"?format=json\" at the end of the URL gives you the result in JSON." : "הוספת „‎?format=json” לסוף הכתובת יעניק לך את התוצאה ב־JSON.",
-    "Then pass the token with the \"NC-Token\" header when querying the above URL." : "לאחר מכן יש להעביר את האסימון עם כותרת „NC-Token” בעת תשאול הכתובת שלעיל."
+    "Then pass the token with the \"NC-Token\" header when querying the above URL." : "לאחר מכן יש להעביר את האסימון עם כותרת „NC-Token” בעת תשאול הכתובת שלעיל.",
+    "You will get a notification once one of your disks is nearly full." : "תישלח אליך התראה כשהכונן עומד להתמלא לחלוטין."
 },
 "nplurals=4; plural=(n == 1 && n % 1 == 0) ? 0 : (n == 2 && n % 1 == 0) ? 1: (n % 10 == 0 && n % 1 == 0 && n > 10) ? 2 : 3;");
