@@ -27,7 +27,6 @@ OC.L10N.register(
     "Size:" : "Suurus:",
     "Available:" : "Saadaval:",
     "Used:" : "Kasutusel:",
-    "You will get a notification once one of your disks is nearly full." : "Saad teavituse, kui mõni ketastest on peaaegu täis.",
     "Files:" : "Faile:",
     "Free Space:" : "Vaba ruum:",
     "Network" : "Võrk",
@@ -64,6 +63,7 @@ OC.L10N.register(
     "Copy" : "Kopeeri",
     "Appending \"?format=json\" at the end of the URL gives you the result in JSON." : "Lisades URL-i lõppu \"?format=json\", saad tulemused JSON-formaadis.",
     "To use an access token, please generate one then set it using the following command:" : "Ligipääsutunnuse kasutamiseks genereeri see ja seadista alljärgneva käsu abil:",
-    "Then pass the token with the \"NC-Token\" header when querying the above URL." : "Seejärel saada tunnus ülaloleva URL-i pärimisel \"NC-Token\" päisega."
+    "Then pass the token with the \"NC-Token\" header when querying the above URL." : "Seejärel saada tunnus ülaloleva URL-i pärimisel \"NC-Token\" päisega.",
+    "You will get a notification once one of your disks is nearly full." : "Saad teavituse, kui mõni ketastest on peaaegu täis."
 },
 "nplurals=2; plural=(n != 1);");

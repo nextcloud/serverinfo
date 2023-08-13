@@ -14,7 +14,6 @@ OC.L10N.register(
     "Memory" : "Memória",
     "Disk" : "Disco",
     "Size:" : "Tamanho:",
-    "You will get a notification once one of your disks is nearly full." : "Receberá uma notificação logo que um dos seus discos esteja perto de estar cheio.",
     "Files:" : "Ficheiros:",
     "Storages:" : "Armazenamentos:",
     "Free Space:" : "Espaço livre:",
@@ -30,6 +29,7 @@ OC.L10N.register(
     "Type:" : "Tipo:",
     "External monitoring tool" : "Ferramenta externa de monitorização",
     "You can connect an external monitoring tool by using this end point:" : "Pode ligar uma ferramenta de monitorização externa ao usar \"endpoint\":",
-    "Copy" : "Copiar"
+    "Copy" : "Copiar",
+    "You will get a notification once one of your disks is nearly full." : "Receberá uma notificação logo que um dos seus discos esteja perto de estar cheio."
 },
 "nplurals=3; plural=(n == 0 || n == 1) ? 0 : n != 0 && n % 1000000 == 0 ? 1 : 2;");
