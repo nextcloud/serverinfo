@@ -14,7 +14,6 @@ OC.L10N.register(
     "Memory" : "Hukommelse",
     "Disk" : "Disk",
     "Size:" : "Størrelse:",
-    "You will get a notification once one of your disks is nearly full." : "Du får en meddelelse, når en af dine diske er næsten fuld.",
     "Files:" : "Filer:",
     "Storages:" : "Lagre:",
     "Free Space:" : "Ledig plads:",
@@ -32,6 +31,7 @@ OC.L10N.register(
     "You can connect an external monitoring tool by using this end point:" : "Du kan forbinde et eksternt monitoreringsprogram ved at bruge dette endepunkt:",
     "Copy" : "Kopier",
     "Appending \"?format=json\" at the end of the URL gives you the result in JSON." : "Ved at tilføje \"?format=json\" i slutningen af URL'en får du resultatet i JSON.",
-    "Then pass the token with the \"NC-Token\" header when querying the above URL." : "Send derefter tokenet med \"NC-Token\"-headeren, når du forespørger på ovenstående URL."
+    "Then pass the token with the \"NC-Token\" header when querying the above URL." : "Send derefter tokenet med \"NC-Token\"-headeren, når du forespørger på ovenstående URL.",
+    "You will get a notification once one of your disks is nearly full." : "Du får en meddelelse, når en af dine diske er næsten fuld."
 },
 "nplurals=2; plural=(n != 1);");

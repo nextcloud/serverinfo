@@ -29,7 +29,6 @@ OC.L10N.register(
     "Size:" : "Mida:",
     "Available:" : "Disponible:",
     "Used:" : "Utilitzat:",
-    "You will get a notification once one of your disks is nearly full." : "Rebreu una notificació quan un dels vostres discs estigui gairebé ple.",
     "Files:" : "FItxers:",
     "Storages:" : "Emmagatzematges:",
     "Free Space:" : "Espai lliure:",
@@ -70,6 +69,7 @@ OC.L10N.register(
     "Copy" : "Copia",
     "Appending \"?format=json\" at the end of the URL gives you the result in JSON." : "Afegint \"?format=json\" al final de la URL rebreu el resultat en format JSON.",
     "To use an access token, please generate one then set it using the following command:" : "Per utilitzar un testimoni d'accés, genereu-ne un i configureu-lo amb l'ordre següent:",
-    "Then pass the token with the \"NC-Token\" header when querying the above URL." : "A continuació, passeu el testimoni amb la capçalera \"NC-Token\" quan consulteu l’adreça URL anterior."
+    "Then pass the token with the \"NC-Token\" header when querying the above URL." : "A continuació, passeu el testimoni amb la capçalera \"NC-Token\" quan consulteu l’adreça URL anterior.",
+    "You will get a notification once one of your disks is nearly full." : "Rebreu una notificació quan un dels vostres discs estigui gairebé ple."
 },
 "nplurals=2; plural=(n != 1);");

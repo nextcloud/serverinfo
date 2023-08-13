@@ -14,7 +14,6 @@ OC.L10N.register(
     "Memory" : "Pomnilnik",
     "Disk" : "Disk",
     "Size:" : "Velikost:",
-    "You will get a notification once one of your disks is nearly full." : "Obvestilo bo poslano, ko bo katerikoli disk skoraj polno zaseden.",
     "Files:" : "Datoteke:",
     "Storages:" : "Shrambe:",
     "Free Space:" : "Prostor:",
@@ -32,6 +31,7 @@ OC.L10N.register(
     "External monitoring tool" : "Zunanje orodje za nadzor",
     "You can connect an external monitoring tool by using this end point:" : "Povezava do zunanjega orodja za spremljanje delovanja prek končne točke:",
     "Copy" : "Kopiraj",
-    "Appending \"?format=json\" at the end of the URL gives you the result in JSON." : "Pripenjanje zapisa » ?format=json « na konec naslova URL omogoči izpis podatkov v zapisu JSON."
+    "Appending \"?format=json\" at the end of the URL gives you the result in JSON." : "Pripenjanje zapisa » ?format=json « na konec naslova URL omogoči izpis podatkov v zapisu JSON.",
+    "You will get a notification once one of your disks is nearly full." : "Obvestilo bo poslano, ko bo katerikoli disk skoraj polno zaseden."
 },
 "nplurals=4; plural=(n%100==1 ? 0 : n%100==2 ? 1 : n%100==3 || n%100==4 ? 2 : 3);");

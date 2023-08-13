@@ -29,7 +29,6 @@ OC.L10N.register(
     "Size:" : "サイズ:",
     "Available:" : "利用可能:",
     "Used:" : "使用中:",
-    "You will get a notification once one of your disks is nearly full." : "いずれかのディスクがいっぱいになると通知を受け取ります。",
     "Files:" : "ファイル数:",
     "Storages:" : "ストレージ：",
     "Free Space:" : "空き容量：",
@@ -60,6 +59,7 @@ OC.L10N.register(
     "Copy" : "コピー",
     "Appending \"?format=json\" at the end of the URL gives you the result in JSON." : "URLの最後に \"?format=json\" を追加すると、JSONの結果が得られます。",
     "To use an access token, please generate one then set it using the following command:" : "アクセストークンを使用するには、アクセストークンを生成し、以下のコマンドで設定してください。",
-    "Then pass the token with the \"NC-Token\" header when querying the above URL." : "次に、上記のURLをクエリするときに、\"NC-Token\" ヘッダーでトークンを渡します。"
+    "Then pass the token with the \"NC-Token\" header when querying the above URL." : "次に、上記のURLをクエリするときに、\"NC-Token\" ヘッダーでトークンを渡します。",
+    "You will get a notification once one of your disks is nearly full." : "いずれかのディスクがいっぱいになると通知を受け取ります。"
 },
 "nplurals=1; plural=0;");

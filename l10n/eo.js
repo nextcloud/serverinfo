@@ -14,7 +14,6 @@ OC.L10N.register(
     "Memory" : "Ĉefmemoro",
     "Disk" : "Disko",
     "Size:" : "Grando:",
-    "You will get a notification once one of your disks is nearly full." : "Ni sciigos vin, kiam disko preskaŭ plenos.",
     "Files:" : "Dosieroj:",
     "Storages:" : "Konservejoj:",
     "Free Space:" : "Libera spaco:",
@@ -30,6 +29,7 @@ OC.L10N.register(
     "Type:" : "Tipo:",
     "External monitoring tool" : "Ekstera observa ilo",
     "You can connect an external monitoring tool by using this end point:" : "Vi povas konekti eksteran observan ilon per tiu adreso:",
-    "Copy" : "Kopii"
+    "Copy" : "Kopii",
+    "You will get a notification once one of your disks is nearly full." : "Ni sciigos vin, kiam disko preskaŭ plenos."
 },
 "nplurals=2; plural=(n != 1);");

@@ -27,7 +27,6 @@
     "Size:" : "Velikost:",
     "Available:" : "K dispozici:",
     "Used:" : "Použito:",
-    "You will get a notification once one of your disks is nearly full." : "Pokud budou vaše úložiště téměř zaplněná, budete na to upozorněni.",
     "Files:" : "Souborů:",
     "Storages:" : "Úložišť:",
     "Free Space:" : "Volné místo:",
@@ -70,6 +69,7 @@
     "Copy" : "Zkopírovat",
     "Appending \"?format=json\" at the end of the URL gives you the result in JSON." : "Přidání „?format=json“ na konec URL poskytne výsledek ve formátu JSON.",
     "To use an access token, please generate one then set it using the following command:" : "Aby bylo možné použít přístupový token, vytvořte ho a pak nastavte pomocí následujícího příkazu:",
-    "Then pass the token with the \"NC-Token\" header when querying the above URL." : "Poté při dotazování výše uvedené URL předávejte se záhlavím „NC-Token“."
+    "Then pass the token with the \"NC-Token\" header when querying the above URL." : "Poté při dotazování výše uvedené URL předávejte se záhlavím „NC-Token“.",
+    "You will get a notification once one of your disks is nearly full." : "Pokud budou vaše úložiště téměř zaplněná, budete na to upozorněni."
 },"pluralForm" :"nplurals=4; plural=(n == 1 && n % 1 == 0) ? 0 : (n >= 2 && n <= 4 && n % 1 == 0) ? 1: (n % 1 != 0 ) ? 2 : 3;"
 }
