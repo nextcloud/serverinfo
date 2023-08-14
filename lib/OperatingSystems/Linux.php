@@ -26,6 +26,7 @@ namespace OCA\ServerInfo\OperatingSystems;
 use OCA\ServerInfo\Resources\Disk;
 use OCA\ServerInfo\Resources\Memory;
 use OCA\ServerInfo\Resources\NetInterface;
+use OCA\ServerInfo\Resources\ThermalZone;
 use RuntimeException;
 
 class Linux implements IOperatingSystem {
@@ -229,22 +230,24 @@ class Linux implements IOperatingSystem {
 	}
 
 	public function getThermalZones(): array {
-		$thermalZones = glob('/sys/class/thermal/thermal_zone*') ?: [];
-		$result = [];
+		$data = [];
 
-		foreach ($thermalZones as $thermalZone) {
-			$tzone = [];
-			try {
-				$tzone['hash'] = md5($thermalZone);
-				$tzone['type'] = $this->readContent($thermalZone . '/type');
-				$tzone['temp'] = (float)((int)($this->readContent($thermalZone . '/temp')) / 1000);
-			} catch (RuntimeException $e) {
-				continue;
-			}
-			$result[] = $tzone;
+		$zones = glob('/sys/class/thermal/thermal_zone*');
+		if ($zones === false) {
+			return $data;
 		}
 
-		return $result;
+		foreach ($zones as $zone) {
+			try {
+				$type = $this->readContent($zone . '/type');
+				$temp = (float)((int)($this->readContent($zone . '/temp')) / 1000);
+				$data[] = new ThermalZone(md5($zone), $type, $temp);
+			} catch (RuntimeException) {
+				// unable to read thermal zone
+			}
+		}
+
+		return $data;
 	}
 
 	/**

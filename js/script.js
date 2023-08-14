@@ -293,8 +293,8 @@
 					var data = response.ocs.data;
 					document.getElementById("servertime").innerHTML = data.servertime;
 					document.getElementById("uptime").innerHTML = data.uptime;
-					for (i in data.thermalzones) {
-						document.getElementById(data.thermalzones[i]['hash']).innerHTML = data.thermalzones[i]['temp'];
+					for (const thermalzone of data.thermalzones) {
+						document.getElementById(thermalzone.zone).textContent = thermalzone.temp;
 					}
 				},
 				error: function (data) {
