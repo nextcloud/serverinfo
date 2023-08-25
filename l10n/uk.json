@@ -64,7 +64,7 @@
     "Database" : "База даних",
     "Type:" : "Тип:",
     "External monitoring tool" : "Моніторинг сторонніми засобами",
-    "You can connect an external monitoring tool by using this end point:" : "Адреса для передачі даних засобам стороннього моніторингу:",
+    "You can connect an external monitoring tool by using this end point:" : "Адреса для передавання даних засобами стороннього моніторингу:",
     "Copy" : "Копіювати",
     "Appending \"?format=json\" at the end of the URL gives you the result in JSON." : "Щоби отримати результат у форматі JSON, будь ласка, додайте рядок \"?format=json\" наприкінці адреси URL.",
     "To use an access token, please generate one then set it using the following command:" : "Щоби застосувати токен для доступу, спочатку зґенеруйте його, а потім встановіть за допомогою команди:",
