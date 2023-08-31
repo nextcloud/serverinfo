@@ -23,10 +23,5 @@
 		"platform": {
 			"php": "8.0"
 		}
-	},
-	"autoload-dev": {
-		"psr-4": {
-			"OCP\\": "vendor/nextcloud/ocp/OCP"
-		}
 	}
 }
