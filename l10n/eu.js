@@ -59,7 +59,7 @@ OC.L10N.register(
     "Version:" : "Bertsioa:",
     "Memory limit:" : "Memoria muga:",
     "Max execution time:" : "Gehienezko exekuzio denbora:",
-    "Upload max size:" : "Kargatzeko gehienezko tamaina:",
+    "Upload max size:" : "Igotzeko gehienezko tamaina:",
     "Extensions:" : "Hedapenak:",
     "Unable to list extensions" : "Ezin dira zerrendatu luzapenak",
     "Show phpinfo" : "Erakutsi phpinfo",
