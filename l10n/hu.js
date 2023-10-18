@@ -63,6 +63,7 @@ OC.L10N.register(
     "OPcache Revalidate Frequency:" : "OPcache újraellenőrzési gyakorisága:",
     "Extensions:" : "Bővítmények:",
     "Unable to list extensions" : "Nem lehet felsorolni a bővítményeket",
+    "Show phpinfo" : "phpinfo mutatása",
     "Database" : "Adatbázis:",
     "Type:" : "Típus:",
     "External monitoring tool" : "Külső rendszerfelügyeleti eszköz",
