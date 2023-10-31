@@ -3,27 +3,9 @@
 # https://github.com/nextcloud/.github
 # https://docs.github.com/en/actions/learn-github-actions/sharing-workflows-with-your-organization
 
-name: PHPUnit
+name: PHPUnit pgsql
 
-on:
-  pull_request:
-    paths:
-      - '.github/workflows/**'
-      - 'appinfo/**'
-      - 'lib/**'
-      - 'templates/**'
-      - 'tests/**'
-      - 'vendor/**'
-      - 'vendor-bin/**'
-      - '.php-cs-fixer.dist.php'
-      - 'composer.json'
-      - 'composer.lock'
-
-  push:
-    branches:
-      - main
-      - master
-      - stable*
+on: pull_request
 
 permissions:
   contents: read
@@ -33,17 +15,44 @@ concurrency:
   cancel-in-progress: true
 
 jobs:
+  changes:
+    runs-on: ubuntu-latest
+
+    outputs:
+      src: ${{ steps.changes.outputs.src}}
+
+    steps:
+      - uses: dorny/paths-filter@4512585405083f25c027a35db413c2b3b9006d50 # v2.11.1
+        id: changes
+        continue-on-error: true
+        with:
+          filters: |
+            src:
+              - '.github/workflows/**'
+              - 'appinfo/**'
+              - 'lib/**'
+              - 'templates/**'
+              - 'tests/**'
+              - 'vendor/**'
+              - 'vendor-bin/**'
+              - '.php-cs-fixer.dist.php'
+              - 'composer.json'
+              - 'composer.lock'
+
   phpunit-pgsql:
     runs-on: ubuntu-latest
 
+    needs: changes
+    if: needs.changes.outputs.src != 'false'
+
     strategy:
       matrix:
-        php-versions: ['8.0']
+        php-versions: ['8.2']
         server-versions: ['stable26']
 
     services:
       postgres:
-        image: postgres:14
+        image: ghcr.io/nextcloud/continuous-integration-postgres-14:latest
         ports:
           - 4444:5432/tcp
         env:
@@ -59,23 +68,25 @@ jobs:
           echo "APP_NAME=${GITHUB_REPOSITORY##*/}" >> $GITHUB_ENV
 
       - name: Checkout server
-        uses: actions/checkout@ac593985615ec2ede58e132d2e21d2b1cbd6127c # v3
+        uses: actions/checkout@b4ffde65f46336ab88eb53be808477a3936bae11 # v4.1.1
         with:
           submodules: true
           repository: nextcloud/server
           ref: ${{ matrix.server-versions }}
 
       - name: Checkout app
-        uses: actions/checkout@ac593985615ec2ede58e132d2e21d2b1cbd6127c # v3
+        uses: actions/checkout@b4ffde65f46336ab88eb53be808477a3936bae11 # v4.1.1
         with:
           path: apps/${{ env.APP_NAME }}
 
       - name: Set up php ${{ matrix.php-versions }}
-        uses: shivammathur/setup-php@1a18b2267f80291a81ca1d33e7c851fe09e7dfc4 # v2
+        uses: shivammathur/setup-php@7fdd3ece872ec7ec4c098ae5ab7637d5e0a96067 # v2
         with:
           php-version: ${{ matrix.php-versions }}
-          extensions: mbstring, iconv, fileinfo, intl, pgsql, pdo_pgsql
+          # https://docs.nextcloud.com/server/stable/admin_manual/installation/source_installation.html#prerequisites-for-manual-installation
+          extensions: bz2, ctype, curl, dom, fileinfo, gd, iconv, intl, json, libxml, mbstring, openssl, pcntl, posix, session, simplexml, xmlreader, xmlwriter, zip, zlib, pgsql, pdo_pgsql
           coverage: none
+          ini-file: development
         env:
           GITHUB_TOKEN: ${{ secrets.GITHUB_TOKEN }}
 
@@ -130,6 +141,11 @@ jobs:
         working-directory: apps/${{ env.APP_NAME }}
         run: composer run test:integration
 
+      - name: Print logs
+        if: always()
+        run: |
+          cat data/nextcloud.log
+
       - name: Skipped
         # Fail the action when neither unit nor integration tests ran
         if: steps.check_phpunit.outcome == 'failure' && steps.check_integration.outcome == 'failure'
@@ -141,7 +157,7 @@ jobs:
     permissions:
       contents: none
     runs-on: ubuntu-latest
-    needs: phpunit-pgsql
+    needs: [changes, phpunit-pgsql]
 
     if: always()
 
@@ -149,4 +165,4 @@ jobs:
 
     steps:
       - name: Summary status
-        run: if ${{ needs.phpunit-pgsql.result != 'success' }}; then exit 1; fi
+        run: if ${{ needs.changes.outputs.src != 'false' && needs.phpunit-pgsql.result != 'success' }}; then exit 1; fi
