@@ -49,14 +49,14 @@ class AdminSettings implements ISettings {
 	private SystemStatistics $systemStatistics;
 
 	public function __construct(Os $os,
-								IL10N $l,
-								IURLGenerator $urlGenerator,
-								StorageStatistics $storageStatistics,
-								PhpStatistics $phpStatistics,
-								DatabaseStatistics $databaseStatistics,
-								ShareStatistics $shareStatistics,
-								SessionStatistics $sessionStatistics,
-								SystemStatistics $systemStatistics
+		IL10N $l,
+		IURLGenerator $urlGenerator,
+		StorageStatistics $storageStatistics,
+		PhpStatistics $phpStatistics,
+		DatabaseStatistics $databaseStatistics,
+		ShareStatistics $shareStatistics,
+		SessionStatistics $sessionStatistics,
+		SystemStatistics $systemStatistics
 	) {
 		$this->os = $os;
 		$this->l = $l;
