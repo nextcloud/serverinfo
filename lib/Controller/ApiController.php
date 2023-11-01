@@ -55,17 +55,17 @@ class ApiController extends OCSController {
 	 * ApiController constructor.
 	 */
 	public function __construct(string $appName,
-								IRequest $request,
-								IConfig $config,
-								IGroupManager $groupManager,
-								?IUserSession $userSession,
-								Os $os,
-								SystemStatistics $systemStatistics,
-								StorageStatistics $storageStatistics,
-								PhpStatistics $phpStatistics,
-								DatabaseStatistics $databaseStatistics,
-								ShareStatistics $shareStatistics,
-								SessionStatistics $sessionStatistics) {
+		IRequest $request,
+		IConfig $config,
+		IGroupManager $groupManager,
+		?IUserSession $userSession,
+		Os $os,
+		SystemStatistics $systemStatistics,
+		StorageStatistics $storageStatistics,
+		PhpStatistics $phpStatistics,
+		DatabaseStatistics $databaseStatistics,
+		ShareStatistics $shareStatistics,
+		SessionStatistics $sessionStatistics) {
 		parent::__construct($appName, $request);
 
 		$this->config = $config;
