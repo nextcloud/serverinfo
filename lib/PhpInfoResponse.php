@@ -29,6 +29,9 @@ use OCP\AppFramework\Http\ContentSecurityPolicy;
 use OCP\AppFramework\Http\FeaturePolicy;
 use OCP\AppFramework\Http\Response;
 
+/**
+ * @template-extends Response<int, array<string, mixed>>
+ */
 class PhpInfoResponse extends Response {
 	public function __construct() {
 		parent::__construct();
