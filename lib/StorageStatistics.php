@@ -88,7 +88,7 @@ class StorageStatistics {
 		}
 		$storageResult->closeCursor();
 
-		$this->config->setAppValue('serverinfo', 'cached_count_filecache' , (string)$fileCount);
+		$this->config->setAppValue('serverinfo', 'cached_count_filecache', (string)$fileCount);
 		$this->config->setAppValue('serverinfo', 'cached_count_storages', (string)$storageCount);
 	}
 
