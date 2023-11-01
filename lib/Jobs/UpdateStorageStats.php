@@ -28,6 +28,7 @@ namespace OCA\ServerInfo\Jobs;
 
 use OCA\ServerInfo\StorageStatistics;
 use OCP\AppFramework\Utility\ITimeFactory;
+use OCP\BackgroundJob\IJob;
 use OCP\BackgroundJob\TimedJob;
 use OCP\IConfig;
 
@@ -35,6 +36,7 @@ class UpdateStorageStats extends TimedJob {
 	private StorageStatistics $storageStatistics;
 
 	public function __construct(ITimeFactory $time, StorageStatistics $storageStatistics, IConfig $config) {
+		$this->setTimeSensitivity(IJob::TIME_INSENSITIVE);
 		$this->setInterval((int)$config->getAppValue('serverinfo', 'job_interval_storage_stats', (string)(60 * 60 * 3)));
 		parent::__construct($time);
 
