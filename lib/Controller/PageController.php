@@ -24,10 +24,10 @@ declare(strict_types=1);
 
 namespace OCA\ServerInfo\Controller;
 
+use OCA\ServerInfo\SystemStatistics;
+use OCP\AppFramework\Controller;
 use OCP\AppFramework\Http\JSONResponse;
 use OCP\IRequest;
-use OCP\AppFramework\Controller;
-use OCA\ServerInfo\SystemStatistics;
 
 class PageController extends Controller {
 	private SystemStatistics $systemStatistics;
@@ -36,8 +36,8 @@ class PageController extends Controller {
 	 * ApiController constructor.
 	 */
 	public function __construct(string $appName,
-								IRequest $request,
-								SystemStatistics $systemStatistics
+		IRequest $request,
+		SystemStatistics $systemStatistics
 	) {
 		parent::__construct($appName, $request);
 
