@@ -1,7 +1,7 @@
 {
 	"require-dev": {
-		"nextcloud/coding-standard": "^0.4.0",
-		"psalm/phar": "^4.22",
+		"nextcloud/coding-standard": "^v1.1.1",
+		"psalm/phar": "^5.15.0",
 		"bantu/ini-get-wrapper": "v1.0.1",
 		"phpunit/phpunit": "^9.5",
 		"nextcloud/ocp": "dev-stable25"
@@ -12,7 +12,9 @@
 		"psalm": "psalm.phar --threads=1",
 		"psalm:update-baseline": "psalm.phar --threads=1 --update-baseline --set-baseline=tests/psalm-baseline.xml",
 		"psalm:clear": "psalm.phar --clear-cache && psalm --clear-global-cache",
-		"psalm:fix": "psalm.phar --alter --issues=InvalidReturnType,InvalidNullableReturnType,MissingParamType,InvalidFalsableReturnType"
+		"psalm:fix": "psalm.phar --alter --issues=InvalidReturnType,InvalidNullableReturnType,MissingParamType,InvalidFalsableReturnType",
+		"lint": "find . -name \\*.php -not -path './vendor/*' -print0 | xargs -0 -n1 php -l",
+		"test:unit": "phpunit -c tests/phpunit.xml --fail-on-warning"
 	},
 	"config": {
 		"allow-plugins": {

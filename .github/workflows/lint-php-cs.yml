@@ -3,19 +3,23 @@
 # https://github.com/nextcloud/.github
 # https://docs.github.com/en/actions/learn-github-actions/sharing-workflows-with-your-organization
 
-name: Static analysis
+name: Lint php-cs
 
 on: pull_request
 
+permissions:
+  contents: read
+
 concurrency:
-  group: psalm-${{ github.head_ref || github.run_id }}
+  group: lint-php-cs-${{ github.head_ref || github.run_id }}
   cancel-in-progress: true
 
 jobs:
-  static-analysis:
+  lint:
     runs-on: ubuntu-latest
 
-    name: Psalm
+    name: php-cs
+
     steps:
       - name: Checkout
         uses: actions/checkout@b4ffde65f46336ab88eb53be808477a3936bae11 # v4.1.1
@@ -32,5 +36,5 @@ jobs:
       - name: Install dependencies
         run: composer i
 
-      - name: Run coding standards check
-        run: composer run psalm
+      - name: Lint
+        run: composer run cs:check || ( echo 'Please run `composer run cs:fix` to format your code' && exit 1 )
