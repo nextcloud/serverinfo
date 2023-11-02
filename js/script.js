@@ -225,7 +225,7 @@
 	function initMonitoringLinkToClipboard() {
 		var clipboard = new Clipboard('.clipboardButton');
 		clipboard.on('success', function (e) {
-			OC.Notification.show('Copied!', { type: 'success' })
+			OC.Notification.show(t('serverinfo', 'Copied!'), { type: 'success' })
 		});
 		clipboard.on('error', function () {
 			var actionMsg = '';
