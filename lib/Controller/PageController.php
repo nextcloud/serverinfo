@@ -49,7 +49,7 @@ class PageController extends Controller {
 	 */
 	public function update(): JSONResponse {
 		$data = [
-			'system' => $this->systemStatistics->getSystemStatistics()
+			'system' => $this->systemStatistics->getSystemStatistics(true)
 		];
 
 		return new JSONResponse($data);
