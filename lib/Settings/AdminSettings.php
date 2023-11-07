@@ -87,7 +87,7 @@ class AdminSettings implements ISettings {
 			'php' => $this->phpStatistics->getPhpStatistics(),
 			'database' => $this->databaseStatistics->getDatabaseStatistics(),
 			'activeUsers' => $this->sessionStatistics->getSessionStatistics(),
-			'system' => $this->systemStatistics->getSystemStatistics(),
+			'system' => $this->systemStatistics->getSystemStatistics(true, true),
 			'thermalzones' => $this->os->getThermalZones(),
 			'phpinfo' => $this->config->getAppValue('serverinfo', 'phpinfo', 'no') === 'yes',
 			'phpinfoUrl' => $this->urlGenerator->linkToRoute('serverinfo.page.phpinfo')

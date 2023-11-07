@@ -225,7 +225,7 @@
 	function initMonitoringLinkToClipboard() {
 		var clipboard = new Clipboard('.clipboardButton');
 		clipboard.on('success', function (e) {
-			OC.Notification.show('Copied!', { type: 'success' })
+			OC.Notification.show(t('serverinfo', 'Copied!'), { type: 'success' })
 		});
 		clipboard.on('error', function () {
 			var actionMsg = '';
@@ -310,3 +310,32 @@
 	}
 
 })(jQuery, OC);
+
+function updateMonitoringUrl(event) {
+	const $endpointUrl = document.getElementById('monitoring-endpoint-url');
+	const $params = document.querySelectorAll('.update-monitoring-endpoint-url');
+
+	const url = new URL($endpointUrl.value)
+	url.searchParams.delete('format')
+	url.searchParams.delete('skipUpdate')
+	url.searchParams.delete('skipApps')
+
+	for (const $param of $params) {
+		if ($param.name === 'format_json' && $param.checked) {
+			url.searchParams.set('format', 'json')
+		}
+		if ($param.name === 'skip_update' && $param.checked) {
+			url.searchParams.set('skipUpdate', 'true')
+		}
+		if ($param.name === 'skip_apps' && $param.checked) {
+			url.searchParams.set('skipApps', 'true')
+		}
+	}
+
+	$endpointUrl.value = url.toString()
+}
+
+document.addEventListener('DOMContentLoaded', function (event) {
+	const $params = document.querySelectorAll('.update-monitoring-endpoint-url');
+	$params.forEach($param => $param.addEventListener('change', updateMonitoringUrl));
+});

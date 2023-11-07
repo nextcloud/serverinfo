@@ -15,13 +15,16 @@ directory **nextcloud/apps/serverinfo**
 
 ## API
 
-The API provides a lot of information information about a running Nextcloud
-instance in XML or JSON format, by using the following URL. If you want to
-get the information returned in JSON format, you have to append **`?format=json`**
-to the URL.
+The API provides a lot of information about a running Nextcloud
+instance in XML or JSON format by using the following URL.
+
 ```
 https://<nextcloud-fqdn>/ocs/v2.php/apps/serverinfo/api/v1/info
 ```
+
+- To request the information in JSON append the url parameter `format=json`
+- Use the url parameter `skipUpdate=true` to omit server updates.
+- Use the url parameter `skipApps=true` to omit app updates (including available app updates will send an external request to the app store).
 
 ### Example XML output:
 ```
