@@ -113,7 +113,7 @@ class ApiController extends OCSController {
 	 * @PublicPage
 	 * @BruteForceProtection(action=serverinfo)
 	 */
-	public function info(bool $skipUpdate = false, bool $skipApps = false): DataResponse {
+	public function info(bool $skipApps = false, bool $skipUpdate = true): DataResponse {
 		if (!$this->checkAuthorized()) {
 			$response = new DataResponse(['message' => 'Unauthorized']);
 			$response->throttle();
@@ -122,7 +122,7 @@ class ApiController extends OCSController {
 		}
 		return new DataResponse([
 			'nextcloud' => [
-				'system' => $this->systemStatistics->getSystemStatistics($skipUpdate, $skipApps),
+				'system' => $this->systemStatistics->getSystemStatistics($skipApps, $skipUpdate),
 				'storage' => $this->storageStatistics->getStorageStatistics(),
 				'shares' => $this->shareStatistics->getShareStatistics()
 			],

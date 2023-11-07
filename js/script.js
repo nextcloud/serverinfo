@@ -317,18 +317,18 @@ function updateMonitoringUrl(event) {
 
 	const url = new URL($endpointUrl.value)
 	url.searchParams.delete('format')
-	url.searchParams.delete('skipUpdate')
 	url.searchParams.delete('skipApps')
+	url.searchParams.delete('skipUpdate')
 
 	for (const $param of $params) {
 		if ($param.name === 'format_json' && $param.checked) {
 			url.searchParams.set('format', 'json')
 		}
-		if ($param.name === 'skip_update' && $param.checked) {
-			url.searchParams.set('skipUpdate', 'true')
-		}
 		if ($param.name === 'skip_apps' && $param.checked) {
 			url.searchParams.set('skipApps', 'true')
+		}
+		if ($param.name === 'skip_update' && !$param.checked) {
+			url.searchParams.set('skipUpdate', 'false')
 		}
 	}
 

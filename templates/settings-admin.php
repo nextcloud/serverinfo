@@ -425,12 +425,12 @@ $phpinfo = $_['phpinfo'];
 						<label for="format_json"><?php p($l->t('Output in JSON')) ?></label>
 					</div>
 					<div class="monitoring-url-param">
-						<input type="checkbox" class="update-monitoring-endpoint-url" name="skip_update" id="skip_update">
-						<label for="skip_update"><?php p($l->t('Skip server update')) ?></label>
-					</div>
-					<div class="monitoring-url-param">
 						<input type="checkbox" class="update-monitoring-endpoint-url" name="skip_apps" id="skip_apps">
 						<label for="skip_apps"><?php p($l->t('Skip app updates (including app updates will send an external request to the app store)')) ?></label>
+					</div>
+					<div class="monitoring-url-param">
+						<input type="checkbox" class="update-monitoring-endpoint-url" name="skip_update" id="skip_update" checked>
+						<label for="skip_update"><?php p($l->t('Skip server update')) ?></label>
 					</div>
 				</div>
 
