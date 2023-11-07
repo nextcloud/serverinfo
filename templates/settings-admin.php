@@ -165,10 +165,6 @@ $interfaces = $_['networkinterfaces'];
 			<?php endforeach; ?>
 		</div>
 
-		<div class="smallinfo">
-			<?php p($l->t('You will get a notification once one of your disks is nearly full.')); ?>
-		</div>
-
 		<p><?php p($l->t('Files:')); ?> <strong id="numFilesStorage"><?php p($_['storage']['num_files']); ?></strong></p>
 		<p><?php p($l->t('Storages:')); ?> <strong id="numFilesStorages"><?php p($_['storage']['num_storages']); ?></strong></p>
 		<?php if ($_['system']['freespace'] !== null): ?>
@@ -398,15 +394,24 @@ $interfaces = $_['networkinterfaces'];
 				<!-- OCS ENDPOINT -->
 				<h2><?php p($l->t('External monitoring tool')); ?></h2>
 				<p>
-					<?php p($l->t('You can connect an external monitoring tool by using this end point:')); ?>
+					<?php p($l->t('Use this end point to connect an external monitoring tool:')); ?>
 				</p>
 				<div class="monitoring-wrapper">
 					<input type="text" readonly="readonly" id="monitoring-endpoint-url" value="<?php echo p($_['ocs']); ?>"/>
 					<a class="clipboardButton icon icon-clippy" title="<?php p($l->t('Copy')); ?>" aria-label="<?php p($l->t('Copy')); ?>" data-clipboard-target="#monitoring-endpoint-url"></a>
 				</div>
-				<p class="settings-hint">
-					<?php p($l->t('Appending "?format=json" at the end of the URL gives you the result in JSON.')); ?>
-				</p>
+
+				<div class="monitoring-url-params">
+					<div class="monitoring-url-param">
+						<input type="checkbox" class="update-monitoring-endpoint-url" name="format_json" id="format_json">
+						<label for="format_json"><?php p($l->t('Output in JSON')) ?></label>
+					</div>
+					<div class="monitoring-url-param">
+						<input type="checkbox" class="update-monitoring-endpoint-url" name="skip_apps" id="skip_apps">
+						<label for="skip_apps"><?php p($l->t('Skip app updates (including app updates will send an external request to the app store)')) ?></label>
+					</div>
+				</div>
+
 				<p>
 					<?php p($l->t('To use an access token, please generate one then set it using the following command:')); ?>
 					<div><i>occ config:app:set serverinfo token --value yourtoken</i></div>

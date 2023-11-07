@@ -244,3 +244,14 @@
 	}
 }
 */
+
+.monitoring-url-params {
+	margin-top: 3px;
+	margin-bottom: 3px;
+}
+
+.monitoring-url-param {
+	display: flex;
+	align-items: center;
+	height: 24px;
+}

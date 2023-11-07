@@ -51,10 +51,11 @@ class SystemStatistics {
 	 *
 	 * @throws \OCP\Files\InvalidPathException
 	 */
-	public function getSystemStatistics(): array {
+	public function getSystemStatistics(bool $skipApps = false): array {
 		$processorUsage = $this->getProcessorUsage();
 		$memoryUsage = $this->os->getMemory();
-		return [
+
+		$data = [
 			'version' => $this->config->getSystemValue('version'),
 			'theme' => $this->config->getSystemValue('theme', 'none'),
 			'enable_avatars' => $this->config->getSystemValue('enable_avatars', true) ? 'yes' : 'no',
@@ -70,8 +71,13 @@ class SystemStatistics {
 			'mem_free' => $memoryUsage->getMemAvailable() * 1024,
 			'swap_total' => $memoryUsage->getSwapTotal() * 1024,
 			'swap_free' => $memoryUsage->getSwapFree() * 1024,
-			'apps' => $this->getAppsInfo()
 		];
+
+		if (!$skipApps) {
+			$data['apps'] = $this->getAppsInfo();
+		}
+
+		return $data;
 	}
 
 	/**
