@@ -51,7 +51,7 @@ class SystemStatistics {
 	 *
 	 * @throws \OCP\Files\InvalidPathException
 	 */
-	public function getSystemStatistics(bool $skipUpdate = false, bool $skipApps = false): array {
+	public function getSystemStatistics(bool $skipApps = false, bool $skipUpdate = true): array {
 		$processorUsage = $this->getProcessorUsage();
 		$memoryUsage = $this->os->getMemory();
 
@@ -73,12 +73,12 @@ class SystemStatistics {
 			'swap_free' => $memoryUsage->getSwapFree() * 1024,
 		];
 
-		if (!$skipUpdate) {
-			$data['update'] = $this->getServerUpdateInfo();
-		}
-
 		if (!$skipApps) {
 			$data['apps'] = $this->getAppsInfo();
+		}
+
+		if (!$skipUpdate) {
+			$data['update'] = $this->getServerUpdateInfo();
 		}
 
 		return $data;
