@@ -63,11 +63,11 @@
     "Database" : "Base de dades",
     "Type:" : "Tipus:",
     "External monitoring tool" : "Eina externa de monitorització",
-    "You can connect an external monitoring tool by using this end point:" : "Podeu connectar una eina externa de monitorització fent servir aquest punt final:",
     "Copy" : "Copia",
-    "Appending \"?format=json\" at the end of the URL gives you the result in JSON." : "Afegint \"?format=json\" al final de la URL rebreu el resultat en format JSON.",
     "To use an access token, please generate one then set it using the following command:" : "Per utilitzar un testimoni d'accés, genereu-ne un i configureu-lo amb l'ordre següent:",
     "Then pass the token with the \"NC-Token\" header when querying the above URL." : "A continuació, passeu el testimoni amb la capçalera \"NC-Token\" quan consulteu l’adreça URL anterior.",
-    "You will get a notification once one of your disks is nearly full." : "Rebreu una notificació quan un dels vostres discs estigui gairebé ple."
+    "You will get a notification once one of your disks is nearly full." : "Rebreu una notificació quan un dels vostres discs estigui gairebé ple.",
+    "You can connect an external monitoring tool by using this end point:" : "Podeu connectar una eina externa de monitorització fent servir aquest punt final:",
+    "Appending \"?format=json\" at the end of the URL gives you the result in JSON." : "Afegint \"?format=json\" al final de la URL rebreu el resultat en format JSON."
 },"pluralForm" :"nplurals=2; plural=(n != 1);"
 }

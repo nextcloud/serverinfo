@@ -5,6 +5,7 @@
     "RAM info not available" : "RAM info not available",
     "SWAP: Total: {swapTotalBytes}/Current usage: {swapUsageBytes}" : "SWAP: Total: {swapTotalBytes}/Current usage: {swapUsageBytes}",
     "SWAP info not available" : "SWAP info not available",
+    "Copied!" : "Copied!",
     "Not supported!" : "Not supported!",
     "Press ⌘-C to copy." : "Press ⌘-C to copy.",
     "Press Ctrl-C to copy." : "Press Ctrl-C to copy.",
@@ -65,11 +66,11 @@
     "Database" : "Database",
     "Type:" : "Type:",
     "External monitoring tool" : "External monitoring tool",
-    "You can connect an external monitoring tool by using this end point:" : "You can connect an external monitoring tool by using this end point:",
     "Copy" : "Copy",
-    "Appending \"?format=json\" at the end of the URL gives you the result in JSON." : "Appending \"?format=json\" at the end of the URL gives you the result in JSON.",
     "To use an access token, please generate one then set it using the following command:" : "To use an access token, please generate one then set it using the following command:",
     "Then pass the token with the \"NC-Token\" header when querying the above URL." : "Then pass the token with the \"NC-Token\" header when querying the above URL.",
-    "You will get a notification once one of your disks is nearly full." : "You will get a notification once one of your disks is nearly full."
+    "You will get a notification once one of your disks is nearly full." : "You will get a notification once one of your disks is nearly full.",
+    "You can connect an external monitoring tool by using this end point:" : "You can connect an external monitoring tool by using this end point:",
+    "Appending \"?format=json\" at the end of the URL gives you the result in JSON." : "Appending \"?format=json\" at the end of the URL gives you the result in JSON."
 },"pluralForm" :"nplurals=2; plural=(n != 1);"
 }

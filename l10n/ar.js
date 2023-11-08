@@ -67,11 +67,11 @@ OC.L10N.register(
     "Database" : "قاعدة البيانات",
     "Type:" : "النوع:",
     "External monitoring tool" : "أداة الرصد الخارجية",
-    "You can connect an external monitoring tool by using this end point:" : "يمكنك توصيل أداة رصد خارجية باستخدام نقطة النهاية هذه:",
     "Copy" : "نسخ",
-    "Appending \"?format=json\" at the end of the URL gives you the result in JSON." : "ينتج عن إلحاق \"؟ format = json\" في نهاية عنوان URL ملف بتنسيق JSON.",
     "To use an access token, please generate one then set it using the following command:" : "لاستخدام أَمَارَة وصول access token، يرجى توليد واحدةٍ ثم تعيينها باستخدام الأمر التالي:",
     "Then pass the token with the \"NC-Token\" header when querying the above URL." : "ثم قُم بتمرير الأَمَارَة talk برأس \"NC-Token\" عند الاستعلام عن عنوان الـ URL أعلاه.",
-    "You will get a notification once one of your disks is nearly full." : "ستتلقى إشعارًا عند اقتراب أحد الأقراص الخاصة بك من الامتلاء."
+    "You will get a notification once one of your disks is nearly full." : "ستتلقى إشعارًا عند اقتراب أحد الأقراص الخاصة بك من الامتلاء.",
+    "You can connect an external monitoring tool by using this end point:" : "يمكنك توصيل أداة رصد خارجية باستخدام نقطة النهاية هذه:",
+    "Appending \"?format=json\" at the end of the URL gives you the result in JSON." : "ينتج عن إلحاق \"؟ format = json\" في نهاية عنوان URL ملف بتنسيق JSON."
 },
 "nplurals=6; plural=n==0 ? 0 : n==1 ? 1 : n==2 ? 2 : n%100>=3 && n%100<=10 ? 3 : n%100>=11 && n%100<=99 ? 4 : 5;");

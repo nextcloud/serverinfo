@@ -7,6 +7,7 @@ OC.L10N.register(
     "RAM info not available" : "Los datos de la RAM no están disponibles",
     "SWAP: Total: {swapTotalBytes}/Current usage: {swapUsageBytes}" : "SWAP: Total: {swapTotalBytes} / Uso actual: {swapUsageBytes}",
     "SWAP info not available" : "Los datos de SWAP no están disponibles",
+    "Copied!" : "¡Copiado!",
     "Not supported!" : "No está soportado.",
     "Press ⌘-C to copy." : "Pulsa ⌘-C para copiar.",
     "Press Ctrl-C to copy." : "Pulsa Ctrl-C para copiar.",
@@ -67,11 +68,11 @@ OC.L10N.register(
     "Database" : "Base de datos",
     "Type:" : "Tipo:",
     "External monitoring tool" : "Herramienta externa de monitorización",
-    "You can connect an external monitoring tool by using this end point:" : "Puedes conectar una herramienta de monitorización externa usando este endpoint:",
     "Copy" : "Copiar",
-    "Appending \"?format=json\" at the end of the URL gives you the result in JSON." : "Añadiendo \"?format=json\" al final de la URL, devuelve el resultado en formato JSON.",
     "To use an access token, please generate one then set it using the following command:" : "Para usar un token de acceso, por favor, genere uno y luego establézcalo usando el siguiente comando",
     "Then pass the token with the \"NC-Token\" header when querying the above URL." : "Luego pase el token en el header \"NC-Token\" cuando solicite la URL anterior.",
-    "You will get a notification once one of your disks is nearly full." : "Recibirás una notificación cuando uno de tus discos esté casi lleno."
+    "You will get a notification once one of your disks is nearly full." : "Recibirás una notificación cuando uno de tus discos esté casi lleno.",
+    "You can connect an external monitoring tool by using this end point:" : "Puedes conectar una herramienta de monitorización externa usando este endpoint:",
+    "Appending \"?format=json\" at the end of the URL gives you the result in JSON." : "Añadiendo \"?format=json\" al final de la URL, devuelve el resultado en formato JSON."
 },
 "nplurals=3; plural=n == 1 ? 0 : n != 0 && n % 1000000 == 0 ? 1 : 2;");

@@ -1,6 +1,7 @@
 OC.L10N.register(
     "serverinfo",
     {
+    "Copied!" : "පිටපත් කළා!",
     "Not supported!" : "සහාය නොදක්වයි!",
     "Press ⌘-C to copy." : "පිටපත් කිරීමට ⌘-C ඔබන්න.",
     "Press Ctrl-C to copy." : "පිටපත් කිරීමට Ctrl-C ඔබන්න.",
