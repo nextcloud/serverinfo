@@ -5,6 +5,7 @@
     "RAM info not available" : "RAM informazioa ez dago eskuragarri",
     "SWAP: Total: {swapTotalBytes}/Current usage: {swapUsageBytes}" : "SWAP: Totala: {swapTotalBytes}/Erabiltzen: {swapUsageBytes}",
     "SWAP info not available" : "SWAP informazioa ez dago eskuragarri",
+    "Copied!" : "Kopiatuta!",
     "Not supported!" : "Ez da onartzen!",
     "Press ⌘-C to copy." : "Sakatu ⌘-C kopiatzeko.",
     "Press Ctrl-C to copy." : "Sakatu Ctrl-C kopiatzeko.",
@@ -64,11 +65,11 @@
     "Database" : "Datu-basea",
     "Type:" : "Mota:",
     "External monitoring tool" : "Kanpo jarraipen tresna",
-    "You can connect an external monitoring tool by using this end point:" : " Kanpoko kontrol-tresna konektatu daiteke amaiera-puntu hau erabiliz:",
     "Copy" : "Kopiatu",
-    "Appending \"?format=json\" at the end of the URL gives you the result in JSON." : "URL-aren amaieran \"?format=json\" eransteak emaitza JSON-en ematen du.",
     "To use an access token, please generate one then set it using the following command:" : "Sarbide-token bat erabiltzeko, sortu bat eta ezarri komando hau erabiliz:",
     "Then pass the token with the \"NC-Token\" header when querying the above URL." : "Ondoren, pasatu token-a \"NC-Token\" goiburuarekin goiko URLa kontsultatzerakoan.",
-    "You will get a notification once one of your disks is nearly full." : "Jakinarazpen bat jasoko duzu zure diskoetariko bat ia beteta dagoenean."
+    "You will get a notification once one of your disks is nearly full." : "Jakinarazpen bat jasoko duzu zure diskoetariko bat ia beteta dagoenean.",
+    "You can connect an external monitoring tool by using this end point:" : " Kanpoko kontrol-tresna konektatu daiteke amaiera-puntu hau erabiliz:",
+    "Appending \"?format=json\" at the end of the URL gives you the result in JSON." : "URL-aren amaieran \"?format=json\" eransteak emaitza JSON-en ematen du."
 },"pluralForm" :"nplurals=2; plural=(n != 1);"
 }

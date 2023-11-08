@@ -7,6 +7,7 @@ OC.L10N.register(
     "RAM info not available" : "Info om minne er ikke tilgjengelig",
     "SWAP: Total: {swapTotalBytes}/Current usage: {swapUsageBytes}" : "SWAP: Totalt: {swapTotalBytes}/Nåværende bruk: {swapUsageBytes}",
     "SWAP info not available" : "Info om SWAP er ikke tilgjengelig",
+    "Copied!" : "Kopiert!",
     "Not supported!" : "Ikke støttet!",
     "Press ⌘-C to copy." : "Trykk ⌘-C for å kopiere.",
     "Press Ctrl-C to copy." : "Trykk Ctrl-C for å kopiere.",

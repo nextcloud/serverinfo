@@ -5,6 +5,7 @@
     "RAM info not available" : "RAM情報が利用不可",
     "SWAP: Total: {swapTotalBytes}/Current usage: {swapUsageBytes}" : "スワップ: 合計: {swapTotalBytes}/現在の使用率: {swapUsageBytes}",
     "SWAP info not available" : "SWAP情報なし",
+    "Copied!" : "コピー完了",
     "Not supported!" : "対応していません！",
     "Press ⌘-C to copy." : "⌘-C でコピーします。",
     "Press Ctrl-C to copy." : "Ctrl-Cを押してコピーします。",
@@ -53,11 +54,11 @@
     "Database" : "データベース",
     "Type:" : "タイプ:",
     "External monitoring tool" : "外部モニタリングツール",
-    "You can connect an external monitoring tool by using this end point:" : "このエンドポイントを利用して外部モニタリングツールに接続することが可能です：",
     "Copy" : "コピー",
-    "Appending \"?format=json\" at the end of the URL gives you the result in JSON." : "URLの最後に \"?format=json\" を追加すると、JSONの結果が得られます。",
     "To use an access token, please generate one then set it using the following command:" : "アクセストークンを使用するには、アクセストークンを生成し、以下のコマンドで設定してください。",
     "Then pass the token with the \"NC-Token\" header when querying the above URL." : "次に、上記のURLをクエリするときに、\"NC-Token\" ヘッダーでトークンを渡します。",
-    "You will get a notification once one of your disks is nearly full." : "いずれかのディスクがいっぱいになると通知を受け取ります。"
+    "You will get a notification once one of your disks is nearly full." : "いずれかのディスクがいっぱいになると通知を受け取ります。",
+    "You can connect an external monitoring tool by using this end point:" : "このエンドポイントを利用して外部モニタリングツールに接続することが可能です：",
+    "Appending \"?format=json\" at the end of the URL gives you the result in JSON." : "URLの最後に \"?format=json\" を追加すると、JSONの結果が得られます。"
 },"pluralForm" :"nplurals=1; plural=0;"
 }

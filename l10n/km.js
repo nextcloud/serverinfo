@@ -1,6 +1,7 @@
 OC.L10N.register(
     "serverinfo",
     {
+    "Copied!" : "បានចម្លង",
     "Press ⌘-C to copy." : " ចុច ⌘-C ដើម្បីចម្លង",
     "Press Ctrl-C to copy." : "ចុច Ctrl-C ដើម្បីចម្លង",
     "Size:" : "ទំហំ៖",

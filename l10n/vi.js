@@ -7,6 +7,7 @@ OC.L10N.register(
     "RAM info not available" : "Không lấy được thông tin RAM",
     "SWAP: Total: {swapTotalBytes}/Current usage: {swapUsageBytes}" : "SWAP: Tổng: {swapTotalBytes}/Đang sử dụng: {swapUsageBytes}",
     "SWAP info not available" : "Không lấy được thông tin SWAP",
+    "Copied!" : "Đã sao chép!",
     "Not supported!" : "Không hỗ trợ!",
     "Press ⌘-C to copy." : "Bấm ⌘-C để sao chép.",
     "Press Ctrl-C to copy." : "Bấm Ctrl-C để sao chép.",

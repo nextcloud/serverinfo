@@ -7,6 +7,7 @@ OC.L10N.register(
     "RAM info not available" : "RAM info not available",
     "SWAP: Total: {swapTotalBytes}/Current usage: {swapUsageBytes}" : "SWAP: Total: {swapTotalBytes}/Current usage: {swapUsageBytes}",
     "SWAP info not available" : "SWAP info not available",
+    "Copied!" : "رونوشت شد!",
     "Not supported!" : "پشتیبانی وجود ندارد!",
     "Press ⌘-C to copy." : "برای کپی کردن از دکمه های C+⌘ استفاده نمایید",
     "Press Ctrl-C to copy." : "برای کپی کردن از دکمه ctrl+c استفاده نمایید",
@@ -67,11 +68,11 @@ OC.L10N.register(
     "Database" : "پایگاه داده",
     "Type:" : "نوع:",
     "External monitoring tool" : "ابزار نظارت خارجی",
-    "You can connect an external monitoring tool by using this end point:" : "با استفاده از این نقطه پایانی می توانید یک ابزار نظارت خارجی را به هم متصل شدن:",
     "Copy" : "کپی کردن",
-    "Appending \"?format=json\" at the end of the URL gives you the result in JSON." : "Appending \"?format=json\" at the end of the URL gives you the result in JSON.",
     "To use an access token, please generate one then set it using the following command:" : "To use an access token, please generate one then set it using the following command:",
     "Then pass the token with the \"NC-Token\" header when querying the above URL." : "Then pass the token with the \"NC-Token\" header when querying the above URL.",
-    "You will get a notification once one of your disks is nearly full." : "هنگامی که یکی از دیسک های شما تقریباً کامل شد ، یک اعلان دریافت خواهید کرد."
+    "You will get a notification once one of your disks is nearly full." : "هنگامی که یکی از دیسک های شما تقریباً کامل شد ، یک اعلان دریافت خواهید کرد.",
+    "You can connect an external monitoring tool by using this end point:" : "با استفاده از این نقطه پایانی می توانید یک ابزار نظارت خارجی را به هم متصل شدن:",
+    "Appending \"?format=json\" at the end of the URL gives you the result in JSON." : "Appending \"?format=json\" at the end of the URL gives you the result in JSON."
 },
 "nplurals=2; plural=(n > 1);");

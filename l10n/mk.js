@@ -7,6 +7,7 @@ OC.L10N.register(
     "RAM info not available" : "Информации за RAM меморијата не се достапни",
     "SWAP: Total: {swapTotalBytes}/Current usage: {swapUsageBytes}" : "SWAP: Вкупно: {swapTotalBytes}/Моментално искористување: {swapUsageBytes}",
     "SWAP info not available" : "Информации за SWAP меморијата не се достапни",
+    "Copied!" : "Копирано!",
     "Not supported!" : "Не е поддржано!",
     "Press ⌘-C to copy." : "Притисни ⌘-C за да копираш",
     "Press Ctrl-C to copy." : "Притисни Ctrl-C за да копираш.",
@@ -67,11 +68,11 @@ OC.L10N.register(
     "Database" : "База",
     "Type:" : "Вид:",
     "External monitoring tool" : "Надворешен уред за следење",
-    "You can connect an external monitoring tool by using this end point:" : "Можете да поврзете надорешен уред за следење со користење на:",
     "Copy" : "Копирај",
-    "Appending \"?format=json\" at the end of the URL gives you the result in JSON." : "Доколку сакате преглед во JSON формат додадете \"?format=json\" на крај на адресата.",
     "To use an access token, please generate one then set it using the following command:" : "За да користите токен за пристап, ве молиме генерирајте еден, а потоа поставете го користејќи ја следнава команда:",
     "Then pass the token with the \"NC-Token\" header when querying the above URL." : "Потоа поминете го токенот со заглавието „NC-Token“ кога го барате горното URL.",
-    "You will get a notification once one of your disks is nearly full." : "Ќе добиете известување кога дискот е пред исполнување"
+    "You will get a notification once one of your disks is nearly full." : "Ќе добиете известување кога дискот е пред исполнување",
+    "You can connect an external monitoring tool by using this end point:" : "Можете да поврзете надорешен уред за следење со користење на:",
+    "Appending \"?format=json\" at the end of the URL gives you the result in JSON." : "Доколку сакате преглед во JSON формат додадете \"?format=json\" на крај на адресата."
 },
 "nplurals=2; plural=(n % 10 == 1 && n % 100 != 11) ? 0 : 1;");

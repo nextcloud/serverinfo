@@ -2,6 +2,7 @@ OC.L10N.register(
     "serverinfo",
     {
     "CPU info not available" : "CPU 정보를 사용할 수 없음",
+    "Copied!" : "복사 성공!",
     "Not supported!" : "지원하지 않음!",
     "Press ⌘-C to copy." : "복사하려면 ⌘-C 키를 누르십시오.",
     "Press Ctrl-C to copy." : "복사하려면 Ctrl-C 키를 누르십시오.",
@@ -28,8 +29,8 @@ OC.L10N.register(
     "Database" : "데이터베이스",
     "Type:" : "종류:",
     "External monitoring tool" : "외부 모니터링 도구",
-    "You can connect an external monitoring tool by using this end point:" : "이 종단점으로 외부 모니터링 도구에 연결할 수 있습니다:",
     "Copy" : "복사",
-    "You will get a notification once one of your disks is nearly full." : "디스크가 거의 가득 찼을 때 한 번 알림을 받습니다."
+    "You will get a notification once one of your disks is nearly full." : "디스크가 거의 가득 찼을 때 한 번 알림을 받습니다.",
+    "You can connect an external monitoring tool by using this end point:" : "이 종단점으로 외부 모니터링 도구에 연결할 수 있습니다:"
 },
 "nplurals=1; plural=0;");

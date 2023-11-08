@@ -67,11 +67,11 @@ OC.L10N.register(
     "Database" : "Base de datos",
     "Type:" : "Tipo:",
     "External monitoring tool" : "Ferramenta externa de supervisión",
-    "You can connect an external monitoring tool by using this end point:" : "Pode conectar unha ferramenta externa de seguimento usando este punto final:",
     "Copy" : "Copiar",
-    "Appending \"?format=json\" at the end of the URL gives you the result in JSON." : "Engadindo «?format=json» na fin do URL devolve o resultado en JSON.",
     "To use an access token, please generate one then set it using the following command:" : "Para usar un testemuño de acceso, xere un e configúreo usando a seguinte orde:",
     "Then pass the token with the \"NC-Token\" header when querying the above URL." : "A continuación, pase o testemuño coa cabeceira «NC-Token» ao consultar o URL anterior.",
-    "You will get a notification once one of your disks is nearly full." : "Recibirá unha notificación cando un dos seus discos estea case completo."
+    "You will get a notification once one of your disks is nearly full." : "Recibirá unha notificación cando un dos seus discos estea case completo.",
+    "You can connect an external monitoring tool by using this end point:" : "Pode conectar unha ferramenta externa de seguimento usando este punto final:",
+    "Appending \"?format=json\" at the end of the URL gives you the result in JSON." : "Engadindo «?format=json» na fin do URL devolve o resultado en JSON."
 },
 "nplurals=2; plural=(n != 1);");

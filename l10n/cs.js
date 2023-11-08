@@ -7,6 +7,7 @@ OC.L10N.register(
     "RAM info not available" : "Informace o operační paměti nejsou k dispozici",
     "SWAP: Total: {swapTotalBytes}/Current usage: {swapUsageBytes}" : "Odkládací prostor (swap): Celkem: {swapTotalBytes}/Stávající využití: {swapUsageBytes}",
     "SWAP info not available" : "Informace o odkládacím prostoru (swap) nejsou k dispozici",
+    "Copied!" : "Zkopírováno!",
     "Not supported!" : "Nepodporováno!",
     "Press ⌘-C to copy." : "Zkopírujete stisknutím ⌘C.",
     "Press Ctrl-C to copy." : "Zkopírujete stisknutím Ctrl+C.",
@@ -67,11 +68,11 @@ OC.L10N.register(
     "Database" : "Databáze",
     "Type:" : "Typ:",
     "External monitoring tool" : "Externí nástroj pro dohledování",
-    "You can connect an external monitoring tool by using this end point:" : "Externí dohledovací nástroj je možné napojit pomocí tohoto koncového bodu:",
     "Copy" : "Zkopírovat",
-    "Appending \"?format=json\" at the end of the URL gives you the result in JSON." : "Přidání „?format=json“ na konec URL poskytne výsledek ve formátu JSON.",
     "To use an access token, please generate one then set it using the following command:" : "Aby bylo možné použít přístupový token, vytvořte ho a pak nastavte pomocí následujícího příkazu:",
     "Then pass the token with the \"NC-Token\" header when querying the above URL." : "Poté při dotazování výše uvedené URL předávejte se záhlavím „NC-Token“.",
-    "You will get a notification once one of your disks is nearly full." : "Pokud budou vaše úložiště téměř zaplněná, budete na to upozorněni."
+    "You will get a notification once one of your disks is nearly full." : "Pokud budou vaše úložiště téměř zaplněná, budete na to upozorněni.",
+    "You can connect an external monitoring tool by using this end point:" : "Externí dohledovací nástroj je možné napojit pomocí tohoto koncového bodu:",
+    "Appending \"?format=json\" at the end of the URL gives you the result in JSON." : "Přidání „?format=json“ na konec URL poskytne výsledek ve formátu JSON."
 },
 "nplurals=4; plural=(n == 1 && n % 1 == 0) ? 0 : (n >= 2 && n <= 4 && n % 1 == 0) ? 1: (n % 1 != 0 ) ? 2 : 3;");
