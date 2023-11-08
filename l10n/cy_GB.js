@@ -1,6 +1,7 @@
 OC.L10N.register(
     "serverinfo",
     {
+    "Copied!" : "Wedi'i gopïo!",
     "Not supported!" : "Heb ei gefnogi!",
     "Press ⌘-C to copy." : "Pwyswch ⌘-C i gopïo.",
     "Press Ctrl-C to copy." : "Pwyswch Ctrl-C i gopïo.",

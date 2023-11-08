@@ -7,6 +7,7 @@ OC.L10N.register(
     "RAM info not available" : "Informação de RAM não disponível",
     "SWAP: Total: {swapTotalBytes}/Current usage: {swapUsageBytes}" : "SWAP: Total: {swapTotalBytes} / Uso atual: {swapUsageBytes}",
     "SWAP info not available" : "Informação SWAP não disponível",
+    "Copied!" : "Copiado!",
     "Not supported!" : "Não suportado!",
     "Press ⌘-C to copy." : "Pressione ⌘-C para copiar.",
     "Press Ctrl-C to copy." : "Pressione Ctrl-C para copiar.",
@@ -67,11 +68,11 @@ OC.L10N.register(
     "Database" : "Banco de Dados",
     "Type:" : "Tipo:",
     "External monitoring tool" : "Ferramenta de monitoramento externo",
-    "You can connect an external monitoring tool by using this end point:" : "Você pode conectar uma ferramenta de monitoramento externa usando este ponto final:",
     "Copy" : "Copiar",
-    "Appending \"?format=json\" at the end of the URL gives you the result in JSON." : "Adicionar \"?format=json\" no final da URL dá a você o resultado em JSON.",
     "To use an access token, please generate one then set it using the following command:" : "Para usar um token de acesso, gere um e defina-o usando o seguinte comando:",
     "Then pass the token with the \"NC-Token\" header when querying the above URL." : "Em seguida, passe o token com o cabeçalho \"NC-Token\" ao consultar o URL acima.",
-    "You will get a notification once one of your disks is nearly full." : "Você receberá uma notificação quando um dos seus discos estiver quase cheio."
+    "You will get a notification once one of your disks is nearly full." : "Você receberá uma notificação quando um dos seus discos estiver quase cheio.",
+    "You can connect an external monitoring tool by using this end point:" : "Você pode conectar uma ferramenta de monitoramento externa usando este ponto final:",
+    "Appending \"?format=json\" at the end of the URL gives you the result in JSON." : "Adicionar \"?format=json\" no final da URL dá a você o resultado em JSON."
 },
 "nplurals=3; plural=(n == 0 || n == 1) ? 0 : n != 0 && n % 1000000 == 0 ? 1 : 2;");

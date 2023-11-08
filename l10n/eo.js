@@ -2,6 +2,7 @@ OC.L10N.register(
     "serverinfo",
     {
     "CPU info not available" : "Informo pri la ĉefprocesoro ne disponeblas",
+    "Copied!" : "Kopiita!",
     "Not supported!" : "Ne subtenite!",
     "Press ⌘-C to copy." : "Premu ⌘-C por kopii.",
     "Press Ctrl-C to copy." : "Premu Ctrl-C por kopii.",
@@ -28,8 +29,8 @@ OC.L10N.register(
     "Database" : "Datumbazo",
     "Type:" : "Tipo:",
     "External monitoring tool" : "Ekstera observa ilo",
-    "You can connect an external monitoring tool by using this end point:" : "Vi povas konekti eksteran observan ilon per tiu adreso:",
     "Copy" : "Kopii",
-    "You will get a notification once one of your disks is nearly full." : "Ni sciigos vin, kiam disko preskaŭ plenos."
+    "You will get a notification once one of your disks is nearly full." : "Ni sciigos vin, kiam disko preskaŭ plenos.",
+    "You can connect an external monitoring tool by using this end point:" : "Vi povas konekti eksteran observan ilon per tiu adreso:"
 },
 "nplurals=2; plural=(n != 1);");

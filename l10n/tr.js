@@ -7,6 +7,7 @@ OC.L10N.register(
     "RAM info not available" : "RAM bilgileri alınamadı",
     "SWAP: Total: {swapTotalBytes}/Current usage: {swapUsageBytes}" : "SWAP: Toplam: {swapTotalBytes}/Güncel kullanım: {swapUsageBytes}",
     "SWAP info not available" : "SWAP bilgileri alınamadı",
+    "Copied!" : "Kopyalandı!",
     "Not supported!" : "Desteklenmiyor!",
     "Press ⌘-C to copy." : "Kopyalamak için ⌘-C tuşlarına basın.",
     "Press Ctrl-C to copy." : "Kopyalamak için Ctrl-C tuşlarına basın.",
@@ -67,11 +68,11 @@ OC.L10N.register(
     "Database" : "Veri tabanı",
     "Type:" : "Tür:",
     "External monitoring tool" : "Dış izleme aracı",
-    "You can connect an external monitoring tool by using this end point:" : "Bu uç noktasını kullanarak bir dış izleme aracı bağlayabilirsiniz:",
     "Copy" : "Kopyala",
-    "Appending \"?format=json\" at the end of the URL gives you the result in JSON." : "Adresin sonuna \"?format=json\" eklendiğinde sonuçlar JSON biçiminde alınabilir.",
     "To use an access token, please generate one then set it using the following command:" : "Erişim kodunu kullanmak için yeni bir kod üretip şu komutu yürüterek ayarlayın:",
     "Then pass the token with the \"NC-Token\" header when querying the above URL." : "Ardından yukarıdaki adresi sorgularken kodu \"NC-Token\" üst bilgisi ile gönderin.",
-    "You will get a notification once one of your disks is nearly full." : "Diskinizde boş alan azaldığında bir bildirim alacaksınız."
+    "You will get a notification once one of your disks is nearly full." : "Diskinizde boş alan azaldığında bir bildirim alacaksınız.",
+    "You can connect an external monitoring tool by using this end point:" : "Bu uç noktasını kullanarak bir dış izleme aracı bağlayabilirsiniz:",
+    "Appending \"?format=json\" at the end of the URL gives you the result in JSON." : "Adresin sonuna \"?format=json\" eklendiğinde sonuçlar JSON biçiminde alınabilir."
 },
 "nplurals=2; plural=(n > 1);");

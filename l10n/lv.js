@@ -7,6 +7,7 @@ OC.L10N.register(
     "RAM info not available" : "RAM informācija nav pieejama",
     "SWAP: Total: {swapTotalBytes}/Current usage: {swapUsageBytes}" : "SWAP: Kopā: {swapTotalBytes}/Pašreizējais lietojums: {swapUsageBytes}",
     "SWAP info not available" : "SWAP informācija nav pieejama",
+    "Copied!" : "Nokopēts!",
     "Not supported!" : "Nav atbalstīts!",
     "Press ⌘-C to copy." : "Spied ⌘-C lai kopētu.",
     "Press Ctrl-C to copy." : "Spied Ctrl-C lai kopētu.",
@@ -55,11 +56,11 @@ OC.L10N.register(
     "Database" : "Datubāze",
     "Type:" : "Tips:",
     "External monitoring tool" : "Ārējās uzraudzības instruments",
-    "You can connect an external monitoring tool by using this end point:" : "Ārējo pārraudzības rīku var savienot, izmantojot šo beigu punktu:",
     "Copy" : "Kopēt",
-    "Appending \"?format=json\" at the end of the URL gives you the result in JSON." : "URL beigās pievienojot “?format=json”, rezultāts tiek iegūts JSON formātā.",
     "To use an access token, please generate one then set it using the following command:" : "Lai izmantotu piekļuves talonu, lūdzu, ģenerējiet to un iestatiet to, izmantojot šādu komandu:",
     "Then pass the token with the \"NC-Token\" header when querying the above URL." : "Pēc tam nododiet marķieri ar galveni \"NC-Token\", veicot vaicājumu iepriekš norādītajam URL.",
-    "You will get a notification once one of your disks is nearly full." : "Ja kāds no diskiem ir gandrīz pilns, saņemsiet paziņojumu."
+    "You will get a notification once one of your disks is nearly full." : "Ja kāds no diskiem ir gandrīz pilns, saņemsiet paziņojumu.",
+    "You can connect an external monitoring tool by using this end point:" : "Ārējo pārraudzības rīku var savienot, izmantojot šo beigu punktu:",
+    "Appending \"?format=json\" at the end of the URL gives you the result in JSON." : "URL beigās pievienojot “?format=json”, rezultāts tiek iegūts JSON formātā."
 },
 "nplurals=3; plural=(n%10==1 && n%100!=11 ? 0 : n != 0 ? 1 : 2);");

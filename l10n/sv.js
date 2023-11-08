@@ -7,6 +7,7 @@ OC.L10N.register(
     "RAM info not available" : "RAM info inte tillgängligt",
     "SWAP: Total: {swapTotalBytes}/Current usage: {swapUsageBytes}" : "SWAP: Totalt: {swapTotalBytes}/Nuvarande användning: {swapUsageBytes}",
     "SWAP info not available" : "SWAP info inte tillgängligt",
+    "Copied!" : "Kopierad!",
     "Not supported!" : "Stöds inte!",
     "Press ⌘-C to copy." : "Tryck ⌘-C för att kopiera.",
     "Press Ctrl-C to copy." : "Tryck Ctrl-C för att kopiera.",
@@ -67,11 +68,11 @@ OC.L10N.register(
     "Database" : "Databas",
     "Type:" : "Typ:",
     "External monitoring tool" : "Externt övervakningsverktyg",
-    "You can connect an external monitoring tool by using this end point:" : "Du kan ansluta ett externt övervakningsverktyg genom att använda denna adress:",
     "Copy" : "Kopiera",
-    "Appending \"?format=json\" at the end of the URL gives you the result in JSON." : "Lägg till \"?format=json\" i slutet av webbadressen för att få resultatet i JSON.",
     "To use an access token, please generate one then set it using the following command:" : "För att använda en access-token, generera en och ställ in den med följande kommando:",
     "Then pass the token with the \"NC-Token\" header when querying the above URL." : "Skicka sedan token med \"NC-Token\"-header när du frågar efter ovanstående URL.",
-    "You will get a notification once one of your disks is nearly full." : "Du får ett meddelande när en av dina diskar är nästan full."
+    "You will get a notification once one of your disks is nearly full." : "Du får ett meddelande när en av dina diskar är nästan full.",
+    "You can connect an external monitoring tool by using this end point:" : "Du kan ansluta ett externt övervakningsverktyg genom att använda denna adress:",
+    "Appending \"?format=json\" at the end of the URL gives you the result in JSON." : "Lägg till \"?format=json\" i slutet av webbadressen för att få resultatet i JSON."
 },
 "nplurals=2; plural=(n != 1);");

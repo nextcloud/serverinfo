@@ -7,6 +7,7 @@ OC.L10N.register(
     "RAM info not available" : "Інформація про оперативну пам'ять недоступна",
     "SWAP: Total: {swapTotalBytes}/Current usage: {swapUsageBytes}" : "Файл підкачки: використовується {swapUsageBytes} із {swapTotalBytes}",
     "SWAP info not available" : "Інформація про обмін недоступна",
+    "Copied!" : "Скопійовано!",
     "Not supported!" : "Не підтримується!",
     "Press ⌘-C to copy." : "Натисніть ⌘-C щоб скопіювати.",
     "Press Ctrl-C to copy." : "Натисніть Ctrl-C щоб скопіювати.",
@@ -67,11 +68,11 @@ OC.L10N.register(
     "Database" : "База даних",
     "Type:" : "Тип:",
     "External monitoring tool" : "Моніторинг сторонніми засобами",
-    "You can connect an external monitoring tool by using this end point:" : "Адреса для передавання даних засобами стороннього моніторингу:",
     "Copy" : "Копіювати",
-    "Appending \"?format=json\" at the end of the URL gives you the result in JSON." : "Щоби отримати результат у форматі JSON, будь ласка, додайте рядок \"?format=json\" наприкінці адреси URL.",
     "To use an access token, please generate one then set it using the following command:" : "Щоби застосувати токен для доступу, спочатку зґенеруйте його, а потім встановіть за допомогою команди:",
     "Then pass the token with the \"NC-Token\" header when querying the above URL." : "Потім передайте токен з додаванням заголовку \"NC-Token\" під час надсилання запиту за вказаною вище адресою URL.",
-    "You will get a notification once one of your disks is nearly full." : "Ви отримаєте сповіщення, якщо один з ваших дисків буде майже заповнено."
+    "You will get a notification once one of your disks is nearly full." : "Ви отримаєте сповіщення, якщо один з ваших дисків буде майже заповнено.",
+    "You can connect an external monitoring tool by using this end point:" : "Адреса для передавання даних засобами стороннього моніторингу:",
+    "Appending \"?format=json\" at the end of the URL gives you the result in JSON." : "Щоби отримати результат у форматі JSON, будь ласка, додайте рядок \"?format=json\" наприкінці адреси URL."
 },
 "nplurals=4; plural=(n % 1 == 0 && n % 10 == 1 && n % 100 != 11 ? 0 : n % 1 == 0 && n % 10 >= 2 && n % 10 <= 4 && (n % 100 < 12 || n % 100 > 14) ? 1 : n % 1 == 0 && (n % 10 ==0 || (n % 10 >=5 && n % 10 <=9) || (n % 100 >=11 && n % 100 <=14 )) ? 2: 3);");

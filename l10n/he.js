@@ -2,6 +2,7 @@ OC.L10N.register(
     "serverinfo",
     {
     "CPU info not available" : "פרטי המעבד לא זמינים",
+    "Copied!" : "הועתק!",
     "Not supported!" : "אין תמיכה!",
     "Press ⌘-C to copy." : "להעתקה: ‎⌘-C.",
     "Press Ctrl-C to copy." : "להעתקה: Ctrl-C.",
@@ -28,10 +29,10 @@ OC.L10N.register(
     "Database" : "מסד נתונים",
     "Type:" : "סוג:",
     "External monitoring tool" : "כלי מעקב חיצוני",
-    "You can connect an external monitoring tool by using this end point:" : "ניתן לחבר לכלי מעקב חיצוני דרך נקודת הגישה הזאת:",
     "Copy" : "העתקה",
-    "Appending \"?format=json\" at the end of the URL gives you the result in JSON." : "הוספת „‎?format=json” לסוף הכתובת יעניק לך את התוצאה ב־JSON.",
     "Then pass the token with the \"NC-Token\" header when querying the above URL." : "לאחר מכן יש להעביר את האסימון עם כותרת „NC-Token” בעת תשאול הכתובת שלעיל.",
-    "You will get a notification once one of your disks is nearly full." : "תישלח אליך התראה כשהכונן עומד להתמלא לחלוטין."
+    "You will get a notification once one of your disks is nearly full." : "תישלח אליך התראה כשהכונן עומד להתמלא לחלוטין.",
+    "You can connect an external monitoring tool by using this end point:" : "ניתן לחבר לכלי מעקב חיצוני דרך נקודת הגישה הזאת:",
+    "Appending \"?format=json\" at the end of the URL gives you the result in JSON." : "הוספת „‎?format=json” לסוף הכתובת יעניק לך את התוצאה ב־JSON."
 },
 "nplurals=4; plural=(n == 1 && n % 1 == 0) ? 0 : (n == 2 && n % 1 == 0) ? 1: (n % 10 == 0 && n % 1 == 0 && n > 10) ? 2 : 3;");

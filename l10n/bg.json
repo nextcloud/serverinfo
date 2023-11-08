@@ -63,11 +63,11 @@
     "Database" : "База данни",
     "Type:" : "Тип:",
     "External monitoring tool" : "Външно средство за мониторинг",
-    "You can connect an external monitoring tool by using this end point:" : "Можете да свържете външен софтуер за мониторинг, чрез следния URL:",
     "Copy" : "Копиране",
-    "Appending \"?format=json\" at the end of the URL gives you the result in JSON." : "Добавянето на „?format=json“ в края на URL адреса ви дава резултата в JSON.",
     "To use an access token, please generate one then set it using the following command:" : "За да използвате токен за достъп, моля, генерирайте такъв, след което го задайте с помощта на следната команда:",
     "Then pass the token with the \"NC-Token\" header when querying the above URL." : "След това предайте токена със заглавката „NC-Token “, когато правите заявка към горния URL адрес.",
-    "You will get a notification once one of your disks is nearly full." : "Ще получите известие щом някой от дисковете е почти запълнен."
+    "You will get a notification once one of your disks is nearly full." : "Ще получите известие щом някой от дисковете е почти запълнен.",
+    "You can connect an external monitoring tool by using this end point:" : "Можете да свържете външен софтуер за мониторинг, чрез следния URL:",
+    "Appending \"?format=json\" at the end of the URL gives you the result in JSON." : "Добавянето на „?format=json“ в края на URL адреса ви дава резултата в JSON."
 },"pluralForm" :"nplurals=2; plural=(n != 1);"
 }
