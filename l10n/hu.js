@@ -7,6 +7,7 @@ OC.L10N.register(
     "RAM info not available" : "A RAM információk nem érhetők el",
     "SWAP: Total: {swapTotalBytes}/Current usage: {swapUsageBytes}" : "CSEREHELY: Összesen: {swapTotalBytes}/Jelenlegi használat: {swapUsageBytes}",
     "SWAP info not available" : "A cserehely információk nem érhetők el",
+    "Copied!" : "Másolva.",
     "Not supported!" : "Nem támogatott!",
     "Press ⌘-C to copy." : "A másoláshoz nyomjon ⌘-C-t.",
     "Press Ctrl-C to copy." : "A másoláshoz nyomjon Ctrl-C-t.",
@@ -67,11 +68,11 @@ OC.L10N.register(
     "Database" : "Adatbázis:",
     "Type:" : "Típus:",
     "External monitoring tool" : "Külső rendszerfelügyeleti eszköz",
-    "You can connect an external monitoring tool by using this end point:" : "Ennek a végpontnak a használatával külső rendszerfelügyeleti eszközt csatlakoztathat:",
     "Copy" : "Másolás",
-    "Appending \"?format=json\" at the end of the URL gives you the result in JSON." : "Ha hozzáfűzi a „?format=json” szöveget az URL végéhez, akkor az eredményt JSON formátumban adja meg.",
     "To use an access token, please generate one then set it using the following command:" : "A hozzáférési token használatához hozzon létre egyet, majd állítsa be a következő paranccsal:",
     "Then pass the token with the \"NC-Token\" header when querying the above URL." : "Ezután adja át a tokent az „NC-Token” fejléccel, amikor lekérdezi a fenti URL-t.",
-    "You will get a notification once one of your disks is nearly full." : "Értesítést fog kapni, ha a lemezek már majdnem megteltek."
+    "You will get a notification once one of your disks is nearly full." : "Értesítést fog kapni, ha a lemezek már majdnem megteltek.",
+    "You can connect an external monitoring tool by using this end point:" : "Ennek a végpontnak a használatával külső rendszerfelügyeleti eszközt csatlakoztathat:",
+    "Appending \"?format=json\" at the end of the URL gives you the result in JSON." : "Ha hozzáfűzi a „?format=json” szöveget az URL végéhez, akkor az eredményt JSON formátumban adja meg."
 },
 "nplurals=2; plural=(n != 1);");

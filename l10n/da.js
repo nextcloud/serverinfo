@@ -2,6 +2,7 @@ OC.L10N.register(
     "serverinfo",
     {
     "CPU info not available" : "CPU information er ikke tilgængeli",
+    "Copied!" : "Kopieret!",
     "Not supported!" : "Ikke understøttet!",
     "Press ⌘-C to copy." : "Tryk ⌘-C for at kopiere.",
     "Press Ctrl-C to copy." : "Tryk Ctrl-C for at kopiere.",
@@ -28,10 +29,10 @@ OC.L10N.register(
     "Database" : "Database",
     "Type:" : "Type:",
     "External monitoring tool" : "Eksternt monitoreringsværktøj",
-    "You can connect an external monitoring tool by using this end point:" : "Du kan forbinde et eksternt monitoreringsprogram ved at bruge dette endepunkt:",
     "Copy" : "Kopier",
-    "Appending \"?format=json\" at the end of the URL gives you the result in JSON." : "Ved at tilføje \"?format=json\" i slutningen af URL'en får du resultatet i JSON.",
     "Then pass the token with the \"NC-Token\" header when querying the above URL." : "Send derefter tokenet med \"NC-Token\"-headeren, når du forespørger på ovenstående URL.",
-    "You will get a notification once one of your disks is nearly full." : "Du får en meddelelse, når en af dine diske er næsten fuld."
+    "You will get a notification once one of your disks is nearly full." : "Du får en meddelelse, når en af dine diske er næsten fuld.",
+    "You can connect an external monitoring tool by using this end point:" : "Du kan forbinde et eksternt monitoreringsprogram ved at bruge dette endepunkt:",
+    "Appending \"?format=json\" at the end of the URL gives you the result in JSON." : "Ved at tilføje \"?format=json\" i slutningen af URL'en får du resultatet i JSON."
 },
 "nplurals=2; plural=(n != 1);");

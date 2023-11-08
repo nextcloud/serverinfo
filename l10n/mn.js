@@ -1,6 +1,7 @@
 OC.L10N.register(
     "serverinfo",
     {
+    "Copied!" : "Хуулсан!",
     "Not supported!" : "Дэмжигдэхгүй",
     "Press ⌘-C to copy." : "Хуулахын тулд ⌘-C дарна уу.",
     "Press Ctrl-C to copy." : "Хуулахын тулд Ctrl-C дарна уу.",

@@ -7,6 +7,7 @@ OC.L10N.register(
     "RAM info not available" : "Informationen zum RAM nicht verfügbar",
     "SWAP: Total: {swapTotalBytes}/Current usage: {swapUsageBytes}" : "SWAP: Gesamt: {swapTotalBytes}/Aktuelle Nutzung: {swapUsageBytes}",
     "SWAP info not available" : "Informationen zum SWAP nicht verfügbar",
+    "Copied!" : "Kopiert!",
     "Not supported!" : "Nicht unterstützt!",
     "Press ⌘-C to copy." : "Zum Kopieren ⌘-C drücken.",
     "Press Ctrl-C to copy." : "Zum Kopieren Strg-C drücken.",
@@ -67,11 +68,11 @@ OC.L10N.register(
     "Database" : "Datenbank",
     "Type:" : "Art:",
     "External monitoring tool" : "Externes Überwachungsprogramm",
-    "You can connect an external monitoring tool by using this end point:" : "Durch Verwendung des folgenden Zugangspunktes kann ein externes Überwachungsprogramm verwendet werden: ",
     "Copy" : "Kopieren",
-    "Appending \"?format=json\" at the end of the URL gives you the result in JSON." : "Wenn Sie \"?format=json\" am Ende der URL anhängen, erhalten Sie das Ergebnis in JSON.",
     "To use an access token, please generate one then set it using the following command:" : "Um ein Zugriffstoken zu verwenden, generieren Sie bitte eines und legen Sie es mit dem folgenden Befehl fest:",
     "Then pass the token with the \"NC-Token\" header when querying the above URL." : "Übergeben Sie dann das Token mit dem Header \"NC-Token\" durch Aufrufen der obigen URL.",
-    "You will get a notification once one of your disks is nearly full." : "Sie erhalten eine Benachrichtigung, sobald eines Ihrer Speichermedien fast voll ist."
+    "You will get a notification once one of your disks is nearly full." : "Sie erhalten eine Benachrichtigung, sobald eines Ihrer Speichermedien fast voll ist.",
+    "You can connect an external monitoring tool by using this end point:" : "Durch Verwendung des folgenden Zugangspunktes kann ein externes Überwachungsprogramm verwendet werden: ",
+    "Appending \"?format=json\" at the end of the URL gives you the result in JSON." : "Wenn Sie \"?format=json\" am Ende der URL anhängen, erhalten Sie das Ergebnis in JSON."
 },
 "nplurals=2; plural=(n != 1);");

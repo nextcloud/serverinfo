@@ -2,6 +2,7 @@ OC.L10N.register(
     "serverinfo",
     {
     "CPU info not available" : "Información de CPU no disponible",
+    "Copied!" : "¡Copiado!",
     "Not supported!" : "¡No soportado!",
     "Press ⌘-C to copy." : "Presione ⌘-C para copiar.",
     "Press Ctrl-C to copy." : "Presione Ctrl-C para copiar.",
@@ -23,7 +24,7 @@ OC.L10N.register(
     "Database" : "Base de datos",
     "Type:" : "Tipo:",
     "External monitoring tool" : "Herramienta de monitoreo externa",
-    "You can connect an external monitoring tool by using this end point:" : "Puede conectar una herramienta de monitoreo externo usando esta terminal:",
-    "Copy" : "Copiar"
+    "Copy" : "Copiar",
+    "You can connect an external monitoring tool by using this end point:" : "Puede conectar una herramienta de monitoreo externo usando esta terminal:"
 },
 "nplurals=3; plural=n == 1 ? 0 : n != 0 && n % 1000000 == 0 ? 1 : 2;");

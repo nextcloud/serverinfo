@@ -5,6 +5,7 @@ OC.L10N.register(
     "Load average: {cpu} (last minute)" : "Keskmine koormus: {cpu} (last minute)",
     "RAM: Total: {memTotalBytes}/Current usage: {memUsageBytes}" : "Mälu: Kokku: {memTotalBytes}/Kasutusel: {memUsageBytes}",
     "RAM info not available" : "Vahemälu info pole saadaval",
+    "Copied!" : "Kopeeritud!",
     "Not supported!" : "Pole toetatud!",
     "Press ⌘-C to copy." : "Kopeerimiseks vajuta ⌘+C.",
     "Press Ctrl-C to copy." : "Kopeerimiseks vajuta Ctrl+C.",
@@ -59,11 +60,11 @@ OC.L10N.register(
     "Database" : "Andmebaas",
     "Type:" : "Tüüp:",
     "External monitoring tool" : "Väline monitoorimistööriist",
-    "You can connect an external monitoring tool by using this end point:" : "Saad välise monitoorimistööriista ühendada selle lõpp-punkti abil:",
     "Copy" : "Kopeeri",
-    "Appending \"?format=json\" at the end of the URL gives you the result in JSON." : "Lisades URL-i lõppu \"?format=json\", saad tulemused JSON-formaadis.",
     "To use an access token, please generate one then set it using the following command:" : "Ligipääsutunnuse kasutamiseks genereeri see ja seadista alljärgneva käsu abil:",
     "Then pass the token with the \"NC-Token\" header when querying the above URL." : "Seejärel saada tunnus ülaloleva URL-i pärimisel \"NC-Token\" päisega.",
-    "You will get a notification once one of your disks is nearly full." : "Saad teavituse, kui mõni ketastest on peaaegu täis."
+    "You will get a notification once one of your disks is nearly full." : "Saad teavituse, kui mõni ketastest on peaaegu täis.",
+    "You can connect an external monitoring tool by using this end point:" : "Saad välise monitoorimistööriista ühendada selle lõpp-punkti abil:",
+    "Appending \"?format=json\" at the end of the URL gives you the result in JSON." : "Lisades URL-i lõppu \"?format=json\", saad tulemused JSON-formaadis."
 },
 "nplurals=2; plural=(n != 1);");
