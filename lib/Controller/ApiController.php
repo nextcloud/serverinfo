@@ -113,7 +113,7 @@ class ApiController extends OCSController {
 	 * @PublicPage
 	 * @BruteForceProtection(action=serverinfo)
 	 */
-	public function info(bool $skipApps = false, bool $skipUpdate = true): DataResponse {
+	public function info(bool $skipApps = true, bool $skipUpdate = true): DataResponse {
 		if (!$this->checkAuthorized()) {
 			$response = new DataResponse(['message' => 'Unauthorized']);
 			$response->throttle();
