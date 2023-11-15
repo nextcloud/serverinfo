@@ -324,8 +324,8 @@ function updateMonitoringUrl(event) {
 		if ($param.name === 'format_json' && $param.checked) {
 			url.searchParams.set('format', 'json')
 		}
-		if ($param.name === 'skip_apps' && $param.checked) {
-			url.searchParams.set('skipApps', 'true')
+		if ($param.name === 'skip_apps' && !$param.checked) {
+			url.searchParams.set('skipApps', 'false')
 		}
 		if ($param.name === 'skip_update' && !$param.checked) {
 			url.searchParams.set('skipUpdate', 'false')
