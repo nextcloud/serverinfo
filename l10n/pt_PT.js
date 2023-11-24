@@ -29,8 +29,6 @@ OC.L10N.register(
     "Database" : "Base de dados",
     "Type:" : "Tipo:",
     "External monitoring tool" : "Ferramenta externa de monitorização",
-    "Copy" : "Copiar",
-    "You will get a notification once one of your disks is nearly full." : "Receberá uma notificação logo que um dos seus discos esteja perto de estar cheio.",
-    "You can connect an external monitoring tool by using this end point:" : "Pode ligar uma ferramenta de monitorização externa ao usar \"endpoint\":"
+    "Copy" : "Copiar"
 },
 "nplurals=3; plural=(n == 0 || n == 1) ? 0 : n != 0 && n % 1000000 == 0 ? 1 : 2;");

@@ -63,9 +63,6 @@ OC.L10N.register(
     "Database" : "Tietokanta",
     "Type:" : "Tyyppi:",
     "External monitoring tool" : "Ulkopuolinen valvontatyökalu",
-    "Copy" : "Kopioi",
-    "You will get a notification once one of your disks is nearly full." : "Saat ilmoituksen, kun jokin levyistä on melkein täynnä.",
-    "You can connect an external monitoring tool by using this end point:" : "Voit yhdistää ulkopuolisen valvontatyökalun käyttämällä tätä liityntäkohtaa:",
-    "Appending \"?format=json\" at the end of the URL gives you the result in JSON." : "Lisää \"?format=json\" URL-osoitteen loppuun saadaksesi tuloksen JSON-muodossa."
+    "Copy" : "Kopioi"
 },
 "nplurals=2; plural=(n != 1);");

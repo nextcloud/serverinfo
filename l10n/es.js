@@ -70,9 +70,6 @@ OC.L10N.register(
     "External monitoring tool" : "Herramienta externa de monitorización",
     "Copy" : "Copiar",
     "To use an access token, please generate one then set it using the following command:" : "Para usar un token de acceso, por favor, genere uno y luego establézcalo usando el siguiente comando",
-    "Then pass the token with the \"NC-Token\" header when querying the above URL." : "Luego pase el token en el header \"NC-Token\" cuando solicite la URL anterior.",
-    "You will get a notification once one of your disks is nearly full." : "Recibirás una notificación cuando uno de tus discos esté casi lleno.",
-    "You can connect an external monitoring tool by using this end point:" : "Puedes conectar una herramienta de monitorización externa usando este endpoint:",
-    "Appending \"?format=json\" at the end of the URL gives you the result in JSON." : "Añadiendo \"?format=json\" al final de la URL, devuelve el resultado en formato JSON."
+    "Then pass the token with the \"NC-Token\" header when querying the above URL." : "Luego pase el token en el header \"NC-Token\" cuando solicite la URL anterior."
 },
 "nplurals=3; plural=n == 1 ? 0 : n != 0 && n % 1000000 == 0 ? 1 : 2;");
