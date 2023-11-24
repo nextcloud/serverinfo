@@ -29,8 +29,6 @@ OC.L10N.register(
     "Database" : "Datumbazo",
     "Type:" : "Tipo:",
     "External monitoring tool" : "Ekstera observa ilo",
-    "Copy" : "Kopii",
-    "You will get a notification once one of your disks is nearly full." : "Ni sciigos vin, kiam disko preskaŭ plenos.",
-    "You can connect an external monitoring tool by using this end point:" : "Vi povas konekti eksteran observan ilon per tiu adreso:"
+    "Copy" : "Kopii"
 },
 "nplurals=2; plural=(n != 1);");

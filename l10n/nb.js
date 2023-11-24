@@ -61,7 +61,6 @@ OC.L10N.register(
     "Database" : "Database",
     "Type:" : "Type:",
     "External monitoring tool" : "Eksternt overvåkingsverktøy",
-    "Copy" : "Kopier",
-    "You will get a notification once one of your disks is nearly full." : "Du vil motta et varsel når en av diskene dine er nesten full."
+    "Copy" : "Kopier"
 },
 "nplurals=2; plural=(n != 1);");

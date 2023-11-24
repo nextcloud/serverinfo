@@ -68,9 +68,6 @@
     "External monitoring tool" : "外部監控工具",
     "Copy" : "複製",
     "To use an access token, please generate one then set it using the following command:" : "要使用存取權杖，請生成一個權杖，然後使用以下命令對其進行設置：",
-    "Then pass the token with the \"NC-Token\" header when querying the above URL." : "然後在查詢上述 URL 時將權杖與 “ NC-Token” 標頭一起傳遞。",
-    "You will get a notification once one of your disks is nearly full." : "你將在其中一個硬碟快滿前收到通知。",
-    "You can connect an external monitoring tool by using this end point:" : "您可以使用此終端連接外部監視工具：",
-    "Appending \"?format=json\" at the end of the URL gives you the result in JSON." : "在URL後面連接參數 \"?format=json\" 將會得到json格式的回傳結果。"
+    "Then pass the token with the \"NC-Token\" header when querying the above URL." : "然後在查詢上述 URL 時將權杖與 “ NC-Token” 標頭一起傳遞。"
 },"pluralForm" :"nplurals=1; plural=0;"
 }

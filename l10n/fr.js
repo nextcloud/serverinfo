@@ -74,9 +74,6 @@ OC.L10N.register(
     "Skip app updates (including app updates will send an external request to the app store)" : "Ignorer les mises à jour des applications (les mises à jour des applications incluses vont envoyer une requête externe au magasin d'applications).",
     "Skip server update" : "Ignorer la mise à jour du serveur",
     "To use an access token, please generate one then set it using the following command:" : "Pour utiliser un jeton d'accès, veuillez en générer un puis le définir à l'aide de la commande suivante :",
-    "Then pass the token with the \"NC-Token\" header when querying the above URL." : "Puis transmettez le jeton avec l'entête \"NC-Token\" lorsque vous appelez l'URL.",
-    "You will get a notification once one of your disks is nearly full." : "Vous recevrez une notification une fois que l’un de vos disques sera presque plein.",
-    "You can connect an external monitoring tool by using this end point:" : "Vous pouvez connecter un outil de surveillance externe en utilisant ce point d'extrémité :",
-    "Appending \"?format=json\" at the end of the URL gives you the result in JSON." : "Ajoutez \"?format=json\" à la fin de l'URL pour obtenir le résultat au format JSON. "
+    "Then pass the token with the \"NC-Token\" header when querying the above URL." : "Puis transmettez le jeton avec l'entête \"NC-Token\" lorsque vous appelez l'URL."
 },
 "nplurals=3; plural=(n == 0 || n == 1) ? 0 : n != 0 && n % 1000000 == 0 ? 1 : 2;");

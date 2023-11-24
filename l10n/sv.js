@@ -74,9 +74,6 @@ OC.L10N.register(
     "Skip app updates (including app updates will send an external request to the app store)" : "Hoppa över appuppdateringar (appuppdateringar skickar en extern begäran till appbutiken)",
     "Skip server update" : "Hoppa över serveruppdatering",
     "To use an access token, please generate one then set it using the following command:" : "För att använda en access-token, generera en och ställ in den med följande kommando:",
-    "Then pass the token with the \"NC-Token\" header when querying the above URL." : "Skicka sedan token med \"NC-Token\"-header när du frågar efter ovanstående URL.",
-    "You will get a notification once one of your disks is nearly full." : "Du får ett meddelande när en av dina diskar är nästan full.",
-    "You can connect an external monitoring tool by using this end point:" : "Du kan ansluta ett externt övervakningsverktyg genom att använda denna adress:",
-    "Appending \"?format=json\" at the end of the URL gives you the result in JSON." : "Lägg till \"?format=json\" i slutet av webbadressen för att få resultatet i JSON."
+    "Then pass the token with the \"NC-Token\" header when querying the above URL." : "Skicka sedan token med \"NC-Token\"-header när du frågar efter ovanstående URL."
 },
 "nplurals=2; plural=(n != 1);");

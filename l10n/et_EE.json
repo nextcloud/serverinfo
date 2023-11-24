@@ -60,9 +60,6 @@
     "External monitoring tool" : "Väline monitoorimistööriist",
     "Copy" : "Kopeeri",
     "To use an access token, please generate one then set it using the following command:" : "Ligipääsutunnuse kasutamiseks genereeri see ja seadista alljärgneva käsu abil:",
-    "Then pass the token with the \"NC-Token\" header when querying the above URL." : "Seejärel saada tunnus ülaloleva URL-i pärimisel \"NC-Token\" päisega.",
-    "You will get a notification once one of your disks is nearly full." : "Saad teavituse, kui mõni ketastest on peaaegu täis.",
-    "You can connect an external monitoring tool by using this end point:" : "Saad välise monitoorimistööriista ühendada selle lõpp-punkti abil:",
-    "Appending \"?format=json\" at the end of the URL gives you the result in JSON." : "Lisades URL-i lõppu \"?format=json\", saad tulemused JSON-formaadis."
+    "Then pass the token with the \"NC-Token\" header when querying the above URL." : "Seejärel saada tunnus ülaloleva URL-i pärimisel \"NC-Token\" päisega."
 },"pluralForm" :"nplurals=2; plural=(n != 1);"
 }

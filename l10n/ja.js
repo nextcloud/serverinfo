@@ -58,9 +58,6 @@ OC.L10N.register(
     "External monitoring tool" : "外部モニタリングツール",
     "Copy" : "コピー",
     "To use an access token, please generate one then set it using the following command:" : "アクセストークンを使用するには、アクセストークンを生成し、以下のコマンドで設定してください。",
-    "Then pass the token with the \"NC-Token\" header when querying the above URL." : "次に、上記のURLをクエリするときに、\"NC-Token\" ヘッダーでトークンを渡します。",
-    "You will get a notification once one of your disks is nearly full." : "いずれかのディスクがいっぱいになると通知を受け取ります。",
-    "You can connect an external monitoring tool by using this end point:" : "このエンドポイントを利用して外部モニタリングツールに接続することが可能です：",
-    "Appending \"?format=json\" at the end of the URL gives you the result in JSON." : "URLの最後に \"?format=json\" を追加すると、JSONの結果が得られます。"
+    "Then pass the token with the \"NC-Token\" header when querying the above URL." : "次に、上記のURLをクエリするときに、\"NC-Token\" ヘッダーでトークンを渡します。"
 },
 "nplurals=1; plural=0;");

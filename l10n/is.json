@@ -27,9 +27,6 @@
     "Database" : "Gagnagrunnur",
     "Type:" : "Tegund:",
     "External monitoring tool" : "Utanaðkomandi vöktunartól",
-    "Copy" : "Afrita",
-    "You will get a notification once one of your disks is nearly full." : "Þú færð tilkynningu um leið og einhver diskanna þinna nálgast það að vera fullur.",
-    "You can connect an external monitoring tool by using this end point:" : "Þú getur tengt utanaðkomandi vöktunartól með því að nota þennan endapunkt: ",
-    "Appending \"?format=json\" at the end of the URL gives you the result in JSON." : "Að með því að bæta \"?format=json\" við enda URL-slóðar, muntu fá niðurstöðurnar á JSON-sniði."
+    "Copy" : "Afrita"
 },"pluralForm" :"nplurals=2; plural=(n % 10 != 1 || n % 100 == 11);"
 }

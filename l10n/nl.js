@@ -54,9 +54,6 @@ OC.L10N.register(
     "External monitoring tool" : "Externe monitoring tool",
     "Copy" : "Kopiëren",
     "To use an access token, please generate one then set it using the following command:" : "Om een ​​toegangstoken te gebruiken, genereert u er een en stelt u deze in met de volgende opdracht:",
-    "Then pass the token with the \"NC-Token\" header when querying the above URL." : "Geef vervolgens het token met de \"NC-Token\" -header door bij het opvragen van de bovenstaande URL.",
-    "You will get a notification once one of your disks is nearly full." : "Je krijgt een melding als een van je schijven bijna vol is.",
-    "You can connect an external monitoring tool by using this end point:" : "Je kunt een externe monitor-tool verbinden door dit end point te gebruiken:",
-    "Appending \"?format=json\" at the end of the URL gives you the result in JSON." : "Wanneer je \"?format=json\" toevoegt aan het einde van de URL ontvang je het resultaat in JSON"
+    "Then pass the token with the \"NC-Token\" header when querying the above URL." : "Geef vervolgens het token met de \"NC-Token\" -header door bij het opvragen van de bovenstaande URL."
 },
 "nplurals=2; plural=(n != 1);");
