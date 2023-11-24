@@ -68,9 +68,6 @@ OC.L10N.register(
     "External monitoring tool" : "Externes Überwachungsprogramm",
     "Copy" : "Kopieren",
     "To use an access token, please generate one then set it using the following command:" : "Um ein Zugriffstoken zu verwenden, generiere bitte ein Token und lege es mit dem folgenden Befehl fest:",
-    "Then pass the token with the \"NC-Token\" header when querying the above URL." : "Übergib dann das Token mit dem \"NC-Token\"-Header bei der Abfrage der obigen URL.",
-    "You will get a notification once one of your disks is nearly full." : "Du erhältst eine Benachrichtigung, sobald eines deiner Speichermedien fast voll ist.",
-    "You can connect an external monitoring tool by using this end point:" : "Durch Verwendung des folgenden Zugangspunktes kann ein externes Überwachungsprogramm verwendet werden: ",
-    "Appending \"?format=json\" at the end of the URL gives you the result in JSON." : "Wenn du \"?format=json\" am Ende der URL anhängst, erhältst du das Ergebnis in JSON."
+    "Then pass the token with the \"NC-Token\" header when querying the above URL." : "Übergib dann das Token mit dem \"NC-Token\"-Header bei der Abfrage der obigen URL."
 },
 "nplurals=2; plural=(n != 1);");

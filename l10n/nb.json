@@ -59,7 +59,6 @@
     "Database" : "Database",
     "Type:" : "Type:",
     "External monitoring tool" : "Eksternt overvåkingsverktøy",
-    "Copy" : "Kopier",
-    "You will get a notification once one of your disks is nearly full." : "Du vil motta et varsel når en av diskene dine er nesten full."
+    "Copy" : "Kopier"
 },"pluralForm" :"nplurals=2; plural=(n != 1);"
 }

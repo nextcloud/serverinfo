@@ -74,9 +74,6 @@ OC.L10N.register(
     "Skip app updates (including app updates will send an external request to the app store)" : "Uygulama güncellemelerini atla (uygulama güncellemeleri ile birlikte uygulama mağazasına bir dış istek gönderilir)",
     "Skip server update" : "Sunucu güncellemesini atla",
     "To use an access token, please generate one then set it using the following command:" : "Erişim kodunu kullanmak için yeni bir kod üretip şu komutu yürüterek ayarlayın:",
-    "Then pass the token with the \"NC-Token\" header when querying the above URL." : "Ardından yukarıdaki adresi sorgularken kodu \"NC-Token\" üst bilgisi ile gönderin.",
-    "You will get a notification once one of your disks is nearly full." : "Diskinizde boş alan azaldığında bir bildirim alacaksınız.",
-    "You can connect an external monitoring tool by using this end point:" : "Bu uç noktasını kullanarak bir dış izleme aracı bağlayabilirsiniz:",
-    "Appending \"?format=json\" at the end of the URL gives you the result in JSON." : "Adresin sonuna \"?format=json\" eklendiğinde sonuçlar JSON biçiminde alınabilir."
+    "Then pass the token with the \"NC-Token\" header when querying the above URL." : "Ardından yukarıdaki adresi sorgularken kodu \"NC-Token\" üst bilgisi ile gönderin."
 },
 "nplurals=2; plural=(n > 1);");

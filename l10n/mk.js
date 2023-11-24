@@ -70,9 +70,6 @@ OC.L10N.register(
     "External monitoring tool" : "Надворешен уред за следење",
     "Copy" : "Копирај",
     "To use an access token, please generate one then set it using the following command:" : "За да користите токен за пристап, ве молиме генерирајте еден, а потоа поставете го користејќи ја следнава команда:",
-    "Then pass the token with the \"NC-Token\" header when querying the above URL." : "Потоа поминете го токенот со заглавието „NC-Token“ кога го барате горното URL.",
-    "You will get a notification once one of your disks is nearly full." : "Ќе добиете известување кога дискот е пред исполнување",
-    "You can connect an external monitoring tool by using this end point:" : "Можете да поврзете надорешен уред за следење со користење на:",
-    "Appending \"?format=json\" at the end of the URL gives you the result in JSON." : "Доколку сакате преглед во JSON формат додадете \"?format=json\" на крај на адресата."
+    "Then pass the token with the \"NC-Token\" header when querying the above URL." : "Потоа поминете го токенот со заглавието „NC-Token“ кога го барате горното URL."
 },
 "nplurals=2; plural=(n % 10 == 1 && n % 100 != 11) ? 0 : 1;");

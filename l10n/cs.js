@@ -74,9 +74,6 @@ OC.L10N.register(
     "Skip app updates (including app updates will send an external request to the app store)" : "Přeskočit aktualizace aplikací (včetně toho, že aktualizace aplikací odešlou externí požadavek do katalogu aplikací)",
     "Skip server update" : "Přeskočit přechod na novější vydání serveru",
     "To use an access token, please generate one then set it using the following command:" : "Aby bylo možné použít přístupový token, vytvořte ho a pak nastavte pomocí následujícího příkazu:",
-    "Then pass the token with the \"NC-Token\" header when querying the above URL." : "Poté při dotazování výše uvedené URL předávejte se záhlavím „NC-Token“.",
-    "You will get a notification once one of your disks is nearly full." : "Pokud budou vaše úložiště téměř zaplněná, budete na to upozorněni.",
-    "You can connect an external monitoring tool by using this end point:" : "Externí dohledovací nástroj je možné napojit pomocí tohoto koncového bodu:",
-    "Appending \"?format=json\" at the end of the URL gives you the result in JSON." : "Přidání „?format=json“ na konec URL poskytne výsledek ve formátu JSON."
+    "Then pass the token with the \"NC-Token\" header when querying the above URL." : "Poté při dotazování výše uvedené URL předávejte se záhlavím „NC-Token“."
 },
 "nplurals=4; plural=(n == 1 && n % 1 == 0) ? 0 : (n >= 2 && n <= 4 && n % 1 == 0) ? 1: (n % 1 != 0 ) ? 2 : 3;");

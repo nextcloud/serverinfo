@@ -70,9 +70,6 @@ OC.L10N.register(
     "External monitoring tool" : "Внешний мониторинг",
     "Copy" : "Копировать",
     "To use an access token, please generate one then set it using the following command:" : "Чтобы использовать токен доступа, пожалуйста, сгенерируйте его, а затем установите с помощью следующей команды:",
-    "Then pass the token with the \"NC-Token\" header when querying the above URL." : "Затем передайте токен с заголовком «NC-Token» при запросе указанного выше URL.",
-    "You will get a notification once one of your disks is nearly full." : "Когда один из ваших дисков будет практически полностью заполнен, вы получите уведомление.",
-    "You can connect an external monitoring tool by using this end point:" : "Вы можете подключить внешний мониторинг используя этот адрес:",
-    "Appending \"?format=json\" at the end of the URL gives you the result in JSON." : "Если к строке URL добавить «?format=json», то ответ сервера будет в формате JSON."
+    "Then pass the token with the \"NC-Token\" header when querying the above URL." : "Затем передайте токен с заголовком «NC-Token» при запросе указанного выше URL."
 },
 "nplurals=4; plural=(n%10==1 && n%100!=11 ? 0 : n%10>=2 && n%10<=4 && (n%100<12 || n%100>14) ? 1 : n%10==0 || (n%10>=5 && n%10<=9) || (n%100>=11 && n%100<=14)? 2 : 3);");

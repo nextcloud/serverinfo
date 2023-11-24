@@ -66,11 +66,12 @@
     "Database" : "Database",
     "Type:" : "Type:",
     "External monitoring tool" : "External monitoring tool",
+    "Use this end point to connect an external monitoring tool:" : "Use this end point to connect an external monitoring tool:",
     "Copy" : "Copy",
+    "Output in JSON" : "Output in JSON",
+    "Skip app updates (including app updates will send an external request to the app store)" : "Skip app updates (including app updates will send an external request to the app store)",
+    "Skip server update" : "Skip server update",
     "To use an access token, please generate one then set it using the following command:" : "To use an access token, please generate one then set it using the following command:",
-    "Then pass the token with the \"NC-Token\" header when querying the above URL." : "Then pass the token with the \"NC-Token\" header when querying the above URL.",
-    "You will get a notification once one of your disks is nearly full." : "You will get a notification once one of your disks is nearly full.",
-    "You can connect an external monitoring tool by using this end point:" : "You can connect an external monitoring tool by using this end point:",
-    "Appending \"?format=json\" at the end of the URL gives you the result in JSON." : "Appending \"?format=json\" at the end of the URL gives you the result in JSON."
+    "Then pass the token with the \"NC-Token\" header when querying the above URL." : "Then pass the token with the \"NC-Token\" header when querying the above URL."
 },"pluralForm" :"nplurals=2; plural=(n != 1);"
 }

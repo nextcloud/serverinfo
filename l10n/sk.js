@@ -61,9 +61,6 @@ OC.L10N.register(
     "External monitoring tool" : "Externý sledovací nástroj",
     "Copy" : "Kopírovať",
     "To use an access token, please generate one then set it using the following command:" : "Pre používanie prístupového tokenu ho vygenerujte a potom ho nastavte použitím nasledujúceho príkazu:",
-    "Then pass the token with the \"NC-Token\" header when querying the above URL." : "Pri dotazovaní na vyššie uvedenú adresu URL potom poslať token s hlavičkou „NC-Token“.",
-    "You will get a notification once one of your disks is nearly full." : "Ak je niektorý z vašich diskov skoro plný, dostanete varovanie.",
-    "You can connect an external monitoring tool by using this end point:" : "Pre pripojenie externého sledovacieho nástroja použite tento koncový bod:",
-    "Appending \"?format=json\" at the end of the URL gives you the result in JSON." : "Ak na koniec adresy URL pridáte „?format = json“, získate výsledok v JSON."
+    "Then pass the token with the \"NC-Token\" header when querying the above URL." : "Pri dotazovaní na vyššie uvedenú adresu URL potom poslať token s hlavičkou „NC-Token“."
 },
 "nplurals=4; plural=(n % 1 == 0 && n == 1 ? 0 : n % 1 == 0 && n >= 2 && n <= 4 ? 1 : n % 1 != 0 ? 2: 3);");

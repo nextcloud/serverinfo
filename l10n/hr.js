@@ -30,9 +30,6 @@ OC.L10N.register(
     "Type:" : "Vrsta:",
     "External monitoring tool" : "Vanjski alat za praćenje",
     "Copy" : "Kopiraj",
-    "Then pass the token with the \"NC-Token\" header when querying the above URL." : "Zatim proslijedite token sa zaglavljem „NC-Token“ prilikom slanja upita za gornji URL.",
-    "You will get a notification once one of your disks is nearly full." : "Primit ćete obavijest kada je jedan od vaših diskova skoro pun.",
-    "You can connect an external monitoring tool by using this end point:" : "Možete povezati vanjski alat za praćenje s pomoću ove krajnje točke:",
-    "Appending \"?format=json\" at the end of the URL gives you the result in JSON." : "Dodavanjem „?format = json” na kraj URL-a dobije se rezultat u JSON-u."
+    "Then pass the token with the \"NC-Token\" header when querying the above URL." : "Zatim proslijedite token sa zaglavljem „NC-Token“ prilikom slanja upita za gornji URL."
 },
 "nplurals=3; plural=n%10==1 && n%100!=11 ? 0 : n%10>=2 && n%10<=4 && (n%100<10 || n%100>=20) ? 1 : 2;");
