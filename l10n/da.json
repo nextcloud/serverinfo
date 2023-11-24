@@ -28,9 +28,6 @@
     "Type:" : "Type:",
     "External monitoring tool" : "Eksternt monitoreringsværktøj",
     "Copy" : "Kopier",
-    "Then pass the token with the \"NC-Token\" header when querying the above URL." : "Send derefter tokenet med \"NC-Token\"-headeren, når du forespørger på ovenstående URL.",
-    "You will get a notification once one of your disks is nearly full." : "Du får en meddelelse, når en af dine diske er næsten fuld.",
-    "You can connect an external monitoring tool by using this end point:" : "Du kan forbinde et eksternt monitoreringsprogram ved at bruge dette endepunkt:",
-    "Appending \"?format=json\" at the end of the URL gives you the result in JSON." : "Ved at tilføje \"?format=json\" i slutningen af URL'en får du resultatet i JSON."
+    "Then pass the token with the \"NC-Token\" header when querying the above URL." : "Send derefter tokenet med \"NC-Token\"-headeren, når du forespørger på ovenstående URL."
 },"pluralForm" :"nplurals=2; plural=(n != 1);"
 }
