@@ -58,7 +58,7 @@ OC.L10N.register(
     "Talk conversations:" : "Розмов Talk:",
     "PHP" : "PHP",
     "Version:" : "Версія:",
-    "Memory limit:" : "Ліміт пам'яті:",
+    "Memory limit:" : "Обмеження пам'яті:",
     "Max execution time:" : "Максимальний час виконання:",
     "Upload max size:" : "Макс. розмір завантаження:",
     "OPcache Revalidate Frequency:" : "Частота ревалідації OPcache:",
