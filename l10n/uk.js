@@ -52,7 +52,7 @@ OC.L10N.register(
     "Users:" : "Користувачів:",
     "Groups:" : "Груп:",
     "Links:" : "Посилань:",
-    "Emails:" : "Ел.адрес:",
+    "Emails:" : "Імейлів:",
     "Federated sent:" : "Надіслано на сусідні сервери:",
     "Federated received:" : "Отримано від сусідніх серверів:",
     "Talk conversations:" : "Розмов Talk:",
