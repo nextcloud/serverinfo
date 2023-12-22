@@ -15,7 +15,7 @@ OC.L10N.register(
     "Monitoring" : "Surveillance",
     "Monitoring app with useful server information" : "Application de surveillance avec les informations utiles du serveur",
     "Provides useful server information, such as CPU load, RAM usage, disk usage, number of users, etc." : "Fournit des informations utiles sur le serveur, telles que la charge du processeur, l'utilisation de la RAM, l'utilisation du disque, le nombre d'utilisateurs, etc.",
-    "Operating System:" : "Système d'exploitation:",
+    "Operating System:" : "Système d'exploitation :",
     "CPU:" : "CPU :",
     "Unknown Processor" : "Processeur inconnu",
     "Memory:" : "Mémoire :",
@@ -37,7 +37,7 @@ OC.L10N.register(
     "Hostname:" : "Nom d'hôte :",
     "DNS:" : "DNS :",
     "Gateway:" : "Passerelle :",
-    "Status:" : "Statut :",
+    "Status:" : "État :",
     "Speed:" : "Vitesse :",
     "Duplex:" : "Duplex :",
     "MAC:" : "MAC :",
@@ -59,7 +59,7 @@ OC.L10N.register(
     "PHP" : "PHP",
     "Version:" : "Version :",
     "Memory limit:" : "Limite de mémoire :",
-    "Max execution time:" : "Max Execution Time:",
+    "Max execution time:" : "Temps d'exécution maximal :",
     "Upload max size:" : "Taille de téléversement maximale :",
     "OPcache Revalidate Frequency:" : "Fréquence de revalidation de l'OPcache :",
     "Extensions:" : "Extensions :",
@@ -74,6 +74,6 @@ OC.L10N.register(
     "Skip app updates (including app updates will send an external request to the app store)" : "Ignorer les mises à jour des applications (les mises à jour des applications incluses vont envoyer une requête externe au magasin d'applications).",
     "Skip server update" : "Ignorer la mise à jour du serveur",
     "To use an access token, please generate one then set it using the following command:" : "Pour utiliser un jeton d'accès, veuillez en générer un puis le définir à l'aide de la commande suivante :",
-    "Then pass the token with the \"NC-Token\" header when querying the above URL." : "Puis transmettez le jeton avec l'entête \"NC-Token\" lorsque vous appelez l'URL."
+    "Then pass the token with the \"NC-Token\" header when querying the above URL." : "Puis transmettez le jeton avec l'entête « NC-Token » lorsque vous appelez l'URL."
 },
 "nplurals=3; plural=(n == 0 || n == 1) ? 0 : n != 0 && n % 1000000 == 0 ? 1 : 2;");
