@@ -8,6 +8,8 @@ OC.L10N.register(
     "System" : "Sistem",
     "Size:" : "Həcm:",
     "Shares" : "Yayımlanmalar",
+    "PHP" : "PHP",
+    "Database" : "Verilənlər bazası",
     "Type:" : "Tip:",
     "Copy" : "Kopyala"
 },
