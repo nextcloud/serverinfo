@@ -6,6 +6,8 @@
     "System" : "Sistem",
     "Size:" : "Həcm:",
     "Shares" : "Yayımlanmalar",
+    "PHP" : "PHP",
+    "Database" : "Verilənlər bazası",
     "Type:" : "Tip:",
     "Copy" : "Kopyala"
 },"pluralForm" :"nplurals=2; plural=(n != 1);"
