@@ -68,7 +68,11 @@ OC.L10N.register(
     "Database" : "Base de datos",
     "Type:" : "Tipo:",
     "External monitoring tool" : "Herramienta externa de monitorización",
+    "Use this end point to connect an external monitoring tool:" : "Utilice este endpoint para conectar una herramienta de monitoreo externa.",
     "Copy" : "Copiar",
+    "Output in JSON" : "Salida en JSON",
+    "Skip app updates (including app updates will send an external request to the app store)" : "Omitir actualizaciones de la aplicación (incluir las actualizaciones de las aplicaciones enviará una solicitud externa al app store)",
+    "Skip server update" : "Omitir actualización del servidor",
     "To use an access token, please generate one then set it using the following command:" : "Para usar un token de acceso, por favor, genere uno y luego establézcalo usando el siguiente comando",
     "Then pass the token with the \"NC-Token\" header when querying the above URL." : "Luego pase el token en el header \"NC-Token\" cuando solicite la URL anterior."
 },
