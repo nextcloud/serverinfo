@@ -121,7 +121,7 @@ class DatabaseStatistics {
 				if ($row['proname'] === 'pg_database_size') {
 					$database = $this->config->getSystemValue('dbname');
 					if (strpos($database, '.') !== false) {
-						list($database, ) = explode('.', $database);
+						[$database, ] = explode('.', $database);
 					}
 					$sql = "SELECT oid
 						FROM pg_database
