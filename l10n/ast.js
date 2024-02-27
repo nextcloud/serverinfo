@@ -11,6 +11,7 @@ OC.L10N.register(
     "1 hour:" : "1 hora",
     "PHP" : "PHP",
     "Version:" : "Versión:",
-    "Database" : "Base de datos"
+    "Database" : "Base de datos",
+    "Copy" : "Copiar"
 },
 "nplurals=2; plural=(n != 1);");
