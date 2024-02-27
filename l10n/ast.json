@@ -9,6 +9,7 @@
     "1 hour:" : "1 hora",
     "PHP" : "PHP",
     "Version:" : "Versión:",
-    "Database" : "Base de datos"
+    "Database" : "Base de datos",
+    "Copy" : "Copiar"
 },"pluralForm" :"nplurals=2; plural=(n != 1);"
 }
