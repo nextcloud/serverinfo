@@ -9,6 +9,7 @@ OC.L10N.register(
     "Size:" : "Tamañu.",
     "Files:" : "Ficheros:",
     "1 hour:" : "1 hora",
+    "Shares" : "Comparticiones",
     "PHP" : "PHP",
     "Version:" : "Versión:",
     "Database" : "Base de datos",
