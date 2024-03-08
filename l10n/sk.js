@@ -49,6 +49,7 @@ OC.L10N.register(
     "Shares" : "Sprístupnené položky",
     "Users:" : "Používatelia:",
     "Links:" : "Odkazy:",
+    "Talk conversations:" : "Talk /Rozhovor/ konverzácia",
     "PHP" : "PHP",
     "Version:" : "Verzia:",
     "Memory limit:" : "Obmedzenie pamäte:",
