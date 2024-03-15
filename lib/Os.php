@@ -36,6 +36,7 @@ class Os implements IOperatingSystem {
 	public function __construct(IConfig $config) {
 		$restrictedMode = $config->getAppValue('serverinfo', 'restricted_mode', 'no') === 'yes';
 		$this->backend = $this->getBackend($restrictedMode ? 'Dummy' : PHP_OS);
+		$this->config = $config;
 	}
 
 	public function supported(): bool {
@@ -70,7 +71,34 @@ class Os implements IOperatingSystem {
 	}
 
 	public function getDiskInfo(): array {
-		return $this->backend->getDiskInfo();
+		$disks = $this->backend->getDiskInfo();
+		$filters = $this->config->getSystemValue('serverinfo_disk_filter_paths', null);
+		if ($filters === null) return $disks;
+
+		// apply defined filters to restrict the list of disks according to their mount point
+		$filtered_disks = [];
+		foreach (explode(':', $filters) as $filter) {
+			// convert special filters to their corresponding paths
+			switch ($filter) {
+				case 'DOCROOT' : $path = isset($_SERVER['SCRIPT_FILENAME']) ? dirname($_SERVER['SCRIPT_FILENAME']) : $_SERVER['DOCUMENT_ROOT']; break;
+				case 'DATADIR' : $path = $this->config->getSystemValue('datadirectory', ''); break;
+				case 'TEMPDIR' : $path = $this->config->getSystemValue('tempdirectory', ''); break;
+				case 'LOGSDIR' : $path = dirname($this->config->getSystemValue('logfile', '')); break;
+				default : $path = $filter;
+			}
+			// find the disk whose mount point contains the filtering path
+			$find_index = null;
+			$find_mount = '';
+			foreach ($disks as $index => $disk) {
+				$mount = $disk->getMount();
+				if (strncmp($path, $mount, strlen($mount)) !== 0) continue;
+				if (strlen($mount) < strlen($find_mount)) continue;
+				$find_mount = $mount;
+				$find_index = $index;
+			}
+			if ($find_index !== null) $filtered_disks[ $find_index ] = $disks[ $find_index ];
+		}
+		return $filtered_disks;
 	}
 
 	/**
