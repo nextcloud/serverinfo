@@ -32,6 +32,7 @@ use OCP\IConfig;
 
 class Os implements IOperatingSystem {
 	private IOperatingSystem $backend;
+	private IConfig $config;
 
 	public function __construct(IConfig $config) {
 		$restrictedMode = $config->getAppValue('serverinfo', 'restricted_mode', 'no') === 'yes';
