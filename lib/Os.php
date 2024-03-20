@@ -82,16 +82,16 @@ class Os implements IOperatingSystem {
 		foreach (explode(':', $filters) as $filter) {
 			// convert special filters to their corresponding paths
 			switch ($filter) {
-				case 'DOCROOT' : $path = isset($_SERVER['SCRIPT_FILENAME']) ? dirname($_SERVER['SCRIPT_FILENAME']) : (isset(
+				case 'DOCROOT': $path = isset($_SERVER['SCRIPT_FILENAME']) ? dirname($_SERVER['SCRIPT_FILENAME']) : (isset(
 $_SERVER['DOCUMENT_ROOT']) ? $_SERVER['DOCUMENT_ROOT'] : '');
 					break;
-				case 'DATADIR' : $path = $this->config->getSystemValue('datadirectory', '');
+				case 'DATADIR': $path = $this->config->getSystemValue('datadirectory', '');
 					break;
-				case 'TEMPDIR' : $path = $this->config->getSystemValue('tempdirectory', '');
+				case 'TEMPDIR': $path = $this->config->getSystemValue('tempdirectory', '');
 					break;
-				case 'LOGSDIR' : $path = dirname($this->config->getSystemValue('logfile', ''));
+				case 'LOGSDIR': $path = dirname($this->config->getSystemValue('logfile', ''));
 					break;
-				default : $path = $filter;
+				default: $path = $filter;
 			}
 			// find the disk whose mount point contains the filtering path
 			$find_index = null;
