@@ -9,6 +9,8 @@ OC.L10N.register(
     "Monitoring" : "Supervisión",
     "Size:" : "Tamañu.",
     "Files:" : "Ficheros:",
+    "Network" : "Rede",
+    "Active users" : "Usuarios activos",
     "1 hour:" : "1 hora",
     "Shares" : "Comparticiones",
     "PHP" : "PHP",
