@@ -68,6 +68,7 @@ OC.L10N.register(
     "Use this end point to connect an external monitoring tool:" : "Použite tento prípojný bod pre externý monitorovací nástroj:",
     "Copy" : "Kopírovať",
     "Output in JSON" : "Výstup v JSON",
+    "Skip app updates (including app updates will send an external request to the app store)" : "Preskočiť aktualizácie aplikácií (vrátane aktualizácií aplikácií odošle externú požiadavku do obchodu s aplikáciami)",
     "Skip server update" : "Preskočiť aktualizáciu servera",
     "To use an access token, please generate one then set it using the following command:" : "Pre používanie prístupového tokenu ho vygenerujte a potom ho nastavte použitím nasledujúceho príkazu:",
     "Then pass the token with the \"NC-Token\" header when querying the above URL." : "Pri dotazovaní na vyššie uvedenú adresu URL potom poslať token s hlavičkou „NC-Token“."
