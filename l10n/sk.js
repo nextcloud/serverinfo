@@ -59,6 +59,7 @@ OC.L10N.register(
     "Memory limit:" : "Obmedzenie pamäte:",
     "Max execution time:" : "Maximálny čas spustenia:",
     "Upload max size:" : "Maximálna veľkosť pre nahratie:",
+    "OPcache Revalidate Frequency:" : "Frekvencia opätovného overenia pamäte OPcache:",
     "Extensions:" : "Rozšírenia:",
     "Unable to list extensions" : "Nepodarilo sa zobraziť rozšírenia",
     "Show phpinfo" : "Zobraziť phpinfo",
