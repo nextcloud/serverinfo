@@ -41,7 +41,7 @@ OC.L10N.register(
     "PHP" : "PHP",
     "Version:" : "Versión:",
     "Extensions:" : "Estensiones:",
-    "Unable to list extensions" : "Nun ye posible llista les estensiones",
+    "Unable to list extensions" : "Nun ye posible llistaR les estensiones",
     "Database" : "Base de datos",
     "Type:" : "Tipu:",
     "Copy" : "Copiar"
