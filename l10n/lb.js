@@ -7,6 +7,7 @@ OC.L10N.register(
     "Press Ctrl-C to copy." : "Dréck CTRL-C fir ze kopéieren.",
     "Temperature" : "Temperatur",
     "Size:" : "Gréisst:",
-    "Type:" : "Typ:"
+    "Type:" : "Typ:",
+    "Copy" : "Kopie"
 },
 "nplurals=2; plural=(n != 1);");
