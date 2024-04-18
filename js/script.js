@@ -50,24 +50,21 @@
 		function updateInfo() {
 			const url = OC.generateUrl('/apps/serverinfo/update')
 
-			$.get(url).success(function(response) {
-				updateCPUStatistics(response.system.cpuload)
-				updateMemoryStatistics(response.system.mem_total, response.system.mem_free, response.system.swap_total, response.system.swap_free)
-			}).complete(function() {
-				setTimeout(updateInfo, 300)
-			})
+			$.get(url)
+				.done(function (response) {
+					updateCPUStatistics(response.system.cpuload)
+					updateMemoryStatistics(response.system.mem_total, response.system.mem_free, response.system.swap_total, response.system.swap_free)
+				})
+				.always(function () {
+					setTimeout(updateInfo, 2000)
+				})
 		}
 
 		setTimeout(updateInfo, 0)
 	});
 
-	$(window).load(function(){
-		resizeSystemCharts();
-	});
-
-	$(window).resize(function () {
-		resizeSystemCharts();
-	});
+	window.addEventListener('load', resizeSystemCharts)
+	window.addEventListener('resize', resizeSystemCharts)
 
 	function getThemedPrimaryColor() {
 		return OCA.Theming ? OCA.Theming.color : 'rgb(54, 129, 195)';
@@ -241,10 +238,9 @@
 	}
 
 	function initDiskCharts() {
-		$.ajax({
-			url: OC.linkToOCS('apps/serverinfo/api/v1/', 2) + 'diskdata?format=json',
-			method: "GET",
-			success: function (response) {
+		const url = OC.linkToOCS('apps/serverinfo/api/v1/', 2) + 'diskdata?format=json';
+		$.get(url)
+			.done(function (response) {
 				var diskdata = response.ocs.data;
 				var diskcharts = document.querySelectorAll(".DiskChart");
 				var i;
@@ -278,35 +274,26 @@
 						}
 					});
 				}
-			},
-			error: function (data) {
-				console.log(data);
-			}
-		});
+			});
 
-		var interval = 1000;  // 1000 = 1 second, 3000 = 3 seconds
+		var interval = 10000;  // 1000 = 1 second, 3000 = 3 seconds
 		function doAjax() {
-			$.ajax({
-				url: OC.linkToOCS('apps/serverinfo/api/v1/', 2) + 'basicdata?format=json',
-				method: "GET",
-				success: function (response) {
+			const url = OC.linkToOCS('apps/serverinfo/api/v1/', 2) + 'basicdata?format=json';
+			$.get(url)
+				.done(function (response) {
 					var data = response.ocs.data;
 					document.getElementById("servertime").innerHTML = data.servertime;
 					document.getElementById("uptime").innerHTML = data.uptime;
 					for (const thermalzone of data.thermalzones) {
 						document.getElementById(thermalzone.zone).textContent = thermalzone.temp;
 					}
-				},
-				error: function (data) {
-					console.log(data);
-				},
-				complete: function (data) {
+				})
+				.always(function () {
 					setTimeout(doAjax, interval);
-				}
-			});
+				});
 		}
 
-		setTimeout(doAjax, interval);
+		setTimeout(doAjax, 0);
 	}
 
 })(jQuery, OC);
