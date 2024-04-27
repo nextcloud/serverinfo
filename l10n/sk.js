@@ -53,6 +53,8 @@ OC.L10N.register(
     "Groups:" : "Skupiny:",
     "Links:" : "Odkazy:",
     "Emails:" : "E-maily:",
+    "Federated sent:" : "Združené odoslané:",
+    "Federated received:" : "Združené prijaté:",
     "Talk conversations:" : "Talk /Rozhovor/ konverzácia",
     "PHP" : "PHP",
     "Version:" : "Verzia:",
