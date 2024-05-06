@@ -121,7 +121,11 @@ class Linux implements IOperatingSystem {
 	}
 
 	public function getTime(): string {
-		return (string)shell_exec('date');
+		try {
+			return $this->executeCommand('date');
+		} catch (RuntimeException $e) {
+			return '';
+		}
 	}
 
 	public function getUptime(): int {
@@ -139,12 +143,17 @@ class Linux implements IOperatingSystem {
 	}
 
 	public function getNetworkInfo(): array {
-		$result = [];
-		$result['hostname'] = \gethostname();
-		$dns = shell_exec('cat /etc/resolv.conf |grep -i \'^nameserver\'|head -n1|cut -d \' \' -f2');
-		$result['dns'] = $dns;
-		$gw = shell_exec('ip route | awk \'/default/ { print $3 }\'');
-		$result['gateway'] = $gw;
+		$result = [
+			'hostname' => \gethostname(),
+			'dns' => '',
+			'gateway' => '',
+		];
+
+		if (function_exists('shell_exec')) {
+			$result['dns'] = shell_exec('cat /etc/resolv.conf |grep -i \'^nameserver\'|head -n1|cut -d \' \' -f2');
+			$result['gateway'] = shell_exec('ip route | awk \'/default/ { print $3 }\'');
+		}
+
 		return $result;
 	}
 
@@ -261,11 +270,23 @@ class Linux implements IOperatingSystem {
 		return trim($data);
 	}
 
+	/**
+	 * Execute a command with shell_exec.
+	 *
+	 * The command will be escaped with escapeshellcmd.
+	 *
+	 * @throws RuntimeException if shell_exec is unavailable, the command failed or an empty response.
+	 */
 	protected function executeCommand(string $command): string {
-		$output = @shell_exec(escapeshellcmd($command));
+		if (function_exists('shell_exec') === false) {
+			throw new RuntimeException('shell_exec unavailable');
+		}
+
+		$output = shell_exec(escapeshellcmd($command));
 		if ($output === false || $output === null || $output === '') {
 			throw new RuntimeException('No output for command: "' . $command . '"');
 		}
+
 		return $output;
 	}
 
