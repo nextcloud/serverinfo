@@ -227,11 +227,23 @@ class FreeBSD implements IOperatingSystem {
 		return [];
 	}
 
+	/**
+	 * Execute a command with shell_exec.
+	 *
+	 * The command will be escaped with escapeshellcmd.
+	 *
+	 * @throws RuntimeException if shell_exec is unavailable, the command failed or an empty response.
+	 */
 	protected function executeCommand(string $command): string {
-		$output = @shell_exec(escapeshellcmd($command));
-		if ($output === null || $output === '' || $output === false) {
+		if (function_exists('shell_exec') === false) {
+			throw new RuntimeException('shell_exec unavailable');
+		}
+
+		$output = shell_exec(escapeshellcmd($command));
+		if ($output === false || $output === null || $output === '') {
 			throw new RuntimeException('No output for command: "' . $command . '"');
 		}
+
 		return $output;
 	}
 
