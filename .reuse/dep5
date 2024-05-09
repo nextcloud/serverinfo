@@ -11,10 +11,6 @@ Files: l10n/*.js l10n/*.json
 Copyright: 2017 Nextcloud contributors
 License: AGPL-3.0-or-later
 
-Files: js/*.js.map js/*.js js/*.mjs js/*.mjs.map js/templates/*.handlebars emptyTemplates/* vendor/autoload.php tests/data/*
+Files: js/*.js.map js/*.js js/*.mjs js/*.mjs.map js/templates/*.handlebars emptyTemplates/* vendor/autoload.php tests/data/* img/app-dark.svg img/app.svg
 Copyright: 2016 Nextcloud GmbH and Nextcloud contributors
 License: AGPL-3.0-or-later
-
-Files: img/app-dark.svg img/app.png img/app.svg img/launch.svg img/x-office-document.svg img/x-office-drawing.svg img/x-office-presentation.svg img/x-office-spreadsheet.svg
-Copyright: 2018-2024 Google LLC
-License: Apache-2.0
