@@ -11,6 +11,15 @@ Files: l10n/*.js l10n/*.json
 Copyright: 2017 Nextcloud contributors
 License: AGPL-3.0-or-later
 
-Files: js/*.js.map js/*.js js/*.mjs js/*.mjs.map js/templates/*.handlebars emptyTemplates/* vendor/autoload.php tests/data/* img/app-dark.svg img/app.svg
+Files: vendor/autoload.php tests/data/* img/app-dark.svg img/app.svg
 Copyright: 2016 Nextcloud GmbH and Nextcloud contributors
 License: AGPL-3.0-or-later
+
+Files: js/Chart.min.js
+Copyright: 2021 Chart.js Contributors
+License: MIT
+
+Files: js/smoothie.js
+Copyright: 2010-2013 Joe Walnes
+	2013-2014 Drew Noakes
+License: MIT
