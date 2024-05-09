@@ -1,4 +1,10 @@
+<!--
+ - SPDX-FileCopyrightText: 2016 Nextcloud GmbH and Nextcloud contributors
+ - SPDX-License-Identifier: AGPL-3.0-or-later
+-->
 # Monitoring
+
+[![REUSE status](https://api.reuse.software/badge/github.com/nextcloud/serverinfo)](https://api.reuse.software/info/github.com/nextcloud/serverinfo)
 
 This apps provides useful server information, such as CPU load, RAM usage,
 disk usage, number of users, etc. Check out the provided **Example XML output**
