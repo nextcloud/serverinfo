@@ -1,3 +1,7 @@
+<!--
+ - SPDX-FileCopyrightText: 2016 Nextcloud GmbH and Nextcloud contributors
+ - SPDX-License-Identifier: AGPL-3.0-or-later
+-->
 # Monitoring
 
 This apps provides useful server information, such as CPU load, RAM usage,
