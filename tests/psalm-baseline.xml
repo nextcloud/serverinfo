@@ -1,8 +1,4 @@
 <?xml version="1.0" encoding="UTF-8"?>
-<!--
- - SPDX-FileCopyrightText: 2022 Nextcloud contributors
- - SPDX-License-Identifier: AGPL-3.0-or-later
--->
 <files psalm-version="4.x-dev@">
   <file src="lib/DatabaseStatistics.php">
     <UndefinedInterfaceMethod occurrences="1">

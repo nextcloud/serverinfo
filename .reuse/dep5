@@ -11,7 +11,7 @@ Files: l10n/*.js l10n/*.json
 Copyright: 2017 Nextcloud contributors
 License: AGPL-3.0-or-later
 
-Files: vendor/autoload.php tests/data/* img/app-dark.svg img/app.svg
+Files: vendor/autoload.php tests/data/* tests/psalm-baseline.xml img/app-dark.svg img/app.svg
 Copyright: 2016 Nextcloud GmbH and Nextcloud contributors
 License: AGPL-3.0-or-later
 
