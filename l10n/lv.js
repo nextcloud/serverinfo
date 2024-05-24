@@ -26,7 +26,7 @@ OC.L10N.register(
     "Memory" : "Atmiņa",
     "Disk" : "Disks",
     "Mount:" : "Piemontēts:",
-    "Filesystem:" : "Failu sistēma:",
+    "Filesystem:" : "Datņu sistēma:",
     "Size:" : "Izmērs:",
     "Available:" : "Pieejams:",
     "Used:" : "Izmantots:",
