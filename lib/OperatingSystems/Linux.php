@@ -130,13 +130,11 @@ class Linux implements IOperatingSystem {
 
 	public function getNetworkInfo(): array {
 		$result = [
-			'hostname' => \gethostname(),
-			'dns' => '',
 			'gateway' => '',
+			'hostname' => \gethostname(),
 		];
 
 		if (function_exists('shell_exec')) {
-			$result['dns'] = shell_exec('cat /etc/resolv.conf |grep -i \'^nameserver\'|head -n1|cut -d \' \' -f2');
 			$result['gateway'] = shell_exec('ip route | awk \'/default/ { print $3 }\'');
 		}
 

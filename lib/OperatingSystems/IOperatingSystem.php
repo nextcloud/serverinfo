@@ -42,7 +42,6 @@ interface IOperatingSystem {
 	 * Get info about network connection.
 	 *
 	 * [
-	 *        'dns' => string,
 	 *        'gateway' => string,
 	 *        'hostname' => string,
 	 * ]

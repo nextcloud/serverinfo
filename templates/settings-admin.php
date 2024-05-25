@@ -181,10 +181,6 @@ $phpinfo = $_['phpinfo'];
 				<span class="info"><?php p($_['networkinfo']['hostname']); ?></span>
 			</div>
 			<div class="col col-12">
-				<?php p($l->t('DNS:')); ?>
-				<span class="info"><?php p($_['networkinfo']['dns']); ?></span>
-			</div>
-			<div class="col col-12">
 				<?php p($l->t('Gateway:')); ?>
 				<span class="info"><?php p($_['networkinfo']['gateway']); ?></span>
 			</div>
