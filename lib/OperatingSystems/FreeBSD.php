@@ -98,24 +98,21 @@ class FreeBSD implements IOperatingSystem {
 	}
 
 	public function getNetworkInfo(): array {
-		$result = [];
-		$result['hostname'] = \gethostname();
+		$result = [
+			'gateway' => '',
+			'hostname' => \gethostname(),
+		];
 
 		try {
-			$dns = $this->executeCommand('cat /etc/resolv.conf 2>/dev/null');
-			preg_match_all("/(?<=^nameserver ).\S*/m", $dns, $matches);
-			$alldns = implode(' ', $matches[0]);
-			$result['dns'] = $alldns;
 			$netstat = $this->executeCommand('netstat -rn');
 			preg_match_all("/(?<=^default)\s*[0-9a-fA-f\.:]+/m", $netstat, $gw);
 			if (count($gw[0]) > 0) {
 				$result['gateway'] = implode(", ", array_map("trim", $gw[0]));
-			} else {
-				$result['gateway'] = '';
 			}
-		} catch (RuntimeException $e) {
-			return $result;
+		} catch (RuntimeException) {
+			// okay
 		}
+
 		return $result;
 	}
 
