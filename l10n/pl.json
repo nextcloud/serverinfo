@@ -33,7 +33,6 @@
     "Free Space:" : "Wolne miejsce:",
     "Network" : "Sieć",
     "Hostname:" : "Nazwa hosta:",
-    "DNS:" : "DNS:",
     "Gateway:" : "Brama:",
     "Status:" : "Status:",
     "Speed:" : "Prędkość:",
@@ -72,6 +71,7 @@
     "Skip app updates (including app updates will send an external request to the app store)" : "Pomiń aktualizacje aplikacji (w tym aktualizacje aplikacji wyślą zewnętrzne żądanie do sklepu z aplikacjami)",
     "Skip server update" : "Pomiń aktualizację serwera",
     "To use an access token, please generate one then set it using the following command:" : "Aby użyć tokena dostępu, wygeneruj go, a następnie ustaw za pomocą następującego polecenia:",
-    "Then pass the token with the \"NC-Token\" header when querying the above URL." : "Następnie przekaż token z nagłówkiem \"NC-Token\" podczas odpytywania powyższego adresu URL."
+    "Then pass the token with the \"NC-Token\" header when querying the above URL." : "Następnie przekaż token z nagłówkiem \"NC-Token\" podczas odpytywania powyższego adresu URL.",
+    "DNS:" : "DNS:"
 },"pluralForm" :"nplurals=4; plural=(n==1 ? 0 : (n%10>=2 && n%10<=4) && (n%100<12 || n%100>14) ? 1 : n!=1 && (n%10>=0 && n%10<=1) || (n%10>=5 && n%10<=9) || (n%100>=12 && n%100<=14) ? 2 : 3);"
 }

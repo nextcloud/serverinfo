@@ -35,7 +35,6 @@ OC.L10N.register(
     "Free Space:" : "Espacio libre:",
     "Network" : "Red",
     "Hostname:" : "Nombre del host:",
-    "DNS:" : "DNS:",
     "Gateway:" : "Gateway:",
     "Status:" : "Estado:",
     "Speed:" : "Velocidad:",
@@ -70,6 +69,7 @@ OC.L10N.register(
     "External monitoring tool" : "Herramienta de monitoreo externa",
     "Copy" : "Copiar",
     "To use an access token, please generate one then set it using the following command:" : "Para usar un token de acceso, por favor genera uno y luego configúralo usando el siguiente comando:",
-    "Then pass the token with the \"NC-Token\" header when querying the above URL." : "Luego pasa el token con la cabecera \"NC-Token\" al consultar la URL anterior."
+    "Then pass the token with the \"NC-Token\" header when querying the above URL." : "Luego pasa el token con la cabecera \"NC-Token\" al consultar la URL anterior.",
+    "DNS:" : "DNS:"
 },
 "nplurals=3; plural=n == 1 ? 0 : n != 0 && n % 1000000 == 0 ? 1 : 2;");

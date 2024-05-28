@@ -28,7 +28,6 @@ OC.L10N.register(
     "Free Space:" : "Espaciu llibre:",
     "Network" : "Rede",
     "Hostname:" : "Agospiador:",
-    "DNS:" : "DNS:",
     "Gateway:" : "Pasera:",
     "Status:" : "Estáu:",
     "Speed:" : "Velocidá:",
@@ -50,6 +49,7 @@ OC.L10N.register(
     "Database" : "Base de datos",
     "Type:" : "Tipu:",
     "External monitoring tool" : "Ferramienta de supervisión esterna",
-    "Copy" : "Copiar"
+    "Copy" : "Copiar",
+    "DNS:" : "DNS:"
 },
 "nplurals=2; plural=(n != 1);");

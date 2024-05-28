@@ -35,7 +35,6 @@ OC.L10N.register(
     "Free Space:" : "空き容量：",
     "Network" : "ネットワーク",
     "Hostname:" : "ホスト名:",
-    "DNS:" : "DNS:",
     "Gateway:" : "ゲートウェイ:",
     "Status:" : "ステータス:",
     "Speed:" : "速度:",
@@ -58,6 +57,7 @@ OC.L10N.register(
     "External monitoring tool" : "外部モニタリングツール",
     "Copy" : "コピー",
     "To use an access token, please generate one then set it using the following command:" : "アクセストークンを使用するには、アクセストークンを生成し、以下のコマンドで設定してください。",
-    "Then pass the token with the \"NC-Token\" header when querying the above URL." : "次に、上記のURLをクエリするときに、\"NC-Token\" ヘッダーでトークンを渡します。"
+    "Then pass the token with the \"NC-Token\" header when querying the above URL." : "次に、上記のURLをクエリするときに、\"NC-Token\" ヘッダーでトークンを渡します。",
+    "DNS:" : "DNS:"
 },
 "nplurals=1; plural=0;");

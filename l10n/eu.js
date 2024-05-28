@@ -35,7 +35,6 @@ OC.L10N.register(
     "Free Space:" : "Leku librea:",
     "Network" : "Sarea",
     "Hostname:" : "Ostalari-izena:",
-    "DNS:" : "DNS:",
     "Gateway:" : "Sarbidea:",
     "Status:" : "Egoera:",
     "Speed:" : "Abiadura:",
@@ -69,6 +68,7 @@ OC.L10N.register(
     "External monitoring tool" : "Kanpo jarraipen tresna",
     "Copy" : "Kopiatu",
     "To use an access token, please generate one then set it using the following command:" : "Sarbide-token bat erabiltzeko, sortu bat eta ezarri komando hau erabiliz:",
-    "Then pass the token with the \"NC-Token\" header when querying the above URL." : "Ondoren, pasatu token-a \"NC-Token\" goiburuarekin goiko URLa kontsultatzerakoan."
+    "Then pass the token with the \"NC-Token\" header when querying the above URL." : "Ondoren, pasatu token-a \"NC-Token\" goiburuarekin goiko URLa kontsultatzerakoan.",
+    "DNS:" : "DNS:"
 },
 "nplurals=2; plural=(n != 1);");
