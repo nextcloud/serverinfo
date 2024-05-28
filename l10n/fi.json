@@ -33,7 +33,6 @@
     "Free Space:" : "Vapaata tilaa:",
     "Network" : "Verkko",
     "Hostname:" : "Tietokoneen nimi:",
-    "DNS:" : "Nimipalvelu:",
     "Gateway:" : "Yhdyskäytävä:",
     "Status:" : "Tila:",
     "Speed:" : "Nopeus:",
@@ -61,6 +60,7 @@
     "Database" : "Tietokanta",
     "Type:" : "Tyyppi:",
     "External monitoring tool" : "Ulkopuolinen valvontatyökalu",
-    "Copy" : "Kopioi"
+    "Copy" : "Kopioi",
+    "DNS:" : "Nimipalvelu:"
 },"pluralForm" :"nplurals=2; plural=(n != 1);"
 }

@@ -35,7 +35,6 @@ OC.L10N.register(
     "Free Space:" : "Ledig plass:",
     "Network" : "Nettverk",
     "Hostname:" : "Servernavn:",
-    "DNS:" : "DNS:",
     "Gateway:" : "Standardruter:",
     "Status:" : "Status:",
     "Speed:" : "Hastighet:",
@@ -74,6 +73,7 @@ OC.L10N.register(
     "Skip app updates (including app updates will send an external request to the app store)" : "Hopp over appoppdateringer (inkludert appoppdateringer sender en ekstern forespørsel til appbutikken)",
     "Skip server update" : "Hopp over serveroppdatering",
     "To use an access token, please generate one then set it using the following command:" : "For å bruke et tilgangstoken, vennligst generer et og sett det ved hjelp av følgende kommando:",
-    "Then pass the token with the \"NC-Token\" header when querying the above URL." : "Send deretter tokenet med \"NC-Token\"-overskriften under spørring av URL-adressen ovenfor."
+    "Then pass the token with the \"NC-Token\" header when querying the above URL." : "Send deretter tokenet med \"NC-Token\"-overskriften under spørring av URL-adressen ovenfor.",
+    "DNS:" : "DNS:"
 },
 "nplurals=2; plural=(n != 1);");

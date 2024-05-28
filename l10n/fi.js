@@ -35,7 +35,6 @@ OC.L10N.register(
     "Free Space:" : "Vapaata tilaa:",
     "Network" : "Verkko",
     "Hostname:" : "Tietokoneen nimi:",
-    "DNS:" : "Nimipalvelu:",
     "Gateway:" : "Yhdyskäytävä:",
     "Status:" : "Tila:",
     "Speed:" : "Nopeus:",
@@ -63,6 +62,7 @@ OC.L10N.register(
     "Database" : "Tietokanta",
     "Type:" : "Tyyppi:",
     "External monitoring tool" : "Ulkopuolinen valvontatyökalu",
-    "Copy" : "Kopioi"
+    "Copy" : "Kopioi",
+    "DNS:" : "Nimipalvelu:"
 },
 "nplurals=2; plural=(n != 1);");

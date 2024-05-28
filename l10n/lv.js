@@ -35,7 +35,6 @@ OC.L10N.register(
     "Free Space:" : "Brīva vieta:",
     "Network" : "Tīkls",
     "Hostname:" : "Resursa nosaukums:",
-    "DNS:" : "DNS:",
     "Gateway:" : "Vārteja:",
     "Status:" : "Statuss:",
     "Speed:" : "Ātrums:",
@@ -58,6 +57,7 @@ OC.L10N.register(
     "External monitoring tool" : "Ārējās uzraudzības instruments",
     "Copy" : "Kopēt",
     "To use an access token, please generate one then set it using the following command:" : "Lai izmantotu piekļuves talonu, lūdzu, ģenerējiet to un iestatiet to, izmantojot šādu komandu:",
-    "Then pass the token with the \"NC-Token\" header when querying the above URL." : "Pēc tam nododiet marķieri ar galveni \"NC-Token\", veicot vaicājumu iepriekš norādītajam URL."
+    "Then pass the token with the \"NC-Token\" header when querying the above URL." : "Pēc tam nododiet marķieri ar galveni \"NC-Token\", veicot vaicājumu iepriekš norādītajam URL.",
+    "DNS:" : "DNS:"
 },
 "nplurals=3; plural=(n%10==1 && n%100!=11 ? 0 : n != 0 ? 1 : 2);");
