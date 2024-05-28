@@ -35,7 +35,6 @@ OC.L10N.register(
     "Free Space:" : "Свободно:",
     "Network" : "Сеть",
     "Hostname:" : "Хост:",
-    "DNS:" : "DNS:",
     "Gateway:" : "Шлюз:",
     "Status:" : "Статус:",
     "Speed:" : "Скорость:",
@@ -70,6 +69,7 @@ OC.L10N.register(
     "External monitoring tool" : "Внешний мониторинг",
     "Copy" : "Копировать",
     "To use an access token, please generate one then set it using the following command:" : "Чтобы использовать токен доступа, пожалуйста, сгенерируйте его, а затем установите с помощью следующей команды:",
-    "Then pass the token with the \"NC-Token\" header when querying the above URL." : "Затем передайте токен с заголовком «NC-Token» при запросе указанного выше URL."
+    "Then pass the token with the \"NC-Token\" header when querying the above URL." : "Затем передайте токен с заголовком «NC-Token» при запросе указанного выше URL.",
+    "DNS:" : "DNS:"
 },
 "nplurals=4; plural=(n%10==1 && n%100!=11 ? 0 : n%10>=2 && n%10<=4 && (n%100<12 || n%100>14) ? 1 : n%10==0 || (n%10>=5 && n%10<=9) || (n%100>=11 && n%100<=14)? 2 : 3);");

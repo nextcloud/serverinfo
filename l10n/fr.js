@@ -35,7 +35,6 @@ OC.L10N.register(
     "Free Space:" : "Espace libre :",
     "Network" : "Réseau",
     "Hostname:" : "Nom d'hôte :",
-    "DNS:" : "DNS :",
     "Gateway:" : "Passerelle :",
     "Status:" : "État :",
     "Speed:" : "Vitesse :",
@@ -74,6 +73,7 @@ OC.L10N.register(
     "Skip app updates (including app updates will send an external request to the app store)" : "Ignorer les mises à jour des applications (les mises à jour des applications incluses vont envoyer une requête externe au magasin d'applications).",
     "Skip server update" : "Ignorer la mise à jour du serveur",
     "To use an access token, please generate one then set it using the following command:" : "Pour utiliser un jeton d'accès, veuillez en générer un puis le définir à l'aide de la commande suivante :",
-    "Then pass the token with the \"NC-Token\" header when querying the above URL." : "Puis transmettez le jeton avec l’entête « NC-Token » lorsque vous appelez l’URL."
+    "Then pass the token with the \"NC-Token\" header when querying the above URL." : "Puis transmettez le jeton avec l’entête « NC-Token » lorsque vous appelez l’URL.",
+    "DNS:" : "DNS :"
 },
 "nplurals=3; plural=(n == 0 || n == 1) ? 0 : n != 0 && n % 1000000 == 0 ? 1 : 2;");

@@ -35,7 +35,6 @@ OC.L10N.register(
     "Free Space:" : "Espaço livre:",
     "Network" : "Rede",
     "Hostname:" : "Hostname:",
-    "DNS:" : "DNS:",
     "Gateway:" : "Gateway:",
     "Status:" : "Status:",
     "Speed:" : "Velocidade:",
@@ -74,6 +73,7 @@ OC.L10N.register(
     "Skip app updates (including app updates will send an external request to the app store)" : "Ignorar atualizações de aplicativos (incluindo atualizações de aplicativos enviará uma solicitação externa à app store)",
     "Skip server update" : "Ignorar atualização do servidor",
     "To use an access token, please generate one then set it using the following command:" : "Para usar um token de acesso, gere um e defina-o usando o seguinte comando:",
-    "Then pass the token with the \"NC-Token\" header when querying the above URL." : "Em seguida, passe o token com o cabeçalho \"NC-Token\" ao consultar o URL acima."
+    "Then pass the token with the \"NC-Token\" header when querying the above URL." : "Em seguida, passe o token com o cabeçalho \"NC-Token\" ao consultar o URL acima.",
+    "DNS:" : "DNS:"
 },
 "nplurals=3; plural=(n == 0 || n == 1) ? 0 : n != 0 && n % 1000000 == 0 ? 1 : 2;");

@@ -32,7 +32,6 @@ OC.L10N.register(
     "Free Space:" : "Vaba ruum:",
     "Network" : "Võrk",
     "Hostname:" : "Hostinimi:",
-    "DNS:" : "Nimeserver:",
     "Gateway:" : "Võrgulüüs:",
     "Status:" : "Seisund:",
     "Speed:" : "Kiirus:",
@@ -62,6 +61,7 @@ OC.L10N.register(
     "External monitoring tool" : "Väline monitoorimistööriist",
     "Copy" : "Kopeeri",
     "To use an access token, please generate one then set it using the following command:" : "Ligipääsutunnuse kasutamiseks genereeri see ja seadista alljärgneva käsu abil:",
-    "Then pass the token with the \"NC-Token\" header when querying the above URL." : "Seejärel saada tunnus ülaloleva URL-i pärimisel \"NC-Token\" päisega."
+    "Then pass the token with the \"NC-Token\" header when querying the above URL." : "Seejärel saada tunnus ülaloleva URL-i pärimisel \"NC-Token\" päisega.",
+    "DNS:" : "Nimeserver:"
 },
 "nplurals=2; plural=(n != 1);");

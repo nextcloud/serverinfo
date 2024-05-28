@@ -35,7 +35,6 @@ OC.L10N.register(
     "Free Space:" : "剩余空间：",
     "Network" : "网络",
     "Hostname:" : "主机名：",
-    "DNS:" : "DNS：",
     "Gateway:" : "网关：",
     "Status:" : "状态：",
     "Speed:" : "速度：",
@@ -70,6 +69,7 @@ OC.L10N.register(
     "External monitoring tool" : "外部监控工具",
     "Copy" : "复制",
     "To use an access token, please generate one then set it using the following command:" : "要使用一个访问令牌，请生成一个，然后使用以下命令设置它：",
-    "Then pass the token with the \"NC-Token\" header when querying the above URL." : "然后在查询上述 URL 时传递带有 “NC-Token” 头的令牌。"
+    "Then pass the token with the \"NC-Token\" header when querying the above URL." : "然后在查询上述 URL 时传递带有 “NC-Token” 头的令牌。",
+    "DNS:" : "DNS："
 },
 "nplurals=1; plural=0;");
