@@ -8,6 +8,7 @@ OC.L10N.register(
     "System" : "Córas",
     "Monitoring" : "Monatóireacht",
     "Active users" : "Úsáideoirí gníomhacha",
+    "Shares" : "Scaireanna",
     "PHP" : "PHP",
     "Database" : "Bunachar Sonraí",
     "Copy" : "Cóipeáil"
