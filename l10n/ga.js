@@ -7,6 +7,7 @@ OC.L10N.register(
     "Press Ctrl-C to copy." : "Brúigh Ctrl-C chun cóip a dhéanamh.",
     "System" : "Córas",
     "Monitoring" : "Monatóireacht",
+    "Temperature" : "Teocht",
     "Network" : "Líonra",
     "Active users" : "Úsáideoirí gníomhacha",
     "Shares" : "Scaireanna",
