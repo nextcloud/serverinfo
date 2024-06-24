@@ -151,6 +151,16 @@ class FreeBSDTest extends TestCase {
 		$this->assertEquals($expected, $actual);
 	}
 
+	public function testGetNetworkInterfacesError(): void {
+		$this->os->method('getNetInterfaces')
+			->willThrowException(new RuntimeException('Unable to get network interfaces'));
+
+		$expected = [];
+		$actual = $this->os->getNetworkInterfaces();
+
+		$this->assertEquals($expected, $actual);
+	}
+
 	public function testSupported(): void {
 		$this->assertFalse($this->os->supported());
 	}
