@@ -144,7 +144,13 @@ class Linux implements IOperatingSystem {
 	public function getNetworkInterfaces(): array {
 		$data = [];
 
-		foreach ($this->getNetInterfaces() as $interfaceName => $interface) {
+		try {
+			$interfaces = $this->getNetInterfaces();
+		} catch (RuntimeException) {
+			return $data;
+		}
+
+		foreach ($interfaces as $interfaceName => $interface) {
 			$netInterface = new NetInterface($interfaceName, $interface['up']);
 			$data[] = $netInterface;
 
