@@ -426,7 +426,7 @@ $phpinfo = $_['phpinfo'];
 					</div>
 					<div class="monitoring-url-param">
 						<input type="checkbox" class="update-monitoring-endpoint-url" name="skip_apps" id="skip_apps" checked>
-						<label for="skip_apps"><?php p($l->t('Skip app updates (including app updates will send an external request to the app store)')) ?></label>
+						<label for="skip_apps"><?php p($l->t('Skip apps section (including apps section will send an external request to the app store)')) ?></label>
 					</div>
 					<div class="monitoring-url-param">
 						<input type="checkbox" class="update-monitoring-endpoint-url" name="skip_update" id="skip_update" checked>
