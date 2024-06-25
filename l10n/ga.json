@@ -68,10 +68,10 @@
     "Use this end point to connect an external monitoring tool:" : "Úsáid an pointe deiridh seo chun uirlis sheachtrach monatóireachta a nascadh:",
     "Copy" : "Cóipeáil",
     "Output in JSON" : "Aschur in JSON",
-    "Skip app updates (including app updates will send an external request to the app store)" : "Léim ar nuashonruithe aipeanna (seolfaidh nuashonruithe aipeanna iarratas seachtrach chuig an siopa aip san áireamh)",
     "Skip server update" : "Léim ar nuashonrú an fhreastalaí",
     "To use an access token, please generate one then set it using the following command:" : "Chun comhartha rochtana a úsáid, giniúint ceann agus ansin socraigh é ag baint úsáide as an ordú seo a leanas le do thoil:",
     "Then pass the token with the \"NC-Token\" header when querying the above URL." : "Ansin cuir an comhartha leis an gceanntásc \"NC-Token\" agus an URL thuas á cheistiú.",
-    "DNS:" : "DNS:"
+    "DNS:" : "DNS:",
+    "Skip app updates (including app updates will send an external request to the app store)" : "Léim ar nuashonruithe aipeanna (seolfaidh nuashonruithe aipeanna iarratas seachtrach chuig an siopa aip san áireamh)"
 },"pluralForm" :"nplurals=5; plural=(n==1 ? 0 : n==2 ? 1 : n<7 ? 2 : n<11 ? 3 : 4);"
 }

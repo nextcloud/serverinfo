@@ -70,10 +70,10 @@ OC.L10N.register(
     "Use this end point to connect an external monitoring tool:" : "Gebruik dit eindpunt om een extern monitoringprogramma te koppelen:",
     "Copy" : "Kopiëren",
     "Output in JSON" : "Uitvoer in JSON",
-    "Skip app updates (including app updates will send an external request to the app store)" : "App-updates overslaan (bij inclusief app-updates wordt een extern verzoek naar de app store gestuurd)",
     "Skip server update" : "Serverupdate overslaan",
     "To use an access token, please generate one then set it using the following command:" : "Om een ​​toegangstoken te gebruiken, genereert u er een en stelt u deze in met de volgende opdracht:",
     "Then pass the token with the \"NC-Token\" header when querying the above URL." : "Geef vervolgens het token met de \"NC-Token\" -header door bij het opvragen van de bovenstaande URL.",
-    "DNS:" : "DNS:"
+    "DNS:" : "DNS:",
+    "Skip app updates (including app updates will send an external request to the app store)" : "App-updates overslaan (bij inclusief app-updates wordt een extern verzoek naar de app store gestuurd)"
 },
 "nplurals=2; plural=(n != 1);");
