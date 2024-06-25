@@ -28,87 +28,95 @@ https://<nextcloud-fqdn>/ocs/v2.php/apps/serverinfo/api/v1/info
 
 ### Example XML output:
 ```
+<?xml version="1.0"?>
 <ocs>
-  <meta>
-    <status>ok</status>
-    <statuscode>200</statuscode>
-    <message>OK</message>
-  </meta>
-  <data>
-    <nextcloud>
-      <system>
-        <version>15.0.4.0</version>
-        <theme/>
-        <enable_avatars>yes</enable_avatars>
-        <enable_previews>yes</enable_previews>
-        <memcache.local>OC\Memcache\APCu</memcache.local>
-        <memcache.distributed>none</memcache.distributed>
-        <filelocking.enabled>yes</filelocking.enabled>
-        <memcache.locking>OC\Memcache\Redis</memcache.locking>
-        <debug>no</debug>
-        <freespace>48472801280</freespace>
-        <cpuload>
-          <element>1.81</element>
-          <element>1.39</element>
-          <element>1.24</element>
-        </cpuload>
-        <mem_total>8183664</mem_total>
-        <mem_free>5877568</mem_free>
-        <swap_total>0</swap_total>
-        <swap_free>0</swap_free>
-        <apps>
-          <num_installed>53</num_installed>
-          <num_updates_available>1</num_updates_available>
-          <app_updates>
-            <files_antivirus>2.0.1</files_antivirus>
-          </app_updates>
-        </apps>
-      </system>
-      <storage>
-        <num_users>7</num_users>
-        <num_files>708860</num_files>
-        <num_storages>125</num_storages>
-        <num_storages_local>7</num_storages_local>
-        <num_storages_home>7</num_storages_home>
-        <num_storages_other>111</num_storages_other>
-      </storage>
-      <shares>
-        <num_shares>1</num_shares>
-        <num_shares_user>0</num_shares_user>
-        <num_shares_groups>0</num_shares_groups>
-        <num_shares_link>0</num_shares_link>
-        <num_shares_link_no_password>0</num_shares_link_no_password>
-        <num_fed_shares_sent>0</num_fed_shares_sent>
-        <num_fed_shares_received>0</num_fed_shares_received>
-        <permissions_4_1>1</permissions_4_1>
-      </shares>
-    </nextcloud>
-    <server>
-      <webserver>Apache/2.4</webserver>
-      <php>
-        <version>7.2.14</version>
-        <memory_limit>536870912</memory_limit>
-        <max_execution_time>3600</max_execution_time>
-        <upload_max_filesize>535822336</upload_max_filesize>
-      </php>
-      <database>
-        <type>mysql</type>
-        <version>10.2.21</version>
-        <size>331382784</size>
-      </database>
-    </server>
-    <activeUsers>
-      <last5minutes>2</last5minutes>
-      <last1hour>4</last1hour>
-      <last24hours>5</last24hours>
-    </activeUsers>
-  </data>
+	<meta>
+		<status>ok</status>
+		<statuscode>200</statuscode>
+		<message>OK</message>
+	</meta>
+	<data>
+		<nextcloud>
+			<system>
+				<version>30.0.0.1</version>
+				<theme/>
+				<enable_avatars>yes</enable_avatars>
+				<enable_previews>yes</enable_previews>
+				<memcache.local>OC\Memcache\APCu</memcache.local>
+				<memcache.distributed>none</memcache.distributed>
+				<filelocking.enabled>yes</filelocking.enabled>
+				<memcache.locking>OC\Memcache\Redis</memcache.locking>
+				<debug>no</debug>
+				<freespace>48472801280</freespace>
+				<cpuload>
+					<element>1.81</element>
+					<element>1.39</element>
+					<element>1.24</element>
+				</cpuload>
+				<mem_total>8183664</mem_total>
+				<mem_free>5877568</mem_free>
+				<swap_total>0</swap_total>
+				<swap_free>0</swap_free>
+				<apps>
+					<!-- only with skipApps=false -->
+					<num_installed>53</num_installed>
+					<num_updates_available>1</num_updates_available>
+					<app_updates>
+						<files_antivirus>2.0.1</files_antivirus>
+					</app_updates>
+				</apps>
+				<update>
+					<!-- only with skipUpdate=false -->
+					<lastupdatedat>1719244666</lastupdatedat>
+					<available/>
+				</update>
+			</system>
+			<storage>
+				<num_users>7</num_users>
+				<num_files>708860</num_files>
+				<num_storages>125</num_storages>
+				<num_storages_local>7</num_storages_local>
+				<num_storages_home>7</num_storages_home>
+				<num_storages_other>111</num_storages_other>
+			</storage>
+			<shares>
+				<num_shares>1</num_shares>
+				<num_shares_user>0</num_shares_user>
+				<num_shares_groups>0</num_shares_groups>
+				<num_shares_link>0</num_shares_link>
+				<num_shares_link_no_password>0</num_shares_link_no_password>
+				<num_fed_shares_sent>0</num_fed_shares_sent>
+				<num_fed_shares_received>0</num_fed_shares_received>
+				<permissions_4_1>1</permissions_4_1>
+			</shares>
+		</nextcloud>
+		<server>
+			<webserver>Apache/2.4</webserver>
+			<php>
+				<version>7.2.14</version>
+				<memory_limit>536870912</memory_limit>
+				<max_execution_time>3600</max_execution_time>
+				<upload_max_filesize>535822336</upload_max_filesize>
+			</php>
+			<database>
+				<type>mysql</type>
+				<version>10.2.21</version>
+				<size>331382784</size>
+			</database>
+		</server>
+		<activeUsers>
+			<last5minutes>2</last5minutes>
+			<last1hour>4</last1hour>
+			<last24hours>5</last24hours>
+		</activeUsers>
+	</data>
 </ocs>
+
 ```
 
 ### Example JSON output:
-```
-{"ocs":{"meta":{"status":"ok","statuscode":200,"message":"OK"},"data":{"nextcloud":{"system":{"version":"15.0.4.0","theme":"","enable_avatars":"yes","enable_previews":"yes","memcache.local":"OC\\Memcache\\APCu","memcache.distributed":"none","filelocking.enabled":"yes","memcache.locking":"OC\\Memcache\\Redis","debug":"no","freespace":48472944640,"cpuload":[0.84999999999999997779553950749686919152736663818359375,1.04000000000000003552713678800500929355621337890625,1.1699999999999999289457264239899814128875732421875],"mem_total":8183664,"mem_free":5877156,"swap_total":0,"swap_free":0,"apps":{"num_installed":53,"num_updates_available":1,"app_updates":{"files_antivirus":"2.0.1"}}},"storage":{"num_users":7,"num_files":708860,"num_storages":125,"num_storages_local":7,"num_storages_home":7,"num_storages_other":111},"shares":{"num_shares":1,"num_shares_user":0,"num_shares_groups":0,"num_shares_link":0,"num_shares_link_no_password":0,"num_fed_shares_sent":0,"num_fed_shares_received":0,"permissions_4_1":"1"}},"server":{"webserver":"Apache\/2.4","php":{"version":"7.2.14","memory_limit":536870912,"max_execution_time":3600,"upload_max_filesize":535822336},"database":{"type":"mysql","version":"10.2.21","size":331382784}},"activeUsers":{"last5minutes":2,"last1hour":3,"last24hours":5}}}}
+```json
+{"ocs":{"meta":{"status":"ok","statuscode":200,"message":"OK"},"data":{"nextcloud":{"system":{"version":"30.0.0.1","theme":"","enable_avatars":"yes","enable_previews":"yes","memcache.local":"OC\\Memcache\\APCu","memcache.distributed":"none","filelocking.enabled":"yes","memcache.locking":"OC\\Memcache\\Redis","debug":"no","freespace":48472944640,"cpuload":[0.84999999999999997779553950749686919152736663818359375,1.04000000000000003552713678800500929355621337890625,1.1699999999999999289457264239899814128875732421875],"mem_total":8183664,"mem_free":5877156,"swap_total":0,"swap_free":0,"apps":{"num_installed":53,"num_updates_available":1,"app_updates":{"files_antivirus":"2.0.1"}}},"storage":{"num_users":7,"num_files":708860,"num_storages":125,"num_storages_local":7,"num_storages_home":7,"num_storages_other":111},"shares":{"num_shares":1,"num_shares_user":0,"num_shares_groups":0,"num_shares_link":0,"num_shares_link_no_password":0,"num_fed_shares_sent":0,"num_fed_shares_received":0,"permissions_4_1":"1"}},"server":{"webserver":"Apache\/2.4","php":{"version":"7.2.14","memory_limit":536870912,"max_execution_time":3600,"upload_max_filesize":535822336},"database":{"type":"mysql","version":"10.2.21","size":331382784}},"activeUsers":{"last5minutes":2,"last1hour":3,"last24hours":5}}}}
 ```
 
 ## Configuration
