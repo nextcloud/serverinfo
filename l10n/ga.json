@@ -68,6 +68,7 @@
     "Use this end point to connect an external monitoring tool:" : "Úsáid an pointe deiridh seo chun uirlis sheachtrach monatóireachta a nascadh:",
     "Copy" : "Cóipeáil",
     "Output in JSON" : "Aschur in JSON",
+    "Skip apps section (including apps section will send an external request to the app store)" : "Scipeáil ar an rannán aipeanna (seolfar iarratas seachtrach chuig an siopa aipeanna san áireamh)",
     "Skip server update" : "Léim ar nuashonrú an fhreastalaí",
     "To use an access token, please generate one then set it using the following command:" : "Chun comhartha rochtana a úsáid, giniúint ceann agus ansin socraigh é ag baint úsáide as an ordú seo a leanas le do thoil:",
     "Then pass the token with the \"NC-Token\" header when querying the above URL." : "Ansin cuir an comhartha leis an gceanntásc \"NC-Token\" agus an URL thuas á cheistiú.",
