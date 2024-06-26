@@ -70,6 +70,7 @@ OC.L10N.register(
     "Use this end point to connect an external monitoring tool:" : "Diesen Endpunkt verwenden, um mit einem externen Überwachungstool zu verbinden:",
     "Copy" : "Kopieren",
     "Output in JSON" : "Ausgabe in JSON",
+    "Skip apps section (including apps section will send an external request to the app store)" : "Abschnitt „Apps“ überspringen (das Einschließen des Abschnitts „Apps“ sendet eine externe Anfrage an den App Store)",
     "Skip server update" : "Serveraktualisierung überspringen",
     "To use an access token, please generate one then set it using the following command:" : "Um ein Zugriffstoken zu verwenden, generieren Sie bitte eines und legen Sie es mit dem folgenden Befehl fest:",
     "Then pass the token with the \"NC-Token\" header when querying the above URL." : "Übergeben Sie dann das Token mit dem Header \"NC-Token\" durch Aufrufen der obigen URL.",
