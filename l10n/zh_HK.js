@@ -70,6 +70,7 @@ OC.L10N.register(
     "Use this end point to connect an external monitoring tool:" : "使用此端點連結外部監控工具：",
     "Copy" : "複製",
     "Output in JSON" : "以 JSON 輸出",
+    "Skip apps section (including apps section will send an external request to the app store)" : "略過應用程式部分（包括此部分將向應用商店發送外部請求）。",
     "Skip server update" : "略過伺服器更新",
     "To use an access token, please generate one then set it using the following command:" : "要使用存取權杖，請生成一個權杖，然後使用以下命令對其進行設置：",
     "Then pass the token with the \"NC-Token\" header when querying the above URL." : "然後在查詢上述 URL 時將權杖與 “ NC-Token” 標頭一起傳遞。",
