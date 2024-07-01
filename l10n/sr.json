@@ -68,6 +68,7 @@
     "Use this end point to connect an external monitoring tool:" : "Употребите следећу крајњу тачку да повежете спољни алат за праћење:",
     "Copy" : "Копирај",
     "Output in JSON" : "Излаз у JSON",
+    "Skip apps section (including apps section will send an external request to the app store)" : "Прескочи одељак са апликацијама (укључивање одељка са апликацијама ће да пошаље спољни захтев у продавницу апликација)",
     "Skip server update" : "Прескочи ажурирање сервера",
     "To use an access token, please generate one then set it using the following command:" : "Да бисте користили жетон за приступ, молимо вас да га генеришете, па поставите следећом командом:",
     "Then pass the token with the \"NC-Token\" header when querying the above URL." : "Затим проследите жетон „NC-Token” заглављем када вршите упит на горњу URL адресу.",
