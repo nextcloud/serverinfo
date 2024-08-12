@@ -85,7 +85,7 @@ class LinuxTest extends TestCase {
 			->with('/proc/cpuinfo')
 			->willReturn(file_get_contents(__DIR__ . '/../data/linux_cpuinfo'));
 
-		$this->assertEquals('Intel(R) Core(TM) i5-6500 CPU @ 3.20GHz (4 cores)', $this->os->getCpuName());
+		$this->assertEquals('Intel(R) Core(TM) i5-6500 CPU @ 3.20GHz (4 threads)', $this->os->getCpuName());
 	}
 
 	public function testGetCpuNameOneCore(): void {
@@ -93,7 +93,7 @@ class LinuxTest extends TestCase {
 			->with('/proc/cpuinfo')
 			->willReturn(file_get_contents(__DIR__ . '/../data/linux_cpuinfo_one_core'));
 
-		$this->assertEquals('Intel(R) Core(TM) i5-6500 CPU @ 3.20GHz (1 core)', $this->os->getCpuName());
+		$this->assertEquals('Intel(R) Core(TM) i5-6500 CPU @ 3.20GHz (1 thread)', $this->os->getCpuName());
 	}
 
 	public function testGetCpuNamePi3b(): void {
@@ -101,7 +101,7 @@ class LinuxTest extends TestCase {
 			->with('/proc/cpuinfo')
 			->willReturn(file_get_contents(__DIR__ . '/../data/linux_cpuinfo_pi3b'));
 
-		$this->assertEquals('Raspberry Pi 3 Model B Rev 1.2 (4 cores)', $this->os->getCpuName());
+		$this->assertEquals('Raspberry Pi 3 Model B Rev 1.2 (4 threads)', $this->os->getCpuName());
 	}
 
 	public function testGetCpuNamePi4b(): void {
@@ -109,7 +109,7 @@ class LinuxTest extends TestCase {
 			->with('/proc/cpuinfo')
 			->willReturn(file_get_contents(__DIR__ . '/../data/linux_cpuinfo_pi4b'));
 
-		$this->assertEquals('Raspberry Pi 4 Model B Rev 1.2 (4 cores)', $this->os->getCpuName());
+		$this->assertEquals('Raspberry Pi 4 Model B Rev 1.2 (4 threads)', $this->os->getCpuName());
 	}
 
 	public function testGetCpuNameOpenPower(): void {
@@ -117,7 +117,7 @@ class LinuxTest extends TestCase {
 			->with('/proc/cpuinfo')
 			->willReturn(file_get_contents(__DIR__ . '/../data/linux_cpuinfo_openpower'));
 
-		$this->assertEquals('POWER9, altivec supported (176 cores)', $this->os->getCpuName());
+		$this->assertEquals('POWER9, altivec supported (176 threads)', $this->os->getCpuName());
 	}
 
 	public function testGetCpuNameNoData(): void {
