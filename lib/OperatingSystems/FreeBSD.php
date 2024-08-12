@@ -78,12 +78,12 @@ class FreeBSD implements IOperatingSystem {
 
 		try {
 			$model = $this->executeCommand('/sbin/sysctl -n hw.model');
-			$cores = $this->executeCommand('/sbin/sysctl -n kern.smp.cpus');
+			$threads = $this->executeCommand('/sbin/sysctl -n kern.smp.cpus');
 
-			if ((int)$cores === 1) {
-				$data = $model . ' (1 core)';
+			if ((int)$threads === 1) {
+				$data = $model . ' (1 thread)';
 			} else {
-				$data = $model . ' (' . $cores . ' cores)';
+				$data = $model . ' (' . $threads . ' threads)';
 			}
 		} catch (RuntimeException $e) {
 			return $data;
