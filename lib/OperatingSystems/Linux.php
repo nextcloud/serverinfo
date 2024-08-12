@@ -95,12 +95,12 @@ class Linux implements IOperatingSystem {
 		$pattern = '/processor\s+:\s(.+)/';
 
 		preg_match_all($pattern, $cpuinfo, $matches);
-		$cores = count($matches[1]);
+		$threads = count($matches[1]);
 
-		if ($cores === 1) {
-			$data = $model . ' (1 core)';
+		if ($threads === 1) {
+			$data = $model . ' (1 thread)';
 		} else {
-			$data = $model . ' (' . $cores . ' cores)';
+			$data = $model . ' (' . $threads . ' threads)';
 		}
 
 		return $data;
