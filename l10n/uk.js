@@ -74,7 +74,6 @@ OC.L10N.register(
     "Skip server update" : "Пропускати оновлення сервера",
     "To use an access token, please generate one then set it using the following command:" : "Щоби застосувати токен для доступу, спочатку зґенеруйте його, а потім встановіть за допомогою команди:",
     "Then pass the token with the \"NC-Token\" header when querying the above URL." : "Потім передайте токен з додаванням заголовку \"NC-Token\" під час надсилання запиту за вказаною вище адресою URL.",
-    "DNS:" : "DNS:",
-    "Skip app updates (including app updates will send an external request to the app store)" : "Пропускати оновлення застосунків (включно з оновленням застосунків, які надсилатимуть зовнішні запити до крамниці застосунків)"
+    "DNS:" : "DNS:"
 },
 "nplurals=4; plural=(n % 1 == 0 && n % 10 == 1 && n % 100 != 11 ? 0 : n % 1 == 0 && n % 10 >= 2 && n % 10 <= 4 && (n % 100 < 12 || n % 100 > 14) ? 1 : n % 1 == 0 && (n % 10 ==0 || (n % 10 >=5 && n % 10 <=9) || (n % 100 >=11 && n % 100 <=14 )) ? 2: 3);");

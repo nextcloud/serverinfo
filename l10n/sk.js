@@ -73,7 +73,6 @@ OC.L10N.register(
     "Skip server update" : "Preskočiť aktualizáciu servera",
     "To use an access token, please generate one then set it using the following command:" : "Pre používanie prístupového tokenu ho vygenerujte a potom ho nastavte použitím nasledujúceho príkazu:",
     "Then pass the token with the \"NC-Token\" header when querying the above URL." : "Pri dotazovaní na vyššie uvedenú adresu URL potom poslať token s hlavičkou „NC-Token“.",
-    "DNS:" : "DNS:",
-    "Skip app updates (including app updates will send an external request to the app store)" : "Preskočiť aktualizácie aplikácií (vrátane aktualizácií aplikácií odošle externú požiadavku do obchodu s aplikáciami)"
+    "DNS:" : "DNS:"
 },
 "nplurals=4; plural=(n % 1 == 0 && n == 1 ? 0 : n % 1 == 0 && n >= 2 && n <= 4 ? 1 : n % 1 != 0 ? 2: 3);");

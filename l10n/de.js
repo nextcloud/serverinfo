@@ -74,7 +74,6 @@ OC.L10N.register(
     "Skip server update" : "Serveraktualisierung überspringen",
     "To use an access token, please generate one then set it using the following command:" : "Um ein Zugriffstoken zu verwenden, generiere bitte ein Token und lege es mit dem folgenden Befehl fest:",
     "Then pass the token with the \"NC-Token\" header when querying the above URL." : "Übergib dann das Token mit dem \"NC-Token\"-Header bei der Abfrage der obigen URL.",
-    "DNS:" : "DNS:",
-    "Skip app updates (including app updates will send an external request to the app store)" : "App-Updates überspringen (einschließlich App-Updates, die eine externe Anfrage an den App Store sendet)"
+    "DNS:" : "DNS:"
 },
 "nplurals=2; plural=(n != 1);");
