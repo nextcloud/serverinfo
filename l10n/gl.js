@@ -74,7 +74,6 @@ OC.L10N.register(
     "Skip server update" : "Omitir actualización do servidor",
     "To use an access token, please generate one then set it using the following command:" : "Para usar un testemuño de acceso, xere un e configúreo usando a seguinte orde:",
     "Then pass the token with the \"NC-Token\" header when querying the above URL." : "A continuación, pase o testemuño coa cabeceira «NC-Token» ao consultar o URL anterior.",
-    "DNS:" : "DNS:",
-    "Skip app updates (including app updates will send an external request to the app store)" : "Omitir actualizacións de aplicacións (se se inclúen as actualizacións de aplicacións enviarase unha solicitude externa á tenda de aplicacións)"
+    "DNS:" : "DNS:"
 },
 "nplurals=2; plural=(n != 1);");

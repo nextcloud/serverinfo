@@ -74,7 +74,6 @@ OC.L10N.register(
     "Skip server update" : "Hoppa över serveruppdatering",
     "To use an access token, please generate one then set it using the following command:" : "För att använda en access-token, generera en och ställ in den med följande kommando:",
     "Then pass the token with the \"NC-Token\" header when querying the above URL." : "Skicka sedan token med \"NC-Token\"-header när du frågar efter ovanstående URL.",
-    "DNS:" : "DNS:",
-    "Skip app updates (including app updates will send an external request to the app store)" : "Hoppa över appuppdateringar (appuppdateringar skickar en extern begäran till appbutiken)"
+    "DNS:" : "DNS:"
 },
 "nplurals=2; plural=(n != 1);");
