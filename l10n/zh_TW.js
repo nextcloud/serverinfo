@@ -74,7 +74,6 @@ OC.L10N.register(
     "Skip server update" : "略過伺服器更新",
     "To use an access token, please generate one then set it using the following command:" : "要使用存取權杖，請產生一個，然後使用下列指令設定：",
     "Then pass the token with the \"NC-Token\" header when querying the above URL." : "然後在查詢上面的 URL 時，將權杖與「NC-Token」標頭一起傳遞。",
-    "DNS:" : "DNS：",
-    "Skip app updates (including app updates will send an external request to the app store)" : "略過應用程式更新（包含應用程式更新將會向應用程式商店傳送外部請求）"
+    "DNS:" : "DNS："
 },
 "nplurals=1; plural=0;");

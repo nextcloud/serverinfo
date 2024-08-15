@@ -74,7 +74,6 @@ OC.L10N.register(
     "Skip server update" : "Sunucu güncellemesini atla",
     "To use an access token, please generate one then set it using the following command:" : "Erişim kodunu kullanmak için yeni bir kod oluşturup şu komutu yürüterek ayarlayın:",
     "Then pass the token with the \"NC-Token\" header when querying the above URL." : "Ardından yukarıdaki adresi sorgularken kodu \"NC-Token\" üst bilgisi ile gönderin.",
-    "DNS:" : "DNS:",
-    "Skip app updates (including app updates will send an external request to the app store)" : "Uygulama güncellemelerini atla (uygulama güncellemeleri ile birlikte uygulama mağazasına bir dış istek gönderilir)"
+    "DNS:" : "DNS:"
 },
 "nplurals=2; plural=(n > 1);");
