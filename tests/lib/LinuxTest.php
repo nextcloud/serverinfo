@@ -205,7 +205,15 @@ class LinuxTest extends TestCase {
 		$disk6->setPercent('1%');
 		$disk6->setMount('/mnt/sshfs');
 
-		$this->assertEquals([$disk1, $disk2, $disk3, $disk4, $disk5, $disk6], $this->os->getDiskInfo());
+		$disk7 = new Disk();
+		$disk7->setDevice('/dev/vda5');
+		$disk7->setFs('ext4');
+		$disk7->setUsed(107508);
+		$disk7->setAvailable(82737);
+		$disk7->setPercent('57%');
+		$disk7->setMount('/nextcloud/my.cloud.domain.xx');
+
+		$this->assertEquals([$disk1, $disk2, $disk3, $disk4, $disk5, $disk6, $disk7], $this->os->getDiskInfo());
 	}
 
 	public function testGetDiskInfoNoCommandOutput(): void {
