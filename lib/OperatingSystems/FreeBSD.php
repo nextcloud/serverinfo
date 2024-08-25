@@ -107,7 +107,7 @@ class FreeBSD implements IOperatingSystem {
 			$netstat = $this->executeCommand('netstat -rn');
 			preg_match_all("/(?<=^default)\s*[0-9a-fA-f\.:]+/m", $netstat, $gw);
 			if (count($gw[0]) > 0) {
-				$result['gateway'] = implode(", ", array_map("trim", $gw[0]));
+				$result['gateway'] = implode(', ', array_map('trim', $gw[0]));
 			}
 		} catch (RuntimeException) {
 			// okay
@@ -148,7 +148,7 @@ class FreeBSD implements IOperatingSystem {
 				continue;
 			}
 
-			preg_match("/(?<=ether ).*/m", $details, $mac);
+			preg_match('/(?<=ether ).*/m', $details, $mac);
 			if (isset($mac[0])) {
 				$netInterface->setMAC($mac[0]);
 			}

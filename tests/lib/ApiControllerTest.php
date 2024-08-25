@@ -28,10 +28,10 @@ class ApiControllerTest extends \Test\TestCase {
 	/** @var Os|\PHPUnit\Framework\MockObject\MockObject */
 	private $os;
 
-	/** @var IRequest|\PHPUnit\Framework\MockObject\MockObject  */
+	/** @var IRequest|\PHPUnit\Framework\MockObject\MockObject */
 	private $request;
 
-	/** @var IConfig|\PHPUnit\Framework\MockObject\MockObject  */
+	/** @var IConfig|\PHPUnit\Framework\MockObject\MockObject */
 	private $config;
 
 	/** @var IGroupManager|\PHPUnit\Framework\MockObject\MockObject */
@@ -142,9 +142,9 @@ class ApiControllerTest extends \Test\TestCase {
 			->willReturn('invalidtoken');
 
 		$this->config->expects($this->once())
-		   ->method('getAppValue')
-		   ->with('serverinfo', 'token', null)
-		   ->willReturn('megatoken');
+			->method('getAppValue')
+			->with('serverinfo', 'token', null)
+			->willReturn('megatoken');
 		$response = $this->getController(null)->info();
 
 		$this->assertEquals(['message' => 'Unauthorized'], $response->getData());
@@ -158,9 +158,9 @@ class ApiControllerTest extends \Test\TestCase {
 			->willReturn('megatoken');
 
 		$this->config->expects($this->once())
-		   ->method('getAppValue')
-		   ->with('serverinfo', 'token', null)
-		   ->willReturn('megatoken');
+			->method('getAppValue')
+			->with('serverinfo', 'token', null)
+			->willReturn('megatoken');
 		$response = $this->getController(null)->info();
 
 		$this->assertEquals(Http::STATUS_OK, $response->getStatus());
@@ -173,9 +173,9 @@ class ApiControllerTest extends \Test\TestCase {
 			->willReturn('megatoken');
 
 		$this->config->expects($this->once())
-		   ->method('getAppValue')
-		   ->with('serverinfo', 'token', null)
-		   ->willReturn('megatoken');
+			->method('getAppValue')
+			->with('serverinfo', 'token', null)
+			->willReturn('megatoken');
 		$response = $this->getController(null)->info();
 
 		$this->assertEquals(Http::STATUS_OK, $response->getStatus());

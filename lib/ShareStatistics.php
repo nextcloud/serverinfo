@@ -62,7 +62,7 @@ class ShareStatistics {
 		$row = $result->fetch();
 		$result->closeCursor();
 
-		return (int) $row['num_entries'];
+		return (int)$row['num_entries'];
 	}
 
 	/**
@@ -84,6 +84,6 @@ class ShareStatistics {
 		$row = $result->fetch();
 		$result->closeCursor();
 
-		return (int) $row['num_entries'];
+		return (int)$row['num_entries'];
 	}
 }
