@@ -44,7 +44,7 @@ class StorageStatistics {
 		$result = $query->executeQuery();
 		$row = $result->fetch();
 		$result->closeCursor();
-		return (int) $row['num_entries'];
+		return (int)$row['num_entries'];
 	}
 
 	protected function getCountOf(string $table): int {
@@ -92,6 +92,6 @@ class StorageStatistics {
 		$result = $query->executeQuery();
 		$row = $result->fetch();
 		$result->closeCursor();
-		return (int) $row['num_entries'];
+		return (int)$row['num_entries'];
 	}
 }

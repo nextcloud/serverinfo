@@ -130,7 +130,7 @@ class DatabaseStatistics {
 				$result->closeCursor();
 				break;
 		}
-		return ($database_size !== false) ? (string) $database_size : 'N/A';
+		return ($database_size !== false) ? (string)$database_size : 'N/A';
 	}
 
 	/**

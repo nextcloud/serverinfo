@@ -76,7 +76,7 @@ class SystemStatistics {
 	 */
 	protected function getServerUpdateInfo(): array {
 		$updateInfo = [
-			'lastupdatedat' => (int) $this->config->getAppValue('core', 'lastupdatedat'),
+			'lastupdatedat' => (int)$this->config->getAppValue('core', 'lastupdatedat'),
 			'available' => false,
 		];
 

@@ -22,13 +22,13 @@ use Test\TestCase;
  * @package OCA\ServerInfo\Tests
  */
 class SessionStatisticsTest extends TestCase {
-	/** @var  ITimeFactory | \PHPUnit_Framework_MockObject_MockObject */
+	/** @var ITimeFactory | \PHPUnit_Framework_MockObject_MockObject */
 	private $timeFactory;
 
-	/** @var  IDBConnection */
+	/** @var IDBConnection */
 	private $connection;
 
-	/** @var  SessionStatistics */
+	/** @var SessionStatistics */
 	private $instance;
 
 	private $table = 'authtoken';
