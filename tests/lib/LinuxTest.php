@@ -160,57 +160,78 @@ class LinuxTest extends TestCase {
 		$disk1 = new Disk();
 		$disk1->setDevice('/dev/mapper/homestead--vg-root');
 		$disk1->setFs('ext4');
-		$disk1->setUsed(6060);
-		$disk1->setAvailable(46212);
-		$disk1->setPercent('12%');
+		// $size1 = 56422560;
+		// $available1 = 47321220;
+		$used1 = 9101340; // $size1 - $available1
+		$disk1->setUsed(8889); // ceil(9101340 / 1024); (= 8888.0273)
+		$disk1->setAvailable(46212); // floor(47321220 / 1024); (= 46212.1289)
+		$disk1->setPercent('16.13%'); // round(($used1 * 100 / $size1), 2) . '%'; (= 16.1307%)
 		$disk1->setMount('/');
 
 		$disk2 = new Disk();
 		$disk2->setDevice('/dev/mapper/homestead--vg-mysql--master');
 		$disk2->setFs('ext4');
-		$disk2->setUsed(251);
+		// $size2 = 65531436;
+		// $available2 = 61902400;
+		$used2 = 3629036;
+		$disk2->setUsed(3544);
 		$disk2->setAvailable(60451);
-		$disk2->setPercent('1%');
+		$disk2->setPercent('5.54%');
 		$disk2->setMount('/homestead-vg/master');
 
 		$disk3 = new Disk();
 		$disk3->setDevice('vagrant');
 		$disk3->setFs('vboxsf');
-		$disk3->setUsed(600421);
+		// $size3 = 958123168;
+		// $available3 = 343292036;
+		$used3 = 614831132;
+		$disk3->setUsed(600422);
 		$disk3->setAvailable(335246);
-		$disk3->setPercent('65%');
+		$disk3->setPercent('64.17%');
 		$disk3->setMount('/vagrant');
 
 		$disk4 = new Disk();
 		$disk4->setDevice('home_vagrant_code');
 		$disk4->setFs('vboxsf');
-		$disk4->setUsed(600421);
+		// $size4 = 958123168;
+		// $available4 = 343292036;
+		$used4 = 614831132;
+		$disk4->setUsed(600422);
 		$disk4->setAvailable(335246);
-		$disk4->setPercent('65%');
+		$disk4->setPercent('64.17%');
 		$disk4->setMount('/home/vagrant/code');
 
 		$disk5 = new Disk();
 		$disk5->setDevice('nfs.example.com:/export');
 		$disk5->setFs('nfs4');
-		$disk5->setUsed(0);
+		// $size5 = 14820;
+		// $available5 = 1230
+		$used5 = 13590;
+		$disk5->setUsed(14);
 		$disk5->setAvailable(1);
-		$disk5->setPercent('0%');
+		$disk5->setPercent('91.7%');
 		$disk5->setMount('/nfs');
 
 		$disk6 = new Disk();
 		$disk6->setDevice('198.51.100.42:/storage');
 		$disk6->setFs('fuse.sshfs');
-		$disk6->setUsed(51);
+		// $size6 = 47929956;
+		// $available6 = 45419052;
+		$used6 = 2510904;
+		$disk6->setUsed(2453);
 		$disk6->setAvailable(44354);
-		$disk6->setPercent('1%');
+		$disk6->setPercent('5.24%');
 		$disk6->setMount('/mnt/sshfs');
 
 		$disk7 = new Disk();
 		$disk7->setDevice('/dev/vda5');
 		$disk7->setFs('ext4');
-		$disk7->setUsed(107508);
+		// $size7 = 205314024;
+		// $available7 = 84722884;
+		$used7 = 120591140;
+		$disk7->setUsed(117765);
 		$disk7->setAvailable(82737);
-		$disk7->setPercent('57%');
+		$disk7->setPercent('58.73%');
 		$disk7->setMount('/nextcloud/my.cloud.domain.xx');
 
 		$this->assertEquals([$disk1, $disk2, $disk3, $disk4, $disk5, $disk6, $disk7], $this->os->getDiskInfo());
