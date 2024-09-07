@@ -14,6 +14,7 @@ OC.L10N.register(
     "Operating System:" : "Sistema operativu",
     "CPU:" : "CPU:",
     "Memory:" : "Memoria:",
+    "Server time:" : "Hora del sirvidor:",
     "Temperature" : "Temperatura",
     "Load" : "Carga",
     "Memory" : "Memoria",
