@@ -34,7 +34,8 @@ class AdminSettings implements ISettings {
 	private SessionStatistics $sessionStatistics;
 	private SystemStatistics $systemStatistics;
 
-	public function __construct(Os $os,
+	public function __construct(
+		Os $os,
 		IL10N $l,
 		IURLGenerator $urlGenerator,
 		StorageStatistics $storageStatistics,
@@ -43,7 +44,7 @@ class AdminSettings implements ISettings {
 		ShareStatistics $shareStatistics,
 		SessionStatistics $sessionStatistics,
 		SystemStatistics $systemStatistics,
-		private IConfig $config
+		private IConfig $config,
 	) {
 		$this->os = $os;
 		$this->l = $l;
