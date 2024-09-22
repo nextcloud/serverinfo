@@ -12,7 +12,8 @@ class ThermalZone implements \JsonSerializable {
 	public function __construct(
 		private string $zone,
 		private string $type,
-		private float  $temp) {
+		private float  $temp,
+	) {
 	}
 
 	public function getZone(): string {

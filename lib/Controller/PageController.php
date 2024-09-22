@@ -19,7 +19,8 @@ use OCP\IConfig;
 use OCP\IRequest;
 
 class PageController extends Controller {
-	public function __construct(string $appName,
+	public function __construct(
+		string $appName,
 		IRequest $request,
 		private SystemStatistics $systemStatistics,
 		private IConfig $config,
