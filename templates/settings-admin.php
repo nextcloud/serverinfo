@@ -227,27 +227,39 @@ $phpinfo = $_['phpinfo'];
 
 			<div class="col col-12">
 				<div class="row">
-					<div class="col col-4 col-l-6 col-m-12">
+					<div class="col">
 						<div class="infobox">
-							<div class="interface-wrapper">
-								<?php if ($_['storage']['num_users'] > 0) : ?>
-									<?php p($l->t('Total users:')); ?>
-									<span class="info"><?php p($_['storage']['num_users']); ?></span><br>
+							<div class="interface-wrapper active-users-wrapper">
+								<?php if ($_['activeUsers']['last1hour'] > 0) : ?>
+									<div class="active-users-box">
+										<?php p($l->t('Last hour')); ?><br>
+										<span class="info"><?php p($_['activeUsers']['last1hour']) ?></span><br>
+										<em><?php p($l->t('%s%% of all users', [round($_['activeUsers']['last1hour'] * 100 / $_['storage']['num_users'], 1)])) ?></em>
+									</div>
 								<?php endif; ?>
 
 								<?php if ($_['activeUsers']['last24hours'] > 0) : ?>
-									<?php p($l->t('24 hours:')); ?>
-									<span class="info"><?php p($_['activeUsers']['last24hours']) ?></span><br>
+									<div class="active-users-box">
+										<?php p($l->t('Last 24 Hours')); ?><br>
+										<span class="info"><?php p($_['activeUsers']['last24hours']) ?></span><br>
+										<em><?php p($l->t('%s%% of all users', [round($_['activeUsers']['last24hours'] * 100 / $_['storage']['num_users'], 1)])) ?></em>
+									</div>
 								<?php endif; ?>
 
-								<?php if ($_['activeUsers']['last1hour'] > 0) : ?>
-									<?php p($l->t('1 hour:')); ?>
-									<span class="info"><?php p($_['activeUsers']['last1hour']) ?></span><br>
+								<?php if ($_['activeUsers']['last7days'] > 0) : ?>
+									<div class="active-users-box">
+										<?php p($l->t('Last 7 Days')); ?><br>
+										<span class="info"><?php p($_['activeUsers']['last7days']) ?></span><br>
+										<em><?php p($l->t('%s%% of all users', [round($_['activeUsers']['last7days'] * 100 / $_['storage']['num_users'], 1)])) ?></em>
+									</div>
 								<?php endif; ?>
 
-								<?php if ($_['activeUsers']['last5minutes'] > 0) : ?>
-									<?php p($l->t('5 mins:')); ?>
-									<span class="info"><?php p($_['activeUsers']['last5minutes']) ?></span><br>
+								<?php if ($_['activeUsers']['last1month'] > 0) : ?>
+									<div class="active-users-box">
+										<?php p($l->t('Last 30 Days')); ?><br>
+										<span class="info"><?php p($_['activeUsers']['last1month']) ?></span><br>
+										<em><?php p($l->t('%s%% of all users', [round($_['activeUsers']['last1month'] * 100 / $_['storage']['num_users'], 1)])) ?></em>
+									</div>
 								<?php endif; ?>
 							</div>
 						</div>
