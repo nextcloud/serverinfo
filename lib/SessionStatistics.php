@@ -25,6 +25,11 @@ class SessionStatistics {
 	private const OFFSET_5MIN = 300;
 	private const OFFSET_1HOUR = 3600;
 	private const OFFSET_1DAY = 86400;
+	private const OFFSET_7DAYS = 604800;
+	private const OFFSET_1MONTH = 2592000;
+	private const OFFSET_3MONTHS = 7776000;
+	private const OFFSET_6MONTHS = 15552000;
+	private const OFFSET_1YEAR = 31536000;
 
 	private IDBConnection $connection;
 	private ITimeFactory $timeFactory;
@@ -39,6 +44,11 @@ class SessionStatistics {
 			'last5minutes' => $this->getNumberOfActiveUsers(self::OFFSET_5MIN),
 			'last1hour' => $this->getNumberOfActiveUsers(self::OFFSET_1HOUR),
 			'last24hours' => $this->getNumberOfActiveUsers(self::OFFSET_1DAY),
+			'last7days' => $this->getNumberOfActiveUsers(self::OFFSET_7DAYS),
+			'last1month' => $this->getNumberOfActiveUsers(self::OFFSET_1MONTH),
+			'last3months' => $this->getNumberOfActiveUsers(self::OFFSET_3MONTHS),
+			'last6months' => $this->getNumberOfActiveUsers(self::OFFSET_6MONTHS),
+			'lastyear' => $this->getNumberOfActiveUsers(self::OFFSET_1YEAR),
 		];
 	}
 
