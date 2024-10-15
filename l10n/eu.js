@@ -43,10 +43,7 @@ OC.L10N.register(
     "IPv4:" : "IPv4:",
     "IPv6:" : "IPv6:",
     "Active users" : "Erabiltzaile aktiboak",
-    "Total users:" : "Erabiltzaileak guztira:",
-    "24 hours:" : "24 ordu:",
-    "1 hour:" : "ordu 1:",
-    "5 mins:" : "5 min:",
+    "Last hour" : "Azken ordua",
     "Shares" : "Partekatutakoak",
     "Users:" : "Erabiltzaileak:",
     "Groups:" : "Taldeak:",
@@ -69,6 +66,10 @@ OC.L10N.register(
     "Copy" : "Kopiatu",
     "To use an access token, please generate one then set it using the following command:" : "Sarbide-token bat erabiltzeko, sortu bat eta ezarri komando hau erabiliz:",
     "Then pass the token with the \"NC-Token\" header when querying the above URL." : "Ondoren, pasatu token-a \"NC-Token\" goiburuarekin goiko URLa kontsultatzerakoan.",
-    "DNS:" : "DNS:"
+    "DNS:" : "DNS:",
+    "Total users:" : "Erabiltzaileak guztira:",
+    "24 hours:" : "24 ordu:",
+    "1 hour:" : "ordu 1:",
+    "5 mins:" : "5 min:"
 },
 "nplurals=2; plural=(n != 1);");

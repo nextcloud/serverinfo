@@ -43,10 +43,7 @@ OC.L10N.register(
     "IPv4:" : "IPv4:",
     "IPv6:" : "IPv6:",
     "Active users" : "Úsáideoirí gníomhacha",
-    "Total users:" : "Úsáideoirí iomlána:",
-    "24 hours:" : "24 uair:",
-    "1 hour:" : "1 uair:",
-    "5 mins:" : "5 nóim:",
+    "Last hour" : "Uair dheireanach",
     "Shares" : "Scaireanna",
     "Users:" : "Úsáideoirí:",
     "Groups:" : "Grúpaí:",
@@ -74,6 +71,10 @@ OC.L10N.register(
     "Skip server update" : "Léim ar nuashonrú an fhreastalaí",
     "To use an access token, please generate one then set it using the following command:" : "Chun comhartha rochtana a úsáid, giniúint ceann agus ansin socraigh é ag baint úsáide as an ordú seo a leanas le do thoil:",
     "Then pass the token with the \"NC-Token\" header when querying the above URL." : "Ansin cuir an comhartha leis an gceanntásc \"NC-Token\" agus an URL thuas á cheistiú.",
-    "DNS:" : "DNS:"
+    "DNS:" : "DNS:",
+    "Total users:" : "Úsáideoirí iomlána:",
+    "24 hours:" : "24 uair:",
+    "1 hour:" : "1 uair:",
+    "5 mins:" : "5 nóim:"
 },
 "nplurals=5; plural=(n==1 ? 0 : n==2 ? 1 : n<7 ? 2 : n<11 ? 3 : 4);");

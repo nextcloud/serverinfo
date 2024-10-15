@@ -42,7 +42,6 @@ OC.L10N.register(
     "IPv4:" : "IPv4:",
     "IPv6:" : "IPv6:",
     "Active users" : "アクティブユーザー数",
-    "Total users:" : "総ユーザー数：",
     "Shares" : "共有数",
     "Users:" : "ユーザー数:",
     "PHP" : "PHP",
@@ -58,6 +57,7 @@ OC.L10N.register(
     "Copy" : "コピー",
     "To use an access token, please generate one then set it using the following command:" : "アクセストークンを使用するには、アクセストークンを生成し、以下のコマンドで設定してください。",
     "Then pass the token with the \"NC-Token\" header when querying the above URL." : "次に、上記のURLをクエリするときに、\"NC-Token\" ヘッダーでトークンを渡します。",
-    "DNS:" : "DNS:"
+    "DNS:" : "DNS:",
+    "Total users:" : "総ユーザー数："
 },
 "nplurals=1; plural=0;");

@@ -43,10 +43,7 @@ OC.L10N.register(
     "IPv4:" : "IPv4:",
     "IPv6:" : "IPv6:",
     "Active users" : "Aktív felhasználók",
-    "Total users:" : "Összes felhasználó:",
-    "24 hours:" : "24 óra:",
-    "1 hour:" : "1 óra:",
-    "5 mins:" : "5 perc:",
+    "Last hour" : "Elmúlt óra",
     "Shares" : "Megosztások",
     "Users:" : "Felhasználók:",
     "Groups:" : "Csoportok:",
@@ -74,6 +71,10 @@ OC.L10N.register(
     "Skip server update" : "Kiszolgáló frissítés kihagyása",
     "To use an access token, please generate one then set it using the following command:" : "A hozzáférési token használatához hozzon létre egyet, majd állítsa be a következő paranccsal:",
     "Then pass the token with the \"NC-Token\" header when querying the above URL." : "Ezután adja át a tokent az „NC-Token” fejléccel, amikor lekérdezi a fenti URL-t.",
-    "DNS:" : "DNS:"
+    "DNS:" : "DNS:",
+    "Total users:" : "Összes felhasználó:",
+    "24 hours:" : "24 óra:",
+    "1 hour:" : "1 óra:",
+    "5 mins:" : "5 perc:"
 },
 "nplurals=2; plural=(n != 1);");

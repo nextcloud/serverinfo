@@ -43,10 +43,7 @@ OC.L10N.register(
     "IPv4:" : "IPv4:",
     "IPv6:" : "IPv6:",
     "Active users" : "Usuários ativos",
-    "Total users:" : "Total de usuários:",
-    "24 hours:" : "24 horas:",
-    "1 hour:" : "1 hora:",
-    "5 mins:" : "5 mins:",
+    "Last hour" : "Última hora",
     "Shares" : "Compartilhamentos",
     "Users:" : "Usuários:",
     "Groups:" : "Grupos:",
@@ -74,6 +71,10 @@ OC.L10N.register(
     "Skip server update" : "Ignorar atualização do servidor",
     "To use an access token, please generate one then set it using the following command:" : "Para usar um token de acesso, gere um e defina-o usando o seguinte comando:",
     "Then pass the token with the \"NC-Token\" header when querying the above URL." : "Em seguida, passe o token com o cabeçalho \"NC-Token\" ao consultar o URL acima.",
-    "DNS:" : "DNS:"
+    "DNS:" : "DNS:",
+    "Total users:" : "Total de usuários:",
+    "24 hours:" : "24 horas:",
+    "1 hour:" : "1 hora:",
+    "5 mins:" : "5 mins:"
 },
 "nplurals=3; plural=(n == 0 || n == 1) ? 0 : n != 0 && n % 1000000 == 0 ? 1 : 2;");

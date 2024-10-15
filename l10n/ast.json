@@ -34,8 +34,6 @@
     "IPv4:" : "IPv4:",
     "IPv6:" : "IPv6:",
     "Active users" : "Usuarios activos",
-    "24 hours:" : "24 hores:",
-    "1 hour:" : "1 hora",
     "Shares" : "Comparticiones",
     "Users:" : "Usuarios:",
     "Groups:" : "Grupos:",
@@ -49,6 +47,8 @@
     "Type:" : "Tipu:",
     "External monitoring tool" : "Ferramienta de supervisión esterna",
     "Copy" : "Copiar",
-    "DNS:" : "DNS:"
+    "DNS:" : "DNS:",
+    "24 hours:" : "24 hores:",
+    "1 hour:" : "1 hora"
 },"pluralForm" :"nplurals=2; plural=(n != 1);"
 }
