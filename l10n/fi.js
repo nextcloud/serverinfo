@@ -42,10 +42,7 @@ OC.L10N.register(
     "IPv4:" : "IPv4:",
     "IPv6:" : "IPv6:",
     "Active users" : "Aktiiviset käyttäjät",
-    "Total users:" : "Käyttäjiä yhteensä:",
-    "24 hours:" : "24 tuntia:",
-    "1 hour:" : "1 tunti:",
-    "5 mins:" : "5 min:",
+    "Last hour" : "Viime tunti",
     "Shares" : "Jaot",
     "Users:" : "Käyttäjiä:",
     "Groups:" : "Ryhmät:",
@@ -63,6 +60,10 @@ OC.L10N.register(
     "Type:" : "Tyyppi:",
     "External monitoring tool" : "Ulkopuolinen valvontatyökalu",
     "Copy" : "Kopioi",
-    "DNS:" : "Nimipalvelu:"
+    "DNS:" : "Nimipalvelu:",
+    "Total users:" : "Käyttäjiä yhteensä:",
+    "24 hours:" : "24 tuntia:",
+    "1 hour:" : "1 tunti:",
+    "5 mins:" : "5 min:"
 },
 "nplurals=2; plural=(n != 1);");

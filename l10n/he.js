@@ -20,7 +20,7 @@ OC.L10N.register(
     "Free Space:" : "מקום פנוי:",
     "Network" : "רשת",
     "Active users" : "משתמשים פעילים",
-    "Total users:" : "סך כל המשתמשים:",
+    "Last hour" : "השעה החולפת",
     "Shares" : "שיתופים",
     "Users:" : "משתמשים:",
     "PHP" : "PHP",
@@ -30,6 +30,7 @@ OC.L10N.register(
     "Type:" : "סוג:",
     "External monitoring tool" : "כלי מעקב חיצוני",
     "Copy" : "העתקה",
-    "Then pass the token with the \"NC-Token\" header when querying the above URL." : "לאחר מכן יש להעביר את האסימון עם כותרת „NC-Token” בעת תשאול הכתובת שלעיל."
+    "Then pass the token with the \"NC-Token\" header when querying the above URL." : "לאחר מכן יש להעביר את האסימון עם כותרת „NC-Token” בעת תשאול הכתובת שלעיל.",
+    "Total users:" : "סך כל המשתמשים:"
 },
 "nplurals=3; plural=(n == 1 && n % 1 == 0) ? 0 : (n == 2 && n % 1 == 0) ? 1: 2;");

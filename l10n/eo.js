@@ -20,7 +20,6 @@ OC.L10N.register(
     "Free Space:" : "Libera spaco:",
     "Network" : "Reto",
     "Active users" : "Aktivaj uzantoj",
-    "Total users:" : "Sumo de uzantoj:",
     "Shares" : "Kunhavoj",
     "Users:" : "Uzantoj:",
     "PHP" : "PHP",
@@ -29,6 +28,7 @@ OC.L10N.register(
     "Database" : "Datumbazo",
     "Type:" : "Tipo:",
     "External monitoring tool" : "Ekstera observa ilo",
-    "Copy" : "Kopii"
+    "Copy" : "Kopii",
+    "Total users:" : "Sumo de uzantoj:"
 },
 "nplurals=2; plural=(n != 1);");

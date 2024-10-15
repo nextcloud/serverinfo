@@ -43,10 +43,7 @@ OC.L10N.register(
     "IPv4:" : "Adresa IPv4:",
     "IPv6:" : "Adresa IPv6:",
     "Active users" : "Aktívni používatelia",
-    "Total users:" : "Používateľov celkom:",
-    "24 hours:" : "24 hodín:",
-    "1 hour:" : "1 hodina:",
-    "5 mins:" : "5 minút:",
+    "Last hour" : "Posledná hodina",
     "Shares" : "Sprístupnené položky",
     "Users:" : "Používatelia:",
     "Groups:" : "Skupiny:",
@@ -73,6 +70,10 @@ OC.L10N.register(
     "Skip server update" : "Preskočiť aktualizáciu servera",
     "To use an access token, please generate one then set it using the following command:" : "Pre používanie prístupového tokenu ho vygenerujte a potom ho nastavte použitím nasledujúceho príkazu:",
     "Then pass the token with the \"NC-Token\" header when querying the above URL." : "Pri dotazovaní na vyššie uvedenú adresu URL potom poslať token s hlavičkou „NC-Token“.",
-    "DNS:" : "DNS:"
+    "DNS:" : "DNS:",
+    "Total users:" : "Používateľov celkom:",
+    "24 hours:" : "24 hodín:",
+    "1 hour:" : "1 hodina:",
+    "5 mins:" : "5 minút:"
 },
 "nplurals=4; plural=(n % 1 == 0 && n == 1 ? 0 : n % 1 == 0 && n >= 2 && n <= 4 ? 1 : n % 1 != 0 ? 2: 3);");

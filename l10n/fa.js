@@ -43,10 +43,7 @@ OC.L10N.register(
     "IPv4:" : "IPv4:",
     "IPv6:" : "IPv6:",
     "Active users" : "کاربران فعال",
-    "Total users:" : "تعداد کل کاربران:",
-    "24 hours:" : "24 hours:",
-    "1 hour:" : "1 hour:",
-    "5 mins:" : "5 mins:",
+    "Last hour" : "Last hour",
     "Shares" : "اشتراک گذاری ها",
     "Users:" : "کاربران:",
     "Groups:" : "Groups:",
@@ -70,6 +67,10 @@ OC.L10N.register(
     "Copy" : "کپی کردن",
     "To use an access token, please generate one then set it using the following command:" : "To use an access token, please generate one then set it using the following command:",
     "Then pass the token with the \"NC-Token\" header when querying the above URL." : "Then pass the token with the \"NC-Token\" header when querying the above URL.",
-    "DNS:" : "DNS:"
+    "DNS:" : "DNS:",
+    "Total users:" : "تعداد کل کاربران:",
+    "24 hours:" : "24 hours:",
+    "1 hour:" : "1 hour:",
+    "5 mins:" : "5 mins:"
 },
 "nplurals=2; plural=(n > 1);");

@@ -32,7 +32,6 @@ OC.L10N.register(
     "IPv4:" : "IPv4:",
     "IPv6:" : "IPv6:",
     "Active users" : "Aktyvūs naudotojai",
-    "Total users:" : "Iš viso naudotojų:",
     "Shares" : "Viešiniai",
     "Users:" : "Naudotojai:",
     "PHP" : "PHP",
@@ -42,6 +41,7 @@ OC.L10N.register(
     "Type:" : "Tipas:",
     "External monitoring tool" : "Išorinis stebėjimo įrankis",
     "Copy" : "Kopijuoti",
-    "DNS:" : "DNS:"
+    "DNS:" : "DNS:",
+    "Total users:" : "Iš viso naudotojų:"
 },
 "nplurals=4; plural=(n % 10 == 1 && (n % 100 > 19 || n % 100 < 11) ? 0 : (n % 10 >= 2 && n % 10 <=9) && (n % 100 > 19 || n % 100 < 11) ? 1 : n % 1 != 0 ? 2: 3);");
