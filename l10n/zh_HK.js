@@ -43,10 +43,7 @@ OC.L10N.register(
     "IPv4:" : "IPv4：",
     "IPv6:" : "IPv6：",
     "Active users" : "活躍用戶",
-    "Total users:" : "總用戶：",
-    "24 hours:" : "24 小時︰",
-    "1 hour:" : "1 小時︰",
-    "5 mins:" : "5 分鐘︰",
+    "Last hour" : "過去 1 小時",
     "Shares" : "分享",
     "Users:" : "用戶︰",
     "Groups:" : "群組︰",
@@ -74,6 +71,10 @@ OC.L10N.register(
     "Skip server update" : "略過伺服器更新",
     "To use an access token, please generate one then set it using the following command:" : "要使用存取權杖，請生成一個權杖，然後使用以下命令對其進行設置：",
     "Then pass the token with the \"NC-Token\" header when querying the above URL." : "然後在查詢上述 URL 時將權杖與 “ NC-Token” 標頭一起傳遞。",
-    "DNS:" : "DNS："
+    "DNS:" : "DNS：",
+    "Total users:" : "總用戶：",
+    "24 hours:" : "24 小時︰",
+    "1 hour:" : "1 小時︰",
+    "5 mins:" : "5 分鐘︰"
 },
 "nplurals=1; plural=0;");

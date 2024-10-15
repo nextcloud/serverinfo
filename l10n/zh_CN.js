@@ -43,10 +43,7 @@ OC.L10N.register(
     "IPv4:" : "IPv4：",
     "IPv6:" : "IPv6：",
     "Active users" : "活跃用户",
-    "Total users:" : "总用户：",
-    "24 hours:" : "24小时：",
-    "1 hour:" : "1小时：",
-    "5 mins:" : "5分钟：",
+    "Last hour" : "上个小时",
     "Shares" : "共享",
     "Users:" : "用户：",
     "Groups:" : "组别：",
@@ -74,6 +71,10 @@ OC.L10N.register(
     "Skip server update" : "跳过服务器更新",
     "To use an access token, please generate one then set it using the following command:" : "要使用一个访问令牌，请生成一个，然后使用以下命令设置它：",
     "Then pass the token with the \"NC-Token\" header when querying the above URL." : "然后在查询上述 URL 时传递带有 “NC-Token” 头的令牌。",
-    "DNS:" : "DNS："
+    "DNS:" : "DNS：",
+    "Total users:" : "总用户：",
+    "24 hours:" : "24小时：",
+    "1 hour:" : "1小时：",
+    "5 mins:" : "5分钟："
 },
 "nplurals=1; plural=0;");

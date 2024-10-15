@@ -20,7 +20,6 @@ OC.L10N.register(
     "Free Space:" : "Ledig plads:",
     "Network" : "Netværk",
     "Active users" : "Aktive brugere",
-    "Total users:" : "Antal brugere:",
     "Shares" : "Delinger",
     "Users:" : "Brugere:",
     "PHP" : "PHP",
@@ -30,6 +29,7 @@ OC.L10N.register(
     "Type:" : "Type:",
     "External monitoring tool" : "Eksternt monitoreringsværktøj",
     "Copy" : "Kopier",
-    "Then pass the token with the \"NC-Token\" header when querying the above URL." : "Send derefter tokenet med \"NC-Token\"-headeren, når du forespørger på ovenstående URL."
+    "Then pass the token with the \"NC-Token\" header when querying the above URL." : "Send derefter tokenet med \"NC-Token\"-headeren, når du forespørger på ovenstående URL.",
+    "Total users:" : "Antal brugere:"
 },
 "nplurals=2; plural=(n != 1);");

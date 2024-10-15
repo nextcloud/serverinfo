@@ -40,10 +40,6 @@ OC.L10N.register(
     "IPv4:" : "IPv4:",
     "IPv6:" : "IPv6:",
     "Active users" : "Aktiivseid kasutajaid",
-    "Total users:" : "Kasutajaid kokku:",
-    "24 hours:" : "24 tundi:",
-    "1 hour:" : "1 tund:",
-    "5 mins:" : "5 minutit:",
     "Shares" : "Jaoskaustad",
     "Users:" : "Kasutajaid:",
     "Groups:" : "Gruppe:",
@@ -62,6 +58,10 @@ OC.L10N.register(
     "Copy" : "Kopeeri",
     "To use an access token, please generate one then set it using the following command:" : "Ligipääsutunnuse kasutamiseks genereeri see ja seadista alljärgneva käsu abil:",
     "Then pass the token with the \"NC-Token\" header when querying the above URL." : "Seejärel saada tunnus ülaloleva URL-i pärimisel \"NC-Token\" päisega.",
-    "DNS:" : "Nimeserver:"
+    "DNS:" : "Nimeserver:",
+    "Total users:" : "Kasutajaid kokku:",
+    "24 hours:" : "24 tundi:",
+    "1 hour:" : "1 tund:",
+    "5 mins:" : "5 minutit:"
 },
 "nplurals=2; plural=(n != 1);");

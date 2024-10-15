@@ -20,7 +20,6 @@ OC.L10N.register(
     "Free Space:" : "남은 공간:",
     "Network" : "네트워크",
     "Active users" : "활성 사용자",
-    "Total users:" : "총 사용자:",
     "Shares" : "공유",
     "Users:" : "사용자:",
     "PHP" : "PHP",
@@ -29,6 +28,7 @@ OC.L10N.register(
     "Database" : "데이터베이스",
     "Type:" : "종류:",
     "External monitoring tool" : "외부 모니터링 도구",
-    "Copy" : "복사"
+    "Copy" : "복사",
+    "Total users:" : "총 사용자:"
 },
 "nplurals=1; plural=0;");
