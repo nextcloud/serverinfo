@@ -43,10 +43,6 @@ OC.L10N.register(
     "IPv4:" : "IPv4:",
     "IPv6:" : "IPv6:",
     "Active users" : "Активни корисници",
-    "Total users:" : "Вкупно корисници:",
-    "24 hours:" : "24 часа:",
-    "1 hour:" : "1 час:",
-    "5 mins:" : "5 минути:",
     "Shares" : "Споделувања",
     "Users:" : "Корисници:",
     "Groups:" : "Групи:",
@@ -70,6 +66,10 @@ OC.L10N.register(
     "Copy" : "Копирај",
     "To use an access token, please generate one then set it using the following command:" : "За да користите токен за пристап, ве молиме генерирајте еден, а потоа поставете го користејќи ја следнава команда:",
     "Then pass the token with the \"NC-Token\" header when querying the above URL." : "Потоа поминете го токенот со заглавието „NC-Token“ кога го барате горното URL.",
-    "DNS:" : "DNS:"
+    "DNS:" : "DNS:",
+    "Total users:" : "Вкупно корисници:",
+    "24 hours:" : "24 часа:",
+    "1 hour:" : "1 час:",
+    "5 mins:" : "5 минути:"
 },
 "nplurals=2; plural=(n % 10 == 1 && n % 100 != 11) ? 0 : 1;");

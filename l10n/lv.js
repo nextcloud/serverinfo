@@ -42,7 +42,6 @@ OC.L10N.register(
     "IPv4:" : "IPv4:",
     "IPv6:" : "IPv6:",
     "Active users" : "Aktīvie lietotāji",
-    "Total users:" : "Kopējais lietotāju skaits:",
     "Shares" : "Koplietots",
     "Users:" : "Lietotāji:",
     "PHP" : "PHP",
@@ -58,6 +57,7 @@ OC.L10N.register(
     "Copy" : "Kopēt",
     "To use an access token, please generate one then set it using the following command:" : "Lai izmantotu piekļuves talonu, lūdzu, ģenerējiet to un iestatiet to, izmantojot šādu komandu:",
     "Then pass the token with the \"NC-Token\" header when querying the above URL." : "Pēc tam nododiet marķieri ar galveni \"NC-Token\", veicot vaicājumu iepriekš norādītajam URL.",
-    "DNS:" : "DNS:"
+    "DNS:" : "DNS:",
+    "Total users:" : "Kopējais lietotāju skaits:"
 },
 "nplurals=3; plural=(n%10==1 && n%100!=11 ? 0 : n != 0 ? 1 : 2);");

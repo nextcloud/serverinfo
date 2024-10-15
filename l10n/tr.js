@@ -43,10 +43,7 @@ OC.L10N.register(
     "IPv4:" : "IPv4:",
     "IPv6:" : "IPv6:",
     "Active users" : "Etkin kullanıcılar",
-    "Total users:" : "Kullanıcı sayısı:",
-    "24 hours:" : "24 saat:",
-    "1 hour:" : "1 saat:",
-    "5 mins:" : "5 dakika:",
+    "Last hour" : "Son 1 saat",
     "Shares" : "Paylaşımlar",
     "Users:" : "Kullanıcılar:",
     "Groups:" : "Gruplar:",
@@ -74,6 +71,10 @@ OC.L10N.register(
     "Skip server update" : "Sunucu güncellemesini atla",
     "To use an access token, please generate one then set it using the following command:" : "Erişim kodunu kullanmak için yeni bir kod oluşturup şu komutu yürüterek ayarlayın:",
     "Then pass the token with the \"NC-Token\" header when querying the above URL." : "Ardından yukarıdaki adresi sorgularken kodu \"NC-Token\" üst bilgisi ile gönderin.",
-    "DNS:" : "DNS:"
+    "DNS:" : "DNS:",
+    "Total users:" : "Kullanıcı sayısı:",
+    "24 hours:" : "24 saat:",
+    "1 hour:" : "1 saat:",
+    "5 mins:" : "5 dakika:"
 },
 "nplurals=2; plural=(n > 1);");

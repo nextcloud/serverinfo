@@ -20,7 +20,7 @@ OC.L10N.register(
     "Free Space:" : "Logu lìberu:",
     "Network" : "Rete",
     "Active users" : "Utèntzias ativas",
-    "Total users:" : "Utèntzias totales:",
+    "Last hour" : "Un'ora a como",
     "Shares" : "Cumpartziduras",
     "PHP" : "PHP",
     "Version:" : "Versione:",
@@ -29,6 +29,7 @@ OC.L10N.register(
     "Type:" : "Genia:",
     "External monitoring tool" : "Trastu de controllu esternu",
     "Copy" : "Còpia",
-    "Then pass the token with the \"NC-Token\" header when querying the above URL." : "A pustis passa su token cun s'intestatzione \"NC-Token\" cando rechedes s'URL in subra."
+    "Then pass the token with the \"NC-Token\" header when querying the above URL." : "A pustis passa su token cun s'intestatzione \"NC-Token\" cando rechedes s'URL in subra.",
+    "Total users:" : "Utèntzias totales:"
 },
 "nplurals=2; plural=(n != 1);");

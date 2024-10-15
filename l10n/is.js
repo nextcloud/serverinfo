@@ -20,7 +20,6 @@ OC.L10N.register(
     "Free Space:" : "Laust diskapláss:",
     "Network" : "Netkerfi",
     "Active users" : "Virkir notendur",
-    "Total users:" : "Heildarfjöldi notenda:",
     "Shares" : "Sameignir",
     "Users:" : "Notendur:",
     "PHP" : "PHP",
@@ -29,6 +28,7 @@ OC.L10N.register(
     "Database" : "Gagnagrunnur",
     "Type:" : "Tegund:",
     "External monitoring tool" : "Utanaðkomandi vöktunartól",
-    "Copy" : "Afrita"
+    "Copy" : "Afrita",
+    "Total users:" : "Heildarfjöldi notenda:"
 },
 "nplurals=2; plural=(n % 10 != 1 || n % 100 == 11);");

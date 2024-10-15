@@ -43,10 +43,7 @@ OC.L10N.register(
     "IPv4:" : "IPv4:",
     "IPv6:" : "IPv6:",
     "Active users" : "Dejavni uporabniki",
-    "Total users:" : "Število uporabnikov:",
-    "24 hours:" : "24 ur:",
-    "1 hour:" : "1 ura:",
-    "5 mins:" : "5 min:",
+    "Last hour" : "Zadnja ura",
     "Shares" : "Souporaba",
     "Users:" : "Uporabniki:",
     "Groups:" : "Skupine:",
@@ -74,6 +71,10 @@ OC.L10N.register(
     "Skip server update" : "Preskoči posodobitev strežnika",
     "To use an access token, please generate one then set it using the following command:" : "Za uporabo žetona za dostop, ga je treba najprej ustvariti in nato nastaviti z ukazom:",
     "Then pass the token with the \"NC-Token\" header when querying the above URL." : "Pri poizvedovanju po zgornjem naslovu URL je treba žeton nato prenesti z glavo »NC-Token«.",
-    "DNS:" : "DNS:"
+    "DNS:" : "DNS:",
+    "Total users:" : "Število uporabnikov:",
+    "24 hours:" : "24 ur:",
+    "1 hour:" : "1 ura:",
+    "5 mins:" : "5 min:"
 },
 "nplurals=4; plural=(n%100==1 ? 0 : n%100==2 ? 1 : n%100==3 || n%100==4 ? 2 : 3);");

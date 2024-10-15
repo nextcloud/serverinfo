@@ -20,7 +20,7 @@ OC.L10N.register(
     "Free Space:" : "Slobodan prostor:",
     "Network" : "Mreža",
     "Active users" : "Aktivni korisnici",
-    "Total users:" : "Ukupno korisnika:",
+    "Last hour" : "Posljednji sat",
     "Shares" : "Dijeljenja",
     "Users:" : "Korisnici:",
     "PHP" : "PHP",
@@ -30,6 +30,7 @@ OC.L10N.register(
     "Type:" : "Vrsta:",
     "External monitoring tool" : "Vanjski alat za praćenje",
     "Copy" : "Kopiraj",
-    "Then pass the token with the \"NC-Token\" header when querying the above URL." : "Zatim proslijedite token sa zaglavljem „NC-Token“ prilikom slanja upita za gornji URL."
+    "Then pass the token with the \"NC-Token\" header when querying the above URL." : "Zatim proslijedite token sa zaglavljem „NC-Token“ prilikom slanja upita za gornji URL.",
+    "Total users:" : "Ukupno korisnika:"
 },
 "nplurals=3; plural=n%10==1 && n%100!=11 ? 0 : n%10>=2 && n%10<=4 && (n%100<10 || n%100>=20) ? 1 : 2;");
