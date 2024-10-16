@@ -34,14 +34,19 @@ OC.L10N.register(
     "Active users" : "Aktyvūs naudotojai",
     "Shares" : "Viešiniai",
     "Users:" : "Naudotojai:",
+    "Groups:" : "Grupės:",
     "PHP" : "PHP",
     "Version:" : "Versija:",
     "Upload max size:" : "Maksimalus įkeliamo failo dydis:",
+    "Show phpinfo" : "Rodyti phpinfo",
     "Database" : "Duomenų bazė",
     "Type:" : "Tipas:",
     "External monitoring tool" : "Išorinis stebėjimo įrankis",
     "Copy" : "Kopijuoti",
     "DNS:" : "DNS:",
-    "Total users:" : "Iš viso naudotojų:"
+    "Total users:" : "Iš viso naudotojų:",
+    "24 hours:" : "24 valandos:",
+    "1 hour:" : "1 valanda:",
+    "5 mins:" : "5 minutės:"
 },
 "nplurals=4; plural=(n % 10 == 1 && (n % 100 > 19 || n % 100 < 11) ? 0 : (n % 10 >= 2 && n % 10 <=9) && (n % 100 > 19 || n % 100 < 11) ? 1 : n % 1 != 0 ? 2: 3);");
