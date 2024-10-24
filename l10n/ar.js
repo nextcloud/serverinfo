@@ -26,7 +26,7 @@ OC.L10N.register(
     "Memory" : "الذاكرة",
     "Disk" : "القرص",
     "Mount:" : "إلحاق mount:",
-    "Filesystem:" : "نظام الملفات file system:",
+    "Filesystem:" : "نظام الملفات:",
     "Size:" : "الحجم:",
     "Available:" : "مُتاحٌ:",
     "Used:" : "مُستعملٌ:",
