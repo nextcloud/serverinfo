@@ -51,7 +51,7 @@ OC.L10N.register(
     "Emails:" : "Письма:",
     "Federated sent:" : "Отправлено в федерацию:",
     "Federated received:" : "Получено из федерации:",
-    "Talk conversations:" : "Обсуждения:",
+    "Talk conversations:" : "Talk беседы:",
     "PHP" : "PHP",
     "Version:" : "Версия:",
     "Memory limit:" : "Лимит памяти:",
