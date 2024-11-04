@@ -43,6 +43,7 @@ OC.L10N.register(
     "IPv4:" : "IPv4:",
     "IPv6:" : "IPv6:",
     "Active users" : "Активни потребители",
+    "Last hour" : "Последния  час",
     "Shares" : "Споделени папки",
     "Users:" : "Потребители:",
     "Groups:" : "Групи:",
