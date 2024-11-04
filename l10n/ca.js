@@ -43,6 +43,7 @@ OC.L10N.register(
     "IPv4:" : "IPv4:",
     "IPv6:" : "IPv6:",
     "Active users" : "Usuaris actius",
+    "Last hour" : "Última hora",
     "Shares" : "Elements compartits",
     "Users:" : "Usuaris:",
     "Groups:" : "Grups:",
