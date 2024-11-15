@@ -62,7 +62,7 @@
     "Database" : "数据库",
     "Type:" : "类型：",
     "External monitoring tool" : "外部监视工具",
-    "Use this end point to connect an external monitoring tool:" : "使用此端点连接外部监视工具：",
+    "Use this end point to connect an external monitoring tool:" : "使用此接口连接外部监视工具：",
     "Copy" : "复制",
     "Output in JSON" : "JSON 格式输出",
     "Skip apps section (including apps section will send an external request to the app store)" : "跳过应用程序部分（包括应用程序部分向应用商店发送外部请求）",
