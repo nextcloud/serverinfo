@@ -75,6 +75,16 @@ class FreeBSD implements IOperatingSystem {
 		return $data;
 	}
 
+	public function getCpuCount(): int {
+		$numCpu = 1; // this should be a save default
+
+		try {
+			$numCpu = intval($this->executeCommand('sysctl -n hw.ncpu')); //TODO: this should be tested if it actually works on FreeBSD
+		} catch (RuntimeException) {}
+
+		return $numCpu;
+	}
+
 	public function getTime(): string {
 		try {
 			return $this->executeCommand('date');
@@ -247,4 +257,5 @@ class FreeBSD implements IOperatingSystem {
 		}
 		return $data;
 	}
+
 }

@@ -658,7 +658,7 @@
     }
     var el = this.getTooltipEl();
     el.style.top = Math.round(this.mousePageY) + 'px';
-    el.style.left = Math.round(this.mousePageX) + 'px';
+    el.style.right = `calc(100vw - ${Math.round(this.mousePageX)}px)`;
     this.updateTooltip();
   };
 
