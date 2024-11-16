@@ -9,7 +9,6 @@
 .monitoring-wrapper {
 	display: -webkit-flex;
 	display: flex;
-	position: left;
 	max-width: 50%;
 	min-width: 50%;
 }
@@ -53,11 +52,6 @@
 	border-radius: var(--border-radius-large);
 }
 
-.infobox.cpuSection,
-.infobox.memorySection {
-    padding: 16px 0 0 0;
-}
-
 .diskchart-container {
 	width: 100px;
 	margin-right: 25px;
@@ -80,13 +74,23 @@
 	background-color: var(--color-primary-element);
 }
 
-@media only screen and (max-width: $breakpoint-mobile) {
+@media (width <= 1280px) {
 	.infobox {
 		display: block;
+		word-break: break-word;
+	}
+
+	.text-center-mobile {
 		text-align: center;
 	}
+
 	.diskchart-container {
 		margin: 0 auto;
+	}
+
+	.monitoring-wrapper {
+		min-width: 100%;
+		max-width: 100%;
 	}
 }
 
@@ -102,7 +106,7 @@
 
 .infoicon {
 	width: 28px;
-	float: left;
+	vertical-align: middle;
 	padding: 5px;
 	filter: var(--background-invert-if-dark);
 }
@@ -211,7 +215,7 @@
 	min-width: 100%;
 }
 
-/*
+
 @media only screen and (max-width: 1200px) {
 	.col-xl-6 {
 		flex-basis: 50%;
@@ -234,7 +238,7 @@
 	}
 }
 
-@media only screen and (max-width: $breakpoint-mobile) {
+@media only screen and (max-width: 768px) {
 	.col-m-6 {
 		flex-basis: 50%;
 		max-width: 50%;
@@ -247,7 +251,7 @@
 		min-width: 100%;
 	}
 }
-*/
+
 
 .monitoring-url-params {
 	margin-top: 3px;
@@ -256,8 +260,14 @@
 
 .monitoring-url-param {
 	display: flex;
-	align-items: center;
-	height: 24px;
+	align-items: start;
+	margin-bottom: 3px;
+}
+
+.monitoring-url-param input {
+	margin-top: 4px;
+	min-height: initial;
+	height: initial;
 }
 
 .active-users-wrapper {
