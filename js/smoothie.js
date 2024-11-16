@@ -681,12 +681,12 @@
       width = this.canvas.offsetWidth;
       height = this.canvas.offsetHeight;
 
-      if (width !== this.lastWidth) {
+      if (width !== this.lastWidth || dpr !== this.lastDpr) {
         this.lastWidth = width;
         this.canvas.setAttribute('width', (Math.floor(width * dpr)).toString());
         this.canvas.getContext('2d').scale(dpr, dpr);
       }
-      if (height !== this.lastHeight) {
+      if (height !== this.lastHeight || dpr !== this.lastDpr) {
         this.lastHeight = height;
         this.canvas.setAttribute('height', (Math.floor(height * dpr)).toString());
         this.canvas.getContext('2d').scale(dpr, dpr);
@@ -694,6 +694,7 @@
 
       this.clientWidth = width;
       this.clientHeight = height;
+	  this.lastDpr = dpr;
     } else {
       width = parseInt(this.canvas.getAttribute('width'));
       height = parseInt(this.canvas.getAttribute('height'));
