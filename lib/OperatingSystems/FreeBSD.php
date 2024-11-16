@@ -80,7 +80,8 @@ class FreeBSD implements IOperatingSystem {
 
 		try {
 			$numCpu = intval($this->executeCommand('sysctl -n hw.ncpu')); //TODO: this should be tested if it actually works on FreeBSD
-		} catch (RuntimeException) {}
+		} catch (RuntimeException) {
+		}
 
 		return $numCpu;
 	}
