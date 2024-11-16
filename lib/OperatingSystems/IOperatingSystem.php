@@ -25,6 +25,13 @@ interface IOperatingSystem {
 	public function getCpuName(): string;
 
 	/**
+	 * Get number of processors (threads).
+	 *
+	 * @return int
+	 */
+	public function getCpuCount(): int;
+
+	/**
 	 * Get disk info returns a list of Disk objects. Used and Available in bytes.
 	 *
 	 * @return Disk[]

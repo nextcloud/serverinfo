@@ -45,6 +45,10 @@ class Os implements IOperatingSystem {
 		return $this->backend->getCpuName();
 	}
 
+	public function getCpuCount(): int {
+		return $this->backend->getCpuCount();
+	}
+
 	public function getTime(): string {
 		return $this->backend->getTime();
 	}
