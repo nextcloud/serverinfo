@@ -49,4 +49,8 @@ class Dummy implements IOperatingSystem {
 	public function getThermalZones(): array {
 		return [];
 	}
+
+	public function getCpuCount(): int {
+		return 1;
+	}
 }

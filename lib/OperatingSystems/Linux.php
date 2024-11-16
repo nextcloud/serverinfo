@@ -106,13 +106,13 @@ class Linux implements IOperatingSystem {
 		return $data;
 	}
 
-	public function getCpuCount(): int
-	{
+	public function getCpuCount(): int {
 		$numCpu = 1; // this should be a save default
 
 		try {
 			$numCpu = intval($this->executeCommand('nproc --all'));
-		} catch (RuntimeException) {}
+		} catch (RuntimeException) {
+		}
 
 		return $numCpu;
 	}
