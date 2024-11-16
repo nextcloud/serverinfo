@@ -136,7 +136,7 @@ $phpinfo = $_['phpinfo'];
 			</div>
 			<?php foreach ($disks as $disk): ?>
 				<div class="col col-4 col-xl-6 col-m-12">
-					<div class="infobox">
+					<div class="infobox text-center-mobile">
 						<div class="diskchart-container">
 							<canvas id="DiskChart" class="DiskChart" style="width:100%; height:200px" width="600"
 									height="200"></canvas>
