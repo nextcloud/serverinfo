@@ -44,6 +44,7 @@ OC.L10N.register(
     "IPv6:" : "IPv6:",
     "Active users" : "Активные пользователи",
     "Last hour" : "Последний час",
+    "%s%% of all users" : "%s%% всех пользователей",
     "Last 24 Hours" : "Последние 24 часа",
     "Last 7 Days" : "Последние 7 дней",
     "Last 30 Days" : "Последние 30 дней",
