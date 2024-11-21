@@ -20,7 +20,7 @@ OC.L10N.register(
     "Free Space:" : "Logu lìberu:",
     "Network" : "Rete",
     "Active users" : "Utèntzias ativas",
-    "Last hour" : "Un'ora a como",
+    "Last hour" : "Un'ora a immoe",
     "Shares" : "Cumpartziduras",
     "PHP" : "PHP",
     "Version:" : "Versione:",
