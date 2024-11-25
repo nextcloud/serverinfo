@@ -89,11 +89,10 @@
 			e.preventDefault();
 		})
 
-		if (cpuload === 'N/A') {
+		if (cpuload === 'N/A' || numCpus === -1) {
 			$cpuFooterInfo.text(t('serverinfo', 'CPU info not available'));
 			$cpuLoadCanvas.addClass('hidden');
 			return;
-
 		} else if ($cpuLoadCanvas.hasClass('hidden')) {
 			$cpuLoadCanvas.removeClass('hidden');
 		}
@@ -120,7 +119,7 @@
 			});
 		}
 
-		$cpuFooterInfo.text(t('serverinfo', 'Load average: {percentage} % ({cpu}) last minute', { percentage: cpuloadPercentageFixed[0], cpu: cpuloadFixed[0] }));
+		$cpuFooterInfo.text(t('serverinfo', 'Load average: {percentage} % ({load}) last minute', { percentage: cpuloadPercentageFixed[0], load: cpuloadFixed[0] }));
 		$cpuFooterInfo[0].title = t(
 			'serverinfo',
 			'{lastMinutePercentage} % ({lastMinute}) last Minute\n{last5MinutesPercentage} % ({last5Minutes}) last 5 Minutes\n{last15MinutesPercentage} % ({last15Minutes}) last 15 Minutes',
@@ -134,7 +133,7 @@
 			}
 		);
 
-		cpuLoadLine.append(new Date().getTime(), cpuload[0]);
+		cpuLoadLine.append(new Date().getTime(), cpuload[0] / numCpus * 100);
 	}
 
 	function isMemoryStat(memTotal, memFree) {

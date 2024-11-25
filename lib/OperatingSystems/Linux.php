@@ -92,10 +92,7 @@ class Linux implements IOperatingSystem {
 
 		$model = $matches[1][0];
 
-		$pattern = '/processor\s+:\s(.+)/';
-
-		preg_match_all($pattern, $cpuinfo, $matches);
-		$threads = count($matches[1]);
+		$threads = $this->getCpuCount();
 
 		if ($threads === 1) {
 			$data = $model . ' (1 thread)';
@@ -107,14 +104,18 @@ class Linux implements IOperatingSystem {
 	}
 
 	public function getCpuCount(): int {
-		$numCpu = 1; // this should be a save default
+		$numCpu = -1;
 
 		try {
-			$numCpu = intval($this->executeCommand('nproc --all'));
-		} catch (RuntimeException) {
+			$cpuinfo = $this->readContent('/proc/cpuinfo');
+		} catch (RuntimeException $e) {
+			return $numCpu;
 		}
 
-		return $numCpu;
+		$pattern = '/processor\s+:\s(.+)/';
+
+		preg_match_all($pattern, $cpuinfo, $matches);
+		return count($matches[1]);
 	}
 
 	public function getTime(): string {
