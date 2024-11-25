@@ -76,7 +76,7 @@ class FreeBSD implements IOperatingSystem {
 	}
 
 	public function getCpuCount(): int {
-		$numCpu = 1; // this should be a save default
+		$numCpu = -1;
 
 		try {
 			$numCpu = intval($this->executeCommand('sysctl -n hw.ncpu')); //TODO: this should be tested if it actually works on FreeBSD
