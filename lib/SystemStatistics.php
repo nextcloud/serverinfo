@@ -39,6 +39,7 @@ class SystemStatistics {
 	public function getSystemStatistics(bool $skipApps = false, bool $skipUpdate = true): array {
 		$processorUsage = $this->getProcessorUsage();
 		$memoryUsage = $this->os->getMemory();
+		$numCPU = $this->os->getCpuCount();
 
 		$data = [
 			'version' => $this->config->getSystemValue('version'),
@@ -52,6 +53,7 @@ class SystemStatistics {
 			'debug' => $this->config->getSystemValue('debug', false) ? 'yes' : 'no',
 			'freespace' => $this->getFreeSpace(),
 			'cpuload' => $processorUsage['loadavg'],
+			'cpunum' => $numCPU,
 			'mem_total' => $memoryUsage->getMemTotal() * 1024,
 			'mem_free' => $memoryUsage->getMemAvailable() * 1024,
 			'swap_total' => $memoryUsage->getSwapTotal() * 1024,
