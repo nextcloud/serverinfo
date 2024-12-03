@@ -2,7 +2,6 @@ OC.L10N.register(
     "serverinfo",
     {
     "CPU info not available" : "Podatki CPE niso na voljo",
-    "Load average: {cpu} (last minute)" : "Povprečje obremenitve: {cpu} (zadnja minuta)",
     "RAM: Total: {memTotalBytes}/Current usage: {memUsageBytes}" : "RAM: Skupaj: {memTotalBytes}/Trenutna uporaba: {memUsageBytes}",
     "RAM info not available" : "Podatki RAM niso na voljo",
     "SWAP: Total: {swapTotalBytes}/Current usage: {swapUsageBytes}" : "Izmenjevalni prostor SWAP: Skupaj: {swapTotalBytes}/Trenutna uporaba: {swapUsageBytes}",
@@ -71,6 +70,7 @@ OC.L10N.register(
     "Skip server update" : "Preskoči posodobitev strežnika",
     "To use an access token, please generate one then set it using the following command:" : "Za uporabo žetona za dostop, ga je treba najprej ustvariti in nato nastaviti z ukazom:",
     "Then pass the token with the \"NC-Token\" header when querying the above URL." : "Pri poizvedovanju po zgornjem naslovu URL je treba žeton nato prenesti z glavo »NC-Token«.",
+    "Load average: {cpu} (last minute)" : "Povprečje obremenitve: {cpu} (zadnja minuta)",
     "DNS:" : "DNS:",
     "Total users:" : "Število uporabnikov:",
     "24 hours:" : "24 ur:",

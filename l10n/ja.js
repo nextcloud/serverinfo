@@ -2,7 +2,6 @@ OC.L10N.register(
     "serverinfo",
     {
     "CPU info not available" : "CPU情報が利用できません",
-    "Load average: {cpu} (last minute)" : "平均ロード: {cpu} (最終11分)",
     "RAM: Total: {memTotalBytes}/Current usage: {memUsageBytes}" : "RAM: 合計: {memTotalBytes}/現在の使用率: {memUsageBytes}",
     "RAM info not available" : "RAM情報が利用不可",
     "SWAP: Total: {swapTotalBytes}/Current usage: {swapUsageBytes}" : "スワップ: 合計: {swapTotalBytes}/現在の使用率: {swapUsageBytes}",
@@ -57,6 +56,7 @@ OC.L10N.register(
     "Copy" : "コピー",
     "To use an access token, please generate one then set it using the following command:" : "アクセストークンを使用するには、アクセストークンを生成し、以下のコマンドで設定してください。",
     "Then pass the token with the \"NC-Token\" header when querying the above URL." : "次に、上記のURLをクエリするときに、\"NC-Token\" ヘッダーでトークンを渡します。",
+    "Load average: {cpu} (last minute)" : "平均ロード: {cpu} (最終11分)",
     "DNS:" : "DNS:",
     "Total users:" : "総ユーザー数："
 },

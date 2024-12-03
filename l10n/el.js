@@ -2,7 +2,6 @@ OC.L10N.register(
     "serverinfo",
     {
     "CPU info not available" : "Οι πληροφορίες επεξεργαστή CPU δεν είναι διαθέσιμες",
-    "Load average: {cpu} (last minute)" : "Μέσος όρος φόρτου: {cpu} (τελευταίο λεπτό)",
     "RAM: Total: {memTotalBytes}/Current usage: {memUsageBytes}" : "RAM: Σύνολο: {memTotalBytes}/Τρέχουσα χρήση: {memUsageBytes}",
     "RAM info not available" : "Οι πληροφορίες RAM δεν είναι διαθέσιμες",
     "SWAP: Total: {swapTotalBytes}/Current usage: {swapUsageBytes}" : "SWAP: Σύνολο: {swapTotalBytes}/Τρέχουσα χρήση: {swapUsageBytes}",
@@ -54,6 +53,7 @@ OC.L10N.register(
     "Copy" : "Αντιγραφή",
     "To use an access token, please generate one then set it using the following command:" : "Για να χρησιμοποιήσετε ένα αναγνωριστικό πρόσβασης (token), δημιουργήστε ένα και ορίστε το χρησιμοποιώντας την ακόλουθη εντολή:",
     "Then pass the token with the \"NC-Token\" header when querying the above URL." : "Στη συνέχεια, περάστε το αναγνωριστικό με την κεφαλίδα \"NC-Token\" όταν υποβάλετε ερώτημα στην παραπάνω διεύθυνση URL.",
+    "Load average: {cpu} (last minute)" : "Μέσος όρος φόρτου: {cpu} (τελευταίο λεπτό)",
     "Total users:" : "Σύνολο χρηστών:",
     "24 hours:" : "24 ώρες:",
     "1 hour:" : "1 ώρα:",

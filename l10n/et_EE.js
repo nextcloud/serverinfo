@@ -2,7 +2,6 @@ OC.L10N.register(
     "serverinfo",
     {
     "CPU info not available" : "Protsessori info pole saadaval",
-    "Load average: {cpu} (last minute)" : "Keskmine koormus: {cpu} (last minute)",
     "RAM: Total: {memTotalBytes}/Current usage: {memUsageBytes}" : "Mälu: Kokku: {memTotalBytes}/Kasutusel: {memUsageBytes}",
     "RAM info not available" : "Vahemälu info pole saadaval",
     "Copied!" : "Kopeeritud!",
@@ -58,6 +57,7 @@ OC.L10N.register(
     "Copy" : "Kopeeri",
     "To use an access token, please generate one then set it using the following command:" : "Ligipääsutunnuse kasutamiseks genereeri see ja seadista alljärgneva käsu abil:",
     "Then pass the token with the \"NC-Token\" header when querying the above URL." : "Seejärel saada tunnus ülaloleva URL-i pärimisel \"NC-Token\" päisega.",
+    "Load average: {cpu} (last minute)" : "Keskmine koormus: {cpu} (last minute)",
     "DNS:" : "Nimeserver:",
     "Total users:" : "Kasutajaid kokku:",
     "24 hours:" : "24 tundi:",
