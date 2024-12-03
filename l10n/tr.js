@@ -2,7 +2,6 @@ OC.L10N.register(
     "serverinfo",
     {
     "CPU info not available" : "İşlemci bilgileri alınamadı",
-    "Load average: {cpu} (last minute)" : "Ortalama yük: {cpu} (son bir dakika)",
     "RAM: Total: {memTotalBytes}/Current usage: {memUsageBytes}" : "RAM: Toplam: {memTotalBytes}/Güncel kullanım: {memUsageBytes}",
     "RAM info not available" : "RAM bilgileri alınamadı",
     "SWAP: Total: {swapTotalBytes}/Current usage: {swapUsageBytes}" : "SWAP: Toplam: {swapTotalBytes}/Güncel kullanım: {swapUsageBytes}",
@@ -75,6 +74,7 @@ OC.L10N.register(
     "Skip server update" : "Sunucu güncellemesini atla",
     "To use an access token, please generate one then set it using the following command:" : "Erişim kodunu kullanmak için yeni bir kod oluşturup şu komutu yürüterek ayarlayın:",
     "Then pass the token with the \"NC-Token\" header when querying the above URL." : "Ardından yukarıdaki adresi sorgularken kodu \"NC-Token\" üst bilgisi ile gönderin.",
+    "Load average: {cpu} (last minute)" : "Ortalama yük: {cpu} (son bir dakika)",
     "DNS:" : "DNS:",
     "Total users:" : "Kullanıcı sayısı:",
     "24 hours:" : "24 saat:",

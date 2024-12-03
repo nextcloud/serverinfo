@@ -1,6 +1,5 @@
 { "translations": {
     "CPU info not available" : "Informazioni CPU non disponibili",
-    "Load average: {cpu} (last minute)" : "Carico medio: {cpu} (ultimo minuto)",
     "RAM: Total: {memTotalBytes}/Current usage: {memUsageBytes}" : "RAM: Totale: {memTotalBytes}/Uso attuale: {memUsageBytes}",
     "RAM info not available" : "Informazioni RAM non disponibili",
     "SWAP: Total: {swapTotalBytes}/Current usage: {swapUsageBytes}" : "SWAP: Totale: {swapTotalBytes}/Uso attuale: {swapUsageBytes}",
@@ -63,6 +62,7 @@
     "Copy" : "Copia",
     "To use an access token, please generate one then set it using the following command:" : "Per usare un token di accesso, generane uno e poi impostalo con il comando seguente:",
     "Then pass the token with the \"NC-Token\" header when querying the above URL." : "Poi passa il token con l'intestazione \"NC-Token\" quando richiami l'URL qua sopra.",
+    "Load average: {cpu} (last minute)" : "Carico medio: {cpu} (ultimo minuto)",
     "DNS:" : "DNS:",
     "Total users:" : "Utenti totali:",
     "24 hours:" : "24 ore:",

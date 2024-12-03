@@ -2,7 +2,6 @@ OC.L10N.register(
     "serverinfo",
     {
     "CPU info not available" : "Info o CPU nie je dostupné",
-    "Load average: {cpu} (last minute)" : "Priemerné zaťaženie:  {cpu} (za poslednú minútu)",
     "RAM: Total: {memTotalBytes}/Current usage: {memUsageBytes}" : "RAM: Celkom: {memTotalBytes}/Využité: {memUsageBytes}",
     "RAM info not available" : "Informácia o RAM nie je prístupná",
     "SWAP: Total: {swapTotalBytes}/Current usage: {swapUsageBytes}" : "SWAP: Celkom: {swapTotalBytes}/Využité: {swapUsageBytes}",
@@ -75,6 +74,7 @@ OC.L10N.register(
     "Skip server update" : "Preskočiť aktualizáciu servera",
     "To use an access token, please generate one then set it using the following command:" : "Pre používanie prístupového tokenu ho vygenerujte a potom ho nastavte použitím nasledujúceho príkazu:",
     "Then pass the token with the \"NC-Token\" header when querying the above URL." : "Pri dotazovaní na vyššie uvedenú adresu URL potom poslať token s hlavičkou „NC-Token“.",
+    "Load average: {cpu} (last minute)" : "Priemerné zaťaženie:  {cpu} (za poslednú minútu)",
     "DNS:" : "DNS:",
     "Total users:" : "Používateľov celkom:",
     "24 hours:" : "24 hodín:",

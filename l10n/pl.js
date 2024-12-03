@@ -2,7 +2,6 @@ OC.L10N.register(
     "serverinfo",
     {
     "CPU info not available" : "Informacje o procesorze są niedostępne",
-    "Load average: {cpu} (last minute)" : "Średnie obciążenie: {cpu} (ostatnia minuta)",
     "RAM: Total: {memTotalBytes}/Current usage: {memUsageBytes}" : "Pamięć RAM: Całkowita: {memTotalBytes}/Bieżące użycie: {memUsageBytes}",
     "RAM info not available" : "Informacje o pamięci RAM są niedostępne",
     "SWAP: Total: {swapTotalBytes}/Current usage: {swapUsageBytes}" : "Pamięć SWAP: Całkowita: {swapTotalBytes}/Bieżące użycie: {swapUsageBytes}",
@@ -75,6 +74,7 @@ OC.L10N.register(
     "Skip server update" : "Pomiń aktualizację serwera",
     "To use an access token, please generate one then set it using the following command:" : "Aby użyć tokena dostępu, wygeneruj go, a następnie ustaw za pomocą następującego polecenia:",
     "Then pass the token with the \"NC-Token\" header when querying the above URL." : "Następnie przekaż token z nagłówkiem \"NC-Token\" podczas odpytywania powyższego adresu URL.",
+    "Load average: {cpu} (last minute)" : "Średnie obciążenie: {cpu} (ostatnia minuta)",
     "DNS:" : "DNS:",
     "Total users:" : "Ilość użytkowników:",
     "24 hours:" : "24 godziny:",

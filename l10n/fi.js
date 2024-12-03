@@ -2,7 +2,6 @@ OC.L10N.register(
     "serverinfo",
     {
     "CPU info not available" : "Suorittimen tietoja ei ole saatavilla",
-    "Load average: {cpu} (last minute)" : "Keskimääräinen kuorma: {cpu} (viimeisin minuutti)",
     "RAM: Total: {memTotalBytes}/Current usage: {memUsageBytes}" : "RAM: Yhteensä: {memTotalBytes}/Nykyinen käyttö: {memUsageBytes}",
     "RAM info not available" : "RAM-tietoja ei saatavilla",
     "SWAP: Total: {swapTotalBytes}/Current usage: {swapUsageBytes}" : "SWAP: Yhteensä: {swapTotalBytes}/Nykyinen käyttö: {swapUsageBytes}",
@@ -60,6 +59,7 @@ OC.L10N.register(
     "Type:" : "Tyyppi:",
     "External monitoring tool" : "Ulkopuolinen valvontatyökalu",
     "Copy" : "Kopioi",
+    "Load average: {cpu} (last minute)" : "Keskimääräinen kuorma: {cpu} (viimeisin minuutti)",
     "DNS:" : "Nimipalvelu:",
     "Total users:" : "Käyttäjiä yhteensä:",
     "24 hours:" : "24 tuntia:",

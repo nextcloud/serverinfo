@@ -2,7 +2,6 @@ OC.L10N.register(
     "serverinfo",
     {
     "CPU info not available" : "CPU 資訊暫時無法使用",
-    "Load average: {cpu} (last minute)" : "平均負載：{cpu}（前ㄧ分鐘）",
     "RAM: Total: {memTotalBytes}/Current usage: {memUsageBytes}" : "RAM：總計 {memTotalBytes}／目前使用量：{memUsageBytes}",
     "RAM info not available" : "沒有可用的 RAM 資訊",
     "SWAP: Total: {swapTotalBytes}/Current usage: {swapUsageBytes}" : "SWAP：總計 {swapTotalBytes}／目前使用量：{swapUsageBytes}",
@@ -75,6 +74,7 @@ OC.L10N.register(
     "Skip server update" : "略過伺服器更新",
     "To use an access token, please generate one then set it using the following command:" : "要使用存取權杖，請產生一個，然後使用下列指令設定：",
     "Then pass the token with the \"NC-Token\" header when querying the above URL." : "然後在查詢上面的 URL 時，將權杖與「NC-Token」標頭一起傳遞。",
+    "Load average: {cpu} (last minute)" : "平均負載：{cpu}（前ㄧ分鐘）",
     "DNS:" : "DNS：",
     "Total users:" : "總使用者：",
     "24 hours:" : "24小時：",
