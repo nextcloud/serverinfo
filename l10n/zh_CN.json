@@ -1,6 +1,5 @@
 { "translations": {
     "CPU info not available" : "CPU 信息不可用",
-    "Load average: {cpu} (last minute)" : "负载平均值： {cpu} （上一分钟）",
     "RAM: Total: {memTotalBytes}/Current usage: {memUsageBytes}" : "RAM: 总共：{memTotalBytes}/当前用量：{memUsageBytes}",
     "RAM info not available" : "RAM 信息不可用",
     "SWAP: Total: {swapTotalBytes}/Current usage: {swapUsageBytes}" : "SWAP: 总共：{swapTotalBytes}/当前用量：{swapUsageBytes}",
@@ -70,6 +69,7 @@
     "Skip server update" : "跳过服务器更新",
     "To use an access token, please generate one then set it using the following command:" : "要使用一个访问令牌，请生成一个，然后使用以下命令设置它：",
     "Then pass the token with the \"NC-Token\" header when querying the above URL." : "然后在查询上述 URL 时传递带有 “NC-Token” 头的令牌。",
+    "Load average: {cpu} (last minute)" : "负载平均值： {cpu} （上一分钟）",
     "DNS:" : "DNS：",
     "Total users:" : "总用户：",
     "24 hours:" : "24小时：",

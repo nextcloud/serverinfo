@@ -2,7 +2,6 @@ OC.L10N.register(
     "serverinfo",
     {
     "CPU info not available" : "Informacija apie procesorių neprieinama",
-    "Load average: {cpu} (last minute)" : "Apkrovos vidurkis: {cpu} (paskutinė minutė)",
     "Copied!" : "Nukopijuota!",
     "Not supported!" : "Nepalaikoma!",
     "Press ⌘-C to copy." : "Norėdami nukopijuoti, paspauskite ⌘-C.",
@@ -43,6 +42,7 @@ OC.L10N.register(
     "Type:" : "Tipas:",
     "External monitoring tool" : "Išorinis stebėjimo įrankis",
     "Copy" : "Kopijuoti",
+    "Load average: {cpu} (last minute)" : "Apkrovos vidurkis: {cpu} (paskutinė minutė)",
     "DNS:" : "DNS:",
     "Total users:" : "Iš viso naudotojų:",
     "24 hours:" : "24 valandos:",

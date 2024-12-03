@@ -2,7 +2,6 @@ OC.L10N.register(
     "serverinfo",
     {
     "CPU info not available" : "Không lấy được thông tin CPU",
-    "Load average: {cpu} (last minute)" : "Tải trung bình:{cpu} (phút trước)",
     "RAM: Total: {memTotalBytes}/Current usage: {memUsageBytes}" : "RAM: Tổng: {memTotalBytes}/Đang sử dụng:  {memUsageBytes}",
     "RAM info not available" : "Không lấy được thông tin RAM",
     "SWAP: Total: {swapTotalBytes}/Current usage: {swapUsageBytes}" : "SWAP: Tổng: {swapTotalBytes}/Đang sử dụng: {swapUsageBytes}",
@@ -24,6 +23,7 @@ OC.L10N.register(
     "Database" : "Cơ sở dữ liệu",
     "Type:" : "Loại:",
     "External monitoring tool" : "Công cụ giám sát ngoài",
-    "Copy" : "Sao chép"
+    "Copy" : "Sao chép",
+    "Load average: {cpu} (last minute)" : "Tải trung bình:{cpu} (phút trước)"
 },
 "nplurals=1; plural=0;");

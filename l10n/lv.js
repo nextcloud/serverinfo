@@ -2,7 +2,6 @@ OC.L10N.register(
     "serverinfo",
     {
     "CPU info not available" : "Centrālā procesora informācija nav pieejama",
-    "Load average: {cpu} (last minute)" : "Vidējā slodze: {cpu} (pēdējā minūte)",
     "RAM: Total: {memTotalBytes}/Current usage: {memUsageBytes}" : "RAM: Kopā: {memTotalBytes}/Pašreizējais lietojums: {memUsageBytes}",
     "RAM info not available" : "RAM informācija nav pieejama",
     "SWAP: Total: {swapTotalBytes}/Current usage: {swapUsageBytes}" : "SWAP: Kopā: {swapTotalBytes}/Pašreizējais lietojums: {swapUsageBytes}",
@@ -57,6 +56,7 @@ OC.L10N.register(
     "Copy" : "Kopēt",
     "To use an access token, please generate one then set it using the following command:" : "Lai izmantotu piekļuves talonu, lūdzu, ģenerējiet to un iestatiet to, izmantojot šādu komandu:",
     "Then pass the token with the \"NC-Token\" header when querying the above URL." : "Pēc tam nododiet marķieri ar galveni \"NC-Token\", veicot vaicājumu iepriekš norādītajam URL.",
+    "Load average: {cpu} (last minute)" : "Vidējā slodze: {cpu} (pēdējā minūte)",
     "DNS:" : "DNS:",
     "Total users:" : "Kopējais lietotāju skaits:"
 },

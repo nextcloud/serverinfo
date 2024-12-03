@@ -2,7 +2,6 @@ OC.L10N.register(
     "serverinfo",
     {
     "CPU info not available" : "Níl eolas LAP ar fáil",
-    "Load average: {cpu} (last minute)" : "Meán luchtaithe: {cpu} (nóiméad deireanach)",
     "RAM: Total: {memTotalBytes}/Current usage: {memUsageBytes}" : "RAM: Iomlán: {memTotalBytes}/Úsáid reatha: {memUsageBytes}",
     "RAM info not available" : "Níl eolas RAM ar fáil",
     "SWAP: Total: {swapTotalBytes}/Current usage: {swapUsageBytes}" : "SWAP: Iomlán: {swapTotalBytes}/Úsáid reatha: {swapUsageBytes}",
@@ -75,6 +74,7 @@ OC.L10N.register(
     "Skip server update" : "Léim ar nuashonrú an fhreastalaí",
     "To use an access token, please generate one then set it using the following command:" : "Chun comhartha rochtana a úsáid, giniúint ceann agus ansin socraigh é ag baint úsáide as an ordú seo a leanas le do thoil:",
     "Then pass the token with the \"NC-Token\" header when querying the above URL." : "Ansin cuir an comhartha leis an gceanntásc \"NC-Token\" agus an URL thuas á cheistiú.",
+    "Load average: {cpu} (last minute)" : "Meán luchtaithe: {cpu} (nóiméad deireanach)",
     "DNS:" : "DNS:",
     "Total users:" : "Úsáideoirí iomlána:",
     "24 hours:" : "24 uair:",

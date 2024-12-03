@@ -2,7 +2,6 @@ OC.L10N.register(
     "serverinfo",
     {
     "CPU info not available" : "CPU informazioa ez dago eskuragarri",
-    "Load average: {cpu} (last minute)" : "Batezbesteko karga: {cpu} (azken minutua)",
     "RAM: Total: {memTotalBytes}/Current usage: {memUsageBytes}" : "RAM: Totala: {memTotalBytes}/Erabiltzen: {memUsageBytes}",
     "RAM info not available" : "RAM informazioa ez dago eskuragarri",
     "SWAP: Total: {swapTotalBytes}/Current usage: {swapUsageBytes}" : "SWAP: Totala: {swapTotalBytes}/Erabiltzen: {swapUsageBytes}",
@@ -66,6 +65,7 @@ OC.L10N.register(
     "Copy" : "Kopiatu",
     "To use an access token, please generate one then set it using the following command:" : "Sarbide-token bat erabiltzeko, sortu bat eta ezarri komando hau erabiliz:",
     "Then pass the token with the \"NC-Token\" header when querying the above URL." : "Ondoren, pasatu token-a \"NC-Token\" goiburuarekin goiko URLa kontsultatzerakoan.",
+    "Load average: {cpu} (last minute)" : "Batezbesteko karga: {cpu} (azken minutua)",
     "DNS:" : "DNS:",
     "Total users:" : "Erabiltzaileak guztira:",
     "24 hours:" : "24 ordu:",
