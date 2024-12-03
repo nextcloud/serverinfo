@@ -2,7 +2,6 @@ OC.L10N.register(
     "serverinfo",
     {
     "CPU info not available" : "CPU-info inte tillgänglig",
-    "Load average: {cpu} (last minute)" : "Belastning genomsnitt: {cpu} (senaste minuten)",
     "RAM: Total: {memTotalBytes}/Current usage: {memUsageBytes}" : "RAM: Totalt: {memTotalBytes}/Nuvarande användning: {memUsageBytes}",
     "RAM info not available" : "RAM info inte tillgängligt",
     "SWAP: Total: {swapTotalBytes}/Current usage: {swapUsageBytes}" : "SWAP: Totalt: {swapTotalBytes}/Nuvarande användning: {swapUsageBytes}",
@@ -75,6 +74,7 @@ OC.L10N.register(
     "Skip server update" : "Hoppa över serveruppdatering",
     "To use an access token, please generate one then set it using the following command:" : "För att använda en access-token, generera en och ställ in den med följande kommando:",
     "Then pass the token with the \"NC-Token\" header when querying the above URL." : "Skicka sedan token med \"NC-Token\"-header när du frågar efter ovanstående URL.",
+    "Load average: {cpu} (last minute)" : "Belastning genomsnitt: {cpu} (senaste minuten)",
     "DNS:" : "DNS:",
     "Total users:" : "Antal användare:",
     "24 hours:" : "24 timmar:",

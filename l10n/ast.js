@@ -2,7 +2,6 @@ OC.L10N.register(
     "serverinfo",
     {
     "CPU info not available" : "La información de la CPU nun ta disponible",
-    "Load average: {cpu} (last minute)" : "Carga media: {cpu} (l'últimu minutu)",
     "RAM info not available" : "La información de la RAM nun ta disponible",
     "SWAP info not available" : "La información del espaciu d'intercambéu nun ta disponible",
     "Copied!" : "¡Copióse!",
@@ -49,6 +48,7 @@ OC.L10N.register(
     "Type:" : "Tipu:",
     "External monitoring tool" : "Ferramienta de supervisión esterna",
     "Copy" : "Copiar",
+    "Load average: {cpu} (last minute)" : "Carga media: {cpu} (l'últimu minutu)",
     "DNS:" : "DNS:",
     "24 hours:" : "24 hores:",
     "1 hour:" : "1 hora"

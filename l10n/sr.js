@@ -2,7 +2,6 @@ OC.L10N.register(
     "serverinfo",
     {
     "CPU info not available" : "Информације о процесору нису доступне",
-    "Load average: {cpu} (last minute)" : "Просечно оптерећење: {cpu} (у последњем минуту)",
     "RAM: Total: {memTotalBytes}/Current usage: {memUsageBytes}" : "RAM: Укупно: {memTotalBytes}/Тренутна употреба: {memUsageBytes}",
     "RAM info not available" : "Нису доступни подаци о RAM меморији",
     "SWAP: Total: {swapTotalBytes}/Current usage: {swapUsageBytes}" : "SWAP: Укупно: {swapTotalBytes}/Тренутна употреба: {swapUsageBytes}",
@@ -75,6 +74,7 @@ OC.L10N.register(
     "Skip server update" : "Прескочи ажурирање сервера",
     "To use an access token, please generate one then set it using the following command:" : "Да бисте користили жетон за приступ, молимо вас да га генеришете, па поставите следећом командом:",
     "Then pass the token with the \"NC-Token\" header when querying the above URL." : "Затим проследите жетон „NC-Token” заглављем када вршите упит на горњу URL адресу.",
+    "Load average: {cpu} (last minute)" : "Просечно оптерећење: {cpu} (у последњем минуту)",
     "DNS:" : "DNS:",
     "Total users:" : "Укупно корисника:",
     "24 hours:" : "24 сата:",

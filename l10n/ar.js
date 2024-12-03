@@ -2,7 +2,6 @@ OC.L10N.register(
     "serverinfo",
     {
     "CPU info not available" : "المعلومات عن وحدة المعالجة المركزية CPU غير متوفرة",
-    "Load average: {cpu} (last minute)" : "مُعدَّل التحميل: {cpu} (last minute)",
     "RAM: Total: {memTotalBytes}/Current usage: {memUsageBytes}" : "ذاكرة القراءة فقط RAM: المجموع : {memTotalBytes}/الاستعمال الحالي: {memUsageBytes}",
     "RAM info not available" : "المعلومات عن ذاكرة القراءة فقط RAM غير متوفرة",
     "SWAP: Total: {swapTotalBytes}/Current usage: {swapUsageBytes}" : "ذاكرة التبديل SWAP: المجموع: {swapTotalBytes}/الاستعمال الحالي: {swapUsageBytes}",
@@ -75,6 +74,7 @@ OC.L10N.register(
     "Skip server update" : "تخطِّي تحديثات الخادم",
     "To use an access token, please generate one then set it using the following command:" : "لاستخدام أَمَارَة وصول access token، يرجى توليد واحدةٍ ثم تعيينها باستخدام الأمر التالي:",
     "Then pass the token with the \"NC-Token\" header when querying the above URL." : "ثم قُم بتمرير الأَمَارَة talk برأس \"NC-Token\" عند الاستعلام عن عنوان الـ URL أعلاه.",
+    "Load average: {cpu} (last minute)" : "مُعدَّل التحميل: {cpu} (last minute)",
     "DNS:" : "نظام تسمية النطاقات DNS:",
     "Total users:" : "العدد الإجمالي للمستخدمين:",
     "24 hours:" : "24 ساعة",

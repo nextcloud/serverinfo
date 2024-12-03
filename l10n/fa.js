@@ -2,7 +2,6 @@ OC.L10N.register(
     "serverinfo",
     {
     "CPU info not available" : "اطلاعات CPU در دسترس نیست",
-    "Load average: {cpu} (last minute)" : "Load average: {cpu} (last minute)",
     "RAM: Total: {memTotalBytes}/Current usage: {memUsageBytes}" : "RAM: Total: {memTotalBytes}/Current usage: {memUsageBytes}",
     "RAM info not available" : "RAM info not available",
     "SWAP: Total: {swapTotalBytes}/Current usage: {swapUsageBytes}" : "SWAP: Total: {swapTotalBytes}/Current usage: {swapUsageBytes}",
@@ -67,6 +66,7 @@ OC.L10N.register(
     "Copy" : "کپی کردن",
     "To use an access token, please generate one then set it using the following command:" : "To use an access token, please generate one then set it using the following command:",
     "Then pass the token with the \"NC-Token\" header when querying the above URL." : "Then pass the token with the \"NC-Token\" header when querying the above URL.",
+    "Load average: {cpu} (last minute)" : "Load average: {cpu} (last minute)",
     "DNS:" : "DNS:",
     "Total users:" : "تعداد کل کاربران:",
     "24 hours:" : "24 hours:",
