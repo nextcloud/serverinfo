@@ -2,6 +2,11 @@ OC.L10N.register(
     "serverinfo",
     {
     "CPU info not available" : "المعلومات عن وحدة المعالجة المركزية CPU غير متوفرة",
+    "CPU Usage:" : "استعمال وحدة المعالجة المركزية CPU: ",
+    "Load average: {percentage} % ({load}) last minute" : "معدل التحميل: {percentage} % ({load}) آخر دقيقة",
+    "{lastMinutePercentage} % ({lastMinute}) last Minute\n{last5MinutesPercentage} % ({last5Minutes}) last 5 Minutes\n{last15MinutesPercentage} % ({last15Minutes}) last 15 Minutes" : "{lastMinutePercentage} % ({lastMinute}) آخر دقيقة\n{last5MinutesPercentage} % ({last5Minutes}) آخر 5 دقائق\n{last15MinutesPercentage} % ({last15Minutes}) آخر 15 دقيقة",
+    "RAM Usage:" : "استعمال الذاكرة العشوائية RAM: ",
+    "SWAP Usage:" : "استعمال ذاكرة التبديل SWAP: ",
     "RAM: Total: {memTotalBytes}/Current usage: {memUsageBytes}" : "ذاكرة القراءة فقط RAM: المجموع : {memTotalBytes}/الاستعمال الحالي: {memUsageBytes}",
     "RAM info not available" : "المعلومات عن ذاكرة القراءة فقط RAM غير متوفرة",
     "SWAP: Total: {swapTotalBytes}/Current usage: {swapUsageBytes}" : "ذاكرة التبديل SWAP: المجموع: {swapTotalBytes}/الاستعمال الحالي: {swapUsageBytes}",
