@@ -2,6 +2,11 @@ OC.L10N.register(
     "serverinfo",
     {
     "CPU info not available" : "CPU info not available",
+    "CPU Usage:" : "CPU Usage:",
+    "Load average: {percentage} % ({load}) last minute" : "Load average: {percentage} % ({load}) last minute",
+    "{lastMinutePercentage} % ({lastMinute}) last Minute\n{last5MinutesPercentage} % ({last5Minutes}) last 5 Minutes\n{last15MinutesPercentage} % ({last15Minutes}) last 15 Minutes" : "{lastMinutePercentage} % ({lastMinute}) last Minute\n{last5MinutesPercentage} % ({last5Minutes}) last 5 Minutes\n{last15MinutesPercentage} % ({last15Minutes}) last 15 Minutes",
+    "RAM Usage:" : "RAM Usage:",
+    "SWAP Usage:" : "SWAP Usage:",
     "RAM: Total: {memTotalBytes}/Current usage: {memUsageBytes}" : "RAM: Total: {memTotalBytes}/Current usage: {memUsageBytes}",
     "RAM info not available" : "RAM info not available",
     "SWAP: Total: {swapTotalBytes}/Current usage: {swapUsageBytes}" : "SWAP: Total: {swapTotalBytes}/Current usage: {swapUsageBytes}",
