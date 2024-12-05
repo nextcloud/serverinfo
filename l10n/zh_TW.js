@@ -2,6 +2,11 @@ OC.L10N.register(
     "serverinfo",
     {
     "CPU info not available" : "CPU 資訊暫時無法使用",
+    "CPU Usage:" : "CPU 使用量：",
+    "Load average: {percentage} % ({load}) last minute" : "平均負載：{percentage} % ({load}) 前 1 分鐘",
+    "{lastMinutePercentage} % ({lastMinute}) last Minute\n{last5MinutesPercentage} % ({last5Minutes}) last 5 Minutes\n{last15MinutesPercentage} % ({last15Minutes}) last 15 Minutes" : "{lastMinutePercentage} % ({lastMinute}) 前 1 分鐘\n{last5MinutesPercentage} % ({last5Minutes}) 前 5 分鐘\n{last15MinutesPercentage} % ({last15Minutes}) 前 15 分鐘",
+    "RAM Usage:" : "RAM 使用量：",
+    "SWAP Usage:" : "SWAP 使用量：",
     "RAM: Total: {memTotalBytes}/Current usage: {memUsageBytes}" : "RAM：總計 {memTotalBytes}／目前使用量：{memUsageBytes}",
     "RAM info not available" : "沒有可用的 RAM 資訊",
     "SWAP: Total: {swapTotalBytes}/Current usage: {swapUsageBytes}" : "SWAP：總計 {swapTotalBytes}／目前使用量：{swapUsageBytes}",
