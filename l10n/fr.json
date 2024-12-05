@@ -1,5 +1,9 @@
 { "translations": {
     "CPU info not available" : "Information CPU non disponible",
+    "CPU Usage:" : "Usage CPU:",
+    "Load average: {percentage} % ({load}) last minute" : "Moyenne de la charge : {percentage}% ( {load}) dernière minute",
+    "RAM Usage:" : "Usage RAM:",
+    "SWAP Usage:" : "Usage SWAP:",
     "RAM: Total: {memTotalBytes}/Current usage: {memUsageBytes}" : "RAM : Total : {memTotalBytes}/Utilisation actuelle : {memUsageBytes}",
     "RAM info not available" : "Informations sur la RAM non disponibles",
     "SWAP: Total: {swapTotalBytes}/Current usage: {swapUsageBytes}" : "SWAP : Total : {swapTotalBytes}/Utilisation actuelle : {swapUsageBytes}",
