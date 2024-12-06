@@ -2,6 +2,11 @@ OC.L10N.register(
     "serverinfo",
     {
     "CPU info not available" : "Níl eolas LAP ar fáil",
+    "CPU Usage:" : "Úsáid LAP:",
+    "Load average: {percentage} % ({load}) last minute" : "Meán luchtaithe: {percentage}%({load}) nóiméad dheireanach",
+    "{lastMinutePercentage} % ({lastMinute}) last Minute\n{last5MinutesPercentage} % ({last5Minutes}) last 5 Minutes\n{last15MinutesPercentage} % ({last15Minutes}) last 15 Minutes" : "{lastMinutePercentage} % ({lastMinute}) Nóiméad deireanach\n{last5MinutesPercentage} % ({last5Minutes}) 5 Nóiméad deireanach\n{last15MinutesPercentage} % ({last15Minutes}) 15 Nóiméad deireanach",
+    "RAM Usage:" : "Úsáid RAM:",
+    "SWAP Usage:" : "Úsáid SWAP:",
     "RAM: Total: {memTotalBytes}/Current usage: {memUsageBytes}" : "RAM: Iomlán: {memTotalBytes}/Úsáid reatha: {memUsageBytes}",
     "RAM info not available" : "Níl eolas RAM ar fáil",
     "SWAP: Total: {swapTotalBytes}/Current usage: {swapUsageBytes}" : "SWAP: Iomlán: {swapTotalBytes}/Úsáid reatha: {swapUsageBytes}",
