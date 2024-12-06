@@ -1,5 +1,10 @@
 { "translations": {
     "CPU info not available" : "Информация о ЦП недоступна",
+    "CPU Usage:" : "Использование ЦП:",
+    "Load average: {percentage} % ({load}) last minute" : "Средняя нагрузка: {percentage} % ({load}) за последнюю минуту",
+    "{lastMinutePercentage} % ({lastMinute}) last Minute\n{last5MinutesPercentage} % ({last5Minutes}) last 5 Minutes\n{last15MinutesPercentage} % ({last15Minutes}) last 15 Minutes" : "{lastMinutePercentage} % ({lastMinute}) за последнюю минуту\n{last5MinutesPercentage} % ({last5Minutes}) за последние 5 минут\n{last15MinutesPercentage} % ({last15Minutes}) за последние 15 минут",
+    "RAM Usage:" : "Использование RAM:",
+    "SWAP Usage:" : "Использование SWAP:",
     "RAM: Total: {memTotalBytes}/Current usage: {memUsageBytes}" : "RAM: Всего: {memTotalBytes} / Использовано: {memUsageBytes}",
     "RAM info not available" : "RAM информация не доступна",
     "SWAP: Total: {swapTotalBytes}/Current usage: {swapUsageBytes}" : "SWAP: Всего: {swapTotalBytes} / Использовано: {swapUsageBytes}",
