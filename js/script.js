@@ -9,17 +9,21 @@
 		memoryUsageLine,
 		swapUsageLine,
 		cpuLoadChart,
-		cpuLoadLine,
-		activeUsersChart,
-		sharesChart;
+		cpuLoadLine
 
-	$(document).ready(function () {
-		var rambox = document.getElementById('rambox');
-		rambox.style.backgroundColor = OCA.Theming ? OCA.Theming.color : 'rgb(54, 129, 195)';
+	const chartOptions = {
+		millisPerPixel: 100,
+		minValue: 0,
+		grid: {fillStyle: 'rgba(0,0,0,0)', strokeStyle: 'transparent'},
+		labels: {fillStyle: getThemedPassiveColor(), fontSize: 12, precision: 1},
+		responsive: true,
+		tooltip: true,
+		tooltipLine: {
+			strokeStyle: getThemedPassiveColor()
+		}
+	};
 
-		var swapbox = document.getElementById('swapbox');
-		swapbox.style.backgroundColor = 'rgba(100, 100, 100, 0.8)';
-
+	$(function () {
 		initDiskCharts();
 
 		setHumanReadableSizeToElement("databaseSize");
@@ -37,7 +41,7 @@
 
 			$.get(url)
 				.done(function (response) {
-					updateCPUStatistics(response.system.cpuload)
+					updateCPUStatistics(response.system.cpuload, response.system.cpunum)
 					updateMemoryStatistics(response.system.mem_total, response.system.mem_free, response.system.swap_total, response.system.swap_free)
 				})
 				.always(function () {
@@ -63,10 +67,10 @@
 	 * Reset all canvas widths on window resize so canvas is responsive
 	 */
 	function resizeSystemCharts() {
-		var cpuCanvas = $("#cpuloadcanvas"),
-			cpuCanvasWidth = cpuCanvas.parents('.infobox').width() - 30,
+		let cpuCanvas = $("#cpuloadcanvas"),
+			cpuCanvasWidth = cpuCanvas.parents('.infobox').width(),
 			memCanvas = $("#memorycanvas"),
-			memCanvasWidth = memCanvas.parents('.infobox').width() - 30;
+			memCanvasWidth = memCanvas.parents('.infobox').width();
 
 
 		// We have to set css width AND attribute width
@@ -76,43 +80,60 @@
 		memCanvas.attr('width', memCanvasWidth);
 	}
 
-	function updateCPUStatistics(cpuload) {
-		var $cpuFooterInfo = $('#cpuFooterInfo');
-		var $cpuLoadCanvas = $('#cpuloadcanvas');
+	function updateCPUStatistics(cpuload, numCpus) {
+		let $cpuFooterInfo = $('#cpuFooterInfo');
+		let $cpuLoadCanvas = $('#cpuloadcanvas');
 
-		if (cpuload === 'N/A') {
+		// We need to stop touch events here, since they cause the tooltip to open, but never close again
+		$cpuLoadCanvas[0].addEventListener('touchstart', (e) => {
+			e.preventDefault();
+		})
+
+		if (cpuload === 'N/A' || numCpus === -1) {
 			$cpuFooterInfo.text(t('serverinfo', 'CPU info not available'));
 			$cpuLoadCanvas.addClass('hidden');
 			return;
-
 		} else if ($cpuLoadCanvas.hasClass('hidden')) {
 			$cpuLoadCanvas.removeClass('hidden');
 		}
 
-		var cpu1 = cpuload[0],
-			cpu2 = cpuload[1],
-			cpu3 = cpuload[2];
+		let cpuloadFixed = cpuload.map((load) => load.toFixed(2));
+		let cpuloadPercentageFixed = cpuload.map((load) => ((load / numCpus) * 100).toFixed(1));
 
 		if (typeof cpuLoadChart === 'undefined') {
-			cpuLoadChart = new SmoothieChart(
-				{
-					millisPerPixel: 100,
-					minValue: 0,
-					grid: {fillStyle: 'rgba(0,0,0,0)', strokeStyle: 'transparent'},
-					labels: {fillStyle: 'rgba(0,0,0,0.4)', fontSize: 12},
-					responsive: true
-				});
+			const percentageFormatter = (val, precision) => val.toFixed(precision) + " %";
+
+			cpuLoadChart = new SmoothieChart({
+				...chartOptions,
+				yMinFormatter: percentageFormatter,
+				yMaxFormatter: percentageFormatter,
+				maxValue: 100
+			});
 			cpuLoadChart.streamTo(document.getElementById("cpuloadcanvas"), 1000/*delay*/);
 			cpuLoadLine = new TimeSeries();
 			cpuLoadChart.addTimeSeries(cpuLoadLine, {
 				lineWidth: 1,
 				strokeStyle: getThemedPassiveColor(),
-				fillStyle: getThemedPrimaryColor()
+				fillStyle: getThemedPrimaryColor(),
+				tooltipLabel: t('serverinfo', 'CPU Usage:')
 			});
 		}
 
-		$cpuFooterInfo.text(t('serverinfo', 'Load average: {cpu} (last minute)', { cpu: cpu1.toFixed(2) }));
-		cpuLoadLine.append(new Date().getTime(), cpu1);
+		$cpuFooterInfo.text(t('serverinfo', 'Load average: {percentage} % ({load}) last minute', { percentage: cpuloadPercentageFixed[0], load: cpuloadFixed[0] }));
+		$cpuFooterInfo[0].title = t(
+			'serverinfo',
+			'{lastMinutePercentage} % ({lastMinute}) last Minute\n{last5MinutesPercentage} % ({last5Minutes}) last 5 Minutes\n{last15MinutesPercentage} % ({last15Minutes}) last 15 Minutes',
+			{
+				lastMinute: cpuloadFixed[0],
+				lastMinutePercentage: cpuloadPercentageFixed[0],
+				last5Minutes: cpuloadFixed[1],
+				last5MinutesPercentage: cpuloadPercentageFixed[1],
+				last15Minutes: cpuloadFixed[2],
+				last15MinutesPercentage: cpuloadPercentageFixed[2]
+			}
+		);
+
+		cpuLoadLine.append(new Date().getTime(), cpuload[0] / numCpus * 100);
 	}
 
 	function isMemoryStat(memTotal, memFree) {
@@ -136,6 +157,11 @@
 		var $swapFooterInfo = $('#swapFooterInfo');
 		var $memoryCanvas = $('#memorycanvas');
 
+		// We need to stop touch events here, since they cause the tooltip to open, but never close again
+		$memoryCanvas[0].addEventListener('touchstart', (e) => {
+			e.preventDefault();
+		})
+
 		var memTotalBytes = memTotal * 1024,
 			memUsageBytes = (memTotal - memFree) * 1024,
 			memTotalGB = memTotal / (1024 * 1024),
@@ -152,27 +178,29 @@
 		}
 
 		if (typeof memoryUsageChart === 'undefined') {
+			const gbFormatter = (val, precision) => val.toFixed(precision) + " GB";
+
 			memoryUsageChart = new SmoothieChart(
 				{
-					millisPerPixel: 100,
+					...chartOptions,
 					maxValue: maxValueOfChart,
-					minValue: 0,
-					grid: {fillStyle: 'rgba(0,0,0,0)', strokeStyle: 'transparent'},
-					labels: {fillStyle: 'rgba(0,0,0,0.4)', fontSize: 12},
-					responsive: true
+					yMinFormatter: gbFormatter,
+					yMaxFormatter: gbFormatter
 				});
 			memoryUsageChart.streamTo(document.getElementById("memorycanvas"), 1000/*delay*/);
 			memoryUsageLine = new TimeSeries();
 			memoryUsageChart.addTimeSeries(memoryUsageLine, {
 				lineWidth: 1,
 				strokeStyle: getThemedPassiveColor(),
-				fillStyle: getThemedPrimaryColor()
+				fillStyle: getThemedPrimaryColor(),
+				tooltipLabel: t('serverinfo', 'RAM Usage:')
 			});
 			swapUsageLine = new TimeSeries();
 			memoryUsageChart.addTimeSeries(swapUsageLine, {
 				lineWidth: 1,
-				strokeStyle: 'rgb(100, 100, 100)',
-				fillStyle: 'rgba(100, 100, 100, 0.2)'
+				strokeStyle: getThemedPassiveColor(),
+				fillStyle: 'rgba(100, 100, 100, 0.2)',
+				tooltipLabel: t('serverinfo', 'SWAP Usage:')
 			});
 		}
 
