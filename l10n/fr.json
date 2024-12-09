@@ -2,6 +2,7 @@
     "CPU info not available" : "Information CPU non disponible",
     "CPU Usage:" : "Usage CPU:",
     "Load average: {percentage} % ({load}) last minute" : "Moyenne de la charge : {percentage}% ( {load}) dernière minute",
+    "{lastMinutePercentage} % ({lastMinute}) last Minute\n{last5MinutesPercentage} % ({last5Minutes}) last 5 Minutes\n{last15MinutesPercentage} % ({last15Minutes}) last 15 Minutes" : "{lastMinutePercentage} % ({lastMinute}) dernière Minute\n{last5MinutesPercentage} % ({last5Minutes}) 5 dernières Minutes\n{last15MinutesPercentage} % ({last15Minutes}) 15 dernières Minutes",
     "RAM Usage:" : "Usage RAM:",
     "SWAP Usage:" : "Usage SWAP:",
     "RAM: Total: {memTotalBytes}/Current usage: {memUsageBytes}" : "RAM : Total : {memTotalBytes}/Utilisation actuelle : {memUsageBytes}",
