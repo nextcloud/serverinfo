@@ -17,6 +17,7 @@ on:
 
 jobs:
   pr-feedback:
+    if: ${{ github.repository_owner == 'nextcloud' }}
     runs-on: ubuntu-latest
     steps:
       - name: The get-github-handles-from-website action
