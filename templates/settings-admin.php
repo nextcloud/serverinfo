@@ -105,7 +105,7 @@ $phpinfo = $_['phpinfo'];
 						<canvas id="cpuloadcanvas" style="width:100%; height:200px" width="600" height="200"></canvas>
 					</div>
 				</div>
-				<p><em id="cpuFooterInfo"></em></p>
+				<p><span class="cpubox" id="cpubox">&nbsp;&nbsp;</span>&nbsp;&nbsp;<em id="cpuFooterInfo"></em></p>
 			</div>
 
 			<div class="col col-6 col-l-12">
@@ -136,7 +136,7 @@ $phpinfo = $_['phpinfo'];
 			</div>
 			<?php foreach ($disks as $disk): ?>
 				<div class="col col-4 col-xl-6 col-m-12">
-					<div class="infobox">
+					<div class="infobox text-center-mobile">
 						<div class="diskchart-container">
 							<canvas id="DiskChart" class="DiskChart" style="width:100%; height:200px" width="600"
 									height="200"></canvas>
