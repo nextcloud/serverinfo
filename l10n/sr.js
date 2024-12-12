@@ -2,6 +2,11 @@ OC.L10N.register(
     "serverinfo",
     {
     "CPU info not available" : "Информације о процесору нису доступне",
+    "CPU Usage:" : "Искоришћење процесора:",
+    "Load average: {percentage} % ({load}) last minute" : "Просечно оптерећење: {percentage} % ({load}) у последњем минуту",
+    "{lastMinutePercentage} % ({lastMinute}) last Minute\n{last5MinutesPercentage} % ({last5Minutes}) last 5 Minutes\n{last15MinutesPercentage} % ({last15Minutes}) last 15 Minutes" : "{lastMinutePercentage} % ({lastMinute}) у последњем минуту\n{last5MinutesPercentage} % ({last5Minutes}) последњих 5 минута\n{last15MinutesPercentage} % ({last15Minutes}) последњих 15 минута",
+    "RAM Usage:" : "Искоришћење меморије:",
+    "SWAP Usage:" : "Искоришћење SWAP простора:",
     "RAM: Total: {memTotalBytes}/Current usage: {memUsageBytes}" : "RAM: Укупно: {memTotalBytes}/Тренутна употреба: {memUsageBytes}",
     "RAM info not available" : "Нису доступни подаци о RAM меморији",
     "SWAP: Total: {swapTotalBytes}/Current usage: {swapUsageBytes}" : "SWAP: Укупно: {swapTotalBytes}/Тренутна употреба: {swapUsageBytes}",
