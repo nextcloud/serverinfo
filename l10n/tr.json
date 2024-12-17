@@ -1,5 +1,10 @@
 { "translations": {
     "CPU info not available" : "İşlemci bilgileri alınamadı",
+    "CPU Usage:" : "İşlemci kullanımı:",
+    "Load average: {percentage} % ({load}) last minute" : "Ortalama yük: % {percentage} ({load}) son 1 dakika",
+    "{lastMinutePercentage} % ({lastMinute}) last Minute\n{last5MinutesPercentage} % ({last5Minutes}) last 5 Minutes\n{last15MinutesPercentage} % ({last15Minutes}) last 15 Minutes" : "% {lastMinutePercentage} ({lastMinute}) son 1 dakika\n% {last5MinutesPercentage} ({last5Minutes}) son 5 dakika\n% {last15MinutesPercentage} ({last15Minutes}) son 15 dakika",
+    "RAM Usage:" : "Bellek kullanımı:",
+    "SWAP Usage:" : "Takas dosyası kullanımı:",
     "RAM: Total: {memTotalBytes}/Current usage: {memUsageBytes}" : "RAM: Toplam: {memTotalBytes}/Güncel kullanım: {memUsageBytes}",
     "RAM info not available" : "RAM bilgileri alınamadı",
     "SWAP: Total: {swapTotalBytes}/Current usage: {swapUsageBytes}" : "SWAP: Toplam: {swapTotalBytes}/Güncel kullanım: {swapUsageBytes}",
