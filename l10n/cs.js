@@ -2,6 +2,9 @@ OC.L10N.register(
     "serverinfo",
     {
     "CPU info not available" : "Informace o procesoru nejsou k dispozici",
+    "CPU Usage:" : "Využití procesoru:",
+    "RAM Usage:" : "Využití operační paměti:",
+    "SWAP Usage:" : "Využití odkládacího prostoru:",
     "RAM: Total: {memTotalBytes}/Current usage: {memUsageBytes}" : "Operační paměť: Celkem: {memTotalBytes}/Stávající využití: {memUsageBytes}",
     "RAM info not available" : "Informace o operační paměti nejsou k dispozici",
     "SWAP: Total: {swapTotalBytes}/Current usage: {swapUsageBytes}" : "Odkládací prostor (swap): Celkem: {swapTotalBytes}/Stávající využití: {swapUsageBytes}",
