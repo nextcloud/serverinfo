@@ -3,6 +3,8 @@ OC.L10N.register(
     {
     "CPU info not available" : "Informace o procesoru nejsou k dispozici",
     "CPU Usage:" : "Využití procesoru:",
+    "Load average: {percentage} % ({load}) last minute" : "Průměrné vytížení: {percentage} % ({load}) za uplynulou minutu",
+    "{lastMinutePercentage} % ({lastMinute}) last Minute\n{last5MinutesPercentage} % ({last5Minutes}) last 5 Minutes\n{last15MinutesPercentage} % ({last15Minutes}) last 15 Minutes" : "{lastMinutePercentage} % ({lastMinute}) uplynulá minuta\n{last5MinutesPercentage} % ({last5Minutes}) uplynulých 5 minut\n{last15MinutesPercentage} % ({last15Minutes}) uplynulých 15 minut",
     "RAM Usage:" : "Využití operační paměti:",
     "SWAP Usage:" : "Využití odkládacího prostoru:",
     "RAM: Total: {memTotalBytes}/Current usage: {memUsageBytes}" : "Operační paměť: Celkem: {memTotalBytes}/Stávající využití: {memUsageBytes}",
