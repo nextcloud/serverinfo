@@ -10,6 +10,8 @@ declare(strict_types=1);
 
 namespace OCA\ServerInfo;
 
+use OCP\Files\IRootFolder;
+use OCP\IAppConfig;
 use OCP\IConfig;
 use OCP\IDBConnection;
 
@@ -17,7 +19,12 @@ class StorageStatistics {
 	private IDBConnection $connection;
 	private IConfig $config;
 
-	public function __construct(IDBConnection $connection, IConfig $config) {
+	public function __construct(
+		IDBConnection $connection,
+		IConfig $config,
+		private IRootFolder $rootFolder,
+		private IAppConfig $appConfig,
+	) {
 		$this->connection = $connection;
 		$this->config = $config;
 	}
@@ -30,6 +37,7 @@ class StorageStatistics {
 			'num_storages_local' => $this->countStorages('local'),
 			'num_storages_home' => $this->countStorages('home'),
 			'num_storages_other' => $this->countStorages('other'),
+			'size_appdata_storage' => $this->appConfig->getValueFloat('serverinfo', 'size_appdata_storage'),
 		];
 	}
 
@@ -73,6 +81,8 @@ class StorageStatistics {
 		}
 		$storageResult->closeCursor();
 
+		$this->updateAppDataStorageSize();
+
 		$this->config->setAppValue('serverinfo', 'cached_count_filecache', (string)$fileCount);
 		$this->config->setAppValue('serverinfo', 'cached_count_storages', (string)$storageCount);
 	}
@@ -93,5 +103,10 @@ class StorageStatistics {
 		$row = $result->fetch();
 		$result->closeCursor();
 		return (int)$row['num_entries'];
+	}
+
+	public function updateAppDataStorageSize(): void {
+		$appDataFolder = $this->rootFolder->get($this->rootFolder->getAppDataDirectoryName());
+		$this->appConfig->setValueFloat('serverinfo', 'size_appdata_storage', $appDataFolder->getSize());
 	}
 }
