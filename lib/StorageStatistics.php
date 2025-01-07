@@ -12,21 +12,15 @@ namespace OCA\ServerInfo;
 
 use OCP\Files\IRootFolder;
 use OCP\IAppConfig;
-use OCP\IConfig;
 use OCP\IDBConnection;
 
 class StorageStatistics {
-	private IDBConnection $connection;
-	private IConfig $config;
 
 	public function __construct(
-		IDBConnection $connection,
-		IConfig $config,
+		private IDBConnection $connection,
 		private IRootFolder $rootFolder,
 		private IAppConfig $appConfig,
 	) {
-		$this->connection = $connection;
-		$this->config = $config;
 	}
 
 	public function getStorageStatistics(): array {
@@ -56,7 +50,7 @@ class StorageStatistics {
 	}
 
 	protected function getCountOf(string $table): int {
-		return (int)$this->config->getAppValue('serverinfo', 'cached_count_' . $table, '0');
+		return $this->appConfig->getValueInt('serverinfo', 'cached_count_' . $table);
 	}
 
 	public function updateStorageCounts(): void {
@@ -83,8 +77,8 @@ class StorageStatistics {
 
 		$this->updateAppDataStorageSize();
 
-		$this->config->setAppValue('serverinfo', 'cached_count_filecache', (string)$fileCount);
-		$this->config->setAppValue('serverinfo', 'cached_count_storages', (string)$storageCount);
+		$this->appConfig->setValueInt('serverinfo', 'cached_count_filecache', $fileCount);
+		$this->appConfig->setValueInt('serverinfo', 'cached_count_storages', $storageCount);
 	}
 
 	protected function countStorages(string $type): int {
