@@ -1,5 +1,8 @@
 { "translations": {
     "CPU info not available" : "Info o CPU nie je dostupné",
+    "CPU Usage:" : "Využitie CPU:",
+    "Load average: {percentage} % ({load}) last minute" : "Priemerné zaťaženie: {percentage} % ({load})za poslednú minútu",
+    "{lastMinutePercentage} % ({lastMinute}) last Minute\n{last5MinutesPercentage} % ({last5Minutes}) last 5 Minutes\n{last15MinutesPercentage} % ({last15Minutes}) last 15 Minutes" : "{lastMinutePercentage}% ({lastMinute}) za poslednú minútu\n{last5MinutesPercentage} % ({last5Minutes}) za posledných 5 minút\n{last15MinutesPercentage} % ({last15Minutes}) za posledných 15 minút",
     "RAM Usage:" : "Využitie RAM:",
     "SWAP Usage:" : "Využitie SWAPu:",
     "RAM: Total: {memTotalBytes}/Current usage: {memUsageBytes}" : "RAM: Celkom: {memTotalBytes}/Využité: {memUsageBytes}",
