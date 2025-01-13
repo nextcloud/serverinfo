@@ -1,5 +1,10 @@
 { "translations": {
     "CPU info not available" : "Інформація про процесор недоступна",
+    "CPU Usage:" : "Використання CPU:",
+    "Load average: {percentage} % ({load}) last minute" : "Середнє навантаження: {percentage} % ({load}) за останню хв.",
+    "{lastMinutePercentage} % ({lastMinute}) last Minute\n{last5MinutesPercentage} % ({last5Minutes}) last 5 Minutes\n{last15MinutesPercentage} % ({last15Minutes}) last 15 Minutes" : "{lastMinutePercentage} % ({lastMinute}) за останню хв.\n{last5MinutesPercentage} % ({last5Minutes}) за останні 5 хв.\n{last15MinutesPercentage} % ({last15Minutes}) за останні 15 хв.",
+    "RAM Usage:" : "Використання ОЗУ:",
+    "SWAP Usage:" : "Використання Swap:",
     "RAM: Total: {memTotalBytes}/Current usage: {memUsageBytes}" : "Оперативна пам’ять: використовується {memUsageBytes} із {memTotalBytes}",
     "RAM info not available" : "Інформація про оперативну пам'ять недоступна",
     "SWAP: Total: {swapTotalBytes}/Current usage: {swapUsageBytes}" : "Файл підкачки: використовується {swapUsageBytes} із {swapTotalBytes}",
