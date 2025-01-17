@@ -79,8 +79,9 @@ class FreeBSD implements IOperatingSystem {
 		$numCpu = -1;
 
 		try {
-			$numCpu = intval($this->executeCommand('sysctl -n hw.ncpu')); //TODO: this should be tested if it actually works on FreeBSD
+			$numCpu = intval($this->executeCommand('/sbin/sysctl -n hw.ncpu'));
 		} catch (RuntimeException) {
+			return $numCpu;
 		}
 
 		return $numCpu;
