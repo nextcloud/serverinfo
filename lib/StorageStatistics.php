@@ -32,6 +32,7 @@ class StorageStatistics {
 			'num_storages_home' => $this->countStorages('home'),
 			'num_storages_other' => $this->countStorages('other'),
 			'size_appdata_storage' => $this->appConfig->getValueFloat('serverinfo', 'size_appdata_storage'),
+			'num_files_appdata' => $this->getCountOf('appdata_files'),
 		];
 	}
 
@@ -75,7 +76,7 @@ class StorageStatistics {
 		}
 		$storageResult->closeCursor();
 
-		$this->updateAppDataStorageSize();
+		$this->updateAppDataStorageStats();
 
 		$this->appConfig->setValueInt('serverinfo', 'cached_count_filecache', $fileCount);
 		$this->appConfig->setValueInt('serverinfo', 'cached_count_storages', $storageCount);
@@ -99,8 +100,18 @@ class StorageStatistics {
 		return (int)$row['num_entries'];
 	}
 
-	public function updateAppDataStorageSize(): void {
-		$appDataFolder = $this->rootFolder->get($this->rootFolder->getAppDataDirectoryName());
+	public function updateAppDataStorageStats(): void {
+		$appDataPath = $this->rootFolder->getAppDataDirectoryName();
+		$appDataFolder = $this->rootFolder->get($appDataPath);
 		$this->appConfig->setValueFloat('serverinfo', 'size_appdata_storage', $appDataFolder->getSize());
+
+		$query = $this->connection->getQueryBuilder();
+		$query->select($query->func()->count())
+			->from('filecache')
+			->where($query->expr()->like('path', $query->createNamedParameter($appDataPath . '%')));
+		$fileResult = $query->executeQuery();
+		$fileCount = (int)$fileResult->fetchOne();
+		$fileResult->closeCursor();
+		$this->appConfig->setValueInt('serverinfo', 'cached_count_appdata_files', $fileCount);
 	}
 }
