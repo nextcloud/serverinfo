@@ -10,16 +10,17 @@ declare(strict_types=1);
 
 namespace OCA\ServerInfo;
 
-use OCP\IConfig;
+use OCP\Files\IRootFolder;
+use OCP\IAppConfig;
 use OCP\IDBConnection;
 
 class StorageStatistics {
-	private IDBConnection $connection;
-	private IConfig $config;
 
-	public function __construct(IDBConnection $connection, IConfig $config) {
-		$this->connection = $connection;
-		$this->config = $config;
+	public function __construct(
+		private IDBConnection $connection,
+		private IRootFolder $rootFolder,
+		private IAppConfig $appConfig,
+	) {
 	}
 
 	public function getStorageStatistics(): array {
@@ -30,6 +31,8 @@ class StorageStatistics {
 			'num_storages_local' => $this->countStorages('local'),
 			'num_storages_home' => $this->countStorages('home'),
 			'num_storages_other' => $this->countStorages('other'),
+			'size_appdata_storage' => $this->appConfig->getValueFloat('serverinfo', 'size_appdata_storage'),
+			'num_files_appdata' => $this->getCountOf('appdata_files'),
 		];
 	}
 
@@ -48,7 +51,7 @@ class StorageStatistics {
 	}
 
 	protected function getCountOf(string $table): int {
-		return (int)$this->config->getAppValue('serverinfo', 'cached_count_' . $table, '0');
+		return $this->appConfig->getValueInt('serverinfo', 'cached_count_' . $table);
 	}
 
 	public function updateStorageCounts(): void {
@@ -73,8 +76,10 @@ class StorageStatistics {
 		}
 		$storageResult->closeCursor();
 
-		$this->config->setAppValue('serverinfo', 'cached_count_filecache', (string)$fileCount);
-		$this->config->setAppValue('serverinfo', 'cached_count_storages', (string)$storageCount);
+		$this->updateAppDataStorageStats();
+
+		$this->appConfig->setValueInt('serverinfo', 'cached_count_filecache', $fileCount);
+		$this->appConfig->setValueInt('serverinfo', 'cached_count_storages', $storageCount);
 	}
 
 	protected function countStorages(string $type): int {
@@ -93,5 +98,20 @@ class StorageStatistics {
 		$row = $result->fetch();
 		$result->closeCursor();
 		return (int)$row['num_entries'];
+	}
+
+	public function updateAppDataStorageStats(): void {
+		$appDataPath = $this->rootFolder->getAppDataDirectoryName();
+		$appDataFolder = $this->rootFolder->get($appDataPath);
+		$this->appConfig->setValueFloat('serverinfo', 'size_appdata_storage', $appDataFolder->getSize());
+
+		$query = $this->connection->getQueryBuilder();
+		$query->select($query->func()->count())
+			->from('filecache')
+			->where($query->expr()->like('path', $query->createNamedParameter($appDataPath . '%')));
+		$fileResult = $query->executeQuery();
+		$fileCount = (int)$fileResult->fetchOne();
+		$fileResult->closeCursor();
+		$this->appConfig->setValueInt('serverinfo', 'cached_count_appdata_files', $fileCount);
 	}
 }

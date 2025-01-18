@@ -12,13 +12,13 @@ namespace OCA\ServerInfo\Jobs;
 use OCA\ServerInfo\StorageStatistics;
 use OCP\AppFramework\Utility\ITimeFactory;
 use OCP\BackgroundJob\TimedJob;
-use OCP\IConfig;
+use OCP\IAppConfig;
 
 class UpdateStorageStats extends TimedJob {
 	private StorageStatistics $storageStatistics;
 
-	public function __construct(ITimeFactory $time, StorageStatistics $storageStatistics, IConfig $config) {
-		$this->setInterval((int)$config->getAppValue('serverinfo', 'job_interval_storage_stats', (string)(60 * 60 * 3)));
+	public function __construct(ITimeFactory $time, StorageStatistics $storageStatistics, IAppConfig $appConfig) {
+		$this->setInterval($appConfig->getValueInt('serverinfo', 'job_interval_storage_stats', 60 * 60 * 3));
 		parent::__construct($time);
 
 		$this->storageStatistics = $storageStatistics;
