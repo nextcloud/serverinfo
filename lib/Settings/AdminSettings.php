@@ -13,6 +13,7 @@ namespace OCA\ServerInfo\Settings;
 use OCA\ServerInfo\DatabaseStatistics;
 use OCA\ServerInfo\Os;
 use OCA\ServerInfo\PhpStatistics;
+use OCA\ServerInfo\FpmStatistics;
 use OCA\ServerInfo\SessionStatistics;
 use OCA\ServerInfo\ShareStatistics;
 use OCA\ServerInfo\StorageStatistics;
@@ -24,37 +25,19 @@ use OCP\IURLGenerator;
 use OCP\Settings\ISettings;
 
 class AdminSettings implements ISettings {
-	private Os $os;
-	private IL10N $l;
-	private IURLGenerator $urlGenerator;
-	private StorageStatistics $storageStatistics;
-	private PhpStatistics $phpStatistics;
-	private DatabaseStatistics $databaseStatistics;
-	private ShareStatistics $shareStatistics;
-	private SessionStatistics $sessionStatistics;
-	private SystemStatistics $systemStatistics;
-
 	public function __construct(
-		Os $os,
-		IL10N $l,
-		IURLGenerator $urlGenerator,
-		StorageStatistics $storageStatistics,
-		PhpStatistics $phpStatistics,
-		DatabaseStatistics $databaseStatistics,
-		ShareStatistics $shareStatistics,
-		SessionStatistics $sessionStatistics,
-		SystemStatistics $systemStatistics,
+		private Os $os,
+		private IL10N $l,
+		private IURLGenerator $urlGenerator,
+		private StorageStatistics $storageStatistics,
+		private PhpStatistics $phpStatistics,
+		private FpmStatistics $fpmStatistics,
+		private DatabaseStatistics $databaseStatistics,
+		private ShareStatistics $shareStatistics,
+		private SessionStatistics $sessionStatistics,
+		private SystemStatistics $systemStatistics,
 		private IConfig $config,
 	) {
-		$this->os = $os;
-		$this->l = $l;
-		$this->urlGenerator = $urlGenerator;
-		$this->storageStatistics = $storageStatistics;
-		$this->phpStatistics = $phpStatistics;
-		$this->databaseStatistics = $databaseStatistics;
-		$this->shareStatistics = $shareStatistics;
-		$this->sessionStatistics = $sessionStatistics;
-		$this->systemStatistics = $systemStatistics;
 	}
 
 	public function getForm(): TemplateResponse {
@@ -71,6 +54,7 @@ class AdminSettings implements ISettings {
 			'storage' => $this->storageStatistics->getStorageStatistics(),
 			'shares' => $this->shareStatistics->getShareStatistics(),
 			'php' => $this->phpStatistics->getPhpStatistics(),
+			'fpm' => $this->fpmStatistics->getFpmStatistics(),
 			'database' => $this->databaseStatistics->getDatabaseStatistics(),
 			'activeUsers' => $this->sessionStatistics->getSessionStatistics(),
 			'system' => $this->systemStatistics->getSystemStatistics(true, true),
