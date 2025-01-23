@@ -369,62 +369,62 @@ $phpinfo = $_['phpinfo'];
 						</p>
 						<?php endif; ?>
 					</div>
-					<?php if ($_['fpm'] !== false): ?>
-					<div class="infobox">
-						<div class="fpm-wrapper">
-							<h3><?php p($l->t('FPM')); ?></h3>
-							<p>
-								<?php p($l->t('Pool:')); ?>
-								<em id="fpmPool"><?php p($_['fpm']['pool']); ?></em>
-							</p>
-							<p>
-								<?php p($l->t('Type:')); ?>
-								<em id="fpmType"><?php p($_['fpm']['process-manager']); ?></em>
-							</p>
-							<p>
-								<?php p($l->t('Start time:')); ?>
-								<em id="fpmStartTime"><?php p($_['fpm']['start-time']); ?></em>
-							</p>
-							<p>
-								<?php p($l->t('Accepted connections:')); ?>
-								<em id="fpmAcceptedConn"><?php p($_['fpm']['accepted-conn']); ?></em>
-							</p>
-							<p>
-								<?php p($l->t('Total processes:')); ?>
-								<em id="fpmTotalProcesses"><?php p($_['fpm']['total-processes']); ?></em>
-							</p>
-							<p>
-								<?php p($l->t('Active processes:')); ?>
-								<em id="fpmActiveProcesses"><?php p($_['fpm']['active-processes']); ?></em>
-							</p>
-							<p>
-								<?php p($l->t('Idle processes:')); ?>
-								<em id="fpmIdleProcesses"><?php p($_['fpm']['idle-processes']); ?></em>
-							</p>
-							<p>
-								<?php p($l->t('Listen queue:')); ?>
-								<em id="fpmListenQueue"><?php p($_['fpm']['listen-queue']); ?></em>
-							</p>
-							<p>
-								<?php p($l->t('Slow requests:')); ?>
-								<em id="fpmSlowRequests"><?php p($_['fpm']['slow-requests']); ?></em>
-							</p>
-							<p>
-								<?php p($l->t('Max listen queue reached:')); ?>
-								<em id="fpmMaxListenQueue"><?php p($_['fpm']['max-listen-queue']); ?></em>
-							</p>
-							<p>
-								<?php p($l->t('Max active processes:')); ?>
-								<em id="fpmMaxActiveProcesses"><?php p($_['fpm']['max-active-processes']); ?></em>
-							</p>
-							<p>
-								<?php p($l->t('Max children reached:')); ?>
-								<em id="fpmMaxChildrenReached"><?php p($_['fpm']['max-children-reached']); ?></em>
-							</p>
-						</div>
-					</div>
-					<?php endif; ?>
 				</div>
+				<?php if ($_['fpm'] !== false): ?>
+				<h2><?php p($l->t('FPM worker pool')); ?></h2>
+				<div class="infobox">
+					<div class="fpm-wrapper">
+						<p>
+							<?php p($l->t('Pool name:')); ?>
+							<em id="fpmPool"><?php p($_['fpm']['pool']); ?></em>
+						</p>
+						<p>
+							<?php p($l->t('Pool type:')); ?>
+							<em id="fpmType"><?php p($_['fpm']['process-manager']); ?></em>
+						</p>
+						<p>
+							<?php p($l->t('Start time:')); ?>
+							<em id="fpmStartTime"><?php p($_['fpm']['start-time']); ?></em>
+						</p>
+						<p>
+							<?php p($l->t('Accepted connections:')); ?>
+							<em id="fpmAcceptedConn"><?php p($_['fpm']['accepted-conn']); ?></em>
+						</p>
+						<p>
+							<?php p($l->t('Total processes:')); ?>
+							<em id="fpmTotalProcesses"><?php p($_['fpm']['total-processes']); ?></em>
+						</p>
+						<p>
+							<?php p($l->t('Active processes:')); ?>
+							<em id="fpmActiveProcesses"><?php p($_['fpm']['active-processes']); ?></em>
+						</p>
+						<p>
+							<?php p($l->t('Idle processes:')); ?>
+							<em id="fpmIdleProcesses"><?php p($_['fpm']['idle-processes']); ?></em>
+						</p>
+						<p>
+							<?php p($l->t('Listen queue:')); ?>
+							<em id="fpmListenQueue"><?php p($_['fpm']['listen-queue']); ?></em>
+						</p>
+						<p>
+							<?php p($l->t('Slow requests:')); ?>
+							<em id="fpmSlowRequests"><?php p($_['fpm']['slow-requests']); ?></em>
+						</p>
+						<p>
+							<?php p($l->t('Max listen queue:')); ?>
+							<em id="fpmMaxListenQueue"><?php p($_['fpm']['max-listen-queue']); ?></em>
+						</p>
+						<p>
+							<?php p($l->t('Max active processes:')); ?>
+							<em id="fpmMaxActiveProcesses"><?php p($_['fpm']['max-active-processes']); ?></em>
+						</p>
+						<p>
+							<?php p($l->t('Max children reached:')); ?>
+							<em id="fpmMaxChildrenReached"><?php p($_['fpm']['max-children-reached']); ?></em>
+						</p>
+					</div>
+				</div>
+				<?php endif; ?>
 			</div>
 
 			<div class="col col-6 col-m-12">
