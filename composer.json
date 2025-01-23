@@ -4,7 +4,7 @@
 		"psalm/phar": "^5.15.0",
 		"bantu/ini-get-wrapper": "v1.0.1",
 		"phpunit/phpunit": "^9.5",
-		"nextcloud/ocp": "dev-master"
+		"nextcloud/ocp": "dev-stable31"
 	},
 	"scripts": {
 		"cs:check": "php-cs-fixer fix --dry-run --diff",
