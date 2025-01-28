@@ -9,13 +9,8 @@ declare(strict_types=1);
 
 namespace OCA\ServerInfo\Controller;
 
-use OCA\ServerInfo\DatabaseStatistics;
 use OCA\ServerInfo\Os;
-use OCA\ServerInfo\PhpStatistics;
-use OCA\ServerInfo\SessionStatistics;
-use OCA\ServerInfo\ShareStatistics;
-use OCA\ServerInfo\StorageStatistics;
-use OCA\ServerInfo\SystemStatistics;
+use OCA\ServerInfo\Service\InfoService;
 use OCP\AppFramework\Http;
 use OCP\AppFramework\Http\DataResponse;
 use OCP\AppFramework\OCSController;
@@ -29,12 +24,7 @@ class ApiController extends OCSController {
 	private IConfig $config;
 	private IGroupManager $groupManager;
 	private ?IUserSession $userSession;
-	private SystemStatistics $systemStatistics;
-	private StorageStatistics $storageStatistics;
-	private PhpStatistics $phpStatistics;
-	private DatabaseStatistics $databaseStatistics;
-	private ShareStatistics $shareStatistics;
-	private SessionStatistics $sessionStatistics;
+    private InfoService $infoService;
 
 	/**
 	 * ApiController constructor.
@@ -45,24 +35,14 @@ class ApiController extends OCSController {
 		IGroupManager $groupManager,
 		?IUserSession $userSession,
 		Os $os,
-		SystemStatistics $systemStatistics,
-		StorageStatistics $storageStatistics,
-		PhpStatistics $phpStatistics,
-		DatabaseStatistics $databaseStatistics,
-		ShareStatistics $shareStatistics,
-		SessionStatistics $sessionStatistics) {
+        InfoService $infoService) { 
 		parent::__construct($appName, $request);
 
 		$this->config = $config;
 		$this->groupManager = $groupManager;
 		$this->userSession = $userSession;
 		$this->os = $os;
-		$this->systemStatistics = $systemStatistics;
-		$this->storageStatistics = $storageStatistics;
-		$this->phpStatistics = $phpStatistics;
-		$this->databaseStatistics = $databaseStatistics;
-		$this->shareStatistics = $shareStatistics;
-		$this->sessionStatistics = $sessionStatistics;
+        $this->infoService = $infoService;
 	}
 
 	/**
@@ -105,19 +85,7 @@ class ApiController extends OCSController {
 			$response->setStatus(Http::STATUS_UNAUTHORIZED);
 			return $response;
 		}
-		return new DataResponse([
-			'nextcloud' => [
-				'system' => $this->systemStatistics->getSystemStatistics($skipApps, $skipUpdate),
-				'storage' => $this->storageStatistics->getStorageStatistics(),
-				'shares' => $this->shareStatistics->getShareStatistics()
-			],
-			'server' => [
-				'webserver' => $this->getWebserver(),
-				'php' => $this->phpStatistics->getPhpStatistics(),
-				'database' => $this->databaseStatistics->getDatabaseStatistics()
-			],
-			'activeUsers' => $this->sessionStatistics->getSessionStatistics()
-		]);
+		return new DataResponse($this->infoService->getServerInfo($skipApps, $skipUpdate));
 	}
 
 	public function BasicData(): DataResponse {
@@ -134,16 +102,6 @@ class ApiController extends OCSController {
 	public function DiskData(): DataResponse {
 		$result = $this->os->getDiskData();
 		return new DataResponse($result);
-	}
-
-	/**
-	 * Get webserver information
-	 */
-	private function getWebserver(): string {
-		if (isset($_SERVER['SERVER_SOFTWARE'])) {
-			return $_SERVER['SERVER_SOFTWARE'];
-		}
-		return 'unknown';
 	}
 
 	/**

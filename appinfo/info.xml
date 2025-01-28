@@ -26,6 +26,7 @@
 	</background-jobs>
 	<commands>
 		<command>OCA\ServerInfo\Commands\UpdateStorageStats</command>
+        <command>OCA\ServerInfo\Commands\GetInfo</command>
 	</commands>
     <settings>
         <admin>OCA\ServerInfo\Settings\AdminSettings</admin>
