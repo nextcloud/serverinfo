@@ -10,6 +10,7 @@ declare(strict_types=1);
 namespace OCA\ServerInfo\Controller;
 
 use OCA\ServerInfo\DatabaseStatistics;
+use OCA\ServerInfo\FpmStatistics;
 use OCA\ServerInfo\Os;
 use OCA\ServerInfo\PhpStatistics;
 use OCA\ServerInfo\SessionStatistics;
@@ -25,44 +26,22 @@ use OCP\IRequest;
 use OCP\IUserSession;
 
 class ApiController extends OCSController {
-	private Os $os;
-	private IConfig $config;
-	private IGroupManager $groupManager;
-	private ?IUserSession $userSession;
-	private SystemStatistics $systemStatistics;
-	private StorageStatistics $storageStatistics;
-	private PhpStatistics $phpStatistics;
-	private DatabaseStatistics $databaseStatistics;
-	private ShareStatistics $shareStatistics;
-	private SessionStatistics $sessionStatistics;
-
-	/**
-	 * ApiController constructor.
-	 */
-	public function __construct(string $appName,
+	public function __construct(
+		string $appName,
 		IRequest $request,
-		IConfig $config,
-		IGroupManager $groupManager,
-		?IUserSession $userSession,
-		Os $os,
-		SystemStatistics $systemStatistics,
-		StorageStatistics $storageStatistics,
-		PhpStatistics $phpStatistics,
-		DatabaseStatistics $databaseStatistics,
-		ShareStatistics $shareStatistics,
-		SessionStatistics $sessionStatistics) {
+		private IConfig $config,
+		private IGroupManager $groupManager,
+		private ?IUserSession $userSession,
+		private Os $os,
+		private SystemStatistics $systemStatistics,
+		private StorageStatistics $storageStatistics,
+		private PhpStatistics $phpStatistics,
+		private FpmStatistics $fpmStatistics,
+		private DatabaseStatistics $databaseStatistics,
+		private ShareStatistics $shareStatistics,
+		private SessionStatistics $sessionStatistics,
+	) {
 		parent::__construct($appName, $request);
-
-		$this->config = $config;
-		$this->groupManager = $groupManager;
-		$this->userSession = $userSession;
-		$this->os = $os;
-		$this->systemStatistics = $systemStatistics;
-		$this->storageStatistics = $storageStatistics;
-		$this->phpStatistics = $phpStatistics;
-		$this->databaseStatistics = $databaseStatistics;
-		$this->shareStatistics = $shareStatistics;
-		$this->sessionStatistics = $sessionStatistics;
 	}
 
 	/**
@@ -114,6 +93,7 @@ class ApiController extends OCSController {
 			'server' => [
 				'webserver' => $this->getWebserver(),
 				'php' => $this->phpStatistics->getPhpStatistics(),
+				'fpm' => $this->fpmStatistics->getFpmStatistics(),
 				'database' => $this->databaseStatistics->getDatabaseStatistics()
 			],
 			'activeUsers' => $this->sessionStatistics->getSessionStatistics()
