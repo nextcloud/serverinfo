@@ -11,9 +11,6 @@ namespace OCA\ServerInfo;
 
 use OCP\IDateTimeFormatter;
 
-/**
- * @package OCA\Survey_Client\Categories
- */
 class FpmStatistics {
 	public function __construct(
 		private IDateTimeFormatter $dateTimeFormatter,
