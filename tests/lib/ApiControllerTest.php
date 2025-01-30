@@ -189,6 +189,9 @@ class ApiControllerTest extends \Test\TestCase {
 		$this->phpStatistics->expects($this->once())
 			->method('getPhpStatistics')
 			->willReturn(['some_php' => 'some_value']);
+		$this->fpmStatistics->expects($this->once())
+			->method('getFpmStatistics')
+			->willReturn(['some_fpm' => 'some_value']);
 		$this->databaseStatistics->expects($this->once())
 			->method('getDatabaseStatistics')
 			->willReturn(['some_database' => 'some_value']);
@@ -209,6 +212,7 @@ class ApiControllerTest extends \Test\TestCase {
 			'server' => [
 				'webserver' => 'unknown',
 				'php' => ['some_php' => 'some_value'],
+				'fpm' => ['some_fpm' => 'some_value'],
 				'database' => ['some_database' => 'some_value'],
 			],
 			'activeUsers' => ['some_user' => 'some_value'],
