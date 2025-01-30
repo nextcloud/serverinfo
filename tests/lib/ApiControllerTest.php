@@ -11,6 +11,7 @@ namespace OCA\ServerInfo\Tests;
 
 use OCA\ServerInfo\Controller\ApiController;
 use OCA\ServerInfo\DatabaseStatistics;
+use OCA\ServerInfo\FpmStatistics;
 use OCA\ServerInfo\Os;
 use OCA\ServerInfo\PhpStatistics;
 use OCA\ServerInfo\SessionStatistics;
@@ -23,37 +24,20 @@ use OCP\IGroupManager;
 use OCP\IRequest;
 use OCP\IUser;
 use OCP\IUserSession;
+use PHPUnit\Framework\MockObject\MockObject;
 
 class ApiControllerTest extends \Test\TestCase {
-	/** @var Os|\PHPUnit\Framework\MockObject\MockObject */
-	private $os;
-
-	/** @var IRequest|\PHPUnit\Framework\MockObject\MockObject */
-	private $request;
-
-	/** @var IConfig|\PHPUnit\Framework\MockObject\MockObject */
-	private $config;
-
-	/** @var IGroupManager|\PHPUnit\Framework\MockObject\MockObject */
-	private $groupManager;
-
-	/** @var SystemStatistics|\PHPUnit\Framework\MockObject\MockObject */
-	private $systemStatistics;
-
-	/** @var StorageStatistics|\PHPUnit\Framework\MockObject\MockObject */
-	private $storageStatistics;
-
-	/** @var PhpStatistics|\PHPUnit\Framework\MockObject\MockObject */
-	private $phpStatistics;
-
-	/** @var DatabaseStatistics|\PHPUnit\Framework\MockObject\MockObject */
-	private $databaseStatistics;
-
-	/** @var ShareStatistics|\PHPUnit\Framework\MockObject\MockObject */
-	private $shareStatistics;
-
-	/** @var SessionStatistics|\PHPUnit\Framework\MockObject\MockObject */
-	private $sessionStatistics;
+	private Os&MockObject $os;
+	private IRequest&MockObject $request;
+	private IConfig&MockObject $config;
+	private IGroupManager&MockObject $groupManager;
+	private SystemStatistics&MockObject $systemStatistics;
+	private StorageStatistics&MockObject $storageStatistics;
+	private PhpStatistics&MockObject $phpStatistics;
+	private FpmStatistics&MockObject $fpmStatistics;
+	private DatabaseStatistics&MockObject $databaseStatistics;
+	private ShareStatistics&MockObject $shareStatistics;
+	private SessionStatistics&MockObject $sessionStatistics;
 
 	protected function setUp(): void {
 		parent::setUp();
@@ -65,6 +49,7 @@ class ApiControllerTest extends \Test\TestCase {
 		$this->systemStatistics = $this->createMock(SystemStatistics::class);
 		$this->storageStatistics = $this->createMock(StorageStatistics::class);
 		$this->phpStatistics = $this->createMock(PhpStatistics::class);
+		$this->fpmStatistics = $this->createMock(FpmStatistics::class);
 		$this->databaseStatistics = $this->createMock(DatabaseStatistics::class);
 		$this->shareStatistics = $this->createMock(ShareStatistics::class);
 		$this->sessionStatistics = $this->createMock(SessionStatistics::class);
@@ -81,6 +66,7 @@ class ApiControllerTest extends \Test\TestCase {
 			$this->systemStatistics,
 			$this->storageStatistics,
 			$this->phpStatistics,
+			$this->fpmStatistics,
 			$this->databaseStatistics,
 			$this->shareStatistics,
 			$this->sessionStatistics

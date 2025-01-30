@@ -11,9 +11,9 @@ declare(strict_types=1);
 namespace OCA\ServerInfo\Settings;
 
 use OCA\ServerInfo\DatabaseStatistics;
+use OCA\ServerInfo\FpmStatistics;
 use OCA\ServerInfo\Os;
 use OCA\ServerInfo\PhpStatistics;
-use OCA\ServerInfo\FpmStatistics;
 use OCA\ServerInfo\SessionStatistics;
 use OCA\ServerInfo\ShareStatistics;
 use OCA\ServerInfo\StorageStatistics;
