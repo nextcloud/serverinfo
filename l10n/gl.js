@@ -59,7 +59,7 @@ OC.L10N.register(
     "Emails:" : "Correos-e",
     "Federated sent:" : "Envíos á federación:",
     "Federated received:" : "Recibido da federación:",
-    "Talk conversations:" : "Conversas en Parlar:",
+    "Talk conversations:" : "Conversas no Parladoiro:",
     "PHP" : "PHP",
     "Version:" : "Versión:",
     "Memory limit:" : "Límite de memoria:",
