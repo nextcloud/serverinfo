@@ -19,7 +19,7 @@ OC.L10N.register(
     "Storages:" : "Armazenamentos:",
     "Free Space:" : "Espaço livre:",
     "Network" : "Rede",
-    "Active users" : "Utilizadores activos",
+    "Active users" : "Utilizadores ativos",
     "Last hour" : "Ultima hora",
     "Shares" : "Partilhas",
     "Users:" : "Utilizadores:",
