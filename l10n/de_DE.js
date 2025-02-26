@@ -23,7 +23,7 @@ OC.L10N.register(
     "CPU:" : "Prozessor:",
     "Unknown Processor" : "Unbekannter Prozessor",
     "Memory:" : "Speicher:",
-    "Server time:" : "Server-Zeit:",
+    "Server time:" : "Serverzeit:",
     "Uptime:" : "Betriebszeit:",
     "Temperature" : "Temperatur",
     "Load" : "Auslastung",
