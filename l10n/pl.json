@@ -68,7 +68,7 @@
     "Use this end point to connect an external monitoring tool:" : "Użyj tego punktu końcowego, aby podłączyć zewnętrzne narzędzie monitorujące:",
     "Copy" : "Kopiuj",
     "Output in JSON" : "Dane wyjściowe w JSON",
-    "Skip apps section (including apps section will send an external request to the app store)" : "Pomiń sekcję aplikacji (w tym sekcja aplikacji wyśle ​​zewnętrzne żądanie do sklepu z aplikacjami)",
+    "Skip apps section (including apps section will send an external request to the app store)" : "Pomiń sekcję aplikacji (włączenie sekcji aplikacji wyśle ​​zewnętrzne żądanie do sklepu z aplikacjami)",
     "Skip server update" : "Pomiń aktualizację serwera",
     "To use an access token, please generate one then set it using the following command:" : "Aby użyć tokena dostępu, wygeneruj go, a następnie ustaw za pomocą następującego polecenia:",
     "Then pass the token with the \"NC-Token\" header when querying the above URL." : "Następnie przekaż token z nagłówkiem \"NC-Token\" podczas odpytywania powyższego adresu URL.",
