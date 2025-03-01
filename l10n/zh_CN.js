@@ -2,6 +2,7 @@ OC.L10N.register(
     "serverinfo",
     {
     "CPU info not available" : "CPU 信息不可用",
+    "CPU Usage:" : "CPU 使用量：",
     "RAM: Total: {memTotalBytes}/Current usage: {memUsageBytes}" : "RAM: 总共：{memTotalBytes}/当前用量：{memUsageBytes}",
     "RAM info not available" : "RAM 信息不可用",
     "SWAP: Total: {swapTotalBytes}/Current usage: {swapUsageBytes}" : "SWAP: 总共：{swapTotalBytes}/当前用量：{swapUsageBytes}",
@@ -44,6 +45,9 @@ OC.L10N.register(
     "Active users" : "活跃用户",
     "Last hour" : "上个小时",
     "%s%% of all users" : "%s%% 所有用户",
+    "Last 24 Hours" : "最近24小时",
+    "Last 7 Days" : "过去7天",
+    "Last 30 Days" : "过去30天",
     "Shares" : "共享",
     "Users:" : "用户：",
     "Groups:" : "组别：",
