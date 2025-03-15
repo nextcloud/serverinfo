@@ -2,6 +2,8 @@ OC.L10N.register(
     "serverinfo",
     {
     "CPU info not available" : "CPU情報が利用できません",
+    "CPU Usage:" : "CPU使用率:",
+    "Load average: {percentage} % ({load}) last minute" : "ロードアベレージ: {percentage}% ({load}) 直近1分間",
     "RAM: Total: {memTotalBytes}/Current usage: {memUsageBytes}" : "RAM: 合計: {memTotalBytes}/現在の使用率: {memUsageBytes}",
     "RAM info not available" : "RAM情報が利用不可",
     "SWAP: Total: {swapTotalBytes}/Current usage: {swapUsageBytes}" : "スワップ: 合計: {swapTotalBytes}/現在の使用率: {swapUsageBytes}",
