@@ -1,6 +1,8 @@
 { "translations": {
     "CPU info not available" : "CPU 信息不可用",
     "CPU Usage:" : "CPU 使用量：",
+    "RAM Usage:" : "内存使用量：",
+    "SWAP Usage:" : "交换内存使用量：",
     "RAM: Total: {memTotalBytes}/Current usage: {memUsageBytes}" : "RAM: 总共：{memTotalBytes}/当前用量：{memUsageBytes}",
     "RAM info not available" : "RAM 信息不可用",
     "SWAP: Total: {swapTotalBytes}/Current usage: {swapUsageBytes}" : "SWAP: 总共：{swapTotalBytes}/当前用量：{swapUsageBytes}",
@@ -63,6 +65,8 @@
     "Extensions:" : "扩展：",
     "Unable to list extensions" : "无法获取扩展列表",
     "Show phpinfo" : "显示phpinfo",
+    "Active processes:" : "活跃进程：",
+    "Idle processes:" : "空闲进程：",
     "Database" : "数据库",
     "Type:" : "类型：",
     "External monitoring tool" : "外部监视工具",
