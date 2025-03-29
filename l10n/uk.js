@@ -69,6 +69,8 @@ OC.L10N.register(
     "Extensions:" : "Розширення:",
     "Unable to list extensions" : "Не вдалося створити список розширень",
     "Show phpinfo" : "Показати phpinfo",
+    "Pool name:" : "Назва пулу:",
+    "Pool type:" : "Тип пулу:",
     "Start time:" : "Початковий час:",
     "Accepted connections:" : "Прийняті з'єднання:",
     "Total processes:" : "Разом процесів:",
