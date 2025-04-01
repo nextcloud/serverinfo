@@ -29,7 +29,7 @@ class LinuxTest extends TestCase {
 			->disableOriginalClone()
 			->disableArgumentCloning()
 			->disallowMockingUnknownTypes()
-			->setMethods(['readContent', 'executeCommand', 'getNetInterfaces'])
+			->onlyMethods(['readContent', 'executeCommand', 'getNetInterfaces'])
 			->getMock();
 	}
 

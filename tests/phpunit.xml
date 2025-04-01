@@ -3,25 +3,21 @@
  - SPDX-FileCopyrightText: 2016 Nextcloud contributors
  - SPDX-License-Identifier: AGPL-3.0-or-later
 -->
-<phpunit xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" bootstrap="bootstrap.php" verbose="true" timeoutForSmallTests="900" timeoutForMediumTests="900" timeoutForLargeTests="900" convertDeprecationsToExceptions="true" xsi:noNamespaceSchemaLocation="https://schema.phpunit.de/9.3/phpunit.xsd">
-  <coverage>
-    <include>
-      <directory suffix=".php">../../serverinfo/lib</directory>
-    </include>
-    <exclude>
-      <directory suffix=".php">../../serverinfo/l10n</directory>
-      <directory suffix=".php">../../serverinfo/lists</directory>
-      <directory suffix=".php">../../serverinfo/tests</directory>
-    </exclude>
-    <report>
-      <clover outputFile="./clover.xml"/>
-    </report>
-  </coverage>
-  <testsuite name="Nextcloud - ServerInfo Tests">
-    <directory suffix="Test.php">.</directory>
-  </testsuite>
-  <!-- filters for code coverage -->
-  <logging>
-    <!-- and this is where your report will be written -->
-  </logging>
+<phpunit xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
+		 xsi:noNamespaceSchemaLocation="../vendor-bin/phpunit/vendor/phpunit/phpunit/phpunit.xsd"
+		 colors="true"
+		 bootstrap="bootstrap.php"
+>
+	<source>
+		<include>
+			<directory suffix=".php">../../serverinfo/lib</directory>
+		</include>
+		<exclude>
+			<directory suffix=".php">../../serverinfo/l10n</directory>
+			<directory suffix=".php">../../serverinfo/tests</directory>
+		</exclude>
+	</source>
+	<testsuite name="Serverinfo tests">
+		<directory suffix="Test.php">.</directory>
+	</testsuite>
 </phpunit>

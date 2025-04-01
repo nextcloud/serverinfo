@@ -4,3 +4,4 @@
 /.php_cs.cache
 /tests/.phpunit.result.cache
 /vendor
+/vendor-bin/**/vendor/

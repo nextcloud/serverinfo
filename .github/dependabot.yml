@@ -2,17 +2,53 @@
 # SPDX-License-Identifier: AGPL-3.0-only
 version: 2
 updates:
+
+  # Composer
   - package-ecosystem: composer
     directory: "/"
+    commit-message:
+      prefix: "build"
+      include: "scope"
+    versioning-strategy: "increase"
     schedule:
       interval: weekly
       day: saturday
       time: "03:00"
       timezone: Europe/Paris
-    open-pull-requests-limit: 10
     labels:
       - 3. to review
       - dependencies
+
+  # Composer (tooling)
+  - package-ecosystem: composer
+    directories:
+      - "/vendor-bin/cs-fixer"
+      - "/vendor-bin/phpunit"
+      - "/vendor-bin/psalm"
     commit-message:
-      prefix: chore
-      include: scope
+      prefix: "ci"
+      include: "scope"
+    versioning-strategy: "increase"
+    schedule:
+      interval: weekly
+      day: saturday
+      time: "03:15"
+      timezone: Europe/Berlin
+    labels:
+      - 3. to review
+      - dependencies
+
+  # GitHub Actions
+  - package-ecosystem: "github-actions"
+    directory: ".github/workflows"
+    commit-message:
+      prefix: "ci"
+      include: "scope"
+    schedule:
+      interval: weekly
+      day: saturday
+      time: "03:30"
+      timezone: Europe/Berlin
+    labels:
+      - 3. to review
+      - dependencies

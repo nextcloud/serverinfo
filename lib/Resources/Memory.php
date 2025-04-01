@@ -8,6 +8,9 @@ declare(strict_types=1);
 
 namespace OCA\ServerInfo\Resources;
 
+/**
+ * @psalm-api
+ */
 class Memory {
 	private int $memTotal = -1;
 	private int $memFree = -1;
