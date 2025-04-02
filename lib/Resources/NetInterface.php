@@ -8,6 +8,9 @@ declare(strict_types=1);
 
 namespace OCA\ServerInfo\Resources;
 
+/**
+ * @psalm-api
+ */
 class NetInterface {
 	private string $name = '';
 	private bool $up = false;

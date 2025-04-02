@@ -8,6 +8,9 @@ declare(strict_types=1);
 
 namespace OCA\ServerInfo\Resources;
 
+/**
+ * @psalm-api
+ */
 class ThermalZone implements \JsonSerializable {
 	public function __construct(
 		private string $zone,

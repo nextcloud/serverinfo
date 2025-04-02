@@ -33,7 +33,7 @@ class FreeBSDTest extends TestCase {
 			->disableOriginalClone()
 			->disableArgumentCloning()
 			->disallowMockingUnknownTypes()
-			->setMethods(['executeCommand', 'getNetInterfaces'])
+			->onlyMethods(['executeCommand', 'getNetInterfaces'])
 			->getMock();
 	}
 

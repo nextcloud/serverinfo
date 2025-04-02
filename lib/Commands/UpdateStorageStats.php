@@ -14,6 +14,9 @@ use OCA\ServerInfo\StorageStatistics;
 use Symfony\Component\Console\Input\InputInterface;
 use Symfony\Component\Console\Output\OutputInterface;
 
+/**
+ * @psalm-api
+ */
 class UpdateStorageStats extends Base {
 	private StorageStatistics $storageStatistics;
 
