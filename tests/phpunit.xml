@@ -17,7 +17,7 @@
 			<directory suffix=".php">../../serverinfo/tests</directory>
 		</exclude>
 	</source>
-	<testsuite name="Serverinfo tests">
+	<testsuite name="serverinfo tests">
 		<directory suffix="Test.php">.</directory>
 	</testsuite>
 </phpunit>

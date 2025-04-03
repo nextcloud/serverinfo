@@ -1,27 +1,60 @@
 <?xml version="1.0" encoding="UTF-8"?>
 <files psalm-version="6.10.0@9c0add4eb88d4b169ac04acb7c679918cbb9c252">
-  <file src="lib/Commands/UpdateStorageStats.php">
-    <MissingOverrideAttribute>
-      <code><![CDATA[public function configure(): void {]]></code>
-    </MissingOverrideAttribute>
-  </file>
   <file src="lib/Controller/ApiController.php">
+    <PossiblyUnusedParam>
+      <code><![CDATA[$appName]]></code>
+      <code><![CDATA[$request]]></code>
+      <code><![CDATA[$skipApps]]></code>
+      <code><![CDATA[$skipUpdate]]></code>
+    </PossiblyUnusedParam>
+    <UndefinedClass>
+      <code><![CDATA[OCSController]]></code>
+    </UndefinedClass>
     <UnusedClass>
       <code><![CDATA[ApiController]]></code>
     </UnusedClass>
   </file>
   <file src="lib/Controller/PageController.php">
+    <PossiblyUnusedParam>
+      <code><![CDATA[$appName]]></code>
+      <code><![CDATA[$request]]></code>
+    </PossiblyUnusedParam>
+    <UndefinedClass>
+      <code><![CDATA[Controller]]></code>
+    </UndefinedClass>
     <UnusedClass>
       <code><![CDATA[PageController]]></code>
     </UnusedClass>
   </file>
   <file src="lib/DatabaseStatistics.php">
-    <PossiblyUnusedMethod>
-      <code><![CDATA[__construct]]></code>
-    </PossiblyUnusedMethod>
-    <UndefinedInterfaceMethod>
-      <code><![CDATA[getInner]]></code>
-    </UndefinedInterfaceMethod>
+    <PossiblyUnusedParam>
+      <code><![CDATA[$config]]></code>
+      <code><![CDATA[$connection]]></code>
+    </PossiblyUnusedParam>
+    <UndefinedClass>
+      <code><![CDATA[$this->config]]></code>
+      <code><![CDATA[$this->config]]></code>
+      <code><![CDATA[$this->config]]></code>
+      <code><![CDATA[$this->config]]></code>
+      <code><![CDATA[$this->config]]></code>
+      <code><![CDATA[$this->config]]></code>
+      <code><![CDATA[$this->config]]></code>
+      <code><![CDATA[$this->connection]]></code>
+      <code><![CDATA[$this->connection]]></code>
+      <code><![CDATA[$this->connection]]></code>
+      <code><![CDATA[$this->connection]]></code>
+      <code><![CDATA[$this->connection]]></code>
+      <code><![CDATA[$this->connection]]></code>
+      <code><![CDATA[$this->connection]]></code>
+      <code><![CDATA[Exception]]></code>
+      <code><![CDATA[IConfig]]></code>
+      <code><![CDATA[IConfig]]></code>
+      <code><![CDATA[IDBConnection]]></code>
+      <code><![CDATA[IDBConnection]]></code>
+    </UndefinedClass>
+    <UnusedClass>
+      <code><![CDATA[DatabaseStatistics]]></code>
+    </UnusedClass>
   </file>
   <file src="lib/FpmStatistics.php">
     <PossiblyInvalidArrayAccess>
@@ -31,31 +64,27 @@
     <PossiblyInvalidArrayAssignment>
       <code><![CDATA[$status['start-time']]]></code>
     </PossiblyInvalidArrayAssignment>
-    <PossiblyUnusedMethod>
-      <code><![CDATA[__construct]]></code>
-    </PossiblyUnusedMethod>
+    <UndefinedClass>
+      <code><![CDATA[$this->dateTimeFormatter]]></code>
+      <code><![CDATA[private]]></code>
+    </UndefinedClass>
+    <UnusedClass>
+      <code><![CDATA[FpmStatistics]]></code>
+    </UnusedClass>
   </file>
   <file src="lib/Jobs/UpdateStorageStats.php">
-    <MissingOverrideAttribute>
-      <code><![CDATA[protected function run($argument): void {]]></code>
-    </MissingOverrideAttribute>
+    <PossiblyUnusedParam>
+      <code><![CDATA[$appConfig]]></code>
+      <code><![CDATA[$argument]]></code>
+      <code><![CDATA[$storageStatistics]]></code>
+      <code><![CDATA[$time]]></code>
+    </PossiblyUnusedParam>
+    <UndefinedClass>
+      <code><![CDATA[TimedJob]]></code>
+    </UndefinedClass>
     <UnusedClass>
       <code><![CDATA[UpdateStorageStats]]></code>
     </UnusedClass>
-  </file>
-  <file src="lib/OperatingSystems/Dummy.php">
-    <MissingOverrideAttribute>
-      <code><![CDATA[public function getCpuCount(): int {]]></code>
-      <code><![CDATA[public function getCpuName(): string {]]></code>
-      <code><![CDATA[public function getDiskInfo(): array {]]></code>
-      <code><![CDATA[public function getMemory(): Memory {]]></code>
-      <code><![CDATA[public function getNetworkInfo(): array {]]></code>
-      <code><![CDATA[public function getNetworkInterfaces(): array {]]></code>
-      <code><![CDATA[public function getThermalZones(): array {]]></code>
-      <code><![CDATA[public function getTime(): string {]]></code>
-      <code><![CDATA[public function getUptime(): int {]]></code>
-      <code><![CDATA[public function supported(): bool {]]></code>
-    </MissingOverrideAttribute>
   </file>
   <file src="lib/OperatingSystems/FreeBSD.php">
     <ForbiddenCode>
@@ -66,18 +95,6 @@
       <code><![CDATA[($lines[1] * ($lines[2] + $lines[3] + $lines[4])) / 1024 / 1024]]></code>
       <code><![CDATA[round(($used * 100 / (int)$matches['Blocks'][$i]), 2)]]></code>
     </InvalidOperand>
-    <MissingOverrideAttribute>
-      <code><![CDATA[public function getCpuCount(): int {]]></code>
-      <code><![CDATA[public function getCpuName(): string {]]></code>
-      <code><![CDATA[public function getDiskInfo(): array {]]></code>
-      <code><![CDATA[public function getMemory(): Memory {]]></code>
-      <code><![CDATA[public function getNetworkInfo(): array {]]></code>
-      <code><![CDATA[public function getNetworkInterfaces(): array {]]></code>
-      <code><![CDATA[public function getThermalZones(): array {]]></code>
-      <code><![CDATA[public function getTime(): string {]]></code>
-      <code><![CDATA[public function getUptime(): int {]]></code>
-      <code><![CDATA[public function supported(): bool {]]></code>
-    </MissingOverrideAttribute>
   </file>
   <file src="lib/OperatingSystems/Linux.php">
     <ForbiddenCode>
@@ -88,94 +105,129 @@
       <code><![CDATA[$speed / 1000]]></code>
       <code><![CDATA[round(($used * 100 / (int)$matches['Blocks'][$i]), 2)]]></code>
     </InvalidOperand>
-    <MissingOverrideAttribute>
-      <code><![CDATA[public function getCpuCount(): int {]]></code>
-      <code><![CDATA[public function getCpuName(): string {]]></code>
-      <code><![CDATA[public function getDiskInfo(): array {]]></code>
-      <code><![CDATA[public function getMemory(): Memory {]]></code>
-      <code><![CDATA[public function getNetworkInfo(): array {]]></code>
-      <code><![CDATA[public function getNetworkInterfaces(): array {]]></code>
-      <code><![CDATA[public function getThermalZones(): array {]]></code>
-      <code><![CDATA[public function getTime(): string {]]></code>
-      <code><![CDATA[public function getUptime(): int {]]></code>
-      <code><![CDATA[public function supported(): bool {]]></code>
-    </MissingOverrideAttribute>
   </file>
   <file src="lib/Os.php">
-    <MissingOverrideAttribute>
-      <code><![CDATA[public function getCpuCount(): int {]]></code>
-      <code><![CDATA[public function getCpuName(): string {]]></code>
-      <code><![CDATA[public function getDiskInfo(): array {]]></code>
-      <code><![CDATA[public function getMemory(): Memory {]]></code>
-      <code><![CDATA[public function getNetworkInfo(): array {]]></code>
-      <code><![CDATA[public function getNetworkInterfaces(): array {]]></code>
-      <code><![CDATA[public function getThermalZones(): array {]]></code>
-      <code><![CDATA[public function getTime(): string {]]></code>
-      <code><![CDATA[public function getUptime(): int {]]></code>
-      <code><![CDATA[public function supported(): bool {]]></code>
-    </MissingOverrideAttribute>
     <PossiblyUnusedMethod>
       <code><![CDATA[__construct]]></code>
+      <code><![CDATA[getDiskData]]></code>
+      <code><![CDATA[getHostname]]></code>
+      <code><![CDATA[getOSName]]></code>
     </PossiblyUnusedMethod>
+    <PossiblyUnusedParam>
+      <code><![CDATA[$config]]></code>
+    </PossiblyUnusedParam>
+    <UndefinedClass>
+      <code><![CDATA[$config]]></code>
+      <code><![CDATA[IConfig]]></code>
+    </UndefinedClass>
   </file>
   <file src="lib/PhpInfoResponse.php">
-    <FalsableReturnStatement>
-      <code><![CDATA[ob_get_clean()]]></code>
-    </FalsableReturnStatement>
-    <MissingOverrideAttribute>
-      <code><![CDATA[public function render() {]]></code>
-    </MissingOverrideAttribute>
+    <UndefinedClass>
+      <code><![CDATA[Response]]></code>
+    </UndefinedClass>
+    <UnusedClass>
+      <code><![CDATA[PhpInfoResponse]]></code>
+    </UnusedClass>
   </file>
   <file src="lib/PhpStatistics.php">
-    <PossiblyUnusedMethod>
-      <code><![CDATA[__construct]]></code>
-    </PossiblyUnusedMethod>
-  </file>
-  <file src="lib/Resources/ThermalZone.php">
-    <MissingOverrideAttribute>
-      <code><![CDATA[public function jsonSerialize(): array {]]></code>
-    </MissingOverrideAttribute>
+    <PossiblyUnusedParam>
+      <code><![CDATA[$phpIni]]></code>
+    </PossiblyUnusedParam>
+    <UndefinedClass>
+      <code><![CDATA[$this->phpIni]]></code>
+      <code><![CDATA[$this->phpIni]]></code>
+      <code><![CDATA[$this->phpIni]]></code>
+      <code><![CDATA[$this->phpIni]]></code>
+      <code><![CDATA[IniGetWrapper]]></code>
+      <code><![CDATA[IniGetWrapper]]></code>
+    </UndefinedClass>
+    <UnusedClass>
+      <code><![CDATA[PhpStatistics]]></code>
+    </UnusedClass>
   </file>
   <file src="lib/SessionStatistics.php">
-    <PossiblyUnusedMethod>
-      <code><![CDATA[__construct]]></code>
-    </PossiblyUnusedMethod>
+    <PossiblyUnusedParam>
+      <code><![CDATA[$connection]]></code>
+      <code><![CDATA[$timeFactory]]></code>
+    </PossiblyUnusedParam>
+    <UndefinedClass>
+      <code><![CDATA[$this->connection]]></code>
+      <code><![CDATA[$this->timeFactory]]></code>
+      <code><![CDATA[IDBConnection]]></code>
+      <code><![CDATA[IDBConnection]]></code>
+      <code><![CDATA[ITimeFactory]]></code>
+      <code><![CDATA[ITimeFactory]]></code>
+    </UndefinedClass>
+    <UnusedClass>
+      <code><![CDATA[SessionStatistics]]></code>
+    </UnusedClass>
   </file>
   <file src="lib/Settings/AdminSection.php">
-    <MissingOverrideAttribute>
-      <code><![CDATA[public function getID(): string {]]></code>
-      <code><![CDATA[public function getIcon(): string {]]></code>
-      <code><![CDATA[public function getName(): string {]]></code>
-      <code><![CDATA[public function getPriority(): int {]]></code>
-    </MissingOverrideAttribute>
+    <PossiblyUnusedParam>
+      <code><![CDATA[$l]]></code>
+      <code><![CDATA[$url]]></code>
+    </PossiblyUnusedParam>
+    <UndefinedClass>
+      <code><![CDATA[IIconSection]]></code>
+    </UndefinedClass>
     <UnusedClass>
       <code><![CDATA[AdminSection]]></code>
     </UnusedClass>
   </file>
   <file src="lib/Settings/AdminSettings.php">
-    <MissingOverrideAttribute>
-      <code><![CDATA[public function getForm(): TemplateResponse {]]></code>
-      <code><![CDATA[public function getPriority(): int {]]></code>
-      <code><![CDATA[public function getSection(): string {]]></code>
-    </MissingOverrideAttribute>
+    <UndefinedClass>
+      <code><![CDATA[ISettings]]></code>
+    </UndefinedClass>
     <UnusedClass>
       <code><![CDATA[AdminSettings]]></code>
     </UnusedClass>
   </file>
   <file src="lib/ShareStatistics.php">
-    <PossiblyUnusedMethod>
-      <code><![CDATA[__construct]]></code>
-    </PossiblyUnusedMethod>
+    <PossiblyUnusedParam>
+      <code><![CDATA[$connection]]></code>
+    </PossiblyUnusedParam>
+    <UndefinedClass>
+      <code><![CDATA[$this->connection]]></code>
+      <code><![CDATA[$this->connection]]></code>
+      <code><![CDATA[$this->connection]]></code>
+      <code><![CDATA[IDBConnection]]></code>
+      <code><![CDATA[IDBConnection]]></code>
+      <code><![CDATA[\OCP\Share\IShare]]></code>
+      <code><![CDATA[\OCP\Share\IShare]]></code>
+      <code><![CDATA[\OCP\Share\IShare]]></code>
+      <code><![CDATA[\OCP\Share\IShare]]></code>
+      <code><![CDATA[\OCP\Share\IShare]]></code>
+      <code><![CDATA[\OCP\Share\IShare]]></code>
+      <code><![CDATA[\OCP\Share\IShare]]></code>
+    </UndefinedClass>
+    <UnusedClass>
+      <code><![CDATA[ShareStatistics]]></code>
+    </UnusedClass>
   </file>
   <file src="lib/StorageStatistics.php">
     <PossiblyUnusedMethod>
       <code><![CDATA[__construct]]></code>
     </PossiblyUnusedMethod>
+    <UndefinedClass>
+      <code><![CDATA[$this->appConfig]]></code>
+      <code><![CDATA[$this->appConfig]]></code>
+      <code><![CDATA[$this->appConfig]]></code>
+      <code><![CDATA[$this->appConfig]]></code>
+      <code><![CDATA[$this->appConfig]]></code>
+      <code><![CDATA[$this->appConfig]]></code>
+      <code><![CDATA[$this->connection]]></code>
+      <code><![CDATA[$this->connection]]></code>
+      <code><![CDATA[$this->connection]]></code>
+      <code><![CDATA[$this->connection]]></code>
+      <code><![CDATA[$this->connection]]></code>
+      <code><![CDATA[$this->rootFolder]]></code>
+      <code><![CDATA[$this->rootFolder]]></code>
+      <code><![CDATA[private]]></code>
+      <code><![CDATA[private]]></code>
+      <code><![CDATA[private]]></code>
+    </UndefinedClass>
   </file>
   <file src="lib/SystemStatistics.php">
-    <PossiblyUnusedMethod>
-      <code><![CDATA[__construct]]></code>
-    </PossiblyUnusedMethod>
     <PossiblyUnusedParam>
       <code><![CDATA[$appManager]]></code>
       <code><![CDATA[$config]]></code>
@@ -183,12 +235,38 @@
       <code><![CDATA[$os]]></code>
     </PossiblyUnusedParam>
     <UndefinedClass>
+      <code><![CDATA[$this->appManager]]></code>
+      <code><![CDATA[$this->config]]></code>
+      <code><![CDATA[$this->config]]></code>
+      <code><![CDATA[$this->config]]></code>
+      <code><![CDATA[$this->config]]></code>
+      <code><![CDATA[$this->config]]></code>
+      <code><![CDATA[$this->config]]></code>
+      <code><![CDATA[$this->config]]></code>
+      <code><![CDATA[$this->config]]></code>
+      <code><![CDATA[$this->config]]></code>
+      <code><![CDATA[$this->config]]></code>
+      <code><![CDATA[$this->config]]></code>
       <code><![CDATA[$this->installer]]></code>
+      <code><![CDATA[FileInfo]]></code>
+      <code><![CDATA[FileInfo]]></code>
+      <code><![CDATA[FileInfo]]></code>
+      <code><![CDATA[IAppManager]]></code>
+      <code><![CDATA[IAppManager]]></code>
+      <code><![CDATA[IConfig]]></code>
+      <code><![CDATA[IConfig]]></code>
       <code><![CDATA[Installer]]></code>
       <code><![CDATA[Installer]]></code>
     </UndefinedClass>
+    <UndefinedDocblockClass>
+      <code><![CDATA[\OCP\Files\InvalidPathException]]></code>
+      <code><![CDATA[\OCP\Files\InvalidPathException]]></code>
+    </UndefinedDocblockClass>
     <UndefinedMethod>
       <code><![CDATA[free_space]]></code>
     </UndefinedMethod>
+    <UnusedClass>
+      <code><![CDATA[SystemStatistics]]></code>
+    </UnusedClass>
   </file>
 </files>
