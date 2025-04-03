@@ -27,6 +27,7 @@ class UpdateStorageStats extends TimedJob {
 	/**
 	 * @inheritDoc
 	 */
+	#[\Override]
 	protected function run($argument): void {
 		$this->storageStatistics->updateStorageCounts();
 	}

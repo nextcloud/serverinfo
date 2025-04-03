@@ -40,6 +40,7 @@ class AdminSettings implements ISettings {
 	) {
 	}
 
+	#[\Override]
 	public function getForm(): TemplateResponse {
 		$monitoringEndPoint = $this->urlGenerator->getAbsoluteURL('ocs/v2.php/apps/serverinfo/api/v1/info');
 		$params = [
@@ -69,6 +70,7 @@ class AdminSettings implements ISettings {
 	/**
 	 * @return string the section ID, e.g. 'sharing'
 	 */
+	#[\Override]
 	public function getSection(): string {
 		return 'serverinfo';
 	}
@@ -80,6 +82,7 @@ class AdminSettings implements ISettings {
 	 *
 	 * keep the server setting at the top, right after "server settings"
 	 */
+	#[\Override]
 	public function getPriority(): int {
 		return 0;
 	}

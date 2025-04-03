@@ -22,6 +22,7 @@ class Os implements IOperatingSystem {
 		$this->backend = $this->getBackend($restrictedMode ? 'Dummy' : PHP_OS);
 	}
 
+	#[\Override]
 	public function supported(): bool {
 		return $this->backend->supported();
 	}
@@ -37,26 +38,32 @@ class Os implements IOperatingSystem {
 		return PHP_OS . ' ' . php_uname('r') . ' ' . php_uname('m');
 	}
 
+	#[\Override]
 	public function getMemory(): Memory {
 		return $this->backend->getMemory();
 	}
 
+	#[\Override]
 	public function getCpuName(): string {
 		return $this->backend->getCpuName();
 	}
 
+	#[\Override]
 	public function getCpuCount(): int {
 		return $this->backend->getCpuCount();
 	}
 
+	#[\Override]
 	public function getTime(): string {
 		return $this->backend->getTime();
 	}
 
+	#[\Override]
 	public function getUptime(): int {
 		return $this->backend->getUptime();
 	}
 
+	#[\Override]
 	public function getDiskInfo(): array {
 		return $this->backend->getDiskInfo();
 	}
@@ -83,14 +90,17 @@ class Os implements IOperatingSystem {
 		return $data;
 	}
 
+	#[\Override]
 	public function getNetworkInfo(): array {
 		return $this->backend->getNetworkInfo();
 	}
 
+	#[\Override]
 	public function getNetworkInterfaces(): array {
 		return $this->backend->getNetworkInterfaces();
 	}
 
+	#[\Override]
 	public function getThermalZones(): array {
 		return $this->backend->getThermalZones();
 	}

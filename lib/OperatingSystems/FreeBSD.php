@@ -16,10 +16,12 @@ class FreeBSD implements IOperatingSystem {
 	private const AF_INET = 2;
 	private const AF_INET6 = 28;
 
+	#[\Override]
 	public function supported(): bool {
 		return false;
 	}
 
+	#[\Override]
 	public function getMemory(): Memory {
 		$data = new Memory();
 
@@ -57,6 +59,7 @@ class FreeBSD implements IOperatingSystem {
 		return $data;
 	}
 
+	#[\Override]
 	public function getCpuName(): string {
 		$data = 'Unknown Processor';
 
@@ -75,6 +78,7 @@ class FreeBSD implements IOperatingSystem {
 		return $data;
 	}
 
+	#[\Override]
 	public function getCpuCount(): int {
 		$numCpu = -1;
 
@@ -87,6 +91,7 @@ class FreeBSD implements IOperatingSystem {
 		return $numCpu;
 	}
 
+	#[\Override]
 	public function getTime(): string {
 		try {
 			return $this->executeCommand('date');
@@ -95,6 +100,7 @@ class FreeBSD implements IOperatingSystem {
 		}
 	}
 
+	#[\Override]
 	public function getUptime(): int {
 		$uptime = -1;
 
@@ -109,6 +115,7 @@ class FreeBSD implements IOperatingSystem {
 		return $uptime;
 	}
 
+	#[\Override]
 	public function getNetworkInfo(): array {
 		$result = [
 			'gateway' => '',
@@ -128,6 +135,7 @@ class FreeBSD implements IOperatingSystem {
 		return $result;
 	}
 
+	#[\Override]
 	public function getNetworkInterfaces(): array {
 		$data = [];
 
@@ -185,6 +193,7 @@ class FreeBSD implements IOperatingSystem {
 		return $data;
 	}
 
+	#[\Override]
 	public function getDiskInfo(): array {
 		$data = [];
 
@@ -223,6 +232,7 @@ class FreeBSD implements IOperatingSystem {
 		return $data;
 	}
 
+	#[\Override]
 	public function getThermalZones(): array {
 		return [];
 	}

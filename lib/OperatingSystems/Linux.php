@@ -19,10 +19,12 @@ class Linux implements IOperatingSystem {
 	private const AF_INET = 2;
 	private const AF_INET6 = 10;
 
+	#[\Override]
 	public function supported(): bool {
 		return true;
 	}
 
+	#[\Override]
 	public function getMemory(): Memory {
 		$data = new Memory();
 
@@ -66,6 +68,7 @@ class Linux implements IOperatingSystem {
 		return $data;
 	}
 
+	#[\Override]
 	public function getCpuName(): string {
 		$data = 'Unknown Processor';
 
@@ -103,6 +106,7 @@ class Linux implements IOperatingSystem {
 		return $data;
 	}
 
+	#[\Override]
 	public function getCpuCount(): int {
 		$numCpu = -1;
 
@@ -118,6 +122,7 @@ class Linux implements IOperatingSystem {
 		return count($matches[1]);
 	}
 
+	#[\Override]
 	public function getTime(): string {
 		try {
 			return $this->executeCommand('date');
@@ -126,6 +131,7 @@ class Linux implements IOperatingSystem {
 		}
 	}
 
+	#[\Override]
 	public function getUptime(): int {
 		$data = -1;
 
@@ -140,6 +146,7 @@ class Linux implements IOperatingSystem {
 		return $uptimeInSeconds;
 	}
 
+	#[\Override]
 	public function getNetworkInfo(): array {
 		$result = [
 			'gateway' => '',
@@ -153,6 +160,7 @@ class Linux implements IOperatingSystem {
 		return $result;
 	}
 
+	#[\Override]
 	public function getNetworkInterfaces(): array {
 		$data = [];
 
@@ -202,6 +210,7 @@ class Linux implements IOperatingSystem {
 		return $data;
 	}
 
+	#[\Override]
 	public function getDiskInfo(): array {
 		$data = [];
 
@@ -241,6 +250,7 @@ class Linux implements IOperatingSystem {
 		return $data;
 	}
 
+	#[\Override]
 	public function getThermalZones(): array {
 		$data = [];
 

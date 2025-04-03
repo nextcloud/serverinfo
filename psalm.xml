@@ -16,12 +16,12 @@
 		<file name="tests/stub.phpstub" preloadClasses="true"/>
 	</stubs>
 	<projectFiles>
-		<directory name="lib" />
+		<directory name="lib"/>
 		<ignoreFiles>
-			<directory name="vendor" />
+			<directory name="vendor"/>
 		</ignoreFiles>
 	</projectFiles>
 	<extraFiles>
-		<directory name="vendor" />
+		<directory name="vendor"/>
 	</extraFiles>
 </psalm>

@@ -25,6 +25,7 @@ class PhpInfoResponse extends Response {
 		$this->setFeaturePolicy(new FeaturePolicy());
 	}
 
+	#[\Override]
 	public function render() {
 		ob_start();
 		phpinfo(INFO_ALL & ~INFO_ENVIRONMENT & ~INFO_VARIABLES);
