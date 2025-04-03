@@ -28,36 +28,4 @@
 			<directory name="vendor/psalm" />
 		</ignoreFiles>
 	</extraFiles>
-	<issueHandlers>
-		<UndefinedMagicMethod>
-			<errorLevel type="suppress">
-				<referencedMethod name="/Db\\.*::.*/" />
-			</errorLevel>
-		</UndefinedMagicMethod>
-		<UndefinedInterfaceMethod>
-			<errorLevel type="suppress">
-				<!-- FIXME Deprecated event handling -->
-				<referencedMethod name="OCP\IUserManager::listen" />
-				<referencedMethod name="OCP\IGroupManager::listen" />
-			</errorLevel>
-		</UndefinedInterfaceMethod>
-		<UndefinedClass>
-			<errorLevel type="suppress">
-				<referencedClass name="OCA\Files\Event\LoadAdditionalScriptsEvent"/>
-				<referencedClass name="OC\AppFramework\OCS\V1Response"/>
-				<referencedClass name="OC\Security\CSP\ContentSecurityPolicyNonceManager" />
-			</errorLevel>
-		</UndefinedClass>
-		<UndefinedDocblockClass>
-			<errorLevel type="suppress">
-				<referencedClass name="OC\AppFramework\OCS\BaseResponse"/>
-				<referencedClass name="Doctrine\DBAL\Schema\Schema" />
-				<referencedClass name="Doctrine\DBAL\Schema\SchemaException" />
-				<referencedClass name="Doctrine\DBAL\Driver\Statement" />
-				<referencedClass name="Doctrine\DBAL\Schema\Table" />
-				<referencedClass name="OC\Security\CSP\ContentSecurityPolicyNonceManager" />
-			</errorLevel>
-		</UndefinedDocblockClass>
-		<ForbiddenCode errorLevel="suppress"/>
-	</issueHandlers>
 </psalm>
