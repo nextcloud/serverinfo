@@ -62,7 +62,7 @@
     "Version:" : "Versão:",
     "Memory limit:" : "Limite de memória:",
     "Max execution time:" : "Tempo máximo de execução:",
-    "Upload max size:" : "Tamanho máximo para envio:",
+    "Upload max size:" : "Tamanho máximo para uploads:",
     "OPcache Revalidate Frequency:" : "Frequência de revalidação do OPcache:",
     "Extensions:" : "Extensões:",
     "Unable to list extensions" : "Não foi possível listar as extensões",
