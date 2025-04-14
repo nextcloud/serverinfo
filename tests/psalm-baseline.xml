@@ -1,21 +1,228 @@
 <?xml version="1.0" encoding="UTF-8"?>
-<files psalm-version="4.x-dev@">
+<files psalm-version="6.8.2@720ed6b578ac24f9543c65c3d4cecea0ff348ccd">
+  <file src="lib/Commands/UpdateStorageStats.php">
+    <MissingOverrideAttribute>
+      <code><![CDATA[public function configure(): void {]]></code>
+    </MissingOverrideAttribute>
+    <UnusedClass>
+      <code><![CDATA[UpdateStorageStats]]></code>
+    </UnusedClass>
+  </file>
+  <file src="lib/Controller/ApiController.php">
+    <InvalidOperand>
+      <code><![CDATA[$uptime]]></code>
+    </InvalidOperand>
+    <UnusedClass>
+      <code><![CDATA[ApiController]]></code>
+    </UnusedClass>
+  </file>
+  <file src="lib/Controller/PageController.php">
+    <UnusedClass>
+      <code><![CDATA[PageController]]></code>
+    </UnusedClass>
+  </file>
   <file src="lib/DatabaseStatistics.php">
-    <UndefinedInterfaceMethod occurrences="1">
-      <code>getInner</code>
+    <PossiblyUnusedMethod>
+      <code><![CDATA[__construct]]></code>
+    </PossiblyUnusedMethod>
+    <UndefinedInterfaceMethod>
+      <code><![CDATA[getInner]]></code>
     </UndefinedInterfaceMethod>
   </file>
+  <file src="lib/Jobs/UpdateStorageStats.php">
+    <MissingOverrideAttribute>
+      <code><![CDATA[protected function run($argument): void {]]></code>
+    </MissingOverrideAttribute>
+    <UnusedClass>
+      <code><![CDATA[UpdateStorageStats]]></code>
+    </UnusedClass>
+  </file>
+  <file src="lib/OperatingSystems/Dummy.php">
+    <MissingOverrideAttribute>
+      <code><![CDATA[public function getCpuCount(): int {]]></code>
+      <code><![CDATA[public function getCpuName(): string {]]></code>
+      <code><![CDATA[public function getDiskInfo(): array {]]></code>
+      <code><![CDATA[public function getMemory(): Memory {]]></code>
+      <code><![CDATA[public function getNetworkInfo(): array {]]></code>
+      <code><![CDATA[public function getNetworkInterfaces(): array {]]></code>
+      <code><![CDATA[public function getThermalZones(): array {]]></code>
+      <code><![CDATA[public function getTime(): string {]]></code>
+      <code><![CDATA[public function getUptime(): int {]]></code>
+      <code><![CDATA[public function supported(): bool {]]></code>
+    </MissingOverrideAttribute>
+  </file>
+  <file src="lib/OperatingSystems/FreeBSD.php">
+    <ForbiddenCode>
+      <code><![CDATA[shell_exec(escapeshellcmd($command))]]></code>
+    </ForbiddenCode>
+    <InvalidOperand>
+      <code><![CDATA[$interfaceName]]></code>
+      <code><![CDATA[$lines[0] / 1024 / 1024]]></code>
+      <code><![CDATA[($lines[1] * ($lines[2] + $lines[3] + $lines[4])) / 1024 / 1024]]></code>
+      <code><![CDATA[round(($used * 100 / (int)$matches['Blocks'][$i]), 2)]]></code>
+    </InvalidOperand>
+    <MissingOverrideAttribute>
+      <code><![CDATA[public function getCpuCount(): int {]]></code>
+      <code><![CDATA[public function getCpuName(): string {]]></code>
+      <code><![CDATA[public function getDiskInfo(): array {]]></code>
+      <code><![CDATA[public function getMemory(): Memory {]]></code>
+      <code><![CDATA[public function getNetworkInfo(): array {]]></code>
+      <code><![CDATA[public function getNetworkInterfaces(): array {]]></code>
+      <code><![CDATA[public function getThermalZones(): array {]]></code>
+      <code><![CDATA[public function getTime(): string {]]></code>
+      <code><![CDATA[public function getUptime(): int {]]></code>
+      <code><![CDATA[public function supported(): bool {]]></code>
+    </MissingOverrideAttribute>
+  </file>
+  <file src="lib/OperatingSystems/Linux.php">
+    <ForbiddenCode>
+      <code><![CDATA[shell_exec('ip route | awk \'/default/ { print $3 }\'')]]></code>
+      <code><![CDATA[shell_exec(escapeshellcmd($command))]]></code>
+    </ForbiddenCode>
+    <InvalidOperand>
+      <code><![CDATA[$interfaceName]]></code>
+      <code><![CDATA[$speed]]></code>
+      <code><![CDATA[$speed / 1000]]></code>
+      <code><![CDATA[$threads]]></code>
+      <code><![CDATA[round(($used * 100 / (int)$matches['Blocks'][$i]), 2)]]></code>
+    </InvalidOperand>
+    <MissingOverrideAttribute>
+      <code><![CDATA[public function getCpuCount(): int {]]></code>
+      <code><![CDATA[public function getCpuName(): string {]]></code>
+      <code><![CDATA[public function getDiskInfo(): array {]]></code>
+      <code><![CDATA[public function getMemory(): Memory {]]></code>
+      <code><![CDATA[public function getNetworkInfo(): array {]]></code>
+      <code><![CDATA[public function getNetworkInterfaces(): array {]]></code>
+      <code><![CDATA[public function getThermalZones(): array {]]></code>
+      <code><![CDATA[public function getTime(): string {]]></code>
+      <code><![CDATA[public function getUptime(): int {]]></code>
+      <code><![CDATA[public function supported(): bool {]]></code>
+    </MissingOverrideAttribute>
+  </file>
+  <file src="lib/Os.php">
+    <MissingOverrideAttribute>
+      <code><![CDATA[public function getCpuCount(): int {]]></code>
+      <code><![CDATA[public function getCpuName(): string {]]></code>
+      <code><![CDATA[public function getDiskInfo(): array {]]></code>
+      <code><![CDATA[public function getMemory(): Memory {]]></code>
+      <code><![CDATA[public function getNetworkInfo(): array {]]></code>
+      <code><![CDATA[public function getNetworkInterfaces(): array {]]></code>
+      <code><![CDATA[public function getThermalZones(): array {]]></code>
+      <code><![CDATA[public function getTime(): string {]]></code>
+      <code><![CDATA[public function getUptime(): int {]]></code>
+      <code><![CDATA[public function supported(): bool {]]></code>
+    </MissingOverrideAttribute>
+    <PossiblyUnusedMethod>
+      <code><![CDATA[__construct]]></code>
+    </PossiblyUnusedMethod>
+  </file>
+  <file src="lib/PhpInfoResponse.php">
+    <FalsableReturnStatement>
+      <code><![CDATA[ob_get_clean()]]></code>
+    </FalsableReturnStatement>
+    <MissingOverrideAttribute>
+      <code><![CDATA[public function render() {]]></code>
+    </MissingOverrideAttribute>
+  </file>
+  <file src="lib/PhpStatistics.php">
+    <InvalidOperand>
+      <code><![CDATA[PHP_MAJOR_VERSION]]></code>
+      <code><![CDATA[PHP_MINOR_VERSION]]></code>
+      <code><![CDATA[PHP_RELEASE_VERSION]]></code>
+    </InvalidOperand>
+    <PossiblyUnusedMethod>
+      <code><![CDATA[__construct]]></code>
+    </PossiblyUnusedMethod>
+  </file>
+  <file src="lib/Resources/Disk.php">
+    <PossiblyUnusedMethod>
+      <code><![CDATA[getDevice]]></code>
+      <code><![CDATA[getFs]]></code>
+      <code><![CDATA[getMount]]></code>
+      <code><![CDATA[getPercent]]></code>
+    </PossiblyUnusedMethod>
+  </file>
+  <file src="lib/Resources/Memory.php">
+    <PossiblyUnusedMethod>
+      <code><![CDATA[getMemFree]]></code>
+    </PossiblyUnusedMethod>
+  </file>
+  <file src="lib/Resources/NetInterface.php">
+    <PossiblyUnusedMethod>
+      <code><![CDATA[getDuplex]]></code>
+      <code><![CDATA[getIPv4]]></code>
+      <code><![CDATA[getIPv6]]></code>
+      <code><![CDATA[getMAC]]></code>
+      <code><![CDATA[getName]]></code>
+      <code><![CDATA[getSpeed]]></code>
+      <code><![CDATA[isUp]]></code>
+      <code><![CDATA[setName]]></code>
+      <code><![CDATA[setUp]]></code>
+    </PossiblyUnusedMethod>
+  </file>
+  <file src="lib/Resources/ThermalZone.php">
+    <MissingOverrideAttribute>
+      <code><![CDATA[public function jsonSerialize(): array {]]></code>
+    </MissingOverrideAttribute>
+    <PossiblyUnusedMethod>
+      <code><![CDATA[getTemp]]></code>
+      <code><![CDATA[getType]]></code>
+      <code><![CDATA[getZone]]></code>
+    </PossiblyUnusedMethod>
+  </file>
+  <file src="lib/SessionStatistics.php">
+    <PossiblyUnusedMethod>
+      <code><![CDATA[__construct]]></code>
+    </PossiblyUnusedMethod>
+  </file>
+  <file src="lib/Settings/AdminSection.php">
+    <MissingOverrideAttribute>
+      <code><![CDATA[public function getID(): string {]]></code>
+      <code><![CDATA[public function getIcon(): string {]]></code>
+      <code><![CDATA[public function getName(): string {]]></code>
+      <code><![CDATA[public function getPriority(): int {]]></code>
+    </MissingOverrideAttribute>
+    <UnusedClass>
+      <code><![CDATA[AdminSection]]></code>
+    </UnusedClass>
+  </file>
+  <file src="lib/Settings/AdminSettings.php">
+    <MissingOverrideAttribute>
+      <code><![CDATA[public function getForm(): TemplateResponse {]]></code>
+      <code><![CDATA[public function getPriority(): int {]]></code>
+      <code><![CDATA[public function getSection(): string {]]></code>
+    </MissingOverrideAttribute>
+    <UnusedClass>
+      <code><![CDATA[AdminSettings]]></code>
+    </UnusedClass>
+  </file>
+  <file src="lib/ShareStatistics.php">
+    <PossiblyUnusedMethod>
+      <code><![CDATA[__construct]]></code>
+    </PossiblyUnusedMethod>
+  </file>
+  <file src="lib/StorageStatistics.php">
+    <PossiblyUnusedMethod>
+      <code><![CDATA[__construct]]></code>
+    </PossiblyUnusedMethod>
+  </file>
   <file src="lib/SystemStatistics.php">
-    <TypeDoesNotContainType occurrences="1">
-      <code>$loadavg === false</code>
-    </TypeDoesNotContainType>
-    <UndefinedClass occurrences="3">
-      <code>$this-&gt;installer</code>
-      <code>Installer</code>
-      <code>Installer</code>
+    <PossiblyUnusedMethod>
+      <code><![CDATA[__construct]]></code>
+    </PossiblyUnusedMethod>
+    <PossiblyUnusedParam>
+      <code><![CDATA[$appManager]]></code>
+      <code><![CDATA[$config]]></code>
+      <code><![CDATA[$installer]]></code>
+      <code><![CDATA[$os]]></code>
+    </PossiblyUnusedParam>
+    <UndefinedClass>
+      <code><![CDATA[$this->installer]]></code>
+      <code><![CDATA[Installer]]></code>
+      <code><![CDATA[Installer]]></code>
     </UndefinedClass>
-    <UndefinedMethod occurrences="1">
-      <code>free_space</code>
+    <UndefinedMethod>
+      <code><![CDATA[free_space]]></code>
     </UndefinedMethod>
   </file>
 </files>
