@@ -3,8 +3,8 @@ OC.L10N.register(
     {
     "Copied!" : "Eilet eo !",
     "Not supported!" : "Diembreget eo ! ",
-    "Press ⌘-C to copy." : "Pouezañ war ⌘-C evit eilañ. ",
-    "Press Ctrl-C to copy." : "Pouezañ war Ctrl-C evit eilañ. ",
+    "Press ⌘-C to copy." : "Pouezañ war ⌘+C evit eilañ. ",
+    "Press Ctrl-C to copy." : "Pouezañ war Ctrl+C evit eilañ. ",
     "System" : "Sistem",
     "Network" : "Rouedad",
     "Shares" : "Rannañ",
