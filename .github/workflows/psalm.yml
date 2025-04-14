@@ -35,7 +35,7 @@ jobs:
       - name: Check enforcement of minimum PHP version ${{ steps.versions.outputs.php-min }} in psalm.xml
         run: grep 'phpVersion="${{ steps.versions.outputs.php-min }}' psalm.xml
 
-      - name: Set up php${{ steps.versions.outputs.php-available }}
+      - name: Set up php${{ steps.versions.outputs.php-max }}
         uses: shivammathur/setup-php@9e72090525849c5e82e596468b86eb55e9cc5401 # v2.32.0
         with:
           php-version: ${{ steps.versions.outputs.php-available }}
