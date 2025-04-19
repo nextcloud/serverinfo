@@ -8,7 +8,7 @@
     "RAM: Total: {memTotalBytes}/Current usage: {memUsageBytes}" : "RAM: Total: {memTotalBytes} / Uso actual: {memUsageBytes}",
     "RAM info not available" : "Los datos de la RAM no están disponibles",
     "SWAP: Total: {swapTotalBytes}/Current usage: {swapUsageBytes}" : "SWAP: Total: {swapTotalBytes} / Uso actual: {swapUsageBytes}",
-    "SWAP info not available" : "Los datos de SWAP no están disponibles",
+    "SWAP info not available" : "La información sobre el SWAP no está disponible",
     "Copied!" : "¡Copiado!",
     "Not supported!" : "No está soportado.",
     "Press ⌘-C to copy." : "Pulsa ⌘-C para copiar.",
