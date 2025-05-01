@@ -12,7 +12,7 @@ OC.L10N.register(
     "Press Ctrl-C to copy." : "Spied Ctrl-C lai kopētu.",
     "System" : "Sistēma",
     "Monitoring" : "Uzraudzība",
-    "Monitoring app with useful server information" : "Monitoringa lietotne ar noderīgu servera informāciju",
+    "Monitoring app with useful server information" : "Pārraudzības lietotne ar noderīgu informāciju par serveri",
     "Provides useful server information, such as CPU load, RAM usage, disk usage, number of users, etc." : "Sniedz noderīgu servera informāciju, piemēram, CPU ielādi, RAM lietojumu, diska lietojumu, lietotāju skaitu utt.",
     "Operating System:" : "Operētājsistēma:",
     "CPU:" : "CPU:",
