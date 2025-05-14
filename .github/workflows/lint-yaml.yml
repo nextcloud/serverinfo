@@ -15,7 +15,7 @@ permissions:
 
 jobs:
   yaml-lint:
-    runs-on: ubuntu-latest
+    runs-on: ubuntu-latest-low
 
     name: yaml
 
