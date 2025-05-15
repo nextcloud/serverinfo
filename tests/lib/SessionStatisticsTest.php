@@ -72,7 +72,7 @@ class SessionStatisticsTest extends TestCase {
 					'userid' => $query->createNamedParameter("user-$id"),
 					'appid' => $query->createNamedParameter('login'),
 					'configkey' => $query->createNamedParameter('lastLogin'),
-					'configvalue' => $query->createNamedParameter($lastActivity),
+					'configvalue' => $query->createNamedParameter((string)$lastActivity),
 					'lazy' => $query->createNamedParameter(0),
 					'type' => $query->createNamedParameter(0),
 					'flags' => $query->createNamedParameter(0),
