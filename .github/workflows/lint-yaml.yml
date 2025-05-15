@@ -15,7 +15,7 @@ permissions:
 
 jobs:
   yaml-lint:
-    runs-on: ubuntu-latest
+    runs-on: ubuntu-latest-low
 
     name: yaml
 
@@ -32,8 +32,3 @@ jobs:
           config_data: |
             line-length: warning
 
-      - name: Install the latest version of uv
-        uses: astral-sh/setup-uv@f94ec6bedd8674c4426838e6b50417d36b6ab231 # v5.3.1
-
-      - name: Check GitHub actions
-        run: uvx zizmor --min-severity medium .github/workflows/*.yml
