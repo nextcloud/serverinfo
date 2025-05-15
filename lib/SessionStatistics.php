@@ -11,6 +11,7 @@ declare(strict_types=1);
 namespace OCA\ServerInfo;
 
 use OCP\AppFramework\Utility\ITimeFactory;
+use OCP\DB\QueryBuilder\IQueryBuilder;
 use OCP\IDBConnection;
 
 /**
@@ -65,7 +66,8 @@ class SessionStatistics {
 			->andWhere($queryBuilder->expr()->eq('configkey', $queryBuilder->createNamedParameter('lastLogin')))
 			->andwhere($queryBuilder->expr()->gte(
 				'configvalue',
-				$queryBuilder->createNamedParameter($this->timeFactory->getTime() - $offset)
+				$queryBuilder->createNamedParameter($this->timeFactory->getTime() - $offset),
+				IQueryBuilder::PARAM_INT
 			))->groupBy('userid');
 
 		$result = $queryBuilder->executeQuery();
