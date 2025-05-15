@@ -27,7 +27,7 @@ class SessionStatisticsTest extends TestCase {
 	private ITimeFactory&MockObject $timeFactory;
 	private IDBConnection $connection;
 	private SessionStatistics $instance;
-	private const TABLE = 'authtoken';
+	private const TABLE = 'preferences';
 	private const OFFSET_5MIN = 300;
 	private const OFFSET_1HOUR = 3600;
 	private const OFFSET_1DAY = 86400;
@@ -66,14 +66,13 @@ class SessionStatisticsTest extends TestCase {
 			$query->insert(self::TABLE)
 				->values(
 					[
-						'uid' => $query->createNamedParameter('user-' . ($numOfEntries + $i % 2)),
-						'login_name' => $query->createNamedParameter('user-' . ($numOfEntries + $i % 2)),
-						'password' => $query->createNamedParameter('password'),
-						'name' => $query->createNamedParameter('user agent'),
-						'token' => $query->createNamedParameter('token-' . $this->getUniqueID()),
+						'userid' => $query->createNamedParameter('user-' . ($numOfEntries + $i % 2)),
+						'appid' => $query->createNamedParameter('login'),
+						'configkey' => $query->createNamedParameter('lastLogin'),
+						'configvalue' => $query->createNamedParameter($lastActivity),
+						'lazy' => $query->createNamedParameter(0),
 						'type' => $query->createNamedParameter(0),
-						'last_activity' => $query->createNamedParameter($lastActivity),
-						'last_check' => $query->createNamedParameter($lastActivity),
+						'flags' => $query->createNamedParameter(0),
 					]
 				);
 			$query->executeStatement();
