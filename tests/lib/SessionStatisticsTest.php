@@ -50,33 +50,35 @@ class SessionStatisticsTest extends TestCase {
 	}
 
 	private function addDummyValues(): void {
-		$this->addDummyValuesWithLastLogin(self::CURRENT_TIME - self::OFFSET_5MIN + 1, 10);
+		$this->addDummyValuesWithLastLogin(self::CURRENT_TIME - self::OFFSET_5MIN + 1, ƒ10);
+		$this->addDummyValuesWithLastLogin(self::CURRENT_TIME - self::OFFSET_5MIN + 1, 11);
 		$this->addDummyValuesWithLastLogin(self::CURRENT_TIME - self::OFFSET_1HOUR + 1, 20);
+		$this->addDummyValuesWithLastLogin(self::CURRENT_TIME - self::OFFSET_1HOUR + 1, 21);
+		$this->addDummyValuesWithLastLogin(self::CURRENT_TIME - self::OFFSET_1HOUR + 1, 22);
 		$this->addDummyValuesWithLastLogin(self::CURRENT_TIME - self::OFFSET_1DAY + 1, 30);
-		$this->addDummyValuesWithLastLogin(self::CURRENT_TIME - self::OFFSET_7DAYS + 1, 40);
 		$this->addDummyValuesWithLastLogin(self::CURRENT_TIME - self::OFFSET_1MONTH + 1, 50);
 		$this->addDummyValuesWithLastLogin(self::CURRENT_TIME - self::OFFSET_3MONTHS + 1, 60);
 		$this->addDummyValuesWithLastLogin(self::CURRENT_TIME - self::OFFSET_6MONTHS + 1, 70);
 		$this->addDummyValuesWithLastLogin(self::CURRENT_TIME - self::OFFSET_1YEAR + 1, 80);
+		$this->addDummyValuesWithLastLogin(self::CURRENT_TIME - self::OFFSET_1YEAR + 1, 88);
+		$this->addDummyValuesWithLastLogin(self::CURRENT_TIME - self::OFFSET_1YEAR + 1, 88);
 	}
 
-	private function addDummyValuesWithLastLogin($lastActivity, $numOfEntries): void {
-		for ($i = 0; $i < $numOfEntries; $i++) {
-			$query = $this->connection->getQueryBuilder();
-			$query->insert(self::TABLE)
-				->values(
-					[
-						'userid' => $query->createNamedParameter('user-' . ($numOfEntries + $i % 2)),
-						'appid' => $query->createNamedParameter('login'),
-						'configkey' => $query->createNamedParameter('lastLogin'),
-						'configvalue' => $query->createNamedParameter($lastActivity),
-						'lazy' => $query->createNamedParameter(0),
-						'type' => $query->createNamedParameter(0),
-						'flags' => $query->createNamedParameter(0),
-					]
-				);
-			$query->executeStatement();
-		}
+	private function addDummyValuesWithLastLogin($lastActivity, $id): void {
+		$query = $this->connection->getQueryBuilder();
+		$query->insert(self::TABLE)
+			->values(
+				[
+					'userid' => $query->createNamedParameter("user-$id"),
+					'appid' => $query->createNamedParameter('login'),
+					'configkey' => $query->createNamedParameter('lastLogin'),
+					'configvalue' => $query->createNamedParameter($lastActivity),
+					'lazy' => $query->createNamedParameter(0),
+					'type' => $query->createNamedParameter(0),
+					'flags' => $query->createNamedParameter(0),
+				]
+			);
+		$query->executeStatement();
 	}
 
 	public function testGetSessionStatistics() {
@@ -88,12 +90,12 @@ class SessionStatisticsTest extends TestCase {
 
 		$this->assertSame(8, count($result));
 		$this->assertSame(2, $result['last5minutes']);
-		$this->assertSame(4, $result['last1hour']);
-		$this->assertSame(6, $result['last24hours']);
-		$this->assertSame(8, $result['last7days']);
-		$this->assertSame(10, $result['last1month']);
-		$this->assertSame(12, $result['last3months']);
-		$this->assertSame(14, $result['last6months']);
-		$this->assertSame(16, $result['lastyear']);
+		$this->assertSame(3, $result['last1hour']);
+		$this->assertSame(1, $result['last24hours']);
+		$this->assertSame(0, $result['last7days']);
+		$this->assertSame(1, $result['last1month']);
+		$this->assertSame(1, $result['last3months']);
+		$this->assertSame(1, $result['last6months']);
+		$this->assertSame(2, $result['lastyear']);
 	}
 }
