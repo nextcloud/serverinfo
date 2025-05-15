@@ -66,8 +66,8 @@ class SessionStatistics {
 			->andWhere($queryBuilder->expr()->eq('configkey', $queryBuilder->createNamedParameter('lastLogin')))
 			->andwhere($queryBuilder->expr()->gte(
 				'configvalue',
-				$queryBuilder->createNamedParameter($this->timeFactory->getTime() - $offset),
-				IQueryBuilder::PARAM_INT
+				$queryBuilder->createNamedParameter((string)($this->timeFactory->getTime() - $offset)),
+				IQueryBuilder::PARAM_STR
 			))->groupBy('userid');
 
 		$result = $queryBuilder->executeQuery();
