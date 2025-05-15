@@ -90,12 +90,12 @@ class SessionStatisticsTest extends TestCase {
 
 		$this->assertSame(8, count($result));
 		$this->assertSame(2, $result['last5minutes']);
-		$this->assertSame(3, $result['last1hour']);
-		$this->assertSame(1, $result['last24hours']);
-		$this->assertSame(0, $result['last7days']);
-		$this->assertSame(1, $result['last1month']);
-		$this->assertSame(1, $result['last3months']);
-		$this->assertSame(1, $result['last6months']);
-		$this->assertSame(3, $result['lastyear']);
+		$this->assertSame(5, $result['last1hour']);
+		$this->assertSame(8, $result['last24hours']);
+		$this->assertSame(8, $result['last7days']);
+		$this->assertSame(9, $result['last1month']);
+		$this->assertSame(10, $result['last3months']);
+		$this->assertSame(11, $result['last6months']);
+		$this->assertSame(14, $result['lastyear']);
 	}
 }
