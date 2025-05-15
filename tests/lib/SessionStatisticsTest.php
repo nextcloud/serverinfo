@@ -50,7 +50,7 @@ class SessionStatisticsTest extends TestCase {
 	}
 
 	private function addDummyValues(): void {
-		$this->addDummyValuesWithLastLogin(self::CURRENT_TIME - self::OFFSET_5MIN + 1, ƒ10);
+		$this->addDummyValuesWithLastLogin(self::CURRENT_TIME - self::OFFSET_5MIN + 1, 10);
 		$this->addDummyValuesWithLastLogin(self::CURRENT_TIME - self::OFFSET_5MIN + 1, 11);
 		$this->addDummyValuesWithLastLogin(self::CURRENT_TIME - self::OFFSET_1HOUR + 1, 20);
 		$this->addDummyValuesWithLastLogin(self::CURRENT_TIME - self::OFFSET_1HOUR + 1, 21);
