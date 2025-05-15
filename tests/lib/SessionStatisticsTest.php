@@ -60,8 +60,8 @@ class SessionStatisticsTest extends TestCase {
 		$this->addDummyValuesWithLastLogin(self::CURRENT_TIME - self::OFFSET_3MONTHS + 1, 60);
 		$this->addDummyValuesWithLastLogin(self::CURRENT_TIME - self::OFFSET_6MONTHS + 1, 70);
 		$this->addDummyValuesWithLastLogin(self::CURRENT_TIME - self::OFFSET_1YEAR + 1, 80);
-		$this->addDummyValuesWithLastLogin(self::CURRENT_TIME - self::OFFSET_1YEAR + 1, 88);
-		$this->addDummyValuesWithLastLogin(self::CURRENT_TIME - self::OFFSET_1YEAR + 1, 88);
+		$this->addDummyValuesWithLastLogin(self::CURRENT_TIME - self::OFFSET_1YEAR + 1, 81);
+		$this->addDummyValuesWithLastLogin(self::CURRENT_TIME - self::OFFSET_1YEAR + 1, 82);
 	}
 
 	private function addDummyValuesWithLastLogin($lastActivity, $id): void {
