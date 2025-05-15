@@ -58,15 +58,17 @@ class SessionStatistics {
 	 * @param int $offset seconds
 	 */
 	private function getNumberOfActiveUsers(int $offset): int {
-		$query = $this->connection->getQueryBuilder();
-		$query->select('uid')
-			->from('authtoken')
-			->where($query->expr()->gte(
-				'last_activity',
-				$query->createNamedParameter($this->timeFactory->getTime() - $offset)
-			))->groupBy('uid');
+		$queryBuilder = $this->connection->getQueryBuilder();
+		$queryBuilder->select('userid')
+			->from('preferences')
+			->where($queryBuilder->expr()->eq('appid', $queryBuilder->createNamedParameter('login')))
+			->andWhere($queryBuilder->expr()->eq('configkey', $queryBuilder->createNamedParameter('lastLogin')))
+			->andwhere($queryBuilder->expr()->gte(
+				'configvalue',
+				$queryBuilder->createNamedParameter($this->timeFactory->getTime() - $offset)
+			))->groupBy('userid');
 
-		$result = $query->executeQuery();
+		$result = $queryBuilder->executeQuery();
 		$activeUsers = $result->fetchAll();
 		$result->closeCursor();
 
