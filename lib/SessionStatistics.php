@@ -11,6 +11,7 @@ declare(strict_types=1);
 namespace OCA\ServerInfo;
 
 use OCP\AppFramework\Utility\ITimeFactory;
+use OCP\DB\QueryBuilder\IQueryBuilder;
 use OCP\IDBConnection;
 
 /**
@@ -58,18 +59,21 @@ class SessionStatistics {
 	 * @param int $offset seconds
 	 */
 	private function getNumberOfActiveUsers(int $offset): int {
-		$query = $this->connection->getQueryBuilder();
-		$query->select('uid')
-			->from('authtoken')
-			->where($query->expr()->gte(
-				'last_activity',
-				$query->createNamedParameter($this->timeFactory->getTime() - $offset)
-			))->groupBy('uid');
+		$queryBuilder = $this->connection->getQueryBuilder();
+		$queryBuilder->select($queryBuilder->func()->count('userid'))
+			->from('preferences')
+			->where($queryBuilder->expr()->eq('appid', $queryBuilder->createNamedParameter('login')))
+			->andWhere($queryBuilder->expr()->eq('configkey', $queryBuilder->createNamedParameter('lastLogin')))
+			->andwhere($queryBuilder->expr()->gte(
+				$queryBuilder->expr()->castColumn('configvalue', IQueryBuilder::PARAM_INT),
+				$queryBuilder->createNamedParameter($this->timeFactory->getTime() - $offset, IQueryBuilder::PARAM_INT),
+				IQueryBuilder::PARAM_INT,
+			));
 
-		$result = $query->executeQuery();
-		$activeUsers = $result->fetchAll();
+		$result = $queryBuilder->executeQuery();
+		$activeUsers = (int)$result->fetchOne();
 		$result->closeCursor();
 
-		return count($activeUsers);
+		return $activeUsers;
 	}
 }
