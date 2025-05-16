@@ -60,19 +60,20 @@ class SessionStatistics {
 	 */
 	private function getNumberOfActiveUsers(int $offset): int {
 		$queryBuilder = $this->connection->getQueryBuilder();
-		$queryBuilder->select('userid')
+		$queryBuilder->select($queryBuilder->func()->count('userid'))
 			->from('preferences')
 			->where($queryBuilder->expr()->eq('appid', $queryBuilder->createNamedParameter('login')))
 			->andWhere($queryBuilder->expr()->eq('configkey', $queryBuilder->createNamedParameter('lastLogin')))
 			->andwhere($queryBuilder->expr()->gte(
-				$queryBuilder->expr()->castColumn('configvalue', IQueryBuilder::PARAM_INT),
-				$queryBuilder->createNamedParameter($this->timeFactory->getTime() - $offset),
-			))->groupBy('userid');
+				'configvalue',
+				$queryBuilder->createNamedParameter((string)$this->timeFactory->getTime() - $offset),
+				IQueryBuilder::PARAM_STR,
+			));
 
 		$result = $queryBuilder->executeQuery();
-		$activeUsers = $result->fetchAll();
+		$activeUsers = (int)$result->fetchOne();
 		$result->closeCursor();
 
-		return count($activeUsers);
+		return $activeUsers;
 	}
 }
