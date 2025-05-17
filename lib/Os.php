@@ -11,6 +11,7 @@ use OCA\ServerInfo\OperatingSystems\Dummy;
 use OCA\ServerInfo\OperatingSystems\FreeBSD;
 use OCA\ServerInfo\OperatingSystems\IOperatingSystem;
 use OCA\ServerInfo\OperatingSystems\Linux;
+use OCA\ServerInfo\Resources\CPU;
 use OCA\ServerInfo\Resources\Memory;
 use OCP\IConfig;
 
@@ -37,16 +38,12 @@ class Os implements IOperatingSystem {
 		return PHP_OS . ' ' . php_uname('r') . ' ' . php_uname('m');
 	}
 
+	public function getCPU(): CPU {
+		return $this->backend->getCPU();
+	}
+
 	public function getMemory(): Memory {
 		return $this->backend->getMemory();
-	}
-
-	public function getCpuName(): string {
-		return $this->backend->getCpuName();
-	}
-
-	public function getCpuCount(): int {
-		return $this->backend->getCpuCount();
 	}
 
 	public function getTime(): string {

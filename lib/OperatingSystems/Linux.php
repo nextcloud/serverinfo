@@ -9,6 +9,7 @@ declare(strict_types=1);
 
 namespace OCA\ServerInfo\OperatingSystems;
 
+use OCA\ServerInfo\Resources\CPU;
 use OCA\ServerInfo\Resources\Disk;
 use OCA\ServerInfo\Resources\Memory;
 use OCA\ServerInfo\Resources\NetInterface;
@@ -21,6 +22,33 @@ class Linux implements IOperatingSystem {
 
 	public function supported(): bool {
 		return true;
+	}
+
+	public function getCPU(): CPU {
+		$default = new CPU('Unknown Processor', 1);
+
+		try {
+			$cpuinfo = $this->readContent('/proc/cpuinfo');
+		} catch (RuntimeException) {
+			return $default;
+		}
+
+		$matches = [];
+
+		if (str_contains($cpuinfo, 'Raspberry Pi')) {
+			$pattern = '/Model\s+:\s(.+)/';
+		} elseif (str_contains($cpuinfo, 'PowerNV') || str_contains($cpuinfo, 'CHRP IBM pSeries')) {
+			$pattern = '/cpu\s+:\s+(.+)/';
+		} else {
+			$pattern = '/model name\s:\s(.+)/';
+		}
+
+		$result = preg_match_all($pattern, $cpuinfo, $matches);
+		if ($result === 0 || $result === false) {
+			return $default;
+		}
+
+		return new CPU($matches[1][0], substr_count($cpuinfo, "processor\t:"));
 	}
 
 	public function getMemory(): Memory {
@@ -64,58 +92,6 @@ class Linux implements IOperatingSystem {
 		}
 
 		return $data;
-	}
-
-	public function getCpuName(): string {
-		$data = 'Unknown Processor';
-
-		try {
-			$cpuinfo = $this->readContent('/proc/cpuinfo');
-		} catch (RuntimeException $e) {
-			return $data;
-		}
-
-		$matches = [];
-
-		if (str_contains($cpuinfo, 'Raspberry Pi')) {
-			$pattern = '/Model\s+:\s(.+)/';
-		} elseif (str_contains($cpuinfo, 'PowerNV') || str_contains($cpuinfo, 'CHRP IBM pSeries')) {
-			$pattern = '/cpu\s+:\s+(.+)/';
-		} else {
-			$pattern = '/model name\s:\s(.+)/';
-		}
-
-		$result = preg_match_all($pattern, $cpuinfo, $matches);
-		if ($result === 0 || $result === false) {
-			return $data;
-		}
-
-		$model = $matches[1][0];
-
-		$threads = $this->getCpuCount();
-
-		if ($threads === 1) {
-			$data = $model . ' (1 thread)';
-		} else {
-			$data = $model . ' (' . $threads . ' threads)';
-		}
-
-		return $data;
-	}
-
-	public function getCpuCount(): int {
-		$numCpu = -1;
-
-		try {
-			$cpuinfo = $this->readContent('/proc/cpuinfo');
-		} catch (RuntimeException $e) {
-			return $numCpu;
-		}
-
-		$pattern = '/processor\s+:\s(.+)/';
-
-		preg_match_all($pattern, $cpuinfo, $matches);
-		return count($matches[1]);
 	}
 
 	public function getTime(): string {

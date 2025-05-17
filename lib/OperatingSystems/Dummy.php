@@ -7,6 +7,7 @@ declare(strict_types=1);
  */
 namespace OCA\ServerInfo\OperatingSystems;
 
+use OCA\ServerInfo\Resources\CPU;
 use OCA\ServerInfo\Resources\Memory;
 
 class Dummy implements IOperatingSystem {
@@ -14,12 +15,12 @@ class Dummy implements IOperatingSystem {
 		return false;
 	}
 
-	public function getMemory(): Memory {
-		return new Memory();
+	public function getCPU(): CPU {
+		return new CPU('Unknown Processor', 1);
 	}
 
-	public function getCpuName(): string {
-		return 'Unknown Processor';
+	public function getMemory(): Memory {
+		return new Memory();
 	}
 
 	public function getTime(): string {
@@ -48,9 +49,5 @@ class Dummy implements IOperatingSystem {
 
 	public function getThermalZones(): array {
 		return [];
-	}
-
-	public function getCpuCount(): int {
-		return 1;
 	}
 }

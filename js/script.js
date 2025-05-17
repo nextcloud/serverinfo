@@ -89,7 +89,7 @@
 			e.preventDefault();
 		})
 
-		if (cpuload === 'N/A' || numCpus === -1) {
+		if (cpuload === false || numCpus === -1) {
 			$cpuFooterInfo.text(t('serverinfo', 'CPU info not available'));
 			$cpuLoadCanvas.addClass('hidden');
 			return;
