@@ -63,60 +63,76 @@ class LinuxTest extends TestCase {
 		$this->assertEquals(new Memory(), $this->os->getMemory());
 	}
 
-	public function testGetCpuName(): void {
+	public function testGetCpu(): void {
 		$this->os->method('readContent')
 			->with('/proc/cpuinfo')
 			->willReturn(file_get_contents(__DIR__ . '/../data/linux_cpuinfo'));
 
-		$this->assertEquals('Intel(R) Core(TM) i5-6500 CPU @ 3.20GHz (4 threads)', $this->os->getCpuName());
+
+		$cpu = $this->os->getCPU();
+
+		$this->assertEquals('Intel(R) Core(TM) i5-6500 CPU @ 3.20GHz', $cpu->getName());
+		$this->assertEquals(4, $cpu->getThreads());
 	}
 
-	public function testGetCpuNameOneCore(): void {
+	public function testGetCpuOneCore(): void {
 		$this->os->method('readContent')
 			->with('/proc/cpuinfo')
 			->willReturn(file_get_contents(__DIR__ . '/../data/linux_cpuinfo_one_core'));
 
-		$this->assertEquals('Intel(R) Core(TM) i5-6500 CPU @ 3.20GHz (1 thread)', $this->os->getCpuName());
+		$cpu = $this->os->getCPU();
+
+		$this->assertEquals('Intel(R) Core(TM) i5-6500 CPU @ 3.20GHz', $cpu->getName());
+		$this->assertEquals(1, $cpu->getThreads());
 	}
 
-	public function testGetCpuNamePi3b(): void {
+	public function testGetCpuPi3b(): void {
 		$this->os->method('readContent')
 			->with('/proc/cpuinfo')
 			->willReturn(file_get_contents(__DIR__ . '/../data/linux_cpuinfo_pi3b'));
 
-		$this->assertEquals('Raspberry Pi 3 Model B Rev 1.2 (4 threads)', $this->os->getCpuName());
+		$cpu = $this->os->getCPU();
+
+		$this->assertEquals('Raspberry Pi 3 Model B Rev 1.2', $cpu->getName());
+		$this->assertEquals(4, $cpu->getThreads());
 	}
 
-	public function testGetCpuNamePi4b(): void {
+	public function testGetCpuPi4b(): void {
 		$this->os->method('readContent')
 			->with('/proc/cpuinfo')
 			->willReturn(file_get_contents(__DIR__ . '/../data/linux_cpuinfo_pi4b'));
 
-		$this->assertEquals('Raspberry Pi 4 Model B Rev 1.2 (4 threads)', $this->os->getCpuName());
+		$cpu = $this->os->getCPU();
+
+		$this->assertEquals('Raspberry Pi 4 Model B Rev 1.2', $cpu->getName());
+		$this->assertEquals(4, $cpu->getThreads());
 	}
 
-	public function testGetCpuNameOpenPower(): void {
+	public function testGetCpuOpenPower(): void {
 		$this->os->method('readContent')
 			->with('/proc/cpuinfo')
 			->willReturn(file_get_contents(__DIR__ . '/../data/linux_cpuinfo_openpower'));
 
-		$this->assertEquals('POWER9, altivec supported (176 threads)', $this->os->getCpuName());
+		$cpu = $this->os->getCPU();
+
+		$this->assertEquals('POWER9, altivec supported', $cpu->getName());
+		$this->assertEquals(176, $cpu->getThreads());
 	}
 
-	public function testGetCpuNameNoData(): void {
+	public function testGetCpuNoData(): void {
 		$this->os->method('readContent')
 			->with('/proc/cpuinfo')
 			->willThrowException(new RuntimeException('Unable to read: "/proc/cpuinfo"'));
 
-		$this->assertEquals('Unknown Processor', $this->os->getCpuName());
+		$this->assertEquals('Unknown Processor', $this->os->getCPU()->getName());
 	}
 
-	public function testGetCpuNameInvalidData(): void {
+	public function testGetCpuInvalidData(): void {
 		$this->os->method('readContent')
 			->with('/proc/cpuinfo')
 			->willReturn('invalid_data');
 
-		$this->assertEquals('Unknown Processor', $this->os->getCpuName());
+		$this->assertEquals('Unknown Processor', $this->os->getCPU()->getName());
 	}
 
 	public function testGetUptime(): void {

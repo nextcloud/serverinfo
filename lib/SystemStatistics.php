@@ -37,9 +37,8 @@ class SystemStatistics {
 	 * @throws \OCP\Files\InvalidPathException
 	 */
 	public function getSystemStatistics(bool $skipApps = false, bool $skipUpdate = true): array {
-		$processorUsage = $this->getProcessorUsage();
-		$memoryUsage = $this->os->getMemory();
-		$numCPU = $this->os->getCpuCount();
+		$cpu = $this->os->getCPU();
+		$memory = $this->os->getMemory();
 
 		$data = [
 			'version' => $this->config->getSystemValue('version'),
@@ -52,12 +51,12 @@ class SystemStatistics {
 			'memcache.locking' => $this->config->getSystemValue('memcache.locking', 'none'),
 			'debug' => $this->config->getSystemValue('debug', false) ? 'yes' : 'no',
 			'freespace' => $this->getFreeSpace(),
-			'cpuload' => $processorUsage['loadavg'],
-			'cpunum' => $numCPU,
-			'mem_total' => $memoryUsage->getMemTotal() * 1024,
-			'mem_free' => $memoryUsage->getMemAvailable() * 1024,
-			'swap_total' => $memoryUsage->getSwapTotal() * 1024,
-			'swap_free' => $memoryUsage->getSwapFree() * 1024,
+			'cpuload' => $cpu->getAverageLoad(),
+			'cpunum' => $cpu->getThreads(),
+			'mem_total' => $memory->getMemTotal() * 1024,
+			'mem_free' => $memory->getMemAvailable() * 1024,
+			'swap_total' => $memory->getSwapTotal() * 1024,
+			'swap_free' => $memory->getSwapFree() * 1024,
 		];
 
 		if (!$skipApps) {

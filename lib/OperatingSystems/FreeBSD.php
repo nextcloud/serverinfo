@@ -7,6 +7,7 @@ declare(strict_types=1);
  */
 namespace OCA\ServerInfo\OperatingSystems;
 
+use OCA\ServerInfo\Resources\CPU;
 use OCA\ServerInfo\Resources\Disk;
 use OCA\ServerInfo\Resources\Memory;
 use OCA\ServerInfo\Resources\NetInterface;
@@ -18,6 +19,17 @@ class FreeBSD implements IOperatingSystem {
 
 	public function supported(): bool {
 		return false;
+	}
+
+	public function getCPU(): CPU {
+		try {
+			$name = $this->executeCommand('/sbin/sysctl -n hw.model');
+			$cores = (int)$this->executeCommand('/sbin/sysctl -n kern.smp.cpus');
+		} catch (RuntimeException) {
+			$name = 'Unknown Processor';
+			$cores = 1;
+		}
+		return new CPU($name, $cores);
 	}
 
 	public function getMemory(): Memory {
@@ -55,36 +67,6 @@ class FreeBSD implements IOperatingSystem {
 		unset($lines);
 
 		return $data;
-	}
-
-	public function getCpuName(): string {
-		$data = 'Unknown Processor';
-
-		try {
-			$model = $this->executeCommand('/sbin/sysctl -n hw.model');
-			$threads = $this->executeCommand('/sbin/sysctl -n kern.smp.cpus');
-
-			if ((int)$threads === 1) {
-				$data = $model . ' (1 thread)';
-			} else {
-				$data = $model . ' (' . $threads . ' threads)';
-			}
-		} catch (RuntimeException $e) {
-			return $data;
-		}
-		return $data;
-	}
-
-	public function getCpuCount(): int {
-		$numCpu = -1;
-
-		try {
-			$numCpu = intval($this->executeCommand('/sbin/sysctl -n hw.ncpu'));
-		} catch (RuntimeException) {
-			return $numCpu;
-		}
-
-		return $numCpu;
 	}
 
 	public function getTime(): string {

@@ -7,6 +7,7 @@ declare(strict_types=1);
  * SPDX-License-Identifier: AGPL-3.0-or-later
  */
 
+use OCA\ServerInfo\Resources\CPU;
 use OCA\ServerInfo\Resources\Disk;
 use OCA\ServerInfo\Resources\Memory;
 use OCA\ServerInfo\Resources\NetInterface;
@@ -31,6 +32,8 @@ function FormatMegabytes(int $byte): string {
 
 /** @var array $_ */
 
+/** @var CPU $cpu */
+$cpu = $_['cpu'];
 /** @var Memory $memory */
 $memory = $_['memory'];
 /** @var Disk[] $disks */
@@ -55,12 +58,7 @@ $phpinfo = $_['phpinfo'];
 					<?php p($_['hostname']); ?>
 				</h2>
 				<p><?php p($l->t('Operating System:')); ?> <strong id="numFilesStorage"><?php p($_['osname']); ?></strong></p>
-				<p><?php p($l->t('CPU:')); ?>
-				<?php if ($_['cpu'] !== 'Unknown Processor'): ?>
-				<strong id="numFilesStorage"><?php p($_['cpu']) ?></strong></p>
-				<?php else: ?>
-				<strong id="numFilesStorage"><?php p($l->t('Unknown Processor')) ?></strong></p>
-				<?php endif; ?>
+				<p><?php p($l->t('CPU:')); ?> <strong id="numFilesStorage"><?php p($cpu->getName()) ?></strong> (<?= $cpu->getThreads() ?> <?php p($l->t('threads')); ?>)</p>
 				<p><?php p($l->t('Memory:')); ?>
 				<?php if ($memory->getMemTotal() > 0): ?> <strong id="numFilesStorage"><?php p(FormatMegabytes($memory->getMemTotal())) ?></strong></p>
 				<?php endif; ?>
