@@ -26,6 +26,7 @@ class AdminSection implements IIconSection {
 	/**
 	 * returns the ID of the section. It is supposed to be a lower case string
 	 */
+	#[\Override]
 	public function getID(): string {
 		return 'serverinfo';
 	}
@@ -34,6 +35,7 @@ class AdminSection implements IIconSection {
 	 * returns the translated name as it should be displayed, e.g. 'LDAP / AD
 	 * integration'. Use the L10N service to translate it.
 	 */
+	#[\Override]
 	public function getName(): string {
 		return $this->l->t('System');
 	}
@@ -45,6 +47,7 @@ class AdminSection implements IIconSection {
 	 *
 	 * keep the server setting at the top, right after "overview" and "basic settings"
 	 */
+	#[\Override]
 	public function getPriority(): int {
 		return 90;
 	}
@@ -52,6 +55,7 @@ class AdminSection implements IIconSection {
 	/**
 	 * {@inheritdoc}
 	 */
+	#[\Override]
 	public function getIcon(): string {
 		return $this->url->imagePath('serverinfo', 'app-dark.svg');
 	}

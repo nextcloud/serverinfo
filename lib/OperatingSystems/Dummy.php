@@ -10,26 +10,32 @@ namespace OCA\ServerInfo\OperatingSystems;
 use OCA\ServerInfo\Resources\Memory;
 
 class Dummy implements IOperatingSystem {
+	#[\Override]
 	public function supported(): bool {
 		return false;
 	}
 
+	#[\Override]
 	public function getMemory(): Memory {
 		return new Memory();
 	}
 
+	#[\Override]
 	public function getCpuName(): string {
 		return 'Unknown Processor';
 	}
 
+	#[\Override]
 	public function getTime(): string {
 		return '';
 	}
 
+	#[\Override]
 	public function getUptime(): int {
 		return -1;
 	}
 
+	#[\Override]
 	public function getNetworkInfo(): array {
 		return [
 			'hostname' => \gethostname(),
@@ -38,18 +44,22 @@ class Dummy implements IOperatingSystem {
 		];
 	}
 
+	#[\Override]
 	public function getNetworkInterfaces(): array {
 		return [];
 	}
 
+	#[\Override]
 	public function getDiskInfo(): array {
 		return [];
 	}
 
+	#[\Override]
 	public function getThermalZones(): array {
 		return [];
 	}
 
+	#[\Override]
 	public function getCpuCount(): int {
 		return 1;
 	}

@@ -31,6 +31,7 @@ class ThermalZone implements \JsonSerializable {
 		return $this->temp;
 	}
 
+	#[\Override]
 	public function jsonSerialize(): array {
 		return [
 			'zone' => $this->zone,

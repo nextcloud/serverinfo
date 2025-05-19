@@ -26,6 +26,7 @@ class UpdateStorageStats extends Base {
 		$this->storageStatistics = $storageStatistics;
 	}
 
+	#[\Override]
 	public function configure(): void {
 		parent::configure();
 		$this->setName('serverinfo:update-storage-statistics')
