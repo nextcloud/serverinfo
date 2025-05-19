@@ -4,7 +4,7 @@
         "Read more about it at https://getcomposer.org/doc/01-basic-usage.md#installing-dependencies",
         "This file is @generated automatically"
     ],
-    "content-hash": "c1f1ac74f52d361a3e681d42656e56f9",
+    "content-hash": "6ecdcc59d08d75813e9de6962f83c0b4",
     "packages": [],
     "packages-dev": [
         {
@@ -264,12 +264,12 @@
             "source": {
                 "type": "git",
                 "url": "https://github.com/nextcloud-deps/ocp.git",
-                "reference": "a6103c4f1f65ef53dded3af4b8f2fdfcb51beb56"
+                "reference": "ccd17225c7f1d4c043f7254b56cd4a2f0c8c528b"
             },
             "dist": {
                 "type": "zip",
-                "url": "https://api.github.com/repos/nextcloud-deps/ocp/zipball/a6103c4f1f65ef53dded3af4b8f2fdfcb51beb56",
-                "reference": "a6103c4f1f65ef53dded3af4b8f2fdfcb51beb56",
+                "url": "https://api.github.com/repos/nextcloud-deps/ocp/zipball/ccd17225c7f1d4c043f7254b56cd4a2f0c8c528b",
+                "reference": "ccd17225c7f1d4c043f7254b56cd4a2f0c8c528b",
                 "shasum": ""
             },
             "require": {
@@ -304,7 +304,7 @@
                 "issues": "https://github.com/nextcloud-deps/ocp/issues",
                 "source": "https://github.com/nextcloud-deps/ocp/tree/stable31"
             },
-            "time": "2025-05-07T00:51:25+00:00"
+            "time": "2025-05-16T00:52:19+00:00"
         },
         {
             "name": "nikic/php-parser",
@@ -958,16 +958,16 @@
         },
         {
             "name": "psalm/phar",
-            "version": "6.8.2",
+            "version": "6.7.1",
             "source": {
                 "type": "git",
                 "url": "https://github.com/psalm/phar.git",
-                "reference": "333a7a0d7805b699860262e1b4ea8cf14e1cd118"
+                "reference": "a7112d33cfd48d857c2eb730ea642046d21bbdf5"
             },
             "dist": {
                 "type": "zip",
-                "url": "https://api.github.com/repos/psalm/phar/zipball/333a7a0d7805b699860262e1b4ea8cf14e1cd118",
-                "reference": "333a7a0d7805b699860262e1b4ea8cf14e1cd118",
+                "url": "https://api.github.com/repos/psalm/phar/zipball/a7112d33cfd48d857c2eb730ea642046d21bbdf5",
+                "reference": "a7112d33cfd48d857c2eb730ea642046d21bbdf5",
                 "shasum": ""
             },
             "require": {
@@ -987,9 +987,9 @@
             "description": "Composer-based Psalm Phar",
             "support": {
                 "issues": "https://github.com/psalm/phar/issues",
-                "source": "https://github.com/psalm/phar/tree/6.8.2"
+                "source": "https://github.com/psalm/phar/tree/6.7.1"
             },
-            "time": "2025-02-20T08:23:26+00:00"
+            "time": "2025-02-17T10:54:35+00:00"
         },
         {
             "name": "psr/clock",
