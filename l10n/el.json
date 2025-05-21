@@ -50,11 +50,6 @@
     "External monitoring tool" : "Εξωτερικό εργαλείο παρακολούθησης",
     "Copy" : "Αντιγραφή",
     "To use an access token, please generate one then set it using the following command:" : "Για να χρησιμοποιήσετε ένα αναγνωριστικό πρόσβασης (token), δημιουργήστε ένα και ορίστε το χρησιμοποιώντας την ακόλουθη εντολή:",
-    "Then pass the token with the \"NC-Token\" header when querying the above URL." : "Στη συνέχεια, περάστε το αναγνωριστικό με την κεφαλίδα \"NC-Token\" όταν υποβάλετε ερώτημα στην παραπάνω διεύθυνση URL.",
-    "Load average: {cpu} (last minute)" : "Μέσος όρος φόρτου: {cpu} (τελευταίο λεπτό)",
-    "Total users:" : "Σύνολο χρηστών:",
-    "24 hours:" : "24 ώρες:",
-    "1 hour:" : "1 ώρα:",
-    "5 mins:" : "5 λεπτά:"
+    "Then pass the token with the \"NC-Token\" header when querying the above URL." : "Στη συνέχεια, περάστε το αναγνωριστικό με την κεφαλίδα \"NC-Token\" όταν υποβάλετε ερώτημα στην παραπάνω διεύθυνση URL."
 },"pluralForm" :"nplurals=2; plural=(n != 1);"
 }

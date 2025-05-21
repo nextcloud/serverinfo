@@ -62,12 +62,6 @@
     "External monitoring tool" : "Надворешен уред за следење",
     "Copy" : "Копирај",
     "To use an access token, please generate one then set it using the following command:" : "За да користите токен за пристап, ве молиме генерирајте еден, а потоа поставете го користејќи ја следнава команда:",
-    "Then pass the token with the \"NC-Token\" header when querying the above URL." : "Потоа поминете го токенот со заглавието „NC-Token“ кога го барате горното URL.",
-    "Load average: {cpu} (last minute)" : "Просечно искористување: {cpu} (последна минута)",
-    "DNS:" : "DNS:",
-    "Total users:" : "Вкупно корисници:",
-    "24 hours:" : "24 часа:",
-    "1 hour:" : "1 час:",
-    "5 mins:" : "5 минути:"
+    "Then pass the token with the \"NC-Token\" header when querying the above URL." : "Потоа поминете го токенот со заглавието „NC-Token“ кога го барате горното URL."
 },"pluralForm" :"nplurals=2; plural=(n % 10 == 1 && n % 100 != 11) ? 0 : 1;"
 }

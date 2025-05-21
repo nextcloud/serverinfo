@@ -91,12 +91,6 @@ OC.L10N.register(
     "Skip apps section (including apps section will send an external request to the app store)" : "アプリセクションをスキップする（アプリセクションを含むとアプリストアに外部リクエストが送信される）",
     "Skip server update" : "サーバーの更新をスキップ",
     "To use an access token, please generate one then set it using the following command:" : "アクセストークンを使用するには、アクセストークンを生成し、以下のコマンドで設定してください。",
-    "Then pass the token with the \"NC-Token\" header when querying the above URL." : "次に、上記のURLをクエリするときに、\"NC-Token\" ヘッダーでトークンを渡します。",
-    "Load average: {cpu} (last minute)" : "平均ロード: {cpu} (最終11分)",
-    "DNS:" : "DNS:",
-    "Total users:" : "総ユーザー数：",
-    "24 hours:" : "24 時間:",
-    "1 hour:" : "1時間:",
-    "5 mins:" : "5分:"
+    "Then pass the token with the \"NC-Token\" header when querying the above URL." : "次に、上記のURLをクエリするときに、\"NC-Token\" ヘッダーでトークンを渡します。"
 },
 "nplurals=1; plural=0;");

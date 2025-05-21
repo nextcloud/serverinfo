@@ -89,12 +89,6 @@
     "Skip apps section (including apps section will send an external request to the app store)" : "Hoppa över appsektionen (inkludera appsektionen skickar en extern begäran till appbutiken)",
     "Skip server update" : "Hoppa över serveruppdatering",
     "To use an access token, please generate one then set it using the following command:" : "För att använda en access-token, generera en och ställ in den med följande kommando:",
-    "Then pass the token with the \"NC-Token\" header when querying the above URL." : "Skicka sedan token med \"NC-Token\"-header när du frågar efter ovanstående URL.",
-    "Load average: {cpu} (last minute)" : "Belastning genomsnitt: {cpu} (senaste minuten)",
-    "DNS:" : "DNS:",
-    "Total users:" : "Antal användare:",
-    "24 hours:" : "24 timmar:",
-    "1 hour:" : "1 timme:",
-    "5 mins:" : "5 min:"
+    "Then pass the token with the \"NC-Token\" header when querying the above URL." : "Skicka sedan token med \"NC-Token\"-header när du frågar efter ovanstående URL."
 },"pluralForm" :"nplurals=2; plural=(n != 1);"
 }

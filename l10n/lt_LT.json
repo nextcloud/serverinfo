@@ -56,12 +56,6 @@
     "External monitoring tool" : "Išorinis stebėjimo įrankis",
     "Copy" : "Kopijuoti",
     "Output in JSON" : "JSON išvedimas",
-    "Skip server update" : "Praleisti serverio atnaujinimą",
-    "Load average: {cpu} (last minute)" : "Apkrovos vidurkis: {cpu} (paskutinė minutė)",
-    "DNS:" : "DNS:",
-    "Total users:" : "Iš viso naudotojų:",
-    "24 hours:" : "24 valandos:",
-    "1 hour:" : "1 valanda:",
-    "5 mins:" : "5 minutės:"
+    "Skip server update" : "Praleisti serverio atnaujinimą"
 },"pluralForm" :"nplurals=4; plural=(n % 10 == 1 && (n % 100 > 19 || n % 100 < 11) ? 0 : (n % 10 >= 2 && n % 10 <=9) && (n % 100 > 19 || n % 100 < 11) ? 1 : n % 1 != 0 ? 2: 3);"
 }

@@ -91,12 +91,6 @@ OC.L10N.register(
     "Skip apps section (including apps section will send an external request to the app store)" : "Scipeáil ar an rannán aipeanna (seolfar iarratas seachtrach chuig an siopa aipeanna san áireamh)",
     "Skip server update" : "Léim ar nuashonrú an fhreastalaí",
     "To use an access token, please generate one then set it using the following command:" : "Chun comhartha rochtana a úsáid, giniúint ceann agus ansin socraigh é ag baint úsáide as an ordú seo a leanas le do thoil:",
-    "Then pass the token with the \"NC-Token\" header when querying the above URL." : "Ansin cuir an comhartha leis an gceanntásc \"NC-Token\" agus an URL thuas á cheistiú.",
-    "Load average: {cpu} (last minute)" : "Meán luchtaithe: {cpu} (nóiméad deireanach)",
-    "DNS:" : "DNS:",
-    "Total users:" : "Úsáideoirí iomlána:",
-    "24 hours:" : "24 uair:",
-    "1 hour:" : "1 uair:",
-    "5 mins:" : "5 nóim:"
+    "Then pass the token with the \"NC-Token\" header when querying the above URL." : "Ansin cuir an comhartha leis an gceanntásc \"NC-Token\" agus an URL thuas á cheistiú."
 },
 "nplurals=5; plural=(n==1 ? 0 : n==2 ? 1 : n<7 ? 2 : n<11 ? 3 : 4);");

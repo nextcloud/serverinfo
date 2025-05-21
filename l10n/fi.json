@@ -56,12 +56,6 @@
     "Database" : "Tietokanta",
     "Type:" : "Tyyppi:",
     "External monitoring tool" : "Ulkopuolinen valvontatyökalu",
-    "Copy" : "Kopioi",
-    "Load average: {cpu} (last minute)" : "Keskimääräinen kuorma: {cpu} (viimeisin minuutti)",
-    "DNS:" : "Nimipalvelu:",
-    "Total users:" : "Käyttäjiä yhteensä:",
-    "24 hours:" : "24 tuntia:",
-    "1 hour:" : "1 tunti:",
-    "5 mins:" : "5 min:"
+    "Copy" : "Kopioi"
 },"pluralForm" :"nplurals=2; plural=(n != 1);"
 }

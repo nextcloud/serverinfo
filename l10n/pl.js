@@ -73,12 +73,6 @@ OC.L10N.register(
     "Skip apps section (including apps section will send an external request to the app store)" : "Pomiń sekcję aplikacji (włączenie sekcji aplikacji wyśle ​​zewnętrzne żądanie do sklepu z aplikacjami)",
     "Skip server update" : "Pomiń aktualizację serwera",
     "To use an access token, please generate one then set it using the following command:" : "Aby użyć tokena dostępu, wygeneruj go, a następnie ustaw za pomocą następującego polecenia:",
-    "Then pass the token with the \"NC-Token\" header when querying the above URL." : "Następnie przekaż token z nagłówkiem \"NC-Token\" podczas odpytywania powyższego adresu URL.",
-    "Load average: {cpu} (last minute)" : "Średnie obciążenie: {cpu} (ostatnia minuta)",
-    "DNS:" : "DNS:",
-    "Total users:" : "Ilość użytkowników:",
-    "24 hours:" : "24 godziny:",
-    "1 hour:" : "1 godzina:",
-    "5 mins:" : "5 minut:"
+    "Then pass the token with the \"NC-Token\" header when querying the above URL." : "Następnie przekaż token z nagłówkiem \"NC-Token\" podczas odpytywania powyższego adresu URL."
 },
 "nplurals=4; plural=(n==1 ? 0 : (n%10>=2 && n%10<=4) && (n%100<12 || n%100>14) ? 1 : n!=1 && (n%10>=0 && n%10<=1) || (n%10>=5 && n%10<=9) || (n%100>=12 && n%100<=14) ? 2 : 3);");
