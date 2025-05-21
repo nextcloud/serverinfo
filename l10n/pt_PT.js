@@ -29,7 +29,6 @@ OC.L10N.register(
     "Database" : "Base de dados",
     "Type:" : "Tipo:",
     "External monitoring tool" : "Ferramenta externa de monitorização",
-    "Copy" : "Copiar",
-    "Total users:" : "Total de utilizadores:"
+    "Copy" : "Copiar"
 },
 "nplurals=3; plural=(n == 0 || n == 1) ? 0 : n != 0 && n % 1000000 == 0 ? 1 : 2;");

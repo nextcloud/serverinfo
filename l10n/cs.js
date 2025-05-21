@@ -91,12 +91,6 @@ OC.L10N.register(
     "Skip apps section (including apps section will send an external request to the app store)" : "Přeskočit sekci aplikací (včetně toho, že sekce aplikací odešle externí požadavek do katalogu aplikací)",
     "Skip server update" : "Přeskočit přechod na novější vydání serveru",
     "To use an access token, please generate one then set it using the following command:" : "Aby bylo možné použít přístupový token, vytvořte ho a pak nastavte pomocí následujícího příkazu:",
-    "Then pass the token with the \"NC-Token\" header when querying the above URL." : "Poté při dotazování výše uvedené URL předávejte se záhlavím „NC-Token“.",
-    "Load average: {cpu} (last minute)" : "Průměrné vytížení: {cpu} (za uplynulou minutu)",
-    "DNS:" : "DNS:",
-    "Total users:" : "Celkem uživatelů:",
-    "24 hours:" : "24 hodin:",
-    "1 hour:" : "1 hodina:",
-    "5 mins:" : "5 minut:"
+    "Then pass the token with the \"NC-Token\" header when querying the above URL." : "Poté při dotazování výše uvedené URL předávejte se záhlavím „NC-Token“."
 },
 "nplurals=4; plural=(n == 1 && n % 1 == 0) ? 0 : (n >= 2 && n <= 4 && n % 1 == 0) ? 1: (n % 1 != 0 ) ? 2 : 3;");

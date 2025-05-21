@@ -91,12 +91,6 @@ OC.L10N.register(
     "Skip apps section (including apps section will send an external request to the app store)" : "Jäta rakenduste valik vahele (sh sellega seotud päring rakendustepoodi)",
     "Skip server update" : "Jäta serveri uuendus vahele",
     "To use an access token, please generate one then set it using the following command:" : "Ligipääsutunnuse kasutamiseks genereeri see ja seadista alljärgneva käsu abil:",
-    "Then pass the token with the \"NC-Token\" header when querying the above URL." : "Seejärel saada tunnus ülaloleva URL-i pärimisel \"NC-Token\" päisega.",
-    "Load average: {cpu} (last minute)" : "Keskmine koormus: {cpu} (last minute)",
-    "DNS:" : "Nimeserver:",
-    "Total users:" : "Kasutajaid kokku:",
-    "24 hours:" : "24 tundi:",
-    "1 hour:" : "1 tund:",
-    "5 mins:" : "5 minutit:"
+    "Then pass the token with the \"NC-Token\" header when querying the above URL." : "Seejärel saada tunnus ülaloleva URL-i pärimisel \"NC-Token\" päisega."
 },
 "nplurals=2; plural=(n != 1);");

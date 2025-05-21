@@ -29,7 +29,6 @@ OC.L10N.register(
     "Type:" : "Genia:",
     "External monitoring tool" : "Trastu de controllu esternu",
     "Copy" : "Còpia",
-    "Then pass the token with the \"NC-Token\" header when querying the above URL." : "A pustis passa su token cun s'intestatzione \"NC-Token\" cando rechedes s'URL in subra.",
-    "Total users:" : "Utèntzias totales:"
+    "Then pass the token with the \"NC-Token\" header when querying the above URL." : "A pustis passa su token cun s'intestatzione \"NC-Token\" cando rechedes s'URL in subra."
 },
 "nplurals=2; plural=(n != 1);");

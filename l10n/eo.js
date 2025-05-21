@@ -28,7 +28,6 @@ OC.L10N.register(
     "Database" : "Datumbazo",
     "Type:" : "Tipo:",
     "External monitoring tool" : "Ekstera observa ilo",
-    "Copy" : "Kopii",
-    "Total users:" : "Sumo de uzantoj:"
+    "Copy" : "Kopii"
 },
 "nplurals=2; plural=(n != 1);");

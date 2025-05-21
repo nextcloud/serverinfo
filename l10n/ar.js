@@ -91,12 +91,6 @@ OC.L10N.register(
     "Skip apps section (including apps section will send an external request to the app store)" : "تخطِّي قسم التطبيقات (تضمين قسم التطبيقات سيرسل طلب خارجي إلى متجر التطبيقات)",
     "Skip server update" : "تخطِّي تحديثات الخادم",
     "To use an access token, please generate one then set it using the following command:" : "لاستخدام أَمَارَة وصول access token، يرجى توليد واحدةٍ ثم تعيينها باستخدام الأمر التالي:",
-    "Then pass the token with the \"NC-Token\" header when querying the above URL." : "ثم قُم بتمرير الأَمَارَة talk برأس \"NC-Token\" عند الاستعلام عن عنوان الـ URL أعلاه.",
-    "Load average: {cpu} (last minute)" : "مُعدَّل التحميل: {cpu} (last minute)",
-    "DNS:" : "نظام تسمية النطاقات DNS:",
-    "Total users:" : "العدد الإجمالي للمستخدمين:",
-    "24 hours:" : "24 ساعة",
-    "1 hour:" : "1 ساعة:",
-    "5 mins:" : "5 دقائق:"
+    "Then pass the token with the \"NC-Token\" header when querying the above URL." : "ثم قُم بتمرير الأَمَارَة talk برأس \"NC-Token\" عند الاستعلام عن عنوان الـ URL أعلاه."
 },
 "nplurals=6; plural=n==0 ? 0 : n==1 ? 1 : n==2 ? 2 : n%100>=3 && n%100<=10 ? 3 : n%100>=11 && n%100<=99 ? 4 : 5;");

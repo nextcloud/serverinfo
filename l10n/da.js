@@ -43,7 +43,6 @@ OC.L10N.register(
     "External monitoring tool" : "Eksternt monitoreringsværktøj",
     "Copy" : "Kopier",
     "To use an access token, please generate one then set it using the following command:" : "For at bruge et adgangstoken, så generer venligst et og sæt det derefter ved hjælp af følgende kommando:",
-    "Then pass the token with the \"NC-Token\" header when querying the above URL." : "Send derefter tokenet med \"NC-Token\"-headeren, når du forespørger på ovenstående URL.",
-    "Total users:" : "Antal brugere:"
+    "Then pass the token with the \"NC-Token\" header when querying the above URL." : "Send derefter tokenet med \"NC-Token\"-headeren, når du forespørger på ovenstående URL."
 },
 "nplurals=2; plural=(n != 1);");
