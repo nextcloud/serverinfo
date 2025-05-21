@@ -89,12 +89,6 @@
     "Skip apps section (including apps section will send an external request to the app store)" : "Vynechať sekciu aplikácií ( zahrnutie sekcie aplikácií odošle externú požiadavku do obchodu s aplikáciami)",
     "Skip server update" : "Preskočiť aktualizáciu servera",
     "To use an access token, please generate one then set it using the following command:" : "Pre používanie prístupového tokenu ho vygenerujte a potom ho nastavte použitím nasledujúceho príkazu:",
-    "Then pass the token with the \"NC-Token\" header when querying the above URL." : "Pri dotazovaní na vyššie uvedenú adresu URL potom poslať token s hlavičkou „NC-Token“.",
-    "Load average: {cpu} (last minute)" : "Priemerné zaťaženie:  {cpu} (za poslednú minútu)",
-    "DNS:" : "DNS:",
-    "Total users:" : "Používateľov celkom:",
-    "24 hours:" : "24 hodín:",
-    "1 hour:" : "1 hodina:",
-    "5 mins:" : "5 minút:"
+    "Then pass the token with the \"NC-Token\" header when querying the above URL." : "Pri dotazovaní na vyššie uvedenú adresu URL potom poslať token s hlavičkou „NC-Token“."
 },"pluralForm" :"nplurals=4; plural=(n % 1 == 0 && n == 1 ? 0 : n % 1 == 0 && n >= 2 && n <= 4 ? 1 : n % 1 != 0 ? 2: 3);"
 }

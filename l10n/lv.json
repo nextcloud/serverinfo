@@ -53,9 +53,6 @@
     "External monitoring tool" : "Ārējās uzraudzības instruments",
     "Copy" : "Kopēt",
     "To use an access token, please generate one then set it using the following command:" : "Lai izmantotu piekļuves pilnvaru, lūgums to izveidot un iestatīt ar šo komandu:",
-    "Then pass the token with the \"NC-Token\" header when querying the above URL." : "Pēc tam jānodod pilnvara ar galveni \"NC-Token\", kad tiek veikti pieprasījumu uz augstāk norādīto URL.",
-    "Load average: {cpu} (last minute)" : "Vidējā slodze: {cpu} (pēdējā minūte)",
-    "DNS:" : "DNS:",
-    "Total users:" : "Kopējais lietotāju skaits:"
+    "Then pass the token with the \"NC-Token\" header when querying the above URL." : "Pēc tam jānodod pilnvara ar galveni \"NC-Token\", kad tiek veikti pieprasījumu uz augstāk norādīto URL."
 },"pluralForm" :"nplurals=3; plural=(n%10==1 && n%100!=11 ? 0 : n != 0 ? 1 : 2);"
 }

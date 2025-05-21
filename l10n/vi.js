@@ -23,7 +23,6 @@ OC.L10N.register(
     "Database" : "Cơ sở dữ liệu",
     "Type:" : "Loại:",
     "External monitoring tool" : "Công cụ giám sát ngoài",
-    "Copy" : "Sao chép",
-    "Load average: {cpu} (last minute)" : "Tải trung bình:{cpu} (phút trước)"
+    "Copy" : "Sao chép"
 },
 "nplurals=1; plural=0;");

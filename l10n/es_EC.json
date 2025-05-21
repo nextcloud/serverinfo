@@ -63,12 +63,6 @@
     "External monitoring tool" : "Herramienta de monitoreo externa",
     "Copy" : "Copiar",
     "To use an access token, please generate one then set it using the following command:" : "Para usar un token de acceso, por favor genera uno y luego configúralo usando el siguiente comando:",
-    "Then pass the token with the \"NC-Token\" header when querying the above URL." : "Luego pasa el token con la cabecera \"NC-Token\" al consultar la URL anterior.",
-    "Load average: {cpu} (last minute)" : "Promedio de carga: {cpu} (último minuto)",
-    "DNS:" : "DNS:",
-    "Total users:" : "Total de usuarios:",
-    "24 hours:" : "24 horas:",
-    "1 hour:" : "1 hora:",
-    "5 mins:" : "5 minutos:"
+    "Then pass the token with the \"NC-Token\" header when querying the above URL." : "Luego pasa el token con la cabecera \"NC-Token\" al consultar la URL anterior."
 },"pluralForm" :"nplurals=3; plural=n == 1 ? 0 : n != 0 && n % 1000000 == 0 ? 1 : 2;"
 }

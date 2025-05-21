@@ -28,7 +28,6 @@ OC.L10N.register(
     "Database" : "Gagnagrunnur",
     "Type:" : "Tegund:",
     "External monitoring tool" : "Utanaðkomandi vöktunartól",
-    "Copy" : "Afrita",
-    "Total users:" : "Heildarfjöldi notenda:"
+    "Copy" : "Afrita"
 },
 "nplurals=2; plural=(n % 10 != 1 || n % 100 == 11);");

@@ -65,12 +65,6 @@ OC.L10N.register(
     "External monitoring tool" : "ابزار نظارت خارجی",
     "Copy" : "کپی کردن",
     "To use an access token, please generate one then set it using the following command:" : "To use an access token, please generate one then set it using the following command:",
-    "Then pass the token with the \"NC-Token\" header when querying the above URL." : "Then pass the token with the \"NC-Token\" header when querying the above URL.",
-    "Load average: {cpu} (last minute)" : "Load average: {cpu} (last minute)",
-    "DNS:" : "DNS:",
-    "Total users:" : "تعداد کل کاربران:",
-    "24 hours:" : "24 hours:",
-    "1 hour:" : "1 hour:",
-    "5 mins:" : "5 mins:"
+    "Then pass the token with the \"NC-Token\" header when querying the above URL." : "Then pass the token with the \"NC-Token\" header when querying the above URL."
 },
 "nplurals=2; plural=(n > 1);");

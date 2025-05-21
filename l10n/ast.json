@@ -45,10 +45,6 @@
     "Database" : "Base de datos",
     "Type:" : "Tipu:",
     "External monitoring tool" : "Ferramienta de supervisión esterna",
-    "Copy" : "Copiar",
-    "Load average: {cpu} (last minute)" : "Carga media: {cpu} (l'últimu minutu)",
-    "DNS:" : "DNS:",
-    "24 hours:" : "24 hores:",
-    "1 hour:" : "1 hora"
+    "Copy" : "Copiar"
 },"pluralForm" :"nplurals=2; plural=(n != 1);"
 }
