@@ -11,6 +11,7 @@ use OCA\ServerInfo\OperatingSystems\Dummy;
 use OCA\ServerInfo\OperatingSystems\FreeBSD;
 use OCA\ServerInfo\OperatingSystems\IOperatingSystem;
 use OCA\ServerInfo\OperatingSystems\Linux;
+use OCA\ServerInfo\Resources\CPU;
 use OCA\ServerInfo\Resources\Memory;
 use OCP\IConfig;
 
@@ -39,18 +40,13 @@ class Os implements IOperatingSystem {
 	}
 
 	#[\Override]
+	public function getCPU(): CPU {
+		return $this->backend->getCPU();
+	}
+
+	#[\Override]
 	public function getMemory(): Memory {
 		return $this->backend->getMemory();
-	}
-
-	#[\Override]
-	public function getCpuName(): string {
-		return $this->backend->getCpuName();
-	}
-
-	#[\Override]
-	public function getCpuCount(): int {
-		return $this->backend->getCpuCount();
 	}
 
 	#[\Override]

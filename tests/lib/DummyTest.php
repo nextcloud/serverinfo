@@ -23,6 +23,13 @@ class DummyTest extends TestCase {
 		$this->os = new Dummy();
 	}
 
+	public function testGetCpu(): void {
+		$cpu = $this->os->getCPU();
+
+		$this->assertEquals('Unknown Processor', $cpu->getName());
+		$this->assertEquals(1, $cpu->getThreads());
+	}
+
 	public function testGetMemory(): void {
 		$memory = $this->os->getMemory();
 
@@ -31,10 +38,6 @@ class DummyTest extends TestCase {
 		$this->assertEquals(-1, $memory->getMemAvailable());
 		$this->assertEquals(-1, $memory->getSwapTotal());
 		$this->assertEquals(-1, $memory->getSwapFree());
-	}
-
-	public function testGetCpuName(): void {
-		$this->assertEquals('Unknown Processor', $this->os->getCpuName());
 	}
 
 	public function testGetUptime(): void {
