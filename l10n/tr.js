@@ -59,7 +59,7 @@ OC.L10N.register(
     "Emails:" : "E-postalar:",
     "Federated sent:" : "Birleşik gönderilen:",
     "Federated received:" : "Birleşik alınan:",
-    "Talk conversations:" : "Konuş görüşmeleri:",
+    "Talk conversations:" : "Talk görüşmeleri:",
     "PHP" : "PHP",
     "Version:" : "Sürüm:",
     "Memory limit:" : "Bellek sınırı:",
