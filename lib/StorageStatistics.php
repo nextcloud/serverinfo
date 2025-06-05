@@ -13,6 +13,7 @@ namespace OCA\ServerInfo;
 use OCP\Files\IRootFolder;
 use OCP\IAppConfig;
 use OCP\IDBConnection;
+use OCP\IUserManager;
 
 class StorageStatistics {
 
@@ -20,12 +21,14 @@ class StorageStatistics {
 		private IDBConnection $connection,
 		private IRootFolder $rootFolder,
 		private IAppConfig $appConfig,
+		private IUserManager $userManager,
 	) {
 	}
 
 	public function getStorageStatistics(): array {
 		return [
 			'num_users' => $this->countUserEntries(),
+			'num_disabled_users' => $this->countDisabledUserEntries(),
 			'num_files' => $this->getCountOf('filecache'),
 			'num_storages' => $this->getCountOf('storages'),
 			'num_storages_local' => $this->countStorages('local'),
@@ -40,14 +43,11 @@ class StorageStatistics {
 	 * count number of users
 	 */
 	protected function countUserEntries(): int {
-		$query = $this->connection->getQueryBuilder();
-		$query->selectAlias($query->createFunction('COUNT(*)'), 'num_entries')
-			->from('preferences')
-			->where($query->expr()->eq('configkey', $query->createNamedParameter('lastLogin')));
-		$result = $query->executeQuery();
-		$row = $result->fetch();
-		$result->closeCursor();
-		return (int)$row['num_entries'];
+		return $this->userManager->countSeenUsers();
+	}
+
+	protected function countDisabledUserEntries(): int {
+		return $this->userManager->countDisabledUsers();
 	}
 
 	protected function getCountOf(string $table): int {
