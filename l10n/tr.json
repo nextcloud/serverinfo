@@ -80,7 +80,7 @@
     "Max listen queue:" : "En fazla kuyruk dinleme:",
     "Max active processes:" : "En fazla etkin işlem sayısı:",
     "Max children reached:" : "Ulaşılan en fazla alt işlem:",
-    "Database" : "Veri tabanı",
+    "Database" : "Veritabanı",
     "Type:" : "Tür:",
     "External monitoring tool" : "Dış izleme aracı",
     "Use this end point to connect an external monitoring tool:" : "Bir dış izleme aracına bağlanmak için bu uç noktayı kullanın:",
