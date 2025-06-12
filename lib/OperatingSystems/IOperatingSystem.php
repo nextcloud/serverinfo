@@ -9,6 +9,7 @@ declare(strict_types=1);
 
 namespace OCA\ServerInfo\OperatingSystems;
 
+use OCA\ServerInfo\Resources\CPU;
 use OCA\ServerInfo\Resources\Disk;
 use OCA\ServerInfo\Resources\Memory;
 use OCA\ServerInfo\Resources\NetInterface;
@@ -17,33 +18,14 @@ use OCA\ServerInfo\Resources\ThermalZone;
 interface IOperatingSystem {
 	public function supported(): bool;
 
-	/**
-	 * Get name of the processor.
-	 *
-	 * @return string
-	 */
-	public function getCpuName(): string;
+	public function getCPU(): CPU;
+
+	public function getMemory(): Memory;
 
 	/**
-	 * Get number of processors (threads).
-	 *
-	 * @return int
-	 */
-	public function getCpuCount(): int;
-
-	/**
-	 * Get disk info returns a list of Disk objects. Used and Available in bytes.
-	 *
 	 * @return Disk[]
 	 */
 	public function getDiskInfo(): array;
-
-	/**
-	 * Get memory returns a Memory object. All values are in bytes.
-	 *
-	 * @return Memory
-	 */
-	public function getMemory(): Memory;
 
 	/**
 	 * Get info about network connection.

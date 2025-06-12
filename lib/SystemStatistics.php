@@ -37,9 +37,8 @@ class SystemStatistics {
 	 * @throws \OCP\Files\InvalidPathException
 	 */
 	public function getSystemStatistics(bool $skipApps = false, bool $skipUpdate = true): array {
-		$processorUsage = $this->getProcessorUsage();
-		$memoryUsage = $this->os->getMemory();
-		$numCPU = $this->os->getCpuCount();
+		$cpu = $this->os->getCPU();
+		$memory = $this->os->getMemory();
 
 		$data = [
 			'version' => $this->config->getSystemValue('version'),
@@ -52,12 +51,12 @@ class SystemStatistics {
 			'memcache.locking' => $this->config->getSystemValue('memcache.locking', 'none'),
 			'debug' => $this->config->getSystemValue('debug', false) ? 'yes' : 'no',
 			'freespace' => $this->getFreeSpace(),
-			'cpuload' => $processorUsage['loadavg'],
-			'cpunum' => $numCPU,
-			'mem_total' => $memoryUsage->getMemTotal() * 1024,
-			'mem_free' => $memoryUsage->getMemAvailable() * 1024,
-			'swap_total' => $memoryUsage->getSwapTotal() * 1024,
-			'swap_free' => $memoryUsage->getSwapFree() * 1024,
+			'cpuload' => $cpu->getAverageLoad(),
+			'cpunum' => $cpu->getThreads(),
+			'mem_total' => $memory->getMemTotal() * 1024,
+			'mem_free' => $memory->getMemAvailable() * 1024,
+			'swap_total' => $memory->getSwapTotal() * 1024,
+			'swap_free' => $memory->getSwapFree() * 1024,
 		];
 
 		if (!$skipApps) {
@@ -122,27 +121,6 @@ class SystemStatistics {
 		}
 
 		return $info;
-	}
-
-	/**
-	 * Get current CPU load average
-	 *
-	 * @return array{loadavg: array|string} load average with three values, 1/5/15 minutes average.
-	 */
-	protected function getProcessorUsage(): array {
-		// get current system load average - if we can
-		$loadavg = (function_exists('sys_getloadavg')) ? sys_getloadavg() : false;
-
-		// check if we got any values back.
-		if ($loadavg === false || count($loadavg) !== 3) {
-			// either no array or too few array keys.
-			// returning back zeroes to prevent any errors on JS side.
-			$loadavg = 'N/A';
-		}
-
-		return [
-			'loadavg' => $loadavg
-		];
 	}
 
 	/**
