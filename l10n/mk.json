@@ -14,7 +14,6 @@
     "Provides useful server information, such as CPU load, RAM usage, disk usage, number of users, etc." : "Овозможува корисни информации за серверот, како искористеност на процесорот, искористеност на меморијата, искористеност на просторот на дискот, број на корисници, итн.",
     "Operating System:" : "Оперативен систем",
     "CPU:" : "Процесор:",
-    "Unknown Processor" : "Непознат процесор",
     "Memory:" : "Меморија:",
     "Server time:" : "Време на серверот:",
     "Uptime:" : "Време на работа:",
@@ -62,6 +61,7 @@
     "External monitoring tool" : "Надворешен уред за следење",
     "Copy" : "Копирај",
     "To use an access token, please generate one then set it using the following command:" : "За да користите токен за пристап, ве молиме генерирајте еден, а потоа поставете го користејќи ја следнава команда:",
-    "Then pass the token with the \"NC-Token\" header when querying the above URL." : "Потоа поминете го токенот со заглавието „NC-Token“ кога го барате горното URL."
+    "Then pass the token with the \"NC-Token\" header when querying the above URL." : "Потоа поминете го токенот со заглавието „NC-Token“ кога го барате горното URL.",
+    "Unknown Processor" : "Непознат процесор"
 },"pluralForm" :"nplurals=2; plural=(n % 10 == 1 && n % 100 != 11) ? 0 : 1;"
 }

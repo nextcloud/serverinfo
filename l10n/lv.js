@@ -16,7 +16,6 @@ OC.L10N.register(
     "Provides useful server information, such as CPU load, RAM usage, disk usage, number of users, etc." : "Sniedz noderīgu servera informāciju, piemēram, CPU ielādi, RAM lietojumu, diska lietojumu, lietotāju skaitu utt.",
     "Operating System:" : "Operētājsistēma:",
     "CPU:" : "CPU:",
-    "Unknown Processor" : "Nezināms procesors",
     "Memory:" : "Atmiņa:",
     "Server time:" : "Servera laiks:",
     "Uptime:" : "Darba laiks:",
@@ -55,6 +54,7 @@ OC.L10N.register(
     "External monitoring tool" : "Ārējās uzraudzības instruments",
     "Copy" : "Kopēt",
     "To use an access token, please generate one then set it using the following command:" : "Lai izmantotu piekļuves pilnvaru, lūgums to izveidot un iestatīt ar šo komandu:",
-    "Then pass the token with the \"NC-Token\" header when querying the above URL." : "Pēc tam jānodod pilnvara ar galveni \"NC-Token\", kad tiek veikti pieprasījumu uz augstāk norādīto URL."
+    "Then pass the token with the \"NC-Token\" header when querying the above URL." : "Pēc tam jānodod pilnvara ar galveni \"NC-Token\", kad tiek veikti pieprasījumu uz augstāk norādīto URL.",
+    "Unknown Processor" : "Nezināms procesors"
 },
 "nplurals=3; plural=(n%10==1 && n%100!=11 ? 0 : n != 0 ? 1 : 2);");

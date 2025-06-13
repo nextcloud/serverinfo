@@ -14,7 +14,6 @@
     "Provides useful server information, such as CPU load, RAM usage, disk usage, number of users, etc." : "Gir nyttig serverinformasjon, som CPU-belastning, RAM-bruk, diskbruk, antall brukere, ned mere.",
     "Operating System:" : "Operativsystem:",
     "CPU:" : "CPU:",
-    "Unknown Processor" : "Ukjent prosessor",
     "Memory:" : "Minne:",
     "Server time:" : "Servertid:",
     "Uptime:" : "Oppetid:",
@@ -67,6 +66,7 @@
     "Skip apps section (including apps section will send an external request to the app store)" : "Hopp over apper-delen (inkludert appdelen sender en ekstern forespørsel til appbutikken)",
     "Skip server update" : "Hopp over serveroppdatering",
     "To use an access token, please generate one then set it using the following command:" : "For å bruke et tilgangstoken, vennligst generer et og sett det ved hjelp av følgende kommando:",
-    "Then pass the token with the \"NC-Token\" header when querying the above URL." : "Send deretter tokenet med \"NC-Token\"-overskriften under spørring av URL-adressen ovenfor."
+    "Then pass the token with the \"NC-Token\" header when querying the above URL." : "Send deretter tokenet med \"NC-Token\"-overskriften under spørring av URL-adressen ovenfor.",
+    "Unknown Processor" : "Ukjent prosessor"
 },"pluralForm" :"nplurals=2; plural=(n != 1);"
 }

@@ -16,7 +16,6 @@ OC.L10N.register(
     "Provides useful server information, such as CPU load, RAM usage, disk usage, number of users, etc." : "Proporciona información útil del servidor, como carga de CPU, uso de RAM, uso de disco, número de usuarios, etc.",
     "Operating System:" : "Sistema operativo:",
     "CPU:" : "CPU:",
-    "Unknown Processor" : "Procesador desconocido",
     "Memory:" : "Memoria:",
     "Server time:" : "Hora del servidor:",
     "Uptime:" : "Tiempo de actividad:",
@@ -65,6 +64,7 @@ OC.L10N.register(
     "External monitoring tool" : "Herramienta de monitoreo externa",
     "Copy" : "Copiar",
     "To use an access token, please generate one then set it using the following command:" : "Para usar un token de acceso, por favor genera uno y luego configúralo usando el siguiente comando:",
-    "Then pass the token with the \"NC-Token\" header when querying the above URL." : "Luego pasa el token con la cabecera \"NC-Token\" al consultar la URL anterior."
+    "Then pass the token with the \"NC-Token\" header when querying the above URL." : "Luego pasa el token con la cabecera \"NC-Token\" al consultar la URL anterior.",
+    "Unknown Processor" : "Procesador desconocido"
 },
 "nplurals=3; plural=n == 1 ? 0 : n != 0 && n % 1000000 == 0 ? 1 : 2;");
