@@ -19,7 +19,6 @@
     "Provides useful server information, such as CPU load, RAM usage, disk usage, number of users, etc." : "Näitab kasulikku infot serveri kohta, näiteks protsessori koormus, mälukasutus, kettaruum, kasutajate arv jne.",
     "Operating System:" : "Operatsioonisüsteem:",
     "CPU:" : "Protsessor:",
-    "Unknown Processor" : "Tundmatu protsessor",
     "Memory:" : "Vahemälu:",
     "Server time:" : "Serveri aeg:",
     "Uptime:" : "Aktiivaeg:",
@@ -89,6 +88,7 @@
     "Skip apps section (including apps section will send an external request to the app store)" : "Jäta rakenduste valik vahele (sh sellega seotud päring rakendustepoodi)",
     "Skip server update" : "Jäta serveri uuendus vahele",
     "To use an access token, please generate one then set it using the following command:" : "Ligipääsutunnuse kasutamiseks genereeri see ja seadista alljärgneva käsu abil:",
-    "Then pass the token with the \"NC-Token\" header when querying the above URL." : "Seejärel saada tunnus ülaloleva URL-i pärimisel \"NC-Token\" päisega."
+    "Then pass the token with the \"NC-Token\" header when querying the above URL." : "Seejärel saada tunnus ülaloleva URL-i pärimisel \"NC-Token\" päisega.",
+    "Unknown Processor" : "Tundmatu protsessor"
 },"pluralForm" :"nplurals=2; plural=(n != 1);"
 }

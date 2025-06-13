@@ -21,7 +21,6 @@ OC.L10N.register(
     "Provides useful server information, such as CPU load, RAM usage, disk usage, number of users, etc." : "يوفر معلومات مفيدة عن الخادم، مثل أحمال وحدة المعالجة المركزية CPU laod، و استخدامات ذاكرة الوصول العشوائي RAM usage، و استخدامات القرص disk usage، و عدد المستخدمين، و غيرها.",
     "Operating System:" : "نظام التشغيل:",
     "CPU:" : "وحدة الذاكرة المركزية CPU:",
-    "Unknown Processor" : "معالِج غير معروف",
     "Memory:" : "الذاكرة:",
     "Server time:" : "وقت الخادم:",
     "Uptime:" : "مدة استمرارية التشغل uptime:",
@@ -91,6 +90,7 @@ OC.L10N.register(
     "Skip apps section (including apps section will send an external request to the app store)" : "تخطِّي قسم التطبيقات (تضمين قسم التطبيقات سيرسل طلب خارجي إلى متجر التطبيقات)",
     "Skip server update" : "تخطِّي تحديثات الخادم",
     "To use an access token, please generate one then set it using the following command:" : "لاستخدام أَمَارَة وصول access token، يرجى توليد واحدةٍ ثم تعيينها باستخدام الأمر التالي:",
-    "Then pass the token with the \"NC-Token\" header when querying the above URL." : "ثم قُم بتمرير الأَمَارَة talk برأس \"NC-Token\" عند الاستعلام عن عنوان الـ URL أعلاه."
+    "Then pass the token with the \"NC-Token\" header when querying the above URL." : "ثم قُم بتمرير الأَمَارَة talk برأس \"NC-Token\" عند الاستعلام عن عنوان الـ URL أعلاه.",
+    "Unknown Processor" : "معالِج غير معروف"
 },
 "nplurals=6; plural=n==0 ? 0 : n==1 ? 1 : n==2 ? 2 : n%100>=3 && n%100<=10 ? 3 : n%100>=11 && n%100<=99 ? 4 : 5;");

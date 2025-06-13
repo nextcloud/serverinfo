@@ -21,7 +21,6 @@ OC.L10N.register(
     "Provides useful server information, such as CPU load, RAM usage, disk usage, number of users, etc." : "Fornisce informazioni utili sul server, come carico della CPU, utilizzo della memoria, utilizzo del disco, numero di utenti, ecc.",
     "Operating System:" : "Sistema operativo:",
     "CPU:" : "CPU:",
-    "Unknown Processor" : "Processore sconosciuto",
     "Memory:" : "Memoria:",
     "Server time:" : "Ora del server:",
     "Uptime:" : "Tempo di attività:",
@@ -82,6 +81,7 @@ OC.L10N.register(
     "Skip apps section (including apps section will send an external request to the app store)" : "Salta la sezione app (includere la sezione app invierà una richiesta esterna all'app store)",
     "Skip server update" : "Salta l'aggiornamento del server",
     "To use an access token, please generate one then set it using the following command:" : "Per usare un token di accesso, generane uno e poi impostalo con il comando seguente:",
-    "Then pass the token with the \"NC-Token\" header when querying the above URL." : "Poi passa il token con l'intestazione \"NC-Token\" quando richiami l'URL qua sopra."
+    "Then pass the token with the \"NC-Token\" header when querying the above URL." : "Poi passa il token con l'intestazione \"NC-Token\" quando richiami l'URL qua sopra.",
+    "Unknown Processor" : "Processore sconosciuto"
 },
 "nplurals=3; plural=n == 1 ? 0 : n != 0 && n % 1000000 == 0 ? 1 : 2;");

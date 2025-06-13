@@ -17,7 +17,6 @@
     "Provides useful server information, such as CPU load, RAM usage, disk usage, number of users, etc." : "提供有用的服务器信息，例如 CPU 负载、内存占用、硬盘占用、在线用户数等。",
     "Operating System:" : "操作系统：",
     "CPU:" : "CPU：",
-    "Unknown Processor" : "未知处理器",
     "Memory:" : "内存：",
     "Server time:" : "服务器时间：",
     "Uptime:" : "运行时长：",
@@ -76,6 +75,7 @@
     "Skip apps section (including apps section will send an external request to the app store)" : "跳过应用程序部分（包括应用程序部分向应用商店发送外部请求）",
     "Skip server update" : "跳过服务器更新",
     "To use an access token, please generate one then set it using the following command:" : "要使用一个访问令牌，请生成一个，然后使用以下命令设置它：",
-    "Then pass the token with the \"NC-Token\" header when querying the above URL." : "然后在查询上述 URL 时传递带有 “NC-Token” 头的令牌。"
+    "Then pass the token with the \"NC-Token\" header when querying the above URL." : "然后在查询上述 URL 时传递带有 “NC-Token” 头的令牌。",
+    "Unknown Processor" : "未知处理器"
 },"pluralForm" :"nplurals=1; plural=0;"
 }

@@ -14,7 +14,6 @@
     "Provides useful server information, such as CPU load, RAM usage, disk usage, number of users, etc." : "Zerbitzariaren informazio baliagarria ematen du, CPU karga, RAM erabilera, diskoaren erabilera, erabiltzaile kopurua, etab. bezala.",
     "Operating System:" : "Sistema eragilea:",
     "CPU:" : "PUZ:",
-    "Unknown Processor" : "Prozesatzaile ezezaguna",
     "Memory:" : "Memoria:",
     "Server time:" : "Zerbitzariaren ordua:",
     "Uptime:" : "Denbora aktibo:",
@@ -62,6 +61,7 @@
     "External monitoring tool" : "Kanpo jarraipen tresna",
     "Copy" : "Kopiatu",
     "To use an access token, please generate one then set it using the following command:" : "Sarbide-token bat erabiltzeko, sortu bat eta ezarri komando hau erabiliz:",
-    "Then pass the token with the \"NC-Token\" header when querying the above URL." : "Ondoren, pasatu token-a \"NC-Token\" goiburuarekin goiko URLa kontsultatzerakoan."
+    "Then pass the token with the \"NC-Token\" header when querying the above URL." : "Ondoren, pasatu token-a \"NC-Token\" goiburuarekin goiko URLa kontsultatzerakoan.",
+    "Unknown Processor" : "Prozesatzaile ezezaguna"
 },"pluralForm" :"nplurals=2; plural=(n != 1);"
 }
