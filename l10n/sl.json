@@ -14,7 +14,6 @@
     "Provides useful server information, such as CPU load, RAM usage, disk usage, number of users, etc." : "Omogoča prikaz različnih podrobnosti strežnika, kot so obremenitev CPE, zasedenost pomnilnika in prostora, števila uporabnikov in drugo.",
     "Operating System:" : "Operacijski sistem:",
     "CPU:" : "CPE:",
-    "Unknown Processor" : "Neznan processor",
     "Memory:" : "Pomnilnik:",
     "Server time:" : "Čas strežnika:",
     "Uptime:" : "Čas delovanja:",
@@ -67,6 +66,7 @@
     "Skip apps section (including apps section will send an external request to the app store)" : "Preskoči razdelek programov (vključitev razdelka pošlje zunanji zahtevek trgovini s programi).",
     "Skip server update" : "Preskoči posodobitev strežnika",
     "To use an access token, please generate one then set it using the following command:" : "Za uporabo žetona za dostop, ga je treba najprej ustvariti in nato nastaviti z ukazom:",
-    "Then pass the token with the \"NC-Token\" header when querying the above URL." : "Pri poizvedovanju po zgornjem naslovu URL je treba žeton nato prenesti z glavo »NC-Token«."
+    "Then pass the token with the \"NC-Token\" header when querying the above URL." : "Pri poizvedovanju po zgornjem naslovu URL je treba žeton nato prenesti z glavo »NC-Token«.",
+    "Unknown Processor" : "Neznan processor"
 },"pluralForm" :"nplurals=4; plural=(n%100==1 ? 0 : n%100==2 ? 1 : n%100==3 || n%100==4 ? 2 : 3);"
 }

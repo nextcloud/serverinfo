@@ -16,7 +16,6 @@ OC.L10N.register(
     "Provides useful server information, such as CPU load, RAM usage, disk usage, number of users, etc." : "Предоставя полезна информация за сървъра, като натоварване на процесора, използване на RAM, използване на диск, брой потребители и др.",
     "Operating System:" : "Операционна система:",
     "CPU:" : "CPU /ПРОЦЕСОР/:",
-    "Unknown Processor" : "Неизвестен процесор",
     "Memory:" : "Памет:",
     "Server time:" : "Време на сървъра:",
     "Uptime:" : "Време на работа:",
@@ -63,6 +62,7 @@ OC.L10N.register(
     "External monitoring tool" : "Външно средство за мониторинг",
     "Copy" : "Копиране",
     "To use an access token, please generate one then set it using the following command:" : "За да използвате токен за достъп, моля, генерирайте такъв, след което го задайте с помощта на следната команда:",
-    "Then pass the token with the \"NC-Token\" header when querying the above URL." : "След това предайте токена със заглавката „NC-Token “, когато правите заявка към горния URL адрес."
+    "Then pass the token with the \"NC-Token\" header when querying the above URL." : "След това предайте токена със заглавката „NC-Token “, когато правите заявка към горния URL адрес.",
+    "Unknown Processor" : "Неизвестен процесор"
 },
 "nplurals=2; plural=(n != 1);");

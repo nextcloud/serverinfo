@@ -21,7 +21,6 @@ OC.L10N.register(
     "Provides useful server information, such as CPU load, RAM usage, disk usage, number of users, etc." : "Надає корисну інформацію про сервер, таку як навантаження ЦПУ, використання пам'яті, використання диску, кількість користувачів тощо.",
     "Operating System:" : "Операційна система:",
     "CPU:" : "ЦП:",
-    "Unknown Processor" : "Невідомий процесор",
     "Memory:" : "Пам'ять:",
     "Server time:" : "Час сервера:",
     "Uptime:" : "Час роботи:",
@@ -90,6 +89,7 @@ OC.L10N.register(
     "Skip apps section (including apps section will send an external request to the app store)" : "Не показувати інформацію про застосунки (показ даних застосунків призведе до надсилання зовнішніх запитів до крамниці застосунків)",
     "Skip server update" : "Не показувати оновлення сервера",
     "To use an access token, please generate one then set it using the following command:" : "Щоби застосувати токен для доступу, спочатку зґенеруйте його, а потім встановіть за допомогою команди:",
-    "Then pass the token with the \"NC-Token\" header when querying the above URL." : "Потім передайте токен з додаванням заголовку \"NC-Token\" під час надсилання запиту за вказаною вище адресою URL."
+    "Then pass the token with the \"NC-Token\" header when querying the above URL." : "Потім передайте токен з додаванням заголовку \"NC-Token\" під час надсилання запиту за вказаною вище адресою URL.",
+    "Unknown Processor" : "Невідомий процесор"
 },
 "nplurals=4; plural=(n % 1 == 0 && n % 10 == 1 && n % 100 != 11 ? 0 : n % 1 == 0 && n % 10 >= 2 && n % 10 <= 4 && (n % 100 < 12 || n % 100 > 14) ? 1 : n % 1 == 0 && (n % 10 ==0 || (n % 10 >=5 && n % 10 <=9) || (n % 100 >=11 && n % 100 <=14 )) ? 2: 3);");

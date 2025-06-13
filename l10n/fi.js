@@ -16,7 +16,6 @@ OC.L10N.register(
     "Provides useful server information, such as CPU load, RAM usage, disk usage, number of users, etc." : "Näyttää hyödyllisiä tietoja palvelimesta, kuten suorittimen kuorman, muistin ja levytilan käytön, käyttäjien määrän jne.",
     "Operating System:" : "Käyttöjärjestelmä:",
     "CPU:" : "Suoritin:",
-    "Unknown Processor" : "Tuntematon suoritin",
     "Memory:" : "Muisti:",
     "Server time:" : "Palvelimen aika:",
     "Uptime:" : "Käynnissäoloaika:",
@@ -58,6 +57,7 @@ OC.L10N.register(
     "Database" : "Tietokanta",
     "Type:" : "Tyyppi:",
     "External monitoring tool" : "Ulkopuolinen valvontatyökalu",
-    "Copy" : "Kopioi"
+    "Copy" : "Kopioi",
+    "Unknown Processor" : "Tuntematon suoritin"
 },
 "nplurals=2; plural=(n != 1);");

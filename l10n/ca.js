@@ -16,7 +16,6 @@ OC.L10N.register(
     "Provides useful server information, such as CPU load, RAM usage, disk usage, number of users, etc." : "Proporciona informació útil del servidor, com ara la càrrega del processador, l’ús de memòria RAM, l’ús del disc, el nombre d’usuaris, etc.",
     "Operating System:" : "Sistema operatiu:",
     "CPU:" : "CPU:",
-    "Unknown Processor" : "Processador desconegut",
     "Memory:" : "Memòria:",
     "Server time:" : "Hora del servidor:",
     "Uptime:" : "Temps de funcionament:",
@@ -63,6 +62,7 @@ OC.L10N.register(
     "External monitoring tool" : "Eina externa de monitorització",
     "Copy" : "Copia",
     "To use an access token, please generate one then set it using the following command:" : "Per utilitzar un testimoni d'accés, genereu-ne un i configureu-lo amb l'ordre següent:",
-    "Then pass the token with the \"NC-Token\" header when querying the above URL." : "A continuació, passeu el testimoni amb la capçalera \"NC-Token\" quan consulteu l’adreça URL anterior."
+    "Then pass the token with the \"NC-Token\" header when querying the above URL." : "A continuació, passeu el testimoni amb la capçalera \"NC-Token\" quan consulteu l’adreça URL anterior.",
+    "Unknown Processor" : "Processador desconegut"
 },
 "nplurals=2; plural=(n != 1);");

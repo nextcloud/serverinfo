@@ -16,7 +16,6 @@ OC.L10N.register(
     "Provides useful server information, such as CPU load, RAM usage, disk usage, number of users, etc." : "اطلاعات سرور مفیدی مانند بار CPU ، استفاده از رم ، استفاده دیسک ، تعداد کاربران و غیره را ارائه می دهد.",
     "Operating System:" : "Operating System:",
     "CPU:" : "CPU:",
-    "Unknown Processor" : "Unknown Processor",
     "Memory:" : "Memory:",
     "Server time:" : "Server time:",
     "Uptime:" : "Uptime:",
@@ -65,6 +64,7 @@ OC.L10N.register(
     "External monitoring tool" : "ابزار نظارت خارجی",
     "Copy" : "کپی کردن",
     "To use an access token, please generate one then set it using the following command:" : "To use an access token, please generate one then set it using the following command:",
-    "Then pass the token with the \"NC-Token\" header when querying the above URL." : "Then pass the token with the \"NC-Token\" header when querying the above URL."
+    "Then pass the token with the \"NC-Token\" header when querying the above URL." : "Then pass the token with the \"NC-Token\" header when querying the above URL.",
+    "Unknown Processor" : "Unknown Processor"
 },
 "nplurals=2; plural=(n > 1);");

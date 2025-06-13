@@ -19,7 +19,6 @@
     "Provides useful server information, such as CPU load, RAM usage, disk usage, number of users, etc." : "Даје корисне информације о серверу, као што су оптерећење процесора, употреба RAM-а, употреба диска, број корисника, итд.",
     "Operating System:" : "Оперативни систем:",
     "CPU:" : "CPU:",
-    "Unknown Processor" : "Непознати процесор",
     "Memory:" : "Меморија:",
     "Server time:" : "Време сервера:",
     "Uptime:" : "Време од стартовања система:",
@@ -89,6 +88,7 @@
     "Skip apps section (including apps section will send an external request to the app store)" : "Прескочи одељак са апликацијама (укључивање одељка са апликацијама ће да пошаље спољни захтев у продавницу апликација)",
     "Skip server update" : "Прескочи ажурирање сервера",
     "To use an access token, please generate one then set it using the following command:" : "Да бисте користили жетон за приступ, молимо вас да га генеришете, па поставите следећом командом:",
-    "Then pass the token with the \"NC-Token\" header when querying the above URL." : "Затим проследите жетон „NC-Token” заглављем када вршите упит на горњу URL адресу."
+    "Then pass the token with the \"NC-Token\" header when querying the above URL." : "Затим проследите жетон „NC-Token” заглављем када вршите упит на горњу URL адресу.",
+    "Unknown Processor" : "Непознати процесор"
 },"pluralForm" :"nplurals=3; plural=(n%10==1 && n%100!=11 ? 0 : n%10>=2 && n%10<=4 && (n%100<10 || n%100>=20) ? 1 : 2);"
 }

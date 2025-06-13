@@ -21,7 +21,6 @@ OC.L10N.register(
     "Provides useful server information, such as CPU load, RAM usage, disk usage, number of users, etc." : "Ger användbar serverinformation, såsom CPU belastning, RAM-användning, diskanvändning, antal användare, m.m.",
     "Operating System:" : "Operativsystem:",
     "CPU:" : "CPU:",
-    "Unknown Processor" : "Okänd processor",
     "Memory:" : "Minne:",
     "Server time:" : "Servertid:",
     "Uptime:" : "Upptid:",
@@ -91,6 +90,7 @@ OC.L10N.register(
     "Skip apps section (including apps section will send an external request to the app store)" : "Hoppa över appsektionen (inkludera appsektionen skickar en extern begäran till appbutiken)",
     "Skip server update" : "Hoppa över serveruppdatering",
     "To use an access token, please generate one then set it using the following command:" : "För att använda en access-token, generera en och ställ in den med följande kommando:",
-    "Then pass the token with the \"NC-Token\" header when querying the above URL." : "Skicka sedan token med \"NC-Token\"-header när du frågar efter ovanstående URL."
+    "Then pass the token with the \"NC-Token\" header when querying the above URL." : "Skicka sedan token med \"NC-Token\"-header när du frågar efter ovanstående URL.",
+    "Unknown Processor" : "Okänd processor"
 },
 "nplurals=2; plural=(n != 1);");
