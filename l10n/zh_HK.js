@@ -21,6 +21,7 @@ OC.L10N.register(
     "Provides useful server information, such as CPU load, RAM usage, disk usage, number of users, etc." : "提供有用的伺服器訊息，例如CPU負載、記憶體使用情況、磁碟使用情況、用戶數等。",
     "Operating System:" : "作業系統：",
     "CPU:" : "CPU：",
+    "threads" : "主題",
     "Memory:" : "記憶體：",
     "Server time:" : "伺服器時間：",
     "Uptime:" : "運行時間：",
