@@ -21,6 +21,7 @@ OC.L10N.register(
     "Provides useful server information, such as CPU load, RAM usage, disk usage, number of users, etc." : "Poskytuje užitečné informace o serveru, jako vytížení procesoru, využití operační paměti, obsazenost datového úložiště, počet uživatelů, atd.",
     "Operating System:" : "Operační systém:",
     "CPU:" : "Procesor:",
+    "threads" : "vláken",
     "Memory:" : "Operační paměť:",
     "Server time:" : "Čas na serveru:",
     "Uptime:" : "Doba chodu od minulého zapnutí:",
