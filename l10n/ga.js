@@ -21,6 +21,7 @@ OC.L10N.register(
     "Provides useful server information, such as CPU load, RAM usage, disk usage, number of users, etc." : "Soláthraíonn sé faisnéis úsáideach freastalaí, mar shampla ualach LAP, úsáid RAM, úsáid diosca, líon na n-úsáideoirí, etc.",
     "Operating System:" : "Córas oibriucháin:",
     "CPU:" : "LAP:",
+    "threads" : "snáitheanna",
     "Memory:" : "Cuimhne:",
     "Server time:" : "Am freastalaí:",
     "Uptime:" : "Aga fónaimh:",

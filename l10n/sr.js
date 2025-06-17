@@ -21,6 +21,7 @@ OC.L10N.register(
     "Provides useful server information, such as CPU load, RAM usage, disk usage, number of users, etc." : "Даје корисне информације о серверу, као што су оптерећење процесора, употреба RAM-а, употреба диска, број корисника, итд.",
     "Operating System:" : "Оперативни систем:",
     "CPU:" : "CPU:",
+    "threads" : "низови",
     "Memory:" : "Меморија:",
     "Server time:" : "Време сервера:",
     "Uptime:" : "Време од стартовања система:",
