@@ -19,6 +19,7 @@
     "Provides useful server information, such as CPU load, RAM usage, disk usage, number of users, etc." : "CPU負荷、メモリ使用量、ディスク使用量、ユーザー数などの役に立つサーバー情報を提供します。",
     "Operating System:" : "OS:",
     "CPU:" : "CPU:",
+    "threads" : "スレッド",
     "Memory:" : "メモリ:",
     "Server time:" : "サーバーの時間:",
     "Uptime:" : "稼働時間：",
