@@ -31,8 +31,6 @@ class FreeBSDTest extends TestCase {
 		$this->os = $this->getMockBuilder(FreeBSD::class)
 			->disableOriginalConstructor()
 			->disableOriginalClone()
-			->disableArgumentCloning()
-			->disallowMockingUnknownTypes()
 			->onlyMethods(['executeCommand', 'getNetInterfaces'])
 			->getMock();
 	}

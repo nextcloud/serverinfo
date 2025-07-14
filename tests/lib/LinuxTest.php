@@ -27,8 +27,6 @@ class LinuxTest extends TestCase {
 		$this->os = $this->getMockBuilder(Linux::class)
 			->disableOriginalConstructor()
 			->disableOriginalClone()
-			->disableArgumentCloning()
-			->disallowMockingUnknownTypes()
 			->onlyMethods(['readContent', 'executeCommand', 'getNetInterfaces'])
 			->getMock();
 	}
