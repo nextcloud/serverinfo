@@ -69,6 +69,7 @@ OC.L10N.register(
     "Extensions:" : "Розширення:",
     "Unable to list extensions" : "Не вдалося створити список розширень",
     "Show phpinfo" : "Показати phpinfo",
+    "FPM worker pool" : "Кадровий резерв FPM",
     "Pool name:" : "Назва пулу:",
     "Pool type:" : "Тип пулу:",
     "Start time:" : "Початковий час:",
