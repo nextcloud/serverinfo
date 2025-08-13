@@ -3,6 +3,7 @@ OC.L10N.register(
     {
     "Copied!" : "Copied!",
     "System" : "Mfumo",
+    "Network" : "Network",
     "Shares" : "Shiriki",
     "Database" : "Kanzidata",
     "Copy" : "Nakili"
