@@ -1,8 +1,8 @@
 { "translations": {
     "CPU info not available" : "Informationen zur CPU nicht verfügbar",
     "CPU Usage:" : "CPU-Auslastung:",
-    "Load average: {percentage} % ({load}) last minute" : "Durchschnittliche Last: {percentage} % ({load}) in der letzen Minute",
-    "{lastMinutePercentage} % ({lastMinute}) last Minute\n{last5MinutesPercentage} % ({last5Minutes}) last 5 Minutes\n{last15MinutesPercentage} % ({last15Minutes}) last 15 Minutes" : "{lastMinutePercentage} % ({lastMinute}) letzte Minute\n{last5MinutesPercentage} % ({last5Minutes}) letzte 5 Minuten\n{last15MinutesPercentage} % ({last15Minutes}) letzte 15 Minuten",
+    "Load average: {percentage} % ({load}) last minute" : "Durchschnittliche Last: {percentage} % ({load}) in der letzten Minute",
+    "{lastMinutePercentage} % ({lastMinute}) last Minute\n{last5MinutesPercentage} % ({last5Minutes}) last 5 Minutes\n{last15MinutesPercentage} % ({last15Minutes}) last 15 Minutes" : "{lastMinutePercentage} % ({lastMinute}) letzten Minute\n{last5MinutesPercentage} % ({last5Minutes}) letzten 5 Minuten\n{last15MinutesPercentage} % ({last15Minutes}) letzten 15 Minuten",
     "RAM Usage:" : "Speicherauslastung:",
     "SWAP Usage:" : "SWAP-Auslastung:",
     "RAM: Total: {memTotalBytes}/Current usage: {memUsageBytes}" : "RAM: Gesamt: {memTotalBytes}/Aktuelle Nutzung: {memUsageBytes}",
