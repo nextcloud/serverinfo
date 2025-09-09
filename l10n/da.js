@@ -89,7 +89,7 @@ OC.L10N.register(
     "Copy" : "Kopier",
     "Output in JSON" : "Output i JSON",
     "Skip apps section (including apps section will send an external request to the app store)" : "Spring over apps sektion (inklusiv apps sektion vil sende en ekstern forespørgsel til app butikken)",
-    "Skip server update" : "Spring over serveropdatering",
+    "Skip server update" : "Spring server-opdatering over",
     "To use an access token, please generate one then set it using the following command:" : "For at bruge et adgangstoken, så generer venligst et og sæt det derefter ved hjælp af følgende kommando:",
     "Then pass the token with the \"NC-Token\" header when querying the above URL." : "Send derefter tokenet med \"NC-Token\"-headeren, når du forespørger på ovenstående URL.",
     "Unknown Processor" : "Ukendt processor"
