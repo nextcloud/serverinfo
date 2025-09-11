@@ -88,7 +88,7 @@ OC.L10N.register(
     "Use this end point to connect an external monitoring tool:" : "Anvend dette slutpunkt til at forbinde et eksternt monitoreringsværktøj:",
     "Copy" : "Kopier",
     "Output in JSON" : "Output i JSON",
-    "Skip apps section (including apps section will send an external request to the app store)" : "Spring over apps sektion (inklusiv apps sektion vil sende en ekstern forespørgsel til app butikken)",
+    "Skip apps section (including apps section will send an external request to the app store)" : "Spring over apps sektion (inkludering af apps sektion vil sende en ekstern forespørgsel til app butikken)",
     "Skip server update" : "Spring server-opdatering over",
     "To use an access token, please generate one then set it using the following command:" : "For at bruge et adgangstoken, så generer venligst et og sæt det derefter ved hjælp af følgende kommando:",
     "Then pass the token with the \"NC-Token\" header when querying the above URL." : "Send derefter tokenet med \"NC-Token\"-headeren, når du forespørger på ovenstående URL.",
