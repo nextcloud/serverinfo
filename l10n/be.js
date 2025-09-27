@@ -6,6 +6,7 @@ OC.L10N.register(
     "Press ⌘-C to copy." : "Націсніце ⌘-C для капіявання.",
     "Press Ctrl-C to copy." : "Націсніце Ctrl-C для капіявання.",
     "System" : "Сістэма",
+    "Operating System:" : "Аперацыйная сістэма:",
     "Size:" : "Памер:",
     "Last hour" : "Апошняя гадзіна",
     "Last 24 Hours" : "Апошнія 24 гадзіны",
