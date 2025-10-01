@@ -12,6 +12,7 @@ OC.L10N.register(
     "Last 24 Hours" : "Апошнія 24 гадзіны",
     "Last 7 Days" : "Апошнія 7 дзён",
     "Last 30 Days" : "Апошнія 30 дзён",
+    "Database" : "База даных",
     "Type:" : "Тып:",
     "Copy" : "Капіяваць",
     "To use an access token, please generate one then set it using the following command:" : "Каб выкарыстоўваць токен доступу, стварыце яго, а затым задайце з дапамогай наступнай каманды:",
