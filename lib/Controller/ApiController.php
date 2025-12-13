@@ -22,6 +22,7 @@ use OCP\AppFramework\Http\DataResponse;
 use OCP\AppFramework\OCSController;
 use OCP\IConfig;
 use OCP\IGroupManager;
+use OCP\IL10N;
 use OCP\IRequest;
 use OCP\IUserSession;
 
@@ -40,6 +41,7 @@ class ApiController extends OCSController {
 		private DatabaseStatistics $databaseStatistics,
 		private ShareStatistics $shareStatistics,
 		private SessionStatistics $sessionStatistics,
+		private IL10N $l10n,
 	) {
 		parent::__construct($appName, $request);
 	}
@@ -131,19 +133,24 @@ class ApiController extends OCSController {
 	 */
 	private function formatUptime(int $uptime): string {
 		if ($uptime === -1) {
-			return 'Unknown';
+			return $this->l10n->t('Unknown');
 		}
 
 		try {
 			$boot = new \DateTime($uptime . ' seconds ago');
 		} catch (\Exception $e) {
-			return 'Unknown';
+			return $this->l10n->t('Unknown');
 		}
 
 		$interval = $boot->diff(new \DateTime());
-		if ($interval->days > 0) {
-			return $interval->format('%a days, %h hours, %i minutes, %s seconds');
+		$days = $interval->days;
+		$hours = $interval->h;
+		$minutes = $interval->i;
+		$seconds = $interval->s;
+
+		if ($days > 0) {
+			return $this->l10n->t('%1$d days, %2$d hours, %3$d minutes, %4$d seconds', [$days, $hours, $minutes, $seconds]);
 		}
-		return $interval->format('%h hours, %i minutes, %s seconds');
+		return $this->l10n->t('%1$d hours, %2$d minutes, %3$d seconds', [$hours, $minutes, $seconds]);
 	}
 }
