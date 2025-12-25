@@ -101,9 +101,15 @@ class PhpStatistics {
 	/**
 	 * Get all loaded php extensions
 	 *
-	 * @return array of strings with the names of the loaded extensions
+	 * @return array|null of strings with the names of the loaded extensions
 	 */
 	protected function getLoadedPhpExtensions(): ?array {
-		return (function_exists('get_loaded_extensions') ? get_loaded_extensions() : null);
+		if (!function_exists('get_loaded_extensions')) {
+			return null;
+		}
+		$extensions = get_loaded_extensions();
+		natcasesort($extensions);
+
+		return $extensions;
 	}
 }
