@@ -57,13 +57,34 @@ $phpinfo = $_['phpinfo'];
 					<img class="infoicon" src="<?php p(image_path('core', 'actions/screen.svg')); ?>">
 					<?php p($_['hostname']); ?>
 				</h2>
-				<p><?php p($l->t('Operating System:')); ?> <strong id="numFilesStorage"><?php p($_['osname']); ?></strong></p>
-				<p><?php p($l->t('CPU:')); ?> <strong id="numFilesStorage"><?php p($cpu->getName()) ?></strong> (<?= $cpu->getThreads() ?> <?php p($l->t('threads')); ?>)</p>
-				<p><?php p($l->t('Memory:')); ?>
-				<?php if ($memory->getMemTotal() > 0): ?> <strong id="numFilesStorage"><?php p(FormatMegabytes($memory->getMemTotal())) ?></strong></p>
-				<?php endif; ?>
-				<p><?php p($l->t('Server time:')); ?> <strong id="numFilesStorage"><span class="info" id="servertime"></span></strong></p>
-				<p><?php p($l->t('Uptime:')); ?> <strong id="numFilesStorage"><span class="info" id="uptime"></span></strong></p>
+                <div class="server-info-table">
+                    <table>
+                        <tbody>
+                            <tr>
+                                <td><?php p($l->t('Operating System:')); ?></td>
+                                <td class="info"><?php p($_['osname']); ?></td>
+                            </tr>
+                            <tr>
+                                <td><?php p($l->t('CPU:')); ?></td>
+                                <td class="info"><?php p($cpu->getName()) ?></strong> (<?= $cpu->getThreads() ?> <?php p($l->t('threads')); ?>)</td>
+                            </tr>
+                            <?php if ($memory->getMemTotal() > 0): ?>
+                            <tr>
+                                <td><?php p($l->t('Memory:')); ?></td>
+                                <td class="info"><?php p(FormatMegabytes($memory->getMemTotal())) ?></td>
+                            </tr>
+                            <?php endif; ?>
+                            <tr>
+                                <td><?php p($l->t('Server time:')); ?></td>
+                                <td><span class="info" id="servertime"></span></td>
+                            </tr>
+                            <tr>
+                                <td><?php p($l->t('Uptime:')); ?></td>
+                                <td><span class="info" id="uptime"></span></td>
+                            </tr>
+                        </tbody>
+                    </table>
+                </div>
 			</div>
 
 			<?php if (count($thermalZones) > 0): ?>
@@ -335,93 +356,110 @@ $phpinfo = $_['phpinfo'];
 					<img class="infoicon" src="<?php p(image_path('core', 'actions/screen.svg')); ?>">
 					<?php p($l->t('PHP')); ?>
 				</h2>
-				<div class="infobox">
-					<div class="phpinfo-wrapper">
-						<p>
-							<?php p($l->t('Version:')); ?>
-							<em id="phpVersion"><?php p($_['php']['version']); ?></em>
-						</p>
-						<p>
-							<?php p($l->t('Memory limit:')); ?>
-							<em id="phpMemLimit"><?php p($_['php']['memory_limit']); ?></em>
-						</p>
-						<p>
-							<?php p($l->t('Max execution time:')); ?>
-							<em id="phpMaxExecTime"><?php p($_['php']['max_execution_time']); ?></em>
-						</p>
-						<p>
-							<?php p($l->t('Upload max size:')); ?>
-							<em id="phpUploadMaxSize"><?php p($_['php']['upload_max_filesize']); ?></em>
-						</p>
-						<p>
-							<?php p($l->t('OPcache Revalidate Frequency:')); ?>
-							<em id="phpOpcacheRevalidateFreq"><?php p($_['php']['opcache_revalidate_freq']); ?></em>
-						</p>
-						<p>
-							<?php p($l->t('Extensions:')); ?>
-							<em id="phpExtensions"><?php p($_['php']['extensions'] !== null ? implode(', ', $_['php']['extensions']) : $l->t('Unable to list extensions')); ?></em>
-						</p>
-						<?php if ($phpinfo): ?>
-						<p>
-							<a target="_blank" href="<?= $_['phpinfoUrl'] ?>"><?php p($l->t('Show phpinfo')) ?></a>
-						</p>
-						<?php endif; ?>
-					</div>
-				</div>
+                <div class="server-info-table">
+                    <table>
+                        <tbody>
+                            <tr>
+                                <td><?php p($l->t('Version:')); ?></td>
+                                <td class="info"><?php p($_['php']['version']); ?></td>
+                            </tr>
+                            <tr>
+                                <td><?php p($l->t('Memory limit:')); ?></td>
+                                <td class="info"><?php p($_['php']['memory_limit'] / 1024 / 1024); ?> <?php p($l->t('MB')); ?></td>
+                            </tr>
+                            <tr>
+                                <td><?php p($l->t('Max execution time:')); ?></td>
+                                <td class="info"><?php p($_['php']['max_execution_time']); ?> <?php p($l->t('seconds')); ?></td>
+                            </tr>
+                            <tr>
+                                <td><?php p($l->t('Upload max size:')); ?></td>
+                                <td class="info"><?php p($_['php']['upload_max_filesize'] / 1024 / 1024); ?> <?php p($l->t('MB')); ?></td>
+                            </tr>
+                            <tr>
+                                <td><?php p($l->t('OPcache Revalidate Frequency:')); ?></td>
+                                <td class="info"><?php p($_['php']['opcache_revalidate_freq']); ?> <?php p($l->t('seconds')); ?></td>
+                            </tr>
+                            <tr>
+                                <td><?php p($l->t('Extensions:')); ?></td>
+                                <td class="info"><div class="server-info__tag-wrapper"><?php
+									if ($_['php']['extensions'] !== null):
+										foreach ($_['php']['extensions'] as $extension):?>
+                                        <span class="server-info__php-extension-tag"><?= $extension ?></span>
+                                        <?php
+										endforeach;
+									else:
+										$l->t('Unable to list extensions');
+									endif;
+?>
+                                </div></td>
+                            </tr>
+                            <?php if ($phpinfo): ?>
+                                <tr>
+                                    <td><?php p($l->t('PHP Info:')); ?></td>
+                                    <td>
+                                        <a class="info" target="_blank" href="<?= $_['phpinfoUrl'] ?>"><?php p($l->t('Show phpinfo')) ?></a>
+                                    </td>
+                                </tr>
+                            <?php endif; ?>
+                        </tbody>
+                    </table>
+                </div>
 				<?php if ($_['fpm'] !== false): ?>
 				<h2><?php p($l->t('FPM worker pool')); ?></h2>
-				<div class="infobox">
-					<div class="fpm-wrapper">
-						<p>
-							<?php p($l->t('Pool name:')); ?>
-							<em id="fpmPool"><?php p($_['fpm']['pool']); ?></em>
-						</p>
-						<p>
-							<?php p($l->t('Pool type:')); ?>
-							<em id="fpmType"><?php p($_['fpm']['process-manager']); ?></em>
-						</p>
-						<p>
-							<?php p($l->t('Start time:')); ?>
-							<em id="fpmStartTime"><?php p($_['fpm']['start-time']); ?></em>
-						</p>
-						<p>
-							<?php p($l->t('Accepted connections:')); ?>
-							<em id="fpmAcceptedConn"><?php p($_['fpm']['accepted-conn']); ?></em>
-						</p>
-						<p>
-							<?php p($l->t('Total processes:')); ?>
-							<em id="fpmTotalProcesses"><?php p($_['fpm']['total-processes']); ?></em>
-						</p>
-						<p>
-							<?php p($l->t('Active processes:')); ?>
-							<em id="fpmActiveProcesses"><?php p($_['fpm']['active-processes']); ?></em>
-						</p>
-						<p>
-							<?php p($l->t('Idle processes:')); ?>
-							<em id="fpmIdleProcesses"><?php p($_['fpm']['idle-processes']); ?></em>
-						</p>
-						<p>
-							<?php p($l->t('Listen queue:')); ?>
-							<em id="fpmListenQueue"><?php p($_['fpm']['listen-queue']); ?></em>
-						</p>
-						<p>
-							<?php p($l->t('Slow requests:')); ?>
-							<em id="fpmSlowRequests"><?php p($_['fpm']['slow-requests']); ?></em>
-						</p>
-						<p>
-							<?php p($l->t('Max listen queue:')); ?>
-							<em id="fpmMaxListenQueue"><?php p($_['fpm']['max-listen-queue']); ?></em>
-						</p>
-						<p>
-							<?php p($l->t('Max active processes:')); ?>
-							<em id="fpmMaxActiveProcesses"><?php p($_['fpm']['max-active-processes']); ?></em>
-						</p>
-						<p>
-							<?php p($l->t('Max children reached:')); ?>
-							<em id="fpmMaxChildrenReached"><?php p($_['fpm']['max-children-reached']); ?></em>
-						</p>
-					</div>
-				</div>
+                <div class="server-info-table">
+                    <table>
+                        <tbody>
+                            <tr>
+                                <td><?php p($l->t('Pool name:')); ?></td>
+                                <td class="info"><?php p($_['fpm']['pool']); ?></td>
+                            </tr>
+                            <tr>
+                                <td><?php p($l->t('Pool type:')); ?></td>
+                                <td class="info"><?php p($_['fpm']['process-manager']); ?></td>
+                            </tr>
+                            <tr>
+                                <td><?php p($l->t('Start time:')); ?></td>
+                                <td class="info"><?php p($_['fpm']['start-time']); ?></td>
+                            </tr>
+                            <tr>
+                                <td><?php p($l->t('Accepted connections:')); ?></td>
+                                <td class="info"><?php p($_['fpm']['accepted-conn']); ?></td>
+                            </tr>
+                            <tr>
+                                <td><?php p($l->t('Total processes:')); ?></td>
+                                <td class="info"><?php p($_['fpm']['total-processes']); ?></td>
+                            </tr>
+                            <tr>
+                                <td><?php p($l->t('Active processes:')); ?></td>
+                                <td class="info"><?php p($_['fpm']['active-processes']); ?></td>
+                            </tr>
+                            <tr>
+                                <td><?php p($l->t('Idle processes:')); ?></td>
+                                <td class="info"><?php p($_['fpm']['idle-processes']); ?></td>
+                            </tr>
+                            <tr>
+                                <td><?php p($l->t('Listen queue:')); ?></td>
+                                <td class="info"><?php p($_['fpm']['listen-queue']); ?></td>
+                            </tr>
+                            <tr>
+                                <td><?php p($l->t('Slow requests:')); ?></td>
+                                <td class="info"><?php p($_['fpm']['slow-requests']); ?></td>
+                            </tr>
+                            <tr>
+                                <td><?php p($l->t('Max listen queue:')); ?></td>
+                                <td class="info"><?php p($_['fpm']['max-listen-queue']); ?></td>
+                            </tr>
+                            <tr>
+                                <td><?php p($l->t('Max active processes:')); ?></td>
+                                <td class="info"><?php p($_['fpm']['max-active-processes']); ?></td>
+                            </tr>
+                            <tr>
+                                <td><?php p($l->t('Max children reached:')); ?></td>
+                                <td class="info"><?php p($_['fpm']['max-children-reached']); ?></td>
+                            </tr>
+                        </tbody>
+                    </table>
+                </div>
 				<?php endif; ?>
 			</div>
 
@@ -431,22 +469,24 @@ $phpinfo = $_['phpinfo'];
 					<img class="infoicon" src="<?php p(image_path('core', 'actions/screen.svg')); ?>">
 					<?php p($l->t('Database')); ?>
 				</h2>
-				<div class="infobox">
-					<div class="database-wrapper">
-						<p>
-							<?php p($l->t('Type:')); ?>
-							<em id="databaseType"><?php p($_['database']['type']); ?></em>
-						</p>
-						<p>
-							<?php p($l->t('Version:')); ?>
-							<em id="databaseVersion"><?php p($_['database']['version']); ?></em>
-						</p>
-						<p>
-							<?php p($l->t('Size:')); ?>
-							<em id="databaseSize"><?php p($_['database']['size']); ?></em>
-						</p>
-					</div>
-				</div>
+                <div class="server-info-table">
+                    <table>
+                        <tbody>
+                            <tr>
+                                <td><?php p($l->t('Type:')); ?></td>
+                                <td class="info"><?php p($_['database']['type']); ?></td>
+                            </tr>
+                            <tr>
+                                <td><?php p($l->t('Version:')); ?></td>
+                                <td class="info"><?php p($_['database']['version']); ?></td>
+                            </tr>
+                            <tr>
+                                <td><?php p($l->t('Size:')); ?></td>
+                                <td class="info"><?php p($_['database']['size'] / 1024 / 1024); ?> <?php p($l->t('MB')); ?></td>
+                            </tr>
+                        </tbody>
+                    </table>
+                </div>
 			</div>
 		</div>
 	</div>
