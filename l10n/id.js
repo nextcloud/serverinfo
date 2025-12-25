@@ -5,6 +5,7 @@ OC.L10N.register(
     "Not supported!" : "Tidak didukung!",
     "Press ⌘-C to copy." : "Tekan ⌘-C untuk menyalin.",
     "Press Ctrl-C to copy." : "Tekan CTRL-C untuk menyalin.",
+    "Unknown" : "Tidak diketahui",
     "System" : "Sistem",
     "Monitoring" : "Pemantauan",
     "Temperature" : "Suhu",

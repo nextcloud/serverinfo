@@ -10,6 +10,7 @@ OC.L10N.register(
     "Not supported!" : "Nepalaikoma!",
     "Press ⌘-C to copy." : "Norėdami nukopijuoti, paspauskite ⌘-C.",
     "Press Ctrl-C to copy." : "Paspauskite Vald-C, norėdami nukopijuoti.",
+    "Unknown" : "Nežinoma",
     "System" : "Sistema",
     "Monitoring" : "Stebėjimas",
     "Monitoring app with useful server information" : "Stebėjimo programėlė su naudinga serverio informacija",

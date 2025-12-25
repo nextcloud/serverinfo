@@ -10,6 +10,7 @@ OC.L10N.register(
     "Not supported!" : "Ez da onartzen!",
     "Press ⌘-C to copy." : "Sakatu ⌘-C kopiatzeko.",
     "Press Ctrl-C to copy." : "Sakatu Ctrl-C kopiatzeko.",
+    "Unknown" : "Ezezaguna",
     "System" : "Sistema",
     "Monitoring" : "Jarraipena",
     "Monitoring app with useful server information" : "Monitorizazio aplikazioa zerbitzariaren informazio baliagarriarekin",

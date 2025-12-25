@@ -5,6 +5,7 @@ OC.L10N.register(
     "Not supported!" : "Pas pres en carga !",
     "Press ⌘-C to copy." : "Quichar ⌘-C per copiar.",
     "Press Ctrl-C to copy." : "Quichar Ctrl-C per copiar.",
+    "Unknown" : "Desconegut",
     "Size:" : "Talha :",
     "Active users" : "Utilizaires actius",
     "Shares" : "Partatges",

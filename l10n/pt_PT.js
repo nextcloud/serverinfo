@@ -6,6 +6,7 @@ OC.L10N.register(
     "Not supported!" : "Não suportado!",
     "Press ⌘-C to copy." : "Pressionar ⌘-C para copiar.",
     "Press Ctrl-C to copy." : "Pressionar Ctrl-C para copiar.",
+    "Unknown" : "Desconhecido",
     "System" : "Sistema",
     "Monitoring" : "Monitorização",
     "Monitoring app with useful server information" : "Aplicação de monitorização com informação útil do servidor",
