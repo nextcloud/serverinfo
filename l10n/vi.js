@@ -10,6 +10,7 @@ OC.L10N.register(
     "Not supported!" : "Không hỗ trợ!",
     "Press ⌘-C to copy." : "Bấm ⌘-C để sao chép.",
     "Press Ctrl-C to copy." : "Bấm Ctrl-C để sao chép.",
+    "Unknown" : "Không xác định",
     "System" : "Hệ thống",
     "Monitoring" : "Giám sát",
     "Size:" : "Kích thước:",

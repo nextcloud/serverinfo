@@ -15,6 +15,7 @@ OC.L10N.register(
     "Not supported!" : "Desteklenmiyor!",
     "Press ⌘-C to copy." : "Kopyalamak için ⌘-C tuşlarına basın.",
     "Press Ctrl-C to copy." : "Kopyalamak için Ctrl-C tuşlarına basın.",
+    "Unknown" : "Bilinmiyor",
     "System" : "Sistem",
     "Monitoring" : "İzleniyor",
     "Monitoring app with useful server information" : "Yararlı sunucu bilgileri sunan izleme uygulaması",

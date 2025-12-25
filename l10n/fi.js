@@ -10,6 +10,7 @@ OC.L10N.register(
     "Not supported!" : "Ei tuettu!",
     "Press ⌘-C to copy." : "Paina ⌘-C kopioidaksesi.",
     "Press Ctrl-C to copy." : "Paina Ctrl-C kopioidaksesi.",
+    "Unknown" : "Tuntematon",
     "System" : "Järjestelmä",
     "Monitoring" : "Valvonta",
     "Monitoring app with useful server information" : "Valvontasovellus sisältäen hyödyllisiä tietoja palvelimesta",

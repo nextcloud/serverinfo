@@ -15,6 +15,7 @@ OC.L10N.register(
     "Not supported!" : "不支援！",
     "Press ⌘-C to copy." : "請按【⌘-C】以複製。",
     "Press Ctrl-C to copy." : "請按【Ctrl-C】以複製。",
+    "Unknown" : "不詳",
     "System" : "系統",
     "Monitoring" : "監控",
     "Monitoring app with useful server information" : "使用有用的伺服器訊息以監控應用程式",

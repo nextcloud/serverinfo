@@ -15,6 +15,7 @@ OC.L10N.register(
     "Not supported!" : "Ikke understøttet!",
     "Press ⌘-C to copy." : "Tryk ⌘-C for at kopiere.",
     "Press Ctrl-C to copy." : "Tryk Ctrl-C for at kopiere.",
+    "Unknown" : "Ukendt",
     "System" : "System",
     "Monitoring" : "Monitorering",
     "Monitoring app with useful server information" : "Monitoreringsapp med serverinformation",

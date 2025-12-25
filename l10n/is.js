@@ -6,6 +6,7 @@ OC.L10N.register(
     "Not supported!" : "Ekki stutt!",
     "Press ⌘-C to copy." : "Ýttu á ⌘-C til að afrita.",
     "Press Ctrl-C to copy." : "Ýttu á Ctrl-C til að afrita.",
+    "Unknown" : "Óþekkt",
     "System" : "Kerfið",
     "Monitoring" : "Vöktun",
     "Monitoring app with useful server information" : "Vöktunarforrit sem nær í ýmsar notadrjúgar upplýsingar um þjón",

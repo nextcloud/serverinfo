@@ -15,6 +15,7 @@ OC.L10N.register(
     "Not supported!" : "Gan tacaíocht!",
     "Press ⌘-C to copy." : "Brúigh ⌘-C chun cóip a dhéanamh.",
     "Press Ctrl-C to copy." : "Brúigh Ctrl-C chun cóip a dhéanamh.",
+    "Unknown" : "Anaithnid",
     "System" : "Córas",
     "Monitoring" : "Monatóireacht",
     "Monitoring app with useful server information" : "Aip monatóireachta le faisnéis úsáideach freastalaí",
