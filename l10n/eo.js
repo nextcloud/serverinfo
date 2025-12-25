@@ -6,6 +6,7 @@ OC.L10N.register(
     "Not supported!" : "Ne subtenite!",
     "Press ⌘-C to copy." : "Premu ⌘-C por kopii.",
     "Press Ctrl-C to copy." : "Premu Ctrl-C por kopii.",
+    "Unknown" : "Nekonata",
     "System" : "Sistemo",
     "Monitoring" : "Observado",
     "Monitoring app with useful server information" : "Observa aplikaĵo kun utilaj informoj pri la servilo",

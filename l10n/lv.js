@@ -10,6 +10,7 @@ OC.L10N.register(
     "Not supported!" : "Nav atbalstīts!",
     "Press ⌘-C to copy." : "Spied ⌘-C lai kopētu.",
     "Press Ctrl-C to copy." : "Spied Ctrl-C lai kopētu.",
+    "Unknown" : "Nezināms",
     "System" : "Sistēma",
     "Monitoring" : "Uzraudzība",
     "Monitoring app with useful server information" : "Pārraudzības lietotne ar noderīgu informāciju par serveri",

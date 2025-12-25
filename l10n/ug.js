@@ -15,6 +15,7 @@ OC.L10N.register(
     "Not supported!" : "قوللىمايدۇ!",
     "Press ⌘-C to copy." : "كۆچۈرۈش ئۈچۈن ⌘-C نى بېسىڭ.",
     "Press Ctrl-C to copy." : "كۆچۈرۈش ئۈچۈن Ctrl-C نى بېسىڭ.",
+    "Unknown" : "نامەلۇم",
     "System" : "سىستېما",
     "Monitoring" : "نازارەت قىلىش",
     "Monitoring app with useful server information" : "پايدىلىق مۇلازىمېتىر ئۇچۇرلىرى بىلەن نازارەت قىلىش دېتالى",

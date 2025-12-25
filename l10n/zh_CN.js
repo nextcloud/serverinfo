@@ -13,6 +13,7 @@ OC.L10N.register(
     "Not supported!" : "不支持！",
     "Press ⌘-C to copy." : "使用 ⌘-C 复制。",
     "Press Ctrl-C to copy." : "使用 Ctrl-C 复制。",
+    "Unknown" : "未知",
     "System" : "系统",
     "Monitoring" : "监视器",
     "Monitoring app with useful server information" : "使用使用的服务器信息监视应用程序",

@@ -10,6 +10,7 @@ OC.L10N.register(
     "Not supported!" : "پشتیبانی وجود ندارد!",
     "Press ⌘-C to copy." : "برای کپی کردن از دکمه های C+⌘ استفاده نمایید",
     "Press Ctrl-C to copy." : "برای کپی کردن از دکمه ctrl+c استفاده نمایید",
+    "Unknown" : "ناشناخته.",
     "System" : "سیستم",
     "Monitoring" : "نظارت بر",
     "Monitoring app with useful server information" : "برنامه نظارت با اطلاعات سرور مفید",

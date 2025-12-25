@@ -5,6 +5,7 @@ OC.L10N.register(
     "Not supported!" : "Nu este suportat!",
     "Press ⌘-C to copy." : "Apasă ⌘-C pentru copiere.",
     "Press Ctrl-C to copy." : "Apasă Ctrl-C pentru copiere.",
+    "Unknown" : "Necunoscut",
     "System" : "Sistem",
     "Monitoring" : "Monitorizare",
     "Size:" : "Mărime:",

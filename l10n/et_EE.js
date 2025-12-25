@@ -15,6 +15,7 @@ OC.L10N.register(
     "Not supported!" : "Pole toetatud!",
     "Press ⌘-C to copy." : "Kopeerimiseks vajuta ⌘+C.",
     "Press Ctrl-C to copy." : "Kopeerimiseks vajuta Ctrl+C.",
+    "Unknown" : "Teadmata",
     "System" : "Süsteem",
     "Monitoring" : "Monitooring",
     "Monitoring app with useful server information" : "Monitoorimisrakendus kasuliku infoga serveri kohta",

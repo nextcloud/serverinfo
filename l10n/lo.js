@@ -15,6 +15,7 @@ OC.L10N.register(
     "Not supported!" : "ບໍ່ຊັບຟອດ",
     "Press ⌘-C to copy." : "Press ⌘-C to copy.",
     "Press Ctrl-C to copy." : "ກົດ Ctrl-C ເພື່ອ copy",
+    "Unknown" : "ບໍ່ຮູ້ຈັກ",
     "System" : "System",
     "Monitoring" : "Monitoring",
     "Monitoring app with useful server information" : "Monitoring app with useful server information",

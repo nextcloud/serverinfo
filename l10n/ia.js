@@ -5,6 +5,7 @@ OC.L10N.register(
     "Not supported!" : "Non supportate!",
     "Press ⌘-C to copy." : "Pulsa ⌘-C pro copiar.",
     "Press Ctrl-C to copy." : "Pulsa Ctrl-C pro copiar.",
+    "Unknown" : "Incognite",
     "System" : "Systema",
     "Monitoring" : "Controlante",
     "Size:" : "Dimension:",

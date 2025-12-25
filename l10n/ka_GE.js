@@ -5,6 +5,7 @@ OC.L10N.register(
     "Not supported!" : "არაა მხარდაჭერილი",
     "Press ⌘-C to copy." : "კოპირებისთვის დააჭირეთ ⌘-C-ს.",
     "Press Ctrl-C to copy." : "კოპირებისთვის დააჭირეთ Ctrl-C-ს.",
+    "Unknown" : "უცნობია",
     "System" : "სისტემა",
     "Monitoring" : "მონიტორინგი",
     "Temperature" : "ტემპერატურა",

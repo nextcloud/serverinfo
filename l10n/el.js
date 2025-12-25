@@ -15,6 +15,7 @@ OC.L10N.register(
     "Not supported!" : "Δεν υποστηρίζεται!",
     "Press ⌘-C to copy." : "Για αντιγραφή πατήστε ⌘-C.",
     "Press Ctrl-C to copy." : "Για αντιγραφή πατήστε Ctrl-C.",
+    "Unknown" : "Άγνωστο",
     "System" : "Σύστημα",
     "Monitoring" : "Παρακολούθηση",
     "Monitoring app with useful server information" : "Εφαρμογή παρακολούθησης πληροφοριών διακομιστή",

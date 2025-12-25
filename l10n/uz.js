@@ -5,6 +5,7 @@ OC.L10N.register(
     "Not supported!" : "Not supported!",
     "Press ⌘-C to copy." : "Press ⌘-C to copy.",
     "Press Ctrl-C to copy." : "Press Ctrl-C to copy.",
+    "Unknown" : "Noma'lum",
     "System" : "System",
     "Copy" : "Copy"
 },
