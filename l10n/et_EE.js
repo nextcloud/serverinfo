@@ -16,6 +16,8 @@ OC.L10N.register(
     "Press ⌘-C to copy." : "Kopeerimiseks vajuta ⌘+C.",
     "Press Ctrl-C to copy." : "Kopeerimiseks vajuta Ctrl+C.",
     "Unknown" : "Teadmata",
+    "%1$d days, %2$d hours, %3$d minutes, %4$d seconds" : "%1$d päeva, %2$d tundi, %3$d minutit, %4$d sekundit",
+    "%1$d hours, %2$d minutes, %3$d seconds" : "%1$d tundi, %2$d minutit, %3$d sekundit",
     "System" : "Süsteem",
     "Monitoring" : "Monitooring",
     "Monitoring app with useful server information" : "Monitoorimisrakendus kasuliku infoga serveri kohta",
