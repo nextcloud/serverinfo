@@ -16,6 +16,8 @@ OC.L10N.register(
     "Press ⌘-C to copy." : "Press ⌘-C to copy.",
     "Press Ctrl-C to copy." : "Press Ctrl-C to copy.",
     "Unknown" : "Unknown",
+    "%1$d days, %2$d hours, %3$d minutes, %4$d seconds" : "%1$d days, %2$d hours, %3$d minutes, %4$d seconds",
+    "%1$d hours, %2$d minutes, %3$d seconds" : "%1$d hours, %2$d minutes, %3$d seconds",
     "System" : "System",
     "Monitoring" : "Monitoring",
     "Monitoring app with useful server information" : "Monitoring app with useful server information",
