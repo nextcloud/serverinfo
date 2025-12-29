@@ -16,6 +16,8 @@ OC.L10N.register(
     "Press ⌘-C to copy." : "Kopyalamak için ⌘-C tuşlarına basın.",
     "Press Ctrl-C to copy." : "Kopyalamak için Ctrl-C tuşlarına basın.",
     "Unknown" : "Bilinmiyor",
+    "%1$d days, %2$d hours, %3$d minutes, %4$d seconds" : "%1$d gün, %2$d saat, %3$d dakika, %4$d saniye",
+    "%1$d hours, %2$d minutes, %3$d seconds" : "%1$d saat, %2$d dakika, %3$d saniye",
     "System" : "Sistem",
     "Monitoring" : "İzleniyor",
     "Monitoring app with useful server information" : "Yararlı sunucu bilgileri sunan izleme uygulaması",
