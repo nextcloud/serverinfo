@@ -16,6 +16,8 @@ OC.L10N.register(
     "Press ⌘-C to copy." : "請按【⌘-C】以複製。",
     "Press Ctrl-C to copy." : "請按【Ctrl-C】以複製。",
     "Unknown" : "不詳",
+    "%1$d days, %2$d hours, %3$d minutes, %4$d seconds" : "%1$d天 %2$d小時%3$d分鐘%4$d秒",
+    "%1$d hours, %2$d minutes, %3$d seconds" : "%1$d小時%2$d分鐘%3$d秒",
     "System" : "系統",
     "Monitoring" : "監控",
     "Monitoring app with useful server information" : "使用有用的伺服器訊息以監控應用程式",
