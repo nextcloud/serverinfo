@@ -16,6 +16,8 @@ OC.L10N.register(
     "Press ⌘-C to copy." : "Brúigh ⌘-C chun cóip a dhéanamh.",
     "Press Ctrl-C to copy." : "Brúigh Ctrl-C chun cóip a dhéanamh.",
     "Unknown" : "Anaithnid",
+    "%1$d days, %2$d hours, %3$d minutes, %4$d seconds" : "%1$d lá, %2$d uair an chloig, %3$d nóiméad, %4$d soicind",
+    "%1$d hours, %2$d minutes, %3$d seconds" : "%1$d uair an chloig, %2$d nóiméad, %3$d soicind",
     "System" : "Córas",
     "Monitoring" : "Monatóireacht",
     "Monitoring app with useful server information" : "Aip monatóireachta le faisnéis úsáideach freastalaí",
