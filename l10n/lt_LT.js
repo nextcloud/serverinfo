@@ -3,6 +3,8 @@ OC.L10N.register(
     {
     "CPU info not available" : "Informacija apie procesorių neprieinama",
     "CPU Usage:" : "CPU naudojimas:",
+    "Load average: {percentage} % ({load}) last minute" : "Apkrovos vidurkis: {percentage} % ({load}) paskutinę minutę",
+    "{lastMinutePercentage} % ({lastMinute}) last Minute\n{last5MinutesPercentage} % ({last5Minutes}) last 5 Minutes\n{last15MinutesPercentage} % ({last15Minutes}) last 15 Minutes" : "{lastMinutePercentage} % ({lastMinute}) paskutinę minutę\n{last5MinutesPercentage} % ({last5Minutes}) paskutines 5 minutes\n{last15MinutesPercentage} % ({last15Minutes}) paskutines 15 minučių",
     "RAM Usage:" : "RAM naudojimas:",
     "SWAP Usage:" : "SWAP naudojimas:",
     "RAM: Total: {memTotalBytes}/Current usage: {memUsageBytes}" : "RAM: Iš viso: {memTotalBytes}/Naudojama: {memUsageBytes}",
@@ -11,6 +13,8 @@ OC.L10N.register(
     "Press ⌘-C to copy." : "Norėdami nukopijuoti, paspauskite ⌘-C.",
     "Press Ctrl-C to copy." : "Paspauskite Vald-C, norėdami nukopijuoti.",
     "Unknown" : "Nežinoma",
+    "%1$d days, %2$d hours, %3$d minutes, %4$d seconds" : "%1$d d., %2$d val., %3$d min., %4$d sek.",
+    "%1$d hours, %2$d minutes, %3$d seconds" : "%1$d val., %2$d min., %3$d sek.",
     "System" : "Sistema",
     "Monitoring" : "Stebėjimas",
     "Monitoring app with useful server information" : "Stebėjimo programėlė su naudinga serverio informacija",
