@@ -316,3 +316,24 @@
 .cpu-wrapper {
 	width: 100%;
 }
+
+.server-info-table table {
+	width: 100%;
+}
+
+.server-info-table td {
+	padding: 6px;
+}
+
+.server-info__tag-wrapper {
+	display: flex;
+	flex-wrap: wrap;
+}
+
+.server-info__php-extension-tag {
+	display: inline-block;
+	margin: 2px;
+	padding: 2px 12px;
+	border-radius: 16px;
+	border: 1px solid var(--color-main-text);
+}
