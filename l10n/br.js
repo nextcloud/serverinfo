@@ -5,6 +5,7 @@ OC.L10N.register(
     "Not supported!" : "Diembreget eo ! ",
     "Press ⌘-C to copy." : "Pouezañ war ⌘+C evit eilañ. ",
     "Press Ctrl-C to copy." : "Pouezañ war Ctrl+C evit eilañ. ",
+    "Unknown" : "Dianv",
     "System" : "Sistem",
     "Network" : "Rouedad",
     "Shares" : "Rannañ",

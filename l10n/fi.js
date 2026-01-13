@@ -52,6 +52,7 @@ OC.L10N.register(
     "Version:" : "Versio:",
     "Memory limit:" : "Muistin raja:",
     "Max execution time:" : "Suoritusaika enintään:",
+    "seconds" : "sekuntia",
     "Upload max size:" : "Suurin lähetyksen koko:",
     "Extensions:" : "Laajennukset:",
     "Unable to list extensions" : "Laajennuksia ei voi listata",

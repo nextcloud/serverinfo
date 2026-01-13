@@ -54,6 +54,7 @@ OC.L10N.register(
     "Version:" : "Versija:",
     "Memory limit:" : "Atminties limitas:",
     "Max execution time:" : "Maksimalus vykdymo laikas:",
+    "seconds" : "sekundes",
     "Upload max size:" : "Maksimalus įkeliamo failo dydis:",
     "Extensions:" : "Priedai:",
     "Show phpinfo" : "Rodyti phpinfo",

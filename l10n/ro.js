@@ -10,6 +10,7 @@ OC.L10N.register(
     "Monitoring" : "Monitorizare",
     "Size:" : "Mărime:",
     "Shares" : "Partajări",
+    "seconds" : "secunde",
     "Database" : "Baza de date",
     "Type:" : "Tip:",
     "Copy" : "Copiază"

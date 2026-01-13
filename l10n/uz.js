@@ -7,6 +7,7 @@ OC.L10N.register(
     "Press Ctrl-C to copy." : "Press Ctrl-C to copy.",
     "Unknown" : "Noma'lum",
     "System" : "System",
+    "seconds" : "sekundlar",
     "Copy" : "Copy"
 },
 "nplurals=1; plural=0;");

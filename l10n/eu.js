@@ -55,6 +55,7 @@ OC.L10N.register(
     "Version:" : "Bertsioa:",
     "Memory limit:" : "Memoria muga:",
     "Max execution time:" : "Gehienezko exekuzio denbora:",
+    "seconds" : "duela segundu batzuk",
     "Upload max size:" : "Igotzeko gehienezko tamaina:",
     "Extensions:" : "Hedapenak:",
     "Unable to list extensions" : "Ezin dira zerrendatu luzapenak",

@@ -65,6 +65,7 @@ OC.L10N.register(
     "Version:" : "Toleo:",
     "Memory limit:" : "Kikomo cha kumbukumbu:",
     "Max execution time:" : "Muda wa juu zaidi wa utekelezaji:",
+    "seconds" : "sekunde",
     "Upload max size:" : "Pakia ukubwa wa juu zaidi:",
     "OPcache Revalidate Frequency:" : "OPcache Kurekebisha Masafa:",
     "Extensions:" : "Viendelezi:",

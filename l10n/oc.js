@@ -10,6 +10,7 @@ OC.L10N.register(
     "Active users" : "Utilizaires actius",
     "Shares" : "Partatges",
     "PHP" : "PHP",
+    "seconds" : "segondas",
     "Type:" : "Tipe :",
     "Copy" : "Copiar"
 },

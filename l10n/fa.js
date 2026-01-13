@@ -55,6 +55,7 @@ OC.L10N.register(
     "Version:" : "نسخه:",
     "Memory limit:" : "Memory limit:",
     "Max execution time:" : "Max execution time:",
+    "seconds" : "ثانیه ها",
     "Upload max size:" : "اندازه حداکثر بارگذاری شود:",
     "OPcache Revalidate Frequency:" : "OPcache Revalidate Frequency:",
     "Extensions:" : "Extensions:",
