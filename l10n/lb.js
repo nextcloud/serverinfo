@@ -8,6 +8,7 @@ OC.L10N.register(
     "Unknown" : "Onbekannt",
     "Temperature" : "Temperatur",
     "Size:" : "Gréisst:",
+    "seconds" : "Sekonnen",
     "Type:" : "Typ:",
     "Copy" : "Kopie"
 },

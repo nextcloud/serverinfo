@@ -67,6 +67,7 @@ OC.L10N.register(
     "Version:" : "Versioon:",
     "Memory limit:" : "Mälukasutuse ülempiir:",
     "Max execution time:" : "Maksimaalne täitmisaeg:",
+    "seconds" : "sekundit",
     "Upload max size:" : "Maksimaalne üleslaadimissuurus:",
     "OPcache Revalidate Frequency:" : "OPcache'i kordusvalideerimise sagedus:",
     "Extensions:" : "Laiendused:",

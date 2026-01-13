@@ -7,6 +7,7 @@ OC.L10N.register(
     "Press Ctrl-C to copy." : "Սեղմել  Ctrl-C պատճենելու համար։",
     "Unknown" : "Անհայտ",
     "Size:" : "Չափս.",
+    "seconds" : "վայրկյան",
     "Type:" : "Տիպ.",
     "Copy" : "պատճենահանել"
 },

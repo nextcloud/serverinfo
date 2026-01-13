@@ -67,6 +67,7 @@ OC.L10N.register(
     "Version:" : "Sürüm:",
     "Memory limit:" : "Bellek sınırı:",
     "Max execution time:" : "En uzun çalışma süresi:",
+    "seconds" : "saniye",
     "Upload max size:" : "En büyük yükleme boyutu:",
     "OPcache Revalidate Frequency:" : "OPcache yeniden doğrulama sıklığı:",
     "Extensions:" : "Eklentiler:",

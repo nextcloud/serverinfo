@@ -67,6 +67,7 @@ OC.L10N.register(
     "Version:" : "Leagan:",
     "Memory limit:" : "Teorainn chuimhne:",
     "Max execution time:" : "Uasmhéid ama rite:",
+    "seconds" : "soicind",
     "Upload max size:" : "Uaslódáil méid uasta:",
     "OPcache Revalidate Frequency:" : "Minicíocht Athbhailíochtaithe OPcache:",
     "Extensions:" : "Eisínteachtaí:",

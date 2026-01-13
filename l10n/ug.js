@@ -65,6 +65,7 @@ OC.L10N.register(
     "Version:" : "نەشرى:",
     "Memory limit:" : "ئەستە ساقلاش چېكى:",
     "Max execution time:" : "ئىجرا قىلىنىش ۋاقتى:",
+    "seconds" : "سېكۇنت",
     "Upload max size:" : "ئەڭ چوڭ چوڭلۇقى:",
     "OPcache Revalidate Frequency:" : "OPcache چاستوتىنى ئىناۋەتسىز قىلىدۇ:",
     "Extensions:" : "كېڭەيتىلمىسى:",

@@ -15,6 +15,7 @@ OC.L10N.register(
     "Users:" : "Usatores:",
     "PHP" : "PHP",
     "Version:" : "Version:",
+    "seconds" : "secundas",
     "Upload max size:" : "Dimension maxime de incarga:",
     "Database" : "Base de datos",
     "Type:" : "Typo:",

@@ -10,6 +10,7 @@ OC.L10N.register(
     "Monitoring" : "Monitro",
     "Size:" : "Maint:",
     "PHP" : "PHP",
+    "seconds" : "eiliad",
     "Database" : "Cronfa ddata",
     "Type:" : "Math:",
     "Copy" : "Copïo"

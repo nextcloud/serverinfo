@@ -15,6 +15,7 @@ OC.L10N.register(
     "Users:" : "Хэрэглэгчид:",
     "PHP" : "PHP",
     "Version:" : "Хувилбар:",
+    "seconds" : "секунд",
     "Database" : "Өгөгдлийн сан",
     "Type:" : "Төрөл:",
     "Copy" : "Хуулах"
