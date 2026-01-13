@@ -5,6 +5,7 @@ OC.L10N.register(
     "Not supported!" : "Не падтрымліваецца!",
     "Press ⌘-C to copy." : "Націсніце ⌘-C для капіявання.",
     "Press Ctrl-C to copy." : "Націсніце Ctrl-C для капіявання.",
+    "Unknown" : "Невядомы",
     "System" : "Сістэма",
     "Operating System:" : "Аперацыйная сістэма:",
     "Size:" : "Памер:",

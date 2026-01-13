@@ -25,6 +25,7 @@ OC.L10N.register(
     "Users:" : "Notendur:",
     "PHP" : "PHP",
     "Version:" : "Útgáfa:",
+    "seconds" : "sekúndum",
     "Upload max size:" : "Hámarksstærð innsendingar:",
     "Database" : "Gagnagrunnur",
     "Type:" : "Tegund:",

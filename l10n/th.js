@@ -10,6 +10,7 @@ OC.L10N.register(
     "Size:" : "ขนาด:",
     "Active users" : "ผู้ใช้ที่ใช้งานอยู่",
     "Shares" : "การแชร์",
+    "seconds" : "วินาที",
     "Type:" : "ชนิด:",
     "Copy" : "คัดลอก"
 },

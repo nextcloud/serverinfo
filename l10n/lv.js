@@ -47,6 +47,7 @@ OC.L10N.register(
     "Version:" : "Versija:",
     "Memory limit:" : "Atmiņas limits:",
     "Max execution time:" : "Lielākais pieļaujamais izpildes laiks:",
+    "seconds" : "sekundes",
     "Upload max size:" : "Augšupielādes lielākais pieļaujamais izmērs:",
     "Extensions:" : "Paplašinājumi:",
     "Unable to list extensions" : "Nevar uzskaitīt paplašinājumus",

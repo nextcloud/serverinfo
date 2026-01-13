@@ -67,6 +67,7 @@ OC.L10N.register(
     "Version:" : "Версія:",
     "Memory limit:" : "Обмеження пам'яті:",
     "Max execution time:" : "Максимальний час виконання:",
+    "seconds" : "секунд",
     "Upload max size:" : "Макс. розмір завантаження:",
     "OPcache Revalidate Frequency:" : "Частота ревалідації OPcache:",
     "Extensions:" : "Розширення:",

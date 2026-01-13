@@ -25,6 +25,7 @@ OC.L10N.register(
     "Shares" : "Cumpartziduras",
     "PHP" : "PHP",
     "Version:" : "Versione:",
+    "seconds" : "segundos",
     "Upload max size:" : "Mannària màssima de carrigamentu",
     "Database" : "Base de datos",
     "Type:" : "Genia:",
