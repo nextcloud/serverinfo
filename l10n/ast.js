@@ -42,6 +42,7 @@ OC.L10N.register(
     "PHP" : "PHP",
     "Version:" : "Versión:",
     "Memory limit:" : "Llende de memoria:",
+    "seconds" : "segundos",
     "Extensions:" : "Estensiones:",
     "Unable to list extensions" : "Nun ye posible llistaR les estensiones",
     "Show phpinfo" : "Amosar phpinfo",

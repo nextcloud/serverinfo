@@ -9,6 +9,7 @@ OC.L10N.register(
     "Size:" : "Həcm:",
     "Shares" : "Yayımlanmalar",
     "PHP" : "PHP",
+    "seconds" : "saniyələr",
     "Database" : "Verilənlər bazası",
     "Type:" : "Tip:",
     "Copy" : "Kopyala"

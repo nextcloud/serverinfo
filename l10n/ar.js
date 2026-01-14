@@ -64,6 +64,7 @@ OC.L10N.register(
     "Version:" : "الأصدار:",
     "Memory limit:" : "حد الذاكرة:",
     "Max execution time:" : "أقصى زمن تنفيذ:",
+    "seconds" : "ثوانٍ",
     "Upload max size:" : "الحجم الأقصى للرفع:",
     "OPcache Revalidate Frequency:" : "تواتر إعادة مصادقة ذاكرة التخزين المؤقت OPcache:",
     "Extensions:" : "الامتدادات extensions:",
