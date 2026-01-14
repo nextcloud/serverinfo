@@ -13,6 +13,7 @@ OC.L10N.register(
     "Users:" : "Gebruikers:",
     "PHP" : "PHP",
     "Version:" : "Weergawe:",
+    "seconds" : "sekondes",
     "Database" : "Databasis",
     "Type:" : "Tipe:",
     "Copy" : "Kopieer"
