@@ -72,6 +72,7 @@ OC.L10N.register(
     "OPcache Revalidate Frequency:" : "Frequência de Revalidação do OPcache:",
     "Extensions:" : "Extensões:",
     "Unable to list extensions" : "Não foi possível listar as extensões",
+    "PHP Info:" : "Informações do PHP",
     "Show phpinfo" : "Mostrar phpinfo",
     "FPM worker pool" : "Pool de trabalhadores FPM",
     "Pool name:" : "Nome do pool:",
