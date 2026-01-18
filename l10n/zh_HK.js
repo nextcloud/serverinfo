@@ -72,6 +72,7 @@ OC.L10N.register(
     "OPcache Revalidate Frequency:" : "OPcache 重新驗證頻率：",
     "Extensions:" : "PHP 擴展：",
     "Unable to list extensions" : "無法列出 PHP 擴展",
+    "PHP Info:" : "PHP 資訊：",
     "Show phpinfo" : "顯示 phpinfo",
     "FPM worker pool" : "FPM 共用人員",
     "Pool name:" : "共用資源名稱：",
