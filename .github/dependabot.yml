@@ -37,18 +37,3 @@ updates:
     labels:
       - 3. to review
       - dependencies
-
-  # GitHub Actions
-  - package-ecosystem: "github-actions"
-    directory: ".github/workflows"
-    commit-message:
-      prefix: "ci"
-      include: "scope"
-    schedule:
-      interval: weekly
-      day: saturday
-      time: "03:30"
-      timezone: Europe/Berlin
-    labels:
-      - 3. to review
-      - dependencies
