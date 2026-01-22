@@ -66,6 +66,7 @@ OC.L10N.register(
     "PHP" : "PHP",
     "Version:" : "版本：",
     "Memory limit:" : "記憶體限制：",
+    "MB" : "MB",
     "Max execution time:" : "最長執行時間：",
     "seconds" : "秒",
     "Upload max size:" : "上傳至多：",
