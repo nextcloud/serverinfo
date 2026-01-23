@@ -24,7 +24,7 @@ class ShareStatistics {
 	 */
 	public function getShareStatistics(): array {
 		$query = $this->connection->getQueryBuilder();
-		$query->selectAlias($query->createFunction('COUNT(*)'), 'num_entries')
+		$query->select($query->func()->count('*', 'num_entries'))
 			->addSelect(['permissions', 'share_type'])
 			->from('share')
 			->addGroupBy('permissions')
@@ -56,7 +56,7 @@ class ShareStatistics {
 	 */
 	protected function countEntries(string $tableName): int {
 		$query = $this->connection->getQueryBuilder();
-		$query->selectAlias($query->createFunction('COUNT(*)'), 'num_entries')
+		$query->select($query->func()->count('*', 'num_entries'))
 			->from($tableName);
 		$result = $query->executeQuery();
 		$row = $result->fetch();
