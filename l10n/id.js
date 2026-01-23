@@ -12,6 +12,7 @@ OC.L10N.register(
     "Size:" : "Ukuran:",
     "Files:" : "Berkas:",
     "Active users" : "Pengguna aktif",
+    "Last hour" : "Satu jam terakhir",
     "Shares" : "Dibagikan",
     "Users:" : "Pengguna:",
     "PHP" : "PHP",
