@@ -11,6 +11,7 @@ OC.L10N.register(
     "Temperature" : "Suhu",
     "Size:" : "Ukuran:",
     "Files:" : "Berkas:",
+    "Network" : "Jaringan",
     "Active users" : "Pengguna aktif",
     "Last hour" : "Satu jam terakhir",
     "Shares" : "Dibagikan",
