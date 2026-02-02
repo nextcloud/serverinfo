@@ -9,6 +9,7 @@ OC.L10N.register(
     "Temperature" : "তাপমাত্রা",
     "Size:" : "আয়তনঃ",
     "Shares" : "ভাগাভাগি",
+    "seconds" : "সেকেন্ড",
     "Type:" : "ধরণঃ"
 },
 "nplurals=2; plural=(n != 1);");
