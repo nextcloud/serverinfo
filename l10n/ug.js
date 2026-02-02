@@ -90,7 +90,7 @@ OC.L10N.register(
     "Use this end point to connect an external monitoring tool:" : "بۇ ئاخىرقى نۇقتىنى ئىشلىتىپ سىرتقى نازارەت قىلىش قورالىنى ئۇلاڭ:",
     "Copy" : "كۆچۈرۈڭ",
     "Output in JSON" : "JSON دىكى چىقىرىش",
-    "Skip apps section (including apps section will send an external request to the app store)" : "ئەپ بۆلەكلىرىدىن ئاتلاش (ئەپ بۆلىكىنى ئۆز ئىچىگە ئالىدۇ) ئەپ دۇكىنىغا تاشقى تەلەپ ئەۋەتىدۇ)",
+    "Skip apps section (including apps section will send an external request to the app store)" : "ئەپ بۆلەكلىرىدىن ئاتلاش (ئەپ بۆلىكىنى ئۆز ئىچىگە ئالىدۇ ھەمدە ئەپ دۇكىنىغا تاشقى تەلەپ ئەۋەتىدۇ)",
     "Skip server update" : "مۇلازىمېتىر يېڭىلاشتىن ئاتلاڭ",
     "To use an access token, please generate one then set it using the following command:" : "زىيارەت بەلگىسىنى ئىشلىتىش ئۈچۈن بىرنى ھاسىل قىلىڭ ، ئاندىن تۆۋەندىكى بۇيرۇقنى ئىشلىتىپ تەڭشەڭ:",
     "Then pass the token with the \"NC-Token\" header when querying the above URL." : "ئاندىن يۇقارقى URL نى سورىغاندا «NC-Token» ماۋزۇسى ئارقىلىق بەلگە يوللاڭ.",
