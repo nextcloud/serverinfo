@@ -13,6 +13,7 @@ OC.L10N.register(
     "Last 24 Hours" : "Апошнія 24 гадзіны",
     "Last 7 Days" : "Апошнія 7 дзён",
     "Last 30 Days" : "Апошнія 30 дзён",
+    "seconds" : "с",
     "Database" : "База даных",
     "Type:" : "Тып:",
     "Copy" : "Капіяваць",

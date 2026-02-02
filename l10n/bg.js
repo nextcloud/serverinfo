@@ -57,6 +57,7 @@ OC.L10N.register(
     "Version:" : "Версия:",
     "Memory limit:" : "Ограничение на паметта:",
     "Max execution time:" : "Максимално време за изпълнение:",
+    "seconds" : "секунди",
     "Upload max size:" : "Максимално време за качване:",
     "Extensions:" : "Разширения",
     "Unable to list extensions" : "Невъзможност за изброяване на разширенията",
