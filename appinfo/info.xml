@@ -9,7 +9,7 @@
     <name>Monitoring</name>
     <summary>Monitoring app with useful server information</summary>
     <description>Provides useful server information, such as CPU load, RAM usage, disk usage, number of users, etc.</description>
-    <version>4.0.0-dev.0</version>
+    <version>4.0.0</version>
     <licence>agpl</licence>
     <author>Bjoern Schiessle</author>
     <author>Ivan Sein Santiago</author>
