@@ -97,7 +97,6 @@ OC.L10N.register(
     "Skip apps section (including apps section will send an external request to the app store)" : "Jäta rakenduste valik vahele (sh sellega seotud päring rakendustepoodi)",
     "Skip server update" : "Jäta serveri uuendus vahele",
     "To use an access token, please generate one then set it using the following command:" : "Ligipääsutunnuse kasutamiseks genereeri see ja seadista alljärgneva käsu abil:",
-    "Then pass the token with the \"NC-Token\" header when querying the above URL." : "Seejärel saada tunnus ülaloleva URL-i pärimisel \"NC-Token\" päisega.",
-    "Unknown Processor" : "Tundmatu protsessor"
+    "Then pass the token with the \"NC-Token\" header when querying the above URL." : "Seejärel saada tunnus ülaloleva URL-i pärimisel \"NC-Token\" päisega."
 },
 "nplurals=2; plural=(n != 1);");

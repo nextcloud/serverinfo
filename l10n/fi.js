@@ -59,7 +59,6 @@ OC.L10N.register(
     "Database" : "Tietokanta",
     "Type:" : "Tyyppi:",
     "External monitoring tool" : "Ulkopuolinen valvontatyökalu",
-    "Copy" : "Kopioi",
-    "Unknown Processor" : "Tuntematon suoritin"
+    "Copy" : "Kopioi"
 },
 "nplurals=2; plural=(n != 1);");
