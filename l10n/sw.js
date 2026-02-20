@@ -93,7 +93,6 @@ OC.L10N.register(
     "Skip apps section (including apps section will send an external request to the app store)" : "Ruka sehemu ya programu (pamoja na sehemu ya programu itatuma ombi la nje kwenye duka la programu)",
     "Skip server update" : "Ruka sasisho la seva",
     "To use an access token, please generate one then set it using the following command:" : "Ili kutumia tokeni ya ufikiaji, tafadhali toa moja kisha uiweke kwa kutumia amri ifuatayo:",
-    "Then pass the token with the \"NC-Token\" header when querying the above URL." : "Kisha pitisha ishara kwa kichwa cha \"NC-Token\" unapouliza URL iliyo hapo juu.",
-    "Unknown Processor" : "Kichakataji kisichojulikana"
+    "Then pass the token with the \"NC-Token\" header when querying the above URL." : "Kisha pitisha ishara kwa kichwa cha \"NC-Token\" unapouliza URL iliyo hapo juu."
 },
 "nplurals=2; plural=(n != 1);");

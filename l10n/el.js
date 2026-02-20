@@ -93,7 +93,6 @@ OC.L10N.register(
     "Skip apps section (including apps section will send an external request to the app store)" : "Παράλειψη τμήματος εφαρμογών (η συμπερίληψη του τμήματος εφαρμογών θα στείλει εξωτερικό αίτημα στο app store)",
     "Skip server update" : "Παράλειψη ενημέρωσης διακομιστή",
     "To use an access token, please generate one then set it using the following command:" : "Για να χρησιμοποιήσετε ένα αναγνωριστικό πρόσβασης (token), δημιουργήστε ένα και ορίστε το χρησιμοποιώντας την ακόλουθη εντολή:",
-    "Then pass the token with the \"NC-Token\" header when querying the above URL." : "Στη συνέχεια, περάστε το αναγνωριστικό με την κεφαλίδα \"NC-Token\" όταν υποβάλετε ερώτημα στην παραπάνω διεύθυνση URL.",
-    "Unknown Processor" : "Άγνωστος Επεξεργαστής"
+    "Then pass the token with the \"NC-Token\" header when querying the above URL." : "Στη συνέχεια, περάστε το αναγνωριστικό με την κεφαλίδα \"NC-Token\" όταν υποβάλετε ερώτημα στην παραπάνω διεύθυνση URL."
 },
 "nplurals=2; plural=(n != 1);");

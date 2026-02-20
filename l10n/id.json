@@ -95,7 +95,6 @@
     "Skip apps section (including apps section will send an external request to the app store)" : "Lewati bagian aplikasi (menyertakan bagian aplikasi akan mengirim permintaan eksternal ke app store)",
     "Skip server update" : "Lewati pembaruan server",
     "To use an access token, please generate one then set it using the following command:" : "Untuk menggunakan token akses, silakan buat token lalu tetapkan menggunakan perintah berikut:",
-    "Then pass the token with the \"NC-Token\" header when querying the above URL." : "Kemudian sertakan token tersebut dengan header \"NC-Token\" saat melakukan kueri ke URL di atas.",
-    "Unknown Processor" : "Prosesor Tidak Dikenal"
+    "Then pass the token with the \"NC-Token\" header when querying the above URL." : "Kemudian sertakan token tersebut dengan header \"NC-Token\" saat melakukan kueri ke URL di atas."
 },"pluralForm" :"nplurals=1; plural=0;"
 }

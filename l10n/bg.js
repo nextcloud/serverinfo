@@ -66,7 +66,6 @@ OC.L10N.register(
     "External monitoring tool" : "Външно средство за мониторинг",
     "Copy" : "Копиране",
     "To use an access token, please generate one then set it using the following command:" : "За да използвате токен за достъп, моля, генерирайте такъв, след което го задайте с помощта на следната команда:",
-    "Then pass the token with the \"NC-Token\" header when querying the above URL." : "След това предайте токена със заглавката „NC-Token “, когато правите заявка към горния URL адрес.",
-    "Unknown Processor" : "Неизвестен процесор"
+    "Then pass the token with the \"NC-Token\" header when querying the above URL." : "След това предайте токена със заглавката „NC-Token “, когато правите заявка към горния URL адрес."
 },
 "nplurals=2; plural=(n != 1);");
