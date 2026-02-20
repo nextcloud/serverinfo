@@ -70,7 +70,6 @@ OC.L10N.register(
     "Skip apps section (including apps section will send an external request to the app store)" : "Preskoči razdelek programov (vključitev razdelka pošlje zunanji zahtevek trgovini s programi).",
     "Skip server update" : "Preskoči posodobitev strežnika",
     "To use an access token, please generate one then set it using the following command:" : "Za uporabo žetona za dostop, ga je treba najprej ustvariti in nato nastaviti z ukazom:",
-    "Then pass the token with the \"NC-Token\" header when querying the above URL." : "Pri poizvedovanju po zgornjem naslovu URL je treba žeton nato prenesti z glavo »NC-Token«.",
-    "Unknown Processor" : "Neznan processor"
+    "Then pass the token with the \"NC-Token\" header when querying the above URL." : "Pri poizvedovanju po zgornjem naslovu URL je treba žeton nato prenesti z glavo »NC-Token«."
 },
 "nplurals=4; plural=(n%100==1 ? 0 : n%100==2 ? 1 : n%100==3 || n%100==4 ? 2 : 3);");

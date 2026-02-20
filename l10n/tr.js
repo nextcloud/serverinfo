@@ -97,7 +97,6 @@ OC.L10N.register(
     "Skip apps section (including apps section will send an external request to the app store)" : "Uygulamalar bölümü atlansın (uygulamalar bölümünün katılması, uygulama mağazasına bir dış istek gönderir)",
     "Skip server update" : "Sunucu güncellemesini atla",
     "To use an access token, please generate one then set it using the following command:" : "Erişim kodunu kullanmak için yeni bir kod oluşturup şu komutu yürüterek ayarlayın:",
-    "Then pass the token with the \"NC-Token\" header when querying the above URL." : "Ardından yukarıdaki adresi sorgularken kodu \"NC-Token\" üst bilgisi ile gönderin.",
-    "Unknown Processor" : "İşlemci bilinmiyor"
+    "Then pass the token with the \"NC-Token\" header when querying the above URL." : "Ardından yukarıdaki adresi sorgularken kodu \"NC-Token\" üst bilgisi ile gönderin."
 },
 "nplurals=2; plural=(n > 1);");

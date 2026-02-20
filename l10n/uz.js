@@ -97,7 +97,6 @@ OC.L10N.register(
     "Skip apps section (including apps section will send an external request to the app store)" : "Ilovalarni o'tkazib yuborish bo'limi (ilovalar bo'limi ham ilova do'koniga tashqi so'rov yuboradi)",
     "Skip server update" : "Server yangilanishini o'tkazib yuborish",
     "To use an access token, please generate one then set it using the following command:" : "Kirish tokenidan foydalanish uchun, iltimos, uni yarating va keyin uni quyidagi buyruq yordamida o'rnating:",
-    "Then pass the token with the \"NC-Token\" header when querying the above URL." : "Keyin yuqoridagi URL manziliga so'rov yuborayotganda tokenni \"NC-Token\" sarlavhasi bilan uzating.",
-    "Unknown Processor" : "Noma'lum protsessor"
+    "Then pass the token with the \"NC-Token\" header when querying the above URL." : "Keyin yuqoridagi URL manziliga so'rov yuborayotganda tokenni \"NC-Token\" sarlavhasi bilan uzating."
 },
 "nplurals=1; plural=0;");

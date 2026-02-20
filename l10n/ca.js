@@ -64,7 +64,6 @@ OC.L10N.register(
     "External monitoring tool" : "Eina externa de monitorització",
     "Copy" : "Copia",
     "To use an access token, please generate one then set it using the following command:" : "Per utilitzar un testimoni d'accés, genereu-ne un i configureu-lo amb l'ordre següent:",
-    "Then pass the token with the \"NC-Token\" header when querying the above URL." : "A continuació, passeu el testimoni amb la capçalera \"NC-Token\" quan consulteu l’adreça URL anterior.",
-    "Unknown Processor" : "Processador desconegut"
+    "Then pass the token with the \"NC-Token\" header when querying the above URL." : "A continuació, passeu el testimoni amb la capçalera \"NC-Token\" quan consulteu l’adreça URL anterior."
 },
 "nplurals=2; plural=(n != 1);");

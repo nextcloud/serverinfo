@@ -97,7 +97,6 @@ OC.L10N.register(
     "Skip apps section (including apps section will send an external request to the app store)" : "Omitir a sección de aplicacións (se se inclúe a sección de aplicacións, enviarase unha solicitude externa á tenda de aplicacións)",
     "Skip server update" : "Omitir actualización do servidor",
     "To use an access token, please generate one then set it using the following command:" : "Para usar un testemuño de acceso, xere un e configúreo usando a seguinte orde:",
-    "Then pass the token with the \"NC-Token\" header when querying the above URL." : "A continuación, pase o testemuño coa cabeceira «NC-Token» ao consultar o URL anterior.",
-    "Unknown Processor" : "Procesador descoñecido"
+    "Then pass the token with the \"NC-Token\" header when querying the above URL." : "A continuación, pase o testemuño coa cabeceira «NC-Token» ao consultar o URL anterior."
 },
 "nplurals=2; plural=(n != 1);");
