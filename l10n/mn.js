@@ -4,6 +4,7 @@ OC.L10N.register(
     "CPU info not available" : "CPU мэдээлэл боломжгүй",
     "CPU Usage:" : "CPU ашиглалт:",
     "Load average: {percentage} % ({load}) last minute" : "Дундаж ачаалал: {percentage} % ({load}) сүүлийн минут",
+    "{lastMinutePercentage} % ({lastMinute}) last Minute\n{last5MinutesPercentage} % ({last5Minutes}) last 5 Minutes\n{last15MinutesPercentage} % ({last15Minutes}) last 15 Minutes" : "{lastMinutePercentage} % ({lastMinute}) сүүлийн 1 минут\n{last5MinutesPercentage} % ({last5Minutes}) сүүлийн 5 минут\n{last15MinutesPercentage} % ({last15Minutes}) сүүлийн 15 минут",
     "RAM Usage:" : "RAM ашиглалт:",
     "SWAP Usage:" : "SWAP ашиглалт:",
     "RAM: Total: {memTotalBytes}/Current usage: {memUsageBytes}" : "RAM: Нийт: {memTotalBytes}/Одоогийн ашиглалт: {memUsageBytes}",
@@ -20,6 +21,7 @@ OC.L10N.register(
     "System" : "сисмем",
     "Monitoring" : "Хяналт",
     "Monitoring app with useful server information" : "Ашигтай серверийн мэдээлэл бүхий хяналтын апп",
+    "Provides useful server information, such as CPU load, RAM usage, disk usage, number of users, etc." : "CPU-ийн ачаалал, RAM-ийн хэрэглээ, дискний хэрэглээ, хэрэглэгчдийн тоо гэх мэт серверийн хэрэгтэй мэдээллийг харуулдаг.",
     "Operating System:" : "Үйлдлийн систем:",
     "CPU:" : "CPU:",
     "threads" : "thread-ууд",
@@ -92,6 +94,9 @@ OC.L10N.register(
     "Use this end point to connect an external monitoring tool:" : "Гадаад хяналтын хэрэгсэл холбоход энэ төгсгөлийн цэгийг ашиглана уу:",
     "Copy" : "Хуулах",
     "Output in JSON" : "JSON гаралт",
-    "Skip server update" : "Серверийн шинэчлэлтийг алгасах"
+    "Skip apps section (including apps section will send an external request to the app store)" : "Аппуудын хэсгийг алгасах (аппуудын хэсгийг оруулахад апп дэлгүүр рүү гадаад хүсэлт илгээнэ)",
+    "Skip server update" : "Серверийн шинэчлэлтийг алгасах",
+    "To use an access token, please generate one then set it using the following command:" : "Хандалтын токен ашиглахын тулд эхлээд токен үүсгэж, дараахь командын тусламжтайгаар тохируулна уу:",
+    "Then pass the token with the \"NC-Token\" header when querying the above URL." : "Дараа нь дээрх URL-д хүсэлт илгээхдээ токеноо \"NC-Token\" толгойн мэдээллээр дамжуулна уу."
 },
 "nplurals=2; plural=(n != 1);");
