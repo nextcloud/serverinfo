@@ -95,9 +95,14 @@ class StorageStatistics {
 			$query->andWhere($query->expr()->notLike('id', $query->createNamedParameter('local::%')));
 		}
 		$result = $query->executeQuery();
-		$row = $result->fetch();
+		$row = $result->fetchOne();
 		$result->closeCursor();
-		return (int)$row['num_entries'];
+
+		if ($row === false) {
+			return 0;
+		}
+
+		return (int)$row;
 	}
 
 	public function updateAppDataStorageStats(): void {
