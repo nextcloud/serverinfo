@@ -97,30 +97,11 @@ class DatabaseStatistics {
 				}
 				break;
 			case 'pgsql':
-				$sql = "SELECT proname
-					FROM pg_proc
-					WHERE proname = 'pg_database_size'";
-				$result = $this->connection->executeQuery($sql);
-				$row = $result->fetch();
+				$database = $this->config->getSystemValueString('dbname');
+				$sql = 'SELECT pg_database_size(:dbname) as size';
+				$result = $this->connection->executeQuery($sql, ['dbname' => $database]);
+				$database_size = $result->fetchOne();
 				$result->closeCursor();
-				if ($row['proname'] === 'pg_database_size') {
-					$database = $this->config->getSystemValue('dbname');
-					if (strpos($database, '.') !== false) {
-						[$database, ] = explode('.', $database);
-					}
-					$sql = "SELECT oid
-						FROM pg_database
-						WHERE datname = '$database'";
-					$result = $this->connection->executeQuery($sql);
-					$row = $result->fetch();
-					$result->closeCursor();
-					$oid = $row['oid'];
-					$sql = 'SELECT pg_database_size(' . $oid . ') as size';
-					$result = $this->connection->executeQuery($sql);
-					$row = $result->fetch();
-					$result->closeCursor();
-					$database_size = $row['size'];
-				}
 				break;
 			case 'oci':
 				$sql = 'SELECT SUM(bytes) as dbsize

@@ -59,10 +59,14 @@ class ShareStatistics {
 		$query->select($query->func()->count('*', 'num_entries'))
 			->from($tableName);
 		$result = $query->executeQuery();
-		$row = $result->fetch();
+		$row = $result->fetchOne();
 		$result->closeCursor();
 
-		return (int)$row['num_entries'];
+		if ($row === false) {
+			return 0;
+		}
+
+		return (int)$row;
 	}
 
 	/**
@@ -72,7 +76,7 @@ class ShareStatistics {
 	 */
 	protected function countShares(int $type, bool $noPassword = false): int {
 		$query = $this->connection->getQueryBuilder();
-		$query->selectAlias($query->createFunction('COUNT(*)'), 'num_entries')
+		$query->select($query->func()->count('*', 'num_entries'))
 			->from('share')
 			->where($query->expr()->eq('share_type', $query->createNamedParameter($type)));
 
@@ -81,9 +85,13 @@ class ShareStatistics {
 		}
 
 		$result = $query->executeQuery();
-		$row = $result->fetch();
+		$row = $result->fetchOne();
 		$result->closeCursor();
 
-		return (int)$row['num_entries'];
+		if ($row === false) {
+			return 0;
+		}
+
+		return (int)$row;
 	}
 }
