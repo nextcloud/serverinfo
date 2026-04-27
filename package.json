@@ -1,0 +1,45 @@
+{
+	"name": "serverinfo",
+	"version": "6.1.0-dev.0",
+	"private": true,
+	"description": "Nextcloud serverinfo app — admin monitoring dashboard.",
+	"license": "AGPL-3.0-or-later",
+	"author": "Nextcloud GmbH and Nextcloud contributors",
+	"type": "module",
+	"scripts": {
+		"build": "vite build",
+		"dev": "NODE_ENV=development vite build --mode development",
+		"watch": "NODE_ENV=development vite build --mode development --watch",
+		"lint": "eslint --no-error-on-unmatched-pattern ./src/",
+		"lint:fix": "eslint --fix --no-error-on-unmatched-pattern ./src/",
+		"test": "vitest run",
+		"test:watch": "vitest watch"
+	},
+	"browserslist": [
+		"extends @nextcloud/browserslist-config"
+	],
+	"engines": {
+		"node": "^24.0.0",
+		"npm": "^11.3.0"
+	},
+	"dependencies": {
+		"@nextcloud/axios": "^2.5.1",
+		"@nextcloud/dialogs": "^7.0.0",
+		"@nextcloud/initial-state": "^2.2.0",
+		"@nextcloud/l10n": "^3.4.0",
+		"@nextcloud/vue": "^9.0.0",
+		"vue": "^3.5.13",
+		"vue-material-design-icons": "^5.4.1"
+	},
+	"devDependencies": {
+		"@nextcloud/browserslist-config": "^4.0.0",
+		"@nextcloud/eslint-config": "^9.0.0",
+		"@nextcloud/vite-config": "^2.5.2",
+		"@vue/test-utils": "^2.4.6",
+		"eslint": "^9.16.0",
+		"jsdom": "^25.0.1",
+		"typescript": "^5.7.2",
+		"vite": "^7.0.0",
+		"vitest": "^3.0.0"
+	}
+}

@@ -9,6 +9,7 @@ declare(strict_types=1);
 
 namespace OCA\ServerInfo\Controller;
 
+use OCA\ServerInfo\Os;
 use OCA\ServerInfo\PhpInfoResponse;
 use OCA\ServerInfo\SystemStatistics;
 use OCP\AppFramework\Controller;
@@ -23,6 +24,7 @@ class PageController extends Controller {
 		string $appName,
 		IRequest $request,
 		private SystemStatistics $systemStatistics,
+		private Os $os,
 		private IConfig $config,
 	) {
 		parent::__construct($appName, $request);
@@ -32,11 +34,11 @@ class PageController extends Controller {
 	 * request data update
 	 */
 	public function update(): JSONResponse {
-		$data = [
-			'system' => $this->systemStatistics->getSystemStatistics(true, true)
-		];
-
-		return new JSONResponse($data);
+		return new JSONResponse([
+			'system' => $this->systemStatistics->getSystemStatistics(true, true),
+			'thermalzones' => array_values($this->os->getThermalZones()),
+			'uptime' => $this->os->getUptime(),
+		]);
 	}
 
 	/**

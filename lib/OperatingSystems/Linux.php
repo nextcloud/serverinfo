@@ -126,10 +126,27 @@ class Linux implements IOperatingSystem {
 		$result = [
 			'gateway' => '',
 			'hostname' => \gethostname(),
+			'dns' => '',
 		];
 
 		if (function_exists('shell_exec')) {
 			$result['gateway'] = shell_exec('ip route | awk \'/default/ { print $3 }\'');
+		}
+
+		// Read DNS servers from /etc/resolv.conf
+		if (is_readable('/etc/resolv.conf')) {
+			$lines = @file('/etc/resolv.conf', FILE_IGNORE_NEW_LINES | FILE_SKIP_EMPTY_LINES) ?: [];
+			$servers = [];
+			foreach ($lines as $line) {
+				$line = trim($line);
+				if ($line === '' || $line[0] === '#' || $line[0] === ';') {
+					continue;
+				}
+				if (preg_match('/^nameserver\s+(\S+)/', $line, $m)) {
+					$servers[] = $m[1];
+				}
+			}
+			$result['dns'] = implode(', ', array_unique($servers));
 		}
 
 		return $result;
@@ -204,7 +221,7 @@ class Linux implements IOperatingSystem {
 		}
 
 		foreach ($matches['Filesystem'] as $i => $filesystem) {
-			if (in_array($matches['Type'][$i], ['tmpfs', 'devtmpfs', 'squashfs', 'overlay'], false)) {
+			if (in_array($matches['Type'][$i], ['tmpfs', 'devtmpfs', 'squashfs', 'overlay', 'efivarfs'], false)) {
 				continue;
 			} elseif (in_array($matches['Mounted'][$i], ['/etc/hostname', '/etc/hosts'], false)) {
 				continue;
