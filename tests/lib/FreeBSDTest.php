@@ -134,6 +134,18 @@ class FreeBSDTest extends TestCase {
 		$this->assertEquals($expected, $actual);
 	}
 
+	public function testGetNetworkInfo(): void {
+		$this->os->method('executeCommand')
+			->with('netstat -rn')
+			->willReturn("Routing tables\n\ndefault            192.0.2.1        UGS\n");
+
+		$networkInfo = $this->os->getNetworkInfo();
+
+		$this->assertSame('192.0.2.1', $networkInfo['gateway']);
+		$this->assertSame('', $networkInfo['dns']);
+		$this->assertArrayHasKey('hostname', $networkInfo);
+	}
+
 	public function testGetNetworkInterfacesError(): void {
 		$this->os->method('getNetInterfaces')
 			->willThrowException(new RuntimeException('Unable to get network interfaces'));

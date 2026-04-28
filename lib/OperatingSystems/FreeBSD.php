@@ -101,6 +101,7 @@ class FreeBSD implements IOperatingSystem {
 		$result = [
 			'gateway' => '',
 			'hostname' => \gethostname(),
+			'dns' => '',
 		];
 
 		try {
