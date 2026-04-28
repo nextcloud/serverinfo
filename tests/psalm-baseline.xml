@@ -10,6 +10,11 @@
       <code><![CDATA[PageController]]></code>
     </UnusedClass>
   </file>
+  <file src="lib/CronInfo.php">
+    <PossiblyUnusedMethod>
+      <code><![CDATA[__construct]]></code>
+    </PossiblyUnusedMethod>
+  </file>
   <file src="lib/DatabaseStatistics.php">
     <PossiblyUnusedMethod>
       <code><![CDATA[__construct]]></code>
@@ -26,6 +31,11 @@
     <PossiblyInvalidArrayAssignment>
       <code><![CDATA[$status['start-time']]]></code>
     </PossiblyInvalidArrayAssignment>
+    <PossiblyUnusedMethod>
+      <code><![CDATA[__construct]]></code>
+    </PossiblyUnusedMethod>
+  </file>
+  <file src="lib/JobQueueInfo.php">
     <PossiblyUnusedMethod>
       <code><![CDATA[__construct]]></code>
     </PossiblyUnusedMethod>
@@ -84,6 +94,11 @@
     <UnusedClass>
       <code><![CDATA[AdminSettings]]></code>
     </UnusedClass>
+  </file>
+  <file src="lib/SlowestJobs.php">
+    <PossiblyUnusedMethod>
+      <code><![CDATA[__construct]]></code>
+    </PossiblyUnusedMethod>
   </file>
   <file src="lib/ShareStatistics.php">
     <PossiblyUnusedMethod>
