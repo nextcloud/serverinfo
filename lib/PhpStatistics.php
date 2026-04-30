@@ -99,15 +99,23 @@ class PhpStatistics {
 	}
 
 	/**
-	 * Get all loaded php extensions
+	 * Get all loaded php extensions (PHP + Zend), de-duplicated and sorted.
 	 *
-	 * @return array|null of strings with the names of the loaded extensions
+	 * @return array|null array of extension names, or null if PHP forbids enumeration
 	 */
 	protected function getLoadedPhpExtensions(): ?array {
 		if (!function_exists('get_loaded_extensions')) {
 			return null;
 		}
-		$extensions = get_loaded_extensions();
+
+		// `get_loaded_extensions(true)` returns Zend extensions (OPcache, Xdebug, etc.)
+		// which are otherwise hidden from the regular call.
+		$extensions = array_merge(
+			get_loaded_extensions(false),
+			get_loaded_extensions(true)
+		);
+
+		$extensions = array_unique(array_map('strtolower', $extensions));
 		natcasesort($extensions);
 
 		return $extensions;
