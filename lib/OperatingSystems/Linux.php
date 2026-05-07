@@ -126,10 +126,20 @@ class Linux implements IOperatingSystem {
 		$result = [
 			'gateway' => '',
 			'hostname' => \gethostname(),
+			'dns' => '',
 		];
 
 		if (function_exists('shell_exec')) {
 			$result['gateway'] = shell_exec('ip route | awk \'/default/ { print $3 }\'');
+		}
+
+		try {
+			$resolvConf = $this->readContent('/etc/resolv.conf');
+			if (preg_match_all('/^\s*nameserver\s+(\S+)/m', $resolvConf, $matches)) {
+				$result['dns'] = implode(', ', array_unique($matches[1]));
+			}
+		} catch (RuntimeException) {
+			// okay
 		}
 
 		return $result;

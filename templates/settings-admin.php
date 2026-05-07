@@ -204,6 +204,10 @@ $phpinfo = $_['phpinfo'];
 				<span class="info"><?php p($_['networkinfo']['gateway']); ?></span>
 			</div>
 			<div class="col col-12">
+				<?php p($l->t('DNS:')); ?>
+				<span class="info"><?php p($_['networkinfo']['dns']); ?></span>
+			</div>
+			<div class="col col-12">
 				<div class="row">
 					<?php foreach ($interfaces as $interface): ?>
 
@@ -532,4 +536,3 @@ $phpinfo = $_['phpinfo'];
 	</div>
 
 </div>
-

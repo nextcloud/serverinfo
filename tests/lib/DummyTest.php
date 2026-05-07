@@ -56,4 +56,12 @@ class DummyTest extends TestCase {
 	public function testGetNetworkInterfaces(): void {
 		$this->assertEquals([], $this->os->getNetworkInterfaces());
 	}
+
+	public function testGetNetworkInfo(): void {
+		$networkInfo = $this->os->getNetworkInfo();
+
+		$this->assertArrayHasKey('hostname', $networkInfo);
+		$this->assertSame('', $networkInfo['gateway']);
+		$this->assertSame('', $networkInfo['dns']);
+	}
 }

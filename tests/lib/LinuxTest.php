@@ -256,6 +256,30 @@ class LinuxTest extends TestCase {
 		$this->assertTrue($this->os->supported());
 	}
 
+	public function testGetNetworkInfo(): void {
+		$this->os->method('readContent')
+			->with('/etc/resolv.conf')
+			->willReturn("# comment\nnameserver 127.0.0.53\nnameserver 1.1.1.1\n; ignored\nnameserver 127.0.0.53");
+
+		$networkInfo = $this->os->getNetworkInfo();
+
+		$this->assertSame('127.0.0.53, 1.1.1.1', $networkInfo['dns']);
+		$this->assertArrayHasKey('hostname', $networkInfo);
+		$this->assertArrayHasKey('gateway', $networkInfo);
+	}
+
+	public function testGetNetworkInfoWithoutResolvConf(): void {
+		$this->os->method('readContent')
+			->with('/etc/resolv.conf')
+			->willThrowException(new RuntimeException('Unable to read: "/etc/resolv.conf"'));
+
+		$networkInfo = $this->os->getNetworkInfo();
+
+		$this->assertSame('', $networkInfo['dns']);
+		$this->assertArrayHasKey('hostname', $networkInfo);
+		$this->assertArrayHasKey('gateway', $networkInfo);
+	}
+
 	public function testGetNetworkInterfaces(): void {
 		$this->os->method('getNetInterfaces')
 			->willReturn(json_decode(file_get_contents(__DIR__ . '/../data/linux_net_get_interfaces.json'), true, 512, JSON_THROW_ON_ERROR));
