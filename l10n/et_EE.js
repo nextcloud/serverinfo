@@ -43,6 +43,7 @@ OC.L10N.register(
     "Network" : "Võrk",
     "Hostname:" : "Hostinimi:",
     "Gateway:" : "Võrgulüüs:",
+    "DNS:" : "Nimeserver:",
     "Status:" : "Seisund:",
     "Speed:" : "Kiirus:",
     "Duplex:" : "Dupleks:",

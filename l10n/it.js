@@ -40,6 +40,7 @@ OC.L10N.register(
     "Network" : "Rete",
     "Hostname:" : "Nome host:",
     "Gateway:" : "Gateway:",
+    "DNS:" : "DNS:",
     "Status:" : "Stato:",
     "Speed:" : "Velocità:",
     "Duplex:" : "Duplex:",

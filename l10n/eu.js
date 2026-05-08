@@ -35,6 +35,7 @@ OC.L10N.register(
     "Network" : "Sarea",
     "Hostname:" : "Ostalari-izena:",
     "Gateway:" : "Sarbidea:",
+    "DNS:" : "DNS:",
     "Status:" : "Egoera:",
     "Speed:" : "Abiadura:",
     "Duplex:" : "Duplex:",

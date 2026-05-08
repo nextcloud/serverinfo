@@ -35,6 +35,7 @@ OC.L10N.register(
     "Free Space:" : "Laisva vieta:",
     "Network" : "Tinklas",
     "Gateway:" : "Tinklų sietuvas:",
+    "DNS:" : "DNS:",
     "Status:" : "Būsena:",
     "Speed:" : "Greitis:",
     "MAC:" : "MAC:",

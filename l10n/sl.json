@@ -33,6 +33,7 @@
     "Network" : "Omrežje",
     "Hostname:" : "Ime gostitelja:",
     "Gateway:" : "Prehod:",
+    "DNS:" : "DNS:",
     "Status:" : "Stanje:",
     "Speed:" : "Hitrost:",
     "Duplex:" : "Dupleks:",

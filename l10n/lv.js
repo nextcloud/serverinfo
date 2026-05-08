@@ -35,6 +35,7 @@ OC.L10N.register(
     "Network" : "Tīkls",
     "Hostname:" : "Resursa nosaukums:",
     "Gateway:" : "Vārteja:",
+    "DNS:" : "DNS:",
     "Status:" : "Statuss:",
     "Speed:" : "Ātrums:",
     "MAC:" : "MAC:",

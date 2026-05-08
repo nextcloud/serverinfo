@@ -43,6 +43,7 @@ OC.L10N.register(
     "Network" : "Hálózat",
     "Hostname:" : "Gépnév:",
     "Gateway:" : "Átjáró:",
+    "DNS:" : "DNS:",
     "Status:" : "Állapot:",
     "Speed:" : "Sebesség:",
     "Duplex:" : "Duplex:",

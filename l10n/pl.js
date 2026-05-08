@@ -35,6 +35,7 @@ OC.L10N.register(
     "Network" : "Sieć",
     "Hostname:" : "Nazwa hosta:",
     "Gateway:" : "Brama:",
+    "DNS:" : "DNS:",
     "Status:" : "Status:",
     "Speed:" : "Prędkość:",
     "Duplex:" : "Dupleks:",

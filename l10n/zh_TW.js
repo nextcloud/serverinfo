@@ -43,6 +43,7 @@ OC.L10N.register(
     "Network" : "網路",
     "Hostname:" : "主機名稱：",
     "Gateway:" : "網路閘道：",
+    "DNS:" : "DNS：",
     "Status:" : "狀態：",
     "Speed:" : "速度：",
     "Duplex:" : "雙工：",
