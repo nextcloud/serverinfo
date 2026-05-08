@@ -43,6 +43,7 @@ OC.L10N.register(
     "Network" : "Ağ",
     "Hostname:" : "Sunucu adı:",
     "Gateway:" : "Ağ geçidi:",
+    "DNS:" : "DNS:",
     "Status:" : "Durum:",
     "Speed:" : "Hız:",
     "Duplex:" : "Çift taraflı:",

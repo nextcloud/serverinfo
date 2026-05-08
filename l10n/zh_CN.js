@@ -38,6 +38,7 @@ OC.L10N.register(
     "Network" : "网络",
     "Hostname:" : "主机名：",
     "Gateway:" : "网关：",
+    "DNS:" : "DNS：",
     "Status:" : "状态：",
     "Speed:" : "速度：",
     "Duplex:" : "复式：",

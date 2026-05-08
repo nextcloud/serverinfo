@@ -30,6 +30,7 @@ OC.L10N.register(
     "Network" : "Rede",
     "Hostname:" : "Agospiador:",
     "Gateway:" : "Pasera:",
+    "DNS:" : "DNS:",
     "Status:" : "Estáu:",
     "Speed:" : "Velocidá:",
     "MAC:" : "MAC:",

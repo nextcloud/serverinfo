@@ -35,6 +35,7 @@ OC.L10N.register(
     "Network" : "Xarxa",
     "Hostname:" : "Nom de màquina:",
     "Gateway:" : "Passarel·la:",
+    "DNS:" : "DNS:",
     "Status:" : "Estat:",
     "Speed:" : "Velocitat:",
     "Duplex:" : "Dúplex:",

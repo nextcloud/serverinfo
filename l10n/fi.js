@@ -35,6 +35,7 @@ OC.L10N.register(
     "Network" : "Verkko",
     "Hostname:" : "Tietokoneen nimi:",
     "Gateway:" : "Yhdyskäytävä:",
+    "DNS:" : "Nimipalvelu:",
     "Status:" : "Tila:",
     "Speed:" : "Nopeus:",
     "MAC:" : "MAC:",

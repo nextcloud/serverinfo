@@ -43,6 +43,7 @@ OC.L10N.register(
     "Network" : "Síť",
     "Hostname:" : "Název stroje:",
     "Gateway:" : "Brána:",
+    "DNS:" : "DNS:",
     "Status:" : "Stav:",
     "Speed:" : "Rychlost:",
     "Duplex:" : "Duplex:",

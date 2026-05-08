@@ -40,6 +40,7 @@ OC.L10N.register(
     "Network" : "الشبكة",
     "Hostname:" : "اسم المُضِيف:",
     "Gateway:" : "البوابة gateway:",
+    "DNS:" : "نظام تسمية النطاقات DNS:",
     "Status:" : "الحالة status:",
     "Speed:" : "السرعة speed:",
     "Duplex:" : "الازدواج duplex:",

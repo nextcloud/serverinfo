@@ -35,6 +35,7 @@ OC.L10N.register(
     "Network" : "Omrežje",
     "Hostname:" : "Ime gostitelja:",
     "Gateway:" : "Prehod:",
+    "DNS:" : "DNS:",
     "Status:" : "Stanje:",
     "Speed:" : "Hitrost:",
     "Duplex:" : "Dupleks:",

@@ -35,6 +35,7 @@ OC.L10N.register(
     "Network" : "Мрежа",
     "Hostname:" : "Име на хост:",
     "Gateway:" : "Шлюз:",
+    "DNS:" : "DNS:",
     "Status:" : "Състояние:",
     "Speed:" : "Скорост:",
     "Duplex:" : "Дуплекс:",

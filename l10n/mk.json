@@ -33,6 +33,7 @@
     "Network" : "Мрежа",
     "Hostname:" : "Име на серверот:",
     "Gateway:" : "Gateway:",
+    "DNS:" : "DNS:",
     "Status:" : "Статус:",
     "Speed:" : "Брзина:",
     "Duplex:" : "Дуплекс:",
