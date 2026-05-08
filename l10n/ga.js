@@ -43,6 +43,7 @@ OC.L10N.register(
     "Network" : "Líonra",
     "Hostname:" : "Ainm an ósta:",
     "Gateway:" : "Geata:",
+    "DNS:" : "DNS:",
     "Status:" : "Stádas:",
     "Speed:" : "Luas:",
     "Duplex:" : "Déphléacsacha:",

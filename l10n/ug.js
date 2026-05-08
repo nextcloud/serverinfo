@@ -41,6 +41,7 @@ OC.L10N.register(
     "Network" : "تور",
     "Hostname:" : "ساھىبجامال:",
     "Gateway:" : "دەرۋازا:",
+    "DNS:" : "DNS:",
     "Status:" : "ھالىتى:",
     "Speed:" : "سۈرئەت:",
     "Duplex:" : "Duplex:",

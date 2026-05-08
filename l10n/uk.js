@@ -43,6 +43,7 @@ OC.L10N.register(
     "Network" : "Мережа",
     "Hostname:" : "Ім'я хосту:",
     "Gateway:" : "Шлюз:",
+    "DNS:" : "DNS:",
     "Status:" : "Стан:",
     "Speed:" : "Швидкість:",
     "Duplex:" : "Двосторонній обмін:",

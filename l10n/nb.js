@@ -35,6 +35,7 @@ OC.L10N.register(
     "Network" : "Nettverk",
     "Hostname:" : "Servernavn:",
     "Gateway:" : "Standardruter:",
+    "DNS:" : "DNS:",
     "Status:" : "Status:",
     "Speed:" : "Hastighet:",
     "Duplex:" : "Duplex:",
