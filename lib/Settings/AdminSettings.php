@@ -10,12 +10,15 @@ declare(strict_types=1);
 
 namespace OCA\ServerInfo\Settings;
 
+use OCA\ServerInfo\CronInfo;
 use OCA\ServerInfo\DatabaseStatistics;
 use OCA\ServerInfo\FpmStatistics;
+use OCA\ServerInfo\JobQueueInfo;
 use OCA\ServerInfo\Os;
 use OCA\ServerInfo\PhpStatistics;
 use OCA\ServerInfo\SessionStatistics;
 use OCA\ServerInfo\ShareStatistics;
+use OCA\ServerInfo\SlowestJobs;
 use OCA\ServerInfo\StorageStatistics;
 use OCA\ServerInfo\SystemStatistics;
 use OCP\AppFramework\Http\TemplateResponse;
@@ -36,6 +39,9 @@ class AdminSettings implements ISettings {
 		private ShareStatistics $shareStatistics,
 		private SessionStatistics $sessionStatistics,
 		private SystemStatistics $systemStatistics,
+		private CronInfo $cronInfo,
+		private JobQueueInfo $jobQueueInfo,
+		private SlowestJobs $slowestJobs,
 		private IConfig $config,
 	) {
 	}
@@ -60,6 +66,9 @@ class AdminSettings implements ISettings {
 			'activeUsers' => $this->sessionStatistics->getSessionStatistics(),
 			'system' => $this->systemStatistics->getSystemStatistics(true, true),
 			'thermalzones' => $this->os->getThermalZones(),
+			'cron' => $this->cronInfo->getCronInfo(),
+			'jobQueue' => $this->jobQueueInfo->getJobQueueInfo(),
+			'slowestJobs' => $this->slowestJobs->getSlowestJobs(),
 			'phpinfo' => $this->config->getAppValue('serverinfo', 'phpinfo', 'no') === 'yes',
 			'phpinfoUrl' => $this->urlGenerator->linkToRoute('serverinfo.page.phpinfo')
 		];
