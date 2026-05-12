@@ -10,10 +10,14 @@ declare(strict_types=1);
 
 namespace OCA\ServerInfo\Settings;
 
+use OCA\ServerInfo\ActiveConnections;
+use OCA\ServerInfo\ActivityRate;
 use OCA\ServerInfo\CronInfo;
 use OCA\ServerInfo\DatabaseStatistics;
 use OCA\ServerInfo\FpmStatistics;
 use OCA\ServerInfo\JobQueueInfo;
+use OCA\ServerInfo\LoginStats;
+use OCA\ServerInfo\LogTailReader;
 use OCA\ServerInfo\Os;
 use OCA\ServerInfo\PhpStatistics;
 use OCA\ServerInfo\SessionStatistics;
@@ -42,6 +46,10 @@ class AdminSettings implements ISettings {
 		private CronInfo $cronInfo,
 		private JobQueueInfo $jobQueueInfo,
 		private SlowestJobs $slowestJobs,
+		private LogTailReader $logTailReader,
+		private LoginStats $loginStats,
+		private ActivityRate $activityRate,
+		private ActiveConnections $activeConnections,
 		private IConfig $config,
 	) {
 	}
@@ -69,6 +77,10 @@ class AdminSettings implements ISettings {
 			'cron' => $this->cronInfo->getCronInfo(),
 			'jobQueue' => $this->jobQueueInfo->getJobQueueInfo(),
 			'slowestJobs' => $this->slowestJobs->getSlowestJobs(),
+			'logTail' => $this->logTailReader->recentErrors(),
+			'loginStats' => $this->loginStats->getStats(),
+			'activityRate' => $this->activityRate->getActivityRate(),
+			'activeConnections' => $this->activeConnections->getActiveConnections(),
 			'phpinfo' => $this->config->getAppValue('serverinfo', 'phpinfo', 'no') === 'yes',
 			'phpinfoUrl' => $this->urlGenerator->linkToRoute('serverinfo.page.phpinfo')
 		];
