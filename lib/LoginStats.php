@@ -9,10 +9,12 @@ declare(strict_types=1);
 
 namespace OCA\ServerInfo;
 
+use OCP\IConfig;
 use OCP\IDBConnection;
 
 class LoginStats {
 	public function __construct(
+		private IConfig $config,
 		private IDBConnection $db,
 	) {
 	}
@@ -23,10 +25,22 @@ class LoginStats {
 	 *     bruteforceAttempts1h: int,
 	 *     bruteforceTotal: int,
 	 *     topIps: list<array{ip: string, count: int}>,
-	 *     available: bool
+	 *     available: bool,
+	 *     reason?: string
 	 * }
 	 */
 	public function getStats(): array {
+		if ($this->usesRedisBruteforceBackend()) {
+			return [
+				'bruteforceAttempts24h' => 0,
+				'bruteforceAttempts1h' => 0,
+				'bruteforceTotal' => 0,
+				'topIps' => [],
+				'available' => false,
+				'reason' => 'redis_backend',
+			];
+		}
+
 		try {
 			$total = $this->countAttempts();
 		} catch (\Throwable) {
@@ -46,6 +60,14 @@ class LoginStats {
 			'topIps' => $this->topIps(),
 			'available' => true,
 		];
+	}
+
+	private function usesRedisBruteforceBackend(): bool {
+		if ($this->config->getSystemValueBool('auth.bruteforce.protection.force.database', false)) {
+			return false;
+		}
+		$distributed = ltrim($this->config->getSystemValueString('memcache.distributed', ''), '\\');
+		return $distributed === 'OC\Memcache\Redis';
 	}
 
 	private function countAttempts(?int $sinceTimestamp = null): int {

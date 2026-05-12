@@ -11,8 +11,10 @@ namespace OCA\ServerInfo\Tests;
 
 use OCA\ServerInfo\LoginStats;
 use OCP\DB\QueryBuilder\IQueryBuilder;
+use OCP\IConfig;
 use OCP\IDBConnection;
 use OCP\Server;
+use PHPUnit\Framework\MockObject\MockObject;
 use Test\TestCase;
 
 /**
@@ -20,6 +22,7 @@ use Test\TestCase;
  */
 class LoginStatsTest extends TestCase {
 	private IDBConnection $db;
+	private IConfig&MockObject $config;
 	private LoginStats $instance;
 
 	private const IP_A = '10.0.0.1';
@@ -29,7 +32,10 @@ class LoginStatsTest extends TestCase {
 	protected function setUp(): void {
 		parent::setUp();
 		$this->db = Server::get(IDBConnection::class);
-		$this->instance = new LoginStats($this->db);
+		$this->config = $this->createMock(IConfig::class);
+		$this->config->method('getSystemValueBool')->willReturn(false);
+		$this->config->method('getSystemValueString')->willReturn('');
+		$this->instance = new LoginStats($this->config, $this->db);
 		$this->cleanUp();
 	}
 
@@ -59,6 +65,29 @@ class LoginStatsTest extends TestCase {
 				'metadata' => $qb->createNamedParameter('{}'),
 			]);
 		$qb->executeStatement();
+	}
+
+	public function testRedisBackendReturnsUnavailable(): void {
+		$config = $this->createMock(IConfig::class);
+		$config->method('getSystemValueBool')->willReturn(false);
+		$config->method('getSystemValueString')->willReturn('OC\Memcache\Redis');
+		$instance = new LoginStats($config, $this->db);
+
+		$result = $instance->getStats();
+
+		$this->assertFalse($result['available']);
+		$this->assertSame('redis_backend', $result['reason']);
+	}
+
+	public function testForceDatabaseOverridesRedis(): void {
+		$config = $this->createMock(IConfig::class);
+		$config->method('getSystemValueBool')->willReturn(true);
+		$config->method('getSystemValueString')->willReturn('OC\Memcache\Redis');
+		$instance = new LoginStats($config, $this->db);
+
+		$result = $instance->getStats();
+
+		$this->assertTrue($result['available']);
 	}
 
 	public function testReturnShape(): void {
@@ -114,6 +143,7 @@ class LoginStatsTest extends TestCase {
 
 		$result = $this->instance->getStats();
 
+		$this->assertIsArray($result['topIps']);
 		foreach ($result['topIps'] as $entry) {
 			$this->assertArrayHasKey('ip', $entry);
 			$this->assertArrayHasKey('count', $entry);
