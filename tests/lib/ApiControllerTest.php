@@ -18,10 +18,10 @@ use OCA\ServerInfo\SessionStatistics;
 use OCA\ServerInfo\ShareStatistics;
 use OCA\ServerInfo\StorageStatistics;
 use OCA\ServerInfo\SystemStatistics;
+use OCA\ServerInfo\UptimeFormatter;
 use OCP\AppFramework\Http;
 use OCP\IConfig;
 use OCP\IGroupManager;
-use OCP\IL10N;
 use OCP\IRequest;
 use OCP\IUser;
 use OCP\IUserSession;
@@ -39,7 +39,7 @@ class ApiControllerTest extends \Test\TestCase {
 	private DatabaseStatistics&MockObject $databaseStatistics;
 	private ShareStatistics&MockObject $shareStatistics;
 	private SessionStatistics&MockObject $sessionStatistics;
-	private IL10N&MockObject $l10n;
+	private UptimeFormatter&MockObject $uptimeFormatter;
 
 	protected function setUp(): void {
 		parent::setUp();
@@ -55,7 +55,7 @@ class ApiControllerTest extends \Test\TestCase {
 		$this->databaseStatistics = $this->createMock(DatabaseStatistics::class);
 		$this->shareStatistics = $this->createMock(ShareStatistics::class);
 		$this->sessionStatistics = $this->createMock(SessionStatistics::class);
-		$this->l10n = $this->createMock(IL10N::class);
+		$this->uptimeFormatter = $this->createMock(UptimeFormatter::class);
 	}
 
 	private function getController($userSession) {
@@ -73,7 +73,7 @@ class ApiControllerTest extends \Test\TestCase {
 			$this->databaseStatistics,
 			$this->shareStatistics,
 			$this->sessionStatistics,
-			$this->l10n
+			$this->uptimeFormatter
 		);
 	}
 

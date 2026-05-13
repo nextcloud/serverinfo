@@ -17,12 +17,12 @@ use OCA\ServerInfo\SessionStatistics;
 use OCA\ServerInfo\ShareStatistics;
 use OCA\ServerInfo\StorageStatistics;
 use OCA\ServerInfo\SystemStatistics;
+use OCA\ServerInfo\UptimeFormatter;
 use OCP\AppFramework\Http;
 use OCP\AppFramework\Http\DataResponse;
 use OCP\AppFramework\OCSController;
 use OCP\IConfig;
 use OCP\IGroupManager;
-use OCP\IL10N;
 use OCP\IRequest;
 use OCP\IUserSession;
 
@@ -41,7 +41,7 @@ class ApiController extends OCSController {
 		private DatabaseStatistics $databaseStatistics,
 		private ShareStatistics $shareStatistics,
 		private SessionStatistics $sessionStatistics,
-		private IL10N $l10n,
+		private UptimeFormatter $uptimeFormatter,
 	) {
 		parent::__construct($appName, $request);
 	}
@@ -104,7 +104,7 @@ class ApiController extends OCSController {
 
 	public function BasicData(): DataResponse {
 		$servertime = $this->os->getTime();
-		$uptime = $this->formatUptime($this->os->getUptime());
+		$uptime = $this->uptimeFormatter->format($this->os->getUptime());
 
 		return new DataResponse([
 			'servertime' => $servertime,
@@ -126,31 +126,5 @@ class ApiController extends OCSController {
 			return $_SERVER['SERVER_SOFTWARE'];
 		}
 		return 'unknown';
-	}
-
-	/**
-	 * Return the uptime of the system as human readable value
-	 */
-	private function formatUptime(int $uptime): string {
-		if ($uptime === -1) {
-			return $this->l10n->t('Unknown');
-		}
-
-		try {
-			$boot = new \DateTime($uptime . ' seconds ago');
-		} catch (\Exception $e) {
-			return $this->l10n->t('Unknown');
-		}
-
-		$interval = $boot->diff(new \DateTime());
-		$days = $interval->days;
-		$hours = $interval->h;
-		$minutes = $interval->i;
-		$seconds = $interval->s;
-
-		if ($days > 0) {
-			return $this->l10n->t('%1$d days, %2$d hours, %3$d minutes, %4$d seconds', [$days, $hours, $minutes, $seconds]);
-		}
-		return $this->l10n->t('%1$d hours, %2$d minutes, %3$d seconds', [$hours, $minutes, $seconds]);
 	}
 }

@@ -11,6 +11,9 @@ namespace OCA\ServerInfo;
 
 use OCP\IDBConnection;
 
+/**
+ * @psalm-api
+ */
 class JobQueueInfo {
 	private const STUCK_THRESHOLD_SECONDS = 12 * 3600;
 
