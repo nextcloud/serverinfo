@@ -1,5 +1,5 @@
 <?xml version="1.0" encoding="UTF-8"?>
-<files psalm-version="6.10.0@9c0add4eb88d4b169ac04acb7c679918cbb9c252">
+<files psalm-version="6.16.1@f1f5de594dc76faf8784e02d3dc4716c91c6f6ac">
   <file src="lib/Controller/ApiController.php">
     <UnusedClass>
       <code><![CDATA[ApiController]]></code>
@@ -35,15 +35,15 @@
       <code><![CDATA[__construct]]></code>
     </PossiblyUnusedMethod>
   </file>
-  <file src="lib/JobQueueInfo.php">
-    <PossiblyUnusedMethod>
-      <code><![CDATA[__construct]]></code>
-    </PossiblyUnusedMethod>
-  </file>
   <file src="lib/Jobs/UpdateStorageStats.php">
     <UnusedClass>
       <code><![CDATA[UpdateStorageStats]]></code>
     </UnusedClass>
+  </file>
+  <file src="lib/LiveData.php">
+    <PossiblyUnusedMethod>
+      <code><![CDATA[__construct]]></code>
+    </PossiblyUnusedMethod>
   </file>
   <file src="lib/OperatingSystems/FreeBSD.php">
     <ForbiddenCode>
@@ -95,12 +95,12 @@
       <code><![CDATA[AdminSettings]]></code>
     </UnusedClass>
   </file>
-  <file src="lib/SlowestJobs.php">
+  <file src="lib/ShareStatistics.php">
     <PossiblyUnusedMethod>
       <code><![CDATA[__construct]]></code>
     </PossiblyUnusedMethod>
   </file>
-  <file src="lib/ShareStatistics.php">
+  <file src="lib/StaticData.php">
     <PossiblyUnusedMethod>
       <code><![CDATA[__construct]]></code>
     </PossiblyUnusedMethod>
@@ -128,5 +128,10 @@
     <UndefinedMethod>
       <code><![CDATA[free_space]]></code>
     </UndefinedMethod>
+  </file>
+  <file src="lib/UptimeFormatter.php">
+    <PossiblyUnusedMethod>
+      <code><![CDATA[__construct]]></code>
+    </PossiblyUnusedMethod>
   </file>
 </files>

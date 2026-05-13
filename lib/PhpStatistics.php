@@ -117,6 +117,6 @@ class PhpStatistics {
 		$extensions = array_unique(array_map('strtolower', $extensions));
 		natcasesort($extensions);
 
-		return $extensions;
+		return array_values($extensions);
 	}
 }
