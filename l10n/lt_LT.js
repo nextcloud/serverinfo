@@ -59,6 +59,7 @@ OC.L10N.register(
     "Upload max size:" : "Maksimalus įkeliamo failo dydis:",
     "Extensions:" : "Priedai:",
     "Show phpinfo" : "Rodyti phpinfo",
+    "FPM worker pool" : "FPM procesų grupė",
     "Database" : "Duomenų bazė",
     "Type:" : "Tipas:",
     "External monitoring tool" : "Išorinis stebėjimo įrankis",
