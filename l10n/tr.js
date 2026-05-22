@@ -21,7 +21,7 @@ OC.L10N.register(
     "System" : "Sistem",
     "Monitoring" : "İzleniyor",
     "Monitoring app with useful server information" : "Yararlı sunucu bilgileri sunan izleme uygulaması",
-    "Provides useful server information, such as CPU load, RAM usage, disk usage, number of users, etc." : "İşlemci yükü, bellek ve disk kullanımı, kullanıcı sayısı gibi sunucu hakkında çeşitli bilgiler sağlar. ",
+    "Provides useful server information, such as CPU load, RAM usage, disk usage, number of users, etc." : "İşlemci yükü, bellek ve disk kullanımı, kullanıcı sayısı gibi sunucu ile ilgili çeşitli bilgiler sağlar. ",
     "Operating System:" : "İşletim sistemi:",
     "CPU:" : "İşlemci",
     "threads" : "işlem",
