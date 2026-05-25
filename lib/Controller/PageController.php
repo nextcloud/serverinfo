@@ -17,6 +17,7 @@ use OCP\AppFramework\Http\NotFoundResponse;
 use OCP\AppFramework\Http\Response;
 use OCP\IConfig;
 use OCP\IRequest;
+use OCP\IUserSession;
 
 class PageController extends Controller {
 	public function __construct(
@@ -24,6 +25,7 @@ class PageController extends Controller {
 		IRequest $request,
 		private SystemStatistics $systemStatistics,
 		private IConfig $config,
+		private IUserSession $userSession,
 	) {
 		parent::__construct($appName, $request);
 	}
@@ -43,7 +45,7 @@ class PageController extends Controller {
 	 * @NoCSRFRequired
 	 */
 	public function phpinfo(): Response {
-		if ($this->config->getAppValue($this->appName, 'phpinfo', 'no') === 'yes') {
+		if ($this->config->getAppValue($this->appName, 'phpinfo', 'no') === 'yes' && $this->userSession->isLoggedIn() && $this->userSession->getUser()?->isAdmin()) {
 			return new PhpInfoResponse();
 		}
 		return new NotFoundResponse();
