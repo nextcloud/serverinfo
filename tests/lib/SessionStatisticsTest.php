@@ -7,7 +7,6 @@ declare(strict_types=1);
  * SPDX-License-Identifier: AGPL-3.0-or-later
  */
 
-
 namespace OCA\ServerInfo\Tests;
 
 use OCA\ServerInfo\SessionStatistics;
@@ -36,7 +35,6 @@ class SessionStatisticsTest extends TestCase {
 	private const OFFSET_3MONTHS = 7776000;
 	private const OFFSET_6MONTHS = 15552000;
 	private const OFFSET_1YEAR = 31536000;
-
 
 	protected function setUp(): void {
 		parent::setUp();
