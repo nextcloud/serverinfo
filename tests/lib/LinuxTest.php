@@ -68,7 +68,6 @@ class LinuxTest extends TestCase {
 			->with('/proc/cpuinfo')
 			->willReturn(file_get_contents(__DIR__ . '/../data/linux_cpuinfo'));
 
-
 		$cpu = $this->os->getCPU();
 
 		$this->assertEquals('Intel(R) Core(TM) i5-6500 CPU @ 3.20GHz', $cpu->getName());
@@ -296,7 +295,6 @@ class LinuxTest extends TestCase {
 				}
 				throw new RuntimeException();
 			});
-
 
 		$net1 = new NetInterface('lo', true);
 		$net1->addIPv4('127.0.0.1');
