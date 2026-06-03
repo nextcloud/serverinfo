@@ -44,7 +44,6 @@ class DummyTest extends TestCase {
 		$this->assertEquals(-1, $this->os->getUptime());
 	}
 
-
 	public function testGetDiskInfo(): void {
 		$this->assertEquals([], $this->os->getDiskInfo());
 	}
