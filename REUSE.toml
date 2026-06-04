@@ -34,3 +34,10 @@ path = "js/smoothie.js"
 precedence = "aggregate"
 SPDX-FileCopyrightText = ["2010-2013 Joe Walnes", "2013-2014 Drew Noakes"]
 SPDX-License-Identifier = "MIT"
+
+[[annotations]]
+path = "js/jquery-3.7.1.min.js"
+precedence = "aggregate"
+SPDX-FileCopyrightText = ["OpenJS Foundation and other contributors"]
+SPDX-License-Identifier = "MIT"
+

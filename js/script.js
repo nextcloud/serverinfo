@@ -56,7 +56,9 @@
 	window.addEventListener('resize', resizeSystemCharts)
 
 	function getThemedPrimaryColor() {
-		return OCA.Theming ? OCA.Theming.color : 'rgb(54, 129, 195)';
+		return getComputedStyle(document.documentElement)
+			.getPropertyValue('--color-primary-element')
+			.trim() || 'rgb(54, 129, 195)';
 	}
 
 	function getThemedPassiveColor() {
@@ -339,3 +341,10 @@ document.addEventListener('DOMContentLoaded', function (event) {
 	const $params = document.querySelectorAll('.update-monitoring-endpoint-url');
 	$params.forEach($param => $param.addEventListener('change', updateMonitoringUrl));
 });
+
+$(document).on('ajaxSend', function(elm, xhr, settings) {
+	if (settings.crossDomain === false) {
+		xhr.setRequestHeader('requesttoken', document.head.dataset.requesttoken)
+		xhr.setRequestHeader('OCS-APIREQUEST', 'true')
+	}
+})
