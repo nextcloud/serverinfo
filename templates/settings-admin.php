@@ -14,6 +14,7 @@ use OCA\ServerInfo\Resources\NetInterface;
 use OCA\ServerInfo\Resources\ThermalZone;
 use OCP\Util;
 
+script('serverinfo', 'jquery-3.7.1.min');
 script('serverinfo', 'script');
 script('serverinfo', 'smoothie');
 script('serverinfo', 'Chart.min');
