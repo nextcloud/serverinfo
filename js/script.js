@@ -344,7 +344,7 @@ document.addEventListener('DOMContentLoaded', function (event) {
 
 $(document).on('ajaxSend', function(elm, xhr, settings) {
 	if (settings.crossDomain === false) {
-		xhr.setRequestHeader('requesttoken', document.head.dataset.requesttoken)
+		xhr.setRequestHeader('requesttoken', OC.requestToken)
 		xhr.setRequestHeader('OCS-APIREQUEST', 'true')
 	}
 })
