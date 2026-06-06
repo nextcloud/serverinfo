@@ -46,7 +46,7 @@ OC.L10N.register(
     "Last 24 Hours" : "Paskutinės 24 valandos",
     "Last 7 Days" : "Paskutinės 7 dienos",
     "Last 30 Days" : "Paskutinės 30 dienų",
-    "Shares" : "Viešiniai",
+    "Shares" : "Bendrinimai",
     "Users:" : "Vartotojai:",
     "Groups:" : "Grupės:",
     "Links:" : "Nuorodos:",
