@@ -128,7 +128,7 @@ class SystemStatistics {
 	 * @return mixed free space or null
 	 * @throws \OCP\Files\InvalidPathException
 	 */
-	protected function getFreeSpace() {
+	public function getFreeSpace() {
 		$free_space = $this->view->free_space();
 		if ($free_space === FileInfo::SPACE_UNKNOWN
 			|| $free_space === FileInfo::SPACE_UNLIMITED

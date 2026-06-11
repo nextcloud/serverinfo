@@ -237,13 +237,50 @@ class Linux implements IOperatingSystem {
 
 	#[\Override]
 	public function getThermalZones(): array {
+		return array_merge($this->readHwmonSensors(), $this->readThermalZoneSensors());
+	}
+
+	/**
+	 * Read temperatures from the hwmon sensor interface (/sys/class/hwmon).
+	 *
+	 * @return ThermalZone[]
+	 */
+	protected function readHwmonSensors(): array {
 		$data = [];
 
-		$zones = glob('/sys/class/thermal/thermal_zone*');
-		if ($zones === false) {
-			return $data;
+		$drivers = glob('/sys/class/hwmon/hwmon*') ?: [];
+		foreach ($drivers as $driver) {
+			try {
+				$name = $this->readContent($driver . '/name');
+			} catch (RuntimeException) {
+				// driver without a name, skip it
+				continue;
+			}
+
+			$zones = glob($driver . '/temp*_label') ?: [];
+			foreach ($zones as $zone) {
+				try {
+					$type = $name . ' ' . $this->readContent($zone);
+					$temp = (float)((int)$this->readContent(str_replace('_label', '_input', $zone)) / 1000);
+					$data[] = new ThermalZone(md5($zone), $type, $temp);
+				} catch (RuntimeException) {
+					// unable to read sensor
+				}
+			}
 		}
 
+		return $data;
+	}
+
+	/**
+	 * Read temperatures from the thermal zone interface (/sys/class/thermal).
+	 *
+	 * @return ThermalZone[]
+	 */
+	protected function readThermalZoneSensors(): array {
+		$data = [];
+
+		$zones = glob('/sys/class/thermal/thermal_zone*') ?: [];
 		foreach ($zones as $zone) {
 			try {
 				$type = $this->readContent($zone . '/type');
