@@ -76,7 +76,7 @@ OC.L10N.register(
     "Unable to list extensions" : "Non é posíbel listar as extensións",
     "PHP Info:" : "Información PHP:",
     "Show phpinfo" : "Amosar phpinfo",
-    "FPM worker pool" : "Agrupamento de traballadores FPM",
+    "FPM worker pool" : "Agrupamento de traballadores do servizo FPM",
     "Pool name:" : "Nome do agrupamento:",
     "Pool type:" : "Tipo de agrupamento:",
     "Start time:" : "Hora de comezo:",
