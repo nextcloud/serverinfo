@@ -18,6 +18,7 @@ declare(strict_types=1);
 
 return [
 	'routes' => [
+		['name' => 'page#data', 'url' => '/data', 'verb' => 'GET'],
 		['name' => 'page#update', 'url' => '/update', 'verb' => 'GET'],
 		['name' => 'page#phpinfo', 'url' => '/phpinfo', 'verb' => 'GET'],
 	],

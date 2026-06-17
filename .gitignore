@@ -5,3 +5,4 @@
 /tests/.phpunit.result.cache
 /vendor
 /vendor-bin/**/vendor/
+/node_modules/

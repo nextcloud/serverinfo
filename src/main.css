@@ -105,10 +105,9 @@
 }
 
 .infoicon {
-	width: 28px;
+	display: inline-flex;
 	vertical-align: middle;
-	padding: 5px;
-	filter: var(--background-invert-if-dark);
+	margin-right: 8px;
 }
 
 .chart-container {
@@ -313,10 +312,6 @@
 	border-radius: var(--border-radius-large);
 }
 
-.cpu-wrapper {
-	width: 100%;
-}
-
 .server-info-table table {
 	width: 100%;
 }
@@ -324,6 +319,7 @@
 .server-info-table td {
 	padding: 6px;
 }
+
 
 .server-info__tag-wrapper {
 	display: flex;
@@ -333,7 +329,7 @@
 .server-info__php-extension-tag {
 	display: inline-block;
 	margin: 2px;
-	padding: 2px 12px;
+	padding: 1px 9px;
 	border-radius: 16px;
 	border: 1px solid var(--color-main-text);
 }

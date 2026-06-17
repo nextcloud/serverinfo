@@ -24,13 +24,7 @@ SPDX-FileCopyrightText = "2016 Nextcloud GmbH and Nextcloud contributors"
 SPDX-License-Identifier = "AGPL-3.0-or-later"
 
 [[annotations]]
-path = "js/Chart.min.js"
+path = "css/**.css"
 precedence = "aggregate"
-SPDX-FileCopyrightText = "2021 Chart.js Contributors"
-SPDX-License-Identifier = "MIT"
-
-[[annotations]]
-path = "js/smoothie.js"
-precedence = "aggregate"
-SPDX-FileCopyrightText = ["2010-2013 Joe Walnes", "2013-2014 Drew Noakes"]
-SPDX-License-Identifier = "MIT"
+SPDX-FileCopyrightText = "Nextcloud GmbH and Nextcloud contributors"
+SPDX-License-Identifier = "AGPL-3.0-or-later"

@@ -12,6 +12,9 @@ namespace OCA\ServerInfo;
 use OCP\IDBConnection;
 use Psr\Log\LoggerInterface;
 
+/**
+ * @psalm-api
+ */
 class SlowestJobs {
 	public function __construct(
 		private IDBConnection $db,
