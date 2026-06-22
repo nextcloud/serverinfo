@@ -22,7 +22,6 @@
     "Provides useful server information, such as CPU load, RAM usage, disk usage, number of users, etc." : "Предоставляет полезную информацию о сервере, такую как загрузка процессора, использование ОЗУ, диска, количество пользователей и т.д.",
     "Operating System:" : "Операционная система:",
     "CPU:" : "CPU:",
-    "threads" : "темы",
     "Memory:" : "Память:",
     "Server time:" : "Серверное время:",
     "Uptime:" : "Время работы:",

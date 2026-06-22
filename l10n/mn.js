@@ -24,7 +24,6 @@ OC.L10N.register(
     "Provides useful server information, such as CPU load, RAM usage, disk usage, number of users, etc." : "CPU-ийн ачаалал, RAM-ийн хэрэглээ, дискний хэрэглээ, хэрэглэгчдийн тоо гэх мэт серверийн хэрэгтэй мэдээллийг харуулдаг.",
     "Operating System:" : "Үйлдлийн систем:",
     "CPU:" : "CPU:",
-    "threads" : "thread-ууд",
     "Memory:" : "Санах ой:",
     "Server time:" : "Серверийн цаг:",
     "Uptime:" : "Ажилласан хугацаа:",

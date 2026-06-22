@@ -22,7 +22,6 @@ OC.L10N.register(
     "Provides useful server information, such as CPU load, RAM usage, disk usage, number of users, etc." : "CPU يۈكى ، RAM ئىشلىتىش ، دىسكا ئىشلىتىش ، ئىشلەتكۈچى سانى قاتارلىق پايدىلىق مۇلازىمېتىر ئۇچۇرلىرى بىلەن تەمىنلەيدۇ.",
     "Operating System:" : "مەشغۇلات سىستېمىسى:",
     "CPU:" : "CPU:",
-    "threads" : "يىپلار",
     "Memory:" : "ئەستە ساقلاش:",
     "Server time:" : "مۇلازىمېتىر ۋاقتى:",
     "Uptime:" : "ئىشلەش ۋاقتى:",

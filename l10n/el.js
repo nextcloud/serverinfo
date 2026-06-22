@@ -22,7 +22,6 @@ OC.L10N.register(
     "Provides useful server information, such as CPU load, RAM usage, disk usage, number of users, etc." : "Εμφανίζει χρήσιμες πληροφορίες του διακομιστή, όπως χρήση CPU, RAM, σκληρού δίσκου, αριθμός χρηστών, κλτ.",
     "Operating System:" : "Λειτουργικό σύστημα",
     "CPU:" : "CPU:",
-    "threads" : "νήματα",
     "Memory:" : "Μνήμη:",
     "Server time:" : "Ώρα διακομιστή:",
     "Uptime:" : "Διάρκεια λειτουργίας:",

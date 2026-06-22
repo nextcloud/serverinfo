@@ -24,7 +24,6 @@ OC.L10N.register(
     "Provides useful server information, such as CPU load, RAM usage, disk usage, number of users, etc." : "CPU yuklanishi, operativ xotiradan foydalanish, diskdan foydalanish, foydalanuvchilar soni va boshqalar kabi foydali server ma'lumotlarini taqdim etadi.",
     "Operating System:" : "Operatsion tizim:",
     "CPU:" : "CPU:",
-    "threads" : "yo'nalishlar",
     "Memory:" : "Xotira:",
     "Server time:" : "Server vaqti:",
     "Uptime:" : "Ish vaqti:",

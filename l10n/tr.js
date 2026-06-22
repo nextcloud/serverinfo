@@ -24,7 +24,6 @@ OC.L10N.register(
     "Provides useful server information, such as CPU load, RAM usage, disk usage, number of users, etc." : "İşlemci yükü, bellek ve disk kullanımı, kullanıcı sayısı gibi sunucu ile ilgili çeşitli bilgiler sağlar. ",
     "Operating System:" : "İşletim sistemi:",
     "CPU:" : "İşlemci",
-    "threads" : "işlem",
     "Memory:" : "Bellek:",
     "Server time:" : "Sunucu zamanı:",
     "Uptime:" : "Çalışma süresi:",

@@ -24,7 +24,6 @@ OC.L10N.register(
     "Provides useful server information, such as CPU load, RAM usage, disk usage, number of users, etc." : "Pateikia naudingos informacijos apie serverį, pavyzdžiui, procesoriaus apkrovą, RAM atminties naudojimą, disko vietos naudojimą, vartotojų skaičių ir pan.",
     "Operating System:" : "Operacinė sistema:",
     "CPU:" : "Procesorius:",
-    "threads" : "gijos",
     "Memory:" : "Atmintis:",
     "Server time:" : "Serverio laikas:",
     "Uptime:" : "Veikimo laikas:",

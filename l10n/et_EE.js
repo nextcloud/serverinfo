@@ -24,7 +24,6 @@ OC.L10N.register(
     "Provides useful server information, such as CPU load, RAM usage, disk usage, number of users, etc." : "Näitab kasulikku teavet serveri kohta, näiteks protsessori koormust, mälukasutust, kettaruumi, kasutajate arvu jne.",
     "Operating System:" : "Operatsioonisüsteem:",
     "CPU:" : "Protsessor:",
-    "threads" : "lõime",
     "Memory:" : "Mälu:",
     "Server time:" : "Serveri aeg:",
     "Uptime:" : "Aeg viimasest serveri käivitusest:",
