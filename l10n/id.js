@@ -24,6 +24,7 @@ OC.L10N.register(
     "Provides useful server information, such as CPU load, RAM usage, disk usage, number of users, etc." : "Menyediakan informasi server yang berguna, seperti beban CPU, penggunaan RAM, penggunaan disk, jumlah pengguna, dll.",
     "Operating System:" : "Sistem Operasi:",
     "CPU:" : "CPU:",
+    "threads" : "thread",
     "Memory:" : "Memori:",
     "Server time:" : "Waktu server:",
     "Uptime:" : "Waktu aktif:",

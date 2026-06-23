@@ -24,6 +24,7 @@ OC.L10N.register(
     "Provides useful server information, such as CPU load, RAM usage, disk usage, number of users, etc." : "Hasznos kiszolgálóinformációk nyújtása, mint a processzorterhelés, memóriafoglaltság, felhasználók száma, stb.",
     "Operating System:" : "Operációs rendszer:",
     "CPU:" : "CPU:",
+    "threads" : "szál",
     "Memory:" : "Memória:",
     "Server time:" : "Kiszolgálóidő:",
     "Uptime:" : "Működési idő:",

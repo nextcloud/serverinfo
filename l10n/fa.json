@@ -22,6 +22,7 @@
     "Provides useful server information, such as CPU load, RAM usage, disk usage, number of users, etc." : "اطلاعات مفید سرور مانند بار CPU، مصرف RAM، مصرف دیسک، تعداد کاربران و غیره را ارائه می‌دهد.",
     "Operating System:" : "سیستم عامل:",
     "CPU:" : "CPU:",
+    "threads" : "رشته",
     "Memory:" : "حافظه:",
     "Server time:" : "زمان سرور:",
     "Uptime:" : "زمان فعالیت:",

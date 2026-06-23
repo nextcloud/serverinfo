@@ -20,6 +20,7 @@
     "Provides useful server information, such as CPU load, RAM usage, disk usage, number of users, etc." : "Hutoa maelezo muhimu ya seva, kama vile upakiaji wa CPU, matumizi ya RAM, matumizi ya diski, idadi ya watumiaji, n.k.",
     "Operating System:" : "Mfumo wa Uendeshaji:",
     "CPU:" : "CPU:",
+    "threads" : "nyuzi",
     "Memory:" : "Kumbukumbu:",
     "Server time:" : "Muda wa seva:",
     "Uptime:" : "Muda wa Kuwasha:",

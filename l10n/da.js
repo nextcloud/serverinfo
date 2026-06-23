@@ -22,6 +22,7 @@ OC.L10N.register(
     "Provides useful server information, such as CPU load, RAM usage, disk usage, number of users, etc." : "Viser serverinformation som CPU belastning, RAM forbrug, lagerforbrug, antal brugere osv.",
     "Operating System:" : "Operativsystem:",
     "CPU:" : "CPU:",
+    "threads" : "tråde",
     "Memory:" : "Hukommelse:",
     "Server time:" : "Server tid:",
     "Uptime:" : "Oppetid:",
