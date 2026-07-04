@@ -3,6 +3,7 @@ OC.L10N.register(
     {
     "CPU info not available" : "Informação do CPU indisponível",
     "CPU Usage:" : "Uso de CPU:",
+    "Load average: {percentage} % ({load}) last minute" : "Média de carga: {percentage} % ({load}) no último minuto",
     "{lastMinutePercentage} % ({lastMinute}) last Minute\n{last5MinutesPercentage} % ({last5Minutes}) last 5 Minutes\n{last15MinutesPercentage} % ({last15Minutes}) last 15 Minutes" : "{lastMinutePercentage} % ({lastMinute}) no último minuto\n{last5MinutesPercentage} % ({last5Minutes}) nos últimos 5 minutos\n{last15MinutesPercentage} % ({last15Minutes}) nos últimos 15 minutos",
     "RAM Usage:" : "Uso de RAM:",
     "SWAP Usage:" : "Uso de SWAP:",
@@ -20,6 +21,7 @@ OC.L10N.register(
     "Monitoring" : "Monitorização",
     "Monitoring app with useful server information" : "Aplicação de monitorização com informação útil do servidor",
     "Provides useful server information, such as CPU load, RAM usage, disk usage, number of users, etc." : "Disponibiliza informação útil do servidor como a carga do CPU, utilização da RAM, utilização do disco, número de utilizadores, etc.",
+    "Operating System:" : "Sistema Operacional:",
     "CPU:" : "CPU:",
     "threads" : "threads",
     "Memory:" : "Memoria:",
@@ -39,6 +41,7 @@ OC.L10N.register(
     "Network" : "Rede",
     "Hostname:" : "Nome do host:",
     "Gateway:" : "Gateway:",
+    "DNS:" : "DNS:",
     "Status:" : "Status:",
     "Speed:" : "Velocidade:",
     "Duplex:" : "Duplex:",
@@ -47,6 +50,7 @@ OC.L10N.register(
     "Active users" : "Utilizadores ativos",
     "Last hour" : "Ultima hora",
     "%s%% of all users" : "%s%% de todos os usuários",
+    "Last 24 Hours" : "Nas Últimas 24 Horas",
     "Last 7 Days" : "Nos Últimos 7 Dias",
     "Last 30 Days" : "Nos Últimos 30 Dias",
     "Shares" : "Partilhas",
@@ -67,6 +71,7 @@ OC.L10N.register(
     "Extensions:" : "Extensões:",
     "Unable to list extensions" : "Não foi possível listar as extensões",
     "PHP Info:" : "Informações do PHP:",
+    "FPM worker pool" : "Pool de trabalhadores FPM",
     "Pool name:" : "Nome do pool:",
     "Pool type:" : "Tipo do pool:",
     "Start time:" : "Hora de início:",
@@ -74,6 +79,7 @@ OC.L10N.register(
     "Total processes:" : "Total de processos:",
     "Active processes:" : "Processos ativos:",
     "Idle processes:" : "Processes inativos:",
+    "Listen queue:" : "Fila de escuta:",
     "Slow requests:" : "Solicitações lentas:",
     "Max listen queue:" : "Máximo da fila de escuta:",
     "Max children reached:" : "Máximo de processos filhos atingido:",
@@ -85,6 +91,7 @@ OC.L10N.register(
     "Output in JSON" : "Saída em JSON",
     "Skip apps section (including apps section will send an external request to the app store)" : "Ignorar a seção de aplicativos (incluir a seção de aplicativos enviará uma solicitação externa para a loja de aplicativos)",
     "Skip server update" : "Ignorar atualização do servidor",
-    "To use an access token, please generate one then set it using the following command:" : "Para usar um token de acesso, gere um e defina-o usando o seguinte comando:"
+    "To use an access token, please generate one then set it using the following command:" : "Para usar um token de acesso, gere um e defina-o usando o seguinte comando:",
+    "Then pass the token with the \"NC-Token\" header when querying the above URL." : "Em seguida, passe o token com o cabeçalho \"NC-Token\" ao consultar o URL acima."
 },
 "nplurals=3; plural=(n == 0 || n == 1) ? 0 : n != 0 && n % 1000000 == 0 ? 1 : 2;");
