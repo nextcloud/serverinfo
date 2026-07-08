@@ -66,7 +66,7 @@ $phpinfo = $_['phpinfo'];
                             </tr>
                             <tr>
                                 <td><?php p($l->t('CPU:')); ?></td>
-                                <td class="info"><?php p($cpu->getName()) ?></strong> (<?= $cpu->getThreads() ?> <?php p($l->t('threads')); ?>)</td>
+                                <td class="info"><?php p($l->t('%1$s (%2$d threads)', [$cpu->getName(), $cpu->getThreads()])) ?></td>
                             </tr>
                             <?php if ($memory->getMemTotal() > 0): ?>
                             <tr>
