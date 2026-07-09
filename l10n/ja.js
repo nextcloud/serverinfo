@@ -24,7 +24,6 @@ OC.L10N.register(
     "Provides useful server information, such as CPU load, RAM usage, disk usage, number of users, etc." : "CPU負荷、メモリ使用量、ディスク使用量、ユーザー数などの役に立つサーバー情報を提供します。",
     "Operating System:" : "OS:",
     "CPU:" : "CPU:",
-    "threads" : "スレッド",
     "Memory:" : "メモリ:",
     "Server time:" : "サーバーの時間:",
     "Uptime:" : "稼働時間：",
@@ -98,6 +97,7 @@ OC.L10N.register(
     "Skip apps section (including apps section will send an external request to the app store)" : "アプリセクションをスキップする（アプリセクションを含むとアプリストアに外部リクエストが送信される）",
     "Skip server update" : "サーバーの更新をスキップ",
     "To use an access token, please generate one then set it using the following command:" : "アクセストークンを使用するには、アクセストークンを生成し、以下のコマンドで設定してください。",
-    "Then pass the token with the \"NC-Token\" header when querying the above URL." : "次に、上記のURLをクエリするときに、\"NC-Token\" ヘッダーでトークンを渡します。"
+    "Then pass the token with the \"NC-Token\" header when querying the above URL." : "次に、上記のURLをクエリするときに、\"NC-Token\" ヘッダーでトークンを渡します。",
+    "threads" : "スレッド"
 },
 "nplurals=1; plural=0;");

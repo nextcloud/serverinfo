@@ -24,7 +24,6 @@ OC.L10N.register(
     "Provides useful server information, such as CPU load, RAM usage, disk usage, number of users, etc." : "Pateikia naudingos informacijos apie serverį, pavyzdžiui, procesoriaus apkrovą, RAM atminties naudojimą, disko vietos naudojimą, vartotojų skaičių ir pan.",
     "Operating System:" : "Operacinė sistema:",
     "CPU:" : "Procesorius:",
-    "threads" : "gijos",
     "Memory:" : "Atmintis:",
     "Server time:" : "Serverio laikas:",
     "Uptime:" : "Veikimo laikas:",
@@ -98,6 +97,7 @@ OC.L10N.register(
     "Skip apps section (including apps section will send an external request to the app store)" : "Praleisti programėlių skyrių (įtraukus šį skyrių, bus išsiųstas išorinis užklausimas į programėlių parduotuvę)",
     "Skip server update" : "Praleisti serverio atnaujinimą",
     "To use an access token, please generate one then set it using the following command:" : "Norėdami naudoti žymenį, sugeneruokite jį ir nustatykite naudodami šią komandą:",
-    "Then pass the token with the \"NC-Token\" header when querying the above URL." : "Tada, teikdami užklausą aukščiau pateiktu URL adresu, perduokite žymenį su antrašte „NC-Token“."
+    "Then pass the token with the \"NC-Token\" header when querying the above URL." : "Tada, teikdami užklausą aukščiau pateiktu URL adresu, perduokite žymenį su antrašte „NC-Token“.",
+    "threads" : "gijos"
 },
 "nplurals=4; plural=(n % 10 == 1 && (n % 100 > 19 || n % 100 < 11) ? 0 : (n % 10 >= 2 && n % 10 <=9) && (n % 100 > 19 || n % 100 < 11) ? 1 : n % 1 != 0 ? 2: 3);");

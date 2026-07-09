@@ -22,7 +22,6 @@ OC.L10N.register(
     "Provides useful server information, such as CPU load, RAM usage, disk usage, number of users, etc." : "Hutoa maelezo muhimu ya seva, kama vile upakiaji wa CPU, matumizi ya RAM, matumizi ya diski, idadi ya watumiaji, n.k.",
     "Operating System:" : "Mfumo wa Uendeshaji:",
     "CPU:" : "CPU:",
-    "threads" : "nyuzi",
     "Memory:" : "Kumbukumbu:",
     "Server time:" : "Muda wa seva:",
     "Uptime:" : "Muda wa Kuwasha:",
@@ -93,6 +92,7 @@ OC.L10N.register(
     "Skip apps section (including apps section will send an external request to the app store)" : "Ruka sehemu ya programu (pamoja na sehemu ya programu itatuma ombi la nje kwenye duka la programu)",
     "Skip server update" : "Ruka sasisho la seva",
     "To use an access token, please generate one then set it using the following command:" : "Ili kutumia tokeni ya ufikiaji, tafadhali toa moja kisha uiweke kwa kutumia amri ifuatayo:",
-    "Then pass the token with the \"NC-Token\" header when querying the above URL." : "Kisha pitisha ishara kwa kichwa cha \"NC-Token\" unapouliza URL iliyo hapo juu."
+    "Then pass the token with the \"NC-Token\" header when querying the above URL." : "Kisha pitisha ishara kwa kichwa cha \"NC-Token\" unapouliza URL iliyo hapo juu.",
+    "threads" : "nyuzi"
 },
 "nplurals=2; plural=(n != 1);");

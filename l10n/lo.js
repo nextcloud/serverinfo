@@ -22,7 +22,6 @@ OC.L10N.register(
     "Provides useful server information, such as CPU load, RAM usage, disk usage, number of users, etc." : "Provides useful server information, such as CPU load, RAM usage, disk usage, number of users, etc.",
     "Operating System:" : "Operating System:",
     "CPU:" : "CPU:",
-    "threads" : "threads",
     "Memory:" : "Memory:",
     "Server time:" : "Server time:",
     "Uptime:" : "Uptime:",
@@ -93,6 +92,7 @@ OC.L10N.register(
     "Skip apps section (including apps section will send an external request to the app store)" : "Skip apps section (including apps section will send an external request to the app store)",
     "Skip server update" : "Skip server update",
     "To use an access token, please generate one then set it using the following command:" : "To use an access token, please generate one then set it using the following command:",
-    "Then pass the token with the \"NC-Token\" header when querying the above URL." : "Then pass the token with the \"NC-Token\" header when querying the above URL."
+    "Then pass the token with the \"NC-Token\" header when querying the above URL." : "Then pass the token with the \"NC-Token\" header when querying the above URL.",
+    "threads" : "threads"
 },
 "nplurals=1; plural=0;");
