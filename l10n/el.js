@@ -22,7 +22,6 @@ OC.L10N.register(
     "Provides useful server information, such as CPU load, RAM usage, disk usage, number of users, etc." : "Εμφανίζει χρήσιμες πληροφορίες του διακομιστή, όπως χρήση CPU, RAM, σκληρού δίσκου, αριθμός χρηστών, κλτ.",
     "Operating System:" : "Λειτουργικό σύστημα",
     "CPU:" : "CPU:",
-    "threads" : "νήματα",
     "Memory:" : "Μνήμη:",
     "Server time:" : "Ώρα διακομιστή:",
     "Uptime:" : "Διάρκεια λειτουργίας:",
@@ -93,6 +92,7 @@ OC.L10N.register(
     "Skip apps section (including apps section will send an external request to the app store)" : "Παράλειψη τμήματος εφαρμογών (η συμπερίληψη του τμήματος εφαρμογών θα στείλει εξωτερικό αίτημα στο app store)",
     "Skip server update" : "Παράλειψη ενημέρωσης διακομιστή",
     "To use an access token, please generate one then set it using the following command:" : "Για να χρησιμοποιήσετε ένα αναγνωριστικό πρόσβασης (token), δημιουργήστε ένα και ορίστε το χρησιμοποιώντας την ακόλουθη εντολή:",
-    "Then pass the token with the \"NC-Token\" header when querying the above URL." : "Στη συνέχεια, περάστε το αναγνωριστικό με την κεφαλίδα \"NC-Token\" όταν υποβάλετε ερώτημα στην παραπάνω διεύθυνση URL."
+    "Then pass the token with the \"NC-Token\" header when querying the above URL." : "Στη συνέχεια, περάστε το αναγνωριστικό με την κεφαλίδα \"NC-Token\" όταν υποβάλετε ερώτημα στην παραπάνω διεύθυνση URL.",
+    "threads" : "νήματα"
 },
 "nplurals=2; plural=(n != 1);");
