@@ -24,7 +24,6 @@ OC.L10N.register(
     "Provides useful server information, such as CPU load, RAM usage, disk usage, number of users, etc." : "Toont nuttige serverinformatie, zoals CPU belasting, RAM gebruik, disk gebruik, aantal gebruikers, etc.",
     "Operating System:" : "Besturingssysteem:",
     "CPU:" : "CPU:",
-    "threads" : "lijnen",
     "Memory:" : "Geheugen:",
     "Server time:" : "Servertijd:",
     "Uptime:" : "Bedrijfstijd:",
@@ -98,6 +97,7 @@ OC.L10N.register(
     "Skip apps section (including apps section will send an external request to the app store)" : "Sla apps sectie over (apps sectie meenemen stuurt een extern verzoek naar de app store)",
     "Skip server update" : "Serverupdate overslaan",
     "To use an access token, please generate one then set it using the following command:" : "Om een ​​toegangstoken te gebruiken, genereert u er een en stelt u deze in met de volgende opdracht:",
-    "Then pass the token with the \"NC-Token\" header when querying the above URL." : "Geef vervolgens het token met de \"NC-Token\" -header door bij het opvragen van de bovenstaande URL."
+    "Then pass the token with the \"NC-Token\" header when querying the above URL." : "Geef vervolgens het token met de \"NC-Token\" -header door bij het opvragen van de bovenstaande URL.",
+    "threads" : "lijnen"
 },
 "nplurals=2; plural=(n != 1);");

@@ -24,7 +24,6 @@ OC.L10N.register(
     "Provides useful server information, such as CPU load, RAM usage, disk usage, number of users, etc." : "Hasznos kiszolgálóinformációk nyújtása, mint a processzorterhelés, memóriafoglaltság, felhasználók száma, stb.",
     "Operating System:" : "Operációs rendszer:",
     "CPU:" : "CPU:",
-    "threads" : "szál",
     "Memory:" : "Memória:",
     "Server time:" : "Kiszolgálóidő:",
     "Uptime:" : "Működési idő:",
@@ -98,6 +97,7 @@ OC.L10N.register(
     "Skip apps section (including apps section will send an external request to the app store)" : "Alkalmazás szekció kihagyása (külső kérést küld az alkalmazásboltba az alkalmazás szekciót is belefoglalva)",
     "Skip server update" : "Kiszolgálófrissítés kihagyása",
     "To use an access token, please generate one then set it using the following command:" : "A hozzáférési token használatához hozzon létre egyet, majd állítsa be a következő paranccsal:",
-    "Then pass the token with the \"NC-Token\" header when querying the above URL." : "Ezután adja át a tokent az „NC-Token” fejléccel, amikor lekérdezi a fenti webcímet."
+    "Then pass the token with the \"NC-Token\" header when querying the above URL." : "Ezután adja át a tokent az „NC-Token” fejléccel, amikor lekérdezi a fenti webcímet.",
+    "threads" : "szál"
 },
 "nplurals=2; plural=(n != 1);");
