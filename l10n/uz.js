@@ -24,7 +24,6 @@ OC.L10N.register(
     "Provides useful server information, such as CPU load, RAM usage, disk usage, number of users, etc." : "CPU yuklanishi, operativ xotiradan foydalanish, diskdan foydalanish, foydalanuvchilar soni va boshqalar kabi foydali server ma'lumotlarini taqdim etadi.",
     "Operating System:" : "Operatsion tizim:",
     "CPU:" : "CPU:",
-    "threads" : "yo'nalishlar",
     "Memory:" : "Xotira:",
     "Server time:" : "Server vaqti:",
     "Uptime:" : "Ish vaqti:",
@@ -97,6 +96,7 @@ OC.L10N.register(
     "Skip apps section (including apps section will send an external request to the app store)" : "Ilovalarni o'tkazib yuborish bo'limi (ilovalar bo'limi ham ilova do'koniga tashqi so'rov yuboradi)",
     "Skip server update" : "Server yangilanishini o'tkazib yuborish",
     "To use an access token, please generate one then set it using the following command:" : "Kirish tokenidan foydalanish uchun, iltimos, uni yarating va keyin uni quyidagi buyruq yordamida o'rnating:",
-    "Then pass the token with the \"NC-Token\" header when querying the above URL." : "Keyin yuqoridagi URL manziliga so'rov yuborayotganda tokenni \"NC-Token\" sarlavhasi bilan uzating."
+    "Then pass the token with the \"NC-Token\" header when querying the above URL." : "Keyin yuqoridagi URL manziliga so'rov yuborayotganda tokenni \"NC-Token\" sarlavhasi bilan uzating.",
+    "threads" : "yo'nalishlar"
 },
 "nplurals=1; plural=0;");

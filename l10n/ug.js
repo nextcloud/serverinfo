@@ -22,7 +22,6 @@ OC.L10N.register(
     "Provides useful server information, such as CPU load, RAM usage, disk usage, number of users, etc." : "CPU يۈكى ، RAM ئىشلىتىش ، دىسكا ئىشلىتىش ، ئىشلەتكۈچى سانى قاتارلىق پايدىلىق مۇلازىمېتىر ئۇچۇرلىرى بىلەن تەمىنلەيدۇ.",
     "Operating System:" : "مەشغۇلات سىستېمىسى:",
     "CPU:" : "CPU:",
-    "threads" : "يىپلار",
     "Memory:" : "ئەستە ساقلاش:",
     "Server time:" : "مۇلازىمېتىر ۋاقتى:",
     "Uptime:" : "ئىشلەش ۋاقتى:",
@@ -94,6 +93,7 @@ OC.L10N.register(
     "Skip apps section (including apps section will send an external request to the app store)" : "ئەپ بۆلەكلىرىدىن ئاتلاش (ئەپ بۆلىكىنى ئۆز ئىچىگە ئالىدۇ ھەمدە ئەپ دۇكىنىغا تاشقى تەلەپ ئەۋەتىدۇ)",
     "Skip server update" : "مۇلازىمېتىر يېڭىلاشتىن ئاتلاڭ",
     "To use an access token, please generate one then set it using the following command:" : "زىيارەت بەلگىسىنى ئىشلىتىش ئۈچۈن بىرنى ھاسىل قىلىڭ ، ئاندىن تۆۋەندىكى بۇيرۇقنى ئىشلىتىپ تەڭشەڭ:",
-    "Then pass the token with the \"NC-Token\" header when querying the above URL." : "ئاندىن يۇقارقى URL نى سورىغاندا «NC-Token» ماۋزۇسى ئارقىلىق بەلگە يوللاڭ."
+    "Then pass the token with the \"NC-Token\" header when querying the above URL." : "ئاندىن يۇقارقى URL نى سورىغاندا «NC-Token» ماۋزۇسى ئارقىلىق بەلگە يوللاڭ.",
+    "threads" : "يىپلار"
 },
 "nplurals=2; plural=(n != 1);");

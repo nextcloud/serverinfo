@@ -22,7 +22,6 @@
     "Provides useful server information, such as CPU load, RAM usage, disk usage, number of users, etc." : "اطلاعات مفید سرور مانند بار CPU، مصرف RAM، مصرف دیسک، تعداد کاربران و غیره را ارائه می‌دهد.",
     "Operating System:" : "سیستم عامل:",
     "CPU:" : "CPU:",
-    "threads" : "رشته",
     "Memory:" : "حافظه:",
     "Server time:" : "زمان سرور:",
     "Uptime:" : "زمان فعالیت:",
@@ -96,6 +95,7 @@
     "Skip apps section (including apps section will send an external request to the app store)" : "رد کردن بخش برنامه‌ها (شامل بخش برنامه‌ها یک درخواست خارجی به فروشگاه برنامه ارسال می‌کند)",
     "Skip server update" : "رد کردن به‌روزرسانی سرور",
     "To use an access token, please generate one then set it using the following command:" : "برای استفاده از توکن دسترسی، لطفاً یکی را ایجاد کرده و سپس با دستور زیر تنظیم کنید:",
-    "Then pass the token with the \"NC-Token\" header when querying the above URL." : "سپس توکن را با هدر \"NC-Token\" هنگام پرس‌وجوی URL بالا ارسال کنید."
+    "Then pass the token with the \"NC-Token\" header when querying the above URL." : "سپس توکن را با هدر \"NC-Token\" هنگام پرس‌وجوی URL بالا ارسال کنید.",
+    "threads" : "رشته"
 },"pluralForm" :"nplurals=2; plural=(n > 1);"
 }

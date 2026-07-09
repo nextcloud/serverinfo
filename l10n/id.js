@@ -24,7 +24,6 @@ OC.L10N.register(
     "Provides useful server information, such as CPU load, RAM usage, disk usage, number of users, etc." : "Menyediakan informasi server yang berguna, seperti beban CPU, penggunaan RAM, penggunaan disk, jumlah pengguna, dll.",
     "Operating System:" : "Sistem Operasi:",
     "CPU:" : "CPU:",
-    "threads" : "thread",
     "Memory:" : "Memori:",
     "Server time:" : "Waktu server:",
     "Uptime:" : "Waktu aktif:",
@@ -97,6 +96,7 @@ OC.L10N.register(
     "Skip apps section (including apps section will send an external request to the app store)" : "Lewati bagian aplikasi (menyertakan bagian aplikasi akan mengirim permintaan eksternal ke app store)",
     "Skip server update" : "Lewati pembaruan server",
     "To use an access token, please generate one then set it using the following command:" : "Untuk menggunakan token akses, silakan buat token lalu tetapkan menggunakan perintah berikut:",
-    "Then pass the token with the \"NC-Token\" header when querying the above URL." : "Kemudian sertakan token tersebut dengan header \"NC-Token\" saat melakukan kueri ke URL di atas."
+    "Then pass the token with the \"NC-Token\" header when querying the above URL." : "Kemudian sertakan token tersebut dengan header \"NC-Token\" saat melakukan kueri ke URL di atas.",
+    "threads" : "thread"
 },
 "nplurals=1; plural=0;");
