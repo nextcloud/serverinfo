@@ -1,17 +1,17 @@
 OC.L10N.register(
     "serverinfo",
     {
+    "System" : "ระบบ",
+    "Unknown" : "ไม่ทราบ",
+    "Active users" : "ผู้ใช้ที่ใช้งานอยู่",
+    "Type:" : "ชนิด:",
+    "Size:" : "ขนาด:",
+    "seconds" : "วินาที",
+    "Shares" : "การแชร์",
     "Copied!" : "คัดลอกแล้ว!",
     "Not supported!" : "ไม่สนับสนุน",
     "Press ⌘-C to copy." : "กด ⌘-C เพื่อคัดลอก",
     "Press Ctrl-C to copy." : "กด Ctrl-C เพื่อคัดลอก",
-    "Unknown" : "ไม่ทราบ",
-    "System" : "ระบบ",
-    "Size:" : "ขนาด:",
-    "Active users" : "ผู้ใช้ที่ใช้งานอยู่",
-    "Shares" : "การแชร์",
-    "seconds" : "วินาที",
-    "Type:" : "ชนิด:",
     "Copy" : "คัดลอก"
 },
 "nplurals=1; plural=0;");
