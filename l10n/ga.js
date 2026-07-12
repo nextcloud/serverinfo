@@ -8,6 +8,7 @@ OC.L10N.register(
     "Monitoring" : "Monatóireacht",
     "Monitoring app with useful server information" : "Aip monatóireachta le faisnéis úsáideach freastalaí",
     "Provides useful server information, such as CPU load, RAM usage, disk usage, number of users, etc." : "Soláthraíonn sé faisnéis úsáideach freastalaí, mar shampla ualach LAP, úsáid RAM, úsáid diosca, líon na n-úsáideoirí, etc.",
+    "{0}% of all users" : "{0}% de na húsáideoirí uile",
     "Active users" : "Úsáideoirí gníomhacha",
     "Last hour" : "Uair dheireanach",
     "Last 24 Hours" : "24 uair an chloig caite",
@@ -85,6 +86,7 @@ OC.L10N.register(
     "Talk conversations:" : "Comhráite:",
     "Operating System:" : "Córas oibriucháin:",
     "CPU:" : "LAP:",
+    "{name} ({threads} threads)" : "{name} ({threads} snáitheanna)",
     "Memory:" : "Cuimhne:",
     "Server time:" : "Am freastalaí:",
     "Uptime:" : "Aga fónaimh:",
@@ -98,6 +100,7 @@ OC.L10N.register(
     "threads" : "snáitheanna",
     "%s%% of all users" : "%s%% de na húsáideoirí go léir",
     "MB" : "MB",
-    "Copy" : "Cóipeáil"
+    "Copy" : "Cóipeáil",
+    "%1$s (%2$d threads)" : "%1$s (%2$d snáitheanna)"
 },
 "nplurals=5; plural=(n==1 ? 0 : n==2 ? 1 : n<7 ? 2 : n<11 ? 3 : 4);");
