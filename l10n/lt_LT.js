@@ -8,6 +8,7 @@ OC.L10N.register(
     "Monitoring" : "Stebėjimas",
     "Monitoring app with useful server information" : "Stebėjimo programėlė su naudinga serverio informacija",
     "Provides useful server information, such as CPU load, RAM usage, disk usage, number of users, etc." : "Pateikia naudingos informacijos apie serverį, pavyzdžiui, procesoriaus apkrovą, RAM atminties naudojimą, disko vietos naudojimą, vartotojų skaičių ir pan.",
+    "{0}% of all users" : "{0}% iš visų vartotojų",
     "Active users" : "Aktyvūs vartotojai",
     "Last hour" : "Paskutinė valanda",
     "Last 24 Hours" : "Paskutinės 24 valandos",
@@ -85,6 +86,7 @@ OC.L10N.register(
     "Talk conversations:" : "„Pokalbių“ pasikalbėjimai:",
     "Operating System:" : "Operacinė sistema:",
     "CPU:" : "Procesorius:",
+    "{name} ({threads} threads)" : "{name} ({threads} gijos)",
     "Memory:" : "Atmintis:",
     "Server time:" : "Serverio laikas:",
     "Uptime:" : "Veikimo laikas:",
@@ -98,6 +100,7 @@ OC.L10N.register(
     "threads" : "gijos",
     "%s%% of all users" : "%s%% iš visų vartotojų",
     "MB" : "MB",
-    "Copy" : "Kopijuoti"
+    "Copy" : "Kopijuoti",
+    "%1$s (%2$d threads)" : "%1$s (%2$d gijos)"
 },
 "nplurals=4; plural=(n % 10 == 1 && (n % 100 > 19 || n % 100 < 11) ? 0 : (n % 10 >= 2 && n % 10 <=9) && (n % 100 > 19 || n % 100 < 11) ? 1 : n % 1 != 0 ? 2: 3);");
