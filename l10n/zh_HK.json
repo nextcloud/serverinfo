@@ -6,6 +6,7 @@
     "Monitoring" : "監控",
     "Monitoring app with useful server information" : "使用有用的伺服器訊息以監控應用程式",
     "Provides useful server information, such as CPU load, RAM usage, disk usage, number of users, etc." : "提供有用的伺服器訊息，例如CPU負載、記憶體使用情況、磁碟使用情況、用戶數等。",
+    "{0}% of all users" : "所有用戶的 {0}%",
     "Active users" : "活躍用戶",
     "Last hour" : "過去 1 小時",
     "Last 24 Hours" : "過去24小時",
@@ -83,6 +84,7 @@
     "Talk conversations:" : "Talk 對話︰",
     "Operating System:" : "作業系統：",
     "CPU:" : "CPU：",
+    "{name} ({threads} threads)" : "{name}（{threads} 條討論串）",
     "Memory:" : "記憶體：",
     "Server time:" : "伺服器時間：",
     "Uptime:" : "運行時間：",
@@ -96,6 +98,7 @@
     "threads" : "主題",
     "%s%% of all users" : " %s%% 所有用戶的",
     "MB" : "MB",
-    "Copy" : "複製"
+    "Copy" : "複製",
+    "%1$s (%2$d threads)" : "%1$s（%2$d 條討論串）"
 },"pluralForm" :"nplurals=1; plural=0;"
 }

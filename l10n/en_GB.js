@@ -8,6 +8,7 @@ OC.L10N.register(
     "Monitoring" : "Monitoring",
     "Monitoring app with useful server information" : "Monitoring app with useful server information",
     "Provides useful server information, such as CPU load, RAM usage, disk usage, number of users, etc." : "Provides useful server information, such as CPU load, RAM usage, disk usage, number of users, etc.",
+    "{0}% of all users" : "{0}% of all users",
     "Active users" : "Active users",
     "Last hour" : "Last hour",
     "Last 24 Hours" : "Last 24 Hours",
@@ -85,6 +86,7 @@ OC.L10N.register(
     "Talk conversations:" : "Talk conversations:",
     "Operating System:" : "Operating System:",
     "CPU:" : "CPU:",
+    "{name} ({threads} threads)" : "{name} ({threads} threads)",
     "Memory:" : "Memory:",
     "Server time:" : "Server time:",
     "Uptime:" : "Uptime:",
@@ -98,6 +100,7 @@ OC.L10N.register(
     "threads" : "threads",
     "%s%% of all users" : "%s%% of all users",
     "MB" : "MB",
-    "Copy" : "Copy"
+    "Copy" : "Copy",
+    "%1$s (%2$d threads)" : "%1$s (%2$d threads)"
 },
 "nplurals=2; plural=(n != 1);");
