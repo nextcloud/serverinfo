@@ -44,7 +44,7 @@ OC.L10N.register(
     "To use an access token, please generate one then set it using the following command:" : "Para usar um token de acesso, gere um e defina-o usando o seguinte comando:",
     "Then pass the token with the \"NC-Token\" header when querying the above URL." : "Em seguida, passe o token com o cabeçalho \"NC-Token\" ao consultar o URL acima.",
     "Network" : "Rede",
-    "Hostname:" : "Nome do host:",
+    "Hostname:" : "Nome do hospedeiro:",
     "Gateway:" : "Gateway:",
     "DNS:" : "DNS:",
     "Status:" : "Status:",
