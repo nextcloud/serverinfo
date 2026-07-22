@@ -8,6 +8,7 @@ OC.L10N.register(
     "Monitoring" : "Övervakning",
     "Monitoring app with useful server information" : "Övervakningsapp med användbar serverinformation",
     "Provides useful server information, such as CPU load, RAM usage, disk usage, number of users, etc." : "Ger användbar serverinformation, till exempel processorbelastning, RAM-användning, diskanvändning och antal användare.",
+    "{0}% of all users" : "{0}% av alla användare",
     "Active users" : "Aktiva användare",
     "Last hour" : "Senaste timmen",
     "Last 24 Hours" : "Senaste 24 timmarna",
@@ -85,6 +86,7 @@ OC.L10N.register(
     "Talk conversations:" : "Talk-konversationer:",
     "Operating System:" : "Operativsystem:",
     "CPU:" : "CPU:",
+    "{name} ({threads} threads)" : "{name} ({threads} trådar)",
     "Memory:" : "Minne:",
     "Server time:" : "Servertid:",
     "Uptime:" : "Upptid:",
@@ -98,6 +100,7 @@ OC.L10N.register(
     "threads" : "trådar",
     "%s%% of all users" : "%s%% av alla användare",
     "MB" : "MB",
-    "Copy" : "Kopiera"
+    "Copy" : "Kopiera",
+    "%1$s (%2$d threads)" : "%1$s (%2$d trådar)"
 },
 "nplurals=2; plural=(n != 1);");
