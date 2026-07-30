@@ -83,7 +83,7 @@ OC.L10N.register(
     "Emails:" : "El. pašto adresai:",
     "Federated sent:" : "Federacinis išsiuntė:",
     "Federated received:" : "Federacinis gavo:",
-    "Talk conversations:" : "„Pokalbių“ pasikalbėjimai:",
+    "Talk conversations:" : "„Pokalbiai“ pasikalbėjimai:",
     "Operating System:" : "Operacinė sistema:",
     "CPU:" : "Procesorius:",
     "{name} ({threads} threads)" : "{name} ({threads} gijos)",
