@@ -235,17 +235,51 @@ class LinuxTest extends TestCase {
 		$this->assertEquals([$disk1, $disk2, $disk3, $disk4, $disk5, $disk6, $disk7], $this->os->getDiskInfo());
 	}
 
+	public function testGetDiskInfoZeroCapacityAndInvertedUsage(): void {
+		$this->os->method('executeCommand')
+			->with('df -TPk')
+			->willReturn(file_get_contents(__DIR__ . '/../data/linux_df_tp_edge_cases'));
+
+		$disk1 = new Disk();
+		$disk1->setDevice('/dev/vda1');
+		$disk1->setFs('ext4');
+		$disk1->setUsed(8889);
+		$disk1->setAvailable(46212);
+		$disk1->setPercent('16.13%');
+		$disk1->setMount('/');
+
+		// Zero blocks: used to be a DivisionByZeroError
+		$disk2 = new Disk();
+		$disk2->setDevice('nsfs');
+		$disk2->setFs('nsfs');
+		$disk2->setUsed(0);
+		$disk2->setAvailable(0);
+		$disk2->setPercent('0%');
+		$disk2->setMount('/run/snapd/ns');
+
+		// More available than total: used is clamped
+		$disk3 = new Disk();
+		$disk3->setDevice('inverted');
+		$disk3->setFs('zfs');
+		$disk3->setUsed(0);
+		$disk3->setAvailable(1);
+		$disk3->setPercent('0%');
+		$disk3->setMount('/tank');
+
+		$this->assertEquals([$disk1, $disk2, $disk3], $this->os->getDiskInfo());
+	}
+
 	public function testGetDiskInfoNoCommandOutput(): void {
 		$this->os->method('executeCommand')
-			->with('df -TP')
-			->willThrowException(new RuntimeException('No output for command "df -TP"'));
+			->with('df -TPk')
+			->willThrowException(new RuntimeException('No output for command "df -TPk"'));
 
 		$this->assertEquals([], $this->os->getDiskInfo());
 	}
 
 	public function testGetDiskInfoInvalidCommandOutput(): void {
 		$this->os->method('executeCommand')
-			->with('df -TP')
+			->with('df -TPk')
 			->willReturn('invalid_data');
 
 		$this->assertEquals([], $this->os->getDiskInfo());
