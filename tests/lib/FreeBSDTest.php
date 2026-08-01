@@ -10,6 +10,7 @@ declare(strict_types=1);
 namespace OCA\ServerInfo\Tests;
 
 use OCA\ServerInfo\OperatingSystems\FreeBSD;
+use OCA\ServerInfo\Resources\Disk;
 use OCA\ServerInfo\Resources\Memory;
 use OCA\ServerInfo\Resources\NetInterface;
 use PHPUnit\Framework\MockObject\MockObject;
@@ -132,6 +133,49 @@ class FreeBSDTest extends TestCase {
 		$actual = $this->os->getNetworkInterfaces();
 
 		$this->assertEquals($expected, $actual);
+	}
+
+	public function testGetDiskInfoUnusualMountPoints(): void {
+		$this->os->method('executeCommand')
+			->with('df -TPk')
+			->willReturn(file_get_contents(__DIR__ . '/../data/freebsd_df_tp_mount_points'));
+
+		// getDiskInfo() had no coverage here at all, and this pattern was even
+		// narrower than the Linux one: it allowed no dots, so a mount point like
+		// /mnt/media.old removed that filesystem from the report entirely.
+		$disk1 = new Disk();
+		$disk1->setDevice('/dev/gpt/rootfs');
+		$disk1->setFs('ufs');
+		$disk1->setUsed(8889);
+		$disk1->setAvailable(46212);
+		$disk1->setPercent('16.13%');
+		$disk1->setMount('/');
+
+		$disk2 = new Disk();
+		$disk2->setDevice('zroot/data');
+		$disk2->setFs('zfs');
+		$disk2->setUsed(1954);
+		$disk2->setAvailable(7812);
+		$disk2->setPercent('20%');
+		$disk2->setMount('/mnt/My Backup');
+
+		$disk3 = new Disk();
+		$disk3->setDevice('zroot/media');
+		$disk3->setFs('zfs');
+		$disk3->setUsed(3907);
+		$disk3->setAvailable(15625);
+		$disk3->setPercent('20%');
+		$disk3->setMount('/mnt/media.old');
+
+		$disk4 = new Disk();
+		$disk4->setDevice('storage:/vol');
+		$disk4->setFs('nfs');
+		$disk4->setUsed(7813);
+		$disk4->setAvailable(31250);
+		$disk4->setPercent('20%');
+		$disk4->setMount('/mnt/nfs');
+
+		$this->assertEquals([$disk1, $disk2, $disk3, $disk4], $this->os->getDiskInfo());
 	}
 
 	public function testGetNetworkInfo(): void {

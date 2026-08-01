@@ -1,0 +1,6 @@
+Filesystem     Type   1024-blocks      Used Available Capacity Mounted on
+/dev/sda1      ext4      56422560   6205468  47321220      12% /
+/dev/sdb1      ext4      10000000   2000000   8000000      20% /mnt/My Backup
+/dev/sdc1      ext4      20000000   4000000  16000000      20% /mnt/Fotos-Übung
+/dev/sdd1      btrfs     30000000   6000000  24000000      20% /mnt/data (old)
+storage:/vol   nfs4      40000000         -  32000000        - /mnt/nfs

@@ -251,6 +251,78 @@ class LinuxTest extends TestCase {
 		$this->assertEquals([], $this->os->getDiskInfo());
 	}
 
+	public function testGetDiskInfoSkipsMalformedLine(): void {
+		$this->os->method('executeCommand')
+			->with('df -TPk')
+			->willReturn("a b 1 c 2\n/dev/sda1 ext4 10000000 2000000 8000000 20% /mnt/data\n");
+
+		$disk = new Disk();
+		$disk->setDevice('/dev/sda1');
+		$disk->setFs('ext4');
+		$disk->setUsed(1954);
+		$disk->setAvailable(7812);
+		$disk->setPercent('20%');
+		$disk->setMount('/mnt/data');
+
+		$this->assertEquals([$disk], $this->os->getDiskInfo());
+	}
+
+	public function testGetDiskInfoUnusualMountPoints(): void {
+		$this->os->method('executeCommand')
+			->with('df -TPk')
+			->willReturn(file_get_contents(__DIR__ . '/../data/linux_df_tp_mount_points'));
+
+		// Only the first of these five used to be reported. The other four were
+		// dropped by the mount point pattern, which silently removed the whole
+		// filesystem from the monitoring page rather than reporting it partially.
+		$disk1 = new Disk();
+		$disk1->setDevice('/dev/sda1');
+		$disk1->setFs('ext4');
+		$disk1->setUsed(8889);
+		$disk1->setAvailable(46212);
+		$disk1->setPercent('16.13%');
+		$disk1->setMount('/');
+
+		// A space in the mount point
+		$disk2 = new Disk();
+		$disk2->setDevice('/dev/sdb1');
+		$disk2->setFs('ext4');
+		$disk2->setUsed(1954);
+		$disk2->setAvailable(7812);
+		$disk2->setPercent('20%');
+		$disk2->setMount('/mnt/My Backup');
+
+		// Non-ASCII, which \w does not cover without the unicode flag
+		$disk3 = new Disk();
+		$disk3->setDevice('/dev/sdc1');
+		$disk3->setFs('ext4');
+		$disk3->setUsed(3907);
+		$disk3->setAvailable(15625);
+		$disk3->setPercent('20%');
+		$disk3->setMount('/mnt/Fotos-Übung');
+
+		// Parentheses
+		$disk4 = new Disk();
+		$disk4->setDevice('/dev/sdd1');
+		$disk4->setFs('btrfs');
+		$disk4->setUsed(5860);
+		$disk4->setAvailable(23437);
+		$disk4->setPercent('20%');
+		$disk4->setMount('/mnt/data (old)');
+
+		// `df` prints "-" for used and capacity when a filesystem does not report
+		// them; both are unread here, so the row is still usable
+		$disk5 = new Disk();
+		$disk5->setDevice('storage:/vol');
+		$disk5->setFs('nfs4');
+		$disk5->setUsed(7813);
+		$disk5->setAvailable(31250);
+		$disk5->setPercent('20%');
+		$disk5->setMount('/mnt/nfs');
+
+		$this->assertEquals([$disk1, $disk2, $disk3, $disk4, $disk5], $this->os->getDiskInfo());
+	}
+
 	public function testSupported(): void {
 		$this->assertTrue($this->os->supported());
 	}
