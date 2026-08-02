@@ -37,22 +37,6 @@
 						{{ php.opcache_revalidate_freq }} {{ t('serverinfo', 'seconds') }}
 					</td>
 				</tr>
-				<tr>
-					<td>{{ t('serverinfo', 'Extensions:') }}</td>
-					<td class="info">
-						<div class="server-info__tag-wrapper">
-							<template v-if="php.extensions">
-								<span
-									v-for="ext in php.extensions"
-									:key="ext"
-									class="server-info__php-extension-tag">{{ ext }}</span>
-							</template>
-							<template v-else>
-								{{ t('serverinfo', 'Unable to list extensions') }}
-							</template>
-						</div>
-					</td>
-				</tr>
 				<tr v-if="phpinfo">
 					<td>{{ t('serverinfo', 'PHP Info:') }}</td>
 					<td>
@@ -164,7 +148,6 @@ defineProps<{
 		max_execution_time: number
 		upload_max_filesize: number
 		opcache_revalidate_freq: number
-		extensions: string[] | null
 	}
 	fpm: {
 		pool: string

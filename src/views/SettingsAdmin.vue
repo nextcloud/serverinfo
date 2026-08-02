@@ -74,6 +74,10 @@
 					<div class="col col-6 col-m-12">
 						<DatabaseSection :database="staticData.database" />
 					</div>
+					<!-- Full width: the tag list is far too long for half a row -->
+					<div class="col col-12">
+						<PhpExtensionsSection :extensions="staticData.php.extensions" />
+					</div>
 				</div>
 			</div>
 
@@ -112,6 +116,9 @@
 					<div class="col col-6 col-m-12">
 						<SectionSkeleton />
 					</div>
+					<div class="col col-12">
+						<SectionSkeleton />
+					</div>
 				</div>
 			</div>
 		</template>
@@ -126,6 +133,7 @@ import DiskSection from '../components/DiskSection.vue'
 import MemoryChartSection from '../components/MemoryChartSection.vue'
 import MonitoringSection from '../components/MonitoringSection.vue'
 import NetworkSection from '../components/NetworkSection.vue'
+import PhpExtensionsSection from '../components/PhpExtensionsSection.vue'
 import PhpSection from '../components/PhpSection.vue'
 import SectionSkeleton from '../components/SectionSkeleton.vue'
 import SharesSection from '../components/SharesSection.vue'

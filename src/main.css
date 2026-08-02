@@ -278,6 +278,15 @@
 	width: 100%;
 }
 
+/* Core's reset sets `white-space: nowrap` on every table. A long value such as
+   the CPU model then cannot wrap: the table grows past its column and prints
+   over the section beside it. */
+.server-info-table table,
+.server-infos-table {
+	white-space: normal;
+	overflow-wrap: break-word;
+}
+
 .server-info-table td {
 	padding: 6px;
 }
