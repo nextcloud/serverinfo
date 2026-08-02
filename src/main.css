@@ -52,40 +52,10 @@
 	border-radius: var(--border-radius-large);
 }
 
-.diskchart-container {
-	width: 100px;
-	margin-right: 25px;
-	border: 1px var(--color-border);
-}
-
-.info-color-label--available::before, .info-color-label--used::before {
-	content: '';
-	display: inline-block;
-	width: 10px;
-	height: 10px;
-	border-radius: 10px;
-	margin-right: 5px;
-}
-.info-color-label--available::before {
-	background-color: var(--color-border-maxcontrast);
-}
-
-.info-color-label--used::before {
-	background-color: var(--color-primary-element);
-}
-
 @media (width <= 1280px) {
 	.infobox {
 		display: block;
 		word-break: break-word;
-	}
-
-	.text-center-mobile {
-		text-align: center;
-	}
-
-	.diskchart-container {
-		margin: 0 auto;
 	}
 
 	.monitoring-wrapper {
@@ -94,14 +64,12 @@
 	}
 }
 
-.diskinfo-container {
-	flex: 1 0 auto;
-}
-
 .infobox h3 {
 	font-weight: bold;
 	padding: 5px 0 10px 0;
 	margin: 0;
+	/* Names like ubuntu--vg-ubuntu--lv offer no break opportunity of their own */
+	overflow-wrap: break-word;
 }
 
 .chart-container {

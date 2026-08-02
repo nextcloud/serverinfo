@@ -55,11 +55,22 @@ export function formatBytes(bytes: number): string {
 }
 
 /**
- * The themed primary accent colour, read from the active theme's CSS custom
- * property so it follows light/dark mode and custom themes.
+ * Reads a themed colour from the active theme's CSS custom properties, so that
+ * canvas drawing (which cannot resolve `var(...)` itself) follows light/dark
+ * mode and custom themes.
+ *
+ * @param name custom property name, including the leading dashes
+ * @param fallback colour to use when the property is not set
+ */
+export function cssColor(name: string, fallback: string): string {
+	return getComputedStyle(document.documentElement)
+		.getPropertyValue(name)
+		.trim() || fallback
+}
+
+/**
+ * The themed primary accent colour.
  */
 export function primaryColor(): string {
-	return getComputedStyle(document.documentElement)
-		.getPropertyValue('--color-primary-element')
-		.trim() || '#3681c3'
+	return cssColor('--color-primary-element', '#3681c3')
 }
