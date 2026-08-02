@@ -1,0 +1,4 @@
+Filesystem     Type     1024-blocks      Used Available Capacity Mounted on
+/dev/vda1      ext4        56422560   6205468  47321220      12% /
+nsfs           nsfs               0         0         0        0% /run/snapd/ns
+inverted       zfs             1000         0      2000       0% /tank

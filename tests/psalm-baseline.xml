@@ -52,7 +52,6 @@
     <InvalidOperand>
       <code><![CDATA[$lines[0] / 1024 / 1024]]></code>
       <code><![CDATA[($lines[1] * ($lines[2] + $lines[3] + $lines[4])) / 1024 / 1024]]></code>
-      <code><![CDATA[round(($used * 100 / (int)$matches['Blocks'][$i]), 2)]]></code>
     </InvalidOperand>
   </file>
   <file src="lib/OperatingSystems/Linux.php">
@@ -62,7 +61,6 @@
     </ForbiddenCode>
     <InvalidOperand>
       <code><![CDATA[$speed / 1000]]></code>
-      <code><![CDATA[round(($used * 100 / (int)$matches['Blocks'][$i]), 2)]]></code>
     </InvalidOperand>
   </file>
   <file src="lib/Os.php">

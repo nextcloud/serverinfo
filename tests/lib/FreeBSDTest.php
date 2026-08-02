@@ -200,6 +200,40 @@ class FreeBSDTest extends TestCase {
 		$this->assertEquals($expected, $actual);
 	}
 
+	public function testGetDiskInfoZeroCapacityAndInvertedUsage(): void {
+		$this->os->method('executeCommand')
+			->with('df -TPk')
+			->willReturn(file_get_contents(__DIR__ . '/../data/freebsd_df_tp_edge_cases'));
+
+		$disk1 = new Disk();
+		$disk1->setDevice('/dev/gpt/rootfs');
+		$disk1->setFs('ufs');
+		$disk1->setUsed(8889);
+		$disk1->setAvailable(46212);
+		$disk1->setPercent('16.13%');
+		$disk1->setMount('/');
+
+		// Zero blocks: used to be a DivisionByZeroError
+		$disk2 = new Disk();
+		$disk2->setDevice('empty');
+		$disk2->setFs('nullfs');
+		$disk2->setUsed(0);
+		$disk2->setAvailable(0);
+		$disk2->setPercent('0%');
+		$disk2->setMount('/mnt/empty');
+
+		// More available than total: used is clamped
+		$disk3 = new Disk();
+		$disk3->setDevice('inverted');
+		$disk3->setFs('zfs');
+		$disk3->setUsed(0);
+		$disk3->setAvailable(1);
+		$disk3->setPercent('0%');
+		$disk3->setMount('/tank');
+
+		$this->assertEquals([$disk1, $disk2, $disk3], $this->os->getDiskInfo());
+	}
+
 	public function testSupported(): void {
 		$this->assertFalse($this->os->supported());
 	}
