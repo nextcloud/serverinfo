@@ -1,0 +1,5 @@
+Filesystem       Type 1024-blocks      Used Available Capacity Mounted on
+/dev/gpt/rootfs  ufs     56422560   6205468  47321220      12% /
+zroot/data       zfs     10000000   2000000   8000000      20% /mnt/My Backup
+zroot/media      zfs     20000000   4000000  16000000      20% /mnt/media.old
+storage:/vol     nfs     40000000         -  32000000        - /mnt/nfs

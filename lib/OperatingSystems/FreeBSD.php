@@ -187,7 +187,11 @@ class FreeBSD implements IOperatingSystem {
 		}
 
 		$matches = [];
-		$pattern = '/^(?<Filesystem>[\S]+)\s*(?<Type>[\S]+)\s*(?<Blocks>\d+)\s*(?<Used>\d+)\s*(?<Available>\d+)\s*(?<Capacity>\d+%)\s*(?<Mounted>[\w\/-]+)$/m';
+		// `df -P` prints one record per line with the mount point last, so the mount
+		// point is everything after the capacity column. Used and Capacity are loose
+		// because nothing reads them and `df` prints "-" for filesystems without
+		// usage numbers.
+		$pattern = '/^(?<Filesystem>\S+)[ \t]+(?<Type>\S+)[ \t]+(?<Blocks>\d+)[ \t]+(?<Used>\S+)[ \t]+(?<Available>\d+)[ \t]+(?<Capacity>\S+)[ \t]+(?<Mounted>\S.*?)[ \t\r]*$/m';
 
 		$result = preg_match_all($pattern, $disks, $matches);
 		if ($result === 0 || $result === false) {
