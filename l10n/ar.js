@@ -50,14 +50,13 @@ OC.L10N.register(
     "MAC:" : "رقم المُصنِّع للجهاز MAC:",
     "IPv4:" : "بروتوكول IPv4:",
     "IPv6:" : "بروتوكول IPv6:",
+    "Unable to list extensions" : "تعذّر عرض قائمة بالامتدادات extensions:",
     "PHP" : "PHP",
     "Memory limit:" : "حد الذاكرة:",
     "Max execution time:" : "أقصى زمن تنفيذ:",
     "seconds" : "ثوانٍ",
     "Upload max size:" : "الحجم الأقصى للرفع:",
     "OPcache Revalidate Frequency:" : "تواتر إعادة مصادقة ذاكرة التخزين المؤقت OPcache:",
-    "Extensions:" : "الامتدادات extensions:",
-    "Unable to list extensions" : "تعذّر عرض قائمة بالامتدادات extensions:",
     "Show phpinfo" : "عرض ملف phpinfo",
     "FPM worker pool" : "حشد عمليات PHP-FPM",
     "Pool name:" : "اسم الحشد:",
@@ -93,6 +92,7 @@ OC.L10N.register(
     "Press ⌘-C to copy." : "إضغط ⌘-C للنسخ",
     "Press Ctrl-C to copy." : "إضغط Ctrl-C للنسخ.",
     "%s%% of all users" : "%s%% من جميع المستخدمين",
+    "Extensions:" : "الامتدادات extensions:",
     "Copy" : "نسخ"
 },
 "nplurals=6; plural=n==0 ? 0 : n==1 ? 1 : n==2 ? 2 : n%100>=3 && n%100<=10 ? 3 : n%100>=11 && n%100<=99 ? 4 : 5;");

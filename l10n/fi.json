@@ -12,6 +12,8 @@
     "Type:" : "Tyyppi:",
     "Version:" : "Versio:",
     "Size:" : "Koko:",
+    "Used" : "Käytetty",
+    "Available" : "Saatavilla",
     "Disk" : "Levy",
     "Mount:" : "Liitospiste:",
     "Filesystem:" : "Tiedostojärjestelmä:",
@@ -35,13 +37,13 @@
     "MAC:" : "MAC:",
     "IPv4:" : "IPv4:",
     "IPv6:" : "IPv6:",
+    "PHP extensions" : "PHP-laajennukset",
+    "Unable to list extensions" : "Laajennuksia ei voi listata",
     "PHP" : "PHP",
     "Memory limit:" : "Muistin raja:",
     "Max execution time:" : "Suoritusaika enintään:",
     "seconds" : "sekuntia",
     "Upload max size:" : "Suurin lähetyksen koko:",
-    "Extensions:" : "Laajennukset:",
-    "Unable to list extensions" : "Laajennuksia ei voi listata",
     "Shares" : "Jaot",
     "Users:" : "Käyttäjiä:",
     "Groups:" : "Ryhmät:",
@@ -58,6 +60,7 @@
     "Not supported!" : "Ei tuettu!",
     "Press ⌘-C to copy." : "Paina ⌘-C kopioidaksesi.",
     "Press Ctrl-C to copy." : "Paina Ctrl-C kopioidaksesi.",
+    "Extensions:" : "Laajennukset:",
     "Copy" : "Kopioi"
 },"pluralForm" :"nplurals=2; plural=(n != 1);"
 }

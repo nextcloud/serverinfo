@@ -11,6 +11,8 @@
     "Type:" : "Veids:",
     "Version:" : "Versija:",
     "Size:" : "Izmērs:",
+    "Used" : "Izmantots",
+    "Available" : "Pieejams",
     "Disk" : "Disks",
     "Mount:" : "Piemontēts:",
     "Filesystem:" : "Datņu sistēma:",
@@ -36,13 +38,13 @@
     "MAC:" : "MAC:",
     "IPv4:" : "IPv4:",
     "IPv6:" : "IPv6:",
+    "PHP extensions" : "PHP paplašinājumi",
+    "Unable to list extensions" : "Nevar uzskaitīt paplašinājumus",
     "PHP" : "PHP",
     "Memory limit:" : "Atmiņas limits:",
     "Max execution time:" : "Lielākais pieļaujamais izpildes laiks:",
     "seconds" : "sekundes",
     "Upload max size:" : "Augšupielādes lielākais pieļaujamais izmērs:",
-    "Extensions:" : "Paplašinājumi:",
-    "Unable to list extensions" : "Nevar uzskaitīt paplašinājumus",
     "Shares" : "Koplietots",
     "Users:" : "Lietotāji:",
     "Operating System:" : "Operētājsistēma:",
@@ -55,6 +57,7 @@
     "Not supported!" : "Nav atbalstīts!",
     "Press ⌘-C to copy." : "Spied ⌘-C lai kopētu.",
     "Press Ctrl-C to copy." : "Spied Ctrl-C lai kopētu.",
+    "Extensions:" : "Paplašinājumi:",
     "Copy" : "Kopēt"
 },"pluralForm" :"nplurals=3; plural=(n%10==1 && n%100!=11 ? 0 : n != 0 ? 1 : 2);"
 }

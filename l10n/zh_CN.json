@@ -15,6 +15,8 @@
     "Type:" : "类型：",
     "Version:" : "版本：",
     "Size:" : "大小：",
+    "Used" : "已用",
+    "Available" : "可用",
     "Disk" : "磁盘",
     "Mount:" : "挂载：",
     "Filesystem:" : "文件系统：",
@@ -47,14 +49,14 @@
     "MAC:" : "MAC：",
     "IPv4:" : "IPv4：",
     "IPv6:" : "IPv6：",
+    "PHP extensions" : "PHP 扩展",
+    "Unable to list extensions" : "无法获取扩展列表",
     "PHP" : "PHP",
     "Memory limit:" : "内存限制：",
     "Max execution time:" : "最大执行时间：",
     "seconds" : "秒",
     "Upload max size:" : "最大上传大小：",
     "OPcache Revalidate Frequency:" : "OPcache重验证频率：",
-    "Extensions:" : "扩展：",
-    "Unable to list extensions" : "无法获取扩展列表",
     "Show phpinfo" : "显示phpinfo",
     "Active processes:" : "活跃进程：",
     "Idle processes:" : "空闲进程：",
@@ -78,6 +80,7 @@
     "Press ⌘-C to copy." : "使用 ⌘-C 复制。",
     "Press Ctrl-C to copy." : "使用 Ctrl-C 复制。",
     "%s%% of all users" : "%s%% 所有用户",
+    "Extensions:" : "扩展：",
     "Copy" : "复制"
 },"pluralForm" :"nplurals=1; plural=0;"
 }

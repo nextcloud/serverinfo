@@ -42,13 +42,12 @@ OC.L10N.register(
     "MAC:" : "MAC:",
     "IPv4:" : "IPv4:",
     "IPv6:" : "IPv6:",
+    "Unable to list extensions" : "Невъзможност за изброяване на разширенията",
     "PHP" : "PHP",
     "Memory limit:" : "Ограничение на паметта:",
     "Max execution time:" : "Максимално време за изпълнение:",
     "seconds" : "секунди",
     "Upload max size:" : "Максимално време за качване:",
-    "Extensions:" : "Разширения",
-    "Unable to list extensions" : "Невъзможност за изброяване на разширенията",
     "Shares" : "Споделени папки",
     "Users:" : "Потребители:",
     "Groups:" : "Групи:",
@@ -67,6 +66,7 @@ OC.L10N.register(
     "Not supported!" : "Не се поддържа!",
     "Press ⌘-C to copy." : "За копиране натиснете ⌘-C.",
     "Press Ctrl-C to copy." : "За копиране натиснете Ctrl-C.",
+    "Extensions:" : "Разширения",
     "Copy" : "Копиране"
 },
 "nplurals=2; plural=(n != 1);");

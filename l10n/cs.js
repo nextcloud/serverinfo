@@ -52,14 +52,13 @@ OC.L10N.register(
     "MAC:" : "MAC adresa:",
     "IPv4:" : "IPv4:",
     "IPv6:" : "IPv6:",
+    "Unable to list extensions" : "Nepodařilo se vypsat rozšíření",
     "PHP" : "PHP",
     "Memory limit:" : "Limit paměti:",
     "Max execution time:" : "Nejdelší umožněný čas vykonávání:",
     "seconds" : "sekund",
     "Upload max size:" : "Nejvyšší umožněná velikost nahrávaného souboru:",
     "OPcache Revalidate Frequency:" : "Četnost opětovného ověřování platnosti OPcache mezipaměti:",
-    "Extensions:" : "Rozšíření:",
-    "Unable to list extensions" : "Nepodařilo se vypsat rozšíření",
     "PHP Info:" : "Informace o PHP:",
     "Show phpinfo" : "Zobrazit phpinfo",
     "FPM worker pool" : "Fond procesů zpracovávajících FPM",
@@ -98,6 +97,7 @@ OC.L10N.register(
     "threads" : "vláken",
     "%s%% of all users" : "%s%% ze všech uživatelů",
     "MB" : "MB",
+    "Extensions:" : "Rozšíření:",
     "Copy" : "Zkopírovat"
 },
 "nplurals=4; plural=(n == 1 && n % 1 == 0) ? 0 : (n >= 2 && n <= 4 && n % 1 == 0) ? 1: (n % 1 != 0 ) ? 2 : 3;");

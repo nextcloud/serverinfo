@@ -32,11 +32,10 @@ OC.L10N.register(
     "MAC:" : "MAC:",
     "IPv4:" : "IPv4:",
     "IPv6:" : "IPv6:",
+    "Unable to list extensions" : "Nun ye posible llistaR les estensiones",
     "PHP" : "PHP",
     "Memory limit:" : "Llende de memoria:",
     "seconds" : "segundos",
-    "Extensions:" : "Estensiones:",
-    "Unable to list extensions" : "Nun ye posible llistaR les estensiones",
     "Show phpinfo" : "Amosar phpinfo",
     "Shares" : "Comparticiones",
     "Users:" : "Usuarios:",
@@ -50,6 +49,7 @@ OC.L10N.register(
     "Not supported!" : "¡Nun ye compatible!",
     "Press ⌘-C to copy." : "Primi ⌘-C pa copiar.",
     "Press Ctrl-C to copy." : "Primi Ctrl-C pa copiar.",
+    "Extensions:" : "Estensiones:",
     "Copy" : "Copiar"
 },
 "nplurals=2; plural=(n != 1);");

@@ -49,14 +49,13 @@ OC.L10N.register(
     "MAC:" : "MAC:",
     "IPv4:" : "IPv4:",
     "IPv6:" : "IPv6:",
+    "Unable to list extensions" : "Kan ikke liste udvidelser",
     "PHP" : "PHP",
     "Memory limit:" : "Hukommelsesgrænse:",
     "Max execution time:" : "Maks udførselstid:",
     "seconds" : "sekunder ",
     "Upload max size:" : "Max upload størrelse:",
     "OPcache Revalidate Frequency:" : "OPcache revalideringsfrekvens:",
-    "Extensions:" : "Udvidelser:",
-    "Unable to list extensions" : "Kan ikke liste udvidelser",
     "Show phpinfo" : "Vis phpinfo",
     "FPM worker pool" : "FPM worker pool",
     "Pool name:" : "Pool navn:",
@@ -93,6 +92,7 @@ OC.L10N.register(
     "Press Ctrl-C to copy." : "Tryk Ctrl-C for at kopiere.",
     "threads" : "tråde",
     "%s%% of all users" : "%s%% af alle brugere",
+    "Extensions:" : "Udvidelser:",
     "Copy" : "Kopier"
 },
 "nplurals=2; plural=(n != 1);");
