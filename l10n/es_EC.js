@@ -40,14 +40,13 @@ OC.L10N.register(
     "MAC:" : "MAC:",
     "IPv4:" : "IPv4:",
     "IPv6:" : "IPv6:",
+    "Unable to list extensions" : "No se pueden enumerar las extensiones",
     "PHP" : "PHP",
     "Memory limit:" : "Límite de memoria:",
     "Max execution time:" : "Tiempo máximo de ejecución:",
     "seconds" : "segundos",
     "Upload max size:" : "Tamaño máximo de carga:",
     "OPcache Revalidate Frequency:" : "Frecuencia de revalidación de OPcache:",
-    "Extensions:" : "Extensiones:",
-    "Unable to list extensions" : "No se pueden enumerar las extensiones",
     "Show phpinfo" : "Mostrar phpinfo",
     "Shares" : "Elementos compartido",
     "Users:" : "Usuarios:",
@@ -67,6 +66,7 @@ OC.L10N.register(
     "Not supported!" : "¡No soportado!",
     "Press ⌘-C to copy." : "Presiona ⌘-C para copiar.",
     "Press Ctrl-C to copy." : "Presiona Ctrl-C para copiar.",
+    "Extensions:" : "Extensiones:",
     "Copy" : "Copiar"
 },
 "nplurals=3; plural=n == 1 ? 0 : n != 0 && n % 1000000 == 0 ? 1 : 2;");
