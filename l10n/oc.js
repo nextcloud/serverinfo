@@ -5,6 +5,8 @@ OC.L10N.register(
     "Active users" : "Utilizaires actius",
     "Type:" : "Tipe :",
     "Size:" : "Talha :",
+    "Available" : "Disponible",
+    "PHP extensions" : "extensions PHP",
     "PHP" : "PHP",
     "seconds" : "segondas",
     "Shares" : "Partatges",

@@ -18,6 +18,8 @@
     "Type:" : "نوع:",
     "Version:" : "نسخه:",
     "Size:" : "اندازه:",
+    "Used" : "استفاده شده",
+    "Available" : "موجود",
     "Disk" : "دیسک",
     "Mount:" : "محل اتصال:",
     "Filesystem:" : "سیستم فایل:",
@@ -50,14 +52,14 @@
     "MAC:" : "MAC:",
     "IPv4:" : "IPv4:",
     "IPv6:" : "IPv6:",
+    "PHP extensions" : "افزونه‌های PHP",
+    "Unable to list extensions" : "امکان فهرست‌سازی افزونه‌ها وجود ندارد",
     "PHP" : "PHP",
     "Memory limit:" : "محدودیت حافظه:",
     "Max execution time:" : "حداکثر زمان اجرا:",
     "seconds" : "ثانیه",
     "Upload max size:" : "حداکثر اندازه آپلود:",
     "OPcache Revalidate Frequency:" : "فرکانس بازبینی OPcache:",
-    "Extensions:" : "افزونه‌ها:",
-    "Unable to list extensions" : "امکان فهرست‌سازی افزونه‌ها وجود ندارد",
     "PHP Info:" : "اطلاعات PHP:",
     "Show phpinfo" : "نمایش phpinfo",
     "FPM worker pool" : "استخر کارگران FPM",
@@ -96,6 +98,7 @@
     "threads" : "رشته",
     "%s%% of all users" : "%s%% از کل کاربران",
     "MB" : "مگابایت",
+    "Extensions:" : "افزونه‌ها:",
     "Copy" : "کپی"
 },"pluralForm" :"nplurals=2; plural=(n > 1);"
 }

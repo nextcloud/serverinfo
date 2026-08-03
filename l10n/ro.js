@@ -7,6 +7,7 @@ OC.L10N.register(
     "Database" : "Baza de date",
     "Type:" : "Tip:",
     "Size:" : "Mărime:",
+    "PHP extensions" : "extensii PHP ",
     "seconds" : "secunde",
     "Shares" : "Partajări",
     "Copied!" : "S-a copiat!",

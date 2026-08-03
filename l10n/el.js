@@ -49,14 +49,13 @@ OC.L10N.register(
     "MAC:" : "MAC:",
     "IPv4:" : "IPv4:",
     "IPv6:" : "IPv6:",
+    "Unable to list extensions" : "Αδυναμία λίστας επεκτάσεων",
     "PHP" : "PHP",
     "Memory limit:" : "Όριο μνήμης:",
     "Max execution time:" : "Μέγιστος χρόνος εκτέλεσης:",
     "seconds" : "δευτερόλεπτα",
     "Upload max size:" : "Μέγιστο μέγεθος μεταφόρτωσης:",
     "OPcache Revalidate Frequency:" : "Συχνότητα Επανεπικύρωσης OPcache:",
-    "Extensions:" : "Επεκτάσεις:",
-    "Unable to list extensions" : "Αδυναμία λίστας επεκτάσεων",
     "Show phpinfo" : "Εμφάνιση phpinfo",
     "FPM worker pool" : "Συλλογή εργατών FPM",
     "Pool name:" : "Όνομα συλλογής:",
@@ -93,6 +92,7 @@ OC.L10N.register(
     "Press Ctrl-C to copy." : "Για αντιγραφή πατήστε Ctrl-C.",
     "threads" : "νήματα",
     "%s%% of all users" : "%s%% όλων των χρηστών",
+    "Extensions:" : "Επεκτάσεις:",
     "Copy" : "Αντιγραφή"
 },
 "nplurals=2; plural=(n != 1);");

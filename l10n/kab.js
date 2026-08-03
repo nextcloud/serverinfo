@@ -5,6 +5,7 @@ OC.L10N.register(
     "Unknown" : "Arussin",
     "Database" : "Taffa n isefka",
     "Type:" : "Anaw:",
+    "Available" : "I yellan",
     "Status:" : "aẓayeṛ",
     "PHP" : "PHP",
     "seconds" : "tisinin",

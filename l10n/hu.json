@@ -18,6 +18,8 @@
     "Type:" : "Típus:",
     "Version:" : "Verzió:",
     "Size:" : "Méret:",
+    "Used" : "Használt",
+    "Available" : "Elérhető",
     "Disk" : "Lemez",
     "Mount:" : "Csatolás:",
     "Filesystem:" : "Fájlrendszer:",
@@ -50,14 +52,14 @@
     "MAC:" : "MAC:",
     "IPv4:" : "IPv4:",
     "IPv6:" : "IPv6:",
+    "PHP extensions" : "PHP-kiterjesztések",
+    "Unable to list extensions" : "Nem lehet felsorolni a bővítményeket",
     "PHP" : "PHP",
     "Memory limit:" : "Memóriakorlát:",
     "Max execution time:" : "Maximális végrehajtási idő:",
     "seconds" : "másodperc",
     "Upload max size:" : "Maximális feltöltési méret:",
     "OPcache Revalidate Frequency:" : "OPcache újraellenőrzési gyakorisága:",
-    "Extensions:" : "Bővítmények:",
-    "Unable to list extensions" : "Nem lehet felsorolni a bővítményeket",
     "PHP Info:" : "PHP információk:",
     "Show phpinfo" : "A phpinfo megjelenítése",
     "FPM worker pool" : "FPM futtatókészlet",
@@ -96,6 +98,7 @@
     "threads" : "szál",
     "%s%% of all users" : "Az összes felhasználó %s%%-a",
     "MB" : "MB",
+    "Extensions:" : "Bővítmények:",
     "Copy" : "Másolás"
 },"pluralForm" :"nplurals=2; plural=(n != 1);"
 }
