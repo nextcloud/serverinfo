@@ -40,13 +40,12 @@ OC.L10N.register(
     "MAC:" : "MAC:",
     "IPv4:" : "IPv4:",
     "IPv6:" : "IPv6:",
+    "Unable to list extensions" : "No es poden llistar les extensions",
     "PHP" : "PHP",
     "Memory limit:" : "Límit de la Memòria:",
     "Max execution time:" : "Temps màxim de l'execució:",
     "seconds" : "segons",
     "Upload max size:" : "Mida màxima per pujades:",
-    "Extensions:" : "Extensions:",
-    "Unable to list extensions" : "No es poden llistar les extensions",
     "Shares" : "Elements compartits",
     "Users:" : "Usuaris:",
     "Groups:" : "Grups:",
@@ -65,6 +64,7 @@ OC.L10N.register(
     "Not supported!" : "No suportat!",
     "Press ⌘-C to copy." : "Premeu ⌘-C per còpia.",
     "Press Ctrl-C to copy." : "Premeu Ctrl-C per còpia.",
+    "Extensions:" : "Extensions:",
     "Copy" : "Copia"
 },
 "nplurals=2; plural=(n != 1);");

@@ -51,14 +51,13 @@
     "MAC:" : "MAC:",
     "IPv4:" : "IPv4:",
     "IPv6:" : "IPv6:",
+    "Unable to list extensions" : "Unable to list extensions",
     "PHP" : "PHP",
     "Memory limit:" : "Memory limit:",
     "Max execution time:" : "Max execution time:",
     "seconds" : "seconds",
     "Upload max size:" : "Upload max size:",
     "OPcache Revalidate Frequency:" : "OPcache Revalidate Frequency:",
-    "Extensions:" : "Extensions:",
-    "Unable to list extensions" : "Unable to list extensions",
     "PHP Info:" : "PHP Info:",
     "Show phpinfo" : "Show phpinfo",
     "FPM worker pool" : "FPM worker pool",
@@ -98,6 +97,7 @@
     "threads" : "threads",
     "%s%% of all users" : "%s%% of all users",
     "MB" : "MB",
+    "Extensions:" : "Extensions:",
     "Copy" : "Copy",
     "%1$s (%2$d threads)" : "%1$s (%2$d threads)"
 },"pluralForm" :"nplurals=2; plural=(n != 1);"

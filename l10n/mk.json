@@ -11,6 +11,8 @@
     "Type:" : "Вид:",
     "Version:" : "Верзија:",
     "Size:" : "Големина:",
+    "Used" : "Искористено",
+    "Available" : "Достапно",
     "Disk" : "Диск",
     "Mount:" : "Монтиран:",
     "Filesystem:" : "Податочен систем:",
@@ -37,14 +39,14 @@
     "MAC:" : "MAC:",
     "IPv4:" : "IPv4:",
     "IPv6:" : "IPv6:",
+    "PHP extensions" : "PHP додатоци",
+    "Unable to list extensions" : "Неможе да се излистаат екстензиите",
     "PHP" : "PHP",
     "Memory limit:" : "Лимит на меморијата:",
     "Max execution time:" : "Максимално време на извршување:",
     "seconds" : "секунди",
     "Upload max size:" : "Максимална големина на прикачување:",
     "OPcache Revalidate Frequency:" : "Фреквенција на ревалидација на OPcache:",
-    "Extensions:" : "Екстензија:",
-    "Unable to list extensions" : "Неможе да се излистаат екстензиите",
     "Show phpinfo" : "Прикажи phpinfo",
     "Shares" : "Споделувања",
     "Users:" : "Корисници:",
@@ -64,6 +66,7 @@
     "Not supported!" : "Не е поддржано!",
     "Press ⌘-C to copy." : "Притисни ⌘-C за да копираш",
     "Press Ctrl-C to copy." : "Притисни Ctrl-C за да копираш.",
+    "Extensions:" : "Екстензија:",
     "Copy" : "Копирај"
 },"pluralForm" :"nplurals=2; plural=(n % 10 == 1 && n % 100 != 11) ? 0 : 1;"
 }

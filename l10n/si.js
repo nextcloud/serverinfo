@@ -2,6 +2,7 @@ OC.L10N.register(
     "serverinfo",
     {
     "System" : "පද්ධතිය",
+    "Available" : "ඇත",
     "Shares" : "බෙදාගැනීම්",
     "Copied!" : "පිටපත් කළා!",
     "Not supported!" : "සහාය නොදක්වයි!",

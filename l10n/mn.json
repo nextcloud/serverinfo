@@ -18,6 +18,7 @@
     "Type:" : "Төрөл:",
     "Version:" : "Хувилбар:",
     "Size:" : "Хэмжээ:",
+    "Available" : "–ë–æ–ª–æ–º–∂—Ç–æ–π",
     "Disk" : "Диск",
     "Mount:" : "Холболт:",
     "Filesystem:" : "Файлын систем:",
@@ -49,14 +50,14 @@
     "MAC:" : "MAC:",
     "IPv4:" : "IPv4:",
     "IPv6:" : "IPv6:",
+    "PHP extensions" : "PHP өргөтгөлүүд",
+    "Unable to list extensions" : "Өргөтгөлүүдийг жагсааж чадсангүй",
     "PHP" : "PHP",
     "Memory limit:" : "Санах ойн хязгаар:",
     "Max execution time:" : "Хамгийн их гүйцэтгэх хугацаа:",
     "seconds" : "секунд",
     "Upload max size:" : "Байршуулах дээд хэмжээ:",
     "OPcache Revalidate Frequency:" : "OPcache дахин баталгаажуулах давтамж:",
-    "Extensions:" : "Өргөтгөлүүд:",
-    "Unable to list extensions" : "Өргөтгөлүүдийг жагсааж чадсангүй",
     "PHP Info:" : "PHP мэдээлэл:",
     "Show phpinfo" : "phpinfo харуулах",
     "FPM worker pool" : "FPM ажилчдын сан",
@@ -95,6 +96,7 @@
     "threads" : "thread-ууд",
     "%s%% of all users" : "Бүх хэрэглэгчдийн %s%%",
     "MB" : "МБ",
+    "Extensions:" : "Өргөтгөлүүд:",
     "Copy" : "Хуулах"
 },"pluralForm" :"nplurals=2; plural=(n != 1);"
 }

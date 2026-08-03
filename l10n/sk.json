@@ -16,6 +16,8 @@
     "Type:" : "Typ:",
     "Version:" : "Verzia:",
     "Size:" : "Veľkosť:",
+    "Used" : "Použité",
+    "Available" : "Dostupné",
     "Disk" : "Disk",
     "Mount:" : "Prípojný bod:",
     "Filesystem:" : "Súborový systém:",
@@ -48,14 +50,14 @@
     "MAC:" : "MAC adresa:",
     "IPv4:" : "Adresa IPv4:",
     "IPv6:" : "Adresa IPv6:",
+    "PHP extensions" : "PHP rozšírenia",
+    "Unable to list extensions" : "Nepodarilo sa zobraziť rozšírenia",
     "PHP" : "PHP",
     "Memory limit:" : "Obmedzenie pamäte:",
     "Max execution time:" : "Maximálny čas spustenia:",
     "seconds" : "sekúnd",
     "Upload max size:" : "Maximálna veľkosť pre nahratie:",
     "OPcache Revalidate Frequency:" : "Frekvencia opätovného overenia pamäte OPcache:",
-    "Extensions:" : "Rozšírenia:",
-    "Unable to list extensions" : "Nepodarilo sa zobraziť rozšírenia",
     "Show phpinfo" : "Zobraziť phpinfo",
     "FPM worker pool" : "Skupina procesov FPM",
     "Pool name:" : "Názov skupiny:",
@@ -91,6 +93,7 @@
     "Press ⌘-C to copy." : "Pre kopírovanie, stlačte ⌘-C.",
     "Press Ctrl-C to copy." : "Pre kopírovanie, stlačte Ctrl-C.",
     "%s%% of all users" : "%s%% všetkých používateľov",
+    "Extensions:" : "Rozšírenia:",
     "Copy" : "Kopírovať"
 },"pluralForm" :"nplurals=4; plural=(n % 1 == 0 && n == 1 ? 0 : n % 1 == 0 && n >= 2 && n <= 4 ? 1 : n % 1 != 0 ? 2: 3);"
 }

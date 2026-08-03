@@ -12,6 +12,8 @@
     "Type:" : "Type:",
     "Version:" : "Versjon:",
     "Size:" : "Størrelse:",
+    "Used" : "Brukt",
+    "Available" : "Ledig",
     "Disk" : "Disk",
     "Mount:" : "Montering:",
     "Filesystem:" : "Filsystem:",
@@ -42,14 +44,14 @@
     "MAC:" : "MAC:",
     "IPv4:" : "IPv4:",
     "IPv6:" : "IPv6:",
+    "PHP extensions" : "PHP-utvidelser",
+    "Unable to list extensions" : "Ikke i stand til å laste utvidelser",
     "PHP" : "PHP",
     "Memory limit:" : "Minnegrense:",
     "Max execution time:" : "Maks. kjøringstid:",
     "seconds" : "sekund",
     "Upload max size:" : "Maks. opplastingstørrelse:",
     "OPcache Revalidate Frequency:" : "OPcache Revalidate Frequency:",
-    "Extensions:" : "Utvidelser:",
-    "Unable to list extensions" : "Ikke i stand til å laste utvidelser",
     "Show phpinfo" : "Vis phpinfo",
     "Shares" : "Delinger",
     "Users:" : "Brukere:",
@@ -69,6 +71,7 @@
     "Not supported!" : "Ikke støttet!",
     "Press ⌘-C to copy." : "Trykk ⌘-C for å kopiere.",
     "Press Ctrl-C to copy." : "Trykk Ctrl-C for å kopiere.",
+    "Extensions:" : "Utvidelser:",
     "Copy" : "Kopier"
 },"pluralForm" :"nplurals=2; plural=(n != 1);"
 }

@@ -11,6 +11,7 @@ OC.L10N.register(
     "Size:" : "ზომა:",
     "Files:" : "ფაილები",
     "External monitoring tool" : "გარე მონიტორინგის ხელსაწყო",
+    "PHP extensions" : "PHP გაფართოებები",
     "PHP" : "PHP",
     "Upload max size:" : "ატვირთვის მაქს. ზომა:",
     "Shares" : "გაზიარებები",

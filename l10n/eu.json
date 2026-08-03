@@ -12,6 +12,8 @@
     "Type:" : "Mota:",
     "Version:" : "Bertsioa:",
     "Size:" : "Tamaina:",
+    "Used" : "Erabilia",
+    "Available" : "Erabilgarri",
     "Disk" : "Diskoa",
     "Mount:" : "Muntatzea:",
     "Filesystem:" : "Fitxategi-sistema:",
@@ -38,13 +40,13 @@
     "MAC:" : "MAC:",
     "IPv4:" : "IPv4:",
     "IPv6:" : "IPv6:",
+    "PHP extensions" : "PHP luzapenak",
+    "Unable to list extensions" : "Ezin dira zerrendatu luzapenak",
     "PHP" : "PHP",
     "Memory limit:" : "Memoria muga:",
     "Max execution time:" : "Gehienezko exekuzio denbora:",
     "seconds" : "duela segundu batzuk",
     "Upload max size:" : "Igotzeko gehienezko tamaina:",
-    "Extensions:" : "Hedapenak:",
-    "Unable to list extensions" : "Ezin dira zerrendatu luzapenak",
     "Show phpinfo" : "Erakutsi phpinfo",
     "Shares" : "Partekatutakoak",
     "Users:" : "Erabiltzaileak:",
@@ -64,6 +66,7 @@
     "Not supported!" : "Ez da onartzen!",
     "Press ⌘-C to copy." : "Sakatu ⌘-C kopiatzeko.",
     "Press Ctrl-C to copy." : "Sakatu Ctrl-C kopiatzeko.",
+    "Extensions:" : "Hedapenak:",
     "Copy" : "Kopiatu"
 },"pluralForm" :"nplurals=2; plural=(n != 1);"
 }

@@ -18,6 +18,8 @@
     "Type:" : "Тип:",
     "Version:" : "Версия:",
     "Size:" : "Размер:",
+    "Used" : "Использовано",
+    "Available" : "Доступный",
     "Disk" : "Диск",
     "Mount:" : "Метка диска:",
     "Filesystem:" : "Файловая система:",
@@ -50,14 +52,14 @@
     "MAC:" : "MAC:",
     "IPv4:" : "IPv4:",
     "IPv6:" : "IPv6:",
+    "PHP extensions" : "Расширения PHP",
+    "Unable to list extensions" : "Невозможно перечислить расширения",
     "PHP" : "PHP",
     "Memory limit:" : "Лимит памяти:",
     "Max execution time:" : "Максимальное время выполнения:",
     "seconds" : "секунд",
     "Upload max size:" : "Максимальный размер для отправки:",
     "OPcache Revalidate Frequency:" : "Частота повторной проверки OPcache:",
-    "Extensions:" : "Расширения:",
-    "Unable to list extensions" : "Невозможно перечислить расширения",
     "PHP Info:" : "PHP Info:",
     "Show phpinfo" : "Показать информацию о php",
     "FPM worker pool" : "Рабочий пул FPM",
@@ -96,6 +98,7 @@
     "threads" : "темы",
     "%s%% of all users" : "%s%% всех пользователей",
     "MB" : "МБ",
+    "Extensions:" : "Расширения:",
     "Copy" : "Копировать"
 },"pluralForm" :"nplurals=4; plural=(n%10==1 && n%100!=11 ? 0 : n%10>=2 && n%10<=4 && (n%100<12 || n%100>14) ? 1 : n%10==0 || (n%10>=5 && n%10<=9) || (n%100>=11 && n%100<=14)? 2 : 3);"
 }

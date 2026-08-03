@@ -49,14 +49,13 @@ OC.L10N.register(
     "MAC:" : "MAC:",
     "IPv4:" : "IPv4:",
     "IPv6:" : "IPv6:",
+    "Unable to list extensions" : "Unable to list extensions",
     "PHP" : "PHP",
     "Memory limit:" : "Memory limit:",
     "Max execution time:" : "Max execution time:",
     "seconds" : "ວິນາທີ",
     "Upload max size:" : "Upload max size:",
     "OPcache Revalidate Frequency:" : "OPcache Revalidate Frequency:",
-    "Extensions:" : "Extensions:",
-    "Unable to list extensions" : "Unable to list extensions",
     "Show phpinfo" : "Show phpinfo",
     "FPM worker pool" : "FPM worker pool",
     "Pool name:" : "Pool name:",
@@ -93,6 +92,7 @@ OC.L10N.register(
     "Press Ctrl-C to copy." : "ກົດ Ctrl-C ເພື່ອ copy",
     "threads" : "threads",
     "%s%% of all users" : "%s%% of all users",
+    "Extensions:" : "Extensions:",
     "Copy" : "ສຳເນົາ"
 },
 "nplurals=1; plural=0;");

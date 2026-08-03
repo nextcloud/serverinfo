@@ -18,6 +18,8 @@
     "Type:" : "Tür:",
     "Version:" : "Sürüm:",
     "Size:" : "Boyut:",
+    "Used" : "Kullanılan alan",
+    "Available" : "Uygun",
     "Disk" : "Disk",
     "Mount:" : "Takılı:",
     "Filesystem:" : "Dosya sistemi:",
@@ -50,14 +52,14 @@
     "MAC:" : "MAC:",
     "IPv4:" : "IPv4:",
     "IPv6:" : "IPv6:",
+    "PHP extensions" : "PHP eklentileri",
+    "Unable to list extensions" : "Eklentiler listelenemedi",
     "PHP" : "PHP",
     "Memory limit:" : "Bellek sınırı:",
     "Max execution time:" : "En uzun çalışma süresi:",
     "seconds" : "saniye",
     "Upload max size:" : "En büyük yükleme boyutu:",
     "OPcache Revalidate Frequency:" : "OPcache yeniden doğrulama sıklığı:",
-    "Extensions:" : "Eklentiler:",
-    "Unable to list extensions" : "Eklentiler listelenemedi",
     "PHP Info:" : "PHP Bilgileri:",
     "Show phpinfo" : "PHP bilgilerini görüntüle",
     "FPM worker pool" : "FPM işleyici havuzu",
@@ -96,6 +98,7 @@
     "threads" : "işlem",
     "%s%% of all users" : "Tüm kullanıcıların %%%s",
     "MB" : "MB",
+    "Extensions:" : "Eklentiler:",
     "Copy" : "Kopyala"
 },"pluralForm" :"nplurals=2; plural=(n > 1);"
 }
