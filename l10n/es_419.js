@@ -11,6 +11,7 @@ OC.L10N.register(
     "Size:" : "Tamaño:",
     "Files:" : "Archivos:",
     "External monitoring tool" : "Herramienta de monitoreo externa",
+    "PHP extensions" : "Extensiones de PHP",
     "PHP" : "PHP",
     "Upload max size:" : "Tamaño máximo de carga:",
     "Shares" : "Elementos compartido",
