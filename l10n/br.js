@@ -4,6 +4,7 @@ OC.L10N.register(
     "System" : "Sistem",
     "Unknown" : "Dianv",
     "Type:" : "Seurt:",
+    "Available" : "Vak",
     "Network" : "Rouedad",
     "PHP" : "PHP",
     "Shares" : "Rannañ",
