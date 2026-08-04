@@ -7,6 +7,8 @@ OC.L10N.register(
     "Database" : "Cronfa ddata",
     "Type:" : "Math:",
     "Size:" : "Maint:",
+    "Available" : "Ar gael?",
+    "PHP extensions" : "Estyniadau PHP",
     "PHP" : "PHP",
     "seconds" : "eiliad",
     "Copied!" : "Wedi'i gopïo!",

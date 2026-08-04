@@ -45,6 +45,7 @@ OC.L10N.register(
     "MAC:" : "MAC:",
     "IPv4:" : "IPv4:",
     "IPv6:" : "IPv6:",
+    "PHP extensions" : "Extensiones de PHP",
     "Unable to list extensions" : "No se pueden enumerar las extensiones",
     "PHP" : "PHP",
     "Memory limit:" : "Límite de memoria:",
