@@ -8,6 +8,7 @@ OC.L10N.register(
     "Monitoring" : "İzleniyor",
     "Monitoring app with useful server information" : "Yararlı sunucu bilgileri sunan izleme uygulaması",
     "Provides useful server information, such as CPU load, RAM usage, disk usage, number of users, etc." : "İşlemci yükü, bellek ve disk kullanımı, kullanıcı sayısı gibi sunucu ile ilgili çeşitli bilgiler sağlar. ",
+    "{0}% of all users" : "Tüm kullanıcılarda %{0} ",
     "Active users" : "Etkin kullanıcılar",
     "Last hour" : "Son 1 saat",
     "Last 24 Hours" : "Son 24 saat",
@@ -20,8 +21,9 @@ OC.L10N.register(
     "Type:" : "Tür:",
     "Version:" : "Sürüm:",
     "Size:" : "Boyut:",
-    "Used" : "Kullanılan alan",
-    "Available" : "Uygun",
+    "{used} of {total} used" : "{used} / {total} kullanılmış",
+    "Used" : "Kullanılan",
+    "Available" : "Kullanılabilecek",
     "Disk" : "Disk",
     "Mount:" : "Takılı:",
     "Filesystem:" : "Dosya sistemi:",
@@ -87,6 +89,7 @@ OC.L10N.register(
     "Talk conversations:" : "Konuş görüşmeleri:",
     "Operating System:" : "İşletim sistemi:",
     "CPU:" : "İşlemci",
+    "{name} ({threads} threads)" : "{name} ({threads} işlem)",
     "Memory:" : "Bellek:",
     "Server time:" : "Sunucu zamanı:",
     "Uptime:" : "Çalışma süresi:",
@@ -101,6 +104,7 @@ OC.L10N.register(
     "%s%% of all users" : "Tüm kullanıcıların %%%s",
     "MB" : "MB",
     "Extensions:" : "Eklentiler:",
-    "Copy" : "Kopyala"
+    "Copy" : "Kopyala",
+    "%1$s (%2$d threads)" : "%1$s (%2$d işlem)"
 },
 "nplurals=2; plural=(n > 1);");
