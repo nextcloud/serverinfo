@@ -1,0 +1,11 @@
+OC.L10N.register(
+    "serverinfo",
+    {
+    "Type:" : "ប្រភេទ៖",
+    "Size:" : "ទំហំ៖",
+    "Shares" : "ចែក​រំលែក",
+    "Copied!" : "បានចម្លង",
+    "Press ⌘-C to copy." : " ចុច ⌘-C ដើម្បីចម្លង",
+    "Press Ctrl-C to copy." : "ចុច Ctrl-C ដើម្បីចម្លង"
+},
+"nplurals=1; plural=0;");
