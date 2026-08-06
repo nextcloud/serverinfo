@@ -1,6 +1,6 @@
 {
     "require-dev": {
-        "nextcloud/coding-standard": "^1.4"
+        "nextcloud/coding-standard": "^1.5"
     },
 	"config": {
 		"platform": {

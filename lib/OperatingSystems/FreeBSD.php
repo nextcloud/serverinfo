@@ -5,6 +5,7 @@ declare(strict_types=1);
  * SPDX-FileCopyrightText: 2020 Nextcloud GmbH and Nextcloud contributors
  * SPDX-License-Identifier: AGPL-3.0-only
  */
+
 namespace OCA\ServerInfo\OperatingSystems;
 
 use OCA\ServerInfo\Resources\CPU;
@@ -101,6 +102,7 @@ class FreeBSD implements IOperatingSystem {
 		$result = [
 			'gateway' => '',
 			'hostname' => \gethostname(),
+			'dns' => '',
 		];
 
 		try {
@@ -185,7 +187,11 @@ class FreeBSD implements IOperatingSystem {
 		}
 
 		$matches = [];
-		$pattern = '/^(?<Filesystem>[\S]+)\s*(?<Type>[\S]+)\s*(?<Blocks>\d+)\s*(?<Used>\d+)\s*(?<Available>\d+)\s*(?<Capacity>\d+%)\s*(?<Mounted>[\w\/-]+)$/m';
+		// `df -P` prints one record per line with the mount point last, so the mount
+		// point is everything after the capacity column. Used and Capacity are loose
+		// because nothing reads them and `df` prints "-" in those two columns when
+		// it has no usage numbers.
+		$pattern = '/^(?<Filesystem>\S+)[ \t]+(?<Type>\S+)[ \t]+(?<Blocks>\d+)[ \t]+(?<Used>\S+)[ \t]+(?<Available>\d+)[ \t]+(?<Capacity>\S+)[ \t]+(?<Mounted>\S.*?)[ \t\r]*$/m';
 
 		$result = preg_match_all($pattern, $disks, $matches);
 		if ($result === 0 || $result === false) {
@@ -198,13 +204,17 @@ class FreeBSD implements IOperatingSystem {
 				continue;
 			}
 
+			$blocks = (int)$matches['Blocks'][$i];
+			$available = (int)$matches['Available'][$i];
+			// Clamped: more available than total would give a negative size
+			$used = max(0, $blocks - $available);
+
 			$disk = new Disk();
 			$disk->setDevice($filesystem);
 			$disk->setFs($matches['Type'][$i]);
-			$used = (int)((int)$matches['Blocks'][$i] - (int)$matches['Available'][$i]);
 			$disk->setUsed((int)ceil($used / 1024));
-			$disk->setAvailable((int)floor((int)$matches['Available'][$i] / 1024));
-			$disk->setPercent(round(($used * 100 / (int)$matches['Blocks'][$i]), 2) . '%');
+			$disk->setAvailable((int)floor($available / 1024));
+			$disk->setPercent($blocks > 0 ? (string)round($used * 100 / $blocks, 2) . '%' : '0%');
 			$disk->setMount($matches['Mounted'][$i]);
 
 			$data[] = $disk;

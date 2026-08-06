@@ -33,6 +33,7 @@ interface IOperatingSystem {
 	 * [
 	 *        'gateway' => string,
 	 *        'hostname' => string,
+	 *        'dns' => string,
 	 * ]
 	 */
 	public function getNetworkInfo(): array;
