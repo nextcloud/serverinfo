@@ -44,7 +44,6 @@ class DummyTest extends TestCase {
 		$this->assertEquals(-1, $this->os->getUptime());
 	}
 
-
 	public function testGetDiskInfo(): void {
 		$this->assertEquals([], $this->os->getDiskInfo());
 	}
@@ -55,5 +54,13 @@ class DummyTest extends TestCase {
 
 	public function testGetNetworkInterfaces(): void {
 		$this->assertEquals([], $this->os->getNetworkInterfaces());
+	}
+
+	public function testGetNetworkInfo(): void {
+		$networkInfo = $this->os->getNetworkInfo();
+
+		$this->assertArrayHasKey('hostname', $networkInfo);
+		$this->assertSame('', $networkInfo['gateway']);
+		$this->assertSame('', $networkInfo['dns']);
 	}
 }

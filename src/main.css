@@ -52,40 +52,10 @@
 	border-radius: var(--border-radius-large);
 }
 
-.diskchart-container {
-	width: 100px;
-	margin-right: 25px;
-	border: 1px var(--color-border);
-}
-
-.info-color-label--available::before, .info-color-label--used::before {
-	content: '';
-	display: inline-block;
-	width: 10px;
-	height: 10px;
-	border-radius: 10px;
-	margin-right: 5px;
-}
-.info-color-label--available::before {
-	background-color: var(--color-border-maxcontrast);
-}
-
-.info-color-label--used::before {
-	background-color: var(--color-primary-element);
-}
-
 @media (width <= 1280px) {
 	.infobox {
 		display: block;
 		word-break: break-word;
-	}
-
-	.text-center-mobile {
-		text-align: center;
-	}
-
-	.diskchart-container {
-		margin: 0 auto;
 	}
 
 	.monitoring-wrapper {
@@ -94,21 +64,12 @@
 	}
 }
 
-.diskinfo-container {
-	flex: 1 0 auto;
-}
-
 .infobox h3 {
 	font-weight: bold;
 	padding: 5px 0 10px 0;
 	margin: 0;
-}
-
-.infoicon {
-	width: 28px;
-	vertical-align: middle;
-	padding: 5px;
-	filter: var(--background-invert-if-dark);
+	/* Names like ubuntu--vg-ubuntu--lv offer no break opportunity of their own */
+	overflow-wrap: break-word;
 }
 
 .chart-container {
@@ -313,17 +274,23 @@
 	border-radius: var(--border-radius-large);
 }
 
-.cpu-wrapper {
+.server-info-table table {
 	width: 100%;
 }
 
-.server-info-table table {
-	width: 100%;
+/* Core's reset sets `white-space: nowrap` on every table. A long value such as
+   the CPU model then cannot wrap: the table grows past its column and prints
+   over the section beside it. */
+.server-info-table table,
+.server-infos-table {
+	white-space: normal;
+	overflow-wrap: break-word;
 }
 
 .server-info-table td {
 	padding: 6px;
 }
+
 
 .server-info__tag-wrapper {
 	display: flex;
@@ -333,7 +300,7 @@
 .server-info__php-extension-tag {
 	display: inline-block;
 	margin: 2px;
-	padding: 2px 12px;
+	padding: 1px 9px;
 	border-radius: 16px;
 	border: 1px solid var(--color-main-text);
 }

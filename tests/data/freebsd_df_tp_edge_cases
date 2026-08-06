@@ -1,0 +1,4 @@
+Filesystem   Type 1024-blocks      Used Available Capacity Mounted on
+/dev/gpt/rootfs ufs     56422560   6205468  47321220      12% /
+empty        nullfs          0         0         0        0% /mnt/empty
+inverted     zfs          1000         0      2000       0% /tank

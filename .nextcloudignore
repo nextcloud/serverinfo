@@ -1,0 +1,16 @@
+.git/
+.git-blame-ignore-revs
+.gitattributes
+.github/
+.gitignore
+.nextcloudignore
+.php-cs-fixer.dist.php
+.tx/
+eslint.config.mjs
+l10n/.gitkeep
+psalm.xml
+README.md
+src/
+tests/
+vendor-bin/
+vite.config.mjs

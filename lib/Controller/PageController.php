@@ -9,8 +9,9 @@ declare(strict_types=1);
 
 namespace OCA\ServerInfo\Controller;
 
+use OCA\ServerInfo\LiveData;
 use OCA\ServerInfo\PhpInfoResponse;
-use OCA\ServerInfo\SystemStatistics;
+use OCA\ServerInfo\StaticData;
 use OCP\AppFramework\Controller;
 use OCP\AppFramework\Http\JSONResponse;
 use OCP\AppFramework\Http\NotFoundResponse;
@@ -22,21 +23,25 @@ class PageController extends Controller {
 	public function __construct(
 		string $appName,
 		IRequest $request,
-		private SystemStatistics $systemStatistics,
 		private IConfig $config,
+		private StaticData $staticData,
+		private LiveData $liveData,
 	) {
 		parent::__construct($appName, $request);
+	}
+
+	/**
+	 * One-time snapshot of static/slow-changing server data for the admin page.
+	 */
+	public function data(): JSONResponse {
+		return new JSONResponse($this->staticData->getData());
 	}
 
 	/**
 	 * request data update
 	 */
 	public function update(): JSONResponse {
-		$data = [
-			'system' => $this->systemStatistics->getSystemStatistics(true, true)
-		];
-
-		return new JSONResponse($data);
+		return new JSONResponse($this->liveData->getData());
 	}
 
 	/**

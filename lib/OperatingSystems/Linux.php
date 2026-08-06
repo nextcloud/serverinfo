@@ -126,10 +126,20 @@ class Linux implements IOperatingSystem {
 		$result = [
 			'gateway' => '',
 			'hostname' => \gethostname(),
+			'dns' => '',
 		];
 
 		if (function_exists('shell_exec')) {
 			$result['gateway'] = shell_exec('ip route | awk \'/default/ { print $3 }\'');
+		}
+
+		try {
+			$resolvConf = $this->readContent('/etc/resolv.conf');
+			if (preg_match_all('/^\s*nameserver\s+(\S+)/m', $resolvConf, $matches)) {
+				$result['dns'] = implode(', ', array_unique($matches[1]));
+			}
+		} catch (RuntimeException) {
+			// okay
 		}
 
 		return $result;
@@ -196,7 +206,11 @@ class Linux implements IOperatingSystem {
 		}
 
 		$matches = [];
-		$pattern = '/^(?<Filesystem>[\S]+)\s*(?<Type>[\S]+)\s*(?<Blocks>\d+)\s*(?<Used>\d+)\s*(?<Available>\d+)\s*(?<Capacity>\d+%)\s*(?<Mounted>[\w\/\-\.]+)$/m';
+		// `df -P` prints one record per line with the mount point last, so the mount
+		// point is everything after the capacity column. Used and Capacity are loose
+		// because nothing reads them and `df` prints "-" in those two columns when
+		// it has no usage numbers.
+		$pattern = '/^(?<Filesystem>\S+)[ \t]+(?<Type>\S+)[ \t]+(?<Blocks>\d+)[ \t]+(?<Used>\S+)[ \t]+(?<Available>\d+)[ \t]+(?<Capacity>\S+)[ \t]+(?<Mounted>\S.*?)[ \t\r]*$/m';
 
 		$result = preg_match_all($pattern, $disks, $matches);
 		if ($result === 0 || $result === false) {
@@ -204,19 +218,24 @@ class Linux implements IOperatingSystem {
 		}
 
 		foreach ($matches['Filesystem'] as $i => $filesystem) {
-			if (in_array($matches['Type'][$i], ['tmpfs', 'devtmpfs', 'squashfs', 'overlay'], false)) {
+			if (in_array($matches['Type'][$i], ['tmpfs', 'devtmpfs', 'squashfs', 'overlay', 'efivarfs'], false)) {
 				continue;
 			} elseif (in_array($matches['Mounted'][$i], ['/etc/hostname', '/etc/hosts'], false)) {
 				continue;
 			}
 
+			$blocks = (int)$matches['Blocks'][$i];
+			$available = (int)$matches['Available'][$i];
+			// Clamped: more available than total would give a negative size
+			$used = max(0, $blocks - $available);
+
 			$disk = new Disk();
 			$disk->setDevice($filesystem);
 			$disk->setFs($matches['Type'][$i]);
-			$used = (int)((int)$matches['Blocks'][$i] - (int)$matches['Available'][$i]);
 			$disk->setUsed((int)ceil($used / 1024));
-			$disk->setAvailable((int)floor((int)$matches['Available'][$i] / 1024));
-			$disk->setPercent(round(($used * 100 / (int)$matches['Blocks'][$i]), 2) . '%');
+			$disk->setAvailable((int)floor($available / 1024));
+			// busybox df lists zero-block filesystems, coreutils does not
+			$disk->setPercent($blocks > 0 ? (string)round($used * 100 / $blocks, 2) . '%' : '0%');
 			$disk->setMount($matches['Mounted'][$i]);
 
 			$data[] = $disk;
@@ -227,13 +246,50 @@ class Linux implements IOperatingSystem {
 
 	#[\Override]
 	public function getThermalZones(): array {
+		return array_merge($this->readHwmonSensors(), $this->readThermalZoneSensors());
+	}
+
+	/**
+	 * Read temperatures from the hwmon sensor interface (/sys/class/hwmon).
+	 *
+	 * @return ThermalZone[]
+	 */
+	protected function readHwmonSensors(): array {
 		$data = [];
 
-		$zones = glob('/sys/class/thermal/thermal_zone*');
-		if ($zones === false) {
-			return $data;
+		$drivers = glob('/sys/class/hwmon/hwmon*') ?: [];
+		foreach ($drivers as $driver) {
+			try {
+				$name = $this->readContent($driver . '/name');
+			} catch (RuntimeException) {
+				// driver without a name, skip it
+				continue;
+			}
+
+			$zones = glob($driver . '/temp*_label') ?: [];
+			foreach ($zones as $zone) {
+				try {
+					$type = $name . ' ' . $this->readContent($zone);
+					$temp = (float)((int)$this->readContent(str_replace('_label', '_input', $zone)) / 1000);
+					$data[] = new ThermalZone(md5($zone), $type, $temp);
+				} catch (RuntimeException) {
+					// unable to read sensor
+				}
+			}
 		}
 
+		return $data;
+	}
+
+	/**
+	 * Read temperatures from the thermal zone interface (/sys/class/thermal).
+	 *
+	 * @return ThermalZone[]
+	 */
+	protected function readThermalZoneSensors(): array {
+		$data = [];
+
+		$zones = glob('/sys/class/thermal/thermal_zone*') ?: [];
 		foreach ($zones as $zone) {
 			try {
 				$type = $this->readContent($zone . '/type');
