@@ -21,6 +21,8 @@ OC.L10N.register(
     "Type:" : "Tipas:",
     "Version:" : "Versija:",
     "Size:" : "Dydis:",
+    "{used} of {total} used" : "Panaudota {used} iš {total}",
+    "Used" : "Panaudota",
     "Available" : "Prieinamas",
     "Disk" : "Diskas",
     "Mount:" : "Prijungti:",
