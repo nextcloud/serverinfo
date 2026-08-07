@@ -21,6 +21,7 @@ OC.L10N.register(
     "Type:" : "Type:",
     "Version:" : "Version:",
     "Size:" : "Size:",
+    "{used} of {total} used" : "{used} of {total} used",
     "Used" : "Used",
     "Available" : "Available",
     "Disk" : "Disk",
