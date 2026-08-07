@@ -21,6 +21,7 @@ OC.L10N.register(
     "Type:" : "類型：",
     "Version:" : "版本：",
     "Size:" : "大小：",
+    "{used} of {total} used" : "在 {total} 中使用了 {used}",
     "Used" : "已使用",
     "Available" : "可用",
     "Disk" : "硬碟",
