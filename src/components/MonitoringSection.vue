@@ -4,58 +4,73 @@
 -->
 <template>
 	<div class="section monitoring">
-		<SectionHeading :icon="Connection" :title="t('serverinfo', 'External monitoring tool')" />
-		<p>{{ t('serverinfo', 'Use this end point to connect an external monitoring tool:') }}</p>
+		<SectionHeading :icon="Connection" :title="t('serverinfo', 'External monitoring API')" />
 
-		<div class="monitoring-wrapper">
-			<input type="text" readonly :value="endpointUrl">
-		</div>
+		<NcFormBox>
+			<!-- TRANSLATORS: Label of a read-only field holding the URL an external monitoring tool should query -->
+			<NcFormBoxCopyButton
+				:label="t('serverinfo', 'Endpoint URL')"
+				:value="endpointUrl" />
+		</NcFormBox>
 
-		<div class="monitoring-url-params">
-			<div class="monitoring-url-param">
-				<input
-					id="format_json"
+		<!-- TRANSLATORS: Heading above the switches that change the endpoint URL, noun -->
+		<NcFormGroup :label="t('serverinfo', 'Configuration')">
+			<NcFormBox>
+				<!-- TRANSLATORS: Switch label, turns on JSON instead of XML as the response format -->
+				<NcFormBoxSwitch
 					v-model="formatJson"
-					type="checkbox"
-					class="update-monitoring-endpoint-url"
-					name="format_json">
-				<label for="format_json">{{ t('serverinfo', 'Output in JSON') }}</label>
-			</div>
-			<div class="monitoring-url-param">
-				<input
-					id="skip_apps"
+					:label="t('serverinfo', 'Output in JSON')" />
+				<!-- TRANSLATORS: Switch label, omits the list of installed apps from the response -->
+				<NcFormBoxSwitch
 					v-model="skipApps"
-					type="checkbox"
-					class="update-monitoring-endpoint-url"
-					name="skip_apps">
-				<label for="skip_apps">{{ t('serverinfo', 'Skip apps section (including apps section will send an external request to the app store)') }}</label>
-			</div>
-			<div class="monitoring-url-param">
-				<input
-					id="skip_update"
+					:label="t('serverinfo', 'Skip apps section')"
+					:description="t('serverinfo', 'Including the apps section sends an external request to the app store')" />
+				<!-- TRANSLATORS: Switch label, omits the check for available server updates from the response -->
+				<NcFormBoxSwitch
 					v-model="skipUpdate"
-					type="checkbox"
-					class="update-monitoring-endpoint-url"
-					name="skip_update">
-				<label for="skip_update">{{ t('serverinfo', 'Skip server update') }}</label>
-			</div>
-		</div>
+					:label="t('serverinfo', 'Skip server update')" />
+			</NcFormBox>
+		</NcFormGroup>
 
-		<p>{{ t('serverinfo', 'To use an access token, please generate one then set it using the following command:') }}</p>
-		<div>
-			<i>occ config:app:set serverinfo token --value yourtoken</i>
-		</div>
-		<p>{{ t('serverinfo', 'Then pass the token with the "NC-Token" header when querying the above URL.') }}</p>
+		<!-- TRANSLATORS: Heading above the access token an external monitoring tool has to send, noun. {header} is the literal HTTP header name "NC-Token". -->
+		<NcFormGroup
+			:label="t('serverinfo', 'Authentication')"
+			:description="t('serverinfo', 'This token was generated in your browser and is not stored until you run the command below. Send it in the {header} header with every request.', { header: TOKEN_HEADER })">
+			<NcFormBox>
+				<!-- TRANSLATORS: Label of a read-only field holding a shell command to copy and run on the server -->
+				<NcFormBoxCopyButton
+					:label="t('serverinfo', 'Command to store the token')"
+					:value="`occ config:app:set serverinfo token --value ${suggestedToken}`" />
+				<!-- TRANSLATORS: Label of a read-only field holding an HTTP header, noun — not an instruction to request something -->
+				<NcFormBoxCopyButton
+					:label="t('serverinfo', 'Request header')"
+					:value="`${TOKEN_HEADER}: ${suggestedToken}`" />
+			</NcFormBox>
+		</NcFormGroup>
 	</div>
 </template>
 
 <script setup lang="ts">
 import { t } from '@nextcloud/l10n'
 import { computed, ref } from 'vue'
+import NcFormBox from '@nextcloud/vue/components/NcFormBox'
+import NcFormBoxCopyButton from '@nextcloud/vue/components/NcFormBoxCopyButton'
+import NcFormBoxSwitch from '@nextcloud/vue/components/NcFormBoxSwitch'
+import NcFormGroup from '@nextcloud/vue/components/NcFormGroup'
 import Connection from 'vue-material-design-icons/Connection.vue'
 import SectionHeading from './SectionHeading.vue'
 
 const props = defineProps<{ ocs: string }>()
+
+const TOKEN_HEADER = 'NC-Token'
+
+// Suggesting a strong token beats "yourtoken", which invites a weak one. Held
+// in a const so it stays stable while the page is open; the admin still has to
+// run occ, nothing is stored from here.
+const suggestedToken = Array.from(
+	crypto.getRandomValues(new Uint8Array(32)),
+	(byte) => byte.toString(16).padStart(2, '0'),
+).join('')
 
 const formatJson = ref(false)
 const skipApps = ref(true)
@@ -80,3 +95,12 @@ const endpointUrl = computed(() => {
 	}
 })
 </script>
+
+<style scoped>
+/* NcFormGroup spaces its own contents, but not the groups against each other. */
+.monitoring {
+	display: flex;
+	flex-direction: column;
+	gap: calc(var(--default-grid-baseline, 4px) * 4);
+}
+</style>
