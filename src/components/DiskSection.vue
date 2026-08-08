@@ -5,7 +5,7 @@
 <template>
 	<div class="section disk-status">
 		<SectionHeading :icon="Harddisk" :title="t('serverinfo', 'Disk')" />
-		<div class="disk-grid">
+		<div class="row row--cards">
 			<div v-for="(disk, i) in disks" :key="disk.device" class="infobox text-center-mobile">
 				<div class="diskchart-container">
 					<canvas
@@ -197,19 +197,6 @@ onUnmounted(() => {
 </script>
 
 <style scoped>
-/* The .col-* classes size off the viewport, but the settings pane is much
-   narrower, so col-4 gave each card a third of an already narrow column. */
-.disk-grid {
-	display: grid;
-	grid-template-columns: repeat(auto-fill, minmax(360px, 1fr));
-	gap: 16px;
-	margin: 16px 0;
-}
-
-.disk-grid .infobox {
-	margin: 0;
-}
-
 .diskchart-container {
 	/* Chart.js sizes the canvas from this box, so it needs a definite width */
 	position: relative;

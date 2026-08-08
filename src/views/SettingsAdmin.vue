@@ -8,7 +8,7 @@
 			<!-- Server info + Thermal -->
 			<div class="section server-infos-two">
 				<div class="row">
-					<div class="col col-6 col-l-12">
+					<div>
 						<SystemSection
 							:hostname="staticData.hostname"
 							:osname="staticData.osname"
@@ -18,7 +18,7 @@
 							:uptime="liveData?.uptime ?? ''" />
 					</div>
 					<!-- Thermal only exists once live data lands; show a skeleton until then. -->
-					<div v-if="!liveData || liveData.thermalzones.length > 0" class="col col-6 col-l-12">
+					<div v-if="!liveData || liveData.thermalzones.length > 0">
 						<SectionSkeleton v-if="!liveData" />
 						<ThermalSection v-else :thermalzones="liveData.thermalzones" />
 					</div>
@@ -28,7 +28,7 @@
 			<!-- CPU + Memory charts -->
 			<div class="section server-infos-two">
 				<div class="row">
-					<div class="col col-6 col-l-12">
+					<div>
 						<CpuChartSection
 							v-if="liveData"
 							:cpuload="liveData.cpu.load"
@@ -36,7 +36,7 @@
 							:tick="tick" />
 						<SectionSkeleton v-else />
 					</div>
-					<div class="col col-6 col-l-12">
+					<div>
 						<MemoryChartSection
 							v-if="liveData"
 							:memTotal="liveData.memory.total"
@@ -64,21 +64,19 @@
 			<!-- PHP + Database -->
 			<div class="section php-database">
 				<div class="row">
-					<div class="col col-6 col-m-12">
+					<div>
 						<PhpSection
 							:php="staticData.php"
 							:fpm="staticData.fpm"
 							:phpinfo="staticData.phpinfo"
 							:phpinfoUrl="staticData.phpinfoUrl" />
 					</div>
-					<div class="col col-6 col-m-12">
+					<div>
 						<DatabaseSection :database="staticData.database" />
 					</div>
-					<!-- Full width: the tag list is far too long for half a row -->
-					<div class="col col-12">
-						<PhpExtensionsSection :extensions="staticData.php.extensions" />
-					</div>
 				</div>
+				<!-- Outside the grid: the tag list is far too long for one column -->
+				<PhpExtensionsSection :extensions="staticData.php.extensions" />
 			</div>
 
 			<!-- External monitoring -->
@@ -88,20 +86,20 @@
 		<template v-else>
 			<div class="section server-infos-two">
 				<div class="row">
-					<div class="col col-6 col-l-12">
+					<div>
 						<SectionSkeleton />
 					</div>
-					<div class="col col-6 col-l-12">
+					<div>
 						<SectionSkeleton />
 					</div>
 				</div>
 			</div>
 			<div class="section server-infos-two">
 				<div class="row">
-					<div class="col col-6 col-l-12">
+					<div>
 						<SectionSkeleton />
 					</div>
-					<div class="col col-6 col-l-12">
+					<div>
 						<SectionSkeleton />
 					</div>
 				</div>
@@ -110,16 +108,14 @@
 			<SectionSkeleton />
 			<div class="section php-database">
 				<div class="row">
-					<div class="col col-6 col-m-12">
+					<div>
 						<SectionSkeleton />
 					</div>
-					<div class="col col-6 col-m-12">
-						<SectionSkeleton />
-					</div>
-					<div class="col col-12">
+					<div>
 						<SectionSkeleton />
 					</div>
 				</div>
+				<SectionSkeleton />
 			</div>
 		</template>
 	</div>
