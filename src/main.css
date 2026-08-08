@@ -2,6 +2,12 @@
  * SPDX-FileCopyrightText: 2016 Nextcloud GmbH and Nextcloud contributors
  * SPDX-License-Identifier: AGPL-3.0-or-later
  */
+/* settings.scss pins `.section h2` to 20px but leaves h3 at the 1.6em from
+   core, so an unstyled subheading outgrows the heading above it. */
+.section h3 {
+	font-size: 18px;
+}
+
 .info {
 	font-weight: bold;
 }
@@ -138,9 +144,16 @@
 	overflow-wrap: break-word;
 }
 
+/* Core pads neither, so a header would otherwise sit flush against the edge
+   while every row below it is indented. */
+.server-info-table th,
 .server-info-table td {
 	padding: 6px;
 	border-bottom: 1px solid var(--color-border);
+}
+
+.server-info-table th {
+	color: var(--color-text-maxcontrast);
 }
 
 .server-info-table tr:last-child td {

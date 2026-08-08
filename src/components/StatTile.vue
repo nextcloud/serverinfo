@@ -7,17 +7,38 @@
 		<div class="stat-tile__label">
 			{{ label }}
 		</div>
-		<div class="stat-tile__value">
-			{{ value }}
+		<div class="stat-tile__value" :class="status && `stat-tile__value--${status}`">
+			<slot>{{ value }}</slot>
+			<!-- The colour is the only visible cue, so the severity has to be
+				 spelled out for assistive technology -->
+			<span v-if="statusLabel" class="hidden-visually">{{ statusLabel }}</span>
 		</div>
 	</div>
 </template>
 
 <script setup lang="ts">
-defineProps<{
+import { t } from '@nextcloud/l10n'
+import { computed } from 'vue'
+
+const props = defineProps<{
 	label: string
-	value: string | number
+	value?: string | number
+	/** Colours the value when the number itself is the warning */
+	status?: 'ok' | 'warning' | 'critical'
 }>()
+
+const statusLabel = computed(() => {
+	switch (props.status) {
+		case 'warning':
+			// TRANSLATORS: Read out after a value that has crossed a warning threshold
+			return t('serverinfo', 'Warning')
+		case 'critical':
+			// TRANSLATORS: Read out after a value that has crossed a critical threshold
+			return t('serverinfo', 'Critical')
+		default:
+			return ''
+	}
+})
 </script>
 
 <style scoped>
@@ -44,5 +65,13 @@ defineProps<{
 	line-height: 1.2;
 	font-variant-numeric: tabular-nums;
 	word-break: break-word;
+}
+
+.stat-tile__value--warning {
+	color: var(--color-warning-text, var(--color-warning));
+}
+
+.stat-tile__value--critical {
+	color: var(--color-error-text, var(--color-error));
 }
 </style>

@@ -3,6 +3,8 @@
  * SPDX-License-Identifier: AGPL-3.0-or-later
  */
 
+import { t } from '@nextcloud/l10n'
+
 /**
  * Formats a size in megabytes to a human-readable string.
  *
@@ -73,4 +75,39 @@ export function cssColor(name: string, fallback: string): string {
  */
 export function primaryColor(): string {
 	return cssColor('--color-primary-element', '#3681c3')
+}
+
+/**
+ * Shortens a job class for a table column: for an `OCA\` job the second segment
+ * is the app id, so `OCA\Talk\BackgroundJob\RemoveEmptyRooms` becomes
+ * "Talk RemoveEmptyRooms".
+ *
+ * @param className fully qualified class name
+ */
+export function jobName(className: string): string {
+	const parts = className.split('\\')
+	const name = parts.pop() ?? className
+	return parts[0] === 'OCA' && parts[1] ? `${parts[1]} ${name}` : name
+}
+
+/**
+ * @param duration run time in milliseconds, null when the job reported none
+ */
+export function formatDuration(duration: number | null): string {
+	if (duration === null) {
+		return '–'
+	}
+	if (duration < 1000) {
+		// TRANSLATORS: {duration} is a number of milliseconds, e.g. "412 ms"
+		return t('serverinfo', '{duration} ms', { duration })
+	}
+	// TRANSLATORS: {duration} is a number of seconds with one decimal, e.g. "1.4 s"
+	return t('serverinfo', '{duration} s', { duration: (duration / 1000).toFixed(1) })
+}
+
+/**
+ * @param memoryPeak peak memory in kilobytes, base 10 as the job runner reports it
+ */
+export function formatKilobytes(memoryPeak: number | null): string {
+	return memoryPeak === null ? '–' : formatBytes(memoryPeak * 1000)
 }

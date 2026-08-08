@@ -23,7 +23,6 @@ class StaticData {
 		private ShareStatistics $shareStatistics,
 		private SessionStatistics $sessionStatistics,
 		private SystemStatistics $systemStatistics,
-		private CronInfo $cronInfo,
 		private IAppConfig $appConfig,
 	) {
 	}
@@ -65,7 +64,6 @@ class StaticData {
 			'activeUsers' => $this->sessionStatistics->getSessionStatistics(),
 			'freeSpace' => $this->systemStatistics->getFreeSpace(),
 			'memTotal' => $memory->getMemTotal(),
-			'cron' => $this->cronInfo->getCronInfo(),
 			'phpinfo' => $this->appConfig->getAppValueBool('phpinfo', false),
 			'phpinfoUrl' => $this->urlGenerator->linkToRoute('serverinfo.page.phpinfo'),
 		];

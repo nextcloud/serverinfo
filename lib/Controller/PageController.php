@@ -9,6 +9,8 @@ declare(strict_types=1);
 
 namespace OCA\ServerInfo\Controller;
 
+use OCA\ServerInfo\Collector\BackgroundJobs;
+use OCA\ServerInfo\Collector\Cron;
 use OCA\ServerInfo\LiveData;
 use OCA\ServerInfo\PhpInfoResponse;
 use OCA\ServerInfo\StaticData;
@@ -26,6 +28,8 @@ class PageController extends Controller {
 		private IConfig $config,
 		private StaticData $staticData,
 		private LiveData $liveData,
+		private Cron $cron,
+		private BackgroundJobs $backgroundJobs,
 	) {
 		parent::__construct($appName, $request);
 	}
@@ -42,6 +46,17 @@ class PageController extends Controller {
 	 */
 	public function update(): JSONResponse {
 		return new JSONResponse($this->liveData->getData());
+	}
+
+	/**
+	 * Data cheap enough to re-read every minute. Anything scanning a large
+	 * table belongs in data() instead.
+	 */
+	public function periodic(): JSONResponse {
+		return new JSONResponse([
+			'cron' => $this->cron->get(),
+			'backgroundJobs' => $this->backgroundJobs->get(),
+		]);
 	}
 
 	/**

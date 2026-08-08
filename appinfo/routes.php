@@ -20,6 +20,7 @@ return [
 	'routes' => [
 		['name' => 'page#data', 'url' => '/data', 'verb' => 'GET'],
 		['name' => 'page#update', 'url' => '/update', 'verb' => 'GET'],
+		['name' => 'page#periodic', 'url' => '/periodic', 'verb' => 'GET'],
 		['name' => 'page#phpinfo', 'url' => '/phpinfo', 'verb' => 'GET'],
 	],
 	'ocs' => [

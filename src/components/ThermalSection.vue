@@ -17,7 +17,7 @@
 </template>
 
 <script setup lang="ts">
-import type { ThermalZone } from '../composables/useLiveData.ts'
+import type { ThermalZone } from '../types.ts'
 
 import { t } from '@nextcloud/l10n'
 import Thermometer from 'vue-material-design-icons/Thermometer.vue'

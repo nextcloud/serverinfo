@@ -19,7 +19,7 @@
 					<div>
 						<ResourceOverviewSection
 							v-if="liveData"
-							:cpuload="liveData.cpu.load"
+							:cpuload="cpuload"
 							:cpunum="staticData.cpu.threads"
 							:memTotal="liveData.memory.total"
 							:memFree="liveData.memory.free"
@@ -36,7 +36,7 @@
 					<div>
 						<CpuChartSection
 							v-if="liveData"
-							:cpuload="liveData.cpu.load"
+							:cpuload="cpuload"
 							:cpunum="staticData.cpu.threads"
 							:tick="tick" />
 						<SectionSkeleton v-else />
@@ -59,6 +59,13 @@
 
 			<!-- Network -->
 			<NetworkSection :networkinfo="staticData.networkinfo" :interfaces="staticData.networkinterfaces" />
+
+			<!-- Background jobs -->
+			<BackgroundJobsSection
+				v-if="periodicData"
+				:cron="periodicData.cron"
+				:jobs="periodicData.backgroundJobs" />
+			<SectionSkeleton v-else />
 
 			<!-- Active users -->
 			<ActiveUsersSection :activeUsers="staticData.activeUsers" :numUsers="staticData.storage.num_users" />
@@ -133,7 +140,11 @@
 </template>
 
 <script setup lang="ts">
+import type { LiveData, PeriodicData } from '../types.ts'
+
+import { computed } from 'vue'
 import ActiveUsersSection from '../components/ActiveUsersSection.vue'
+import BackgroundJobsSection from '../components/BackgroundJobsSection.vue'
 import CpuChartSection from '../components/CpuChartSection.vue'
 import DatabaseSection from '../components/DatabaseSection.vue'
 import DiskSection from '../components/DiskSection.vue'
@@ -153,5 +164,13 @@ import { useStaticData } from '../composables/useStaticData.ts'
 defineOptions({ name: 'ServerInfo' })
 
 const { data: staticData } = useStaticData()
-const { data: liveData, tick } = useLiveData()
+const { data: liveData, tick } = useLiveData<LiveData>('/apps/serverinfo/update')
+const { data: periodicData } = useLiveData<PeriodicData>('/apps/serverinfo/periodic', 60000)
+
+// The API reports "no CPU data" as both false and an empty array; collapsing
+// the two keeps every consumer down to a single check.
+const cpuload = computed(() => {
+	const load = liveData.value?.cpu.load
+	return Array.isArray(load) && load.length > 0 ? load : false
+})
 </script>
