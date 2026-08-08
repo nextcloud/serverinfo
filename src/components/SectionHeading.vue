@@ -3,7 +3,7 @@
   - SPDX-License-Identifier: AGPL-3.0-or-later
 -->
 <template>
-	<h2>
+	<h2 class="section-heading">
 		<component :is="icon" class="icon" :size="20" />
 		{{ title }}
 	</h2>
@@ -16,6 +16,10 @@ defineProps<{ icon: Component, title: string }>()
 </script>
 
 <style scoped>
+.section-heading {
+	justify-content: start;
+}
+
 .icon {
 	display: inline-flex;
 	vertical-align: middle;

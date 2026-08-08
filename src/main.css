@@ -2,21 +2,6 @@
  * SPDX-FileCopyrightText: 2016 Nextcloud GmbH and Nextcloud contributors
  * SPDX-License-Identifier: AGPL-3.0-or-later
  */
-.monitoring-wrapper {
-	display: -webkit-flex;
-	display: flex;
-	max-width: 50%;
-	min-width: 50%;
-}
-
-.monitoring-wrapper > input {
-	flex: 1 0 auto;
-}
-
-.monitoring-wrapper + .settings-hint {
-	margin-top: 0;
-}
-
 .rambox, .cpubox {
 	height: 10px;
 	width: 10px;
@@ -52,11 +37,6 @@
 	.infobox {
 		display: block;
 		word-break: break-word;
-	}
-
-	.monitoring-wrapper {
-		min-width: 100%;
-		max-width: 100%;
 	}
 }
 
@@ -109,23 +89,6 @@
    a device name would widen its track instead of wrapping. */
 .row > * {
 	min-width: 0;
-}
-
-.monitoring-url-params {
-	margin-top: 3px;
-	margin-bottom: 3px;
-}
-
-.monitoring-url-param {
-	display: flex;
-	align-items: start;
-	margin-bottom: 3px;
-}
-
-.monitoring-url-param input {
-	margin-top: 4px;
-	min-height: initial;
-	height: initial;
 }
 
 .active-users-wrapper {
