@@ -4,31 +4,38 @@
 -->
 <template>
 	<SectionHeading :icon="Memory" :title="t('serverinfo', 'Memory')" />
-	<div id="memorySection" class="infobox">
-		<div class="chart-wrapper">
-			<Line v-if="hasMemory" :data="chartData" :options="chartOptions" />
+	<p v-if="!hasMemory">
+		<!-- TRANSLATORS: Shown instead of the memory chart when the server does not report memory information -->
+		<em>{{ t('serverinfo', 'RAM info not available') }}</em>
+	</p>
+	<template v-else>
+		<div class="row row--tiles">
+			<!-- TRANSLATORS: Tile label above the amount of RAM currently in use, e.g. "3.2 GB" -->
+			<StatTile :label="t('serverinfo', 'Used')" :value="memUsed" />
+			<!-- TRANSLATORS: Tile label above the total amount of RAM installed, e.g. "16 GB" -->
+			<StatTile :label="t('serverinfo', 'Total')" :value="memTotalText" />
+			<!-- TRANSLATORS: Tile label above the amount of swap space currently in use -->
+			<StatTile v-if="hasSwap" :label="t('serverinfo', 'Swap used')" :value="swapUsed" />
 		</div>
-	</div>
-	<p>
-		<span id="rambox" class="rambox">&nbsp;&nbsp;</span>&nbsp;&nbsp;
-		<em>{{ memText }}</em>
-	</p>
-	<p>
-		<span id="swapbox" class="swapbox">&nbsp;&nbsp;</span>&nbsp;&nbsp;
-		<em>{{ swapText }}</em>
-	</p>
+		<div id="memorySection" class="infobox">
+			<div class="chart-wrapper">
+				<Line :data="chartData" :options="chartOptions" />
+			</div>
+		</div>
+	</template>
 </template>
 
 <script setup lang="ts">
-import type { TooltipItem } from 'chart.js'
+import type { LegendItem, TooltipItem } from 'chart.js'
 
 import { t } from '@nextcloud/l10n'
-import { CategoryScale, Chart, Filler, LinearScale, LineController, LineElement, PointElement, Tooltip } from 'chart.js'
+import { CategoryScale, Chart, Filler, Legend, LinearScale, LineController, LineElement, PointElement, Tooltip } from 'chart.js'
 import { computed, ref, shallowRef, watch } from 'vue'
 import { Line } from 'vue-chartjs'
 import Memory from 'vue-material-design-icons/Memory.vue'
 import SectionHeading from './SectionHeading.vue'
-import { formatBytes, primaryColor, withAlpha } from '../utils.ts'
+import StatTile from './StatTile.vue'
+import { formatMegabytes, primaryColor, withAlpha } from '../utils.ts'
 
 const props = defineProps<{
 	memTotal: number | 'N/A'
@@ -38,12 +45,12 @@ const props = defineProps<{
 	tick: number
 }>()
 
-Chart.register(CategoryScale, Filler, LinearScale, LineController, LineElement, PointElement, Tooltip)
+Chart.register(CategoryScale, Filler, Legend, LinearScale, LineController, LineElement, PointElement, Tooltip)
 
 const MAX_POINTS = 60
 
 const hasMemory = computed(() => props.memTotal !== 'N/A' && props.memFree !== 'N/A')
-const hasSwap = computed(() => props.swapTotal !== 'N/A' && props.swapFree !== 'N/A')
+const hasSwap = computed(() => props.swapTotal !== 'N/A' && props.swapFree !== 'N/A' && props.swapTotal > 0)
 
 /**
  *
@@ -53,7 +60,8 @@ function passiveColor(): string {
 }
 
 const ramDataset = {
-	label: t('serverinfo', 'RAM Usage:'),
+	// TRANSLATORS: Chart legend entry for the line plotting RAM usage over time
+	label: t('serverinfo', 'RAM usage'),
 	borderColor: passiveColor(),
 	backgroundColor: withAlpha(primaryColor(), 0.4),
 	fill: true,
@@ -63,7 +71,8 @@ const ramDataset = {
 }
 
 const swapDataset = {
-	label: t('serverinfo', 'SWAP Usage:'),
+	// TRANSLATORS: Chart legend entry for the line plotting swap usage over time
+	label: t('serverinfo', 'Swap usage'),
 	borderColor: 'rgba(100,100,100,0.8)',
 	backgroundColor: 'rgba(100,100,100,0.2)',
 	fill: true,
@@ -105,36 +114,25 @@ const chartOptions = computed(() => ({
 		},
 	},
 	plugins: {
-		legend: { display: false },
+		// Two datasets share this chart, so the legend is what tells the RAM line
+		// from the swap one. Hide the swap entry on hosts without swap.
+		legend: {
+			display: true,
+			position: 'bottom' as const,
+			labels: {
+				color: passiveColor(),
+				filter: (item: LegendItem) => hasSwap.value || item.datasetIndex === 0,
+			},
+		},
 		tooltip: {
-			callbacks: { label: (ctx: TooltipItem<'line'>) => (ctx.dataset.label ?? '') + ' ' + ctx.parsed.y.toFixed(2) + ' GB' },
+			callbacks: { label: (ctx: TooltipItem<'line'>) => (ctx.dataset.label ?? '') + ': ' + ctx.parsed.y.toFixed(2) + ' GB' },
 		},
 	},
 }))
 
-const memText = computed(() => {
-	if (!hasMemory.value) {
-		return t('serverinfo', 'RAM info not available')
-	}
-	const total = (props.memTotal as number) * 1024 * 1024
-	const used = ((props.memTotal as number) - (props.memFree as number)) * 1024 * 1024
-	return t('serverinfo', 'RAM: Total: {memTotalBytes}/Current usage: {memUsageBytes}', {
-		memTotalBytes: formatBytes(total),
-		memUsageBytes: formatBytes(used),
-	})
-})
-
-const swapText = computed(() => {
-	if (!hasSwap.value) {
-		return t('serverinfo', 'SWAP info not available')
-	}
-	const total = (props.swapTotal as number) * 1024 * 1024
-	const used = ((props.swapTotal as number) - (props.swapFree as number)) * 1024 * 1024
-	return t('serverinfo', 'SWAP: Total: {swapTotalBytes}/Current usage: {swapUsageBytes}', {
-		swapTotalBytes: formatBytes(total),
-		swapUsageBytes: formatBytes(used),
-	})
-})
+const memTotalText = computed(() => formatMegabytes(props.memTotal as number))
+const memUsed = computed(() => formatMegabytes((props.memTotal as number) - (props.memFree as number)))
+const swapUsed = computed(() => formatMegabytes((props.swapTotal as number) - (props.swapFree as number)))
 
 watch(() => props.tick, () => {
 	if (!hasMemory.value) {

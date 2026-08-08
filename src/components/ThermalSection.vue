@@ -4,12 +4,12 @@
 -->
 <template>
 	<SectionHeading :icon="Thermometer" :title="t('serverinfo', 'Temperature')" />
-	<div class="table-wrapper">
-		<table class="server-infos-table">
+	<div class="server-info-table">
+		<table>
 			<tbody>
 				<tr v-for="zone in thermalzones" :key="zone.zone">
 					<td>{{ zone.type }}:</td>
-					<td>&nbsp;<span class="info">{{ zone.temp }}</span>°C</td>
+					<td><span class="info temp">{{ Math.round(zone.temp) }}</span>°C</td>
 				</tr>
 			</tbody>
 		</table>
@@ -27,3 +27,11 @@ defineProps<{
 	thermalzones: ThermalZone[]
 }>()
 </script>
+
+<style scoped>
+/* The reading refreshes every two seconds; equal-width digits keep it from
+   jumping sideways between updates. */
+.temp {
+	font-variant-numeric: tabular-nums;
+}
+</style>

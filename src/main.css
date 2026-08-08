@@ -2,18 +2,6 @@
  * SPDX-FileCopyrightText: 2016 Nextcloud GmbH and Nextcloud contributors
  * SPDX-License-Identifier: AGPL-3.0-or-later
  */
-.rambox, .cpubox {
-	height: 10px;
-	width: 10px;
-	background-color: var(--color-primary-element);
-}
-
-.swapbox {
-	height: 10px;
-	width: 10px;
-	background-color: var(--color-background-darker);
-}
-
 .info {
 	font-weight: bold;
 }
@@ -85,6 +73,13 @@
 	margin: 0;
 }
 
+/* Stat tiles above the load and memory charts. */
+.row--tiles {
+	grid-template-columns: repeat(auto-fit, minmax(min(110px, 100%), 1fr));
+	gap: 8px;
+	margin: 16px 0;
+}
+
 /* Grid items are min-width:auto by default, so a long unbreakable value such as
    a device name would widen its track instead of wrapping. */
 .row > * {
@@ -134,21 +129,22 @@
 	border-radius: var(--border-radius-large);
 }
 
-.server-info-table table {
-	width: 100%;
-}
-
 /* Core's reset sets `white-space: nowrap` on every table. A long value such as
    the CPU model then cannot wrap: the table grows past its column and prints
    over the section beside it. */
-.server-info-table table,
-.server-infos-table {
+.server-info-table table {
+	width: 100%;
 	white-space: normal;
 	overflow-wrap: break-word;
 }
 
 .server-info-table td {
 	padding: 6px;
+	border-bottom: 1px solid var(--color-border);
+}
+
+.server-info-table tr:last-child td {
+	border-bottom: none;
 }
 
 
