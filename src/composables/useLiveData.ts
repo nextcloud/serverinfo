@@ -31,7 +31,14 @@ export function useLiveData() {
 	async function poll() {
 		try {
 			const response = await axios.get(generateUrl('/apps/serverinfo/update'))
-			data.value = response.data
+			const live = response.data as LiveData
+			// The API says "no CPU data" as either false or an empty array. Collapse
+			// the two here so consumers only ever have to check for false — an
+			// unchecked load[0] otherwise renders NaN.
+			if (Array.isArray(live.cpu?.load) && live.cpu.load.length === 0) {
+				live.cpu.load = false
+			}
+			data.value = live
 			tick.value++
 		} catch {
 			// Keep previous values on error

@@ -5,17 +5,13 @@
 <template>
 	<div class="section network-infos">
 		<SectionHeading :icon="Lan" :title="t('serverinfo', 'Network')" />
-		<div>
-			{{ t('serverinfo', 'Hostname:') }}
-			<span class="info">{{ networkinfo.hostname }}</span>
-		</div>
-		<div>
-			{{ t('serverinfo', 'Gateway:') }}
-			<span class="info">{{ networkinfo.gateway }}</span>
-		</div>
-		<div>
-			{{ t('serverinfo', 'DNS:') }}
-			<span class="info">{{ networkinfo.dns }}</span>
+		<div class="row row--tiles">
+			<!-- TRANSLATORS: Tile label above the network host name of the server -->
+			<StatTile :label="t('serverinfo', 'Hostname')" :value="networkinfo.hostname" />
+			<!-- TRANSLATORS: Tile label above the IP address of the default network gateway -->
+			<StatTile :label="t('serverinfo', 'Gateway')" :value="networkinfo.gateway" />
+			<!-- TRANSLATORS: Tile label above the IP addresses of the configured DNS name servers -->
+			<StatTile :label="t('serverinfo', 'DNS')" :value="networkinfo.dns" />
 		</div>
 		<div class="row row--cards">
 			<div v-for="iface in interfaces" :key="iface.name">
@@ -45,6 +41,7 @@
 import { t } from '@nextcloud/l10n'
 import Lan from 'vue-material-design-icons/Lan.vue'
 import SectionHeading from './SectionHeading.vue'
+import StatTile from './StatTile.vue'
 
 defineProps<{
 	networkinfo: { hostname: string, gateway: string, dns: string }
