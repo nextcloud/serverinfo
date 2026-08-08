@@ -5,7 +5,7 @@
 <template>
 	<div class="server-info-wrapper">
 		<template v-if="staticData">
-			<!-- Server info + Thermal -->
+			<!-- Server info + resource usage -->
 			<div class="section server-infos-two">
 				<div class="row">
 					<div>
@@ -13,14 +13,19 @@
 							:hostname="staticData.hostname"
 							:osname="staticData.osname"
 							:cpu="staticData.cpu"
-							:memTotal="staticData.memTotal"
 							:servertime="liveData?.servertime ?? ''"
 							:uptime="liveData?.uptime ?? ''" />
 					</div>
-					<!-- Thermal only exists once live data lands; show a skeleton until then. -->
-					<div v-if="!liveData || liveData.thermalzones.length > 0">
-						<SectionSkeleton v-if="!liveData" />
-						<ThermalSection v-else :thermalzones="liveData.thermalzones" />
+					<div>
+						<ResourceOverviewSection
+							v-if="liveData"
+							:cpuload="liveData.cpu.load"
+							:cpunum="staticData.cpu.threads"
+							:memTotal="liveData.memory.total"
+							:memFree="liveData.memory.free"
+							:swapTotal="liveData.memory.swap_total"
+							:swapFree="liveData.memory.swap_free" />
+						<SectionSkeleton v-else />
 					</div>
 				</div>
 			</div>
@@ -60,6 +65,12 @@
 
 			<!-- Shares -->
 			<SharesSection v-if="staticData.shares.num_shares > 0" :shares="staticData.shares" />
+
+			<!-- Temperature -->
+			<div v-if="!liveData || liveData.thermalzones.length > 0" class="section">
+				<SectionSkeleton v-if="!liveData" />
+				<ThermalSection v-else :thermalzones="liveData.thermalzones" />
+			</div>
 
 			<!-- PHP + Database -->
 			<div class="section php-database">
@@ -131,6 +142,7 @@ import MonitoringSection from '../components/MonitoringSection.vue'
 import NetworkSection from '../components/NetworkSection.vue'
 import PhpExtensionsSection from '../components/PhpExtensionsSection.vue'
 import PhpSection from '../components/PhpSection.vue'
+import ResourceOverviewSection from '../components/ResourceOverviewSection.vue'
 import SectionSkeleton from '../components/SectionSkeleton.vue'
 import SharesSection from '../components/SharesSection.vue'
 import SystemSection from '../components/SystemSection.vue'
