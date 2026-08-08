@@ -4,38 +4,28 @@
 -->
 <template>
 	<div class="section network-infos">
-		<div class="row">
-			<div class="col col-12">
-				<SectionHeading :icon="AccountGroup" :title="t('serverinfo', 'Active users')" />
-			</div>
-			<div class="col col-12">
-				<div class="row">
-					<div class="col">
-						<div class="infobox">
-							<div class="interface-wrapper active-users-wrapper">
-								<div v-if="activeUsers.last1hour > 0" class="active-users-box">
-									{{ t('serverinfo', 'Last hour') }}<br>
-									<span class="info">{{ activeUsers.last1hour }}</span><br>
-									<em>{{ percentageOfAllUsers(activeUsers.last1hour) }}</em>
-								</div>
-								<div v-if="activeUsers.last24hours > 0" class="active-users-box">
-									{{ t('serverinfo', 'Last 24 Hours') }}<br>
-									<span class="info">{{ activeUsers.last24hours }}</span><br>
-									<em>{{ percentageOfAllUsers(activeUsers.last24hours) }}</em>
-								</div>
-								<div v-if="activeUsers.last7days > 0" class="active-users-box">
-									{{ t('serverinfo', 'Last 7 Days') }}<br>
-									<span class="info">{{ activeUsers.last7days }}</span><br>
-									<em>{{ percentageOfAllUsers(activeUsers.last7days) }}</em>
-								</div>
-								<div v-if="activeUsers.last1month > 0" class="active-users-box">
-									{{ t('serverinfo', 'Last 30 Days') }}<br>
-									<span class="info">{{ activeUsers.last1month }}</span><br>
-									<em>{{ percentageOfAllUsers(activeUsers.last1month) }}</em>
-								</div>
-							</div>
-						</div>
-					</div>
+		<SectionHeading :icon="AccountGroup" :title="t('serverinfo', 'Active users')" />
+		<div class="infobox">
+			<div class="interface-wrapper active-users-wrapper">
+				<div v-if="activeUsers.last1hour > 0" class="active-users-box">
+					{{ t('serverinfo', 'Last hour') }}<br>
+					<span class="info">{{ activeUsers.last1hour }}</span><br>
+					<em>{{ percentageOfAllUsers(activeUsers.last1hour) }}</em>
+				</div>
+				<div v-if="activeUsers.last24hours > 0" class="active-users-box">
+					{{ t('serverinfo', 'Last 24 Hours') }}<br>
+					<span class="info">{{ activeUsers.last24hours }}</span><br>
+					<em>{{ percentageOfAllUsers(activeUsers.last24hours) }}</em>
+				</div>
+				<div v-if="activeUsers.last7days > 0" class="active-users-box">
+					{{ t('serverinfo', 'Last 7 Days') }}<br>
+					<span class="info">{{ activeUsers.last7days }}</span><br>
+					<em>{{ percentageOfAllUsers(activeUsers.last7days) }}</em>
+				</div>
+				<div v-if="activeUsers.last1month > 0" class="active-users-box">
+					{{ t('serverinfo', 'Last 30 Days') }}<br>
+					<span class="info">{{ activeUsers.last1month }}</span><br>
+					<em>{{ percentageOfAllUsers(activeUsers.last1month) }}</em>
 				</div>
 			</div>
 		</div>
