@@ -2,10 +2,6 @@
  * SPDX-FileCopyrightText: 2016 Nextcloud GmbH and Nextcloud contributors
  * SPDX-License-Identifier: AGPL-3.0-or-later
  */
-.server-info-wrapper {
-	max-width: 100vw;
-}
-
 .monitoring-wrapper {
 	display: -webkit-flex;
 	display: flex;
@@ -86,133 +82,34 @@
 
 /* GRID SYSTEM */
 
+/* auto-fit + minmax reflows on the container's own width, so the settings pane
+   -- which is much narrower than the viewport -- no longer needs breakpoints. */
 .row {
-	display: -webkit-flex;
-	display: flex;
-	flex: 0 1 auto;
-	flex-direction: row;
-	flex-wrap: wrap;
-	margin-left: -15px;
-	margin-right: -15px;
+	display: grid;
+	grid-template-columns: repeat(auto-fit, minmax(min(320px, 100%), 1fr));
+	gap: 30px;
 }
 
-.col {
-	flex-grow: 1;
-	flex-basis: 0;
-	max-width: 100%;
-	padding-left: 15px;
-	padding-right: 15px;
+/* Card lists: network interfaces, shares, disks. auto-fill rather than auto-fit
+   keeps the empty tracks, so a host with a single interface gets one card rather
+   than one band stretched across the whole pane. The track fits the widest card
+   -- a disk, which puts a chart beside its stats -- so every list steps at the
+   same width. */
+.row--cards {
+	grid-template-columns: repeat(auto-fill, minmax(min(360px, 100%), 1fr));
+	margin: 16px 0;
 }
 
-.col-1 {
-	flex-basis: 8.333%;
-	max-width: 8.333%;
-	min-width: 8.333%;
+/* The gap spaces the cards now; the stock margin would stack on top of it. */
+.row--cards .infobox {
+	margin: 0;
 }
 
-.col-2 {
-	flex-basis: 16.666%;
-	max-width: 16.666%;
-	min-width: 16.666%;
+/* Grid items are min-width:auto by default, so a long unbreakable value such as
+   a device name would widen its track instead of wrapping. */
+.row > * {
+	min-width: 0;
 }
-
-.col-3 {
-	flex-basis: 25%;
-	max-width: 25%;
-	min-width: 25%;
-}
-
-.col-4 {
-	flex-basis: 33.333%;
-	max-width: 33.333%;
-	min-width: 33.333%;
-}
-
-.col-5 {
-	flex-basis: 41.666%;
-	max-width: 41.666%;
-	min-width: 41.666%;
-}
-
-.col-6 {
-	flex-basis: 50%;
-	max-width: 50%;
-	min-width: 50%;
-}
-
-.col-7 {
-	flex-basis: 58.333%;
-	max-width: 58.333%;
-	min-width: 58.333%;
-}
-
-.col-8 {
-	flex-basis: 66.666%;
-	max-width: 66.666%;
-	min-width: 66.666%;
-}
-
-.col-9 {
-	flex-basis: 75%;
-	max-width: 75%;
-	min-width: 75%;
-}
-
-.col-10 {
-	flex-basis: 83.333%;
-	max-width: 83.333%;
-	min-width: 83.333%;
-}
-
-.col-11 {
-	flex-basis: 91.666%;
-	max-width: 91.666%;
-	min-width: 91.666%;
-}
-
-.col-12 {
-	flex-basis: 100%;
-	max-width: 100%;
-	min-width: 100%;
-}
-
-
-@media only screen and (max-width: 1200px) {
-	.col-xl-6 {
-		flex-basis: 50%;
-		max-width: 50%;
-		min-width: 50%;
-	}
-}
-
-@media only screen and (max-width: 1024px) {
-	.col-l-6 {
-		flex-basis: 50%;
-		max-width: 50%;
-		min-width: 50%;
-	}
-
-	.col-l-12 {
-		flex-basis: 100%;
-		max-width: 100%;
-		min-width: 100%;
-	}
-}
-
-@media only screen and (max-width: 768px) {
-	.col-m-6 {
-		flex-basis: 50%;
-		max-width: 50%;
-		min-width: 50%;
-	}
-
-	.col-m-12 {
-		flex-basis: 100%;
-		max-width: 100%;
-		min-width: 100%;
-	}
-}
-
 
 .monitoring-url-params {
 	margin-top: 3px;
