@@ -30,11 +30,6 @@
       <code><![CDATA[__construct]]></code>
     </PossiblyUnusedMethod>
   </file>
-  <file src="lib/Jobs/UpdateStorageStats.php">
-    <UnusedClass>
-      <code><![CDATA[UpdateStorageStats]]></code>
-    </UnusedClass>
-  </file>
   <file src="lib/OperatingSystems/FreeBSD.php">
     <ForbiddenCode>
       <code><![CDATA[shell_exec(escapeshellcmd($command))]]></code>
