@@ -21,6 +21,8 @@ OC.L10N.register(
     "Type:" : "Cineál:",
     "Version:" : "Leagan:",
     "Size:" : "Méid:",
+    "{used} of {total} used" : "{used} de {total} úsáidte",
+    "Used" : "Úsáidte",
     "Available" : "Ar fáil",
     "Disk" : "Diosca",
     "Mount:" : "Gléasta:",
