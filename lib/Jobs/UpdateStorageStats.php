@@ -11,22 +11,25 @@ namespace OCA\ServerInfo\Jobs;
 
 use OCA\ServerInfo\StorageStatistics;
 use OCP\AppFramework\Utility\ITimeFactory;
+use OCP\BackgroundJob\IJob;
 use OCP\BackgroundJob\TimedJob;
 use OCP\IAppConfig;
 
+/**
+ * @psalm-api
+ */
 class UpdateStorageStats extends TimedJob {
-	private StorageStatistics $storageStatistics;
 
-	public function __construct(ITimeFactory $time, StorageStatistics $storageStatistics, IAppConfig $appConfig) {
-		$this->setInterval($appConfig->getValueInt('serverinfo', 'job_interval_storage_stats', 60 * 60 * 3));
+	public function __construct(
+		ITimeFactory $time,
+		private StorageStatistics $storageStatistics,
+		IAppConfig $appConfig,
+	) {
 		parent::__construct($time);
-
-		$this->storageStatistics = $storageStatistics;
+		$this->setInterval($appConfig->getValueInt('serverinfo', 'job_interval_storage_stats', 60 * 60 * 3));
+		$this->setTimeSensitivity(IJob::TIME_INSENSITIVE);
 	}
 
-	/**
-	 * @inheritDoc
-	 */
 	#[\Override]
 	protected function run($argument): void {
 		$this->storageStatistics->updateStorageCounts();
