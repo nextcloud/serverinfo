@@ -21,6 +21,7 @@ OC.L10N.register(
     "Type:" : "Тип:",
     "Version:" : "Версія:",
     "Size:" : "Розмір:",
+    "{used} of {total} used" : "Використано {used} із {total} ",
     "Used" : "Використовується",
     "Available" : "Доступно",
     "Disk" : "Диск",
