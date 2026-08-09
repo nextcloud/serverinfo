@@ -35,11 +35,6 @@
       <code><![CDATA[__construct]]></code>
     </PossiblyUnusedMethod>
   </file>
-  <file src="lib/Jobs/UpdateStorageStats.php">
-    <UnusedClass>
-      <code><![CDATA[UpdateStorageStats]]></code>
-    </UnusedClass>
-  </file>
   <file src="lib/LiveData.php">
     <PossiblyUnusedMethod>
       <code><![CDATA[__construct]]></code>
