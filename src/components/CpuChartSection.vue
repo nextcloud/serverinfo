@@ -4,15 +4,25 @@
 -->
 <template>
 	<SectionHeading :icon="Chip" :title="t('serverinfo', 'Load')" />
-	<div id="cpuSection" class="infobox">
-		<div class="chart-wrapper">
-			<Line v-if="cpuload !== false" :data="chartData" :options="chartOptions" />
-		</div>
-	</div>
-	<p>
-		<span id="cpubox" class="cpubox">&nbsp;&nbsp;</span>&nbsp;&nbsp;
-		<em>{{ footerText }}</em>
+	<p v-if="!stats">
+		<!-- TRANSLATORS: Shown instead of the CPU load chart when the server does not report CPU information -->
+		<em>{{ t('serverinfo', 'CPU info not available') }}</em>
 	</p>
+	<template v-else>
+		<div class="row row--tiles">
+			<!-- TRANSLATORS: Tile label above the current CPU load as a percentage -->
+			<StatTile :label="t('serverinfo', 'Current usage')" :value="`${stats.usage} %`" />
+			<!-- TRANSLATORS: Tile label above the number of CPU threads (logical cores) the server has -->
+			<StatTile :label="t('serverinfo', 'Threads')" :value="cpunum" />
+			<!-- TRANSLATORS: Tile label above the Unix load average, three numbers for the last 1/5/15 minutes -->
+			<StatTile :label="t('serverinfo', 'Load average')" :value="stats.loads" />
+		</div>
+		<div id="cpuSection" class="infobox">
+			<div class="chart-wrapper">
+				<Line :data="chartData" :options="chartOptions" />
+			</div>
+		</div>
+	</template>
 </template>
 
 <script setup lang="ts">
@@ -24,6 +34,7 @@ import { computed, shallowRef, watch } from 'vue'
 import { Line } from 'vue-chartjs'
 import Chip from 'vue-material-design-icons/Chip.vue'
 import SectionHeading from './SectionHeading.vue'
+import StatTile from './StatTile.vue'
 import { primaryColor, withAlpha } from '../utils.ts'
 
 const props = defineProps<{
@@ -87,16 +98,14 @@ const chartOptions = {
 	},
 }
 
-const footerText = computed(() => {
+const stats = computed(() => {
 	if (props.cpuload === false || props.cpunum <= 0) {
-		return t('serverinfo', 'CPU info not available')
+		return null
 	}
-	const pct = props.cpuload.map((l) => ((l / props.cpunum) * 100).toFixed(1))
-	const load = props.cpuload.map((l) => l.toFixed(2))
-	return t('serverinfo', 'Load average: {percentage} % ({load}) last minute', {
-		percentage: pct[0],
-		load: load[0],
-	})
+	return {
+		usage: ((props.cpuload[0] / props.cpunum) * 100).toFixed(1),
+		loads: props.cpuload.map((load) => load.toFixed(2)).join(' / '),
+	}
 })
 
 watch(() => props.tick, () => {

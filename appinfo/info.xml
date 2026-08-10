@@ -23,9 +23,11 @@
     </dependencies>
 	<background-jobs>
 		<job>OCA\ServerInfo\Jobs\UpdateStorageStats</job>
+		<job>OCA\ServerInfo\Jobs\UpdateJobStats</job>
 	</background-jobs>
 	<commands>
 		<command>OCA\ServerInfo\Commands\UpdateStorageStats</command>
+		<command>OCA\ServerInfo\Commands\UpdateJobStats</command>
 	</commands>
     <settings>
         <admin>OCA\ServerInfo\Settings\AdminSettings</admin>

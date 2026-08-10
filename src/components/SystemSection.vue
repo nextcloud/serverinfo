@@ -19,12 +19,6 @@
 						{{ t('serverinfo', '{name} ({threads} threads)', { name: cpu.name, threads: cpu.threads }) }}
 					</td>
 				</tr>
-				<tr v-if="memTotal > 0">
-					<td>{{ t('serverinfo', 'Memory:') }}</td>
-					<td class="info">
-						{{ formatMegabytes(memTotal) }}
-					</td>
-				</tr>
 				<tr>
 					<td>{{ t('serverinfo', 'Server time:') }}</td>
 					<td><span class="info">{{ servertime }}</span></td>
@@ -42,13 +36,11 @@
 import { t } from '@nextcloud/l10n'
 import Monitor from 'vue-material-design-icons/Monitor.vue'
 import SectionHeading from './SectionHeading.vue'
-import { formatMegabytes } from '../utils.ts'
 
 defineProps<{
 	hostname: string
 	osname: string
 	cpu: { name: string, threads: number }
-	memTotal: number
 	servertime: string
 	uptime: string
 }>()

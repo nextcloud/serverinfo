@@ -5,22 +5,27 @@
 <template>
 	<div class="server-info-wrapper">
 		<template v-if="staticData">
-			<!-- Server info + Thermal -->
+			<!-- Server info + resource usage -->
 			<div class="section server-infos-two">
 				<div class="row">
-					<div class="col col-6 col-l-12">
+					<div>
 						<SystemSection
 							:hostname="staticData.hostname"
 							:osname="staticData.osname"
 							:cpu="staticData.cpu"
-							:memTotal="staticData.memTotal"
 							:servertime="liveData?.servertime ?? ''"
 							:uptime="liveData?.uptime ?? ''" />
 					</div>
-					<!-- Thermal only exists once live data lands; show a skeleton until then. -->
-					<div v-if="!liveData || liveData.thermalzones.length > 0" class="col col-6 col-l-12">
-						<SectionSkeleton v-if="!liveData" />
-						<ThermalSection v-else :thermalzones="liveData.thermalzones" />
+					<div>
+						<ResourceOverviewSection
+							v-if="liveData"
+							:cpuload="cpuload"
+							:cpunum="staticData.cpu.threads"
+							:memTotal="liveData.memory.total"
+							:memFree="liveData.memory.free"
+							:swapTotal="liveData.memory.swap_total"
+							:swapFree="liveData.memory.swap_free" />
+						<SectionSkeleton v-else />
 					</div>
 				</div>
 			</div>
@@ -28,15 +33,15 @@
 			<!-- CPU + Memory charts -->
 			<div class="section server-infos-two">
 				<div class="row">
-					<div class="col col-6 col-l-12">
+					<div>
 						<CpuChartSection
 							v-if="liveData"
-							:cpuload="liveData.cpu.load"
+							:cpuload="cpuload"
 							:cpunum="staticData.cpu.threads"
 							:tick="tick" />
 						<SectionSkeleton v-else />
 					</div>
-					<div class="col col-6 col-l-12">
+					<div>
 						<MemoryChartSection
 							v-if="liveData"
 							:memTotal="liveData.memory.total"
@@ -55,30 +60,41 @@
 			<!-- Network -->
 			<NetworkSection :networkinfo="staticData.networkinfo" :interfaces="staticData.networkinterfaces" />
 
+			<!-- Background jobs -->
+			<BackgroundJobsSection
+				v-if="periodicData"
+				:cron="periodicData.cron"
+				:jobs="periodicData.backgroundJobs" />
+			<SectionSkeleton v-else />
+
 			<!-- Active users -->
 			<ActiveUsersSection :activeUsers="staticData.activeUsers" :numUsers="staticData.storage.num_users" />
 
 			<!-- Shares -->
 			<SharesSection v-if="staticData.shares.num_shares > 0" :shares="staticData.shares" />
 
+			<!-- Temperature -->
+			<div v-if="!liveData || liveData.thermalzones.length > 0" class="section">
+				<SectionSkeleton v-if="!liveData" />
+				<ThermalSection v-else :thermalzones="liveData.thermalzones" />
+			</div>
+
 			<!-- PHP + Database -->
 			<div class="section php-database">
 				<div class="row">
-					<div class="col col-6 col-m-12">
+					<div>
 						<PhpSection
 							:php="staticData.php"
 							:fpm="staticData.fpm"
 							:phpinfo="staticData.phpinfo"
 							:phpinfoUrl="staticData.phpinfoUrl" />
 					</div>
-					<div class="col col-6 col-m-12">
+					<div>
 						<DatabaseSection :database="staticData.database" />
 					</div>
-					<!-- Full width: the tag list is far too long for half a row -->
-					<div class="col col-12">
-						<PhpExtensionsSection :extensions="staticData.php.extensions" />
-					</div>
 				</div>
+				<!-- Outside the grid: the tag list is far too long for one column -->
+				<PhpExtensionsSection :extensions="staticData.php.extensions" />
 			</div>
 
 			<!-- External monitoring -->
@@ -88,20 +104,20 @@
 		<template v-else>
 			<div class="section server-infos-two">
 				<div class="row">
-					<div class="col col-6 col-l-12">
+					<div>
 						<SectionSkeleton />
 					</div>
-					<div class="col col-6 col-l-12">
+					<div>
 						<SectionSkeleton />
 					</div>
 				</div>
 			</div>
 			<div class="section server-infos-two">
 				<div class="row">
-					<div class="col col-6 col-l-12">
+					<div>
 						<SectionSkeleton />
 					</div>
-					<div class="col col-6 col-l-12">
+					<div>
 						<SectionSkeleton />
 					</div>
 				</div>
@@ -110,23 +126,25 @@
 			<SectionSkeleton />
 			<div class="section php-database">
 				<div class="row">
-					<div class="col col-6 col-m-12">
+					<div>
 						<SectionSkeleton />
 					</div>
-					<div class="col col-6 col-m-12">
-						<SectionSkeleton />
-					</div>
-					<div class="col col-12">
+					<div>
 						<SectionSkeleton />
 					</div>
 				</div>
+				<SectionSkeleton />
 			</div>
 		</template>
 	</div>
 </template>
 
 <script setup lang="ts">
+import type { LiveData, PeriodicData } from '../types.ts'
+
+import { computed } from 'vue'
 import ActiveUsersSection from '../components/ActiveUsersSection.vue'
+import BackgroundJobsSection from '../components/BackgroundJobsSection.vue'
 import CpuChartSection from '../components/CpuChartSection.vue'
 import DatabaseSection from '../components/DatabaseSection.vue'
 import DiskSection from '../components/DiskSection.vue'
@@ -135,6 +153,7 @@ import MonitoringSection from '../components/MonitoringSection.vue'
 import NetworkSection from '../components/NetworkSection.vue'
 import PhpExtensionsSection from '../components/PhpExtensionsSection.vue'
 import PhpSection from '../components/PhpSection.vue'
+import ResourceOverviewSection from '../components/ResourceOverviewSection.vue'
 import SectionSkeleton from '../components/SectionSkeleton.vue'
 import SharesSection from '../components/SharesSection.vue'
 import SystemSection from '../components/SystemSection.vue'
@@ -145,5 +164,13 @@ import { useStaticData } from '../composables/useStaticData.ts'
 defineOptions({ name: 'ServerInfo' })
 
 const { data: staticData } = useStaticData()
-const { data: liveData, tick } = useLiveData()
+const { data: liveData, tick } = useLiveData<LiveData>('/apps/serverinfo/update')
+const { data: periodicData } = useLiveData<PeriodicData>('/apps/serverinfo/periodic', 60000)
+
+// The API reports "no CPU data" as both false and an empty array; collapsing
+// the two keeps every consumer down to a single check.
+const cpuload = computed(() => {
+	const load = liveData.value?.cpu.load
+	return Array.isArray(load) && load.length > 0 ? load : false
+})
 </script>

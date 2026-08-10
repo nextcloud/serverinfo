@@ -3,26 +3,21 @@
  * SPDX-License-Identifier: AGPL-3.0-or-later
  */
 
+import type { Ref } from 'vue'
+
 import axios from '@nextcloud/axios'
 import { generateUrl } from '@nextcloud/router'
 import { onUnmounted, ref } from 'vue'
 
-export interface ThermalZone {
-	zone: string
-	type: string
-	temp: number
-}
-
-export interface LiveData {
-	cpu: { load: number[] | false }
-	memory: { total: number, free: number, swap_total: number, swap_free: number }
-	servertime: string
-	uptime: string
-	thermalzones: ThermalZone[]
-}
-
-export function useLiveData() {
-	const data = ref<LiveData | null>(null)
+/**
+ * Polls an endpoint until the component goes away. A failed request keeps the
+ * previous values rather than blanking the charts.
+ *
+ * @param url app-relative endpoint to poll
+ * @param intervalMs delay between two requests
+ */
+export function useLiveData<T>(url: string, intervalMs = 2000) {
+	const data = ref<T | null>(null) as Ref<T | null>
 	const tick = ref(0)
 
 	let timeoutId: ReturnType<typeof setTimeout> | null = null
@@ -30,14 +25,14 @@ export function useLiveData() {
 
 	async function poll() {
 		try {
-			const response = await axios.get(generateUrl('/apps/serverinfo/update'))
-			data.value = response.data
+			const response = await axios.get(generateUrl(url))
+			data.value = response.data as T
 			tick.value++
 		} catch {
 			// Keep previous values on error
 		} finally {
 			if (!stopped) {
-				timeoutId = setTimeout(poll, 2000)
+				timeoutId = setTimeout(poll, intervalMs)
 			}
 		}
 	}

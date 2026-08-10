@@ -5,7 +5,18 @@
 <template>
 	<div class="section disk-status">
 		<SectionHeading :icon="Harddisk" :title="t('serverinfo', 'Disk')" />
-		<div class="disk-grid">
+		<div class="row row--tiles">
+			<!-- TRANSLATORS: Tile label above the number of files stored in Nextcloud, noun -->
+			<StatTile :label="t('serverinfo', 'Files')" :value="storage.num_files" />
+			<!-- TRANSLATORS: Tile label above the number of configured storage backends, noun -->
+			<StatTile :label="t('serverinfo', 'Storages')" :value="storage.num_storages" />
+			<!-- TRANSLATORS: Tile label above the disk space still available on the data directory -->
+			<StatTile
+				v-if="freespace !== null"
+				:label="t('serverinfo', 'Free space')"
+				:value="formatBytes(freespace)" />
+		</div>
+		<div class="row row--cards">
 			<div v-for="(disk, i) in disks" :key="disk.device" class="infobox text-center-mobile">
 				<div class="diskchart-container">
 					<canvas
@@ -57,12 +68,6 @@
 				</div>
 			</div>
 		</div>
-
-		<p>{{ t('serverinfo', 'Files:') }} <strong>{{ storage.num_files }}</strong></p>
-		<p>{{ t('serverinfo', 'Storages:') }} <strong>{{ storage.num_storages }}</strong></p>
-		<p v-if="freespace !== null">
-			{{ t('serverinfo', 'Free Space:') }} <strong>{{ formatBytes(freespace) }}</strong>
-		</p>
 	</div>
 </template>
 
@@ -74,6 +79,7 @@ import { ArcElement, Chart, DoughnutController, Tooltip } from 'chart.js'
 import { onMounted, onUnmounted } from 'vue'
 import Harddisk from 'vue-material-design-icons/Harddisk.vue'
 import SectionHeading from './SectionHeading.vue'
+import StatTile from './StatTile.vue'
 import { cssColor, formatBytes, formatMegabytes, primaryColor } from '../utils.ts'
 
 type Disk = { device: string, fs: string, used: number, available: number, percent: string, mount: string }
@@ -197,19 +203,6 @@ onUnmounted(() => {
 </script>
 
 <style scoped>
-/* The .col-* classes size off the viewport, but the settings pane is much
-   narrower, so col-4 gave each card a third of an already narrow column. */
-.disk-grid {
-	display: grid;
-	grid-template-columns: repeat(auto-fill, minmax(360px, 1fr));
-	gap: 16px;
-	margin: 16px 0;
-}
-
-.disk-grid .infobox {
-	margin: 0;
-}
-
 .diskchart-container {
 	/* Chart.js sizes the canvas from this box, so it needs a definite width */
 	position: relative;
@@ -270,11 +263,6 @@ onUnmounted(() => {
 
 .info-color-label--used::before {
 	background-color: var(--color-primary-element);
-}
-
-/* Default paragraph margins leave a blank line between each stat */
-.disk-status > p {
-	margin: 2px 0;
 }
 
 @media (width <= 1280px) {
