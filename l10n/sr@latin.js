@@ -1,8 +1,13 @@
 OC.L10N.register(
     "serverinfo",
     {
+    "Never" : "Nikad",
     "Type:" : "Tip:",
     "Size:" : "Veličina:",
+    "Files" : "Fajlovi",
+    "Details" : "Detalji",
+    "Failed" : "Nije uspelo",
+    "Warning" : "Upozorenje",
     "Copied!" : "Копирано!",
     "Not supported!" : "Није подржано!",
     "Press ⌘-C to copy." : "Притисни ⌘-C за копирање.",
