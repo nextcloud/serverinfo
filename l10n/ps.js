@@ -1,6 +1,7 @@
 OC.L10N.register(
     "serverinfo",
     {
+    "Details" : "معلومات",
     "Shares" : "شريک شوي",
     "Copied!" : "کاپي شو!",
     "Not supported!" : "د کار نه کېږي",

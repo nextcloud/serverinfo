@@ -7,7 +7,6 @@ OC.L10N.register(
     "Type:" : "Tipe:",
     "Version:" : "Weergawe:",
     "Size:" : "Grootte:",
-    "Files:" : "Lêers",
     "PHP" : "PHP",
     "seconds" : "sekondes",
     "Users:" : "Gebruikers:",
@@ -16,6 +15,7 @@ OC.L10N.register(
     "Not supported!" : "Word nie ondersteun nie!",
     "Press ⌘-C to copy." : "Druk ⌘-C om te kopieer.",
     "Press Ctrl-C to copy." : "Druk Ctrl-C om te kopieer.",
+    "Files:" : "Lêers",
     "Copy" : "Kopieer"
 },
 "nplurals=2; plural=(n != 1);");
