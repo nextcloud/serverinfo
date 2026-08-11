@@ -3,7 +3,9 @@ OC.L10N.register(
     {
     "Type:" : "ប្រភេទ៖",
     "Size:" : "ទំហំ៖",
+    "Details" : "ព័ត៌មាន​លម្អិត",
     "Shares" : "ចែក​រំលែក",
+    "Warning" : "បម្រាម",
     "Copied!" : "បានចម្លង",
     "Press ⌘-C to copy." : " ចុច ⌘-C ដើម្បីចម្លង",
     "Press Ctrl-C to copy." : "ចុច Ctrl-C ដើម្បីចម្លង"

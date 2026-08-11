@@ -2,9 +2,12 @@ OC.L10N.register(
     "serverinfo",
     {
     "Unknown" : "Անհայտ",
+    "Never" : "Երբեք",
     "Type:" : "Տիպ.",
     "Size:" : "Չափս.",
+    "Details" : "Մանրամասներ",
     "seconds" : "վայրկյան",
+    "Warning" : "Զգուշացում",
     "Copied!" : "Պատճենված է․",
     "Not supported!" : "Չի՛ սպասարկվում։",
     "Press ⌘-C to copy." : "Սեղմել ⌘-C պատճենելու համար։",
