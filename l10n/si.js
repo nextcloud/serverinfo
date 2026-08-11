@@ -3,7 +3,12 @@ OC.L10N.register(
     {
     "System" : "පද්ධතිය",
     "Available" : "ඇත",
+    "Files" : "ගොනු",
+    "Duration" : "කාල සීමාව",
+    "Authentication" : "සත්‍යාපනය",
+    "Hostname" : "ධාරක නාමය",
     "Shares" : "බෙදාගැනීම්",
+    "Warning" : "අවවාදයයි",
     "Copied!" : "පිටපත් කළා!",
     "Not supported!" : "සහාය නොදක්වයි!",
     "Press ⌘-C to copy." : "පිටපත් කිරීමට ⌘-C ඔබන්න.",
