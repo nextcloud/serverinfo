@@ -111,7 +111,7 @@ table {
 }
 
 .when-cell {
-	width: 150px;
+	width: 180px;
 }
 
 .duration-cell {
