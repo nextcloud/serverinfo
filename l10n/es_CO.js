@@ -17,6 +17,7 @@ OC.L10N.register(
     "Files" : "Archivo",
     "Details" : "Detalles",
     "Total" : "Total",
+    "Authentication" : "Autenticación",
     "Hostname" : "Nombre del servidor",
     "PHP extensions" : "Extensiones de PHP",
     "PHP" : "PHP",
