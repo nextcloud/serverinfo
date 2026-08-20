@@ -23,6 +23,8 @@
     "No background job has run yet." : "尚未有背景工作執行。",
     "Slowest jobs" : "最慢的工作",
     "The slow jobs statistics are not available yet. They are collected by a background job and appear after its next run." : "尚未有慢速工作統計資料。這些資料由背景工作收集，並會在下次執行後顯示。",
+    "_Latest failures (last %n day)_::_Latest failures (last %n days)_" : ["最近失敗（過去%n日）"],
+    "_No background job failed in the last %n day._::_No background job failed in the last %n days._" : ["最近%n天內沒有任何後台作業失敗。"],
     "Load" : "負載",
     "CPU info not available" : "CPU 資訊暫時無法使用",
     "Current usage" : "目前使用量",
