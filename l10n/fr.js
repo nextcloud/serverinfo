@@ -54,6 +54,7 @@ OC.L10N.register(
     "Memory" : "Mémoire",
     "RAM info not available" : "Informations RAM non disponibles",
     "Total" : "Total",
+    "External monitoring API" : "API de surveillance externe",
     "Endpoint URL" : "URL du point de terminaison",
     "Configuration" : "Configuration",
     "Output in JSON" : "Sortie en JSON",
