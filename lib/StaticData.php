@@ -9,6 +9,8 @@ declare(strict_types=1);
 
 namespace OCA\ServerInfo;
 
+use OCA\ServerInfo\Collector\Opcache;
+use OCA\ServerInfo\Collector\Php;
 use OCP\AppFramework\Services\IAppConfig;
 use OCP\IURLGenerator;
 
@@ -17,7 +19,8 @@ class StaticData {
 		private Os $os,
 		private IURLGenerator $urlGenerator,
 		private StorageStatistics $storageStatistics,
-		private PhpStatistics $phpStatistics,
+		private Php $php,
+		private Opcache $opcache,
 		private FpmStatistics $fpmStatistics,
 		private DatabaseStatistics $databaseStatistics,
 		private ShareStatistics $shareStatistics,
@@ -58,7 +61,8 @@ class StaticData {
 			'ocs' => $this->urlGenerator->getAbsoluteURL('ocs/v2.php/apps/serverinfo/api/v1/info'),
 			'storage' => $this->storageStatistics->getStorageStatistics(),
 			'shares' => $this->shareStatistics->getShareStatistics(),
-			'php' => $this->phpStatistics->getPhpStatistics(),
+			'php' => $this->php->getData(),
+			'opcache' => $this->opcache->getData(),
 			'fpm' => $this->fpmStatistics->getFpmStatistics(),
 			'database' => $this->databaseStatistics->getDatabaseStatistics(),
 			'activeUsers' => $this->sessionStatistics->getSessionStatistics(),
