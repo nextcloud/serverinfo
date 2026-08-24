@@ -159,17 +159,3 @@
 .server-info-table tr:last-child td {
 	border-bottom: none;
 }
-
-
-.server-info__tag-wrapper {
-	display: flex;
-	flex-wrap: wrap;
-}
-
-.server-info__php-extension-tag {
-	display: inline-block;
-	margin: 2px;
-	padding: 1px 9px;
-	border-radius: 16px;
-	border: 1px solid var(--color-main-text);
-}

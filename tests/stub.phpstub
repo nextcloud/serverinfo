@@ -348,6 +348,7 @@ namespace {
 		static $CLI = false;
 		/** @var IServerContainer */
 		static $server;
+		static $SERVERROOT;
 	}
 }
 

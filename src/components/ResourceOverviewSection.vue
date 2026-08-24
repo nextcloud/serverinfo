@@ -6,26 +6,16 @@
 	<!-- TRANSLATORS: Section heading above the progress bars for CPU, memory and swap usage, noun -->
 	<SectionHeading :icon="Gauge" :title="t('serverinfo', 'Resource usage')" />
 	<div class="resource-usage">
-		<div v-for="row in rows" :key="row.label" class="resource-usage__row">
-			<div class="resource-usage__header">
-				<span>{{ row.label }}</span>
-				<span class="info">{{ row.detail }}</span>
-			</div>
-			<NcProgressBar
-				:value="row.percentage"
-				size="medium"
-				:color="row.percentage >= WARNING_AT ? 'var(--color-warning)' : undefined"
-				:error="row.percentage >= CRITICAL_AT" />
-		</div>
+		<UsageMeterBar v-for="row in rows" :key="row.label" v-bind="row" />
 	</div>
 </template>
 
 <script setup lang="ts">
 import { t } from '@nextcloud/l10n'
 import { computed } from 'vue'
-import NcProgressBar from '@nextcloud/vue/components/NcProgressBar'
 import Gauge from 'vue-material-design-icons/Gauge.vue'
 import SectionHeading from './SectionHeading.vue'
+import UsageMeterBar from './UsageMeterBar.vue'
 import { formatMegabytes } from '../utils.ts'
 
 const props = defineProps<{
@@ -36,9 +26,6 @@ const props = defineProps<{
 	swapTotal: number | 'N/A'
 	swapFree: number | 'N/A'
 }>()
-
-const WARNING_AT = 75
-const CRITICAL_AT = 90
 
 /**
  * A usage bar with its "used of total" caption, or null when the metric is
@@ -99,12 +86,5 @@ const rows = computed(() => {
 	flex-direction: column;
 	gap: 16px;
 	padding: 16px 0;
-}
-
-.resource-usage__header {
-	display: flex;
-	justify-content: space-between;
-	gap: 8px;
-	margin-bottom: 4px;
 }
 </style>

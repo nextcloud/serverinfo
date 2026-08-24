@@ -7,6 +7,7 @@
 		 xsi:noNamespaceSchemaLocation="../vendor-bin/phpunit/vendor/phpunit/phpunit/phpunit.xsd"
 		 colors="true"
 		 bootstrap="bootstrap.php"
+		 displayDetailsOnTestsThatTriggerWarnings="true"
 >
 	<source>
 		<include>

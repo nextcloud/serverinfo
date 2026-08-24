@@ -4,37 +4,47 @@
 -->
 <template>
 	<SectionHeading :icon="LanguagePhp" :title="t('serverinfo', 'PHP')" />
+	<div class="row row--tiles">
+		<StatTile :label="t('serverinfo', 'Version')" :value="php.version" />
+		<StatTile :label="t('serverinfo', 'Memory limit')" :value="formatBytes(php.memoryLimit)" />
+	</div>
 	<div class="server-info-table">
 		<table>
 			<tbody>
 				<tr>
-					<td>{{ t('serverinfo', 'Version:') }}</td>
-					<td class="info">
-						{{ php.version }}
-					</td>
-				</tr>
-				<tr>
-					<td>{{ t('serverinfo', 'Memory limit:') }}</td>
-					<td class="info">
-						{{ formatBytes(php.memory_limit) }}
-					</td>
-				</tr>
-				<tr>
 					<td>{{ t('serverinfo', 'Max execution time:') }}</td>
 					<td class="info">
-						{{ php.max_execution_time }} {{ t('serverinfo', 'seconds') }}
+						{{ php.maxExecutionTime }} {{ t('serverinfo', 'seconds') }}
 					</td>
 				</tr>
 				<tr>
 					<td>{{ t('serverinfo', 'Upload max size:') }}</td>
 					<td class="info">
-						{{ formatBytes(php.upload_max_filesize) }}
+						{{ formatBytes(php.uploadMaxFilesize) }}
 					</td>
 				</tr>
 				<tr>
-					<td>{{ t('serverinfo', 'OPcache Revalidate Frequency:') }}</td>
+					<td>{{ t('serverinfo', 'Post max size:') }}</td>
 					<td class="info">
-						{{ php.opcache_revalidate_freq }} {{ t('serverinfo', 'seconds') }}
+						{{ formatBytes(php.postMaxSize) }}
+					</td>
+				</tr>
+				<tr>
+					<td>{{ t('serverinfo', 'SAPI:') }}</td>
+					<td class="info">
+						{{ php.sapi }}
+					</td>
+				</tr>
+				<tr>
+					<td>{{ t('serverinfo', 'Extensions:') }}</td>
+					<td class="info">
+						<NcButton
+							class="extensions-button"
+							variant="tertiary"
+							size="small"
+							@click="showExtensions = true">
+							{{ extensionsCountText }}
+						</NcButton>
 					</td>
 				</tr>
 				<tr v-if="phpinfo">
@@ -132,22 +142,33 @@
 			</table>
 		</div>
 	</template>
+
+	<PhpExtensionsDialog
+		v-if="showExtensions"
+		:extensions="php.extensions"
+		@close="showExtensions = false" />
 </template>
 
 <script setup lang="ts">
 import { t } from '@nextcloud/l10n'
+import { computed, ref } from 'vue'
+import NcButton from '@nextcloud/vue/components/NcButton'
 import Cogs from 'vue-material-design-icons/Cogs.vue'
 import LanguagePhp from 'vue-material-design-icons/LanguagePhp.vue'
+import PhpExtensionsDialog from './PhpExtensionsDialog.vue'
 import SectionHeading from './SectionHeading.vue'
+import StatTile from './StatTile.vue'
 import { formatBytes } from '../utils.ts'
 
-defineProps<{
+const props = defineProps<{
 	php: {
 		version: string
-		memory_limit: number
-		max_execution_time: number
-		upload_max_filesize: number
-		opcache_revalidate_freq: number
+		sapi: string
+		memoryLimit: number
+		maxExecutionTime: number
+		uploadMaxFilesize: number
+		postMaxSize: number
+		extensions: string[] | null
 	}
 	fpm: {
 		pool: string
@@ -166,4 +187,20 @@ defineProps<{
 	phpinfo: boolean
 	phpinfoUrl: string
 }>()
+
+const showExtensions = ref(false)
+
+const extensionsCountText = computed(() => props.php.extensions === null
+	// TRANSLATORS: Shown when PHP forbids listing its loaded extensions
+	? t('serverinfo', 'Unable to list extensions')
+	// TRANSLATORS: {count} is how many PHP extensions are loaded
+	: t('serverinfo', '{count} loaded', { count: props.php.extensions.length }))
 </script>
+
+<style scoped>
+.extensions-button {
+	/* Cancels NcButton's own inline padding (2x grid baseline + element radius)
+	   so its label lines up with the plain text in the rows above it. */
+	margin-inline-start: calc(-2 * var(--default-grid-baseline) - var(--border-radius-element));
+}
+</style>

@@ -79,8 +79,8 @@
 				<ThermalSection v-else :thermalzones="liveData.thermalzones" />
 			</div>
 
-			<!-- PHP + Database -->
-			<div class="section php-database">
+			<!-- PHP + Opcache -->
+			<div class="section php-opcache">
 				<div class="row">
 					<div>
 						<PhpSection
@@ -90,11 +90,18 @@
 							:phpinfoUrl="staticData.phpinfoUrl" />
 					</div>
 					<div>
+						<OpcacheSection :opcache="staticData.opcache" />
+					</div>
+				</div>
+			</div>
+
+			<!-- Database -->
+			<div class="section">
+				<div class="row">
+					<div>
 						<DatabaseSection :database="staticData.database" />
 					</div>
 				</div>
-				<!-- Outside the grid: the tag list is far too long for one column -->
-				<PhpExtensionsSection :extensions="staticData.php.extensions" />
 			</div>
 
 			<!-- External monitoring -->
@@ -124,7 +131,7 @@
 			</div>
 			<SectionSkeleton />
 			<SectionSkeleton />
-			<div class="section php-database">
+			<div class="section php-opcache">
 				<div class="row">
 					<div>
 						<SectionSkeleton />
@@ -133,7 +140,13 @@
 						<SectionSkeleton />
 					</div>
 				</div>
-				<SectionSkeleton />
+			</div>
+			<div class="section">
+				<div class="row">
+					<div>
+						<SectionSkeleton />
+					</div>
+				</div>
 			</div>
 		</template>
 	</div>
@@ -151,7 +164,7 @@ import DiskSection from '../components/DiskSection.vue'
 import MemoryChartSection from '../components/MemoryChartSection.vue'
 import MonitoringSection from '../components/MonitoringSection.vue'
 import NetworkSection from '../components/NetworkSection.vue'
-import PhpExtensionsSection from '../components/PhpExtensionsSection.vue'
+import OpcacheSection from '../components/OpcacheSection.vue'
 import PhpSection from '../components/PhpSection.vue'
 import ResourceOverviewSection from '../components/ResourceOverviewSection.vue'
 import SectionSkeleton from '../components/SectionSkeleton.vue'

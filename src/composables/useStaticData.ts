@@ -3,6 +3,8 @@
  * SPDX-License-Identifier: AGPL-3.0-or-later
  */
 
+import type { OpcacheStatus } from '../types.ts'
+
 import axios from '@nextcloud/axios'
 import { generateUrl } from '@nextcloud/router'
 import { ref } from 'vue'
@@ -37,12 +39,14 @@ export interface StaticData {
 	}
 	php: {
 		version: string
-		memory_limit: number
-		max_execution_time: number
-		upload_max_filesize: number
-		opcache_revalidate_freq: number
+		sapi: string
+		memoryLimit: number
+		maxExecutionTime: number
+		uploadMaxFilesize: number
+		postMaxSize: number
 		extensions: string[] | null
 	}
+	opcache: OpcacheStatus
 	fpm: Record<string, string | number> | false
 	database: { type: string, version: string, size: number }
 	activeUsers: { last1hour: number, last24hours: number, last7days: number, last1month: number }
