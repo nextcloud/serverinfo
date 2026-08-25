@@ -4,6 +4,8 @@ OC.L10N.register(
     "Type:" : "Jenis",
     "Size:" : "Saiz",
     "Files" : "Fail-fail",
+    "Yes" : "Ya",
+    "No" : "Tidak",
     "Shares" : "Kongsi",
     "Warning" : "Amaran",
     "Copied!" : "Disalin!",
