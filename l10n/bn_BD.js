@@ -7,6 +7,7 @@ OC.L10N.register(
     "Details" : "বিসতারিত",
     "Hostname" : "হোস্টনেম",
     "seconds" : "সেকেন্ড",
+    "No" : "না",
     "Shares" : "ভাগাভাগি",
     "Warning" : "সতর্কবাণী",
     "Temperature" : "তাপমাত্রা",

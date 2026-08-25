@@ -21,6 +21,7 @@ OC.L10N.register(
     "Hostname" : "Nombre del servidor",
     "PHP extensions" : "Extensiones de PHP",
     "PHP" : "PHP",
+    "Version" : "Versión",
     "Upload max size:" : "Tamaño máximo de carga:",
     "Shares" : "Elementos compartido",
     "Users:" : "Usuarios:",
