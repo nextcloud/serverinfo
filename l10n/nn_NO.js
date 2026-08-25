@@ -15,6 +15,8 @@ OC.L10N.register(
     "Total" : "Totalt",
     "Authentication" : "Godkjenning",
     "Hostname" : "Vertsnamn",
+    "Disabled" : "Deaktivert",
+    "Version" : "Utgåve",
     "Upload max size:" : "Maks opplastning storleik:",
     "Shares" : "Delingar",
     "Users:" : "Brukarare:",

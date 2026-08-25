@@ -15,6 +15,7 @@ OC.L10N.register(
     "Running" : "O redek",
     "Network" : "Rouedad",
     "Hostname" : "Anv-ost",
+    "No" : "Ket",
     "PHP" : "PHP",
     "Shares" : "Rannañ",
     "Warning" : "Kemenadenn",
