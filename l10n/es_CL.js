@@ -19,6 +19,7 @@ OC.L10N.register(
     "Total" : "Total",
     "Authentication" : "Autenticación",
     "Hostname" : "Nombre del servidor",
+    "Disabled" : "Deshabilitado",
     "Yes" : "Si",
     "PHP extensions" : "Extensiones de PHP",
     "PHP" : "PHP",

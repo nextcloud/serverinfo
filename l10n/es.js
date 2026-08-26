@@ -92,6 +92,7 @@ OC.L10N.register(
     "IPv6:" : "IPv6:",
     "{used} of {total}" : "{used} de {total}",
     "Keys" : "Llaves",
+    "Disabled" : "Deshabilitado",
     "seconds" : "seconds",
     "Yes" : "Sí",
     "No" : "No",

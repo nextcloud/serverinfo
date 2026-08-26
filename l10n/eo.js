@@ -30,6 +30,7 @@ OC.L10N.register(
     "Hostname" : "Gastigonomo",
     "Gateway" : "Kluzo",
     "DNS" : "DNS",
+    "Disabled" : "Malkapabligita",
     "seconds" : "sekundoj",
     "Yes" : "Jes",
     "No" : "Ne",
