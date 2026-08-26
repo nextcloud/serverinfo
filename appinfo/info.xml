@@ -10,7 +10,7 @@
     <summary>Monitoring app with useful server information</summary>
     <description>Provides useful server information, such as CPU load, RAM usage, disk usage, number of users, etc.</description>
     <version>8.0.0-dev.0</version>
-    <licence>agpl</licence>
+    <licence>AGPL-3.0-or-later</licence>
     <author>Bjoern Schiessle</author>
     <author>Ivan Sein Santiago</author>
     <author>Frank Karlitschek</author>
