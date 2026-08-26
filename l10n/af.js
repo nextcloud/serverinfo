@@ -13,6 +13,7 @@ OC.L10N.register(
     "Total" : "Totaal",
     "seconds" : "sekondes",
     "PHP" : "PHP",
+    "Version" : "Weergawe",
     "Users:" : "Gebruikers:",
     "Temperature" : "Temperatuur",
     "Copied!" : "Gekopieer!",
