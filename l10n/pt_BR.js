@@ -49,7 +49,7 @@ OC.L10N.register(
     "Used:" : "Usado:",
     "Class" : "Classe",
     "Status" : "Status",
-    "Started" : "Iniciou",
+    "Started" : "Iniciado",
     "Duration" : "Duração",
     "Peak memory" : "Memória máxima",
     "Run ID" : "ID da execução",
