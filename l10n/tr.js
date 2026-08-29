@@ -30,7 +30,7 @@ OC.L10N.register(
     "Load" : "Yük",
     "CPU info not available" : "İşlemci bilgileri alınamadı",
     "Current usage" : "Güncel kullanım",
-    "Threads" : "Konular",
+    "Threads" : "İşlemler",
     "Load average" : "Yük ortalaması",
     "Database" : "Veri tabanı",
     "Type:" : "Tür:",
