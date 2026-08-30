@@ -62,16 +62,16 @@ This file is generated from multiple sources. Included packages:
 	- version: 6.0.7
 	- license: MIT
 - @vue/reactivity
-	- version: 3.5.35
+	- version: 3.5.41
 	- license: MIT
 - @vue/runtime-core
-	- version: 3.5.35
+	- version: 3.5.41
 	- license: MIT
 - @vue/runtime-dom
-	- version: 3.5.35
+	- version: 3.5.41
 	- license: MIT
 - @vue/shared
-	- version: 3.5.35
+	- version: 3.5.41
 	- license: MIT
 - @vueuse/core
 	- version: 14.4.0
@@ -98,7 +98,7 @@ This file is generated from multiple sources. Included packages:
 	- version: 8.2.2
 	- license: MIT
 - semver
-	- version: 7.8.1
+	- version: 7.8.5
 	- license: ISC
 - serverinfo
 	- version: 8.0.0-dev.0
@@ -113,7 +113,7 @@ This file is generated from multiple sources. Included packages:
 	- version: 0.28.0
 	- license: MIT
 - vue-chartjs
-	- version: 5.3.3
+	- version: 5.3.4
 	- license: MIT
 - vue-material-design-icons
 	- version: 5.3.1
