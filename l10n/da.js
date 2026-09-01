@@ -92,7 +92,7 @@ OC.L10N.register(
     "Emails:" : "E-mails:",
     "Federated sent:" : "Fødereret sendt:",
     "Federated received:" : "Fødereret modtaget:",
-    "Talk conversations:" : "Snak samtaler:",
+    "Talk conversations:" : "Talk samtaler:",
     "Average" : "Gennemsnit",
     "Warning" : "Advarsel",
     "Operating System:" : "Operativsystem:",
