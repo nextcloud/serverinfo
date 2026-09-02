@@ -49,6 +49,7 @@ OC.L10N.register(
     "Started" : "Démarré",
     "Duration" : "Durée",
     "Server ID" : "ID du serveur",
+    "Process ID" : "ID du processus",
     "Job" : "Travail",
     "When" : "Quand",
     "Details" : "Détails",
