@@ -23,6 +23,7 @@ OC.L10N.register(
     "Available" : "Tiltækt",
     "Disk" : "Diskur",
     "Files" : "Skráaforrit",
+    "Status" : "Staða",
     "Started" : "Ræst",
     "Duration" : "Tímalengd",
     "Details" : "Nánar",
