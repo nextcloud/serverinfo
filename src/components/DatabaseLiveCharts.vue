@@ -131,16 +131,25 @@ watch(() => [props.active, document.hidden], () => {
 	}
 }, { immediate: true })
 
-document.addEventListener('visibilitychange', () => {
+/**
+ * Pauses while the tab is in the background and resumes on return.
+ *
+ * Named rather than inline so that it can be taken off again: an anonymous
+ * handler here would outlive the component.
+ */
+function onVisibilityChange() {
 	if (document.hidden) {
 		stop()
 	} else if (props.active && timeoutId === null) {
 		poll()
 	}
-})
+}
+
+document.addEventListener('visibilitychange', onVisibilityChange)
 
 onUnmounted(() => {
 	stopped = true
+	document.removeEventListener('visibilitychange', onVisibilityChange)
 	stop()
 })
 

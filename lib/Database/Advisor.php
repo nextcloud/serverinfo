@@ -130,7 +130,12 @@ class Advisor {
 		try {
 			$value = $this->evaluator->evaluate($rule->formula, $context);
 		} catch (ExpressionException $e) {
-			$this->logger->warning(
+			// Debug, not warning: a variable that is not a number on this server is
+			// ordinary — MariaDB reports concurrent_insert as AUTO where MySQL
+			// reports an integer — and the rule says so in its skip reason. At
+			// warning level it would land in the log on every page load and inflate
+			// the "Errors in the log" setup check.
+			$this->logger->debug(
 				'serverinfo: failed to evaluate formula for rule {id}: {msg}',
 				['id' => $rule->id, 'msg' => $e->getMessage(), 'app' => 'serverinfo'],
 			);
@@ -153,7 +158,9 @@ class Advisor {
 			$failed = $this->evaluator->evaluate($rule->test, $testCtx);
 			$failed = is_bool($failed) ? $failed : ($valueFloat !== 0.0);
 		} catch (ExpressionException $e) {
-			$this->logger->warning(
+			// Debug for the same reason as the formula above: reported to the admin
+			// as a skipped rule, not something to write to the log every time.
+			$this->logger->debug(
 				'serverinfo: failed to evaluate test for rule {id}: {msg}',
 				['id' => $rule->id, 'msg' => $e->getMessage(), 'app' => 'serverinfo'],
 			);

@@ -44,7 +44,7 @@
 import type { LiveData, PeriodicData, SettingsView } from '../types.ts'
 
 import { t } from '@nextcloud/l10n'
-import { computed, ref, watch } from 'vue'
+import { computed, onUnmounted, ref, watch } from 'vue'
 import NcButton from '@nextcloud/vue/components/NcButton'
 import NcNoteCard from '@nextcloud/vue/components/NcNoteCard'
 import SettingsNavigation from '../components/SettingsNavigation.vue'
@@ -77,8 +77,18 @@ watch(view, (current) => {
 	window.history.replaceState(null, '', `#${current}`)
 })
 
-window.addEventListener('hashchange', () => {
+/**
+ * Keeps the page in step with the fragment when the browser changes it, for
+ * instance on back/forward. Named so it can be removed again.
+ */
+function onHashChange() {
 	view.value = viewFromHash()
+}
+
+window.addEventListener('hashchange', onHashChange)
+
+onUnmounted(() => {
+	window.removeEventListener('hashchange', onHashChange)
 })
 
 const { data: staticData, error: staticError, reload: reloadStatic } = useStaticData()
