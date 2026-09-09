@@ -22,6 +22,8 @@ use OCP\Config\ValueType;
 class ConfigLexicon implements ILexicon {
 	public const CACHED_SLOWEST_JOBS = 'cached_slowest_jobs';
 	public const JOB_INTERVAL_JOB_STATS = 'job_interval_job_stats';
+	public const CACHED_BOOT_TIME = 'cached_boot_time';
+	public const CACHED_BOOT_TIME_SAMPLED_AT = 'cached_boot_time_sampled_at';
 
 	#[\Override]
 	public function getStrictness(): Strictness {
@@ -37,6 +39,20 @@ class ConfigLexicon implements ILexicon {
 				ValueType::ARRAY,
 				[],
 				'Slowest background jobs, as collected by OCA\ServerInfo\Jobs\UpdateJobStats',
+				lazy: true,
+			),
+			new Entry(
+				self::CACHED_BOOT_TIME,
+				ValueType::INT,
+				0,
+				'Boot time as a unix timestamp, remembered so that uptime does not cost a process fork on every poll',
+				lazy: true,
+			),
+			new Entry(
+				self::CACHED_BOOT_TIME_SAMPLED_AT,
+				ValueType::INT,
+				0,
+				'When the boot time above was last measured',
 				lazy: true,
 			),
 			new Entry(
