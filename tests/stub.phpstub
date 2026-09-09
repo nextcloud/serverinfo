@@ -899,3 +899,36 @@ namespace OC\Files\Storage\Wrapper{
 		public function getQuota() {}
 	}
 }
+
+namespace Doctrine\DBAL {
+	/**
+	 * Shipped by the server, not by this app, so psalm needs the shape of the
+	 * few methods the database checks actually call.
+	 */
+	class Connection {
+		public function connect(): void {}
+
+		public function close(): void {}
+
+		/** @return mixed */
+		public function fetchOne(string $query, array $params = []) {}
+
+		/** @return array<string, mixed>|false */
+		public function fetchAssociative(string $query, array $params = []) {}
+
+		/** @return list<array<string, mixed>> */
+		public function fetchAllAssociative(string $query, array $params = []): array {}
+
+		public function prepare(string $sql): \Doctrine\DBAL\Statement {}
+	}
+
+	class Statement {
+		/** @return mixed */
+		public function executeQuery(array $params = []) {}
+	}
+
+	class DriverManager {
+		/** @param array<string, mixed> $params */
+		public static function getConnection(array $params): Connection {}
+	}
+}

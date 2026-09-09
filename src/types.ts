@@ -4,7 +4,49 @@
  */
 
 /** The pages the admin settings can show, selected by the navigation at the top. */
-export type SettingsView = 'status' | 'background-jobs'
+export type SettingsView = 'status' | 'database' | 'background-jobs'
+
+/** What a failing check suggests changing, and where. */
+export interface DatabaseApply {
+	variable: string
+	recommendedValue: string
+	runtimeWritable: boolean
+	configKey: string
+	configFile: string
+	note: string | null
+}
+
+/** One database check, as returned by /database/check. */
+export interface DatabaseRule {
+	id: string
+	name: string
+	category: string
+	severity: 'alert' | 'warning' | 'notice'
+	status: 'ok' | 'fail' | 'skipped'
+	issue: string
+	recommendation: string
+	justification: string | null
+	value: number | null
+	skipReason: string | null
+	apply: DatabaseApply | null
+	details?: string[] | null
+	docUrl: string | null
+}
+
+export type DatabaseCheck
+	= | { supported: true, flavour: string, version: string, ranAt: number, results: DatabaseRule[] }
+		| { supported: false, reason: 'flavour', flavour: string }
+		| { supported: false, reason: 'error', message: string }
+
+/** The optional connection the checks may use instead of Nextcloud's own. */
+export interface DatabaseOverride {
+	host: string
+	port: number
+	user: string
+	database: string
+	driver: string
+	passwordSet: boolean
+}
 
 export interface ThermalZone {
 	zone: string

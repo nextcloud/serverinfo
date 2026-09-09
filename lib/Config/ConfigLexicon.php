@@ -22,6 +22,7 @@ use OCP\Config\ValueType;
 class ConfigLexicon implements ILexicon {
 	public const CACHED_SLOWEST_JOBS = 'cached_slowest_jobs';
 	public const JOB_INTERVAL_JOB_STATS = 'job_interval_job_stats';
+	public const CACHED_DB_CHECK = 'cached_db_check';
 	public const CACHED_BOOT_TIME = 'cached_boot_time';
 	public const CACHED_BOOT_TIME_SAMPLED_AT = 'cached_boot_time_sampled_at';
 
@@ -39,6 +40,13 @@ class ConfigLexicon implements ILexicon {
 				ValueType::ARRAY,
 				[],
 				'Slowest background jobs, as collected by OCA\ServerInfo\Jobs\UpdateJobStats',
+				lazy: true,
+			),
+			new Entry(
+				self::CACHED_DB_CHECK,
+				ValueType::ARRAY,
+				[],
+				'Outcome of the last database check run, read by the setup check on Settings > Overview',
 				lazy: true,
 			),
 			new Entry(
