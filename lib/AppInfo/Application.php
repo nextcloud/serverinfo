@@ -10,6 +10,7 @@ declare(strict_types=1);
 namespace OCA\ServerInfo\AppInfo;
 
 use OCA\ServerInfo\Config\ConfigLexicon;
+use OCA\ServerInfo\SetupChecks\DatabaseChecks;
 use OCP\AppFramework\App;
 use OCP\AppFramework\Bootstrap\IBootContext;
 use OCP\AppFramework\Bootstrap\IBootstrap;
@@ -28,6 +29,7 @@ class Application extends App implements IBootstrap {
 	#[\Override]
 	public function register(IRegistrationContext $context): void {
 		$context->registerConfigLexicon(ConfigLexicon::class);
+		$context->registerSetupCheck(DatabaseChecks::class);
 	}
 
 	#[\Override]
