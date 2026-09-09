@@ -38,10 +38,10 @@ import StatTile from './StatTile.vue'
 import { formatMegabytes, primaryColor, withAlpha } from '../utils.ts'
 
 const props = defineProps<{
-	memTotal: number | 'N/A'
-	memFree: number | 'N/A'
-	swapTotal: number | 'N/A'
-	swapFree: number | 'N/A'
+	memTotal: number
+	memFree: number
+	swapTotal: number
+	swapFree: number
 	tick: number
 }>()
 
@@ -49,8 +49,11 @@ Chart.register(CategoryScale, Filler, Legend, LinearScale, LineController, LineE
 
 const MAX_POINTS = 60
 
-const hasMemory = computed(() => props.memTotal !== 'N/A' && props.memFree !== 'N/A')
-const hasSwap = computed(() => props.swapTotal !== 'N/A' && props.swapFree !== 'N/A' && props.swapTotal > 0)
+// The API marks every unavailable memory figure with -1 (a container without
+// swap, an unreadable /proc, restricted mode). Charting that produces a
+// plausible-looking graph of nonsense, so treat it as "no data" instead.
+const hasMemory = computed(() => props.memTotal > 0 && props.memFree >= 0)
+const hasSwap = computed(() => props.swapTotal > 0 && props.swapFree >= 0)
 
 /**
  *
@@ -130,26 +133,26 @@ const chartOptions = computed(() => ({
 	},
 }))
 
-const memTotalText = computed(() => formatMegabytes(props.memTotal as number))
-const memUsed = computed(() => formatMegabytes((props.memTotal as number) - (props.memFree as number)))
-const swapUsed = computed(() => formatMegabytes((props.swapTotal as number) - (props.swapFree as number)))
+const memTotalText = computed(() => formatMegabytes(props.memTotal))
+const memUsed = computed(() => formatMegabytes(props.memTotal - props.memFree))
+const swapUsed = computed(() => formatMegabytes(props.swapTotal - props.swapFree))
 
 watch(() => props.tick, () => {
 	if (!hasMemory.value) {
 		return
 	}
 
-	const memTotalGB = (props.memTotal as number) / 1024
-	const swapTotalGB = hasSwap.value ? (props.swapTotal as number) / 1024 : 0
+	const memTotalGB = props.memTotal / 1024
+	const swapTotalGB = hasSwap.value ? props.swapTotal / 1024 : 0
 	maxGB.value = Math.ceil(Math.max(memTotalGB, swapTotalGB))
 
 	const labels = [...chartData.value.labels.slice(1), new Date().toLocaleTimeString()]
 
-	const memUsageGB = ((props.memTotal as number) - (props.memFree as number)) / 1024
+	const memUsageGB = (props.memTotal - props.memFree) / 1024
 	const ramData = [...chartData.value.datasets[0].data.slice(1), memUsageGB]
 
 	const swapUsageGB = hasSwap.value
-		? ((props.swapTotal as number) - (props.swapFree as number)) / 1024
+		? (props.swapTotal - props.swapFree) / 1024
 		: null
 	const swapData = [...chartData.value.datasets[1].data.slice(1), swapUsageGB]
 

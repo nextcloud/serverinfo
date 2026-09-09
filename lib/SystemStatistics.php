@@ -31,6 +31,15 @@ class SystemStatistics {
 	}
 
 	/**
+	 * Memory is collected in MB, where -1 means "not available". Scaling that
+	 * sentinel would report -1024 as though it were a measurement, so it is
+	 * passed through untouched and -1 keeps one meaning across the API.
+	 */
+	private function toKibibytes(int $mebibytes): int {
+		return $mebibytes < 0 ? -1 : $mebibytes * 1024;
+	}
+
+	/**
 	 * Get statistics about the system
 	 *
 	 * @throws \OCP\Files\InvalidPathException
@@ -52,10 +61,10 @@ class SystemStatistics {
 			'freespace' => $this->getFreeSpace(),
 			'cpuload' => $cpu->getAverageLoad(),
 			'cpunum' => $cpu->getThreads(),
-			'mem_total' => $memory->getMemTotal() * 1024,
-			'mem_free' => $memory->getMemAvailable() * 1024,
-			'swap_total' => $memory->getSwapTotal() * 1024,
-			'swap_free' => $memory->getSwapFree() * 1024,
+			'mem_total' => $this->toKibibytes($memory->getMemTotal()),
+			'mem_free' => $this->toKibibytes($memory->getMemAvailable()),
+			'swap_total' => $this->toKibibytes($memory->getSwapTotal()),
+			'swap_free' => $this->toKibibytes($memory->getSwapFree()),
 		];
 
 		if (!$skipApps) {

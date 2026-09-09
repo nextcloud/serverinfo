@@ -27,7 +27,9 @@ class DummyTest extends TestCase {
 		$cpu = $this->os->getCPU();
 
 		$this->assertEquals('Unknown Processor', $cpu->getName());
-		$this->assertEquals(1, $cpu->getThreads());
+		// -1, not 1: the thread count divides the load average, so claiming a
+		// single core reports an eight-core host as 800% busy.
+		$this->assertEquals(-1, $cpu->getThreads());
 	}
 
 	public function testGetMemory(): void {

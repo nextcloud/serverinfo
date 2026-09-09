@@ -19,7 +19,14 @@ class Dummy implements IOperatingSystem {
 
 	#[\Override]
 	public function getCPU(): CPU {
-		return new CPU('Unknown Processor', 1);
+		// -1, not 1: a fabricated core count is used as a divisor for the load
+		// average and would report a single-core machine at 800% busy.
+		return new CPU('Unknown Processor', -1);
+	}
+
+	#[\Override]
+	public function sampleUptime(): int {
+		return -1;
 	}
 
 	#[\Override]

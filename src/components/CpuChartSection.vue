@@ -4,24 +4,28 @@
 -->
 <template>
 	<SectionHeading :icon="Chip" :title="t('serverinfo', 'Load')" />
-	<p v-if="!stats">
+	<p v-if="loadAverage === null">
 		<!-- TRANSLATORS: Shown instead of the CPU load chart when the server does not report CPU information -->
 		<em>{{ t('serverinfo', 'CPU info not available') }}</em>
 	</p>
 	<template v-else>
 		<div class="row row--tiles">
 			<!-- TRANSLATORS: Tile label above the current CPU load as a percentage -->
-			<StatTile :label="t('serverinfo', 'Current usage')" :value="`${stats.usage} %`" />
+			<StatTile v-if="usage !== null" :label="t('serverinfo', 'Current usage')" :value="`${usage} %`" />
 			<!-- TRANSLATORS: Tile label above the number of CPU threads (logical cores) the server has -->
-			<StatTile :label="t('serverinfo', 'Threads')" :value="cpunum" />
+			<StatTile v-if="cpunum > 0" :label="t('serverinfo', 'Threads')" :value="cpunum" />
 			<!-- TRANSLATORS: Tile label above the Unix load average, three numbers for the last 1/5/15 minutes -->
-			<StatTile :label="t('serverinfo', 'Load average')" :value="stats.loads" />
+			<StatTile :label="t('serverinfo', 'Load average')" :value="loadAverage" />
 		</div>
-		<div id="cpuSection" class="infobox">
+		<div v-if="usage !== null" id="cpuSection" class="infobox">
 			<div class="chart-wrapper">
 				<Line :data="chartData" :options="chartOptions" />
 			</div>
 		</div>
+		<p v-else>
+			<!-- TRANSLATORS: Shown under the load average when the server does not report how many CPU threads it has -->
+			<em>{{ t('serverinfo', 'The number of CPU threads is unknown, so the load cannot be shown as a percentage.') }}</em>
+		</p>
 	</template>
 </template>
 
@@ -98,15 +102,17 @@ const chartOptions = {
 	},
 }
 
-const stats = computed(() => {
-	if (props.cpuload === false || props.cpunum <= 0) {
-		return null
-	}
-	return {
-		usage: ((props.cpuload[0] / props.cpunum) * 100).toFixed(1),
-		loads: props.cpuload.map((load) => load.toFixed(2)).join(' / '),
-	}
-})
+// The load average comes from sys_getloadavg() and is real even on a host where
+// the thread count could not be read. Keep showing it rather than discarding the
+// one usable number along with the percentage it cannot produce.
+const loadAverage = computed(() => (props.cpuload === false || props.cpuload.length === 0)
+	? null
+	: props.cpuload.map((load) => load.toFixed(2)).join(' / '))
+
+// A percentage needs a divisor, and -1 threads is the API saying it has none.
+const usage = computed(() => (props.cpuload === false || props.cpuload.length === 0 || props.cpunum <= 0)
+	? null
+	: ((props.cpuload[0] / props.cpunum) * 100).toFixed(1))
 
 watch(() => props.tick, () => {
 	const cpuload = props.cpuload
