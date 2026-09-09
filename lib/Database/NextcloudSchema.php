@@ -10,28 +10,13 @@ declare(strict_types=1);
 namespace OCA\ServerInfo\Database;
 
 use OC\DB\Connection;
-use OC\DB\SchemaWrapper;
-use OCP\DB\Events\AddMissingColumnsEvent;
-use OCP\DB\Events\AddMissingIndicesEvent;
-use OCP\DB\Events\AddMissingPrimaryKeyEvent;
-use OCP\EventDispatcher\IEventDispatcher;
 use OCP\IConfig;
 use Psr\Log\LoggerInterface;
 
 /**
  * Computes Nextcloud-specific database facts that the generic
- * phpMyAdmin-derived rules can't express: whether the schema is missing
- * indices / columns / primary keys that Nextcloud's own migrations
- * expect, and (on MySQL/MariaDB) whether every table uses the utf8mb4
- * charset and the InnoDB engine, and whether the transaction isolation
- * level is READ-COMMITTED.
- *
- * The missing-schema detection deliberately reuses the exact mechanism
- * behind `occ db:add-missing-indices` / `-columns` / `-primary-keys`:
- * dispatch the same events every app listens to, then compare the
- * declared expectations against the live schema via {@see SchemaWrapper}.
- * That keeps the counts in lockstep with what those occ commands would
- * actually change — the fix DB Doctor recommends.
+ * phpMyAdmin-derived rules can't express: on MySQL and MariaDB, whether
+ * every table uses the utf8mb4 charset and the InnoDB engine.
  *
  * All facts are read from Nextcloud's own (default) connection — these
  * are questions about *the Nextcloud database*, so a configured override
@@ -46,7 +31,6 @@ use Psr\Log\LoggerInterface;
 final class NextcloudSchema {
 	public function __construct(
 		private Connection $connection,
-		private IEventDispatcher $dispatcher,
 		private IConfig $config,
 		private LoggerInterface $logger,
 	) {
@@ -58,84 +42,11 @@ final class NextcloudSchema {
 	 *                               dependent rule skips instead of evaluating on a bad value.
 	 */
 	public function facts(string $flavour): array {
-		$out = $this->missingSchemaCounts();
-
 		if ($flavour === Snapshot::FLAVOUR_MYSQL || $flavour === Snapshot::FLAVOUR_MARIADB) {
-			$out += $this->mysqlSchemaFacts();
+			return $this->mysqlSchemaFacts();
 		}
 
-		return $out;
-	}
-
-	/**
-	 * Counts of schema objects Nextcloud expects but the live database
-	 * lacks — the same comparison `occ db:add-missing-*` performs.
-	 *
-	 * @return array<string, int>
-	 */
-	private function missingSchemaCounts(): array {
-		try {
-			$schema = new SchemaWrapper($this->connection);
-			return [
-				'nc_missing_indices' => $this->countMissingIndices($schema),
-				'nc_missing_columns' => $this->countMissingColumns($schema),
-				'nc_missing_primary_keys' => $this->countMissingPrimaryKeys($schema),
-			];
-		} catch (\Throwable $e) {
-			$this->logger->warning(
-				'serverinfo: Nextcloud schema probe failed: {msg}',
-				['msg' => $e->getMessage(), 'app' => 'serverinfo'],
-			);
-			return [];
-		}
-	}
-
-	private function countMissingIndices(SchemaWrapper $schema): int {
-		$event = new AddMissingIndicesEvent();
-		$this->dispatcher->dispatchTyped($event);
-
-		$count = 0;
-		foreach ($event->getMissingIndices() as $missing) {
-			if ($schema->hasTable($missing['tableName'])
-				&& !$schema->getTable($missing['tableName'])->hasIndex($missing['indexName'])) {
-				$count++;
-			}
-		}
-		foreach ($event->getIndicesToReplace() as $replace) {
-			if ($schema->hasTable($replace['tableName'])
-				&& !$schema->getTable($replace['tableName'])->hasIndex($replace['newIndexName'])) {
-				$count++;
-			}
-		}
-		return $count;
-	}
-
-	private function countMissingColumns(SchemaWrapper $schema): int {
-		$event = new AddMissingColumnsEvent();
-		$this->dispatcher->dispatchTyped($event);
-
-		$count = 0;
-		foreach ($event->getMissingColumns() as $missing) {
-			if ($schema->hasTable($missing['tableName'])
-				&& !$schema->getTable($missing['tableName'])->hasColumn($missing['columnName'])) {
-				$count++;
-			}
-		}
-		return $count;
-	}
-
-	private function countMissingPrimaryKeys(SchemaWrapper $schema): int {
-		$event = new AddMissingPrimaryKeyEvent();
-		$this->dispatcher->dispatchTyped($event);
-
-		$count = 0;
-		foreach ($event->getMissingPrimaryKeys() as $missing) {
-			if ($schema->hasTable($missing['tableName'])
-				&& $schema->getTable($missing['tableName'])->getPrimaryKey() === null) {
-				$count++;
-			}
-		}
-		return $count;
+		return [];
 	}
 
 	/**
@@ -173,7 +84,6 @@ final class NextcloudSchema {
 			return [
 				'nc_non_utf8mb4_tables' => $nonUtf8mb4,
 				'nc_non_innodb_tables' => $nonInnodb,
-				'nc_read_committed' => $this->isReadCommitted() ? 1 : 0,
 			];
 		} catch (\Throwable $e) {
 			$this->logger->warning(
@@ -182,28 +92,6 @@ final class NextcloudSchema {
 			);
 			return [];
 		}
-	}
-
-	/**
-	 * Reads the server-wide (global) transaction isolation level — the
-	 * value the my.cnf recommendation targets.  We deliberately read the
-	 * GLOBAL rather than the SESSION value: Nextcloud forces READ-COMMITTED
-	 * per session on its own connection, so `SHOW VARIABLES` (session) would
-	 * always report READ-COMMITTED and hide the server's real default.
-	 *
-	 * The variable is `transaction_isolation` on MySQL 5.7.20+ / MariaDB
-	 * 11.1+ and `tx_isolation` on older servers; we accept either.
-	 */
-	private function isReadCommitted(): bool {
-		// SHOW GLOBAL VARIABLES returns (Variable_name, Value) rows, which
-		// fetchAllKeyValue() folds into a name → value map.
-		$rows = $this->connection->fetchAllKeyValue(
-			"SHOW GLOBAL VARIABLES WHERE Variable_name IN ('transaction_isolation', 'tx_isolation')",
-		);
-		$value = (string)($rows['transaction_isolation'] ?? $rows['tx_isolation'] ?? '');
-
-		// Servers report "READ-COMMITTED"; normalise spacing defensively.
-		return strtoupper(str_replace(' ', '-', trim($value))) === 'READ-COMMITTED';
 	}
 
 	/**

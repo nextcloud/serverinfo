@@ -59,16 +59,8 @@
     </PossiblyUnusedMethod>
     <UndefinedClass>
       <code><![CDATA[$this->connection]]></code>
-      <code><![CDATA[$this->connection]]></code>
-      <code><![CDATA[SchemaWrapper]]></code>
-      <code><![CDATA[SchemaWrapper]]></code>
-      <code><![CDATA[SchemaWrapper]]></code>
-      <code><![CDATA[SchemaWrapper]]></code>
       <code><![CDATA[private]]></code>
     </UndefinedClass>
-    <UnusedProperty>
-      <code><![CDATA[$dispatcher]]></code>
-    </UnusedProperty>
   </file>
   <file src="lib/Database/RuleSet.php">
     <PossiblyUnusedMethod>
@@ -86,11 +78,6 @@
       <code><![CDATA[public function rules(): array {]]></code>
     </MissingOverrideAttribute>
     <UnusedClosureParam>
-      <code><![CDATA[$s]]></code>
-      <code><![CDATA[$s]]></code>
-      <code><![CDATA[$s]]></code>
-      <code><![CDATA[$s]]></code>
-      <code><![CDATA[$s]]></code>
       <code><![CDATA[$s]]></code>
       <code><![CDATA[$s]]></code>
       <code><![CDATA[$s]]></code>
