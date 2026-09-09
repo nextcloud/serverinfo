@@ -3,6 +3,9 @@
  * SPDX-License-Identifier: AGPL-3.0-or-later
  */
 
+/** The pages the admin settings can show, selected by the navigation at the top. */
+export type SettingsView = 'status' | 'background-jobs'
+
 export interface ThermalZone {
 	zone: string
 	type: string
