@@ -101,7 +101,7 @@
 			<MonitoringSection :ocs="staticData.ocs" />
 		</template>
 
-		<template v-else>
+		<template v-else-if="!staticError">
 			<div class="section server-infos-two">
 				<div class="row">
 					<div>
@@ -167,6 +167,7 @@ import ThermalSection from '../components/ThermalSection.vue'
 
 const props = defineProps<{
 	staticData: StaticData | null
+	staticError: boolean
 	liveData: LiveData | null
 	tick: number
 }>()
