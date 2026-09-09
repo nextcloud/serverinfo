@@ -30,6 +30,11 @@
       <code><![CDATA[__construct]]></code>
     </PossiblyUnusedMethod>
   </file>
+  <file src="lib/Database/CheckSummary.php">
+    <PossiblyUnusedMethod>
+      <code><![CDATA[__construct]]></code>
+    </PossiblyUnusedMethod>
+  </file>
   <file src="lib/Database/DatabaseProbe.php">
     <PossiblyUnusedMethod>
       <code><![CDATA[__construct]]></code>
@@ -183,6 +188,11 @@
     <UnusedClass>
       <code><![CDATA[AdminSettings]]></code>
     </UnusedClass>
+  </file>
+  <file src="lib/SetupChecks/DatabaseChecks.php">
+    <PossiblyUnusedMethod>
+      <code><![CDATA[__construct]]></code>
+    </PossiblyUnusedMethod>
   </file>
   <file src="lib/ShareStatistics.php">
     <PossiblyUnusedMethod>
