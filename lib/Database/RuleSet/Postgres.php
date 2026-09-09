@@ -25,8 +25,6 @@ use OCA\ServerInfo\Database\Snapshot;
  * automatically through the snapshot's context map.
  */
 final class Postgres implements RuleSet {
-	use NextcloudSchemaRules;
-
 	/** @var list<Rule>|null */
 	private ?array $cache = null;
 
@@ -161,12 +159,6 @@ final class Postgres implements RuleSet {
 			justificationFormula: 'value',
 			requires: ['long_running_queries'],
 		);
-
-		// Nextcloud schema-integrity checks (missing indices / columns /
-		// primary keys) apply to Postgres as much as MySQL.
-		foreach ($this->nextcloudSchemaRules() as $rule) {
-			$rules[] = $rule;
-		}
 
 		return $rules;
 	}

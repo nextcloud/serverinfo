@@ -33,8 +33,6 @@ use OCA\ServerInfo\Database\Snapshot;
  * rules naturally stay out of the way.
  */
 final class Mysql implements RuleSet {
-	use NextcloudSchemaRules;
-
 	/** @var list<Rule>|null */
 	private ?array $cache = null;
 
@@ -391,58 +389,9 @@ final class Mysql implements RuleSet {
 
 		// ── Security ────────────────────────────────────────────────
 
-		$rules[] = new Rule(
-			id: 'Skip_name_resolve',
-			name: 'Skip name resolve',
-			category: 'Security',
-			severity: Rule::SEVERITY_NOTICE,
-			formula: 'skip_name_resolve',
-			test: 'value == 0',
-			issue: 'Reverse DNS is performed on every connection — slow DNS makes connection setup slow.',
-			recommendation: 'Set skip_name_resolve=1 and grant by IP. Removes a network round-trip per connection.',
-			justification: 'skip_name_resolve is currently OFF.',
-			justificationFormula: '',
-			requires: ['skip_name_resolve'],
-		);
-
 		// ── Memory: query cache (MySQL 5.x / MariaDB only — auto-skipped on 8.0+) ──
 
-		$rules[] = new Rule(
-			id: 'Query_cache_efficiency',
-			name: 'Query cache efficiency',
-			category: 'Performance',
-			severity: Rule::SEVERITY_NOTICE,
-			formula: 'Qcache_hits / (Qcache_hits + Com_select + 1) * 100',
-			test: 'value < 20',
-			issue: 'The query cache is enabled but has poor hit rates; it may be hurting more than helping.',
-			recommendation: 'Disable the query cache (query_cache_type=OFF) or accept the inefficiency. The query cache was removed in MySQL 8.0.',
-			justification: 'Query cache hit rate is %s%%.',
-			justificationFormula: 'value',
-			requires: ['Qcache_hits', 'Com_select'],
-		);
-
 		// ── MyISAM ──────────────────────────────────────────────────
-
-		$rules[] = new Rule(
-			id: 'Key_buffer_hit_rate',
-			name: 'MyISAM key buffer hit rate',
-			category: 'Performance',
-			severity: Rule::SEVERITY_NOTICE,
-			formula: '100 - (Key_reads / Key_read_requests * 100)',
-			test: 'value < 99',
-			issue: 'MyISAM index reads are not finding their pages in the key buffer.',
-			recommendation: 'Increase key_buffer_size, or migrate the affected tables to InnoDB.',
-			justification: 'Key buffer hit rate is %s%%.',
-			justificationFormula: 'value',
-			apply: new ApplyDescriptor(
-				variable: 'key_buffer_size',
-				recommendedValue: static fn (Snapshot $s) => '64M',
-				runtimeWritable: true,
-				configKey: 'key_buffer_size',
-				configFile: 'my.cnf',
-			),
-			requires: ['Key_reads', 'Key_read_requests'],
-		);
 
 		// ── Locks ───────────────────────────────────────────────────
 
@@ -478,48 +427,6 @@ final class Mysql implements RuleSet {
 
 		// ── Binlog cache ────────────────────────────────────────────
 
-		$rules[] = new Rule(
-			id: 'Binlog_cache_disk_use',
-			name: 'Binlog cache spilled to disk',
-			category: 'Performance',
-			severity: Rule::SEVERITY_NOTICE,
-			formula: 'Binlog_cache_disk_use / Binlog_cache_use * 100',
-			test: 'value > 10',
-			issue: 'Some transactions are exceeding binlog_cache_size and spilling to a temporary file.',
-			recommendation: 'Increase binlog_cache_size if your transactions are large.',
-			justification: '%s%% of binlog cache uses spilled to disk.',
-			justificationFormula: 'value',
-			apply: new ApplyDescriptor(
-				variable: 'binlog_cache_size',
-				recommendedValue: static fn (Snapshot $s) => '4M',
-				runtimeWritable: true,
-				configKey: 'binlog_cache_size',
-				configFile: 'my.cnf',
-			),
-			requires: ['Binlog_cache_disk_use', 'Binlog_cache_use'],
-		);
-
-		$rules[] = new Rule(
-			id: 'Sync_binlog',
-			name: 'Binary log durability',
-			category: 'Performance',
-			severity: Rule::SEVERITY_NOTICE,
-			formula: 'sync_binlog',
-			test: 'value != 1',
-			issue: 'sync_binlog is not 1 — replicas can lose transactions on a primary crash.',
-			recommendation: 'Set sync_binlog=1 unless you knowingly accept replica drift on crash.',
-			justification: 'sync_binlog is currently %s.',
-			justificationFormula: 'value',
-			apply: new ApplyDescriptor(
-				variable: 'sync_binlog',
-				recommendedValue: static fn (Snapshot $s) => '1',
-				runtimeWritable: true,
-				configKey: 'sync_binlog',
-				configFile: 'my.cnf',
-			),
-			requires: ['sync_binlog'],
-		);
-
 		// ── Additional rules ported from phpMyAdmin's advisor ───────
 		//
 		// These mirror upstream rules that didn't have a local
@@ -532,22 +439,6 @@ final class Mysql implements RuleSet {
 		// ported — porting them faithfully would require either
 		// rule-graph evaluation or string ops that the safe expression
 		// evaluator deliberately doesn't support.
-
-		// Server / data-quality
-		$rules[] = new Rule(
-			// upstream id: "Questions below 1,000"
-			id: 'Questions_below_1000',
-			name: 'Too few queries to analyse',
-			category: 'Server',
-			severity: Rule::SEVERITY_NOTICE,
-			formula: 'Questions',
-			test: 'value < 1000',
-			issue: 'Fewer than 1,000 queries have run against this server, so statistical advice may be inaccurate.',
-			recommendation: 'Let the server run for longer before relying on the recommendations below.',
-			justification: 'Current Questions: %s.',
-			justificationFormula: 'value',
-			requires: ['Questions'],
-		);
 
 		// Performance / queries
 		$rules[] = new Rule(
@@ -673,44 +564,6 @@ final class Mysql implements RuleSet {
 			requires: ['tmp_table_size', 'max_heap_table_size'],
 		);
 
-		// Memory / MyISAM key buffer
-		$rules[] = new Rule(
-			// upstream id: "MyISAM key buffer size"
-			id: 'Key_buffer_size_zero',
-			name: 'MyISAM key buffer disabled',
-			category: 'Memory',
-			severity: Rule::SEVERITY_NOTICE,
-			formula: 'key_buffer_size',
-			test: 'value == 0',
-			issue: 'key_buffer_size is 0; MyISAM indexes will not be cached.',
-			recommendation: 'Set key_buffer_size based on your MyISAM index footprint; 64M is a reasonable starting point.',
-			justification: 'key_buffer_size is 0.',
-			justificationFormula: '',
-			apply: new ApplyDescriptor(
-				variable: 'key_buffer_size',
-				recommendedValue: static fn (Snapshot $s) => (string)(64 * 1024 * 1024),
-				runtimeWritable: true,
-				configKey: 'key_buffer_size',
-				configFile: 'my.cnf',
-			),
-			requires: ['key_buffer_size'],
-		);
-
-		$rules[] = new Rule(
-			// upstream id: "Max % MyISAM key buffer ever used"
-			id: 'Key_buffer_peak_usage_low',
-			name: 'MyISAM key buffer peak usage low',
-			category: 'Memory',
-			severity: Rule::SEVERITY_NOTICE,
-			formula: 'Key_blocks_used * key_cache_block_size / key_buffer_size * 100',
-			test: 'value < 95 && key_buffer_size > 0',
-			issue: 'The MyISAM key buffer has rarely been more than 95%% full.',
-			recommendation: 'Consider lowering key_buffer_size, or check whether expected indexes still exist.',
-			justification: 'Peak key buffer usage: %s%%; aim for >= 95%%.',
-			justificationFormula: 'round(value, 1)',
-			requires: ['Key_blocks_used', 'key_cache_block_size', 'key_buffer_size'],
-		);
-
 		// Performance / open files
 		$rules[] = new Rule(
 			// upstream id: "Rate of open files"
@@ -767,21 +620,6 @@ final class Mysql implements RuleSet {
 				configFile: 'my.cnf',
 			),
 			requires: ['thread_cache_size'],
-		);
-
-		$rules[] = new Rule(
-			// upstream id: "Slow launch time"
-			id: 'Slow_launch_time_high',
-			name: 'slow_launch_time threshold high',
-			category: 'Performance',
-			severity: Rule::SEVERITY_NOTICE,
-			formula: 'slow_launch_time',
-			test: 'value > 2',
-			issue: 'slow_launch_time is set higher than 2 seconds.',
-			recommendation: 'Set slow_launch_time to 1 or 2 so the Slow_launch_threads counter is meaningful.',
-			justification: 'slow_launch_time is %s seconds.',
-			justificationFormula: 'value',
-			requires: ['slow_launch_time'],
 		);
 
 		$rules[] = new Rule(
@@ -880,142 +718,7 @@ final class Mysql implements RuleSet {
 			requires: ['innodb_log_file_size'],
 		);
 
-		// MyISAM
-		$rules[] = new Rule(
-			// upstream id: "MyISAM concurrent inserts"
-			id: 'Concurrent_insert_off',
-			name: 'MyISAM concurrent inserts disabled',
-			category: 'MyISAM',
-			severity: Rule::SEVERITY_NOTICE,
-			formula: 'concurrent_insert',
-			test: 'value == 0',
-			issue: 'concurrent_insert is set to 0, blocking concurrent INSERT/SELECT on MyISAM tables.',
-			recommendation: 'Set concurrent_insert to 1 (or AUTO/2) to reduce reader/writer contention on MyISAM.',
-			justification: 'concurrent_insert is 0.',
-			justificationFormula: '',
-			requires: ['concurrent_insert'],
-		);
-
-		// Query cache (legacy — these rules will skip on MySQL 8.0+ via
-		// `requires`, since the QC variables don't exist there.  The
-		// upstream `fired()` precondition that hides them when the QC
-		// is fully disabled is intentionally not modelled — at worst,
-		// users see two QC-related findings instead of one.)
-		$rules[] = new Rule(
-			// upstream id: "Query cache disabled"
-			id: 'Query_cache_disabled',
-			name: 'Query cache disabled',
-			category: 'QueryCache',
-			severity: Rule::SEVERITY_NOTICE,
-			formula: 'query_cache_size',
-			test: 'value == 0',
-			issue: 'The query cache is disabled (query_cache_size == 0).',
-			recommendation: 'On read-heavy MySQL <= 5.7, sizing query_cache_size and setting query_cache_type=ON can help. (Removed in MySQL 8.0+.)',
-			justification: 'query_cache_size is 0.',
-			justificationFormula: '',
-			requires: ['query_cache_size'],
-		);
-
-		$rules[] = new Rule(
-			// upstream id: "Query Cache usage"
-			id: 'Query_cache_usage_low',
-			name: 'Query cache underutilized',
-			category: 'QueryCache',
-			severity: Rule::SEVERITY_NOTICE,
-			formula: '100 - Qcache_free_memory / query_cache_size * 100',
-			test: 'value < 80 && query_cache_size > 0',
-			issue: 'Less than 80%% of the query cache is in use.',
-			recommendation: 'query_cache_limit may be too low; raising it can let larger results enter the cache.',
-			justification: 'Query cache is %s%% utilized.',
-			justificationFormula: 'round(value, 1)',
-			requires: ['Qcache_free_memory', 'query_cache_size'],
-		);
-
-		$rules[] = new Rule(
-			// upstream id: "Query cache fragmentation"
-			id: 'Query_cache_fragmentation',
-			name: 'Query cache fragmented',
-			category: 'QueryCache',
-			severity: Rule::SEVERITY_NOTICE,
-			formula: 'Qcache_free_blocks / (Qcache_total_blocks / 2) * 100',
-			test: 'value > 20 && Qcache_total_blocks > 0',
-			issue: 'The query cache is significantly fragmented.',
-			recommendation: 'Tune query_cache_min_res_unit, or temporarily flush the cache to defragment.',
-			justification: 'Cache fragmentation: %s%%; aim for less than 20%%.',
-			justificationFormula: 'round(value, 1)',
-			requires: ['Qcache_free_blocks', 'Qcache_total_blocks'],
-		);
-
-		$rules[] = new Rule(
-			// upstream id: "Query cache low memory prunes"
-			id: 'Query_cache_lowmem_prunes',
-			name: 'Query cache evicting under memory pressure',
-			category: 'QueryCache',
-			severity: Rule::SEVERITY_NOTICE,
-			formula: 'Qcache_lowmem_prunes / Qcache_inserts * 100',
-			test: 'value > 0.1 && Qcache_inserts > 0',
-			issue: 'Cached queries are being evicted because the query cache is full.',
-			recommendation: 'Increase query_cache_size — but in small increments; an oversized cache adds maintenance overhead.',
-			justification: 'Lowmem prune ratio: %s%% of inserts.',
-			justificationFormula: 'round(value, 2)',
-			requires: ['Qcache_lowmem_prunes', 'Qcache_inserts'],
-		);
-
-		$rules[] = new Rule(
-			// upstream id: "Query cache max size"
-			id: 'Query_cache_size_too_large',
-			name: 'Query cache size very large',
-			category: 'QueryCache',
-			severity: Rule::SEVERITY_NOTICE,
-			formula: 'query_cache_size',
-			test: 'value > 1024 * 1024 * 128',
-			issue: 'query_cache_size is above 128 MiB; cache maintenance overhead grows with size.',
-			recommendation: 'Reducing query_cache_size to 64-128 MiB is usually enough on MySQL <= 5.7.',
-			justification: 'query_cache_size is %s bytes.',
-			justificationFormula: 'value',
-			requires: ['query_cache_size'],
-		);
-
-		// ── Uptime sanity ───────────────────────────────────────────
-
-		$rules[] = new Rule(
-			id: 'Short_uptime',
-			name: 'Short server uptime',
-			category: 'Performance',
-			severity: Rule::SEVERITY_NOTICE,
-			formula: 'Uptime_hours',
-			test: 'value < 24',
-			issue: 'The server has been up for less than a day; statistics-driven rules will be less reliable.',
-			recommendation: 'Re-run DB Doctor after the server has been running for at least a day.',
-			justification: 'Uptime is %s hours; rules using counters are most accurate after 24+ hours.',
-			justificationFormula: 'Uptime_hours',
-			requires: ['Uptime_hours'],
-		);
-
 		// ── Nextcloud-specific database requirements ─────────────────
-
-		$rules[] = new Rule(
-			id: 'nc.transaction_isolation',
-			name: 'Transaction isolation level',
-			category: 'Nextcloud',
-			severity: Rule::SEVERITY_NOTICE,
-			formula: 'nc_read_committed',
-			test: 'value == 0',
-			issue: 'The global transaction isolation level is not READ-COMMITTED. Nextcloud recommends READ-COMMITTED on MySQL/MariaDB to reduce lock contention and deadlocks under concurrent load.',
-			recommendation: 'Set "transaction_isolation = READ-COMMITTED" in the [mysqld] section of my.cnf and restart the server.',
-			justification: 'The server-wide transaction isolation level is not READ-COMMITTED.',
-			justificationFormula: '',
-			apply: new ApplyDescriptor(
-				variable: 'transaction_isolation',
-				recommendedValue: static fn (Snapshot $s) => 'READ-COMMITTED',
-				runtimeWritable: false,
-				configKey: 'transaction_isolation',
-				configFile: 'my.cnf',
-				note: 'Nextcloud already forces READ-COMMITTED per session; setting it globally is belt-and-suspenders and needs a server restart.',
-			),
-			requires: ['nc_read_committed'],
-			docUrl: 'https://docs.nextcloud.com/server/latest/admin_manual/configuration_database/linux_database_configuration.html',
-		);
 
 		$rules[] = new Rule(
 			id: 'nc.utf8mb4_charset',
@@ -1046,12 +749,6 @@ final class Mysql implements RuleSet {
 			requires: ['nc_non_innodb_tables'],
 			docUrl: 'https://docs.nextcloud.com/server/latest/admin_manual/configuration_database/linux_database_configuration.html',
 		);
-
-		// Shared Nextcloud schema-integrity checks (missing indices /
-		// columns / primary keys).
-		foreach ($this->nextcloudSchemaRules() as $rule) {
-			$rules[] = $rule;
-		}
 
 		return $rules;
 	}
