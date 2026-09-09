@@ -33,10 +33,30 @@ class LinuxTest extends TestCase {
 			->getMock();
 	}
 
-	public function testGetMemory(): void {
+	/**
+	 * Serve the given files through readContent, and behave like a host where
+	 * every other path is missing, which is what readContent does for a file
+	 * that does not exist.
+	 *
+	 * @param array<string, string> $files
+	 */
+	private function mockFiles(array $files): void {
 		$this->os->method('readContent')
-			->with('/proc/meminfo')
-			->willReturn(file_get_contents(__DIR__ . '/../data/linux_meminfo'));
+			->willReturnCallback(static function (string $filename) use ($files): string {
+				if (!isset($files[$filename])) {
+					throw new RuntimeException('Unable to read: "' . $filename . '"');
+				}
+
+				return $files[$filename];
+			});
+	}
+
+	private function fixture(string $name): string {
+		return (string)file_get_contents(__DIR__ . '/../data/' . $name);
+	}
+
+	public function testGetMemory(): void {
+		$this->mockFiles(['/proc/meminfo' => $this->fixture('linux_meminfo')]);
 
 		$memory = $this->os->getMemory();
 
@@ -61,6 +81,101 @@ class LinuxTest extends TestCase {
 			->willReturn('invalid_data');
 
 		$this->assertEquals(new Memory(), $this->os->getMemory());
+	}
+
+	public function testGetMemoryWithCgroupV2Limit(): void {
+		$this->mockFiles([
+			'/proc/meminfo' => $this->fixture('linux_meminfo'),
+			'/sys/fs/cgroup/memory.max' => '2147483648',
+			'/sys/fs/cgroup/memory.current' => '1610612736',
+			'/sys/fs/cgroup/memory.stat' => $this->fixture('linux_cgroup_v2_memory_stat'),
+			'/sys/fs/cgroup/memory.swap.max' => '1073741824',
+			'/sys/fs/cgroup/memory.swap.current' => '268435456',
+		]);
+
+		$memory = $this->os->getMemory();
+
+		// Limited to 2 GiB, so the host's 15947 MB must not show up anywhere.
+		$this->assertEquals(2048, $memory->getMemTotal());
+		$this->assertEquals(512, $memory->getMemFree());
+		// 384 MB of the 1536 MB in use is reclaimable page cache.
+		$this->assertEquals(896, $memory->getMemAvailable());
+		$this->assertEquals(1024, $memory->getSwapTotal());
+		$this->assertEquals(768, $memory->getSwapFree());
+	}
+
+	public function testGetMemoryWithCgroupV2Unlimited(): void {
+		$this->mockFiles([
+			'/proc/meminfo' => $this->fixture('linux_meminfo'),
+			'/sys/fs/cgroup/memory.max' => 'max',
+			'/sys/fs/cgroup/memory.current' => '1610612736',
+		]);
+
+		$memory = $this->os->getMemory();
+
+		$this->assertEquals(15947, $memory->getMemTotal());
+		$this->assertEquals(7495, $memory->getMemAvailable());
+	}
+
+	public function testGetMemoryWithCgroupV1Limit(): void {
+		$this->mockFiles([
+			'/proc/meminfo' => $this->fixture('linux_meminfo'),
+			'/sys/fs/cgroup/memory/memory.limit_in_bytes' => '2147483648',
+			'/sys/fs/cgroup/memory/memory.usage_in_bytes' => '1610612736',
+			'/sys/fs/cgroup/memory/memory.stat' => $this->fixture('linux_cgroup_v1_memory_stat'),
+			'/sys/fs/cgroup/memory/memory.memsw.limit_in_bytes' => '2684354560',
+			'/sys/fs/cgroup/memory/memory.memsw.usage_in_bytes' => '1879048192',
+		]);
+
+		$memory = $this->os->getMemory();
+
+		$this->assertEquals(2048, $memory->getMemTotal());
+		$this->assertEquals(512, $memory->getMemFree());
+		$this->assertEquals(896, $memory->getMemAvailable());
+		// memsw covers memory and swap together, leaving 512 MB of swap.
+		$this->assertEquals(512, $memory->getSwapTotal());
+		$this->assertEquals(256, $memory->getSwapFree());
+	}
+
+	public function testGetMemoryWithCgroupV1Unlimited(): void {
+		$this->mockFiles([
+			'/proc/meminfo' => $this->fixture('linux_meminfo'),
+			// What the kernel reports for "no limit" on cgroup v1.
+			'/sys/fs/cgroup/memory/memory.limit_in_bytes' => '9223372036854771712',
+			'/sys/fs/cgroup/memory/memory.usage_in_bytes' => '1610612736',
+		]);
+
+		$memory = $this->os->getMemory();
+
+		$this->assertEquals(15947, $memory->getMemTotal());
+		$this->assertEquals(7495, $memory->getMemAvailable());
+	}
+
+	public function testGetMemoryIgnoresLimitAboveHostMemory(): void {
+		$this->mockFiles([
+			'/proc/meminfo' => $this->fixture('linux_meminfo'),
+			'/sys/fs/cgroup/memory.max' => '34359738368',
+			'/sys/fs/cgroup/memory.current' => '1610612736',
+		]);
+
+		$memory = $this->os->getMemory();
+
+		$this->assertEquals(15947, $memory->getMemTotal());
+	}
+
+	public function testGetMemoryWithCgroupLimitButNoStat(): void {
+		$this->mockFiles([
+			'/proc/meminfo' => $this->fixture('linux_meminfo'),
+			'/sys/fs/cgroup/memory.max' => '2147483648',
+			'/sys/fs/cgroup/memory.current' => '1610612736',
+		]);
+
+		$memory = $this->os->getMemory();
+
+		// Without memory.stat no cache can be discounted, so available equals free.
+		$this->assertEquals(2048, $memory->getMemTotal());
+		$this->assertEquals(512, $memory->getMemFree());
+		$this->assertEquals(512, $memory->getMemAvailable());
 	}
 
 	public function testGetCpu(): void {

@@ -20,6 +20,9 @@ class Linux implements IOperatingSystem {
 	private const AF_INET = 2;
 	private const AF_INET6 = 10;
 
+	/** Mount point of both the cgroup v2 unified hierarchy and the v1 controllers. */
+	private const CGROUP_ROOT = '/sys/fs/cgroup';
+
 	#[\Override]
 	public function supported(): bool {
 		return true;
@@ -94,7 +97,146 @@ class Linux implements IOperatingSystem {
 			}
 		}
 
+		$this->applyCgroupMemory($data);
+
 		return $data;
+	}
+
+	/**
+	 * A container still sees the host's /proc/meminfo, so a memory limited
+	 * cgroup would be reported as if the whole machine were available to
+	 * Nextcloud. Where a cgroup limits us further, report that instead.
+	 *
+	 * Tries the cgroup v2 unified hierarchy first and falls back to v1.
+	 */
+	private function applyCgroupMemory(Memory $data): void {
+		if ($this->applyCgroupV2Memory($data)) {
+			return;
+		}
+
+		$this->applyCgroupV1Memory($data);
+	}
+
+	/**
+	 * @return bool whether a limit was found and applied
+	 */
+	private function applyCgroupV2Memory(Memory $data): bool {
+		$limit = $this->readCgroupBytes(self::CGROUP_ROOT . '/memory.max');
+		if ($limit === null || !$this->isConstrainingLimit($limit, $data->getMemTotal())) {
+			return false;
+		}
+
+		$current = $this->readCgroupBytes(self::CGROUP_ROOT . '/memory.current');
+		if ($current === null) {
+			return false;
+		}
+
+		$cache = $this->readCgroupStat(self::CGROUP_ROOT . '/memory.stat', 'inactive_file') ?? 0;
+		$this->setCgroupMemory($data, $limit, $current, $cache);
+
+		$swapLimit = $this->readCgroupBytes(self::CGROUP_ROOT . '/memory.swap.max');
+		$swapCurrent = $this->readCgroupBytes(self::CGROUP_ROOT . '/memory.swap.current');
+		if ($swapLimit !== null && $swapCurrent !== null) {
+			$data->setSwapTotal($this->bytesToMebibytes($swapLimit));
+			$data->setSwapFree($this->bytesToMebibytes(max(0, $swapLimit - $swapCurrent)));
+		}
+
+		return true;
+	}
+
+	private function applyCgroupV1Memory(Memory $data): void {
+		$root = self::CGROUP_ROOT . '/memory';
+
+		$limit = $this->readCgroupBytes($root . '/memory.limit_in_bytes');
+		if ($limit === null || !$this->isConstrainingLimit($limit, $data->getMemTotal())) {
+			return;
+		}
+
+		$current = $this->readCgroupBytes($root . '/memory.usage_in_bytes');
+		if ($current === null) {
+			return;
+		}
+
+		$cache = $this->readCgroupStat($root . '/memory.stat', 'total_inactive_file') ?? 0;
+		$this->setCgroupMemory($data, $limit, $current, $cache);
+
+		// memsw accounts memory and swap together, so the swap share is whatever
+		// is left once the memory limit is taken off.
+		$memswLimit = $this->readCgroupBytes($root . '/memory.memsw.limit_in_bytes');
+		$memswUsage = $this->readCgroupBytes($root . '/memory.memsw.usage_in_bytes');
+		if ($memswLimit !== null && $memswUsage !== null && $memswLimit > $limit) {
+			$swapTotal = $memswLimit - $limit;
+			$swapUsed = max(0, $memswUsage - $current);
+			$data->setSwapTotal($this->bytesToMebibytes($swapTotal));
+			$data->setSwapFree($this->bytesToMebibytes(max(0, $swapTotal - $swapUsed)));
+		}
+	}
+
+	/**
+	 * Page cache is reclaimable, so it counts towards available memory the same
+	 * way MemAvailable accounts for it in /proc/meminfo, while MemFree does not.
+	 */
+	private function setCgroupMemory(Memory $data, int $limit, int $current, int $cache): void {
+		$used = max(0, $current - $cache);
+
+		$data->setMemTotal($this->bytesToMebibytes($limit));
+		$data->setMemFree($this->bytesToMebibytes(max(0, $limit - $current)));
+		$data->setMemAvailable($this->bytesToMebibytes(max(0, $limit - $used)));
+	}
+
+	/**
+	 * A cgroup without a memory limit reports "max" on v2 and a value near
+	 * PHP_INT_MAX on v1. Either way a limit that is not below the host's memory
+	 * adds nothing to what /proc/meminfo has already told us.
+	 */
+	private function isConstrainingLimit(int $limitBytes, int $hostTotal): bool {
+		if ($hostTotal <= 0) {
+			// The host total is unknown, so the cgroup is the better source.
+			return true;
+		}
+
+		return $limitBytes < $hostTotal * 1024 * 1024;
+	}
+
+	/**
+	 * Read a cgroup file holding a single byte count.
+	 *
+	 * @return int|null null when the file is missing or holds no plain number,
+	 *                  which is how cgroup v2 spells "no limit" ("max").
+	 */
+	private function readCgroupBytes(string $filename): ?int {
+		try {
+			$value = $this->readContent($filename);
+		} catch (RuntimeException) {
+			return null;
+		}
+
+		if (preg_match('/^\d+$/', $value) !== 1) {
+			return null;
+		}
+
+		return (int)$value;
+	}
+
+	/**
+	 * Read a single counter out of a cgroup memory.stat file.
+	 */
+	private function readCgroupStat(string $filename, string $key): ?int {
+		try {
+			$stat = $this->readContent($filename);
+		} catch (RuntimeException) {
+			return null;
+		}
+
+		if (preg_match('/^' . preg_quote($key, '/') . ' (\d+)$/m', $stat, $matches) !== 1) {
+			return null;
+		}
+
+		return (int)$matches[1];
+	}
+
+	private function bytesToMebibytes(int $bytes): int {
+		return intdiv($bytes, 1024 * 1024);
 	}
 
 	#[\Override]
