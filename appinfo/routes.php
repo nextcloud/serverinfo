@@ -22,6 +22,11 @@ return [
 		['name' => 'page#update', 'url' => '/update', 'verb' => 'GET'],
 		['name' => 'page#periodic', 'url' => '/periodic', 'verb' => 'GET'],
 		['name' => 'page#phpinfo', 'url' => '/phpinfo', 'verb' => 'GET'],
+		['name' => 'database#check', 'url' => '/database/check', 'verb' => 'GET'],
+		['name' => 'database#live', 'url' => '/database/live', 'verb' => 'GET'],
+		['name' => 'database#settings', 'url' => '/database/settings', 'verb' => 'GET'],
+		['name' => 'database#updateSettings', 'url' => '/database/settings', 'verb' => 'PUT'],
+		['name' => 'database#testConnection', 'url' => '/database/test-connection', 'verb' => 'POST'],
 	],
 	'ocs' => [
 		['name' => 'api#info', 'url' => '/api/v1/info', 'verb' => 'GET'],

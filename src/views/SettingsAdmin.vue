@@ -33,6 +33,7 @@
 			:staticError="staticError"
 			:liveData="liveData"
 			:tick="tick" />
+		<DatabaseView v-show="view === 'database'" :active="view === 'database'" />
 		<BackgroundJobsView
 			v-show="view === 'background-jobs'"
 			:periodicData="periodicData" />
@@ -48,6 +49,7 @@ import NcButton from '@nextcloud/vue/components/NcButton'
 import NcNoteCard from '@nextcloud/vue/components/NcNoteCard'
 import SettingsNavigation from '../components/SettingsNavigation.vue'
 import BackgroundJobsView from './BackgroundJobsView.vue'
+import DatabaseView from './DatabaseView.vue'
 import StatusView from './StatusView.vue'
 import { useLiveData } from '../composables/useLiveData.ts'
 import { useStaticData } from '../composables/useStaticData.ts'
