@@ -6,7 +6,7 @@
 	<SectionHeading :icon="LanguagePhp" :title="t('serverinfo', 'PHP')" />
 	<div class="row row--tiles">
 		<StatTile :label="t('serverinfo', 'Version')" :value="php.version" />
-		<StatTile :label="t('serverinfo', 'Memory limit')" :value="formatBytes(php.memoryLimit)" />
+		<StatTile :label="t('serverinfo', 'Memory limit')" :value="memoryLimitText" />
 	</div>
 	<div class="server-info-table">
 		<table>
@@ -14,7 +14,13 @@
 				<tr>
 					<td>{{ t('serverinfo', 'Max execution time:') }}</td>
 					<td class="info">
-						{{ php.maxExecutionTime }} {{ t('serverinfo', 'seconds') }}
+						<template v-if="php.maxExecutionTime === 0">
+							<!-- TRANSLATORS: Value shown when PHP's max_execution_time is 0, which means no limit -->
+							{{ t('serverinfo', 'Unlimited') }}
+						</template>
+						<template v-else>
+							{{ php.maxExecutionTime }} {{ t('serverinfo', 'seconds') }}
+						</template>
 					</td>
 				</tr>
 				<tr>
@@ -187,6 +193,13 @@ const props = defineProps<{
 	phpinfo: boolean
 	phpinfoUrl: string
 }>()
+
+// memory_limit = -1 means "no limit" in PHP, not a size; formatBytes would
+// otherwise render it as a value.
+const memoryLimitText = computed(() => props.php.memoryLimit < 0
+	// TRANSLATORS: Value of the "Memory limit" tile when PHP has no memory limit set
+	? t('serverinfo', 'Unlimited')
+	: formatBytes(props.php.memoryLimit))
 
 const showExtensions = ref(false)
 

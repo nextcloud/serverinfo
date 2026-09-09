@@ -29,7 +29,7 @@ class LinuxTest extends TestCase {
 			->disableOriginalClone()
 			->disableArgumentCloning()
 			->disallowMockingUnknownTypes()
-			->onlyMethods(['readContent', 'executeCommand', 'getNetInterfaces'])
+			->onlyMethods(['readContent', 'executeCommand', 'getNetInterfaces', 'getMemoryNodes'])
 			->getMock();
 	}
 
@@ -238,7 +238,9 @@ class LinuxTest extends TestCase {
 			->with('/proc/cpuinfo')
 			->willThrowException(new RuntimeException('Unable to read: "/proc/cpuinfo"'));
 
-		$this->assertEquals('Unknown Processor', $this->os->getCPU()->getName());
+		$cpu = $this->os->getCPU();
+		$this->assertEquals('Unknown Processor', $cpu->getName());
+		$this->assertEquals(-1, $cpu->getThreads(), 'an unknown thread count must not be reported as 1');
 	}
 
 	public function testGetCpuInvalidData(): void {
@@ -246,7 +248,117 @@ class LinuxTest extends TestCase {
 			->with('/proc/cpuinfo')
 			->willReturn('invalid_data');
 
-		$this->assertEquals('Unknown Processor', $this->os->getCPU()->getName());
+		$cpu = $this->os->getCPU();
+		$this->assertEquals('Unknown Processor', $cpu->getName());
+		$this->assertEquals(-1, $cpu->getThreads(), 'an unknown thread count must not be reported as 1');
+	}
+
+	public function testGetCpuOnAarch64HasNoModelNameButStillCountsCores(): void {
+		$this->os->method('readContent')
+			->with('/proc/cpuinfo')
+			->willReturn(file_get_contents(__DIR__ . '/../data/linux_cpuinfo_aarch64'));
+
+		$cpu = $this->os->getCPU();
+
+		$this->assertEquals('Unknown Processor', $cpu->getName());
+		// No "model name" line on aarch64, but the processors are still listed.
+		$this->assertEquals(2, $cpu->getThreads());
+	}
+
+	public function testGetCpuFallsBackToNprocWhenProcIsHidden(): void {
+		$this->os->method('readContent')
+			->with('/proc/cpuinfo')
+			->willThrowException(new RuntimeException('Unable to read: "/proc/cpuinfo"'));
+		$this->os->method('executeCommand')
+			->with('nproc')
+			->willReturn("2\n");
+
+		$cpu = $this->os->getCPU();
+
+		$this->assertEquals('Unknown Processor', $cpu->getName());
+		$this->assertEquals(2, $cpu->getThreads());
+	}
+
+	public function testGetMemoryFallsBackToFreeWhenProcIsHidden(): void {
+		$this->os->method('readContent')
+			->with('/proc/meminfo')
+			->willThrowException(new RuntimeException('Unable to read: "/proc/meminfo"'));
+		$this->os->method('executeCommand')
+			->with('free -k')
+			->willReturn(file_get_contents(__DIR__ . '/../data/linux_free_k'));
+
+		$memory = $this->os->getMemory();
+
+		$this->assertEquals(3378, $memory->getMemTotal());
+		$this->assertEquals(685, $memory->getMemFree());
+		$this->assertEquals(1438, $memory->getMemAvailable());
+		$this->assertEquals(1023, $memory->getSwapTotal());
+		$this->assertEquals(767, $memory->getSwapFree());
+	}
+
+	public function testGetMemoryPrefersSysOverForkingFree(): void {
+		$this->os->method('readContent')
+			->willReturnCallback(static function (string $filename): string {
+				if ($filename === '/sys/devices/system/node/node0/meminfo') {
+					return (string)file_get_contents(__DIR__ . '/../data/linux_sys_node_meminfo');
+				}
+
+				throw new RuntimeException('Unable to read: "' . $filename . '"');
+			});
+		// free(1) reads /proc/meminfo itself, so where that file is hidden it is
+		// bound to fail: /sys settles the question without paying for the fork.
+		$this->os->expects($this->never())->method('executeCommand');
+		$this->os->method('getMemoryNodes')
+			->willReturn(['/sys/devices/system/node/node0/meminfo']);
+
+		$memory = $this->os->getMemory();
+
+		$this->assertEquals(3378, $memory->getMemTotal());
+		$this->assertEquals(668, $memory->getMemFree());
+		// MemFree + Inactive(file) + SReclaimable, the kernel's own recipe for
+		// MemAvailable, which /sys does not publish per node.
+		$this->assertEquals(1529, $memory->getMemAvailable());
+		// Nor does it publish swap totals.
+		$this->assertEquals(-1, $memory->getSwapTotal());
+	}
+
+	public function testGetMemoryStaysUnknownWhenBothSourcesFail(): void {
+		$this->os->method('readContent')
+			->with('/proc/meminfo')
+			->willThrowException(new RuntimeException('Unable to read: "/proc/meminfo"'));
+		$this->os->method('executeCommand')
+			->with('free -k')
+			->willThrowException(new RuntimeException('shell_exec unavailable'));
+
+		$this->assertEquals(new Memory(), $this->os->getMemory());
+	}
+
+	public function testGetTimeDoesNotFork(): void {
+		// date(1) used to be executed here on every poll.
+		$this->os->expects($this->never())->method('executeCommand');
+
+		$this->assertMatchesRegularExpression(
+			'/^[A-Z][a-z]{2} [A-Z][a-z]{2} \d{1,2} \d{2}:\d{2}:\d{2} \S+ \d{4}$/',
+			$this->os->getTime(),
+		);
+	}
+
+	public function testSampleUptimeReadsStarttimeOfAFreshProcess(): void {
+		// Field 22 of /proc/self/stat, in clock ticks since boot. The command name
+		// sits in brackets and can contain spaces, hence the odd-looking prefix.
+		$this->os->method('executeCommand')
+			->with('cat /proc/self/stat')
+			->willReturn('302652 (cat) R 302651 284137 284137 0 -1 4194304 396 0 0 0 0 0 0 0 20 0 1 0 32618365 3close');
+
+		$this->assertEquals(326183, $this->os->sampleUptime());
+	}
+
+	public function testSampleUptimeWithoutShell(): void {
+		$this->os->method('executeCommand')
+			->with('cat /proc/self/stat')
+			->willThrowException(new RuntimeException('shell_exec unavailable'));
+
+		$this->assertEquals(-1, $this->os->sampleUptime());
 	}
 
 	public function testGetUptime(): void {

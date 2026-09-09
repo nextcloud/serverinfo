@@ -17,12 +17,11 @@ class LiveData {
 	}
 
 	public function getData(): array {
-		$cpu = $this->os->getCPU();
 		$memory = $this->os->getMemory();
 
 		return [
 			'cpu' => [
-				'load' => $cpu->getAverageLoad(),
+				'load' => $this->os->getAverageLoad(),
 			],
 			'memory' => [
 				'total' => $memory->getMemTotal(),
