@@ -15,6 +15,12 @@
 				<Monitor :size="20" />
 			</template>
 		</NcRadioGroupButton>
+		<!-- TRANSLATORS: Name of the page showing the health checks for the database, noun -->
+		<NcRadioGroupButton value="database" :label="t('serverinfo', 'Database')">
+			<template #icon>
+				<Database :size="20" />
+			</template>
+		</NcRadioGroupButton>
 		<!-- TRANSLATORS: Name of the page showing how the server's background jobs are doing, noun -->
 		<NcRadioGroupButton value="background-jobs" :label="t('serverinfo', 'Background jobs')">
 			<template #icon>
@@ -30,6 +36,7 @@ import type { SettingsView } from '../types.ts'
 import { t } from '@nextcloud/l10n'
 import NcRadioGroup from '@nextcloud/vue/components/NcRadioGroup'
 import NcRadioGroupButton from '@nextcloud/vue/components/NcRadioGroupButton'
+import Database from 'vue-material-design-icons/Database.vue'
 import Monitor from 'vue-material-design-icons/Monitor.vue'
 import Update from 'vue-material-design-icons/Update.vue'
 
