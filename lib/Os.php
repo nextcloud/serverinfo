@@ -8,20 +8,39 @@ declare(strict_types=1);
 
 namespace OCA\ServerInfo;
 
+use OCA\ServerInfo\Config\ConfigLexicon;
 use OCA\ServerInfo\OperatingSystems\Dummy;
 use OCA\ServerInfo\OperatingSystems\FreeBSD;
 use OCA\ServerInfo\OperatingSystems\IOperatingSystem;
 use OCA\ServerInfo\OperatingSystems\Linux;
 use OCA\ServerInfo\Resources\CPU;
 use OCA\ServerInfo\Resources\Memory;
+use OCP\AppFramework\Services\IAppConfig;
 use OCP\IConfig;
 
 class Os implements IOperatingSystem {
+	/** How long a measured boot time is trusted before it is checked again. */
+	private const BOOT_TIME_TTL = 60;
+
 	private IOperatingSystem $backend;
 
-	public function __construct(IConfig $config) {
+	public function __construct(
+		IConfig $config,
+		private IAppConfig $appConfig,
+	) {
 		$restrictedMode = $config->getAppValue('serverinfo', 'restricted_mode', 'no') === 'yes';
 		$this->backend = $this->getBackend($restrictedMode ? 'Dummy' : PHP_OS);
+	}
+
+	/**
+	 * The load average comes from sys_getloadavg() and needs nothing that
+	 * getCPU() collects, which is why it does not go through it: getCPU() parses
+	 * /proc/cpuinfo, or forks nproc, and this runs on a two-second poll.
+	 *
+	 * @return array{0: float, 1: float, 2: float}|false
+	 */
+	public function getAverageLoad(): array|false {
+		return sys_getloadavg();
 	}
 
 	#[\Override]
@@ -57,7 +76,45 @@ class Os implements IOperatingSystem {
 
 	#[\Override]
 	public function getUptime(): int {
-		return $this->backend->getUptime();
+		$uptime = $this->backend->getUptime();
+		if ($uptime >= 0) {
+			return $uptime;
+		}
+
+		return $this->getSampledUptime();
+	}
+
+	#[\Override]
+	public function sampleUptime(): int {
+		return $this->backend->sampleUptime();
+	}
+
+	/**
+	 * Sampling the uptime costs a process fork, and this is reached from a
+	 * two-second poll, so the boot time it implies is remembered and only
+	 * re-measured once a minute. In between the answer is still exact — it is
+	 * wall-clock arithmetic on a constant — except for up to a minute after a
+	 * reboot.
+	 */
+	private function getSampledUptime(): int {
+		$now = time();
+		$bootTime = $this->appConfig->getAppValueInt(ConfigLexicon::CACHED_BOOT_TIME);
+		$sampledAt = $this->appConfig->getAppValueInt(ConfigLexicon::CACHED_BOOT_TIME_SAMPLED_AT);
+
+		if ($bootTime > 0 && $now - $sampledAt < self::BOOT_TIME_TTL) {
+			return max(0, $now - $bootTime);
+		}
+
+		$uptime = $this->backend->sampleUptime();
+		if ($uptime < 0) {
+			// Nothing new to learn, so keep answering from what is remembered.
+			return $bootTime > 0 ? max(0, $now - $bootTime) : -1;
+		}
+
+		$this->appConfig->setAppValueInt(ConfigLexicon::CACHED_BOOT_TIME, $now - $uptime);
+		$this->appConfig->setAppValueInt(ConfigLexicon::CACHED_BOOT_TIME_SAMPLED_AT, $now);
+
+		return $uptime;
 	}
 
 	#[\Override]

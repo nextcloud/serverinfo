@@ -23,7 +23,7 @@ class DatabaseStatistics {
 	}
 
 	/**
-	 * @return array{type: string, version: string, size: string}
+	 * @return array{type: string, version: string, size: int}
 	 */
 	public function getDatabaseStatistics(): array {
 		return [
@@ -67,7 +67,10 @@ class DatabaseStatistics {
 	 * @copyright (c) phpBB Limited <https://www.phpbb.com>
 	 * @license GNU General Public License, version 2 (GPL-2.0)
 	 */
-	protected function databaseSize(): string {
+	/**
+	 * @return int size in bytes, or -1 when it cannot be determined
+	 */
+	protected function databaseSize(): int {
 		$database_size = false;
 		// This code is heavily influenced by a similar routine in phpMyAdmin 2.2.0
 		switch ($this->config->getSystemValue('dbtype')) {
@@ -110,7 +113,9 @@ class DatabaseStatistics {
 				$result->closeCursor();
 				break;
 		}
-		return ($database_size !== false) ? (string)$database_size : 'N/A';
+		// -1 rather than the string 'N/A': the size is consumed as a number, and a
+		// string reaches the UI as "NaN B".
+		return ($database_size !== false) ? (int)$database_size : -1;
 	}
 
 	/**

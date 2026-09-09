@@ -11,6 +11,10 @@ import { t } from '@nextcloud/l10n'
  * @param mb size in megabytes
  */
 export function formatMegabytes(mb: number): string {
+	if (!Number.isFinite(mb) || mb < 0) {
+		return t('serverinfo', 'Unknown')
+	}
+
 	const units = ['MB', 'GB', 'TB', 'PB', 'EB']
 	let value = mb
 	let i = 0
@@ -46,8 +50,15 @@ export function withAlpha(color: string, alpha: number): string {
  * @param bytes size in bytes
  */
 export function formatBytes(bytes: number): string {
+	// The API reports "could not be determined" as -1. Taking the absolute value
+	// used to render that as a confident "1.0 B".
+	if (!Number.isFinite(bytes) || bytes < 0) {
+		// TRANSLATORS: Shown in place of a size the server could not determine
+		return t('serverinfo', 'Unknown')
+	}
+
 	const units = ['B', 'KB', 'MB', 'GB', 'TB', 'PB']
-	let value = Math.abs(bytes)
+	let value = bytes
 	let i = 0
 	while (value >= 1024 && i < units.length - 1) {
 		value /= 1024
