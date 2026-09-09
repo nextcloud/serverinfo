@@ -23,7 +23,7 @@
 <script setup lang="ts">
 import type { LiveData, PeriodicData, SettingsView } from '../types.ts'
 
-import { ref, watch } from 'vue'
+import { onUnmounted, ref, watch } from 'vue'
 import SettingsNavigation from '../components/SettingsNavigation.vue'
 import BackgroundJobsView from './BackgroundJobsView.vue'
 import DatabaseView from './DatabaseView.vue'
@@ -54,8 +54,18 @@ watch(view, (current) => {
 	window.history.replaceState(null, '', `#${current}`)
 })
 
-window.addEventListener('hashchange', () => {
+/**
+ * Keeps the page in step with the fragment when the browser changes it, for
+ * instance on back/forward. Named so it can be removed again.
+ */
+function onHashChange() {
 	view.value = viewFromHash()
+}
+
+window.addEventListener('hashchange', onHashChange)
+
+onUnmounted(() => {
+	window.removeEventListener('hashchange', onHashChange)
 })
 
 const { data: staticData } = useStaticData()
