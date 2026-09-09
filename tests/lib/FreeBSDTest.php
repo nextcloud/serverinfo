@@ -38,6 +38,18 @@ class FreeBSDTest extends TestCase {
 			->getMock();
 	}
 
+	public function testGetCpuNoData(): void {
+		$this->os->method('executeCommand')
+			->willThrowException(new RuntimeException('No output for command'));
+
+		$cpu = $this->os->getCPU();
+
+		$this->assertEquals('Unknown Processor', $cpu->getName());
+		// -1, not 1: the thread count divides the load average, so claiming a
+		// single core reports an eight-core host as 800% busy.
+		$this->assertEquals(-1, $cpu->getThreads());
+	}
+
 	public function testGetMemory(): void {
 		$this->os->method('executeCommand')
 			->willReturnMap([

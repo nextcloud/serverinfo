@@ -20,6 +20,14 @@ interface IOperatingSystem {
 
 	public function getCPU(): CPU;
 
+	/**
+	 * Uptime obtained by a means that may cost a process fork, used only when
+	 * getUptime() cannot answer.
+	 *
+	 * @return int uptime in seconds, or -1 when it cannot be determined
+	 */
+	public function sampleUptime(): int;
+
 	public function getMemory(): Memory;
 
 	/**

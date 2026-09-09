@@ -30,12 +30,12 @@ class Linux implements IOperatingSystem {
 
 	#[\Override]
 	public function getCPU(): CPU {
-		$default = new CPU('Unknown Processor', 1);
-
 		try {
 			$cpuinfo = $this->readContent('/proc/cpuinfo');
 		} catch (RuntimeException) {
-			return $default;
+			// -1 threads means "unknown"; a fabricated 1 would be used as the
+			// divisor for the load average and turn a 2-core box into "800 %".
+			return new CPU('Unknown Processor', $this->countProcessors());
 		}
 
 		$matches = [];
@@ -48,12 +48,128 @@ class Linux implements IOperatingSystem {
 			$pattern = '/model name\s:\s(.+)/';
 		}
 
-		$result = preg_match_all($pattern, $cpuinfo, $matches);
-		if ($result === 0 || $result === false) {
-			return $default;
+		// Counted separately from the model name: aarch64 and s390x list every
+		// processor but carry no "model name" line at all.
+		$threads = substr_count($cpuinfo, "processor\t");
+		if ($threads < 1) {
+			$threads = $this->countProcessors();
 		}
 
-		return new CPU($matches[1][0], substr_count($cpuinfo, "processor\t"));
+		$result = preg_match_all($pattern, $cpuinfo, $matches);
+		if ($result === 0 || $result === false) {
+			return new CPU('Unknown Processor', $threads);
+		}
+
+		return new CPU($matches[1][0], $threads);
+	}
+
+	/**
+	 * Read memory from free(1) when /proc/meminfo is out of reach.
+	 *
+	 * {@see countProcessors()} for why a web server may be able to run commands
+	 * but not read /proc.
+	 */
+	private function getMemoryFromFree(): Memory {
+		$data = new Memory();
+
+		try {
+			$output = $this->executeCommand('free -k');
+		} catch (RuntimeException) {
+			return $data;
+		}
+
+		// total used free shared buff/cache available. The last three columns are
+		// missing on older procps, so only the first three are required.
+		if (preg_match('/^Mem:\s+(\d+)\s+(\d+)\s+(\d+)(?:\s+\d+\s+\d+\s+(\d+))?/m', $output, $matches) === 1) {
+			$data->setMemTotal((int)((int)$matches[1] / 1024));
+			$data->setMemFree((int)((int)$matches[3] / 1024));
+			// Without an "available" column, free is the closest honest answer.
+			$data->setMemAvailable((int)((int)($matches[4] ?? $matches[3]) / 1024));
+		}
+
+		if (preg_match('/^Swap:\s+(\d+)\s+(\d+)\s+(\d+)/m', $output, $matches) === 1) {
+			$data->setSwapTotal((int)((int)$matches[1] / 1024));
+			$data->setSwapFree((int)((int)$matches[3] / 1024));
+		}
+
+		return $data;
+	}
+
+	/**
+	 * Read memory from the per-NUMA-node files under /sys.
+	 *
+	 * ProcSubset only hides /proc, so these survive on a web server that cannot
+	 * read /proc/meminfo. They carry no swap totals and no MemAvailable, so swap
+	 * stays unknown and available is approximated the way the kernel does it:
+	 * free memory plus the page cache and slab it can reclaim.
+	 */
+	private function getMemoryFromSys(): Memory {
+		$data = new Memory();
+
+		$total = 0;
+		$free = 0;
+		$reclaimable = 0;
+		$found = false;
+
+		foreach ($this->getMemoryNodes() as $node) {
+			try {
+				$content = $this->readContent($node);
+			} catch (RuntimeException) {
+				continue;
+			}
+
+			$found = true;
+			$total += $this->readNodeMemValue($content, 'MemTotal');
+			$free += $this->readNodeMemValue($content, 'MemFree');
+			$reclaimable += $this->readNodeMemValue($content, 'Inactive(file)')
+				+ $this->readNodeMemValue($content, 'SReclaimable');
+		}
+
+		if (!$found || $total <= 0) {
+			return $data;
+		}
+
+		$data->setMemTotal((int)($total / 1024));
+		$data->setMemFree((int)($free / 1024));
+		$data->setMemAvailable((int)(($free + $reclaimable) / 1024));
+
+		return $data;
+	}
+
+	/**
+	 * @return string[] paths of the per-node meminfo files
+	 */
+	protected function getMemoryNodes(): array {
+		return glob('/sys/devices/system/node/node*/meminfo') ?: [];
+	}
+
+	/**
+	 * @return int the value in kB, or 0 when the key is absent
+	 */
+	private function readNodeMemValue(string $content, string $key): int {
+		$pattern = '/^Node \d+ ' . preg_quote($key, '/') . ':\s+(\d+) kB$/m';
+
+		return preg_match($pattern, $content, $matches) === 1 ? (int)$matches[1] : 0;
+	}
+
+	/**
+	 * Ask the system for its processor count.
+	 *
+	 * Debian's and Ubuntu's apache2 unit ships ProcSubset=pid, which hides
+	 * everything but per-process directories in /proc from the web server while
+	 * leaving commands runnable. nproc then still knows what /proc/cpuinfo
+	 * cannot tell us.
+	 *
+	 * @return int the number of processors, or -1 when it cannot be determined
+	 */
+	private function countProcessors(): int {
+		try {
+			$output = trim($this->executeCommand('nproc'));
+		} catch (RuntimeException) {
+			return -1;
+		}
+
+		return preg_match('/^\d+$/', $output) === 1 ? (int)$output : -1;
 	}
 
 	#[\Override]
@@ -63,7 +179,13 @@ class Linux implements IOperatingSystem {
 		try {
 			$meminfo = $this->readContent('/proc/meminfo');
 		} catch (RuntimeException $e) {
-			return $data;
+			// /sys is tried first because it settles which situation we are in
+			// without paying for a fork: where it can be read, /proc is hidden by
+			// ProcSubset and free(1) — which reads /proc/meminfo itself — is bound
+			// to fail as well. Where it cannot (open_basedir), free still can.
+			$fromSys = $this->getMemoryFromSys();
+
+			return $fromSys->getMemTotal() > 0 ? $fromSys : $this->getMemoryFromFree();
 		}
 
 		$matches = [];
@@ -241,11 +363,23 @@ class Linux implements IOperatingSystem {
 
 	#[\Override]
 	public function getTime(): string {
-		try {
-			return $this->executeCommand('date');
-		} catch (RuntimeException $e) {
-			return '';
+		// date(1) used to be forked here on every two-second poll for something
+		// PHP already knows. Nextcloud runs on UTC internally, so the system zone
+		// is read from /etc/localtime to keep reporting the server's own clock.
+		return (new \DateTimeImmutable('now', $this->getSystemTimeZone()))->format('D M j H:i:s T Y');
+	}
+
+	private function getSystemTimeZone(): \DateTimeZone {
+		$link = @readlink('/etc/localtime');
+		if (is_string($link) && preg_match('#/zoneinfo/(.+)$#', $link, $matches) === 1 && $matches[1] !== '') {
+			try {
+				return new \DateTimeZone($matches[1]);
+			} catch (\Exception) {
+				// fall through to the configured default
+			}
 		}
+
+		return new \DateTimeZone(date_default_timezone_get());
 	}
 
 	#[\Override]
@@ -261,6 +395,38 @@ class Linux implements IOperatingSystem {
 		[$uptimeInSeconds,] = array_map('intval', explode(' ', $uptime));
 
 		return $uptimeInSeconds;
+	}
+
+	/**
+	 * A process that has only just started carries the system uptime in its own
+	 * /proc/<pid>/stat, and a process may always read its own entry — which is
+	 * what makes this work where /proc/uptime itself is hidden. Field 22 is the
+	 * start time in clock ticks since boot, and USER_HZ is fixed at 100 for the
+	 * /proc ABI regardless of the kernel's own HZ.
+	 *
+	 * Costs a fork, so {@see Os::getUptime()} only asks occasionally.
+	 */
+	#[\Override]
+	public function sampleUptime(): int {
+		try {
+			$stat = $this->executeCommand('cat /proc/self/stat');
+		} catch (RuntimeException) {
+			return -1;
+		}
+
+		// The second field is the executable name in brackets and may itself
+		// contain spaces, so the fields are counted from the closing bracket.
+		$close = strrpos($stat, ')');
+		if ($close === false) {
+			return -1;
+		}
+
+		$fields = preg_split('/\s+/', trim(substr($stat, $close + 2))) ?: [];
+		if (!isset($fields[19]) || preg_match('/^\d+$/', $fields[19]) !== 1) {
+			return -1;
+		}
+
+		return intdiv((int)$fields[19], 100);
 	}
 
 	#[\Override]

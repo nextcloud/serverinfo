@@ -16,7 +16,9 @@
 				<tr>
 					<td>{{ t('serverinfo', 'CPU:') }}</td>
 					<td class="info">
-						{{ t('serverinfo', '{name} ({threads} threads)', { name: cpu.name, threads: cpu.threads }) }}
+						{{ cpu.threads > 0
+							? t('serverinfo', '{name} ({threads} threads)', { name: cpu.name, threads: cpu.threads })
+							: cpu.name }}
 					</td>
 				</tr>
 				<tr>

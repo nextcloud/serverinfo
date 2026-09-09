@@ -5,7 +5,11 @@
 <template>
 	<!-- TRANSLATORS: Section heading above the progress bars for CPU, memory and swap usage, noun -->
 	<SectionHeading :icon="Gauge" :title="t('serverinfo', 'Resource usage')" />
-	<div class="resource-usage">
+	<p v-if="rows.length === 0">
+		<!-- TRANSLATORS: Shown instead of the usage bars when the server reports no CPU or memory figures at all -->
+		<em>{{ t('serverinfo', 'Resource usage not available') }}</em>
+	</p>
+	<div v-else class="resource-usage">
 		<UsageMeterBar v-for="row in rows" :key="row.label" v-bind="row" />
 	</div>
 </template>
@@ -21,10 +25,10 @@ import { formatMegabytes } from '../utils.ts'
 const props = defineProps<{
 	cpuload: number[] | false
 	cpunum: number
-	memTotal: number | 'N/A'
-	memFree: number | 'N/A'
-	swapTotal: number | 'N/A'
-	swapFree: number | 'N/A'
+	memTotal: number
+	memFree: number
+	swapTotal: number
+	swapFree: number
 }>()
 
 /**
@@ -35,8 +39,9 @@ const props = defineProps<{
  * @param used amount in use, in megabytes
  * @param total amount available, in megabytes
  */
-function memoryRow(label: string, used: number | 'N/A', total: number | 'N/A') {
-	if (used === 'N/A' || total === 'N/A' || total <= 0) {
+function memoryRow(label: string, used: number, total: number) {
+	// -1 is how the API reports a figure it could not determine.
+	if (total <= 0 || used < 0) {
 		return null
 	}
 	return {
@@ -67,13 +72,13 @@ const rows = computed(() => {
 		memoryRow(
 			// TRANSLATORS: Label of the usage bar showing RAM consumption
 			t('serverinfo', 'Memory'),
-			memTotal === 'N/A' || props.memFree === 'N/A' ? 'N/A' : memTotal - props.memFree,
+			props.memFree < 0 ? -1 : memTotal - props.memFree,
 			memTotal,
 		),
 		memoryRow(
 			// TRANSLATORS: Label of the usage bar showing swap space consumption
 			t('serverinfo', 'Swap'),
-			swapTotal === 'N/A' || props.swapFree === 'N/A' ? 'N/A' : swapTotal - props.swapFree,
+			props.swapFree < 0 ? -1 : swapTotal - props.swapFree,
 			swapTotal,
 		),
 	].filter((row) => row !== null)

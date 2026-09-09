@@ -30,9 +30,15 @@ class FreeBSD implements IOperatingSystem {
 			$cores = (int)$this->executeCommand('/sbin/sysctl -n kern.smp.cpus');
 		} catch (RuntimeException) {
 			$name = 'Unknown Processor';
-			$cores = 1;
+			// -1 marks the count as unknown rather than claiming a single core.
+			$cores = -1;
 		}
 		return new CPU($name, $cores);
+	}
+
+	#[\Override]
+	public function sampleUptime(): int {
+		return -1;
 	}
 
 	#[\Override]
