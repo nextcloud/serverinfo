@@ -15,10 +15,101 @@
       <code><![CDATA[ApiController]]></code>
     </UnusedClass>
   </file>
+  <file src="lib/Controller/DatabaseController.php">
+    <UnusedClass>
+      <code><![CDATA[DatabaseController]]></code>
+    </UnusedClass>
+  </file>
   <file src="lib/Controller/PageController.php">
     <UnusedClass>
       <code><![CDATA[PageController]]></code>
     </UnusedClass>
+  </file>
+  <file src="lib/Database/Advisor.php">
+    <PossiblyUnusedMethod>
+      <code><![CDATA[__construct]]></code>
+    </PossiblyUnusedMethod>
+  </file>
+  <file src="lib/Database/DatabaseProbe.php">
+    <PossiblyUnusedMethod>
+      <code><![CDATA[__construct]]></code>
+      <code><![CDATA[databaseSizeBytes]]></code>
+      <code><![CDATA[detectFlavour]]></code>
+      <code><![CDATA[detectVersion]]></code>
+    </PossiblyUnusedMethod>
+  </file>
+  <file src="lib/Database/ExpressionEvaluator.php">
+    <PossiblyUnusedMethod>
+      <code><![CDATA[__construct]]></code>
+    </PossiblyUnusedMethod>
+  </file>
+  <file src="lib/Database/LiveMetrics.php">
+    <PossiblyUnusedMethod>
+      <code><![CDATA[__construct]]></code>
+    </PossiblyUnusedMethod>
+  </file>
+  <file src="lib/Database/NextcloudSchema.php">
+    <PossiblyUnusedMethod>
+      <code><![CDATA[__construct]]></code>
+    </PossiblyUnusedMethod>
+    <UndefinedClass>
+      <code><![CDATA[$this->connection]]></code>
+      <code><![CDATA[$this->connection]]></code>
+      <code><![CDATA[SchemaWrapper]]></code>
+      <code><![CDATA[SchemaWrapper]]></code>
+      <code><![CDATA[SchemaWrapper]]></code>
+      <code><![CDATA[SchemaWrapper]]></code>
+      <code><![CDATA[private]]></code>
+    </UndefinedClass>
+    <UnusedProperty>
+      <code><![CDATA[$dispatcher]]></code>
+    </UnusedProperty>
+  </file>
+  <file src="lib/Database/RuleSet.php">
+    <PossiblyUnusedMethod>
+      <code><![CDATA[flavour]]></code>
+    </PossiblyUnusedMethod>
+  </file>
+  <file src="lib/Database/RuleSet/Mysql.php">
+    <InvalidOperand>
+      <code><![CDATA[(float)($s->variables['max_connections'] ?? 100) / 4]]></code>
+      <code><![CDATA[(float)($s->variables['max_connections'] ?? 100) / 4]]></code>
+      <code><![CDATA[(float)($s->variables['table_open_cache'] ?? 2000) * 2]]></code>
+    </InvalidOperand>
+    <MissingOverrideAttribute>
+      <code><![CDATA[public function flavour(): string {]]></code>
+      <code><![CDATA[public function rules(): array {]]></code>
+    </MissingOverrideAttribute>
+    <UnusedClosureParam>
+      <code><![CDATA[$s]]></code>
+      <code><![CDATA[$s]]></code>
+      <code><![CDATA[$s]]></code>
+      <code><![CDATA[$s]]></code>
+      <code><![CDATA[$s]]></code>
+      <code><![CDATA[$s]]></code>
+      <code><![CDATA[$s]]></code>
+      <code><![CDATA[$s]]></code>
+      <code><![CDATA[$s]]></code>
+      <code><![CDATA[$s]]></code>
+      <code><![CDATA[$s]]></code>
+      <code><![CDATA[$s]]></code>
+    </UnusedClosureParam>
+  </file>
+  <file src="lib/Database/RuleSet/Postgres.php">
+    <MissingOverrideAttribute>
+      <code><![CDATA[public function flavour(): string {]]></code>
+      <code><![CDATA[public function rules(): array {]]></code>
+    </MissingOverrideAttribute>
+    <UnusedClosureParam>
+      <code><![CDATA[$s]]></code>
+      <code><![CDATA[$s]]></code>
+    </UnusedClosureParam>
+  </file>
+  <file src="lib/Database/Snapshot.php">
+    <PossiblyUnusedMethod>
+      <code><![CDATA[get]]></code>
+      <code><![CDATA[has]]></code>
+    </PossiblyUnusedMethod>
   </file>
   <file src="lib/DatabaseStatistics.php">
     <PossiblyUnusedMethod>
