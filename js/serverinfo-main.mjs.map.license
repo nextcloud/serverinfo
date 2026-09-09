@@ -12,6 +12,7 @@ SPDX-FileCopyrightText: Evan You
 SPDX-FileCopyrightText: GitHub Inc.
 SPDX-FileCopyrightText: Guillaume Chau <guillaume.b.chau@gmail.com>
 SPDX-FileCopyrightText: Jakub Juszczak <jakub@posteo.de>
+SPDX-FileCopyrightText: Jeff Sagal <sagalbot@gmail.com>
 SPDX-FileCopyrightText: Jukka Kurkela
 SPDX-FileCopyrightText: Matt Zabriskie
 SPDX-FileCopyrightText: Nextcloud GmbH and Nextcloud contributors
@@ -27,6 +28,9 @@ This file is generated from multiple sources. Included packages:
 	- license: MIT
 - @floating-ui/dom
 	- version: 1.1.1
+	- license: MIT
+- @floating-ui/dom
+	- version: 1.8.0
 	- license: MIT
 - @floating-ui/utils
 	- version: 0.2.12
@@ -58,6 +62,9 @@ This file is generated from multiple sources. Included packages:
 - @nextcloud/vue
 	- version: 9.9.0
 	- license: AGPL-3.0-or-later
+- @nextcloud/vue-select
+	- version: 4.1.0
+	- license: MIT
 - @vitejs/plugin-vue
 	- version: 6.0.7
 	- license: MIT
