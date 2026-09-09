@@ -23,7 +23,7 @@
 <script setup lang="ts">
 import type { LiveData, PeriodicData, SettingsView } from '../types.ts'
 
-import { ref } from 'vue'
+import { ref, watch } from 'vue'
 import SettingsNavigation from '../components/SettingsNavigation.vue'
 import BackgroundJobsView from './BackgroundJobsView.vue'
 import DatabaseView from './DatabaseView.vue'
@@ -33,7 +33,30 @@ import { useStaticData } from '../composables/useStaticData.ts'
 
 defineOptions({ name: 'ServerInfo' })
 
-const view = ref<SettingsView>('status')
+const VIEWS: SettingsView[] = ['status', 'database', 'background-jobs']
+
+/**
+ * Reads the page out of the URL fragment so that a link can point straight at
+ * one — the setup check on Settings > Overview links to #database. Anything we
+ * do not recognise leaves the default alone rather than showing a blank page.
+ */
+function viewFromHash(): SettingsView {
+	const fromHash = window.location.hash.replace(/^#/, '') as SettingsView
+
+	return VIEWS.includes(fromHash) ? fromHash : 'status'
+}
+
+const view = ref<SettingsView>(viewFromHash())
+
+// replaceState, not a hash assignment: switching pages should not fill the
+// browser's back button with entries inside one settings section.
+watch(view, (current) => {
+	window.history.replaceState(null, '', `#${current}`)
+})
+
+window.addEventListener('hashchange', () => {
+	view.value = viewFromHash()
+})
 
 const { data: staticData } = useStaticData()
 const { data: liveData, tick } = useLiveData<LiveData>('/apps/serverinfo/update')

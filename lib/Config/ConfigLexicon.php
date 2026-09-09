@@ -22,6 +22,7 @@ use OCP\Config\ValueType;
 class ConfigLexicon implements ILexicon {
 	public const CACHED_SLOWEST_JOBS = 'cached_slowest_jobs';
 	public const JOB_INTERVAL_JOB_STATS = 'job_interval_job_stats';
+	public const CACHED_DB_CHECK = 'cached_db_check';
 
 	#[\Override]
 	public function getStrictness(): Strictness {
@@ -44,6 +45,13 @@ class ConfigLexicon implements ILexicon {
 				ValueType::INT,
 				60 * 60 * 6,
 				'How often the background job statistics are recomputed, in seconds',
+			),
+			new Entry(
+				self::CACHED_DB_CHECK,
+				ValueType::ARRAY,
+				[],
+				'Outcome of the last database check run, read by the setup check on Settings > Overview',
+				lazy: true,
 			),
 		];
 	}

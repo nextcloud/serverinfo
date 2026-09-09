@@ -12,6 +12,7 @@ namespace OCA\ServerInfo\Controller;
 use Doctrine\DBAL\DriverManager;
 use OCA\ServerInfo\AppInfo\Application;
 use OCA\ServerInfo\Database\Advisor;
+use OCA\ServerInfo\Database\CheckSummary;
 use OCA\ServerInfo\Database\DatabaseProbe;
 use OCA\ServerInfo\Database\LiveMetrics;
 use OCA\ServerInfo\Database\RuleSet;
@@ -47,6 +48,7 @@ class DatabaseController extends Controller {
 		private DatabaseProbe $probe,
 		private LiveMetrics $liveMetrics,
 		private Advisor $advisor,
+		private CheckSummary $summary,
 		private MysqlRuleSet $mysqlRules,
 		private PostgresRuleSet $postgresRules,
 		private LoggerInterface $logger,
@@ -84,6 +86,8 @@ class DatabaseController extends Controller {
 		}
 
 		if (!$snapshot->isSupported()) {
+			$this->summary->record(false, []);
+
 			return new JSONResponse([
 				'supported' => false,
 				'reason' => 'flavour',
@@ -91,14 +95,20 @@ class DatabaseController extends Controller {
 			]);
 		}
 
-		$results = $this->advisor->run($this->ruleSetFor($snapshot), $snapshot);
+		$results = array_map(
+			static fn ($result) => $result->jsonSerialize(),
+			$this->advisor->run($this->ruleSetFor($snapshot), $snapshot),
+		);
+		// Opening this page is what keeps the Overview's setup check current, so
+		// acting on a finding here clears the warning there without a wait.
+		$this->summary->record(true, $results);
 
 		return new JSONResponse([
 			'supported' => true,
 			'flavour' => $snapshot->flavour,
 			'version' => $snapshot->version,
 			'ranAt' => time(),
-			'results' => array_map(static fn ($result) => $result->jsonSerialize(), $results),
+			'results' => $results,
 		]);
 	}
 
