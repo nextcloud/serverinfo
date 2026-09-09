@@ -19,6 +19,11 @@ import { onUnmounted, ref } from 'vue'
 export function useLiveData<T>(url: string, intervalMs = 2000) {
 	const data = ref<T | null>(null) as Ref<T | null>
 	const tick = ref(0)
+	/** Consecutive failed requests; 0 means the values on screen are current. */
+	const failures = ref(0)
+	const lastUpdated = ref<Date | null>(null)
+
+	const MAX_BACKOFF_MS = 60_000
 
 	let timeoutId: ReturnType<typeof setTimeout> | null = null
 	let stopped = false
@@ -31,8 +36,12 @@ export function useLiveData<T>(url: string, intervalMs = 2000) {
 			const response = await axios.get(generateUrl(url))
 			data.value = response.data as T
 			tick.value++
+			failures.value = 0
+			lastUpdated.value = new Date()
 		} catch {
-			// Keep previous values on error
+			// The previous values stay on screen deliberately, but silently: it is
+			// `failures` that lets the page admit they have stopped being current.
+			failures.value++
 		} finally {
 			inFlight = false
 			schedule()
@@ -47,7 +56,20 @@ export function useLiveData<T>(url: string, intervalMs = 2000) {
 			return
 		}
 
-		timeoutId = setTimeout(poll, intervalMs)
+		timeoutId = setTimeout(poll, delay())
+	}
+
+	/**
+	 * Back off while the server is unreachable. Polling a server that is down
+	 * every two seconds gains nothing and costs it a full request cycle each
+	 * time; the interval returns to normal on the first success.
+	 */
+	function delay(): number {
+		if (failures.value === 0) {
+			return intervalMs
+		}
+
+		return Math.min(intervalMs * 2 ** failures.value, MAX_BACKOFF_MS)
 	}
 
 	/**
@@ -80,5 +102,5 @@ export function useLiveData<T>(url: string, intervalMs = 2000) {
 		}
 	})
 
-	return { data, tick }
+	return { data, tick, failures, lastUpdated }
 }

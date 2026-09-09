@@ -62,6 +62,9 @@ export function useStaticData() {
 	const error = ref(false)
 
 	async function load() {
+		loading.value = true
+		error.value = false
+
 		try {
 			const response = await axios.get(generateUrl('/apps/serverinfo/data'))
 			data.value = response.data
@@ -74,5 +77,5 @@ export function useStaticData() {
 
 	load()
 
-	return { data, loading, error }
+	return { data, loading, error, reload: load }
 }
