@@ -2,6 +2,7 @@ OC.L10N.register(
     "serverinfo",
     {
     "Unknown" : "অজানা",
+    "Warning" : "সতর্কবাণী",
     "Type:" : "ধরণঃ",
     "Size:" : "আয়তনঃ",
     "Details" : "বিসতারিত",
@@ -12,7 +13,6 @@ OC.L10N.register(
     "No" : "না",
     "Version" : "ভার্সন",
     "Shares" : "ভাগাভাগি",
-    "Warning" : "সতর্কবাণী",
     "Temperature" : "তাপমাত্রা",
     "Copied!" : "অনুলিপি!",
     "Not supported!" : "সমর্থিত নয়! ",
