@@ -1,0 +1,20 @@
+OC.L10N.register(
+    "serverinfo",
+    {
+    "Unknown" : "Chan eil fhios",
+    "Background jobs" : "Obraichean sa chùlaibh",
+    "Note" : "Nòta",
+    "User" : "Cleachdaiche",
+    "Password" : "Facal-faire",
+    "Cancel" : "Cancel",
+    "Save" : "Save",
+    "Close" : "Dùin",
+    "Files" : "Faidhlichean",
+    "Started" : "Air a thòiseachadh",
+    "Details" : "Mion-fhiosrachadh",
+    "Yes" : "Tha",
+    "No" : "Chan eil",
+    "Version" : "Tionndadh",
+    "Copy" : "Dèan lethbhreac"
+},
+"nplurals=4; plural=(n==1 || n==11) ? 0 : (n==2 || n==12) ? 1 : (n > 2 && n < 20) ? 2 : 3;");
