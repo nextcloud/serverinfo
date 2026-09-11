@@ -1,0 +1,21 @@
+OC.L10N.register(
+    "serverinfo",
+    {
+    "Warning" : "﻿ಎಚ್ಚರಿಕೆ",
+    "Host" : "ಅತಿಥೆಯ-ಗಣಕ",
+    "Port" : "﻿ರೇವು",
+    "User" : "User",
+    "Password" : "ಗುಪ್ತಪದ",
+    "Database name" : "ದತ್ತಸಂಚಯದ ಹೆಸರು",
+    "Cancel" : "Cancel",
+    "Save" : "Save",
+    "Close" : "ಮುಚ್ಚು",
+    "Files" : "﻿ಕಡತಗಳು",
+    "Disabled" : "ನಿಷ್ಕ್ರಿಯಗೊಳಿಸಲಾಗಿದೆ",
+    "Yes" : "﻿ಹೌದು",
+    "No" : "﻿ಇಲ್ಲ",
+    "Version" : "﻿ಆವೃತ್ತಿ",
+    "All" : "﻿ಎಲ್ಲಾ",
+    "Copy" : "ನಕಲಿಸಿ"
+},
+"nplurals=2; plural=(n > 1);");
