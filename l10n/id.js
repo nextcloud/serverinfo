@@ -26,6 +26,7 @@ OC.L10N.register(
     "Skipped" : "Ter lewat kan",
     "Warning" : "Peringatan",
     "Value" : "Nilai",
+    "Setting" : "Pengaturan",
     "Note" : "Catatan",
     "Database" : "Basis data",
     "Type:" : "Jenis:",
