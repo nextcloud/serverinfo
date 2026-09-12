@@ -39,6 +39,7 @@ OC.L10N.register(
     "Password" : "Kata sandi",
     "Database name" : "Nama basis data",
     "Cancel" : "Cancel",
+    "Test connection" : "Uji koneksi",
     "Save" : "Save",
     "Copied" : "Disalin",
     "Copy to clipboard" : "Salin ke papan klip",
