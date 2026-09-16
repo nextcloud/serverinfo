@@ -51,7 +51,7 @@ OC.L10N.register(
     "Notice" : "Nota",
     "Warning" : "Aviso",
     "Value" : "Valor",
-    "Setting" : "Configurações",
+    "Setting" : "Configuração",
     "restart required" : "é necessário reiniciar",
     "Note" : "Nota",
     "Show config snippet" : "Mostrar trecho de configuração",
