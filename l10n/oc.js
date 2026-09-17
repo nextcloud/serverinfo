@@ -6,6 +6,7 @@ OC.L10N.register(
     "Background jobs" : "Prètzfaches de rèireplan",
     "Mode" : "Mòde",
     "Never" : "Jamai",
+    "Threads" : "Fils",
     "Warning" : "Avertiment",
     "Value" : "Valor",
     "Setting" : "Paramètres",
