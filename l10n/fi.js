@@ -65,6 +65,7 @@ OC.L10N.register(
     "MAC:" : "MAC:",
     "IPv4:" : "IPv4:",
     "IPv6:" : "IPv6:",
+    "{used} of {total}" : "{used}/{total}",
     "Keys" : "Avaimet",
     "Disabled" : "Pois käytöstä",
     "seconds" : "sekuntia",
