@@ -56,6 +56,7 @@ class Advisor {
 		'Query_cache_efficiency',
 		'Key_buffer_hit_rate',
 		'Table_locks_waited',
+		'Table_open_cache',
 		'Binlog_cache_disk_use',
 		'Slow_query_rate',
 		'Sort_rows',
