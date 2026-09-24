@@ -92,6 +92,37 @@ class AdvisorTest extends \Test\TestCase {
 	}
 
 	/**
+	 * Table_open_cache derives from counters that reset with the server, so
+	 * the cold-start opens dominate the ratio for hours after a restart.  It
+	 * belongs behind the same uptime gate as the other hit-rate rules.
+	 */
+	public function testTableOpenCacheSkippedOnFreshlyRestartedServer(): void {
+		$status = [
+			'Uptime' => 3600,
+			'Table_open_cache_hits' => 3411,
+			'Table_open_cache_misses' => 87,
+		];
+		$derived = ['Uptime_hours' => 1.0, 'Uptime_days' => 1.0 / 24.0];
+
+		$snapshot = new Snapshot(
+			Snapshot::FLAVOUR_MARIADB,
+			'11.8.8-MariaDB',
+			$status,
+			['table_open_cache' => 4000],
+			$derived + ['value' => 0.0],
+		);
+
+		foreach ($this->advisor->run(new Mysql(), $snapshot) as $result) {
+			if ($result->rule->id === 'Table_open_cache') {
+				$this->assertSame(RuleResult::STATUS_SKIPPED, $result->status);
+				return;
+			}
+		}
+
+		$this->fail("Rule 'Table_open_cache' was not evaluated");
+	}
+
+	/**
 	 * A healthy replica must not be flagged.
 	 */
 	public function testReplicaLagPassesOnRunningReplica(): void {
