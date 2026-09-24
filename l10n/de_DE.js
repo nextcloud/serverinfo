@@ -36,7 +36,7 @@ OC.L10N.register(
     "Load" : "Auslastung",
     "CPU info not available" : "Informationen zur CPU nicht verfügbar",
     "Current usage" : "Aktuelle Nutzung",
-    "Threads" : "Themen",
+    "Threads" : "Threads",
     "Load average" : "Durchschnittsauslastung",
     "The number of CPU threads is unknown, so the load cannot be shown as a percentage." : "Die Anzahl der CPU-Threads ist unbekannt, daher kann die Auslastung nicht in Prozent angezeigt werden.",
     "Queries per second" : "Abfragen pro Sekunde",
