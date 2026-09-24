@@ -189,6 +189,30 @@ class LinuxTest extends TestCase {
 		$this->assertEquals(4, $cpu->getThreads());
 	}
 
+	public function testGetAverageLoad(): void {
+		$this->os->method('readContent')
+			->with('/proc/loadavg')
+			->willReturn('0.22 0.41 0.53 1/123 456');
+
+		$this->assertSame([0.22, 0.41, 0.53], $this->os->getAverageLoad());
+	}
+
+	public function testGetAverageLoadNoData(): void {
+		$this->os->method('readContent')
+			->with('/proc/loadavg')
+			->willThrowException(new RuntimeException('Unable to read: "/proc/loadavg"'));
+
+		$this->assertFalse($this->os->getAverageLoad());
+	}
+
+	public function testGetAverageLoadInvalidData(): void {
+		$this->os->method('readContent')
+			->with('/proc/loadavg')
+			->willReturn('invalid data');
+
+		$this->assertFalse($this->os->getAverageLoad());
+	}
+
 	public function testGetCpuOneCore(): void {
 		$this->os->method('readContent')
 			->with('/proc/cpuinfo')
