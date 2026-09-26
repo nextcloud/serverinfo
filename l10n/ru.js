@@ -78,6 +78,7 @@ OC.L10N.register(
     "MAC:" : "MAC:",
     "IPv4:" : "IPv4:",
     "IPv6:" : "IPv6:",
+    "{used} of {total}" : "{used} из {total}",
     "Keys" : "Ключи",
     "Disabled" : "Отключено",
     "seconds" : "секунд",
