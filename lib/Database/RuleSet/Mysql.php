@@ -493,7 +493,7 @@ final class Mysql implements RuleSet {
 			id: 'Join_without_index_rate',
 			name: 'Join-without-index rate',
 			category: 'Performance',
-			severity: Rule::SEVERITY_WARNING,
+			severity: Rule::SEVERITY_NOTICE,
 			formula: '(Select_range_check + Select_scan + Select_full_join) / Uptime',
 			test: 'value * 60 * 60 > 1',
 			issue: 'Many SELECTs are doing full table scans or joins without indexes.',
