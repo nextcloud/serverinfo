@@ -71,9 +71,23 @@ class DatabaseChecks implements ISetupCheck {
 			);
 		}
 
-		if ($summary['failing'] === 0) {
+		$actionable = $summary['alerts'] + $summary['warnings'];
+
+		if ($actionable === 0) {
+			if ($summary['notices'] === 0) {
+				return SetupResult::success(
+					$this->l10n->t('All database checks pass.'),
+				);
+			}
+
 			return SetupResult::success(
-				$this->l10n->t('All database checks pass.'),
+				$this->l10n->n(
+					'No database problems found. %n tuning hint is available. {link}',
+					'No database problems found. %n tuning hints are available. {link}',
+					$summary['notices'],
+				),
+				null,
+				$this->linkParameter(),
 			);
 		}
 
@@ -83,18 +97,28 @@ class DatabaseChecks implements ISetupCheck {
 			$this->l10n->n(
 				'%n database check is failing. {link}',
 				'%n database checks are failing. {link}',
-				$summary['failing'],
+				$actionable,
 			),
 			null,
-			[
-				'link' => [
-					'type' => 'highlight',
-					'id' => 'serverinfo-database-checks',
-					'name' => $this->l10n->t('Show the findings…'),
-					'link' => $this->databasePageUrl(),
-				],
-			],
+			$this->linkParameter(),
 		);
+	}
+
+	/**
+	 * @return array<string, array<string, string>>
+	 */
+	private function linkParameter(): array {
+		return [
+			'link' => [
+				'type' => 'highlight',
+				'id' => 'serverinfo-database-checks',
+				'name' => $this->l10n->t('Show the findings…'),
+				'link' => $this->urlGenerator->linkToRoute(
+					'settings.AdminSettings.index',
+					['section' => Application::APP_ID],
+				) . '#database',
+			],
+		];
 	}
 
 	/**
@@ -124,12 +148,5 @@ class DatabaseChecks implements ISetupCheck {
 			// checks will report far better than this one can.
 			return null;
 		}
-	}
-
-	private function databasePageUrl(): string {
-		return $this->urlGenerator->linkToRoute(
-			'settings.AdminSettings.index',
-			['section' => Application::APP_ID],
-		) . '#database';
 	}
 }

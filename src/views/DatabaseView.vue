@@ -100,6 +100,7 @@ import DatabaseSettingsDialog from '../components/DatabaseSettingsDialog.vue'
 import DatabaseSnippetDialog from '../components/DatabaseSnippetDialog.vue'
 import SectionHeading from '../components/SectionHeading.vue'
 import SectionSkeleton from '../components/SectionSkeleton.vue'
+import { ruleOutcome } from '../utils.ts'
 
 const props = defineProps<{ active: boolean }>()
 
@@ -114,8 +115,8 @@ const statusFilter = ref<'all' | 'fail' | 'ok' | 'skipped'>('fail')
 const rules = computed<DatabaseRule[]>(() => (check.value?.supported ? check.value.results : []))
 
 const filters = computed(() => [
-	// TRANSLATORS: Filter showing only the database checks that found a problem
-	{ id: 'fail' as const, label: t('serverinfo', 'Failing'), count: rules.value.filter((r) => r.status === 'fail').length },
+	// TRANSLATORS: Filter showing the database checks that found a problem or a tuning hint
+	{ id: 'fail' as const, label: t('serverinfo', 'Findings'), count: rules.value.filter((r) => r.status === 'fail').length },
 	// TRANSLATORS: Filter showing only the database checks that found nothing wrong
 	{ id: 'ok' as const, label: t('serverinfo', 'Passing'), count: rules.value.filter((r) => r.status === 'ok').length },
 	// TRANSLATORS: Filter showing only the database checks that could not run
@@ -142,7 +143,7 @@ const groups = computed(() => {
 	return [...byCategory.entries()].map(([category, categoryRules]) => ({
 		category,
 		rules: categoryRules,
-		failCount: categoryRules.filter((rule) => rule.status === 'fail').length,
+		failCount: categoryRules.filter((rule) => ruleOutcome(rule) === 'fail').length,
 	}))
 })
 
