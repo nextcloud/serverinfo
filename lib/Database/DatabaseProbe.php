@@ -209,7 +209,39 @@ class DatabaseProbe {
 			$derived['slow_query_ratio'] = $q > 0 ? $slow / $q : 0.0;
 		}
 
+		// `Slave_running` reads OFF both on a replica whose threads have
+		// stopped *and* on a server that was never pointed at a primary —
+		// the default for a standalone install.  Publish a marker that only
+		// exists in the latter's absence, so replication rules can list it
+		// in `requires` and be skipped rather than firing everywhere.
+		if ($this->hasReplicaConfigured($conn)) {
+			$derived['Replica_configured'] = 1.0;
+		}
+
 		return new Snapshot($flavour, $version, $status, $variables, $derived);
+	}
+
+	/**
+	 * Whether this server is configured as a replica.
+	 *
+	 * The status statement returns an empty result set on a server that was
+	 * never pointed at a primary.  It also needs the REPLICATION CLIENT
+	 * (BINLOG MONITOR on MariaDB) privilege; when the Nextcloud database user
+	 * lacks it we report "not a replica", so replication rules are skipped
+	 * instead of being evaluated against something we could not verify.
+	 */
+	private function hasReplicaConfigured(Connection|IDBConnection $conn): bool {
+		// `SHOW REPLICA STATUS` exists since MySQL 8.0.22 / MariaDB 10.5;
+		// older servers only know the pre-deprecation spelling.
+		foreach (['SHOW REPLICA STATUS', 'SHOW SLAVE STATUS'] as $sql) {
+			try {
+				return $this->all($conn, $sql) !== [];
+			} catch (\Throwable) {
+				// Unsupported syntax or missing privilege — try the next spelling.
+			}
+		}
+
+		return false;
 	}
 
 	// ── PostgreSQL ──────────────────────────────────────────────────

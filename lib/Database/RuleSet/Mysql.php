@@ -384,7 +384,7 @@ final class Mysql implements RuleSet {
 			recommendation: 'Check the replica with SHOW REPLICA STATUS; resolve any IO/SQL errors and restart replication.',
 			justification: 'Slave_running is reporting OFF.',
 			justificationFormula: '',
-			requires: ['Slave_running'],
+			requires: ['Slave_running', 'Replica_configured'],
 		);
 
 		// ── Security ────────────────────────────────────────────────
