@@ -3,7 +3,18 @@
  * SPDX-License-Identifier: AGPL-3.0-or-later
  */
 
+import type { DatabaseRule } from './types.ts'
+
 import { t } from '@nextcloud/l10n'
+
+/**
+ * A failed notice-level check is a tuning hint rather than a failure.
+ *
+ * @param rule the database check
+ */
+export function ruleOutcome(rule: DatabaseRule): DatabaseRule['status'] | 'hint' {
+	return rule.status === 'fail' && rule.severity === 'notice' ? 'hint' : rule.status
+}
 
 /**
  * Formats a size in megabytes to a human-readable string.
