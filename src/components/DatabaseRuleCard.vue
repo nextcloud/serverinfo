@@ -3,7 +3,7 @@
   - SPDX-License-Identifier: AGPL-3.0-or-later
 -->
 <template>
-	<article class="rule-card" :class="`rule-card--${rule.status}`">
+	<article class="rule-card" :class="`rule-card--${outcome}`">
 		<header class="rule-card__header">
 			<span class="rule-card__dot" :class="`rule-card__dot--${rule.severity}`" />
 			<div class="rule-card__title-block">
@@ -16,7 +16,7 @@
 					<code>{{ rule.id }}</code>
 				</span>
 			</div>
-			<span class="rule-card__chip" :class="`rule-card__chip--${rule.status}`">{{ statusLabel }}</span>
+			<span class="rule-card__chip" :class="`rule-card__chip--${outcome}`">{{ statusLabel }}</span>
 		</header>
 
 		<p v-if="rule.status === 'fail' && rule.issue" class="rule-card__issue">
@@ -93,6 +93,7 @@ import { t } from '@nextcloud/l10n'
 import { computed } from 'vue'
 import NcButton from '@nextcloud/vue/components/NcButton'
 import CodeJson from 'vue-material-design-icons/CodeJson.vue'
+import { ruleOutcome } from '../utils.ts'
 
 const props = defineProps<{ rule: DatabaseRule }>()
 
@@ -100,12 +101,16 @@ defineEmits<{ snippet: [rule: DatabaseRule] }>()
 
 const hasDetails = computed(() => props.rule.value !== null || props.rule.apply !== null)
 
+const outcome = computed(() => ruleOutcome(props.rule))
+
 const statusLabel = computed(() => {
-	switch (props.rule.status) {
+	switch (outcome.value) {
 		// TRANSLATORS: Status of a database check that found nothing wrong
 		case 'ok': return t('serverinfo', 'Passing')
 		// TRANSLATORS: Status of a database check that could not run, e.g. the value was unavailable
 		case 'skipped': return t('serverinfo', 'Skipped')
+		// TRANSLATORS: Status of a database check that found an optional tuning opportunity, not a problem
+		case 'hint': return t('serverinfo', 'Hint')
 		// TRANSLATORS: Status of a database check that found a problem
 		default: return t('serverinfo', 'Failing')
 	}
@@ -145,6 +150,10 @@ const formattedValue = computed(() => {
    the page into a wall of colour and swallows the status chip. */
 .rule-card--fail {
 	border-inline-start: 4px solid var(--color-error);
+}
+
+.rule-card--hint {
+	border-inline-start: 4px solid var(--color-border-maxcontrast);
 }
 
 .rule-card--skipped {
