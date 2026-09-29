@@ -11,6 +11,7 @@ namespace OCA\ServerInfo\Tests\Database;
 
 use OCA\ServerInfo\Database\Advisor;
 use OCA\ServerInfo\Database\ExpressionEvaluator;
+use OCA\ServerInfo\Database\Rule;
 use OCA\ServerInfo\Database\RuleResult;
 use OCA\ServerInfo\Database\RuleSet\Mysql;
 use OCA\ServerInfo\Database\Snapshot;
@@ -133,5 +134,20 @@ class AdvisorTest extends \Test\TestCase {
 		);
 
 		$this->assertSame(RuleResult::STATUS_OK, $result->status);
+	}
+
+	/**
+	 * Select_scan alone exceeds one per hour on any active Nextcloud, so the
+	 * rule is a hint rather than a warning.
+	 */
+	public function testJoinWithoutIndexRateIsANotice(): void {
+		$result = $this->resultFor('Join_without_index_rate', [
+			'Select_range_check' => 0,
+			'Select_scan' => 50000,
+			'Select_full_join' => 0,
+		]);
+
+		$this->assertSame(RuleResult::STATUS_FAIL, $result->status);
+		$this->assertSame(Rule::SEVERITY_NOTICE, $result->rule->severity);
 	}
 }
