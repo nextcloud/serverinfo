@@ -46,6 +46,7 @@ OC.L10N.register(
     "Database latency" : "Databasfördröjning",
     "Passing" : "Godkänd",
     "Skipped" : "Hoppades över",
+    "Hint" : "Tips",
     "Failing" : "Underkänd",
     "Alert" : "Varning",
     "Notice" : "Meddelande",

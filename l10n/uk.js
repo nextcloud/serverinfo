@@ -34,6 +34,7 @@ OC.L10N.register(
     "Threads" : "Гілки",
     "Load average" : "Середнє навантаження",
     "Skipped" : "Пропущено",
+    "Hint" : "Підказка",
     "Warning" : "Попередження",
     "Value" : "Значення",
     "Setting" : "Налаштування",
