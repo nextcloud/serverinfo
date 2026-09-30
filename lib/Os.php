@@ -33,14 +33,17 @@ class Os implements IOperatingSystem {
 	}
 
 	/**
-	 * The load average comes from sys_getloadavg() and needs nothing that
-	 * getCPU() collects, which is why it does not go through it: getCPU() parses
-	 * /proc/cpuinfo, or forks nproc, and this runs on a two-second poll.
+	 * Prefer the operating-system backend because container-aware virtual files
+	 * can differ from sys_getloadavg(), which may expose the host's load. Fall
+	 * back to PHP's portable implementation when no native value is available.
 	 *
 	 * @return array{0: float, 1: float, 2: float}|false
 	 */
+	#[\Override]
 	public function getAverageLoad(): array|false {
-		return sys_getloadavg();
+		$load = $this->backend->getAverageLoad();
+
+		return $load !== false ? $load : sys_getloadavg();
 	}
 
 	#[\Override]
