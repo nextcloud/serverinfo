@@ -26,6 +26,7 @@ OC.L10N.register(
     "connections" : "spojení",
     "Passing" : "V pořádku",
     "Skipped" : "Přeskočeno",
+    "Hint" : "Rada",
     "Failing" : "S problémy",
     "Alert" : "Výstraha",
     "Notice" : "Upozornění",
