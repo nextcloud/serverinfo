@@ -46,6 +46,7 @@ OC.L10N.register(
     "Database latency" : "Moill bhunachar sonraí",
     "Passing" : "Ag dul thart",
     "Skipped" : "Scipeáilte",
+    "Hint" : "Leid",
     "Failing" : "Ag teip",
     "Alert" : "Foláireamh",
     "Notice" : "Fógra",
