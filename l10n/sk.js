@@ -46,6 +46,7 @@ OC.L10N.register(
     "Database latency" : "Latencia databázy",
     "Passing" : "Úspešné",
     "Skipped" : "Preskočené",
+    "Hint" : "Tip",
     "Failing" : "Zlyhávajúce",
     "Alert" : "Výstraha",
     "Notice" : "Oznámenie",

@@ -46,6 +46,7 @@ OC.L10N.register(
     "Database latency" : "Veri tabanı gecikmesi",
     "Passing" : "Sorunsuz",
     "Skipped" : "Atlandı",
+    "Hint" : "İpucu",
     "Failing" : "Sorunlu",
     "Alert" : "Uyarı",
     "Notice" : "Bildirim",

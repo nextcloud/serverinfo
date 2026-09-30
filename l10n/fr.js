@@ -46,6 +46,7 @@ OC.L10N.register(
     "Database latency" : "Latence de la base de données",
     "Passing" : "Passe",
     "Skipped" : "Ignoré",
+    "Hint" : "Indice",
     "Failing" : "Échoue",
     "Alert" : "Alerte",
     "Notice" : "Information",

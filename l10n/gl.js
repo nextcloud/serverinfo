@@ -24,6 +24,7 @@ OC.L10N.register(
     "Threads" : "Fíos",
     "Load average" : "Carga media",
     "Skipped" : "Omitido",
+    "Hint" : "Consello",
     "Warning" : "Advertencia",
     "Value" : "Valor",
     "Setting" : "Axuste",
