@@ -21,6 +21,7 @@ OC.L10N.register(
     "Current usage" : "Тренутна употреба",
     "Threads" : "Нити",
     "Load average" : "Просечно оптерећење",
+    "Hint" : "Савет",
     "Warning" : "Упозорење",
     "Value" : "Вредност",
     "Setting" : "Поставка",

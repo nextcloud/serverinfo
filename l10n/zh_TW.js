@@ -46,6 +46,7 @@ OC.L10N.register(
     "Database latency" : "資料庫延遲",
     "Passing" : "通過",
     "Skipped" : "略過",
+    "Hint" : "提示",
     "Failing" : "失敗",
     "Alert" : "警告",
     "Notice" : "注意",
