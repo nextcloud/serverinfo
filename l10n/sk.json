@@ -4,6 +4,7 @@
     "The database configuration could not be checked." : "Konfiguráciu databázy nebolo možné skontrolovať.",
     "These checks only cover MySQL, MariaDB and PostgreSQL." : "Tieto kontroly pokrývajú iba MySQL, MariaDB a PostgreSQL.",
     "All database checks pass." : "Všetky kontroly databázy prešli.",
+    "_No database problems found. %n tuning hint is available. {link}_::_No database problems found. %n tuning hints are available. {link}_" : ["Nenašli sa žiadne problémy s databázou. K dispozícii je %n tip na ladenie. {link}","Nenašli sa žiadne problémy s databázou. K dispozícii je %n tipy na ladenie. {link}","Nenašli sa žiadne problémy s databázou. K dispozícii je %n tipu na ladenie. {link}","Nenašli sa žiadne problémy s databázou. K dispozícii je %n tipov na ladenie. {link}"],
     "_%n database check is failing. {link}_::_%n database checks are failing. {link}_" : ["%n kontrola databázy zlyháva. {link}","%n kontroly databázy zlyhávajú. {link}","%n kontrol databázy zlyháva. {link}","%n kontrol databázy zlyháva. {link}"],
     "Show the findings…" : "Zobraziť zistenia…",
     "Unknown" : "Neznámy",
