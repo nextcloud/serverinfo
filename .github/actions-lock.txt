@@ -2,7 +2,7 @@
 # SPDX-License-Identifier: MIT
 acad44f3e99b665897766ce90374dd03 block-merge-freeze.yml
 19ab9c47c8d96de93f37fab242c398cc block-unconventional-commits.yml
-e6351c608939c31ae1e32923aa82aa10 dependabot-approve-merge.yml
+c1476a553c3223e70e49de980f22315e dependabot-approve-merge.yml
 2581a67c5bcdcd570427e6d51db767d7 fixup.yml
 79006ab196f5664fc444e63645cfd8a7 lint-php-cs.yml
 300be6a756abda800e40850918f2d964 lint-php.yml
@@ -16,9 +16,9 @@ aaa395a26591445ccf4c8196d7f01ee7 pr-feedback.yml
 2dbec18233063b42f4d8e03bbb43671c reuse.yml
 511439ba27869e0324f283142cc8b3df sync-workflow-templates.yml
 abcb8206c3f6c5a9dc86cccf57846bfc update-nextcloud-ocp-approve-merge.yml
-f951ce2c95c9fcf7f4122b6f4f44618d update-nextcloud-ocp.yml
+8ce35c51ee3d9cc735faab60c5d6f350 update-nextcloud-ocp.yml
 43fd0c5fb704cabc5f11cdfaf513236d lint-info-xml.yml
-ffbfc28e30ea82e6334314aa8f703b67 npm-audit-fix.yml
-ab958fa2b07234fceab6b6d836fb7f19 npm-build.yml
+10bb32b28348390097f8e9ad030ecca8 npm-audit-fix.yml
+92a60849d140adc8bdfa1e4cad903b48 npm-build.yml
 e456e5920f7020b8fef59329ab6ce54e ai-policy.yml
-7f15fef2fde87aae0eb8386ded489372 command-compile.yml
+4544db1f7eb9832ec10d80676c8c82b0 command-compile.yml
