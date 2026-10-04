@@ -6,6 +6,7 @@ OC.L10N.register(
     "The database configuration could not be checked." : "無法檢查資料庫設定。",
     "These checks only cover MySQL, MariaDB and PostgreSQL." : "這些檢查只涵蓋 MySQL、MariaDB 及 PostgreSQL。",
     "All database checks pass." : "所有資料庫檢查均通過。",
+    "_No database problems found. %n tuning hint is available. {link}_::_No database problems found. %n tuning hints are available. {link}_" : ["未發現任何資料庫問題。提供 %n 個調校訣竅。{link}"],
     "_%n database check is failing. {link}_::_%n database checks are failing. {link}_" : ["%n 資料庫檢查失敗。{link}"],
     "Show the findings…" : "顯示檢查結果…",
     "Unknown" : "不詳",
