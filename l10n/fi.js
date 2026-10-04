@@ -9,6 +9,7 @@ OC.L10N.register(
     "Provides useful server information, such as CPU load, RAM usage, disk usage, number of users, etc." : "Näyttää hyödyllisiä tietoja palvelimesta, kuten suorittimen kuorman, muistin ja levytilan käytön, käyttäjien määrän jne.",
     "Active users" : "Aktiiviset käyttäjät",
     "Last hour" : "Viime tunti",
+    "Webcron" : "Webcron",
     "Background jobs" : "Taustatyöt",
     "Mode" : "Tila",
     "Never" : "Ei koskaan",
