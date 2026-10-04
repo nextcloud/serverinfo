@@ -12,7 +12,7 @@
     "%1$d hours, %2$d minutes, %3$d seconds" : "%1$d Stunden, %2$d Minuten, %3$d Sekunden",
     "Monitoring" : "Information",
     "Monitoring app with useful server information" : "Monitoring-App mit nützlichen Serverinformationen",
-    "Provides useful server information, such as CPU load, RAM usage, disk usage, number of users, etc." : "Zeigt nützliche Informationen des Servers an wie z.B. CPU-Last, Arbeitsspeicherauslastung, Massenspeicherauslastung, Anzahl der Benutzer, usw.",
+    "Provides useful server information, such as CPU load, RAM usage, disk usage, number of users, etc." : "Zeigt nützliche Informationen des Servers an wie z. B. CPU-Last, Arbeitsspeicherauslastung, Massenspeicherauslastung, Anzahl der Benutzer, usw.",
     "{0}% of all users" : "{0} % aller Benutzer",
     "Active users" : "Aktive Benutzer",
     "Last hour" : "In der letzten Stunde",
