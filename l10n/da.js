@@ -53,6 +53,7 @@ OC.L10N.register(
     "Status" : "Status",
     "Started" : "Startet",
     "Duration" : "Varighed",
+    "When" : "Når",
     "Details" : "Detaljer",
     "Succeeded" : "Gennemført",
     "Failed" : "Mislykkede",
