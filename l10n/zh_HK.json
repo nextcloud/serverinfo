@@ -206,6 +206,7 @@
     "Server time:" : "伺服器時間：",
     "Uptime:" : "運行時間：",
     "Temperature" : "體溫",
+    "Findings" : "檢查發現",
     "All" : "全部",
     "The database checks could not be run." : "無法執行資料庫檢查。",
     "Database checks" : "資料庫檢查",

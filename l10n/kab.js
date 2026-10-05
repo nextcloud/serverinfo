@@ -3,6 +3,7 @@ OC.L10N.register(
     {
     "System" : "Anagraw",
     "Unknown" : "Arussin",
+    "Background jobs" : "Imahilen n ugilal",
     "Mode" : "Askar",
     "Never" : "Weṛǧin",
     "Threads" : "Asqerdec",
