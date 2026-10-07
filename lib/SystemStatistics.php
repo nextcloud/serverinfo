@@ -67,6 +67,11 @@ class SystemStatistics {
 			'swap_free' => $this->toKibibytes($memory->getSwapFree()),
 		];
 
+		$aioVersion = $this->getAioVersion();
+		if ($aioVersion !== null) {
+			$data['aio_version'] = $aioVersion;
+		}
+
 		if (!$skipApps) {
 			$data['apps'] = $this->getAppsInfo();
 		}
@@ -76,6 +81,18 @@ class SystemStatistics {
 		}
 
 		return $data;
+	}
+
+	/**
+	 * Get the Nextcloud AIO version, which AIO stores as AIO_VERSION in
+	 * config.php (e.g. "v12.6.1").
+	 *
+	 * @return string|null the version without the "v" prefix, or null when not running in AIO
+	 */
+	protected function getAioVersion(): ?string {
+		$aioVersion = $this->config->getSystemValueString('AIO_VERSION', '');
+		$aioVersion = ltrim(trim($aioVersion), 'v');
+		return $aioVersion !== '' ? $aioVersion : null;
 	}
 
 	/**
