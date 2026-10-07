@@ -249,7 +249,7 @@ OC.L10N.register(
     "External monitoring tool" : "Externý sledovací nástroj",
     "Use this end point to connect an external monitoring tool:" : "Použite tento prípojný bod pre externý monitorovací nástroj:",
     "Copy" : "Kopírovať",
-    "Skip apps section (including apps section will send an external request to the app store)" : "Vynechať sekciu aplikácií ( zahrnutie sekcie aplikácií odošle externú požiadavku do obchodu s aplikáciami)",
+    "Skip apps section (including apps section will send an external request to the app store)" : "Vynechať sekciu aplikácií (zahrnutie sekcie aplikácií odošle externú požiadavku do obchodu s aplikáciami)",
     "To use an access token, please generate one then set it using the following command:" : "Pre používanie prístupového tokenu ho vygenerujte a potom ho nastavte použitím nasledujúceho príkazu:",
     "Then pass the token with the \"NC-Token\" header when querying the above URL." : "Pri dotazovaní na vyššie uvedenú adresu URL potom poslať token s hlavičkou „NC-Token“.",
     "%1$s (%2$d threads)" : "%1$s (%2$d vlákien)",
