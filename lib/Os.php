@@ -42,8 +42,15 @@ class Os implements IOperatingSystem {
 	#[\Override]
 	public function getAverageLoad(): array|false {
 		$load = $this->backend->getAverageLoad();
+		if ($load !== false) {
+			return $load;
+		}
 
-		return $load !== false ? $load : sys_getloadavg();
+		if (function_exists('sys_getloadavg')) {
+			return sys_getloadavg();
+		}
+
+		return false;
 	}
 
 	#[\Override]
