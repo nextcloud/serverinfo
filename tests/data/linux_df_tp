@@ -2,6 +2,8 @@ Filesystem                              Type     1024-blocks      Used Available
 udev                                    devtmpfs     4052408         0   4052408       0% /dev
 tmpfs                                   tmpfs         816800      7592    809208       1% /run
 /dev/mapper/homestead--vg-root          ext4        56422560   6205468  47321220      12% /
+/dev/sda2                               vfat            524272     34864    489408       7% /boot/efi
+/dev/sda1                               ext4            999320    245108    685400      27% /boot
 tmpfs                                   tmpfs        4084000         8   4083992       1% /dev/shm
 tmpfs                                   tmpfs           5120         0      5120       0% /run/lock
 tmpfs                                   tmpfs        4084000         0   4084000       0% /sys/fs/cgroup
