@@ -26,7 +26,6 @@ class CPU implements \JsonSerializable {
 		return $this->threads;
 	}
 
-
 	#[\Override]
 	public function jsonSerialize(): array {
 		return [
