@@ -21,6 +21,13 @@ interface IOperatingSystem {
 	public function getCPU(): CPU;
 
 	/**
+	 * Get the 1, 5, and 15 minute load averages, or false when unavailable.
+	 *
+	 * @return array{0: float, 1: float, 2: float}|false
+	 */
+	public function getAverageLoad(): array|false;
+
+	/**
 	 * Uptime obtained by a means that may cost a process fork, used only when
 	 * getUptime() cannot answer.
 	 *
