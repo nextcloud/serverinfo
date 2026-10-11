@@ -26,18 +26,6 @@ class CPU implements \JsonSerializable {
 		return $this->threads;
 	}
 
-	/**
-	 * Retrieves the system load averages.
-	 *
-	 * @return array|false Returns an array containing the system load averages for the last 1, 5, and 15 minutes.
-	 */
-	public function getAverageLoad(): array|false {
-		if (function_exists('sys_getloadavg')) {
-			return sys_getloadavg();
-		}
-		return false;
-	}
-
 	#[\Override]
 	public function jsonSerialize(): array {
 		return [
