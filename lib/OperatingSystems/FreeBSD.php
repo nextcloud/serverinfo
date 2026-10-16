@@ -122,6 +122,10 @@ class FreeBSD implements IOperatingSystem {
 			if (count($gw[0]) > 0) {
 				$result['gateway'] = implode(', ', array_map('trim', $gw[0]));
 			}
+			$resolvConf = $this->readContent('/etc/resolv.conf');
+			if (preg_match_all('/^\s*nameserver\s+(\S+)/m', $resolvConf, $matches)) {
+				$result['dns'] = implode(', ', array_unique($matches[1]));
+			}
 		} catch (RuntimeException) {
 			// okay
 		}
@@ -237,6 +241,17 @@ class FreeBSD implements IOperatingSystem {
 	#[\Override]
 	public function getThermalZones(): array {
 		return [];
+	}
+
+	/**
+	 * @throws RuntimeException
+	 */
+	protected function readContent(string $filename): string {
+		$data = @file_get_contents($filename);
+		if ($data === false || $data === '') {
+			throw new RuntimeException('Unable to read: "' . $filename . '"');
+		}
+		return trim($data);
 	}
 
 	/**
