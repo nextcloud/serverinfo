@@ -159,3 +159,90 @@
 .server-info-table tr:last-child td {
 	border-bottom: none;
 }
+
+/* OPERATING SYSTEM PAGE */
+
+.os-muted {
+	color: var(--color-text-maxcontrast);
+}
+
+/* Small label next to a package or unit name. */
+.os-tag {
+	display: inline-flex;
+	align-items: center;
+	padding: 0 8px;
+	border-radius: var(--border-radius-pill);
+	background: var(--color-background-dark);
+	color: var(--color-main-text);
+	font-size: 0.8rem;
+	line-height: 1.6;
+	white-space: nowrap;
+}
+
+.os-tag--primary {
+	background: var(--color-primary-element-light);
+	color: var(--color-primary-element-light-text);
+}
+
+/* The -text variants: --color-error/-warning are pale fills in most themes. */
+.os-tag--error {
+	background: var(--color-error-hover, var(--color-background-dark));
+	color: var(--color-error-text, var(--color-error));
+}
+
+.os-tag--warning {
+	background: var(--color-warning-hover, var(--color-background-dark));
+	color: var(--color-warning-text, var(--color-warning));
+}
+
+/* A status icon followed by a bold finding and its explanation. */
+.os-checklist {
+	display: flex;
+	flex-direction: column;
+	gap: 16px;
+	margin: 12px 0 0;
+	padding: 0;
+	list-style: none;
+}
+
+.os-checklist__item {
+	display: flex;
+	align-items: flex-start;
+	gap: 12px;
+}
+
+.os-checklist__body {
+	display: flex;
+	flex: 1 1 auto;
+	flex-direction: column;
+	gap: 2px;
+	min-inline-size: 0;
+}
+
+.os-checklist__body > .os-command {
+	margin-block-start: 6px;
+}
+
+/* Core gives bare dl/dt/dd 12px of padding and a fixed 130px dt. */
+.os-facts {
+	display: grid;
+	grid-template-columns: minmax(120px, max-content) 1fr;
+	gap: 10px 20px;
+	margin: 0;
+	padding: 0;
+}
+
+.os-facts dt {
+	inline-size: auto;
+	padding: 0;
+	color: var(--color-text-maxcontrast);
+	white-space: normal;
+	text-align: start;
+}
+
+.os-facts dd {
+	margin: 0;
+	padding: 0;
+	min-inline-size: 0;
+	overflow-wrap: anywhere;
+}

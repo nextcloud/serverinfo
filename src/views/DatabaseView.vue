@@ -37,19 +37,7 @@
 			</NcNoteCard>
 
 			<template v-else-if="check?.supported">
-				<nav class="database-view__filters" :aria-label="t('serverinfo', 'Filter checks by status')">
-					<button
-						v-for="option in filters"
-						:key="option.id"
-						type="button"
-						class="database-view__filter"
-						:class="{ 'database-view__filter--active': statusFilter === option.id }"
-						:aria-pressed="statusFilter === option.id"
-						@click="statusFilter = option.id">
-						{{ option.label }}
-						<span class="database-view__filter-count">{{ option.count }}</span>
-					</button>
-				</nav>
+				<FilterPills v-model="statusFilter" :label="t('serverinfo', 'Filter checks by status')" :options="filters" />
 
 				<section v-for="group in groups" :key="group.category" class="database-view__group">
 					<h3 class="database-view__group-title">
@@ -98,6 +86,7 @@ import DatabaseLiveCharts from '../components/DatabaseLiveCharts.vue'
 import DatabaseRuleCard from '../components/DatabaseRuleCard.vue'
 import DatabaseSettingsDialog from '../components/DatabaseSettingsDialog.vue'
 import DatabaseSnippetDialog from '../components/DatabaseSnippetDialog.vue'
+import FilterPills from '../components/FilterPills.vue'
 import SectionHeading from '../components/SectionHeading.vue'
 import SectionSkeleton from '../components/SectionSkeleton.vue'
 import { ruleOutcome } from '../utils.ts'
@@ -186,45 +175,6 @@ watch(() => props.active, (active) => {
 	align-items: center;
 	justify-content: space-between;
 	gap: 12px;
-}
-
-.database-view__filters {
-	display: flex;
-	flex-wrap: wrap;
-	gap: 4px;
-	margin: 12px 0;
-	/* Sits the pills on a sunken strip spanning the page, so the group reads as
-	   one control rather than four loose buttons. */
-	padding: 4px;
-	background: var(--color-background-dark);
-	border-radius: var(--border-radius-large);
-}
-
-.database-view__filter {
-	display: inline-flex;
-	align-items: center;
-	gap: 6px;
-	/* On the sunken strip an outlined white pill reads as a raised chip, so the
-	   inactive ones stay flat and only the selected one is filled. */
-	border: none;
-	border-radius: var(--border-radius-pill);
-	background: transparent;
-	color: var(--color-main-text);
-	padding: 4px 14px;
-}
-
-.database-view__filter:hover {
-	background: var(--color-background-hover);
-}
-
-.database-view__filter--active {
-	background: var(--color-primary-element);
-	color: var(--color-primary-element-text);
-}
-
-.database-view__filter-count {
-	color: inherit;
-	opacity: 0.75;
 }
 
 .database-view__group {

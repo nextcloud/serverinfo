@@ -15,3 +15,4 @@ src/
 tests/
 vendor-bin/
 vite.config.mjs
+vitest.config.mjs
