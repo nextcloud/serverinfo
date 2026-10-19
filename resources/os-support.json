@@ -1,0 +1,539 @@
+{
+    "source": "endoflife.date, MIT License, https://endoflife.date",
+    "generatedAt": "2026-10-19",
+    "cycles": {
+        "ubuntu": "minor",
+        "debian": "major",
+        "rhel": "major",
+        "almalinux": "major",
+        "rocky": "major",
+        "centos-stream": "major",
+        "centos": "major",
+        "ol": "major",
+        "fedora": "major",
+        "opensuse-leap": "minor",
+        "sles": "minor",
+        "alpine": "minor",
+        "amzn": "major"
+    },
+    "rolling": [
+        "arch",
+        "archarm",
+        "manjaro",
+        "endeavouros",
+        "cachyos",
+        "garuda",
+        "opensuse-tumbleweed",
+        "opensuse-microos",
+        "opensuse-slowroll",
+        "gentoo",
+        "void",
+        "nixos-unstable"
+    ],
+    "releases": {
+        "almalinux:8": {
+            "securityEnds": "2029-05-31"
+        },
+        "almalinux:9": {
+            "securityEnds": "2032-05-31"
+        },
+        "almalinux:10": {
+            "securityEnds": "2035-05-31"
+        },
+        "alpine:3.4": {
+            "securityEnds": "2018-05-01"
+        },
+        "alpine:3.5": {
+            "securityEnds": "2018-11-01"
+        },
+        "alpine:3.6": {
+            "securityEnds": "2019-05-01"
+        },
+        "alpine:3.7": {
+            "securityEnds": "2019-11-01"
+        },
+        "alpine:3.8": {
+            "securityEnds": "2020-05-01"
+        },
+        "alpine:3.9": {
+            "securityEnds": "2020-11-01"
+        },
+        "alpine:3.10": {
+            "securityEnds": "2021-05-01"
+        },
+        "alpine:3.11": {
+            "securityEnds": "2021-11-01"
+        },
+        "alpine:3.12": {
+            "securityEnds": "2022-05-01"
+        },
+        "alpine:3.13": {
+            "securityEnds": "2022-11-01"
+        },
+        "alpine:3.14": {
+            "securityEnds": "2023-05-01"
+        },
+        "alpine:3.15": {
+            "securityEnds": "2023-11-01"
+        },
+        "alpine:3.16": {
+            "securityEnds": "2024-05-23"
+        },
+        "alpine:3.17": {
+            "securityEnds": "2024-11-22"
+        },
+        "alpine:3.18": {
+            "securityEnds": "2025-05-09"
+        },
+        "alpine:3.19": {
+            "securityEnds": "2025-11-01"
+        },
+        "alpine:3.20": {
+            "securityEnds": "2026-04-01"
+        },
+        "alpine:3.21": {
+            "securityEnds": "2026-11-01"
+        },
+        "alpine:3.22": {
+            "securityEnds": "2027-05-01"
+        },
+        "alpine:3.23": {
+            "securityEnds": "2027-11-01"
+        },
+        "alpine:3.24": {
+            "securityEnds": "2028-06-01"
+        },
+        "amzn:2": {
+            "securityEnds": "2026-06-30"
+        },
+        "amzn:2010.11": {
+            "securityEnds": "2023-12-31"
+        },
+        "amzn:2011.09": {
+            "securityEnds": "2023-12-31"
+        },
+        "amzn:2012.03": {
+            "securityEnds": "2023-12-31"
+        },
+        "amzn:2012.09": {
+            "securityEnds": "2023-12-31"
+        },
+        "amzn:2013.03": {
+            "securityEnds": "2023-12-31"
+        },
+        "amzn:2013.09": {
+            "securityEnds": "2023-12-31"
+        },
+        "amzn:2014.03": {
+            "securityEnds": "2023-12-31"
+        },
+        "amzn:2014.09": {
+            "securityEnds": "2023-12-31"
+        },
+        "amzn:2015.03": {
+            "securityEnds": "2023-12-31"
+        },
+        "amzn:2015.09": {
+            "securityEnds": "2023-12-31"
+        },
+        "amzn:2016.03": {
+            "securityEnds": "2023-12-31"
+        },
+        "amzn:2016.09": {
+            "securityEnds": "2023-12-31"
+        },
+        "amzn:2017.03": {
+            "securityEnds": "2023-12-31"
+        },
+        "amzn:2017.09": {
+            "securityEnds": "2023-12-31"
+        },
+        "amzn:2018.03": {
+            "securityEnds": "2023-12-31"
+        },
+        "amzn:2023": {
+            "securityEnds": "2029-06-30"
+        },
+        "centos-stream:8": {
+            "securityEnds": "2024-05-31"
+        },
+        "centos-stream:9": {
+            "securityEnds": "2027-05-31"
+        },
+        "centos-stream:10": {
+            "securityEnds": "2030-05-31"
+        },
+        "centos:6": {
+            "securityEnds": "2020-11-30"
+        },
+        "centos:7": {
+            "securityEnds": "2024-06-30"
+        },
+        "centos:8": {
+            "securityEnds": "2021-12-31"
+        },
+        "debian:7": {
+            "securityEnds": "2018-05-31",
+            "ltsFrom": "2016-04-25",
+            "extendedEnds": "2020-06-30",
+            "extended": "debian-elts"
+        },
+        "debian:8": {
+            "securityEnds": "2020-06-30",
+            "ltsFrom": "2018-06-17",
+            "extendedEnds": "2025-06-30",
+            "extended": "debian-elts"
+        },
+        "debian:9": {
+            "securityEnds": "2022-07-01",
+            "ltsFrom": "2020-07-18",
+            "extendedEnds": "2027-06-30",
+            "extended": "debian-elts"
+        },
+        "debian:10": {
+            "securityEnds": "2024-06-30",
+            "ltsFrom": "2022-09-10",
+            "extendedEnds": "2029-06-30",
+            "extended": "debian-elts"
+        },
+        "debian:11": {
+            "securityEnds": "2026-08-31",
+            "ltsFrom": "2024-08-14",
+            "extendedEnds": "2031-06-30",
+            "extended": "debian-elts"
+        },
+        "debian:12": {
+            "securityEnds": "2028-06-30",
+            "ltsFrom": "2026-07-11",
+            "extendedEnds": "2033-06-30",
+            "extended": "debian-elts"
+        },
+        "debian:13": {
+            "securityEnds": "2030-06-30",
+            "ltsFrom": "2028-08-09",
+            "extendedEnds": "2035-06-30",
+            "extended": "debian-elts"
+        },
+        "fedora:26": {
+            "securityEnds": "2018-05-29"
+        },
+        "fedora:27": {
+            "securityEnds": "2018-11-30"
+        },
+        "fedora:28": {
+            "securityEnds": "2019-05-28"
+        },
+        "fedora:29": {
+            "securityEnds": "2019-11-26"
+        },
+        "fedora:30": {
+            "securityEnds": "2020-05-26"
+        },
+        "fedora:31": {
+            "securityEnds": "2020-11-24"
+        },
+        "fedora:32": {
+            "securityEnds": "2021-05-25"
+        },
+        "fedora:33": {
+            "securityEnds": "2021-11-30"
+        },
+        "fedora:34": {
+            "securityEnds": "2022-06-07"
+        },
+        "fedora:35": {
+            "securityEnds": "2022-12-13"
+        },
+        "fedora:36": {
+            "securityEnds": "2023-05-16"
+        },
+        "fedora:37": {
+            "securityEnds": "2023-12-05"
+        },
+        "fedora:38": {
+            "securityEnds": "2024-05-21"
+        },
+        "fedora:39": {
+            "securityEnds": "2024-11-26"
+        },
+        "fedora:40": {
+            "securityEnds": "2025-05-13"
+        },
+        "fedora:41": {
+            "securityEnds": "2025-12-15"
+        },
+        "fedora:42": {
+            "securityEnds": "2026-05-27"
+        },
+        "fedora:43": {
+            "securityEnds": "2026-12-09"
+        },
+        "fedora:44": {
+            "securityEnds": "2027-06-02"
+        },
+        "ol:6": {
+            "securityEnds": "2021-03-31",
+            "extendedEnds": "2024-12-31",
+            "extended": "oracle-extended"
+        },
+        "ol:7": {
+            "securityEnds": "2024-12-31",
+            "extendedEnds": "2029-07-31",
+            "extended": "oracle-extended"
+        },
+        "ol:8": {
+            "securityEnds": "2029-07-31",
+            "extendedEnds": "2032-07-31",
+            "extended": "oracle-extended"
+        },
+        "ol:9": {
+            "securityEnds": "2032-06-30",
+            "extendedEnds": "2035-06-30",
+            "extended": "oracle-extended"
+        },
+        "ol:10": {
+            "securityEnds": "2035-06-30",
+            "extendedEnds": "2038-06-30",
+            "extended": "oracle-extended"
+        },
+        "opensuse-leap:15.0": {
+            "securityEnds": "2019-12-03"
+        },
+        "opensuse-leap:15.1": {
+            "securityEnds": "2021-02-02"
+        },
+        "opensuse-leap:15.2": {
+            "securityEnds": "2022-01-04"
+        },
+        "opensuse-leap:15.3": {
+            "securityEnds": "2022-12-31"
+        },
+        "opensuse-leap:15.4": {
+            "securityEnds": "2023-12-07"
+        },
+        "opensuse-leap:15.5": {
+            "securityEnds": "2024-12-31"
+        },
+        "opensuse-leap:15.6": {
+            "securityEnds": "2026-04-30"
+        },
+        "opensuse-leap:16.0": {
+            "securityEnds": "2027-10-31"
+        },
+        "opensuse-leap:42.2": {
+            "securityEnds": "2018-01-26"
+        },
+        "opensuse-leap:42.3": {
+            "securityEnds": "2019-07-01"
+        },
+        "rhel:5": {
+            "securityEnds": "2017-03-31",
+            "extendedEnds": "2020-11-30",
+            "extended": "rhel-els"
+        },
+        "rhel:6": {
+            "securityEnds": "2020-11-30",
+            "extendedEnds": "2024-06-30",
+            "extended": "rhel-els"
+        },
+        "rhel:7": {
+            "securityEnds": "2024-06-30",
+            "extendedEnds": "2029-05-31",
+            "extended": "rhel-els"
+        },
+        "rhel:8": {
+            "securityEnds": "2029-05-31",
+            "extendedEnds": "2033-05-31",
+            "extended": "rhel-els"
+        },
+        "rhel:9": {
+            "securityEnds": "2032-05-31",
+            "extendedEnds": "2036-05-31",
+            "extended": "rhel-els"
+        },
+        "rhel:10": {
+            "securityEnds": "2035-05-31",
+            "extendedEnds": "2039-05-31",
+            "extended": "rhel-els"
+        },
+        "rocky:8": {
+            "securityEnds": "2029-05-31"
+        },
+        "rocky:9": {
+            "securityEnds": "2032-05-31"
+        },
+        "rocky:10": {
+            "securityEnds": "2035-05-31"
+        },
+        "sles:11.3": {
+            "securityEnds": "2016-01-31",
+            "extendedEnds": "2019-01-30",
+            "extended": "suse-ltss"
+        },
+        "sles:11.4": {
+            "securityEnds": "2019-03-31",
+            "extendedEnds": "2022-03-31",
+            "extended": "suse-ltss"
+        },
+        "sles:12.0": {
+            "securityEnds": "2016-06-30",
+            "extendedEnds": "2019-07-01",
+            "extended": "suse-ltss"
+        },
+        "sles:12.1": {
+            "securityEnds": "2017-05-31",
+            "extendedEnds": "2020-05-31",
+            "extended": "suse-ltss"
+        },
+        "sles:12.2": {
+            "securityEnds": "2018-03-31",
+            "extendedEnds": "2021-03-31",
+            "extended": "suse-ltss"
+        },
+        "sles:12.3": {
+            "securityEnds": "2019-06-30",
+            "extendedEnds": "2022-06-30",
+            "extended": "suse-ltss"
+        },
+        "sles:12.4": {
+            "securityEnds": "2020-06-30",
+            "extendedEnds": "2023-06-30",
+            "extended": "suse-ltss"
+        },
+        "sles:12.5": {
+            "securityEnds": "2024-10-31",
+            "extendedEnds": "2027-10-31",
+            "extended": "suse-ltss"
+        },
+        "sles:15.0": {
+            "securityEnds": "2019-12-31",
+            "extendedEnds": "2022-12-31",
+            "extended": "suse-ltss"
+        },
+        "sles:15.1": {
+            "securityEnds": "2021-01-31",
+            "extendedEnds": "2024-01-31",
+            "extended": "suse-ltss"
+        },
+        "sles:15.2": {
+            "securityEnds": "2021-12-31",
+            "extendedEnds": "2024-12-31",
+            "extended": "suse-ltss"
+        },
+        "sles:15.3": {
+            "securityEnds": "2022-12-31",
+            "extendedEnds": "2025-12-31",
+            "extended": "suse-ltss"
+        },
+        "sles:15.4": {
+            "securityEnds": "2023-12-31",
+            "extendedEnds": "2026-12-31",
+            "extended": "suse-ltss"
+        },
+        "sles:15.5": {
+            "securityEnds": "2024-12-31",
+            "extendedEnds": "2027-12-31",
+            "extended": "suse-ltss"
+        },
+        "sles:15.6": {
+            "securityEnds": "2025-12-31",
+            "extendedEnds": "2028-12-31",
+            "extended": "suse-ltss"
+        },
+        "sles:15.7": {
+            "securityEnds": "2031-07-31",
+            "extendedEnds": "2034-07-31",
+            "extended": "suse-ltss"
+        },
+        "sles:16.0": {
+            "securityEnds": "2027-11-30",
+            "extendedEnds": "2030-11-30",
+            "extended": "suse-ltss"
+        },
+        "ubuntu:12.04": {
+            "securityEnds": "2017-04-28",
+            "extendedEnds": "2019-04-26",
+            "extended": "ubuntu-pro"
+        },
+        "ubuntu:14.04": {
+            "securityEnds": "2019-04-02",
+            "extendedEnds": "2024-04-02",
+            "extended": "ubuntu-pro"
+        },
+        "ubuntu:16.04": {
+            "securityEnds": "2021-04-02",
+            "extendedEnds": "2026-04-02",
+            "extended": "ubuntu-pro"
+        },
+        "ubuntu:17.04": {
+            "securityEnds": "2018-01-13"
+        },
+        "ubuntu:17.10": {
+            "securityEnds": "2018-07-19"
+        },
+        "ubuntu:18.04": {
+            "securityEnds": "2023-05-31",
+            "extendedEnds": "2028-04-26",
+            "extended": "ubuntu-pro"
+        },
+        "ubuntu:18.10": {
+            "securityEnds": "2019-07-18"
+        },
+        "ubuntu:19.04": {
+            "securityEnds": "2020-01-23"
+        },
+        "ubuntu:19.10": {
+            "securityEnds": "2020-07-06"
+        },
+        "ubuntu:20.04": {
+            "securityEnds": "2025-05-31",
+            "extendedEnds": "2030-04-23",
+            "extended": "ubuntu-pro"
+        },
+        "ubuntu:20.10": {
+            "securityEnds": "2021-07-22"
+        },
+        "ubuntu:21.04": {
+            "securityEnds": "2022-01-20"
+        },
+        "ubuntu:21.10": {
+            "securityEnds": "2022-07-14"
+        },
+        "ubuntu:22.04": {
+            "securityEnds": "2027-06-01",
+            "extendedEnds": "2032-04-21",
+            "extended": "ubuntu-pro"
+        },
+        "ubuntu:22.10": {
+            "securityEnds": "2023-07-20"
+        },
+        "ubuntu:23.04": {
+            "securityEnds": "2024-01-20"
+        },
+        "ubuntu:23.10": {
+            "securityEnds": "2024-07-12"
+        },
+        "ubuntu:24.04": {
+            "securityEnds": "2029-05-31",
+            "extendedEnds": "2034-04-25",
+            "extended": "ubuntu-pro"
+        },
+        "ubuntu:24.10": {
+            "securityEnds": "2025-07-10"
+        },
+        "ubuntu:25.04": {
+            "securityEnds": "2026-01-17"
+        },
+        "ubuntu:25.10": {
+            "securityEnds": "2026-07-01"
+        },
+        "ubuntu:26.04": {
+            "securityEnds": "2031-05-29",
+            "extendedEnds": "2036-04-23",
+            "extended": "ubuntu-pro"
+        },
+        "ubuntu:26.10": {
+            "securityEnds": "2027-07-01"
+        }
+    }
+}

@@ -10,6 +10,8 @@ declare(strict_types=1);
 namespace OCA\ServerInfo\AppInfo;
 
 use OCA\ServerInfo\Config\ConfigLexicon;
+use OCA\ServerInfo\OsStatus\Host\IHost;
+use OCA\ServerInfo\OsStatus\Host\LocalHost;
 use OCA\ServerInfo\SetupChecks\DatabaseChecks;
 use OCP\AppFramework\App;
 use OCP\AppFramework\Bootstrap\IBootContext;
@@ -30,6 +32,7 @@ class Application extends App implements IBootstrap {
 	public function register(IRegistrationContext $context): void {
 		$context->registerConfigLexicon(ConfigLexicon::class);
 		$context->registerSetupCheck(DatabaseChecks::class);
+		$context->registerServiceAlias(IHost::class, LocalHost::class);
 	}
 
 	#[\Override]

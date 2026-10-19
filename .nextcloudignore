@@ -6,6 +6,7 @@
 .nextcloudignore
 .php-cs-fixer.dist.php
 .tx/
+build/
 eslint.config.mjs
 l10n/.gitkeep
 psalm.xml

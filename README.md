@@ -19,6 +19,43 @@ provided end-points.
 This app is part of the standard Nextcloud package and can be found in the
 directory **nextcloud/apps/serverinfo**
 
+## Operating system
+
+The app keeps track of what keeps the Linux distribution under Nextcloud
+secure:
+
+- pending updates, security fixes first, with the packages Nextcloud itself
+  runs on (PHP, the web server, the database, Redis …) marked
+- whether a reboot is needed, and why (a newer kernel, updated core libraries,
+  the distribution asking for one), with live kernel patches taken into account
+- whether the PHP serving Nextcloud still runs libraries that an update
+  replaced, and which service to restart
+- how long the release still receives security updates, including paid
+  extensions such as Ubuntu Pro, Debian ELTS or RHEL ELS
+- automatic updates, package list age, held packages, failed system services,
+  time synchronisation, SELinux and AppArmor
+
+Debian and Ubuntu are supported. Inside Docker, Podman, Kubernetes or a snap the status says
+what can and cannot be known from inside; LXC and systemd-nspawn guests are
+treated like machines without a kernel of their own.
+
+Nothing is installed or changed.
+
+The status is collected by a background job once an hour. Admins can also
+check it right away with:
+
+```
+occ serverinfo:os-status [--refresh] [--output=json]
+```
+
+The command exits with 0, 1 or 2 for ok, warning and error, so it can be used
+as a monitoring check. When something counts as a warning or an error is set by
+the `os_*_days` app config values, see `lib/Config/ConfigLexicon.php`.
+
+Release support dates are bundled with the app (see
+`build/update-os-support.php`, data from [endoflife.date](https://endoflife.date),
+MIT License); the app never looks them up online.
+
 ## API
 
 The API provides a lot of information about a running Nextcloud

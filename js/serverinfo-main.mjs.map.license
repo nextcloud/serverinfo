@@ -66,7 +66,7 @@ This file is generated from multiple sources. Included packages:
 	- version: 4.1.0
 	- license: MIT
 - @vitejs/plugin-vue
-	- version: 6.0.7
+	- version: 6.0.10
 	- license: MIT
 - @vue/reactivity
 	- version: 3.5.43
@@ -108,7 +108,7 @@ This file is generated from multiple sources. Included packages:
 	- version: 7.8.5
 	- license: ISC
 - serverinfo
-	- version: 8.0.0-dev.0
+	- version: 8.0.0-dev.1
 	- license: AGPL-3.0-or-later
 - tabbable
 	- version: 6.5.0
