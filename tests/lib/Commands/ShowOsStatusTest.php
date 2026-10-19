@@ -10,6 +10,7 @@ declare(strict_types=1);
 namespace OCA\ServerInfo\Tests\Commands;
 
 use OCA\ServerInfo\Commands\ShowOsStatus;
+use OCA\ServerInfo\OsStatus\Notifications\OsNotificationSender;
 use OCA\ServerInfo\OsStatus\OsStatus;
 use OCA\ServerInfo\OsStatus\OsStatusCollector;
 use OCA\ServerInfo\OsStatus\OsStatusService;
@@ -91,7 +92,7 @@ class ShowOsStatusTest extends \Test\TestCase {
 	 * @param array<string, mixed> $written receives what the command writes as its result
 	 */
 	private function execute(OsStatusService $service, array &$written = [], bool $refresh = false, ?OsStatusCollector $collector = null): int {
-		$command = new ShowOsStatus($collector ?? $this->createMock(OsStatusCollector::class), $service);
+		$command = new ShowOsStatus($collector ?? $this->createMock(OsStatusCollector::class), $service, $this->createMock(OsNotificationSender::class));
 		$output = $this->createMock(IOutput::class);
 		$output->method('writeArrayInOutputFormat')->willReturnCallback(static function (iterable $items) use (&$written): void {
 			$written = is_array($items) ? $items : iterator_to_array($items);

@@ -70,7 +70,9 @@ occ serverinfo:os-status [--refresh] [--output=json]
 The command shows how old the status is and exits with 0, 1, 2 or 3 for ok,
 warning, error and unknown, so it can be used as a monitoring check. Unknown means the status has not been
 collected yet, or nothing is wrong but the pending updates could not be
-determined. When something counts as a warning or an error is set by
+determined. The same verdict appears as setup checks on Settings → Overview, in
+a notification to admins when a concern escalates, and in the **Server health**
+dashboard widget. When something counts as a warning or an error is set by
 the `os_*_days` app config values, see `lib/Config/ConfigLexicon.php`.
 
 Release support dates are bundled with the app (see
@@ -141,6 +143,35 @@ https://<nextcloud-fqdn>/ocs/v2.php/apps/serverinfo/api/v1/info
 - To request the information in JSON append the url parameter `format=json`
 - Use the url parameter `skipUpdate=true` to omit server updates.
 - Use the url parameter `skipApps=true` to omit app updates (including available app updates will send an external request to the app store).
+- Use the url parameter `skipOs=true` to omit the operating system status.
+
+The operating system status in `server.os` holds counts and flags only, never
+package names or advisories, so a leaked token does not reveal what is
+unpatched. Values that could not be determined are `null`:
+
+```json
+"os": {
+    "state": "ok",
+    "level": "warning",
+    "collectedAt": 1792411200,
+    "outdated": false,
+    "name": "Ubuntu 24.04.3 LTS",
+    "kernel": "6.8.0-45-generic",
+    "environment": "host",
+    "container": null,
+    "updates": { "classified": true, "security": 7, "total": 23, "pendingDays": 5, "held": 0 },
+    "rebootRequired": true,
+    "rebootPendingDays": 2,
+    "phpRestartRequired": false,
+    "servicesNeedRestart": null,
+    "support": { "state": "supported", "ends": "2029-05-31", "daysLeft": 954 },
+    "automaticUpdates": "enabled",
+    "listsAgeHours": 4,
+    "timeSynchronized": true,
+    "failedUnits": 0,
+    "helper": "absent"
+}
+```
 
 ### Example XML output:
 ```

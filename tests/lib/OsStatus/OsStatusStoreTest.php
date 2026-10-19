@@ -240,4 +240,10 @@ class OsStatusStoreTest extends \Test\TestCase {
 		$this->assertSame($stored, $this->values[ConfigLexicon::CACHED_OS_FIRST_SEEN]);
 		$this->assertSame(1120, $this->store->phpOutdatedSince(), 'Still outdated, so still counting from the first sighting');
 	}
+
+	public function testNotifiedLevels(): void {
+		$this->store->setNotifiedLevels(['updates' => 'warning']);
+
+		$this->assertSame(['updates' => 'warning'], $this->store->notifiedLevels());
+	}
 }
