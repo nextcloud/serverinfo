@@ -13,6 +13,7 @@ use OCA\ServerInfo\OperatingSystems\Dummy;
 use OCA\ServerInfo\OperatingSystems\FreeBSD;
 use OCA\ServerInfo\OperatingSystems\IOperatingSystem;
 use OCA\ServerInfo\OperatingSystems\Linux;
+use OCA\ServerInfo\OsStatus\OsRelease;
 use OCA\ServerInfo\Resources\CPU;
 use OCA\ServerInfo\Resources\Memory;
 use OCP\AppFramework\Services\IAppConfig;
@@ -63,10 +64,22 @@ class Os implements IOperatingSystem {
 	}
 
 	/**
-	 * Get name of the operating system.
+	 * Get name of the operating system: the distribution where it can be
+	 * read, the kernel otherwise.
 	 */
 	public function getOSName(): string {
-		return PHP_OS . ' ' . php_uname('r') . ' ' . php_uname('m');
+		$kernel = PHP_OS . ' ' . php_uname('r') . ' ' . php_uname('m');
+		if (!$this->backend instanceof Linux) {
+			return $kernel;
+		}
+
+		$content = @file_get_contents('/etc/os-release', false, null, 0, 65536);
+		$release = is_string($content) ? OsRelease::parse($content) : null;
+		if ($release === null) {
+			return $kernel;
+		}
+
+		return $release->prettyName . ' (' . $kernel . ')';
 	}
 
 	#[\Override]

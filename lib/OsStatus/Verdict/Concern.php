@@ -80,4 +80,11 @@ final class Concern {
 	public function isResolved(): bool {
 		return $this->level !== self::LEVEL_UNKNOWN && !$this->isProblem();
 	}
+
+	/**
+	 * @return array{id: string, level: string, facts: array<string, scalar|list<string>|null>}
+	 */
+	public function toArray(): array {
+		return ['id' => $this->id, 'level' => $this->level, 'facts' => $this->facts];
+	}
 }

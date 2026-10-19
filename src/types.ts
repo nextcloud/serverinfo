@@ -4,7 +4,7 @@
  */
 
 /** The pages the admin settings can show, selected by the navigation at the top. */
-export type SettingsView = 'status' | 'database' | 'background-jobs'
+export type SettingsView = 'status' | 'database' | 'background-jobs' | 'os'
 
 /** What a failing check suggests changing, and where. */
 export interface DatabaseApply {
@@ -129,4 +129,108 @@ export interface PeriodicData {
 		/** Runs older than this are pruned, bounding what "no failures" means */
 		retentionDays: number
 	}
+}
+
+export type OsLevel = 'ok' | 'info' | 'warning' | 'error' | 'unknown'
+
+export type OsConcernId = 'updates' | 'reboot' | 'restart' | 'support' | 'package-lists'
+	| 'automatic-updates' | 'failed-units' | 'time-sync' | 'helper'
+
+export interface OsConcern {
+	id: OsConcernId
+	level: OsLevel
+	facts: Record<string, string | number | boolean | string[] | null>
+}
+
+export interface OsPendingUpdate {
+	name: string
+	installed: string | null
+	candidate: string
+	security: boolean
+	origin: string | null
+	advisories: string[]
+	severity: string | null
+	/** Unix timestamp the update was first seen pending */
+	since: number | null
+	kind: 'package' | 'patch'
+	/** One of the packages Nextcloud itself depends on */
+	stack: boolean
+	/** What a SUSE patch fixes, e.g. "Security update for glibc" */
+	summary: string | null
+}
+
+export interface OsRebootReason {
+	kind: 'kernel' | 'kernel-removed' | 'distribution' | 'core-library' | 'microcode'
+	detail: string | null
+	packages: string[]
+	since: number | null
+}
+
+export type OsSupportState = 'supported' | 'extended' | 'extended-available' | 'ended' | 'rolling' | 'unknown'
+
+export type OsHelperState = 'absent' | 'ok' | 'stale' | 'previous-boot' | 'other-host' | 'insecure' | 'unreadable' | 'invalid' | 'unsupported'
+
+/** The collected operating system status, see OCA\ServerInfo\OsStatus\OsStatus */
+export interface OsStatus {
+	state: 'ok' | 'restricted' | 'unsupported'
+	collectedAt: number
+	release: { id: string, name: string, prettyName: string, versionId: string | null, codename: string | null } | null
+	kernel: string
+	architecture: string
+	environment: { kind: 'host' | 'application-container' | 'system-container' | 'snap', container: string | null, virtualization: string | null }
+	support: {
+		rolling: boolean
+		securityEnds: string | null
+		extendedEnds: string | null
+		extended: string | null
+		extendedActive: boolean | null
+		ltsFrom: string | null
+		dataDate: string | null
+	}
+	packageManager: string | null
+	updates: OsPendingUpdate[] | null
+	updatesSource: 'system' | 'helper' | null
+	securityClassified: boolean
+	updatesOmitted: number
+	held: Array<{ name: string, mechanism: string, constraint: string | null }> | null
+	listsRefreshedAt: number | null
+	lastUpgradeAt: number | null
+	automaticUpdates: { state: 'enabled' | 'disabled' | 'unknown', mechanism: string | null, scope: 'security' | 'all' | 'download' | 'unknown' }
+	rebootReasons: OsRebootReason[] | null
+	restartServices: Array<{ unit: string, since: number | null, stack: boolean }> | null
+	livePatches: string[] | null
+	failedUnits: string[] | null
+	timeSynchronized: boolean | null
+	timeSource: string | null
+	selinux: 'enforcing' | 'permissive' | 'disabled' | null
+	apparmor: 'enabled' | 'disabled' | null
+	upgradeCommands: { all: string | null, security: string | null }
+	helper: { state: OsHelperState, path: string, generatedAt: number | null, version: string | null, outdated: boolean, errors: string[] }
+	bootTime: number | null
+	diagnostics: string[]
+}
+
+export interface OsThresholds {
+	securityWarning: number
+	securityError: number
+	rebootWarning: number
+	rebootError: number
+	restartWarning: number
+	eolWarning: number
+	listsWarning: number
+	listsError: number
+}
+
+/** Payload of /os */
+export interface OsPayload {
+	/** Server clock, so ages never depend on the browser's */
+	now: number
+	status: OsStatus | null
+	verdict: { level: OsLevel, concerns: OsConcern[] } | null
+	/** Packages changed after the status was collected */
+	outdated: boolean
+	php: { sampledAt: number, sapi: string, outdatedLibraries: string[], service: string | null, confinement: string | null } | null
+	thresholds: OsThresholds
+	notifications: boolean
+	helper: { bundledVersion: string, scriptPath: string, installPath: string, reportPath: string }
 }

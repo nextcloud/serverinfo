@@ -12,6 +12,7 @@ import { ref } from 'vue'
 export interface StaticData {
 	hostname: string
 	osname: string
+	osLevel: string | null
 	cpu: { name: string, threads: number }
 	diskinfo: Array<{ device: string, fs: string, used: number, available: number, percent: string, mount: string }>
 	networkinfo: { hostname: string, gateway: string, dns: string }

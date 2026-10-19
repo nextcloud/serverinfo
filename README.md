@@ -21,8 +21,8 @@ directory **nextcloud/apps/serverinfo**
 
 ## Operating system
 
-The app keeps track of what keeps the Linux distribution under Nextcloud
-secure:
+The **Operating system** page shows what keeps the Linux distribution under
+Nextcloud secure:
 
 - pending updates, security fixes first, with the packages Nextcloud itself
   runs on (PHP, the web server, the database, Redis …) marked
@@ -36,12 +36,13 @@ secure:
   time synchronisation, SELinux and AppArmor
 
 Debian, Ubuntu, RHEL and its rebuilds, Fedora, openSUSE and SLES, Arch and
-Alpine are supported. Inside Docker, Podman, Kubernetes or a snap the status says
+Alpine are supported. Inside Docker, Podman, Kubernetes or a snap the page says
 what can and cannot be known from inside; LXC and systemd-nspawn guests are
 treated like machines without a kernel of their own.
 
-Nothing is installed or changed. To find out, the app reads `/etc/os-release`,
-`/proc` (uptime, `/proc/1/cgroup`, its own process maps), `/sys/class/dmi/id`,
+Nothing is installed or changed. Each command shown on the page is for the
+admin to copy. To find out, the app reads `/etc/os-release`, `/proc` (uptime,
+`/proc/1/cgroup`, its own process maps), `/sys/class/dmi/id`,
 `/sys/kernel/livepatch`, the SELinux and AppArmor state under `/sys`, the
 package manager's configuration, state and logs, `/run/reboot-required` and the
 installed kernel modules. It runs the package manager's query commands (updates
@@ -63,7 +64,7 @@ jobs run from system cron; under AJAX or webcron the commands would hold a web
 request for minutes. A status older than three job intervals (at least six
 hours), or background jobs that do not run from system cron, count as a
 warning, so an old all-clear is never shown as current. Admins can also check
-it right away with:
+it from the page, or run:
 
 ```
 occ serverinfo:os-status [--refresh] [--output=json]
@@ -75,8 +76,8 @@ collected yet, or nothing is wrong but the pending updates could not be
 determined. The same verdict appears as setup checks on Settings → Overview
 (only for admins; sub-admins, who may load the setup checks too, get no
 details), in a notification to admins when a concern escalates, and in the
-**Server health** dashboard widget for admins. When something counts as a warning or an error is set by
-the `os_*_days` app config values, see `lib/Config/ConfigLexicon.php`.
+**Server health** dashboard widget for admins. When something counts as a
+warning or an error can be adjusted on the page.
 
 Release support dates are bundled with the app (see
 `build/update-os-support.php`, data from [endoflife.date](https://endoflife.date),

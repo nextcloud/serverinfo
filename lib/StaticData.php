@@ -11,6 +11,7 @@ namespace OCA\ServerInfo;
 
 use OCA\ServerInfo\Collector\Opcache;
 use OCA\ServerInfo\Collector\Php;
+use OCA\ServerInfo\OsStatus\OsStatusService;
 use OCP\AppFramework\Services\IAppConfig;
 use OCP\IURLGenerator;
 
@@ -27,6 +28,7 @@ class StaticData {
 		private SessionStatistics $sessionStatistics,
 		private SystemStatistics $systemStatistics,
 		private IAppConfig $appConfig,
+		private OsStatusService $osStatus,
 	) {
 	}
 
@@ -38,6 +40,7 @@ class StaticData {
 		return [
 			'hostname' => $this->os->getHostname(),
 			'osname' => $this->os->getOSName(),
+			'osLevel' => $this->osStatus->evaluate()?->level(),
 			'cpu' => $this->os->getCPU(),
 			'diskinfo' => array_map(fn ($d) => [
 				'device' => $d->getDevice(),
