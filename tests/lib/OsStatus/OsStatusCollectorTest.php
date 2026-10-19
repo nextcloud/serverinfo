@@ -20,8 +20,13 @@ use OCA\ServerInfo\OsStatus\Helper\HelperState;
 use OCA\ServerInfo\OsStatus\OsStatus;
 use OCA\ServerInfo\OsStatus\OsStatusCollector;
 use OCA\ServerInfo\OsStatus\OsStatusStore;
+use OCA\ServerInfo\OsStatus\Packages\Apk;
 use OCA\ServerInfo\OsStatus\Packages\Apt;
+use OCA\ServerInfo\OsStatus\Packages\Dnf;
 use OCA\ServerInfo\OsStatus\Packages\PackageManagerFactory;
+use OCA\ServerInfo\OsStatus\Packages\Pacman;
+use OCA\ServerInfo\OsStatus\Packages\Rpm;
+use OCA\ServerInfo\OsStatus\Packages\Zypper;
 use OCA\ServerInfo\OsStatus\Reboot\CoreLibraryProbe;
 use OCA\ServerInfo\OsStatus\Reboot\KernelProbe;
 use OCA\ServerInfo\OsStatus\Reboot\RebootReason;
@@ -74,6 +79,7 @@ class OsStatusCollectorTest extends \Test\TestCase {
 
 		$host = $this->host;
 		$systemd = new SystemdProbe($host);
+		$rpm = new Rpm($host);
 
 		return new OsStatusCollector(
 			$host,
@@ -83,7 +89,7 @@ class OsStatusCollectorTest extends \Test\TestCase {
 			new EnvironmentDetector($host),
 			new SupportTable(),
 			new SubscriptionProbe($host),
-			new PackageManagerFactory(new Apt($host, $systemd)),
+			new PackageManagerFactory(new Apt($host, $systemd), new Dnf($host, $rpm, $systemd), new Zypper($host, $rpm, $systemd), new Pacman($host), new Apk($host)),
 			new KernelProbe($host),
 			new CoreLibraryProbe($host),
 			$systemd,

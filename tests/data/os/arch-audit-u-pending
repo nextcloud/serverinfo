@@ -1,0 +1,1 @@
+python-urllib3 is affected by certificate verification bypass, denial of service. High risk! Update to at least 1.26.5-1!

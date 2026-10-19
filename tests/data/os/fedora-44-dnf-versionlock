@@ -1,0 +1,3 @@
+# Added by 'versionlock add' command on 2026-10-19 18:33:45
+Package name: sudo
+evr = 1.9.17-7.p2.fc44
