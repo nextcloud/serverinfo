@@ -11,12 +11,14 @@ namespace OCA\ServerInfo\Tests\OsStatus;
 
 use OCA\ServerInfo\Config\ConfigLexicon;
 use OCA\ServerInfo\OsStatus\Environment;
+use OCA\ServerInfo\OsStatus\Helper\HelperState;
 use OCA\ServerInfo\OsStatus\OsRelease;
 use OCA\ServerInfo\OsStatus\OsStatus;
 use OCA\ServerInfo\OsStatus\Packages\AutomaticUpdates;
 use OCA\ServerInfo\OsStatus\Packages\HeldPackage;
 use OCA\ServerInfo\OsStatus\Packages\PendingUpdate;
 use OCA\ServerInfo\OsStatus\Reboot\RebootReason;
+use OCA\ServerInfo\OsStatus\Restart\ServiceRestart;
 use OCA\ServerInfo\OsStatus\Support\SupportStatus;
 use OCA\ServerInfo\OsStatus\Verdict\Thresholds;
 use OCP\AppFramework\Services\IAppConfig;
@@ -41,6 +43,7 @@ class ThresholdsAndStatusTest extends \Test\TestCase {
 			1792300000,
 			new AutomaticUpdates(AutomaticUpdates::STATE_ENABLED, 'unattended-upgrades', AutomaticUpdates::SCOPE_SECURITY),
 			[new RebootReason(RebootReason::KIND_KERNEL, '7.0.0-40-generic', [], 1792100000)],
+			[new ServiceRestart('php8.5-fpm.service', 1792200000)],
 			[],
 			['logrotate.service'],
 			true,
@@ -49,6 +52,7 @@ class ThresholdsAndStatusTest extends \Test\TestCase {
 			'enabled',
 			['all' => 'sudo apt update && sudo apt full-upgrade', 'security' => null],
 			'/var/lib/dpkg/status',
+			new HelperState(HelperState::STATE_OK, '/var/lib/serverinfo/os-report.json', 1792410000, '1.0.0'),
 			1792000000,
 			['diagnostic'],
 		);
@@ -95,5 +99,7 @@ class ThresholdsAndStatusTest extends \Test\TestCase {
 		$this->assertTrue((new PendingUpdate('libapache2-mod-php8.3', null, '1', false))->toArray()['stack']);
 		$this->assertTrue((new PendingUpdate('openssl-libs', null, '1', false))->toArray()['stack']);
 		$this->assertFalse((new PendingUpdate('vim', null, '1', false))->toArray()['stack']);
+		$this->assertTrue((new ServiceRestart('mariadb.service'))->toArray()['stack']);
+		$this->assertFalse((new ServiceRestart('ssh.service'))->toArray()['stack']);
 	}
 }

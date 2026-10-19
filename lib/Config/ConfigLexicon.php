@@ -32,6 +32,7 @@ class ConfigLexicon implements ILexicon {
 	public const CACHED_OS_PHP_PROCESS = 'cached_os_php_process';
 	public const CACHED_OS_PHP_OUTDATED_SINCE = 'cached_os_php_outdated_since';
 	public const JOB_INTERVAL_OS_STATUS = 'job_interval_os_status';
+	public const OS_HELPER_REPORT_PATH = 'os_helper_report_path';
 	public const OS_SECURITY_WARNING_DAYS = 'os_security_warning_days';
 	public const OS_SECURITY_ERROR_DAYS = 'os_security_error_days';
 	public const OS_REBOOT_WARNING_DAYS = 'os_reboot_warning_days';
@@ -110,6 +111,13 @@ class ConfigLexicon implements ILexicon {
 				ValueType::INT,
 				60 * 60,
 				'How often the operating system status is collected, in seconds',
+			),
+			new Entry(
+				self::OS_HELPER_REPORT_PATH,
+				ValueType::STRING,
+				'/var/lib/serverinfo/os-report.json',
+				'Where the optional root helper bin/serverinfo-os-report writes its report; an absolute path ending in .json',
+				lazy: true,
 			),
 			new Entry(self::OS_SECURITY_WARNING_DAYS, ValueType::INT, 3, 'Days a security update may be pending before a warning', lazy: true),
 			new Entry(self::OS_SECURITY_ERROR_DAYS, ValueType::INT, 14, 'Days a security update may be pending before an error', lazy: true),

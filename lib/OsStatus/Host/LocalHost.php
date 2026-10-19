@@ -84,6 +84,18 @@ class LocalHost implements IHost {
 	}
 
 	#[\Override]
+	public function ownership(string $path): ?array {
+		clearstatcache(true, $path);
+		$owner = @fileowner($path);
+		$mode = @fileperms($path);
+		if ($owner === false || $mode === false) {
+			return null;
+		}
+
+		return ['owner' => $owner, 'mode' => $mode];
+	}
+
+	#[\Override]
 	public function readLink(string $path): ?string {
 		$target = @readlink($path);
 
@@ -127,6 +139,13 @@ class LocalHost implements IHost {
 	#[\Override]
 	public function uname(string $mode): string {
 		return php_uname($mode);
+	}
+
+	#[\Override]
+	public function hostname(): string {
+		$hostname = gethostname();
+
+		return is_string($hostname) && $hostname !== '' ? $hostname : php_uname('n');
 	}
 
 	#[\Override]

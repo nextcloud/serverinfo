@@ -9,12 +9,14 @@ declare(strict_types=1);
 
 namespace OCA\ServerInfo\OsStatus\Verdict;
 
+use OCA\ServerInfo\OsStatus\Helper\HelperState;
 use OCA\ServerInfo\OsStatus\NextcloudStack;
 use OCA\ServerInfo\OsStatus\OsStatus;
 use OCA\ServerInfo\OsStatus\Packages\AutomaticUpdates;
 use OCA\ServerInfo\OsStatus\Packages\PendingUpdate;
 use OCA\ServerInfo\OsStatus\Reboot\RebootReason;
 use OCA\ServerInfo\OsStatus\Restart\PhpProcessSample;
+use OCA\ServerInfo\OsStatus\Restart\ServiceRestart;
 use OCA\ServerInfo\OsStatus\Support\SupportStatus;
 
 /**
@@ -50,7 +52,7 @@ class OsVerdict {
 			$concerns[] = $this->updates($status, $thresholds, $now);
 			$concerns[] = $this->reboot($status, $thresholds, $now);
 		}
-		$concerns[] = $this->restart($php, $phpOutdatedSince, $thresholds, $now);
+		$concerns[] = $this->restart($status, $php, $phpOutdatedSince, $thresholds, $now);
 		$concerns[] = $this->support($status, $thresholds, $now);
 		if ($managed) {
 			$concerns[] = $this->packageLists($status, $thresholds, $now);
@@ -58,6 +60,7 @@ class OsVerdict {
 		}
 		$concerns[] = $this->failedUnits($status);
 		$concerns[] = $this->timeSync($status);
+		$concerns[] = $this->helper($status);
 		$concerns[] = $this->freshness($status, $now, $systemCron, $collectInterval);
 
 		return new Verdict($concerns);
@@ -142,20 +145,36 @@ class OsVerdict {
 		]);
 	}
 
-	private function restart(?PhpProcessSample $php, ?int $phpOutdatedSince, Thresholds $thresholds, int $now): Concern {
-		if ($php === null) {
+	private function restart(OsStatus $status, ?PhpProcessSample $php, ?int $phpOutdatedSince, Thresholds $thresholds, int $now): Concern {
+		$services = $status->environment->managesPackages() ? $status->restartServices : null;
+		if ($php === null && $services === null) {
 			return new Concern(Concern::RESTART, Concern::LEVEL_UNKNOWN);
 		}
-		if (!$php->isOutdated()) {
-			return new Concern(Concern::RESTART, Concern::LEVEL_OK, ['php' => false, 'days' => null]);
+
+		$phpOutdated = $php !== null && $php->isOutdated();
+		$services ??= [];
+		$facts = [
+			'php' => $phpOutdated,
+			'services' => count($services),
+			'stack' => count(array_filter($services, static fn (ServiceRestart $s): bool => NextcloudStack::isStackService($s->unit))),
+			'days' => null,
+		];
+
+		if (!$phpOutdated && $services === []) {
+			return new Concern(Concern::RESTART, Concern::LEVEL_OK, $facts);
 		}
 
-		$days = self::days($now - ($phpOutdatedSince ?? $now));
+		$since = $now;
+		foreach ($services as $service) {
+			$since = min($since, $service->since ?? $now);
+		}
+		if ($phpOutdated) {
+			$since = min($since, $phpOutdatedSince ?? $now);
+		}
+		$days = self::days($now - $since);
+		$facts['days'] = $days;
 
-		return new Concern(Concern::RESTART, $days >= $thresholds->restartWarning ? Concern::LEVEL_WARNING : Concern::LEVEL_INFO, [
-			'php' => true,
-			'days' => $days,
-		]);
+		return new Concern(Concern::RESTART, $days >= $thresholds->restartWarning ? Concern::LEVEL_WARNING : Concern::LEVEL_INFO, $facts);
 	}
 
 	private function support(OsStatus $status, Thresholds $thresholds, int $now): Concern {
@@ -236,6 +255,21 @@ class OsVerdict {
 		};
 
 		return new Concern(Concern::TIME_SYNC, $level, ['source' => $status->timeSource]);
+	}
+
+	private function helper(OsStatus $status): Concern {
+		$helper = $status->helper;
+		$level = match ($helper->state) {
+			HelperState::STATE_OK => $helper->outdated || $helper->errors !== [] ? Concern::LEVEL_INFO : Concern::LEVEL_OK,
+			HelperState::STATE_ABSENT => Concern::LEVEL_OK,
+			HelperState::STATE_INSECURE => Concern::LEVEL_WARNING,
+			default => Concern::LEVEL_INFO,
+		};
+
+		return new Concern(Concern::HELPER, $level, [
+			'state' => $helper->state,
+			'outdated' => $helper->outdated,
+		]);
 	}
 
 	/**

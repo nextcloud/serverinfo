@@ -30,6 +30,7 @@ final class Concern {
 	public const TIME_SYNC = 'time-sync';
 	/** Whether the stored status still describes the system */
 	public const FRESHNESS = 'freshness';
+	public const HELPER = 'helper';
 
 	/**
 	 * @param self::LEVEL_* $level

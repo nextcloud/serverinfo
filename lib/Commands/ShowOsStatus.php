@@ -84,6 +84,7 @@ class ShowOsStatus {
 			'updates' => $status->updates === null ? 'unknown' : count($status->updates) + $status->updatesOmitted,
 			'updatesPendingDays' => is_int($pendingDays) ? $pendingDays : 'none',
 			'rebootRequired' => $status->rebootReasons === null ? 'unknown' : ($status->rebootReasons !== [] ? 'yes' : 'no'),
+			'helper' => $status->helper->state,
 			'concerns' => $concerns,
 		]);
 
