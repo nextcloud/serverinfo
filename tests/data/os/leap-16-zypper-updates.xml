@@ -1,0 +1,21 @@
+<?xml version='1.0'?>
+<stream>
+<message type="info">Loading repository data...</message>
+<message type="info">Reading installed packages...</message>
+<update-status version="0.6">
+<update-list>
+<update kind="package" name="glibc" edition="2.40-160000.7.1" arch="aarch64" edition-old="2.40-160000.5.1"><summary>Standard Shared Libraries (from the GNU C Library)</summary><description>The GNU C Library provides the most important standard libraries used
+by nearly all programs: the standard C library, the standard math
+library, and the POSIX thread library. A system is not functional
+without these libraries.</description><license/><source url="http://cdn.opensuse.org/distribution/leap/16.0/repo/oss/aarch64" alias="openSUSE:repo-oss"/></update><update kind="package" name="glibc-locale-base" edition="2.40-160000.7.1" arch="aarch64" edition-old="2.40-160000.5.1"><summary>en_US Locale Data for Localized Programs</summary><description>Locale data for the internationalisation features of the GNU C library.
+This package contains only the U.S. English locale.</description><license/><source url="http://cdn.opensuse.org/distribution/leap/16.0/repo/oss/aarch64" alias="openSUSE:repo-oss"/></update><update kind="package" name="libcurl4" edition="8.14.1-160000.9.1" arch="aarch64" edition-old="8.14.1-160000.7.1"><summary>Library for transferring data from URLs</summary><description>The cURL shared library for accessing data using different
+network protocols.</description><license/><source url="http://cdn.opensuse.org/distribution/leap/16.0/repo/oss/aarch64" alias="openSUSE:repo-oss"/></update><update kind="package" name="libopenssl-3-fips-provider" edition="3.5.0-160000.11.1" arch="aarch64" edition-old="3.5.0-160000.9.1"><summary>OpenSSL FIPS provider</summary><description>This package contains the OpenSSL FIPS provider.</description><license/><source url="http://cdn.opensuse.org/distribution/leap/16.0/repo/oss/aarch64" alias="openSUSE:repo-oss"/></update><update kind="package" name="libopenssl3" edition="3.5.0-160000.11.1" arch="aarch64" edition-old="3.5.0-160000.9.1"><summary>Secure Sockets and Transport Layer Security</summary><description>OpenSSL is a software library to be used in applications that need to
+secure communications over computer networks against eavesdropping or
+need to ascertain the identity of the party at the other end.
+OpenSSL contains an implementation of the SSL and TLS protocols.</description><license/><source url="http://cdn.opensuse.org/distribution/leap/16.0/repo/oss/aarch64" alias="openSUSE:repo-oss"/></update><update kind="package" name="openssl-3" edition="3.5.0-160000.11.1" arch="aarch64" edition-old="3.5.0-160000.9.1"><summary>Secure Sockets and Transport Layer Security</summary><description>OpenSSL is a software library to be used in applications that need to
+secure communications over computer networks against eavesdropping or
+need to ascertain the identity of the party at the other end.
+OpenSSL contains an implementation of the SSL and TLS protocols.</description><license/><source url="http://cdn.opensuse.org/distribution/leap/16.0/repo/oss/aarch64" alias="openSUSE:repo-oss"/></update><update kind="package" name="timezone" edition="2026e-160000.1.1" arch="aarch64" edition-old="2026c-160000.1.1"><summary>Time Zone Descriptions</summary><description>These are configuration files that describe available time zones. You
+can select an appropriate time zone for your system with YaST.</description><license/><source url="http://cdn.opensuse.org/distribution/leap/16.0/repo/oss/aarch64" alias="openSUSE:repo-oss"/></update></update-list>
+</update-status>
+</stream>

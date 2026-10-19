@@ -1,0 +1,127 @@
+Loading repository data...
+Reading installed packages...
+
+
+Information for patch openSUSE-Leap-16.0-1157:
+----------------------------------------------
+Repository  : repo-oss (16.0)
+Name        : openSUSE-Leap-16.0-1157
+Version     : 1
+Arch        : noarch
+Vendor      : maintenance@opensuse.org
+Status      : applied
+Category    : security
+Severity    : moderate
+Created On  : Fri Jul  3 13:19:16 2026
+Interactive : ---
+Summary     : Security update for glibc
+Description : 
+    This update for glibc fixes the following issues
+
+    - CVE-2026-5435: unchecked buffer writing in TSIG handling can lead to an out-of-bounds write (bsc#1263656).
+    - CVE-2026-6238: insufficient RDATA length validation can lead to application crashes or uninitialized memory disclosure
+      (bsc#1263658).
+Provides    : patch:openSUSE-Leap-16.0-1157 = 1
+Conflicts   : [53]
+    glibc.aarch64 < 2.40-160000.6.1
+    glibc.noarch < 2.40-160000.6.1
+    glibc-devel.aarch64 < 2.40-160000.6.1
+    glibc-devel.noarch < 2.40-160000.6.1
+    glibc-devel-static.aarch64 < 2.40-160000.6.1
+    glibc-devel-static.noarch < 2.40-160000.6.1
+    glibc-extra.aarch64 < 2.40-160000.6.1
+    glibc-extra.noarch < 2.40-160000.6.1
+    glibc-gconv-modules-extra.aarch64 < 2.40-160000.6.1
+    glibc-gconv-modules-extra.noarch < 2.40-160000.6.1
+    glibc-html < 2.40-160000.6.1
+    glibc-i18ndata < 2.40-160000.6.1
+    glibc-info < 2.40-160000.6.1
+    glibc-lang < 2.40-160000.6.1
+    glibc-locale.aarch64 < 2.40-160000.6.1
+    glibc-locale.noarch < 2.40-160000.6.1
+    glibc-locale-base.aarch64 < 2.40-160000.6.1
+    glibc-locale-base.noarch < 2.40-160000.6.1
+    glibc-profile.aarch64 < 2.40-160000.6.1
+    glibc-profile.noarch < 2.40-160000.6.1
+    cross-ppc64le-glibc-devel < 2.40-160000.6.1
+    cross-riscv64-glibc-devel < 2.40-160000.6.1
+    cross-s390x-glibc-devel < 2.40-160000.6.1
+    glibc-utils.aarch64 < 2.40-160000.6.1
+    glibc-utils.noarch < 2.40-160000.6.1
+    glibc.ppc64le < 2.40-160000.6.1
+    glibc-devel.ppc64le < 2.40-160000.6.1
+    glibc-devel-static.ppc64le < 2.40-160000.6.1
+    glibc-extra.ppc64le < 2.40-160000.6.1
+    glibc-gconv-modules-extra.ppc64le < 2.40-160000.6.1
+    glibc-locale.ppc64le < 2.40-160000.6.1
+    glibc-locale-base.ppc64le < 2.40-160000.6.1
+    glibc-profile.ppc64le < 2.40-160000.6.1
+    cross-aarch64-glibc-devel < 2.40-160000.6.1
+    glibc-utils.ppc64le < 2.40-160000.6.1
+    glibc.s390x < 2.40-160000.6.1
+    glibc-devel.s390x < 2.40-160000.6.1
+    glibc-devel-static.s390x < 2.40-160000.6.1
+    glibc-extra.s390x < 2.40-160000.6.1
+    glibc-gconv-modules-extra.s390x < 2.40-160000.6.1
+    glibc-locale.s390x < 2.40-160000.6.1
+    glibc-locale-base.s390x < 2.40-160000.6.1
+    glibc-profile.s390x < 2.40-160000.6.1
+    glibc-utils.s390x < 2.40-160000.6.1
+    glibc.x86_64 < 2.40-160000.6.1
+    glibc-devel.x86_64 < 2.40-160000.6.1
+    glibc-devel-static.x86_64 < 2.40-160000.6.1
+    glibc-extra.x86_64 < 2.40-160000.6.1
+    glibc-gconv-modules-extra.x86_64 < 2.40-160000.6.1
+    glibc-locale.x86_64 < 2.40-160000.6.1
+    glibc-locale-base.x86_64 < 2.40-160000.6.1
+    glibc-profile.x86_64 < 2.40-160000.6.1
+    glibc-utils.x86_64 < 2.40-160000.6.1
+
+
+Information for patch openSUSE-Leap-16.0-1187:
+----------------------------------------------
+Repository  : repo-oss (16.0)
+Name        : openSUSE-Leap-16.0-1187
+Version     : 1
+Arch        : noarch
+Vendor      : maintenance@opensuse.org
+Status      : applied
+Category    : security
+Severity    : important
+Created On  : Wed Jul  8 13:46:40 2026
+Interactive : ---
+Summary     : Security update for curl
+Description : 
+    This update for curl fixes the following issues
+
+    - CVE-2026-8286: wrong STARTTLS connection reuse (bsc#1268402).
+    - CVE-2026-8458: wrong reuse for different services (bsc#1268407).
+    - CVE-2026-8924: traling dot domain super cookie (bsc#1268409).
+    - CVE-2026-8927: env-set cross-proxy Digest auth state leak (bsc#1268413).
+    - CVE-2026-9079: stale proxy password leak (bsc#1268415).
+    - CVE-2026-9080: UAF after pause in socket callback (bsc#1268416).
+    - CVE-2026-9545: exposing HTTP/3 early data (bsc#1268417).
+    - CVE-2026-9547: SSH improper host validation (bsc#1268420).
+    - CVE-2026-10536: HTTP/2 stream-dependency tree UAF (bsc#1268422).
+    - CVE-2026-12064: proto-default skips SSH verification (bsc#1268427).
+Provides    : patch:openSUSE-Leap-16.0-1187 = 1
+Conflicts   : [18]
+    curl.aarch64 < 8.14.1-160000.8.1
+    curl.noarch < 8.14.1-160000.8.1
+    curl-fish-completion < 8.14.1-160000.8.1
+    curl-zsh-completion < 8.14.1-160000.8.1
+    libcurl-devel.aarch64 < 8.14.1-160000.8.1
+    libcurl-devel.noarch < 8.14.1-160000.8.1
+    libcurl-devel-doc < 8.14.1-160000.8.1
+    libcurl4.aarch64 < 8.14.1-160000.8.1
+    libcurl4.noarch < 8.14.1-160000.8.1
+    curl.ppc64le < 8.14.1-160000.8.1
+    libcurl-devel.ppc64le < 8.14.1-160000.8.1
+    libcurl4.ppc64le < 8.14.1-160000.8.1
+    curl.s390x < 8.14.1-160000.8.1
+    libcurl-devel.s390x < 8.14.1-160000.8.1
+    libcurl4.s390x < 8.14.1-160000.8.1
+    curl.x86_64 < 8.14.1-160000.8.1
+    libcurl-devel.x86_64 < 8.14.1-160000.8.1
+    libcurl4.x86_64 < 8.14.1-160000.8.1
+

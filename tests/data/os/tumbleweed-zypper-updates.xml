@@ -1,0 +1,18 @@
+<?xml version='1.0'?>
+<stream>
+<message type="info">Loading repository data...</message>
+<message type="info">Reading installed packages...</message>
+<update-status version="0.6">
+<update-list>
+<update kind="package" name="openSUSE-build-key" edition="1.0-69.1" arch="aarch64" edition-old="1.0-68.1"><summary>The public gpg keys for rpm package signature verification</summary><description>This package contains the gpg keys that are used to sign the
+openSUSE rpm packages. The keys installed here are not actually
+used by anything. rpm/zypper use the keys in the rpm db instead.</description><license/><source url="http://download.opensuse.org/ports/aarch64/update/tumbleweed/" alias="repo-update"/></update><update kind="package" name="update-test-reboot-needed" edition="5.2-2.1" arch="aarch64" edition-old="5.1-2.2"><summary>Test update that requires a system reboot</summary><description>Package for testing the update stack during product development.
+
+An update for this package should inform the user that a system
+reboot is necessary. This is used, for example, in kernel updates.</description><license/><source url="http://download.opensuse.org/ports/aarch64/update/tumbleweed/" alias="repo-update"/></update><update kind="package" name="update-test-security" edition="5.2-2.1" arch="aarch64" edition-old="5.1-2.2"><summary>Test update that includes security fixes</summary><description>Package for testing the update stack during product development.
+
+An update for this package should have its category set to
+&quot;security&quot;, indicating that one or more security vulnerabilities
+are being fixed.</description><license/><source url="http://download.opensuse.org/ports/aarch64/update/tumbleweed/" alias="repo-update"/></update></update-list>
+</update-status>
+</stream>
