@@ -214,6 +214,24 @@ class OsStatusStore {
 	}
 
 	/**
+	 * @return array<string, string> concern id => level last notified
+	 */
+	public function notifiedLevels(): array {
+		return array_filter(
+			$this->appConfig->getAppValueArray(ConfigLexicon::OS_NOTIFIED_LEVELS),
+			static fn (mixed $level, mixed $key): bool => is_string($key) && is_string($level),
+			ARRAY_FILTER_USE_BOTH,
+		);
+	}
+
+	/**
+	 * @param array<string, string> $levels
+	 */
+	public function setNotifiedLevels(array $levels): void {
+		$this->appConfig->setAppValueArray(ConfigLexicon::OS_NOTIFIED_LEVELS, $levels);
+	}
+
+	/**
 	 * @param list<string>|null $scope
 	 */
 	private function inScope(string $key, ?array $scope): bool {

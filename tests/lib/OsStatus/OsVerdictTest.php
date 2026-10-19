@@ -61,6 +61,7 @@ class OsVerdictTest extends \Test\TestCase {
 		$verdict = $this->evaluate($this->osStatus(), new PhpProcessSample(self::NOW, 'fpm-fcgi', [], 'php8.3-fpm', null));
 
 		$this->assertSame(Concern::LEVEL_OK, $verdict->level());
+		$this->assertSame([], $verdict->atLeast(Concern::LEVEL_INFO));
 	}
 
 	public static function dataSecurityUpdates(): array {
@@ -194,6 +195,7 @@ class OsVerdictTest extends \Test\TestCase {
 		$this->assertSame(Concern::LEVEL_INFO, $verdict->get(Concern::AUTOMATIC_UPDATES)?->level);
 		$this->assertSame(Concern::LEVEL_WARNING, $verdict->get(Concern::HELPER)?->level);
 		$this->assertSame(Concern::LEVEL_WARNING, $verdict->level());
+		$this->assertSame(Concern::FAILED_UNITS, $verdict->atLeast(Concern::LEVEL_WARNING)[0]->id);
 	}
 
 	public function testAHelperReportFromTheFutureIsWorthMentioning(): void {

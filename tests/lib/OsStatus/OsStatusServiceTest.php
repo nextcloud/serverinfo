@@ -9,10 +9,15 @@ declare(strict_types=1);
 
 namespace OCA\ServerInfo\Tests\OsStatus;
 
+use OCA\ServerInfo\OsStatus\Environment;
+use OCA\ServerInfo\OsStatus\OsRelease;
 use OCA\ServerInfo\OsStatus\OsStatus;
 use OCA\ServerInfo\OsStatus\OsStatusService;
 use OCA\ServerInfo\OsStatus\OsStatusStore;
+use OCA\ServerInfo\OsStatus\Packages\HeldPackage;
+use OCA\ServerInfo\OsStatus\Packages\PendingUpdate;
 use OCA\ServerInfo\OsStatus\Restart\PhpProcessProbe;
+use OCA\ServerInfo\OsStatus\Support\SupportStatus;
 use OCA\ServerInfo\OsStatus\Verdict\Concern;
 use OCA\ServerInfo\OsStatus\Verdict\OsVerdict;
 use OCP\AppFramework\Services\IAppConfig;
@@ -46,6 +51,56 @@ class OsStatusServiceTest extends \Test\TestCase {
 		$serverConfig->method('getValueInt')->willReturnCallback(static fn (string $app, string $key): int => $app === 'serverinfo' && $key === 'job_interval_os_status' ? 86400 : 0);
 
 		$this->service = new OsStatusService($this->store, new OsVerdict(), new PhpProcessProbe($this->host), $config, $time, $this->host, $serverConfig);
+	}
+
+	public function testTheMonitoringSummaryHasCountsButNoNames(): void {
+		$this->store->method('load')->willReturn(new OsStatus(
+			OsStatus::STATE_OK,
+			self::NOW - 60,
+			new OsRelease('ubuntu', ['debian'], 'Ubuntu', 'Ubuntu 24.04.3 LTS', '24.04', 'noble'),
+			'6.8.0-45-generic',
+			'x86_64',
+			new Environment(Environment::KIND_HOST, null, 'kvm'),
+			new SupportStatus(false, '2029-05-31'),
+			'apt',
+			[
+				new PendingUpdate('openssl', '1', '2', true, advisories: ['USN-7012-1'], since: self::NOW - 4 * 86400),
+				new PendingUpdate('tzdata', '1', '2', false),
+			],
+			OsStatus::SOURCE_SYSTEM,
+			true,
+			5,
+			[new HeldPackage('mariadb-server', 'apt-mark hold')],
+			self::NOW - 7200,
+			rebootReasons: [],
+			restartServices: null,
+			failedUnits: ['nginx.service'],
+			timeSynchronized: true,
+		));
+
+		$summary = $this->service->monitoringSummary();
+		$encoded = (string)json_encode($summary);
+
+		$this->assertSame('warning', $summary['level']);
+		$this->assertSame(['classified' => true, 'security' => 1, 'total' => 7, 'pendingDays' => 4, 'held' => 1], $summary['updates']);
+		$this->assertFalse($summary['rebootRequired']);
+		$this->assertNull($summary['servicesNeedRestart'], 'Unknown is null, never 0');
+		$this->assertSame(1, $summary['failedUnits']);
+		$this->assertSame(2, $summary['listsAgeHours']);
+		$this->assertSame('supported', $summary['support']['state']);
+		foreach (['openssl', 'USN-7012', 'mariadb', 'nginx'] as $secret) {
+			$this->assertStringNotContainsString($secret, $encoded);
+		}
+	}
+
+	public function testUnclassifiedDistributionsReportNoSecurityCount(): void {
+		$this->store->method('load')->willReturn(new OsStatus(OsStatus::STATE_OK, self::NOW, updates: [new PendingUpdate('linux', '1', '2', false)], securityClassified: false));
+
+		$this->assertNull($this->service->monitoringSummary()['updates']['security']);
+	}
+
+	public function testBeforeTheFirstCheck(): void {
+		$this->assertSame(['state' => 'pending', 'level' => 'unknown'], $this->service->monitoringSummary());
 	}
 
 	public function testOutdatedWhenPackagesChangedAfterTheCheck(): void {

@@ -13,6 +13,7 @@ use OCA\ServerInfo\Jobs\UpdateOsStatus;
 use OCA\ServerInfo\OsStatus\Host\IHost;
 use OCA\ServerInfo\OsStatus\Restart\PhpProcessProbe;
 use OCA\ServerInfo\OsStatus\Restart\PhpProcessSample;
+use OCA\ServerInfo\OsStatus\Verdict\Concern;
 use OCA\ServerInfo\OsStatus\Verdict\OsVerdict;
 use OCA\ServerInfo\OsStatus\Verdict\Thresholds;
 use OCA\ServerInfo\OsStatus\Verdict\Verdict;
@@ -94,5 +95,58 @@ class OsStatusService {
 		$changedAt = $this->host->modifiedAt($status->packageDatabase);
 
 		return $changedAt !== null && $changedAt > $status->collectedAt;
+	}
+
+	/**
+	 * Counts and flags for the monitoring API. Deliberately no package names,
+	 * versions or advisories: a leaked monitoring token must not become a list
+	 * of unpatched software. Unknown values are null, never 0 or false, so a
+	 * monitoring system cannot mistake "unknown" for "healthy".
+	 */
+	public function monitoringSummary(): array {
+		$status = $this->getStatus();
+		if ($status === null) {
+			return ['state' => 'pending', 'level' => Concern::LEVEL_UNKNOWN];
+		}
+		if ($status->state !== OsStatus::STATE_OK) {
+			return ['state' => $status->state, 'level' => Concern::LEVEL_UNKNOWN, 'collectedAt' => $status->collectedAt];
+		}
+
+		$now = $this->timeFactory->getTime();
+		$verdict = $this->evaluate($status);
+		$facts = static fn (string $id, string $fact): mixed => $verdict?->get($id)?->facts[$fact] ?? null;
+		$php = $this->getPhpSample();
+
+		return [
+			'state' => $status->state,
+			'level' => $verdict?->level() ?? Concern::LEVEL_UNKNOWN,
+			'collectedAt' => $status->collectedAt,
+			'outdated' => $this->isOutdated($status),
+			'name' => $status->release?->prettyName,
+			'kernel' => $status->kernel,
+			'environment' => $status->environment->kind,
+			'container' => $status->environment->container,
+			'updates' => [
+				'classified' => $status->securityClassified,
+				'security' => $status->updates === null || !$status->securityClassified ? null : count($status->securityUpdates() ?? []),
+				'total' => $status->updates === null ? null : count($status->updates) + $status->updatesOmitted,
+				'pendingDays' => $facts(Concern::UPDATES, 'days'),
+				'held' => $status->held === null ? null : count($status->held),
+			],
+			'rebootRequired' => $status->rebootReasons === null ? null : $status->rebootReasons !== [],
+			'rebootPendingDays' => $facts(Concern::REBOOT, 'days'),
+			'phpRestartRequired' => $php?->isOutdated(),
+			'servicesNeedRestart' => $status->restartServices === null ? null : count($status->restartServices),
+			'support' => [
+				'state' => $status->support->state($now),
+				'ends' => $status->support->effectiveEnd(),
+				'daysLeft' => $status->support->daysLeft($now),
+			],
+			'automaticUpdates' => $status->automaticUpdates->state,
+			'listsAgeHours' => $status->listsRefreshedAt === null ? null : intdiv(max(0, $now - $status->listsRefreshedAt), 3600),
+			'timeSynchronized' => $status->timeSynchronized,
+			'failedUnits' => $status->failedUnits === null ? null : count($status->failedUnits),
+			'helper' => $status->helper->state,
+		];
 	}
 }
