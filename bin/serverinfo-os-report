@@ -1,0 +1,443 @@
+#!/bin/sh
+# SPDX-FileCopyrightText: 2026 Nextcloud GmbH and Nextcloud contributors
+# SPDX-License-Identifier: AGPL-3.0-or-later
+#
+# serverinfo-os-report: optional root helper for the Nextcloud Monitoring app.
+#
+# The Monitoring app runs as the web server user, which can see most of the
+# operating system status by itself. This helper adds what only root can see:
+#
+#   - services still running code that an upgrade replaced (needrestart,
+#     dnf needs-restarting, zypper ps, or a scan of /proc as a fallback)
+#   - fresh package lists (--refresh), so pending updates are current
+#   - pending dnf updates, which dnf 5 does not tell other users
+#   - SUSE LTSS registration
+#
+# It only reads the system and writes one JSON file. It never installs,
+# upgrades, restarts or reboots anything.
+#
+# Install it outside the Nextcloud directory, which the web server can write
+# to, so that the web server can never change what root runs:
+#
+#   sudo install -o root -g root -m 0755 apps/serverinfo/bin/serverinfo-os-report /usr/local/sbin/
+#   echo '17 */6 * * * root /usr/local/sbin/serverinfo-os-report --refresh' | sudo tee /etc/cron.d/serverinfo-os-report
+#
+# Report format (schema 1), all fields but the first five optional:
+#   schema, helperVersion, generatedAt (unix time), hostname, bootTime (unix time),
+#   distribution, listsRefreshedAt (unix time, after a successful --refresh),
+#   pendingUpdates (list of {name, installed, candidate, security, origin,
+#   advisories, severity}, null when not collected),
+#   restartServices (list of systemd units, null when unknown),
+#   rebootReasons (list of {kind: kernel|microcode, detail}),
+#   subscription ({kind, active}), errors (list of strings)
+
+set -u
+# Command output is split into words in places; it must never be expanded as
+# a file name pattern.
+set -f
+umask 022
+
+PATH=/usr/local/sbin:/usr/local/bin:/usr/sbin:/usr/bin:/sbin:/bin
+LC_ALL=C
+LANG=C
+export PATH LC_ALL LANG
+
+VERSION=1.0.0
+SCHEMA=1
+OUTPUT=/var/lib/serverinfo/os-report.json
+REFRESH=0
+DRY_RUN=0
+ERRORS=
+SERVICES=
+REBOOT_REASONS=
+
+# Architectures that end a package name in the output of the rpm tools.
+RPM_ARCHES='x86_64|aarch64|i[3-6]86|noarch|ppc64le|s390x|armv7hl|riscv64'
+
+usage() {
+	cat <<EOF
+Usage: serverinfo-os-report [--refresh] [--output FILE] [--dry-run]
+
+Writes the operating system report the Nextcloud Monitoring app reads.
+
+  --refresh      refresh the package lists first (apt-get update, dnf makecache, ...)
+  --output FILE  where to write the report (default: $OUTPUT)
+  --dry-run      print the report instead of writing it
+  --version      print the version and exit
+  --help         show this help
+EOF
+}
+
+die() {
+	printf 'serverinfo-os-report: %s\n' "$1" >&2
+	exit 1
+}
+
+# Records a problem for the report. Only printable ASCII is kept, so the
+# message can be placed in JSON after escaping quotes and backslashes.
+note_error() {
+	message=$(printf '%s' "$1" | tr -c '\040-\176' ' ' | cut -c1-300)
+	ERRORS="$ERRORS$message
+"
+}
+
+json_text() {
+	printf '"%s"' "$(printf '%s' "$1" | sed -e 's/\\/\\\\/g' -e 's/"/\\"/g')"
+}
+
+# Package, unit and version tokens are emitted only when they consist of
+# characters that need no escaping in JSON; anything else is dropped.
+is_token() {
+	case "$1" in
+		'' | *[!A-Za-z0-9@._+:~^-]*) return 1 ;;
+		*) return 0 ;;
+	esac
+}
+
+run_limited() {
+	limit=$1
+	shift
+	if command -v timeout >/dev/null 2>&1; then
+		timeout "$limit" "$@"
+	else
+		"$@"
+	fi
+}
+
+os_value() {
+	sed -n "s/^$1=//p" /etc/os-release 2>/dev/null | head -n 1 | tr -d "\"'"
+}
+
+add_service() {
+	unit=$1
+	case "$unit" in
+		*.service) ;;
+		*) unit="$unit.service" ;;
+	esac
+	is_token "$unit" || return 0
+	case "
+$SERVICES" in
+		*"
+$unit
+"*) return 0 ;;
+	esac
+	SERVICES="$SERVICES$unit
+"
+}
+
+# One unit per line.
+add_services() {
+	while IFS= read -r unit; do
+		unit=$(printf '%s' "$unit" | tr -d ' \t\r')
+		[ -n "$unit" ] && add_service "$unit"
+	done <<EOF
+$1
+EOF
+}
+
+add_reboot_reason() {
+	kind=$1
+	detail=$2
+	if is_token "$detail"; then
+		item="{\"kind\":\"$kind\",\"detail\":\"$detail\"}"
+	else
+		item="{\"kind\":\"$kind\",\"detail\":null}"
+	fi
+	REBOOT_REASONS="${REBOOT_REASONS:+$REBOOT_REASONS,}$item"
+}
+
+from_needrestart() {
+	command -v needrestart >/dev/null 2>&1 || return 1
+	output=$(run_limited 300 needrestart -b -r l 2>/dev/null) || return 1
+	printf '%s\n' "$output" | grep -q '^NEEDRESTART-VER:' || return 1
+
+	add_services "$(printf '%s\n' "$output" | sed -n 's/^NEEDRESTART-SVC: *//p')"
+
+	kernel_status=$(printf '%s\n' "$output" | sed -n 's/^NEEDRESTART-KSTA: *//p')
+	expected=$(printf '%s\n' "$output" | sed -n 's/^NEEDRESTART-KEXP: *//p')
+	case "$kernel_status" in
+		2 | 3) add_reboot_reason kernel "$expected" ;;
+	esac
+	microcode_status=$(printf '%s\n' "$output" | sed -n 's/^NEEDRESTART-UCSTA: *//p')
+	[ "$microcode_status" = 2 ] && add_reboot_reason microcode ''
+	return 0
+}
+
+from_dnf() {
+	command -v dnf >/dev/null 2>&1 || return 1
+	output=$(run_limited 300 dnf -q needs-restarting -s 2>/dev/null) || return 1
+	add_services "$output"
+	return 0
+}
+
+from_zypper() {
+	command -v zypper >/dev/null 2>&1 || return 1
+	# Exits 4 without lsof; the /proc scan then answers instead.
+	output=$(run_limited 300 zypper --non-interactive --quiet ps -sss 2>/dev/null) || return 1
+	add_services "$output"
+	return 0
+}
+
+# Fallback for any systemd distribution: processes that map a library which
+# has been deleted since, attributed to their systemd unit.
+from_proc() {
+	[ -d /proc/1 ] || return 1
+	set +f
+	directories=$(printf '%s\n' /proc/[0-9]*)
+	set -f
+	for dir in $directories; do
+		[ -r "$dir/maps" ] || continue
+		awk '
+			/ \(deleted\)$/ && $6 ~ /\.so/ && $6 !~ /^\/(dev|memfd:|tmp|var\/tmp|run|proc|SYSV)/ { found = 1; exit }
+			END { exit found ? 0 : 1 }
+		' "$dir/maps" 2>/dev/null || continue
+		unit=$(sed -n \
+			-e 's#^0::/.*/\([^/]*\.service\)$#\1#p' \
+			-e 's#^[0-9]*:name=systemd:/.*/\([^/]*\.service\)$#\1#p' \
+			"$dir/cgroup" 2>/dev/null | head -n 1)
+		case "$unit" in
+			'' | user@*) continue ;;
+		esac
+		add_service "$unit"
+	done
+	return 0
+}
+
+# Prints pending dnf updates as a JSON list, from the output of
+# `dnf check-update` ($1), the security advisory list of dnf 4 or 5 ($2) and
+# `rpm -qa` with name and epoch:version-release ($3). Values that are not
+# plain tokens are dropped, so nothing needs escaping.
+dnf_updates_json() {
+	{
+		printf '%s\n' "$3" | sed 's/^/I /'
+		printf '%s\n' "$2" | sed 's/^/A /'
+		printf '%s\n' "$1" | sed 's/^/U /'
+	} | awk -v arches="$RPM_ARCHES" '
+		function token(s) { return s ~ /^[A-Za-z0-9@._+:~^-]+$/ }
+		function strip_arch(s) { sub("\\.(" arches ")$", "", s); return s }
+		function rank(s) {
+			s = tolower(s)
+			return s == "critical" ? 4 : s == "important" ? 3 : s == "moderate" ? 2 : s == "low" ? 1 : 0
+		}
+		$1 == "I" && NF == 3 { version = $3; sub(/^0:/, "", version); installed[$2] = version; next }
+		$1 == "A" {
+			if ($3 ~ /\/Sec\.$/) { severity = $3; sub(/\/Sec\.$/, "", severity); nevra = $4 }
+			else if ($3 == "security") { severity = $4; nevra = $5 }
+			else next
+			if (!token($2) || !token(nevra)) next
+			name = strip_arch(nevra)
+			sub(/-[^-]+-[^-]+$/, "", name)
+			if (!((name, $2) in seen)) {
+				seen[name, $2] = 1
+				ids[name] = ids[name] (ids[name] == "" ? "" : ",") "\"" $2 "\""
+			}
+			if (severity ~ /^[A-Za-z]+$/ && rank(severity) > rank(highest[name])) highest[name] = severity
+			next
+		}
+		$1 == "U" && $2 ~ /^Obsoleting/ { stop = 1 }
+		$1 == "U" && !stop && NF == 4 && $2 ~ ("\\.(" arches ")$") {
+			if (!token($2) || !token($3) || !token($4)) next
+			name = strip_arch($2)
+			out = out (count++ ? "," : "") sprintf("{\"name\":\"%s\",\"installed\":%s,\"candidate\":\"%s\",\"security\":%s,\"origin\":\"%s\",\"advisories\":[%s],\"severity\":%s}",
+				name,
+				(name in installed) ? "\"" installed[name] "\"" : "null",
+				$3,
+				(name in ids) ? "true" : "false",
+				$4,
+				ids[name],
+				(name in highest) ? "\"" highest[name] "\"" : "null")
+		}
+		END { printf "[%s]", out }
+	'
+}
+
+dnf_pending_updates() {
+	command -v dnf >/dev/null 2>&1 || return 1
+	updates=$(run_limited 600 dnf -q --cacheonly check-update 2>/dev/null)
+	case $? in
+		0) printf '[]'; return 0 ;;
+		100) ;;
+		*) return 1 ;;
+	esac
+	if command -v dnf5 >/dev/null 2>&1; then
+		advisories=$(run_limited 600 dnf -q --cacheonly advisory list --security 2>/dev/null) || return 1
+	else
+		advisories=$(run_limited 600 dnf -q --cacheonly updateinfo list --security --available 2>/dev/null) || return 1
+	fi
+	installed=$(rpm -qa --qf '%{NAME} %{EPOCHNUM}:%{VERSION}-%{RELEASE}\n' 2>/dev/null) || return 1
+	dnf_updates_json "$updates" "$advisories" "$installed"
+}
+
+main() {
+	while [ $# -gt 0 ]; do
+		case "$1" in
+			--refresh) REFRESH=1 ;;
+			--dry-run) DRY_RUN=1 ;;
+			--output)
+				[ $# -ge 2 ] || die '--output needs a file name'
+				OUTPUT=$2
+				shift
+				;;
+			--output=*) OUTPUT=${1#--output=} ;;
+			--version) echo "$VERSION"; exit 0 ;;
+			--help | -h) usage; exit 0 ;;
+			*) usage >&2; exit 1 ;;
+		esac
+		shift
+	done
+
+	case "$OUTPUT" in
+		/*.json) ;;
+		*) die 'the output must be an absolute path ending in .json' ;;
+	esac
+	case "$OUTPUT" in
+		*/../* | */./* | *[!A-Za-z0-9._/-]*) die 'the output path may only contain letters, digits, dots, dashes, underscores and slashes' ;;
+	esac
+
+	[ "$(id -u)" -eq 0 ] || die 'must run as root'
+	cd / || exit 1
+
+	# --- identity -----------------------------------------------------------
+
+	HOSTNAME_VALUE=$(hostname 2>/dev/null || cat /proc/sys/kernel/hostname 2>/dev/null)
+	is_token "$HOSTNAME_VALUE" || die 'the host name could not be determined'
+
+	BOOT_TIME=$(awk '/^btime / { print $2 }' /proc/stat 2>/dev/null)
+	case "$BOOT_TIME" in
+		'' | *[!0-9]*) BOOT_TIME=null ;;
+	esac
+
+	DISTRO_ID=$(os_value ID)
+	DISTRO_LIKE=$(os_value ID_LIKE)
+	is_token "$DISTRO_ID" || DISTRO_ID=unknown
+
+	case " $DISTRO_ID $DISTRO_LIKE " in
+		*' debian '* | *' ubuntu '*) FAMILY=apt ;;
+		*' suse '* | *' opensuse'* | *' sles '*) FAMILY=zypper ;;
+		*' fedora '* | *' rhel '* | *' centos '* | *' amzn '*) FAMILY=dnf ;;
+		*' arch '*) FAMILY=pacman ;;
+		*' alpine '*) FAMILY=apk ;;
+		*) FAMILY=unknown ;;
+	esac
+
+	# --- package lists ------------------------------------------------------
+
+	LISTS_REFRESHED_AT=null
+	if [ "$REFRESH" -eq 1 ]; then
+		refreshed=0
+		case "$FAMILY" in
+			apt) run_limited 900 apt-get update -qq -o DPkg::Lock::Timeout=300 >/dev/null 2>&1 && refreshed=1 ;;
+			dnf) run_limited 900 dnf -q makecache >/dev/null 2>&1 && refreshed=1 ;;
+			zypper) run_limited 900 zypper --non-interactive --quiet refresh >/dev/null 2>&1 && refreshed=1 ;;
+			apk) run_limited 900 apk update -q >/dev/null 2>&1 && refreshed=1 ;;
+			# pacman -Sy without -u leaves Arch half upgraded; checkupdates, which
+			# the app runs itself, syncs into a private database instead.
+			*) refreshed=2 ;;
+		esac
+		case "$refreshed" in
+			1) LISTS_REFRESHED_AT=$(date +%s) ;;
+			0) note_error "Refreshing the package lists with $FAMILY failed." ;;
+		esac
+	fi
+
+	PENDING=null
+	if [ "$FAMILY" = dnf ]; then
+		PENDING=$(dnf_pending_updates) || {
+			PENDING=null
+			note_error 'Pending updates could not be listed with dnf.'
+		}
+	fi
+
+	# --- services that need a restart ---------------------------------------
+
+	services_known=0
+	case "$FAMILY" in
+		apt) from_needrestart && services_known=1 ;;
+		dnf) from_dnf && services_known=1 ;;
+		zypper) from_zypper && services_known=1 ;;
+	esac
+	if [ "$services_known" -eq 0 ]; then
+		from_proc && services_known=1
+	fi
+	[ "$services_known" -eq 1 ] || note_error 'Services that need a restart could not be determined.'
+
+	# --- subscriptions ------------------------------------------------------
+
+	SUBSCRIPTION=null
+	if [ "$FAMILY" = zypper ] && command -v SUSEConnect >/dev/null 2>&1; then
+		status=$(run_limited 120 SUSEConnect --status 2>/dev/null | tr -d ' \n')
+		case "$status" in
+			*'"identifier":"SLES-LTSS"'*'"status":"Registered"'*) SUBSCRIPTION='{"kind":"suse-ltss","active":true}' ;;
+			'['*) SUBSCRIPTION='{"kind":"suse-ltss","active":false}' ;;
+		esac
+	fi
+
+	# --- report -------------------------------------------------------------
+
+	services_json=null
+	if [ "$services_known" -eq 1 ]; then
+		services_json=$(printf '%s' "$SERVICES" | awk 'NF { printf "%s\"%s\"", (n++ ? "," : ""), $0 }')
+		services_json="[$services_json]"
+	fi
+
+	errors_json=
+	old_ifs=$IFS
+	IFS='
+'
+	for message in $ERRORS; do
+		errors_json="${errors_json:+$errors_json,}$(json_text "$message")"
+	done
+	IFS=$old_ifs
+
+	REPORT=$(cat <<EOF
+{
+  "schema": $SCHEMA,
+  "helperVersion": "$VERSION",
+  "generatedAt": $(date +%s),
+  "hostname": "$HOSTNAME_VALUE",
+  "bootTime": $BOOT_TIME,
+  "distribution": "$DISTRO_ID",
+  "listsRefreshedAt": $LISTS_REFRESHED_AT,
+  "pendingUpdates": $PENDING,
+  "restartServices": $services_json,
+  "rebootReasons": [$REBOOT_REASONS],
+  "subscription": $SUBSCRIPTION,
+  "errors": [$errors_json]
+}
+EOF
+)
+
+	if [ "$DRY_RUN" -eq 1 ]; then
+		printf '%s\n' "$REPORT"
+		exit 0
+	fi
+
+	# The directory must be root's alone: anyone who can write to it could swap
+	# the report, or plant a symlink for root to write through.
+	directory=$(dirname "$OUTPUT")
+	[ -L "$directory" ] && die "$directory is a symbolic link"
+	if [ ! -d "$directory" ]; then
+		# Parent directories get 0755 from the umask set above.
+		# shellcheck disable=SC2174
+		mkdir -p -m 0755 "$directory" || die "cannot create $directory"
+	fi
+	for path in "$directory" "$(dirname "$directory")"; do
+		[ "$(stat -c %u "$path")" = 0 ] || die "$path must be owned by root"
+		case "$(stat -c %a "$path")" in
+			*[2367]? | *[2367]) die "$path must not be writable by group or others" ;;
+		esac
+	done
+
+	temporary=$(mktemp "$directory/.os-report.XXXXXX") || die "cannot write to $directory"
+	trap 'rm -f "$temporary"' EXIT
+	printf '%s\n' "$REPORT" > "$temporary" || die "cannot write $temporary"
+	chmod 0644 "$temporary"
+	# rename(2) replaces a symbolic link at the target instead of following it.
+	mv -f "$temporary" "$OUTPUT" || die "cannot replace $OUTPUT"
+	trap - EXIT
+}
+
+# Tests load the functions above without running anything.
+if [ "${SERVERINFO_OS_REPORT_FUNCTIONS_ONLY:-}" != 1 ]; then
+	main "$@"
+fi

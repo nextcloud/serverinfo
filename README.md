@@ -66,6 +66,28 @@ Release support dates are bundled with the app (see
 `build/update-os-support.php`, data from [endoflife.date](https://endoflife.date),
 MIT License); the app never looks them up online.
 
+### Root helper
+
+The web server cannot see everything: only root can tell which services still
+run code an update replaced, and only root can refresh the package lists. The
+optional script `bin/serverinfo-os-report` adds that. Run as root, it writes a
+small JSON report that the app reads. It only reads the system; it never
+installs, upgrades, restarts or reboots anything.
+
+Install it outside the Nextcloud directory: the web server can write there, so
+a root cron job pointing into it would hand the web server root.
+
+```
+sudo install -o root -g root -m 0755 apps/serverinfo/bin/serverinfo-os-report /usr/local/sbin/
+echo '17 */6 * * * root /usr/local/sbin/serverinfo-os-report --refresh' | sudo tee /etc/cron.d/serverinfo-os-report
+```
+
+The report is written to `/var/lib/serverinfo/os-report.json`. Use
+`--output` and `occ config:app:set serverinfo os_helper_report_path --value …`
+to put it elsewhere. The app ignores a report that anyone but root could have
+written, one written before the last reboot or on another host, and one older
+than 26 hours.
+
 ## API
 
 The API provides a lot of information about a running Nextcloud

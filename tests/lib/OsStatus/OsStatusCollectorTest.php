@@ -15,6 +15,8 @@ use OCA\ServerInfo\OsStatus\EnvironmentDetector;
 use OCA\ServerInfo\OsStatus\Health\SecurityProbe;
 use OCA\ServerInfo\OsStatus\Health\SystemdProbe;
 use OCA\ServerInfo\OsStatus\Health\TimeSyncProbe;
+use OCA\ServerInfo\OsStatus\Helper\HelperReportReader;
+use OCA\ServerInfo\OsStatus\Helper\HelperState;
 use OCA\ServerInfo\OsStatus\OsStatus;
 use OCA\ServerInfo\OsStatus\OsStatusCollector;
 use OCA\ServerInfo\OsStatus\OsStatusStore;
@@ -87,6 +89,7 @@ class OsStatusCollectorTest extends \Test\TestCase {
 			$systemd,
 			$this->timeSync ?? new TimeSyncProbe($host),
 			new SecurityProbe($host),
+			new HelperReportReader($host),
 			new OsStatusStore($appConfig, $this->appData(), $cacheFactory),
 			$this->createMock(LoggerInterface::class),
 		);
@@ -155,11 +158,13 @@ class OsStatusCollectorTest extends \Test\TestCase {
 		$this->assertSame(self::NOW, $status->updates[0]->since);
 		$this->assertSame(RebootReason::KIND_DISTRIBUTION, $status->rebootReasons[0]->kind);
 		$this->assertSame(self::NOW - 2 * 86400, $status->rebootReasons[0]->since);
+		$this->assertNull($status->restartServices, 'Without the helper other services are unknown');
 		$this->assertSame(SupportStatus::STATE_SUPPORTED, $status->support->state(self::NOW));
 		$this->assertFalse($status->support->extendedActive);
 		$this->assertSame(self::NOW - 3600, $status->listsRefreshedAt);
 		$this->assertSame([], $status->failedUnits);
 		$this->assertTrue($status->timeSynchronized);
+		$this->assertSame(HelperState::STATE_ABSENT, $status->helper->state);
 		$this->assertSame(self::BOOT, $status->bootTime);
 	}
 
@@ -209,6 +214,43 @@ class OsStatusCollectorTest extends \Test\TestCase {
 		$this->assertNull($status->updates);
 		$this->assertNull($status->rebootReasons);
 		$this->assertNotContains('apt-get -s -o Debug::NoLocking=1 dist-upgrade', $this->host->ran);
+	}
+
+	public function testHelperFillsWhatTheWebServerCannotSee(): void {
+		$this->withPendingUpdates();
+		$this->host->owners[HelperReportReader::DEFAULT_PATH] = ['owner' => 0, 'mode' => 0o100644];
+		$this->host->owners['/var/lib/serverinfo'] = ['owner' => 0, 'mode' => 0o40755];
+		$this->host->withFile(HelperReportReader::DEFAULT_PATH, (string)json_encode([
+			'schema' => 1, 'helperVersion' => '1.0.0', 'generatedAt' => self::NOW - 600, 'hostname' => 'cloud.example.org',
+			'bootTime' => self::BOOT, 'listsRefreshedAt' => self::NOW - 600,
+			'restartServices' => ['php8.3-fpm.service'],
+			'rebootReasons' => [['kind' => 'microcode', 'detail' => null]],
+		]));
+
+		$status = $this->collector()->collect();
+
+		$this->assertSame(HelperState::STATE_OK, $status->helper->state);
+		$this->assertSame('php8.3-fpm.service', $status->restartServices[0]->unit);
+		$this->assertSame(self::NOW, $status->restartServices[0]->since);
+		$this->assertSame(self::NOW - 600, $status->listsRefreshedAt);
+		$this->assertContains(RebootReason::KIND_MICROCODE, array_map(static fn ($r) => $r->kind, $status->rebootReasons ?? []));
+	}
+
+	public function testUpdatesFromTheHelperWhenTheWebServerCannotAsk(): void {
+		$this->host->owners[HelperReportReader::DEFAULT_PATH] = ['owner' => 0, 'mode' => 0o100644];
+		$this->host->owners['/var/lib/serverinfo'] = ['owner' => 0, 'mode' => 0o40755];
+		$this->host->withFile(HelperReportReader::DEFAULT_PATH, (string)json_encode([
+			'schema' => 1, 'helperVersion' => '1.0.0', 'generatedAt' => self::NOW - 600, 'hostname' => 'cloud.example.org',
+			'bootTime' => self::BOOT,
+			'pendingUpdates' => [['name' => 'openssl', 'installed' => '1', 'candidate' => '2', 'security' => true]],
+		]));
+
+		$status = $this->collector()->collect();
+
+		$this->assertNull($status->packageManager, 'apt-get is not available to the web server here');
+		$this->assertSame(OsStatus::SOURCE_HELPER, $status->updatesSource);
+		$this->assertSame('openssl', $status->updates[0]->name);
+		$this->assertContains('No supported package manager was found for Ubuntu 24.04.3 LTS.', $status->diagnostics);
 	}
 
 	public function testFailuresBecomeDiagnostics(): void {
