@@ -18,3 +18,6 @@ require_once __DIR__ . '/../../../lib/base.php';
 require_once __DIR__ . '/../../../tests/autoload.php';
 
 Server::get(IAppManager::class)->loadApp('serverinfo');
+
+// Shared test double, not a test case, so PHPUnit does not load it on its own.
+require_once __DIR__ . '/lib/OsStatus/FakeHost.php';

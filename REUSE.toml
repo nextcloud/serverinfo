@@ -28,3 +28,9 @@ path = "css/**.css"
 precedence = "aggregate"
 SPDX-FileCopyrightText = "Nextcloud GmbH and Nextcloud contributors"
 SPDX-License-Identifier = "AGPL-3.0-or-later"
+
+[[annotations]]
+path = "resources/os-support.json"
+precedence = "aggregate"
+SPDX-FileCopyrightText = "2020 endoflife.date contributors"
+SPDX-License-Identifier = "MIT"

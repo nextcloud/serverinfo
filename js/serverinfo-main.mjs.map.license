@@ -66,19 +66,19 @@ This file is generated from multiple sources. Included packages:
 	- version: 4.1.0
 	- license: MIT
 - @vitejs/plugin-vue
-	- version: 6.0.7
+	- version: 6.0.10
 	- license: MIT
 - @vue/reactivity
-	- version: 3.5.44
+	- version: 3.5.43
 	- license: MIT
 - @vue/runtime-core
-	- version: 3.5.44
+	- version: 3.5.43
 	- license: MIT
 - @vue/runtime-dom
-	- version: 3.5.44
+	- version: 3.5.43
 	- license: MIT
 - @vue/shared
-	- version: 3.5.44
+	- version: 3.5.43
 	- license: MIT
 - @vueuse/core
 	- version: 14.4.0
@@ -93,7 +93,7 @@ This file is generated from multiple sources. Included packages:
 	- version: 4.5.1
 	- license: MIT
 - dompurify
-	- version: 3.4.17
+	- version: 3.4.16
 	- license: (MPL-2.0 OR Apache-2.0)
 - escape-html
 	- version: 1.0.3
@@ -108,13 +108,13 @@ This file is generated from multiple sources. Included packages:
 	- version: 7.8.5
 	- license: ISC
 - serverinfo
-	- version: 8.0.0-dev.0
+	- version: 8.0.0-dev.1
 	- license: AGPL-3.0-or-later
 - tabbable
 	- version: 6.5.0
 	- license: MIT
 - vite
-	- version: 7.3.7
+	- version: 7.3.6
 	- license: MIT
 - vite-plugin-node-polyfills
 	- version: 0.28.0
@@ -123,7 +123,7 @@ This file is generated from multiple sources. Included packages:
 	- version: 5.3.4
 	- license: MIT
 - vue-material-design-icons
-	- version: 5.4.0
+	- version: 5.3.1
 	- license: MIT
 - vue-router
 	- version: 5.3.1
