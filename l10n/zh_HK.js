@@ -235,7 +235,7 @@ OC.L10N.register(
     "Not supported!" : "不支援！",
     "Press ⌘-C to copy." : "請按【⌘-C】以複製。",
     "Press Ctrl-C to copy." : "請按【Ctrl-C】以複製。",
-    "threads" : "主題",
+    "%1$s (%2$d threads)" : "%1$s（%2$d 條討論串）",
     "Memory:" : "記憶體：",
     "Files:" : "檔案：",
     "Storages:" : "儲存設備：",
@@ -252,7 +252,6 @@ OC.L10N.register(
     "Skip apps section (including apps section will send an external request to the app store)" : "略過應用程式部分（包括此部分將向應用商店發送外部請求）。",
     "To use an access token, please generate one then set it using the following command:" : "要使用存取權杖，請生成一個權杖，然後使用以下命令對其進行設置：",
     "Then pass the token with the \"NC-Token\" header when querying the above URL." : "然後在查詢上述 URL 時將權杖與 “ NC-Token” 標頭一起傳遞。",
-    "%1$s (%2$d threads)" : "%1$s（%2$d 條討論串）",
     "DNS:" : "DNS："
 },
 "nplurals=1; plural=0;");

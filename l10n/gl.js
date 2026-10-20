@@ -138,7 +138,6 @@ OC.L10N.register(
     "Not supported!" : "Non admitido!",
     "Press ⌘-C to copy." : "Prema ⌘-C para copiar.",
     "Press Ctrl-C to copy." : "Prema Ctrl-C para copiar.",
-    "threads" : "fíos",
     "Memory:" : "Memoria:",
     "Files:" : "Ficheiros:",
     "Storages:" : "Almacenamentos:",

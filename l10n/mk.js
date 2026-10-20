@@ -210,7 +210,7 @@ OC.L10N.register(
     "Not supported!" : "Не е поддржано!",
     "Press ⌘-C to copy." : "Притисни ⌘-C за да копираш",
     "Press Ctrl-C to copy." : "Притисни Ctrl-C за да копираш.",
-    "threads" : "нишки",
+    "%1$s (%2$d threads)" : "%1$s (%2$d нишки)",
     "Memory:" : "Меморија:",
     "Files:" : "Датотеки:",
     "Storages:" : "Складишта:",
@@ -227,7 +227,6 @@ OC.L10N.register(
     "Skip apps section (including apps section will send an external request to the app store)" : "Прескокни го делот со апликации (вклучувањето на делот со апликации ќе испрати надворешно барање до продавницата за апликации)",
     "To use an access token, please generate one then set it using the following command:" : "За да користите токен за пристап, ве молиме генерирајте еден, а потоа поставете го користејќи ја следнава команда:",
     "Then pass the token with the \"NC-Token\" header when querying the above URL." : "Потоа поминете го токенот со заглавието „NC-Token“ кога го барате горното URL.",
-    "%1$s (%2$d threads)" : "%1$s (%2$d нишки)",
     "DNS:" : "DNS:"
 },
 "nplurals=2; plural=(n % 10 == 1 && n % 100 != 11) ? 0 : 1;");

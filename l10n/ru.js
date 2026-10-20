@@ -235,7 +235,7 @@ OC.L10N.register(
     "Not supported!" : "Не поддерживается!",
     "Press ⌘-C to copy." : "Нажмите ⌘-C, чтобы скопировать.",
     "Press Ctrl-C to copy." : "Нажмите Ctrl-C, чтобы скопировать.",
-    "threads" : "потоков",
+    "%1$s (%2$d threads)" : "%1$s (потоков: %2$d)",
     "Memory:" : "Память:",
     "Files:" : "Файлы:",
     "Storages:" : "Хранилища:",
@@ -252,7 +252,6 @@ OC.L10N.register(
     "Skip apps section (including apps section will send an external request to the app store)" : "Пропустить раздел приложений (если его включить, сервер отправит внешний запрос в магазин приложений)",
     "To use an access token, please generate one then set it using the following command:" : "Чтобы использовать токен доступа, создайте его и сохраните следующей командой:",
     "Then pass the token with the \"NC-Token\" header when querying the above URL." : "Затем передавайте токен в заголовке «NC-Token» при запросе к указанному выше URL.",
-    "%1$s (%2$d threads)" : "%1$s (потоков: %2$d)",
     "DNS:" : "DNS:"
 },
 "nplurals=4; plural=(n%10==1 && n%100!=11 ? 0 : n%10>=2 && n%10<=4 && (n%100<12 || n%100>14) ? 1 : n%10==0 || (n%10>=5 && n%10<=9) || (n%100>=11 && n%100<=14)? 2 : 3);");

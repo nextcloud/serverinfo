@@ -235,7 +235,7 @@ OC.L10N.register(
     "Not supported!" : "Not supported!",
     "Press ⌘-C to copy." : "Press ⌘-C to copy.",
     "Press Ctrl-C to copy." : "Press Ctrl-C to copy.",
-    "threads" : "threads",
+    "%1$s (%2$d threads)" : "%1$s (%2$d threads)",
     "Memory:" : "Memory:",
     "Files:" : "Files:",
     "Storages:" : "Storages:",
@@ -252,7 +252,6 @@ OC.L10N.register(
     "Skip apps section (including apps section will send an external request to the app store)" : "Skip apps section (including apps section will send an external request to the app store)",
     "To use an access token, please generate one then set it using the following command:" : "To use an access token, please generate one then set it using the following command:",
     "Then pass the token with the \"NC-Token\" header when querying the above URL." : "Then pass the token with the \"NC-Token\" header when querying the above URL.",
-    "%1$s (%2$d threads)" : "%1$s (%2$d threads)",
     "DNS:" : "DNS:"
 },
 "nplurals=2; plural=(n != 1);");

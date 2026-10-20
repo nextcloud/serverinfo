@@ -124,7 +124,6 @@ OC.L10N.register(
     "Not supported!" : "Haitumiki!",
     "Press ⌘-C to copy." : "Bonyeza ⌘-C ili kunakili.",
     "Press Ctrl-C to copy." : "Bonyeza Ctrl-C ili kunakili.",
-    "threads" : "nyuzi",
     "Memory:" : "Kumbukumbu:",
     "Files:" : "Faili:",
     "Storages:" : "Hifadhi:",

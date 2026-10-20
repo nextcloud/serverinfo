@@ -235,7 +235,7 @@ OC.L10N.register(
     "Not supported!" : "対応していません！",
     "Press ⌘-C to copy." : "⌘-C でコピーします。",
     "Press Ctrl-C to copy." : "Ctrl-Cを押してコピーします。",
-    "threads" : "スレッド",
+    "%1$s (%2$d threads)" : "%1$s(%2$dスレッド)",
     "Memory:" : "メモリ:",
     "Files:" : "ファイル数:",
     "Storages:" : "ストレージ：",
@@ -252,7 +252,6 @@ OC.L10N.register(
     "Skip apps section (including apps section will send an external request to the app store)" : "アプリセクションをスキップする（アプリセクションを含むとアプリストアに外部リクエストが送信される）",
     "To use an access token, please generate one then set it using the following command:" : "アクセストークンを使用するには、アクセストークンを生成し、以下のコマンドで設定してください。",
     "Then pass the token with the \"NC-Token\" header when querying the above URL." : "次に、上記のURLをクエリするときに、\"NC-Token\" ヘッダーでトークンを渡します。",
-    "%1$s (%2$d threads)" : "%1$s(%2$dスレッド)",
     "DNS:" : "DNS:"
 },
 "nplurals=1; plural=0;");

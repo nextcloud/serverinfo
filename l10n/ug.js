@@ -127,7 +127,6 @@ OC.L10N.register(
     "Not supported!" : "قوللىمايدۇ!",
     "Press ⌘-C to copy." : "كۆچۈرۈش ئۈچۈن ⌘-C نى بېسىڭ.",
     "Press Ctrl-C to copy." : "كۆچۈرۈش ئۈچۈن Ctrl-C نى بېسىڭ.",
-    "threads" : "يىپلار",
     "Memory:" : "ئەستە ساقلاش:",
     "Files:" : "ھۆججەتلەر:",
     "Storages:" : "دۇكانلار:",

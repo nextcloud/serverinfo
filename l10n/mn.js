@@ -235,7 +235,7 @@ OC.L10N.register(
     "Not supported!" : "Дэмжигдэхгүй",
     "Press ⌘-C to copy." : "Хуулахын тулд ⌘-C дарна уу.",
     "Press Ctrl-C to copy." : "Хуулахын тулд Ctrl-C дарна уу.",
-    "threads" : "thread-ууд",
+    "%1$s (%2$d threads)" : "%1$s (%2$d урсгал)",
     "Memory:" : "Санах ой:",
     "Files:" : "Файлууд:",
     "Storages:" : "Санах ойнууд:",
@@ -252,7 +252,6 @@ OC.L10N.register(
     "Skip apps section (including apps section will send an external request to the app store)" : "Аппуудын хэсгийг алгасах (аппуудын хэсгийг оруулахад апп дэлгүүр рүү гадаад хүсэлт илгээнэ)",
     "To use an access token, please generate one then set it using the following command:" : "Хандалтын токен ашиглахын тулд эхлээд токен үүсгэж, дараахь командын тусламжтайгаар тохируулна уу:",
     "Then pass the token with the \"NC-Token\" header when querying the above URL." : "Дараа нь дээрх URL-д хүсэлт илгээхдээ токеноо \"NC-Token\" толгойн мэдээллээр дамжуулна уу.",
-    "%1$s (%2$d threads)" : "%1$s (%2$d урсгал)",
     "DNS:" : "DNS:"
 },
 "nplurals=2; plural=(n != 1);");
