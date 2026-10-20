@@ -109,7 +109,6 @@ OC.L10N.register(
     "Not supported!" : "Qo'llab-quvvatlanmaydi!",
     "Press ⌘-C to copy." : "Nusxalash uchun ⌘-C ni bosing.",
     "Press Ctrl-C to copy." : "Nusxalash uchun Ctrl-C ni bosing.",
-    "threads" : "yo'nalishlar",
     "Memory:" : "Xotira:",
     "Files:" : "Fayllar:",
     "Storages:" : "Omborlar:",

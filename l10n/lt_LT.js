@@ -175,7 +175,7 @@ OC.L10N.register(
     "Not supported!" : "Nepalaikoma!",
     "Press ⌘-C to copy." : "Norėdami nukopijuoti, paspauskite ⌘-C.",
     "Press Ctrl-C to copy." : "Paspauskite Ctrl-C, norėdami nukopijuoti.",
-    "threads" : "gijos",
+    "%1$s (%2$d threads)" : "%1$s (%2$d gijos)",
     "Memory:" : "Atmintis:",
     "Files:" : "Failai:",
     "Storages:" : "Saugyklos:",
@@ -192,7 +192,6 @@ OC.L10N.register(
     "Skip apps section (including apps section will send an external request to the app store)" : "Praleisti programėlių skyrių (įtraukus šį skyrių, bus išsiųstas išorinis užklausimas į programėlių parduotuvę)",
     "To use an access token, please generate one then set it using the following command:" : "Norėdami naudoti žymenį, sugeneruokite jį ir nustatykite naudodami šią komandą:",
     "Then pass the token with the \"NC-Token\" header when querying the above URL." : "Tada, teikdami užklausą aukščiau pateiktu URL adresu, perduokite žymenį su antrašte „NC-Token“.",
-    "%1$s (%2$d threads)" : "%1$s (%2$d gijos)",
     "DNS:" : "DNS:"
 },
 "nplurals=4; plural=(n % 10 == 1 && (n % 100 > 19 || n % 100 < 11) ? 0 : (n % 10 >= 2 && n % 10 <=9) && (n % 100 > 19 || n % 100 < 11) ? 1 : n % 1 != 0 ? 2: 3);");

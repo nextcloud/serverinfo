@@ -20,6 +20,7 @@ OC.L10N.register(
     "CPU info not available" : "المعلومات عن وحدة المعالجة المركزية CPU غير متوفرة",
     "Current usage" : "الاستخدام الحالي",
     "Load average" : "متوسط الحمل",
+    "Hint" : "إرشاد",
     "Warning" : "تحذير",
     "Value" : "القيمة",
     "Setting" : "الإعدادات",

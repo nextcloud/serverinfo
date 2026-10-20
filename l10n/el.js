@@ -134,7 +134,6 @@ OC.L10N.register(
     "Not supported!" : "Δεν υποστηρίζεται!",
     "Press ⌘-C to copy." : "Για αντιγραφή πατήστε ⌘-C.",
     "Press Ctrl-C to copy." : "Για αντιγραφή πατήστε Ctrl-C.",
-    "threads" : "νήματα",
     "Memory:" : "Μνήμη:",
     "Files:" : "Αρχεία:",
     "Storages:" : "Αποθηκευτικοί χώροι:",

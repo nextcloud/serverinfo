@@ -235,7 +235,7 @@ OC.L10N.register(
     "Not supported!" : "Gan tacaíocht!",
     "Press ⌘-C to copy." : "Brúigh ⌘-C chun cóip a dhéanamh.",
     "Press Ctrl-C to copy." : "Brúigh Ctrl-C chun cóip a dhéanamh.",
-    "threads" : "snáitheanna",
+    "%1$s (%2$d threads)" : "%1$s (%2$d snáitheanna)",
     "Memory:" : "Cuimhne:",
     "Files:" : "Comhaid:",
     "Storages:" : "Stórais:",
@@ -252,7 +252,6 @@ OC.L10N.register(
     "Skip apps section (including apps section will send an external request to the app store)" : "Scipeáil ar an rannán aipeanna (seolfar iarratas seachtrach chuig an siopa aipeanna san áireamh)",
     "To use an access token, please generate one then set it using the following command:" : "Chun comhartha rochtana a úsáid, giniúint ceann agus ansin socraigh é ag baint úsáide as an ordú seo a leanas le do thoil:",
     "Then pass the token with the \"NC-Token\" header when querying the above URL." : "Ansin cuir an comhartha leis an gceanntásc \"NC-Token\" agus an URL thuas á cheistiú.",
-    "%1$s (%2$d threads)" : "%1$s (%2$d snáitheanna)",
     "DNS:" : "DNS:"
 },
 "nplurals=5; plural=(n==1 ? 0 : n==2 ? 1 : n<7 ? 2 : n<11 ? 3 : 4);");

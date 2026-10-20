@@ -155,7 +155,6 @@ OC.L10N.register(
     "Not supported!" : "Nepodporováno!",
     "Press ⌘-C to copy." : "Zkopírujete stisknutím ⌘C.",
     "Press Ctrl-C to copy." : "Zkopírujete stisknutím Ctrl+C.",
-    "threads" : "vláken",
     "Memory:" : "Operační paměť:",
     "Files:" : "Souborů:",
     "Storages:" : "Úložišť:",
