@@ -235,7 +235,7 @@ OC.L10N.register(
     "Not supported!" : "Desteklenmiyor!",
     "Press ⌘-C to copy." : "Kopyalamak için ⌘-C tuşlarına basın.",
     "Press Ctrl-C to copy." : "Kopyalamak için Ctrl-C tuşlarına basın.",
-    "threads" : "işlem",
+    "%1$s (%2$d threads)" : "%1$s (%2$d işlem)",
     "Memory:" : "Bellek:",
     "Files:" : "Dosyalar:",
     "Storages:" : "Depolama birimleri:",
@@ -252,7 +252,6 @@ OC.L10N.register(
     "Skip apps section (including apps section will send an external request to the app store)" : "Uygulamalar bölümü atlansın (uygulamalar bölümünün katılması, uygulama mağazasına bir dış istek gönderir)",
     "To use an access token, please generate one then set it using the following command:" : "Erişim kodunu kullanmak için yeni bir kod oluşturup şu komutu yürüterek ayarlayın:",
     "Then pass the token with the \"NC-Token\" header when querying the above URL." : "Ardından yukarıdaki adresi sorgularken kodu \"NC-Token\" üst bilgisi ile gönderin.",
-    "%1$s (%2$d threads)" : "%1$s (%2$d işlem)",
     "DNS:" : "DNS:"
 },
 "nplurals=2; plural=(n > 1);");
