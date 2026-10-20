@@ -124,7 +124,6 @@ OC.L10N.register(
     "Not supported!" : "ບໍ່ຊັບຟອດ",
     "Press ⌘-C to copy." : "Press ⌘-C to copy.",
     "Press Ctrl-C to copy." : "ກົດ Ctrl-C ເພື່ອ copy",
-    "threads" : "threads",
     "Memory:" : "Memory:",
     "Files:" : "Files:",
     "Storages:" : "Storages:",

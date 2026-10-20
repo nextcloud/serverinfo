@@ -235,7 +235,7 @@ OC.L10N.register(
     "Not supported!" : "Non supporté !",
     "Press ⌘-C to copy." : "Appuyer sur ⌘-C pour copier.",
     "Press Ctrl-C to copy." : "Appuyez sur Ctrl-C pour copier.",
-    "threads" : "fil de discussion",
+    "%1$s (%2$d threads)" : "%1$s (%2$d fils d’exécution)",
     "Memory:" : "Mémoire :",
     "Files:" : "Fichiers :",
     "Storages:" : "Stockages :",
@@ -252,7 +252,6 @@ OC.L10N.register(
     "Skip apps section (including apps section will send an external request to the app store)" : "Ignorer la section des applications (y compris la section des applications enverra une demande externe à l'App Store)",
     "To use an access token, please generate one then set it using the following command:" : "Pour utiliser un jeton d'accès, veuillez en générer un puis le définir à l'aide de la commande suivante :",
     "Then pass the token with the \"NC-Token\" header when querying the above URL." : "Puis transmettez le jeton avec l’entête « NC-Token » lorsque vous appelez l’URL.",
-    "%1$s (%2$d threads)" : "%1$s (%2$d fils d’exécution)",
     "DNS:" : "DNS :"
 },
 "nplurals=3; plural=(n == 0 || n == 1) ? 0 : n != 0 && n % 1000000 == 0 ? 1 : 2;");

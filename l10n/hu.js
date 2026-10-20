@@ -136,7 +136,6 @@ OC.L10N.register(
     "Not supported!" : "Nem támogatott!",
     "Press ⌘-C to copy." : "A másoláshoz nyomjon ⌘+C-t.",
     "Press Ctrl-C to copy." : "A másoláshoz nyomjon Ctrl+C-t.",
-    "threads" : "szál",
     "Memory:" : "Memória:",
     "Files:" : "Fájlok:",
     "Storages:" : "Tárhelyek:",

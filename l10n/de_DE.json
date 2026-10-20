@@ -233,7 +233,7 @@
     "Not supported!" : "Nicht unterstützt!",
     "Press ⌘-C to copy." : "Zum Kopieren ⌘-C drücken.",
     "Press Ctrl-C to copy." : "Zum Kopieren Strg-C drücken.",
-    "threads" : "Threads",
+    "%1$s (%2$d threads)" : "%1$s (%2$d Threads)",
     "Memory:" : "Speicher:",
     "Files:" : "Dateien:",
     "Storages:" : "Speicher:",
@@ -250,7 +250,6 @@
     "Skip apps section (including apps section will send an external request to the app store)" : "Abschnitt \"Apps\" überspringen (das Einschließen des Abschnitts \"Apps\" sendet eine externe Anfrage an den App Store)",
     "To use an access token, please generate one then set it using the following command:" : "Um ein Zugriffstoken zu verwenden, generieren Sie bitte eines und legen Sie es mit dem folgenden Befehl fest:",
     "Then pass the token with the \"NC-Token\" header when querying the above URL." : "Übergeben Sie dann das Token mit dem Header \"NC-Token\" durch Aufrufen der obigen URL.",
-    "%1$s (%2$d threads)" : "%1$s (%2$d Threads)",
     "DNS:" : "DNS:"
 },"pluralForm" :"nplurals=2; plural=(n != 1);"
 }

@@ -135,7 +135,6 @@ OC.L10N.register(
     "Not supported!" : "Није подржано! ",
     "Press ⌘-C to copy." : "Притисните ⌘-C за копирање.",
     "Press Ctrl-C to copy." : "Притисни Ctrl-C за копирање.",
-    "threads" : "низови",
     "Memory:" : "Меморија:",
     "Files:" : "Фајлова:",
     "Storages:" : "Складишта:",

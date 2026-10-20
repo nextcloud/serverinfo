@@ -136,7 +136,6 @@ OC.L10N.register(
     "Not supported!" : "پشتیبانی نمی‌شود!",
     "Press ⌘-C to copy." : "برای کپی، ⌘-C را فشار دهید.",
     "Press Ctrl-C to copy." : "برای کپی، Ctrl-C را فشار دهید.",
-    "threads" : "رشته",
     "Memory:" : "حافظه:",
     "Files:" : "فایل‌ها:",
     "Storages:" : "ذخیره‌سازها:",

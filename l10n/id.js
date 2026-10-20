@@ -133,7 +133,6 @@ OC.L10N.register(
     "Not supported!" : "Tidak didukung!",
     "Press ⌘-C to copy." : "Tekan ⌘-C untuk menyalin.",
     "Press Ctrl-C to copy." : "Tekan Ctrl-C untuk menyalin.",
-    "threads" : "thread",
     "Memory:" : "Memori:",
     "Files:" : "File:",
     "Storages:" : "Penyimpanan:",
