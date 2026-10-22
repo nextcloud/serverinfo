@@ -146,6 +146,17 @@ class OsStatusCollectorTest extends \Test\TestCase {
 		$this->assertSame(self::NOW, $status->updates[0]->since);
 	}
 
+	public function testASupersedingUpdateKeepsCounting(): void {
+		$this->withPendingUpdates();
+		$this->collector()->collect();
+		$this->host->withCommand('apt-get', ['-s', '-o', 'Debug::NoLocking=1', 'dist-upgrade'],
+			'Inst libssl3t64 [3.0.13-0ubuntu3.4] (3.0.13-0ubuntu3.6 Ubuntu:24.04/noble-security [amd64])');
+		$status = $this->collector(self::NOW + 86400)->collect();
+
+		$this->assertSame('3.0.13-0ubuntu3.6', $status->updates[0]->candidateVersion);
+		$this->assertSame(self::NOW, $status->updates[0]->since);
+	}
+
 	public function testAContainerIsNotAskedAboutPackagesOrReboots(): void {
 		$this->host->files['/.dockerenv'] = '';
 		$this->withPendingUpdates();

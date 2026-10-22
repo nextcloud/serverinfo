@@ -75,8 +75,12 @@ final class PendingUpdate {
 		return NextcloudStack::isStackPackage($this->name);
 	}
 
+	/**
+	 * What the first-seen time is tracked by: the package, not the version, so
+	 * a newer update superseding a pending one keeps counting.
+	 */
 	public function key(): string {
-		return $this->name . ':' . $this->candidateVersion;
+		return $this->name;
 	}
 
 	public function withSince(?int $since): self {
