@@ -10,10 +10,12 @@ declare(strict_types=1);
 namespace OCA\ServerInfo\Tests\OsStatus;
 
 use OCA\ServerInfo\OsStatus\Health\SystemdProbe;
+use OCA\ServerInfo\OsStatus\Host\CommandResult;
 use OCA\ServerInfo\OsStatus\Packages\Apt;
 use OCA\ServerInfo\OsStatus\Packages\AutomaticUpdates;
 use OCA\ServerInfo\OsStatus\Packages\ProbeException;
 use OCA\ServerInfo\OsStatus\Reboot\RebootReason;
+use PHPUnit\Framework\Attributes\DataProvider;
 
 class AptTest extends \Test\TestCase {
 	private const SIMULATE = ['-s', '-o', 'Debug::NoLocking=1', 'dist-upgrade'];
@@ -66,6 +68,24 @@ class AptTest extends \Test\TestCase {
 
 		$this->expectException(ProbeException::class);
 		$this->expectExceptionMessage('E: Could not open lock file');
+		$this->apt->getPendingUpdates();
+	}
+
+	public static function dataRunnerFailures(): array {
+		return [
+			'time limit' => [new CommandResult(137, "Inst libssl3 [1] (2 Debian-Security:12/stable-security [amd64])\n", '', timedOut: true), 'apt-get -s dist-upgrade failed: timed out after 120 s'],
+			'output cap' => [new CommandResult(137, "Inst libssl3 [1] (2 Debian-Security:12/stable-security [amd64])\n", '', truncated: true), 'apt-get -s dist-upgrade failed: output too large'],
+			'no output' => [new CommandResult(100, ''), 'apt-get -s dist-upgrade failed: exit code 100'],
+		];
+	}
+
+	#[DataProvider('dataRunnerFailures')]
+	public function testRunnerFailuresSayWhatHappened(CommandResult $result, string $message): void {
+		$this->host->withCommand('apt-get', self::SIMULATE, '');
+		$this->host->commands['apt-get ' . implode(' ', self::SIMULATE)] = $result;
+
+		$this->expectException(ProbeException::class);
+		$this->expectExceptionMessage($message);
 		$this->apt->getPendingUpdates();
 	}
 

@@ -27,6 +27,7 @@ class Apt implements IPackageManager {
 	private const REBOOT_REQUIRED = '/run/reboot-required';
 	private const DPKG_LOG = '/var/log/dpkg.log';
 	private const DPKG_STATUS = '/var/lib/dpkg/status';
+	private const SIMULATE_TIMEOUT = 120;
 
 	public function __construct(
 		private IHost $host,
@@ -51,12 +52,12 @@ class Apt implements IPackageManager {
 
 	#[\Override]
 	public function getPendingUpdates(): array {
-		$result = $this->host->run('apt-get', ['-s', '-o', 'Debug::NoLocking=1', 'dist-upgrade'], 120);
+		$result = $this->host->run('apt-get', ['-s', '-o', 'Debug::NoLocking=1', 'dist-upgrade'], self::SIMULATE_TIMEOUT);
 		if ($result === null) {
 			throw new ProbeException('apt-get could not be run.');
 		}
 		if (!$result->succeeded()) {
-			throw new ProbeException('apt-get -s dist-upgrade failed: ' . self::firstLine($result->stderr ?: $result->stdout));
+			throw new ProbeException('apt-get -s dist-upgrade failed: ' . $result->failure(self::SIMULATE_TIMEOUT));
 		}
 
 		return self::parseSimulation($result->stdout);
@@ -263,11 +264,5 @@ class Apt implements IPackageManager {
 	#[\Override]
 	public function getPackageDatabasePath(): ?string {
 		return self::DPKG_STATUS;
-	}
-
-	private static function firstLine(string $text): string {
-		$line = trim((string)strtok(trim($text), "\n"));
-
-		return mb_substr($line, 0, 200);
 	}
 }

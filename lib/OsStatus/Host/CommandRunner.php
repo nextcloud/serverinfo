@@ -27,6 +27,9 @@ class CommandRunner {
 	/** How long a process that closed its output is given to exit before it is killed. */
 	private const EXIT_GRACE_SECONDS = 2.0;
 
+	/** Waiting for output may be interrupted by a signal; failing this often in a row is an error. */
+	private const MAX_SELECT_FAILURES = 3;
+
 	public function isAvailable(): bool {
 		return function_exists('proc_open')
 			&& function_exists('proc_get_status')
@@ -141,6 +144,8 @@ class CommandRunner {
 		$deadline = microtime(true) + (float)$timeout;
 		$timedOut = false;
 		$truncated = false;
+		$readFailed = false;
+		$selectFailures = 0;
 
 		while ($open !== []) {
 			$remaining = $deadline - microtime(true);
@@ -150,13 +155,14 @@ class CommandRunner {
 			}
 
 			$read = array_values($open);
-			$write = null;
-			$except = null;
-			$seconds = (int)$remaining;
-			$ready = @stream_select($read, $write, $except, $seconds, (int)(($remaining - (float)$seconds) * 1000000.0));
-			if ($ready === false) {
+			if ($this->select($read, $remaining) === false) {
+				if (++$selectFailures < self::MAX_SELECT_FAILURES) {
+					continue;
+				}
+				$readFailed = true;
 				break;
 			}
+			$selectFailures = 0;
 
 			foreach ($read as $stream) {
 				$fd = array_search($stream, $open, true);
@@ -185,9 +191,23 @@ class CommandRunner {
 			fclose($stream);
 		}
 
-		$exitCode = $this->finish($process, $timedOut || $truncated);
+		$exitCode = $this->finish($process, $timedOut || $truncated || $readFailed);
 
-		return new CommandResult($exitCode, $output[1], $output[2], $timedOut, $truncated);
+		return new CommandResult($exitCode, $output[1], $output[2], $timedOut, $truncated, $readFailed);
+	}
+
+	/**
+	 * Waits until one of the streams can be read, at most $timeout seconds.
+	 *
+	 * @param list<resource> $read narrowed to the readable streams
+	 * @return int|false false when waiting failed, e.g. interrupted by a signal
+	 */
+	protected function select(array &$read, float $timeout): int|false {
+		$write = null;
+		$except = null;
+		$seconds = (int)$timeout;
+
+		return @stream_select($read, $write, $except, $seconds, (int)(($timeout - (float)$seconds) * 1000000.0));
 	}
 
 	/**
