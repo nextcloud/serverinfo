@@ -39,17 +39,26 @@ Debian and Ubuntu are supported. Inside Docker, Podman, Kubernetes or a snap the
 what can and cannot be known from inside; LXC and systemd-nspawn guests are
 treated like machines without a kernel of their own.
 
-Nothing is installed or changed.
+Nothing is installed or changed. To find out, the app reads `/etc/os-release`,
+`/proc` (uptime, `/proc/1/cgroup`, its own process maps), `/sys/class/dmi/id`,
+`/sys/kernel/livepatch`, the SELinux and AppArmor state under `/sys`, the
+package manager's configuration, state and logs, `/run/reboot-required` and the
+installed kernel modules. It runs the package manager's query commands (updates
+only in simulation mode), `systemctl`, `timedatectl`, `chronyc` and
+`systemd-detect-virt`. Anything it may not read or run is reported as unknown.
 
-The status is collected by a background job once an hour. Admins can also
-check it right away with:
+The status is collected by a background job once an hour, when background
+jobs run from system cron; under AJAX or webcron the commands would hold a web
+request for minutes. Admins can also check it right away with:
 
 ```
 occ serverinfo:os-status [--refresh] [--output=json]
 ```
 
-The command exits with 0, 1 or 2 for ok, warning and error, so it can be used
-as a monitoring check. When something counts as a warning or an error is set by
+The command exits with 0, 1, 2 or 3 for ok, warning, error and unknown, so it
+can be used as a monitoring check. Unknown means the status has not been
+collected yet, or nothing is wrong but the pending updates could not be
+determined. When something counts as a warning or an error is set by
 the `os_*_days` app config values, see `lib/Config/ConfigLexicon.php`.
 
 Release support dates are bundled with the app (see
