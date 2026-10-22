@@ -21,6 +21,12 @@ use Symfony\Component\Console\Output\OutputInterface;
  * @psalm-api
  */
 class ShowOsStatus extends Base {
+	/** Exit codes of monitoring plugins */
+	public const EXIT_OK = 0;
+	public const EXIT_WARNING = 1;
+	public const EXIT_CRITICAL = 2;
+	public const EXIT_UNKNOWN = 3;
+
 	public function __construct(
 		private OsStatusCollector $collector,
 		private OsStatusService $service,
@@ -41,7 +47,7 @@ class ShowOsStatus extends Base {
 			if ($this->collector->collectAndStore() === null) {
 				$output->writeln('<error>The operating system status could not be collected; see the Nextcloud log.</error>');
 
-				return 1;
+				return self::EXIT_UNKNOWN;
 			}
 		}
 
@@ -49,7 +55,7 @@ class ShowOsStatus extends Base {
 		if ($status === null) {
 			$output->writeln('The operating system has not been checked yet. Run with --refresh to check it now.');
 
-			return 1;
+			return self::EXIT_UNKNOWN;
 		}
 
 		$verdict = $this->service->evaluate($status);
@@ -77,11 +83,18 @@ class ShowOsStatus extends Base {
 			'concerns' => $concerns,
 		]);
 
-		// Exit codes in the style of monitoring plugins: 0 ok, 1 warning, 2 critical.
-		return match ($verdict?->level()) {
-			Concern::LEVEL_ERROR => 2,
-			Concern::LEVEL_WARNING => 1,
-			default => 0,
+		return self::exitCode($verdict?->level());
+	}
+
+	/**
+	 * @param Concern::LEVEL_*|null $level
+	 */
+	public static function exitCode(?string $level): int {
+		return match ($level) {
+			Concern::LEVEL_OK, Concern::LEVEL_INFO => self::EXIT_OK,
+			Concern::LEVEL_WARNING => self::EXIT_WARNING,
+			Concern::LEVEL_ERROR => self::EXIT_CRITICAL,
+			default => self::EXIT_UNKNOWN,
 		};
 	}
 }

@@ -17,7 +17,7 @@ final class Concern {
 	public const LEVEL_INFO = 'info';
 	public const LEVEL_WARNING = 'warning';
 	public const LEVEL_ERROR = 'error';
-	/** Could not be determined; never raises the overall level */
+	/** Could not be determined; never raises the overall level to a warning or an error */
 	public const LEVEL_UNKNOWN = 'unknown';
 
 	public const UPDATES = 'updates';
