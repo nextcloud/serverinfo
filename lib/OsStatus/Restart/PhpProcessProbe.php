@@ -25,7 +25,7 @@ use OCA\ServerInfo\OsStatus\OsRelease;
  */
 class PhpProcessProbe {
 	/** Mappings that are deleted by design rather than by an upgrade. */
-	private const IGNORED_PREFIXES = ['/dev/', '/memfd:', '/tmp/', '/var/tmp/', '/run/', '/dev/shm/', '/SYSV', '/proc/', '/var/lib/php', '/var/cache/'];
+	private const IGNORED_PREFIXES = ['/dev/', '/memfd:', '/tmp/', '/var/tmp/', '/run/', '/SYSV', '/proc/', '/var/lib/php', '/var/cache/'];
 
 	/** Report at most this many libraries; the restart fixes all of them. */
 	private const MAX_LIBRARIES = 20;

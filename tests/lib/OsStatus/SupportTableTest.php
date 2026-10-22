@@ -68,6 +68,8 @@ class SupportTableTest extends \Test\TestCase {
 		$this->assertSame(SupportStatus::STATE_UNKNOWN, $this->table->lookup($this->release('debian', null))->state(time()));
 		$this->assertSame(SupportStatus::STATE_UNKNOWN, $this->table->lookup($this->release('linuxmint', '22', 'Mint', ['ubuntu']))->state(time()));
 		$this->assertSame(SupportStatus::STATE_UNKNOWN, $this->table->lookup($this->release('ubuntu', '99.04'))->state(time()));
+		$this->assertSame(SupportStatus::STATE_UNKNOWN, $this->table->lookup($this->release('raspbian', '12', 'Raspbian', ['debian']))->state(time()), 'Raspbian has its own archive');
+		$this->assertSame(SupportStatus::STATE_UNKNOWN, $this->table->lookup($this->release('nixos', '25.05', 'NixOS'))->state(time()));
 	}
 
 	public function testAMissingTableKnowsNothing(): void {
