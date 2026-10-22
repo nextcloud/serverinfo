@@ -97,6 +97,16 @@ class OsVerdictTest extends \Test\TestCase {
 		$this->assertSame(Concern::LEVEL_ERROR, $verdict->get(Concern::UPDATES)?->level);
 	}
 
+	public function testUpdatesFromOldPackageListsAreMarked(): void {
+		$fresh = $this->evaluate($this->osStatus(['listsRefreshedAt' => self::NOW - 6 * self::DAY]));
+		$stale = $this->evaluate($this->osStatus(['listsRefreshedAt' => self::NOW - 7 * self::DAY]));
+		$pacman = $this->evaluate($this->osStatus(['packageManager' => 'pacman', 'listsRefreshedAt' => self::NOW - 90 * self::DAY]));
+
+		$this->assertFalse($fresh->get(Concern::UPDATES)?->facts['listsStale']);
+		$this->assertTrue($stale->get(Concern::UPDATES)?->facts['listsStale']);
+		$this->assertFalse($pacman->get(Concern::UPDATES)?->facts['listsStale']);
+	}
+
 	public function testUnknownUpdatesDoNotRaiseTheLevel(): void {
 		$verdict = $this->evaluate($this->osStatus(['updates' => null]));
 

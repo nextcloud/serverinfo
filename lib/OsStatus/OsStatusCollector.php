@@ -25,6 +25,7 @@ use OCA\ServerInfo\OsStatus\Reboot\RebootReason;
 use OCA\ServerInfo\OsStatus\Support\SubscriptionProbe;
 use OCA\ServerInfo\OsStatus\Support\SupportStatus;
 use OCA\ServerInfo\OsStatus\Support\SupportTable;
+use OCA\ServerInfo\OsStatus\Verdict\OsVerdict;
 use OCP\AppFramework\Services\IAppConfig;
 use OCP\AppFramework\Utility\ITimeFactory;
 use Psr\Log\LoggerInterface;
@@ -117,6 +118,14 @@ class OsStatusCollector {
 			}
 		}
 
+		$listsRefreshedAt = $packageManager?->getListsRefreshedAt();
+		// Without package lists the package manager knows of no newer versions at all.
+		if ($updates === [] && $listsRefreshedAt === null && in_array($packageManager?->getId(), OsVerdict::LISTS_AGE_MATTERS, true)) {
+			$updates = null;
+			$updatesSource = null;
+			$diagnostics[] = 'The package lists could not be found, so pending updates are unknown until the lists are refreshed.';
+		}
+
 		$rebootReasons = $environment->managesPackages()
 			? $this->rebootReasons($packageManager, $environment, $bootTime)
 			: null;
@@ -151,7 +160,7 @@ class OsStatusCollector {
 			$packageManager?->classifiesSecurity() ?? false,
 			$omitted,
 			$packageManager?->getHeldPackages(),
-			$packageManager?->getListsRefreshedAt(),
+			$listsRefreshedAt,
 			$packageManager?->getLastUpgradeAt(),
 			$packageManager?->getAutomaticUpdates() ?? AutomaticUpdates::unknown(),
 			$rebootReasons,

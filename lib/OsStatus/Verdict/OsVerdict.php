@@ -25,7 +25,7 @@ use OCA\ServerInfo\OsStatus\Support\SupportStatus;
  */
 class OsVerdict {
 	/** Package managers whose metadata is refreshed in place and can go stale */
-	private const LISTS_AGE_MATTERS = ['apt', 'dnf', 'zypper', 'apk'];
+	public const LISTS_AGE_MATTERS = ['apt', 'dnf', 'zypper', 'apk'];
 
 	private const DAY = 86400;
 
@@ -66,6 +66,10 @@ class OsVerdict {
 			'classified' => $status->securityClassified,
 			'stack' => count(array_filter($relevant, static fn (PendingUpdate $u): bool => $u->isStack())),
 			'days' => null,
+			// The package manager only knows the updates its lists on disk tell it about.
+			'listsStale' => in_array($status->packageManager, self::LISTS_AGE_MATTERS, true)
+				&& $status->listsRefreshedAt !== null
+				&& self::days($now - $status->listsRefreshedAt) >= $thresholds->listsWarning,
 		];
 
 		if ($relevant === []) {

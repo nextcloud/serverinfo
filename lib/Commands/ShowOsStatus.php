@@ -61,6 +61,7 @@ class ShowOsStatus extends Base {
 			);
 		}
 		$pendingDays = $verdict?->get(Concern::UPDATES)?->facts['days'] ?? null;
+		$securityUpdates = $status->securityUpdates();
 
 		$this->writeArrayInOutputFormat($input, $output, [
 			'level' => $verdict?->level() ?? Concern::LEVEL_UNKNOWN,
@@ -69,7 +70,7 @@ class ShowOsStatus extends Base {
 			'kernel' => $status->kernel,
 			'environment' => $status->environment->kind,
 			'packageManager' => $status->packageManager ?? 'none',
-			'securityUpdates' => count($status->securityUpdates() ?? []),
+			'securityUpdates' => $securityUpdates === null ? 'unknown' : count($securityUpdates),
 			'updates' => $status->updates === null ? 'unknown' : count($status->updates) + $status->updatesOmitted,
 			'updatesPendingDays' => is_int($pendingDays) ? $pendingDays : 'none',
 			'rebootRequired' => $status->rebootReasons === null ? 'unknown' : ($status->rebootReasons !== [] ? 'yes' : 'no'),
