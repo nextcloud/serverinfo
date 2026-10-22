@@ -54,6 +54,60 @@ class CommandRunnerTest extends \Test\TestCase {
 		$this->assertLessThan(10, microtime(true) - $start);
 	}
 
+	public function testOutputBeyondTheCapIsCutOffAndFails(): void {
+		$result = $this->runner->run('sh', ['-c', 'dd if=/dev/zero bs=1048576 count=9 2>/dev/null'], 30);
+
+		$this->assertTrue($result?->truncated);
+		$this->assertSame(8 * 1024 * 1024, strlen($result->stdout));
+		$this->assertFalse($result->succeeded());
+		$this->assertSame('output too large', $result->failure(30));
+	}
+
+	public function testWaitingThatKeepsFailingIsAFailure(): void {
+		$runner = new class extends CommandRunner {
+			#[\Override]
+			protected function select(array &$read, float $timeout): int|false {
+				return false;
+			}
+		};
+
+		$start = microtime(true);
+		$result = $runner->run('sh', ['-c', 'echo out; sleep 30'], 20);
+
+		$this->assertTrue($result?->readFailed);
+		$this->assertFalse($result->succeeded());
+		$this->assertSame('output could not be read', $result->failure(20));
+		$this->assertLessThan(10, microtime(true) - $start, 'The process is killed, not waited for');
+	}
+
+	public function testAnInterruptedWaitIsRetried(): void {
+		$runner = new class extends CommandRunner {
+			private bool $interrupted = false;
+
+			#[\Override]
+			protected function select(array &$read, float $timeout): int|false {
+				if (!$this->interrupted) {
+					$this->interrupted = true;
+
+					return false;
+				}
+
+				return parent::select($read, $timeout);
+			}
+		};
+
+		$result = $runner->run('sh', ['-c', 'echo out'], 10);
+
+		$this->assertSame("out\n", $result?->stdout);
+		$this->assertTrue($result->succeeded());
+	}
+
+	public function testFailureReasons(): void {
+		$this->assertSame('timed out after 120 s', $this->runner->run('sh', ['-c', 'sleep 30'], 1)?->failure(120));
+		$this->assertSame('E: broken', $this->runner->run('sh', ['-c', 'echo out; printf "E: broken\\nmore\\n" >&2; exit 100'], 10)?->failure(10));
+		$this->assertSame('exit code 4', $this->runner->run('sh', ['-c', 'exit 4'], 10)?->failure(10));
+	}
+
 	public function testUnknownBinaries(): void {
 		$this->assertNull($this->runner->run('serverinfo-no-such-binary', [], 5));
 		$this->assertNull($this->runner->run('../../bin/sh', [], 5));
