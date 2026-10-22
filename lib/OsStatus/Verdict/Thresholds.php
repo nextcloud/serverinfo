@@ -32,6 +32,13 @@ final class Thresholds {
 		'listsError' => ConfigLexicon::OS_LISTS_ERROR_DAYS,
 	];
 
+	/** Pairs where the error threshold may not come before the warning one. */
+	private const PAIRS = [
+		['securityWarning', 'securityError'],
+		['rebootWarning', 'rebootError'],
+		['listsWarning', 'listsError'],
+	];
+
 	public function __construct(
 		public readonly int $securityWarning = 3,
 		public readonly int $securityError = 14,
@@ -48,6 +55,9 @@ final class Thresholds {
 		$values = [];
 		foreach (self::KEYS as $name => $key) {
 			$values[$name] = max(0, min(self::MAX_DAYS, $appConfig->getAppValueInt($key)));
+		}
+		foreach (self::PAIRS as [$warning, $error]) {
+			$values[$error] = max($values[$error], $values[$warning]);
 		}
 
 		return new self(...$values);
