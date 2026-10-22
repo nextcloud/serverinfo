@@ -27,8 +27,7 @@
         "opensuse-microos",
         "opensuse-slowroll",
         "gentoo",
-        "void",
-        "nixos-unstable"
+        "void"
     ],
     "releases": {
         "almalinux:8": {

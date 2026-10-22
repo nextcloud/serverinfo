@@ -77,7 +77,6 @@ class SupportTable {
 	private function tableId(OsRelease $release): string {
 		return match (true) {
 			$release->id === 'centos' && stripos($release->name, 'stream') !== false => 'centos-stream',
-			$release->id === 'raspbian' => 'debian',
 			default => $release->id,
 		};
 	}

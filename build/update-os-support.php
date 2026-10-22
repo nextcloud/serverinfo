@@ -41,7 +41,7 @@ const PRODUCTS = [
 const ROLLING = [
 	'arch', 'archarm', 'manjaro', 'endeavouros', 'cachyos', 'garuda',
 	'opensuse-tumbleweed', 'opensuse-microos', 'opensuse-slowroll',
-	'gentoo', 'void', 'nixos-unstable',
+	'gentoo', 'void',
 ];
 
 /** Releases whose support ended before this are left out; nothing that old runs a current Nextcloud. */
