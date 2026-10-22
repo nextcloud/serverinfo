@@ -83,7 +83,7 @@ class ProbesTest extends \Test\TestCase {
 	public function testCoreLibrariesReplacedSinceBoot(): void {
 		$this->host->globs['/lib/*-linux-gnu*/libc.so.6'] = ['/lib/x86_64-linux-gnu/libc.so.6'];
 		$this->host->changed['/lib/x86_64-linux-gnu/libc.so.6'] = 5000;
-		$this->host->changed['/usr/lib/systemd/systemd'] = 900;
+		$this->host->changed['/usr/lib/systemd/systemd'] = 6000;
 		$this->host->changed['/usr/bin/dbus-daemon'] = 7000;
 
 		$reasons = (new CoreLibraryProbe($this->host))->getRebootReasons(1000);
@@ -93,7 +93,7 @@ class ProbesTest extends \Test\TestCase {
 	}
 
 	public function testCoreLibrariesWithinTheBootSlack(): void {
-		$this->host->changed['/usr/lib/systemd/systemd'] = 1030;
+		$this->host->changed['/usr/bin/dbus-daemon'] = 1030;
 
 		$this->assertSame([], (new CoreLibraryProbe($this->host))->getRebootReasons(1000));
 	}
