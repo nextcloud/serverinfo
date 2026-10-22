@@ -168,6 +168,23 @@ class OsStatusCollectorTest extends \Test\TestCase {
 		$this->assertContains('apt-get -s dist-upgrade failed: E: The package lists are damaged', $status->diagnostics);
 	}
 
+	public function testMissingPackageListsLeaveTheUpdatesUnknown(): void {
+		$this->host->withCommand('apt-get', ['-s', '-o', 'Debug::NoLocking=1', 'dist-upgrade'], '');
+
+		$status = $this->collector()->collect();
+
+		$this->assertNull($status->updates);
+		$this->assertNull($status->updatesSource);
+		$this->assertContains('The package lists could not be found, so pending updates are unknown until the lists are refreshed.', $status->diagnostics);
+	}
+
+	public function testNoUpdatesWithRefreshedPackageLists(): void {
+		$this->host->withCommand('apt-get', ['-s', '-o', 'Debug::NoLocking=1', 'dist-upgrade'], '');
+		$this->host->modified['/var/lib/apt/lists/partial'] = self::NOW - 3600;
+
+		$this->assertSame([], $this->collector()->collect()->updates);
+	}
+
 	public function testWithoutProcesses(): void {
 		$this->host->commandsAllowed = false;
 
