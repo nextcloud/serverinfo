@@ -9,6 +9,7 @@ declare(strict_types=1);
 
 namespace OCA\ServerInfo\Tests\OsStatus;
 
+use OCA\ServerInfo\Config\ConfigLexicon;
 use OCA\ServerInfo\OsStatus\Environment;
 use OCA\ServerInfo\OsStatus\OsRelease;
 use OCA\ServerInfo\OsStatus\OsStatus;
@@ -17,6 +18,8 @@ use OCA\ServerInfo\OsStatus\Packages\HeldPackage;
 use OCA\ServerInfo\OsStatus\Packages\PendingUpdate;
 use OCA\ServerInfo\OsStatus\Reboot\RebootReason;
 use OCA\ServerInfo\OsStatus\Support\SupportStatus;
+use OCA\ServerInfo\OsStatus\Verdict\Thresholds;
+use OCP\AppFramework\Services\IAppConfig;
 
 class ThresholdsAndStatusTest extends \Test\TestCase {
 	public function testStatusRoundTrip(): void {
@@ -65,6 +68,26 @@ class ThresholdsAndStatusTest extends \Test\TestCase {
 		$this->assertNull($status->updates);
 		$this->assertSame([], $status->rebootReasons);
 		$this->assertSame(Environment::KIND_HOST, $status->environment->kind);
+	}
+
+	public function testLoadKeepsEachErrorAtOrAboveItsWarning(): void {
+		$config = $this->createMock(IAppConfig::class);
+		$config->method('getAppValueInt')->willReturnCallback(static fn (string $key): int => match ($key) {
+			ConfigLexicon::OS_SECURITY_WARNING_DAYS => 20,
+			ConfigLexicon::OS_SECURITY_ERROR_DAYS => 14,
+			ConfigLexicon::OS_REBOOT_WARNING_DAYS => 7,
+			ConfigLexicon::OS_REBOOT_ERROR_DAYS => 30,
+			ConfigLexicon::OS_LISTS_WARNING_DAYS => 99999,
+			ConfigLexicon::OS_LISTS_ERROR_DAYS => 30,
+			default => 3,
+		});
+
+		$thresholds = Thresholds::load($config);
+
+		$this->assertSame(20, $thresholds->securityWarning);
+		$this->assertSame(20, $thresholds->securityError);
+		$this->assertSame(30, $thresholds->rebootError);
+		$this->assertSame(Thresholds::MAX_DAYS, $thresholds->listsError);
 	}
 
 	public function testStackPackagesAreMarked(): void {
