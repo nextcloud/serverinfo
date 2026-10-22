@@ -107,11 +107,17 @@ class OsVerdictTest extends \Test\TestCase {
 		$this->assertFalse($pacman->get(Concern::UPDATES)?->facts['listsStale']);
 	}
 
-	public function testUnknownUpdatesDoNotRaiseTheLevel(): void {
+	public function testUnknownUpdatesLeaveNoAllClear(): void {
 		$verdict = $this->evaluate($this->osStatus(['updates' => null]));
 
 		$this->assertSame(Concern::LEVEL_UNKNOWN, $verdict->get(Concern::UPDATES)?->level);
-		$this->assertSame(Concern::LEVEL_OK, $verdict->level());
+		$this->assertSame(Concern::LEVEL_UNKNOWN, $verdict->level());
+	}
+
+	public function testUnknownUpdatesDoNotHideAWarning(): void {
+		$verdict = $this->evaluate($this->osStatus(['updates' => null, 'timeSynchronized' => false]));
+
+		$this->assertSame(Concern::LEVEL_WARNING, $verdict->level());
 	}
 
 	public function testRebootEscalatesAndLivePatchingSoftensKernelReboots(): void {
@@ -193,6 +199,7 @@ class OsVerdictTest extends \Test\TestCase {
 		$this->assertNotContains(Concern::REBOOT, $ids);
 		$this->assertNotContains(Concern::PACKAGE_LISTS, $ids);
 		$this->assertContains(Concern::RESTART, $ids);
+		$this->assertSame(Concern::LEVEL_OK, $verdict->level());
 	}
 
 	public function testRestrictedOrUnsupportedHaveNoVerdict(): void {

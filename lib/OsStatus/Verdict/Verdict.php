@@ -22,7 +22,8 @@ final class Verdict {
 	}
 
 	/**
-	 * The most severe level of any concern; "unknown" when nothing could be assessed.
+	 * The most severe level of any concern; "unknown" when nothing could be
+	 * assessed, or when nothing is wrong but the pending updates are unknown.
 	 *
 	 * @return Concern::LEVEL_*
 	 */
@@ -37,6 +38,10 @@ final class Verdict {
 				$level = $concern->level;
 			}
 			$known = true;
+		}
+
+		if (Concern::rank($level) <= Concern::rank(Concern::LEVEL_INFO) && $this->get(Concern::UPDATES)?->level === Concern::LEVEL_UNKNOWN) {
+			return Concern::LEVEL_UNKNOWN;
 		}
 
 		return $level;
