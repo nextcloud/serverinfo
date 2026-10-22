@@ -215,7 +215,8 @@ class OsStatusCollector {
 
 		$hasDistributionAnswer = ($packageManager?->hasOwnRebootCheck() ?? false)
 			|| array_filter($reasons, static fn (RebootReason $r): bool => $r->kind === RebootReason::KIND_DISTRIBUTION) !== [];
-		if (!$hasDistributionAnswer && $bootTime !== null) {
+		// A system container may see the host's uptime, which says nothing about when its own processes started.
+		if (!$hasDistributionAnswer && $bootTime !== null && $environment->kind !== Environment::KIND_SYSTEM_CONTAINER) {
 			foreach ($this->coreLibraryProbe->getRebootReasons($bootTime) as $reason) {
 				$add($reason);
 			}

@@ -20,6 +20,8 @@ use OCA\ServerInfo\OsStatus\Host\IHost;
  * build time as the modification time, so only the change time says when a
  * file was installed.
  *
+ * systemd is not among them: its package re-executes PID 1 on upgrade.
+ *
  * @psalm-api
  */
 class CoreLibraryProbe {
@@ -31,7 +33,6 @@ class CoreLibraryProbe {
 			'/lib64/libc.so.6', '/usr/lib64/libc.so.6', '/usr/lib/libc.so.6',
 			'/lib/ld-musl-*.so.1',
 		],
-		'systemd' => ['/usr/lib/systemd/systemd', '/lib/systemd/systemd'],
 		'dbus' => ['/usr/bin/dbus-broker', '/usr/bin/dbus-daemon'],
 	];
 

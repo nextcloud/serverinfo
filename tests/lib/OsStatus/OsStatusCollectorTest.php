@@ -157,6 +157,22 @@ class OsStatusCollectorTest extends \Test\TestCase {
 		$this->assertSame(self::NOW, $status->updates[0]->since);
 	}
 
+	public function testCoreLibrariesReplacedSinceBoot(): void {
+		$this->host->changed['/lib64/libc.so.6'] = self::BOOT + 86400;
+
+		$this->assertSame(RebootReason::KIND_CORE_LIBRARY, $this->collector()->collect()->rebootReasons[0]->kind ?? null);
+	}
+
+	public function testASystemContainerDoesNotCompareCoreLibrariesWithTheHostsBoot(): void {
+		$this->host->withFile('/run/systemd/container', "lxc\n");
+		$this->host->changed['/lib64/libc.so.6'] = self::BOOT + 86400;
+
+		$status = $this->collector()->collect();
+
+		$this->assertSame(Environment::KIND_SYSTEM_CONTAINER, $status->environment->kind);
+		$this->assertSame([], $status->rebootReasons);
+	}
+
 	public function testAContainerIsNotAskedAboutPackagesOrReboots(): void {
 		$this->host->files['/.dockerenv'] = '';
 		$this->withPendingUpdates();
