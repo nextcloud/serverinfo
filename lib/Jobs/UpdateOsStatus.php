@@ -22,13 +22,16 @@ use OCP\IAppConfig;
  * Time sensitive on purpose: a maintenance window would hold a pending
  * security update back from the admin for most of a day.
  *
+ * Runs only from system cron: the commands may take minutes, which under
+ * AJAX or webcron would hold a web server worker.
+ *
  * @psalm-api
  */
 class UpdateOsStatus extends TimedJob {
 	public function __construct(
 		ITimeFactory $time,
 		private OsStatusCollector $collector,
-		IAppConfig $appConfig,
+		private IAppConfig $appConfig,
 	) {
 		parent::__construct($time);
 		$this->setInterval(max(300, $appConfig->getValueInt(Application::APP_ID, ConfigLexicon::JOB_INTERVAL_OS_STATUS)));
@@ -36,6 +39,10 @@ class UpdateOsStatus extends TimedJob {
 
 	#[\Override]
 	protected function run($argument): void {
+		if ($this->appConfig->getValueString('core', 'backgroundjobs_mode', 'ajax') !== 'cron') {
+			return;
+		}
+
 		$this->collector->collectAndStore();
 	}
 }
