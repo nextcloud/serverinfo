@@ -9,8 +9,10 @@ declare(strict_types=1);
 
 namespace OCA\ServerInfo\Tests\OsStatus;
 
+use OCA\ServerInfo\OsStatus\OsRelease;
 use OCA\ServerInfo\OsStatus\OsStatus;
 use OCA\ServerInfo\OsStatus\OsStatusService;
+use OCA\ServerInfo\OsStatus\Support\SupportStatus;
 use OCA\ServerInfo\OsStatus\Verdict\Concern;
 use OCA\ServerInfo\OsStatus\Verdict\ConcernTexts;
 use OCA\ServerInfo\OsStatus\Verdict\Verdict;
@@ -25,15 +27,13 @@ use PHPUnit\Framework\MockObject\MockObject;
 
 class OsSetupChecksTest extends \Test\TestCase {
 	private OsStatusService&MockObject $service;
-	private IL10N&MockObject $l10n;
+	private IL10N $l10n;
 	private IURLGenerator&MockObject $urlGenerator;
 
 	protected function setUp(): void {
 		parent::setUp();
 		$this->service = $this->createMock(OsStatusService::class);
-		$this->l10n = $this->createMock(IL10N::class);
-		$this->l10n->method('t')->willReturnArgument(0);
-		$this->l10n->method('n')->willReturnCallback(static fn (string $one, string $many, int $count): string => str_replace('%n', (string)$count, $count === 1 ? $one : $many));
+		$this->l10n = new FakeL10N();
 		$this->urlGenerator = $this->createMock(IURLGenerator::class);
 		$this->urlGenerator->method('linkToRoute')->willReturn('/settings/admin/serverinfo');
 	}
@@ -98,6 +98,19 @@ class OsSetupChecksTest extends \Test\TestCase {
 		$this->given(new OsStatus(OsStatus::STATE_OK, 1), new Concern(Concern::SUPPORT, Concern::LEVEL_UNKNOWN));
 
 		$this->assertSame(SetupResult::INFO, (new OsSupportCheck($this->l10n, $this->urlGenerator, $this->service, $this->texts()))->run()->getSeverity());
+	}
+
+	public function testTheSupportSentenceIsFilledIn(): void {
+		$formatter = $this->createMock(IDateTimeFormatter::class);
+		$formatter->method('formatDate')->willReturn('May 31, 2029');
+		$this->given(
+			new OsStatus(OsStatus::STATE_OK, 1, new OsRelease('ubuntu', ['debian'], 'Ubuntu', 'Ubuntu 24.04.3 LTS', '24.04', 'noble')),
+			new Concern(Concern::SUPPORT, Concern::LEVEL_OK, ['state' => SupportStatus::STATE_SUPPORTED, 'ends' => '2029-05-31']),
+		);
+
+		$result = (new OsSupportCheck($this->l10n, $this->urlGenerator, $this->service, new ConcernTexts($formatter)))->run();
+
+		$this->assertSame('Ubuntu 24.04.3 LTS receives security updates until May 31, 2029.', $result->getDescription());
 	}
 
 	public function testRestrictedMode(): void {

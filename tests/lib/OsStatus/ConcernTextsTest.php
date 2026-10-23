@@ -16,6 +16,7 @@ use OCA\ServerInfo\OsStatus\Verdict\Concern;
 use OCA\ServerInfo\OsStatus\Verdict\ConcernTexts;
 use OCP\IDateTimeFormatter;
 use OCP\IL10N;
+use PHPUnit\Framework\Attributes\DataProvider;
 
 class ConcernTextsTest extends \Test\TestCase {
 	private ConcernTexts $texts;
@@ -28,16 +29,7 @@ class ConcernTextsTest extends \Test\TestCase {
 		$formatter->method('formatDate')->willReturnCallback(static fn (int $time): string => gmdate('Y-m-d', $time));
 		$this->texts = new ConcernTexts($formatter);
 
-		$this->l = $this->createMock(IL10N::class);
-		$replace = static function (string $text, array $parameters): string {
-			foreach ($parameters as $key => $value) {
-				$text = str_replace('{' . $key . '}', (string)$value, $text);
-			}
-
-			return $text;
-		};
-		$this->l->method('t')->willReturnCallback(static fn (string $text, array $parameters = []): string => $replace($text, $parameters));
-		$this->l->method('n')->willReturnCallback(static fn (string $one, string $many, int $count, array $parameters = []): string => str_replace('%n', (string)$count, $replace($count === 1 ? $one : $many, $parameters)));
+		$this->l = new FakeL10N();
 
 		$this->status = new OsStatus(OsStatus::STATE_OK, 1, new OsRelease('ubuntu', ['debian'], 'Ubuntu', 'Ubuntu 22.04.5 LTS', '22.04', 'jammy'));
 	}
@@ -87,6 +79,21 @@ class ConcernTextsTest extends \Test\TestCase {
 
 		$ended = new Concern(Concern::SUPPORT, Concern::LEVEL_ERROR, ['state' => SupportStatus::STATE_ENDED, 'ends' => '2024-06-30']);
 		$this->assertSame('Ubuntu 22.04.5 LTS no longer receives security updates since 2024-06-30', $this->texts->title($ended, $this->status, $this->l));
+	}
+
+	public static function dataSupportTitles(): array {
+		return [
+			'supported' => [Concern::LEVEL_OK, ['state' => SupportStatus::STATE_SUPPORTED, 'ends' => '2027-05-31'], 'Ubuntu 22.04.5 LTS receives security updates until 2027-05-31'],
+			'ending soon' => [Concern::LEVEL_WARNING, ['state' => SupportStatus::STATE_SUPPORTED, 'ends' => '2027-05-31'], 'Security updates for Ubuntu 22.04.5 LTS end on 2027-05-31'],
+			'extended' => [Concern::LEVEL_OK, ['state' => SupportStatus::STATE_EXTENDED, 'ends' => '2032-04-09', 'extended' => 'ubuntu-pro'], 'Ubuntu 22.04.5 LTS receives security updates through Ubuntu Pro until 2032-04-09'],
+			'rolling' => [Concern::LEVEL_OK, ['state' => SupportStatus::STATE_ROLLING], 'Ubuntu 22.04.5 LTS is a rolling release'],
+			'unknown' => [Concern::LEVEL_UNKNOWN, ['state' => SupportStatus::STATE_UNKNOWN], 'The support status of Ubuntu 22.04.5 LTS is unknown'],
+		];
+	}
+
+	#[DataProvider('dataSupportTitles')]
+	public function testEverySupportTitleIsFilledIn(string $level, array $facts, string $expected): void {
+		$this->assertSame($expected, $this->texts->title(new Concern(Concern::SUPPORT, $level, $facts), $this->status, $this->l));
 	}
 
 	public function testRestartPrefersThePhpMessage(): void {

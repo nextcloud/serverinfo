@@ -165,22 +165,24 @@ class ConcernTexts {
 		$extendedEnds = $this->date(self::string($concern, 'extendedEnds'), $l);
 
 		return match (self::string($concern, 'state')) {
-			SupportStatus::STATE_ROLLING => $l->t('{name} is a rolling release', ['name' => $name]),
-			SupportStatus::STATE_ENDED => $l->t('{name} no longer receives security updates since {date}', ['name' => $name, 'date' => $ends]),
-			SupportStatus::STATE_EXTENDED_AVAILABLE => $l->t('Standard support for {name} has ended. Security updates continue only with {programme} until {date}', [
-				'name' => $name,
-				'programme' => $programme ?? '',
-				'date' => $extendedEnds,
+			SupportStatus::STATE_ROLLING => $l->t('%1$s is a rolling release', [$name]),
+			SupportStatus::STATE_ENDED => $l->t('%1$s no longer receives security updates since %2$s', [$name, $ends]),
+			// TRANSLATORS: %1$s is the release, %2$s a paid support programme, e.g. "Ubuntu Pro", %3$s the date it ends
+			SupportStatus::STATE_EXTENDED_AVAILABLE => $l->t('Standard support for %1$s has ended. Security updates continue only with %2$s until %3$s', [
+				$name,
+				$programme ?? '',
+				$extendedEnds,
 			]),
-			SupportStatus::STATE_EXTENDED => $l->t('{name} receives security updates through {programme} until {date}', [
-				'name' => $name,
-				'programme' => $programme ?? '',
-				'date' => $ends,
+			// TRANSLATORS: %1$s is the release, %2$s a paid support programme, e.g. "Ubuntu Pro", %3$s the date it ends
+			SupportStatus::STATE_EXTENDED => $l->t('%1$s receives security updates through %2$s until %3$s', [
+				$name,
+				$programme ?? '',
+				$ends,
 			]),
 			SupportStatus::STATE_SUPPORTED => $concern->level === Concern::LEVEL_OK
-				? $l->t('{name} receives security updates until {date}', ['name' => $name, 'date' => $ends])
-				: $l->t('Security updates for {name} end on {date}', ['name' => $name, 'date' => $ends]),
-			default => $l->t('The support status of {name} is unknown', ['name' => $name]),
+				? $l->t('%1$s receives security updates until %2$s', [$name, $ends])
+				: $l->t('Security updates for %1$s end on %2$s', [$name, $ends]),
+			default => $l->t('The support status of %1$s is unknown', [$name]),
 		};
 	}
 
