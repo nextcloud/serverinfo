@@ -99,9 +99,9 @@ class OsStatusService {
 
 	/**
 	 * Counts and flags for the monitoring API. Deliberately no package names,
-	 * versions or advisories: a leaked monitoring token must not become a list
-	 * of unpatched software. Unknown values are null, never 0 or false, so a
-	 * monitoring system cannot mistake "unknown" for "healthy".
+	 * package or kernel versions, or advisories: a leaked monitoring token must
+	 * not become a list of unpatched software. Unknown values are null, never 0
+	 * or false, so a monitoring system cannot mistake "unknown" for "healthy".
 	 */
 	public function monitoringSummary(): array {
 		$status = $this->getStatus();
@@ -123,7 +123,6 @@ class OsStatusService {
 			'collectedAt' => $status->collectedAt,
 			'outdated' => $this->isOutdated($status),
 			'name' => $status->release?->prettyName,
-			'kernel' => $status->kernel,
 			'environment' => $status->environment->kind,
 			'container' => $status->environment->container,
 			'updates' => [

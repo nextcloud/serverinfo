@@ -206,9 +206,7 @@ class ApiControllerTest extends \Test\TestCase {
 		$this->sessionStatistics->expects($this->once())
 			->method('getSessionStatistics')
 			->willReturn(['some_user' => 'some_value']);
-		$this->osStatus->expects($this->once())
-			->method('monitoringSummary')
-			->willReturn(['state' => 'ok', 'level' => 'warning']);
+		$this->osStatus->expects($this->never())->method('monitoringSummary');
 
 		$response = $this->getController($userSession)->info();
 
@@ -225,22 +223,23 @@ class ApiControllerTest extends \Test\TestCase {
 				'php' => ['some_php' => 'some_value'],
 				'fpm' => ['some_fpm' => 'some_value'],
 				'database' => ['some_database' => 'some_value'],
-				'os' => ['state' => 'ok', 'level' => 'warning'],
 			],
 			'activeUsers' => ['some_user' => 'some_value'],
 		], $response->getData());
 	}
 
-	public function testInfoWithoutTheOperatingSystem(): void {
+	public function testInfoWithTheOperatingSystemOnRequest(): void {
 		$userSession = $this->createMock(IUserSession::class);
 		$user = $this->createMock(IUser::class);
 		$user->method('getUID')->willReturn('admin');
 		$userSession->method('getUser')->willReturn($user);
 		$this->groupManager->method('isAdmin')->willReturn(true);
-		$this->osStatus->expects($this->never())->method('monitoringSummary');
+		$this->osStatus->expects($this->once())
+			->method('monitoringSummary')
+			->willReturn(['state' => 'ok', 'level' => 'warning']);
 
-		$response = $this->getController($userSession)->info(skipOs: true);
+		$response = $this->getController($userSession)->info(skipOs: false);
 
-		$this->assertArrayNotHasKey('os', $response->getData()['server']);
+		$this->assertSame(['state' => 'ok', 'level' => 'warning'], $response->getData()['server']['os']);
 	}
 }

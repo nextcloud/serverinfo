@@ -88,7 +88,8 @@ class OsStatusServiceTest extends \Test\TestCase {
 		$this->assertSame(1, $summary['failedUnits']);
 		$this->assertSame(2, $summary['listsAgeHours']);
 		$this->assertSame('supported', $summary['support']['state']);
-		foreach (['openssl', 'USN-7012', 'mariadb', 'nginx'] as $secret) {
+		$this->assertArrayNotHasKey('kernel', $summary);
+		foreach (['openssl', 'USN-7012', 'mariadb', 'nginx', '6.8.0-45'] as $secret) {
 			$this->assertStringNotContainsString($secret, $encoded);
 		}
 	}

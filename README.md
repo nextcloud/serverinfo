@@ -143,11 +143,12 @@ https://<nextcloud-fqdn>/ocs/v2.php/apps/serverinfo/api/v1/info
 - To request the information in JSON append the url parameter `format=json`
 - Use the url parameter `skipUpdate=true` to omit server updates.
 - Use the url parameter `skipApps=true` to omit app updates (including available app updates will send an external request to the app store).
-- Use the url parameter `skipOs=true` to omit the operating system status.
+- Use the url parameter `skipOs=false` to include the operating system status.
 
 The operating system status in `server.os` holds counts and flags only, never
-package names or advisories, so a leaked token does not reveal what is
-unpatched. Values that could not be determined are `null`:
+package names, package or kernel versions, or advisories, so a leaked token
+does not reveal what is unpatched. Values that could not be determined are
+`null`:
 
 ```json
 "os": {
@@ -156,7 +157,6 @@ unpatched. Values that could not be determined are `null`:
     "collectedAt": 1792411200,
     "outdated": false,
     "name": "Ubuntu 24.04.3 LTS",
-    "kernel": "6.8.0-45-generic",
     "environment": "host",
     "container": null,
     "updates": { "classified": true, "security": 7, "total": 23, "pendingDays": 5, "held": 0 },
