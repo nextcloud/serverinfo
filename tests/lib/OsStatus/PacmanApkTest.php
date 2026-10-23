@@ -9,19 +9,23 @@ declare(strict_types=1);
 
 namespace OCA\ServerInfo\Tests\OsStatus;
 
+use OCA\ServerInfo\Config\ConfigLexicon;
 use OCA\ServerInfo\OsStatus\Packages\Apk;
 use OCA\ServerInfo\OsStatus\Packages\Pacman;
 use OCA\ServerInfo\OsStatus\Packages\ProbeException;
+use OCP\AppFramework\Services\IAppConfig;
 use OCP\AppFramework\Utility\ITimeFactory;
 
 class PacmanApkTest extends \Test\TestCase {
 	private const NOW = 1792411200;
 
-	private function pacman(FakeHost $host): Pacman {
+	private function pacman(FakeHost $host, bool $network = true): Pacman {
 		$time = $this->createMock(ITimeFactory::class);
 		$time->method('getTime')->willReturn(self::NOW);
+		$appConfig = $this->createMock(IAppConfig::class);
+		$appConfig->method('getAppValueBool')->willReturnMap([[ConfigLexicon::OS_ALLOW_NETWORK, true, true, $network]]);
 
-		return new Pacman($host, $time);
+		return new Pacman($host, $time, $appConfig);
 	}
 
 	public function testCheckupdatesOutput(): void {
@@ -85,6 +89,22 @@ class PacmanApkTest extends \Test\TestCase {
 		$this->assertCount(1, $pacman->getPendingUpdates());
 		$this->assertSame(self::NOW - 34 * 86400, $pacman->getListsRefreshedAt());
 		$this->assertSame(['checkupdates could not sync the package databases, so pending updates come from the databases root last synced: ==> ERROR: Cannot fetch updates'], $pacman->getDiagnostics());
+	}
+
+	public function testWithoutNetworkOnlyLocalDatabasesAreRead(): void {
+		$host = new FakeHost();
+		$host->binaries = ['pacman', 'checkupdates', 'arch-audit'];
+		$host->withCommand('pacman', ['-Qu'], "openssl 3.3.2-1 -> 3.4.0-1\n");
+		$host->modified['/var/lib/pacman/sync'] = self::NOW - 3600;
+
+		$pacman = $this->pacman($host, false);
+		$updates = $pacman->getPendingUpdates();
+
+		$this->assertFalse($updates[0]->security);
+		$this->assertFalse($pacman->classifiesSecurity());
+		$this->assertSame(self::NOW - 3600, $pacman->getListsRefreshedAt());
+		$this->assertSame(['pacman -Qu'], $host->ran, 'Neither checkupdates nor arch-audit runs');
+		$this->assertSame([], $pacman->getDiagnostics());
 	}
 
 	public function testPacmanQuWithNothingToDo(): void {
