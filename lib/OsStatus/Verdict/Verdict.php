@@ -71,14 +71,4 @@ final class Verdict {
 
 		return $matching;
 	}
-
-	/**
-	 * @return array{level: string, concerns: list<array{id: string, level: string, facts: array<string, scalar|list<string>|null>}>}
-	 */
-	public function toArray(): array {
-		return [
-			'level' => $this->level(),
-			'concerns' => array_map(static fn (Concern $concern): array => $concern->toArray(), $this->concerns),
-		];
-	}
 }

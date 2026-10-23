@@ -5,18 +5,9 @@
 
 import type { OsConcern, OsConcernId, OsLevel, OsPayload, OsStatus } from './types.ts'
 
-import { getCanonicalLocale, n, t } from '@nextcloud/l10n'
+import { n, t } from '@nextcloud/l10n'
 
 const RANK: Record<OsLevel, number> = { unknown: 0, ok: 0, info: 1, warning: 2, error: 3 }
-
-/** Brand names of the paid extended support programmes */
-export const PROGRAMMES: Record<string, string> = {
-	'ubuntu-pro': 'Ubuntu Pro',
-	'debian-elts': 'Debian Extended LTS',
-	'rhel-els': 'Red Hat Extended Life Cycle Support',
-	'suse-ltss': 'SUSE Long Term Service Pack Support',
-	'oracle-extended': 'Oracle Linux Extended Support',
-}
 
 /**
  * @param a first level
@@ -46,13 +37,6 @@ export function problems(payload: OsPayload | null): OsConcern[] {
 }
 
 /**
- * @param fact a fact value of a concern
- */
-export function factNumber(fact: unknown): number | null {
-	return typeof fact === 'number' ? fact : null
-}
-
-/**
  * @param level the overall level
  */
 export function headline(level: OsLevel): string {
@@ -72,47 +56,6 @@ export function headline(level: OsLevel): string {
 		default:
 			// TRANSLATORS: Headline of the operating system page when nothing could be determined
 			return t('serverinfo', 'The operating system status is unknown')
-	}
-}
-
-/**
- * Short label of a concern, for the chips under the headline.
- *
- * @param concern the concern
- */
-export function concernLabel(concern: OsConcern): string {
-	const facts = concern.facts
-	const days = factNumber(facts.days)
-	switch (concern.id) {
-		case 'updates': {
-			const security = factNumber(facts.security) ?? 0
-			const other = factNumber(facts.other) ?? 0
-			return facts.classified
-				? n('serverinfo', '%n security update', '%n security updates', security)
-				: n('serverinfo', '%n update', '%n updates', other)
-		}
-		case 'reboot':
-			return days !== null && days > 0
-				? n('serverinfo', 'Reboot pending for %n day', 'Reboot pending for %n days', days)
-				: t('serverinfo', 'Reboot required')
-		case 'restart':
-			return facts.php
-				? t('serverinfo', 'PHP restart required')
-				: n('serverinfo', '%n service needs a restart', '%n services need a restart', factNumber(facts.services) ?? 0)
-		case 'support':
-			return facts.state === 'ended'
-				? t('serverinfo', 'Release no longer supported')
-				: t('serverinfo', 'Support ends soon')
-		case 'package-lists':
-			return t('serverinfo', 'Package lists are old')
-		case 'automatic-updates':
-			return t('serverinfo', 'Automatic updates are off')
-		case 'failed-units':
-			return n('serverinfo', '%n failed service', '%n failed services', (facts.units as string[] | undefined)?.length ?? 0)
-		case 'time-sync':
-			return t('serverinfo', 'Clock not synchronized')
-		default:
-			return t('serverinfo', 'Root helper')
 	}
 }
 
@@ -178,21 +121,6 @@ function hypervisorName(hypervisor: string): string {
 		utm: 'UTM',
 	}
 	return names[hypervisor] ?? hypervisor
-}
-
-/**
- * A calendar date from the support table (Y-m-d), in the user's locale.
- *
- * @param date date as Y-m-d
- */
-export function formatDay(date: string | null): string {
-	if (!date) {
-		return ''
-	}
-	const parsed = new Date(`${date}T12:00:00Z`)
-	return Number.isNaN(parsed.getTime())
-		? date
-		: parsed.toLocaleDateString(getCanonicalLocale(), { dateStyle: 'long', timeZone: 'UTC' })
 }
 
 /**

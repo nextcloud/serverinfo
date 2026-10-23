@@ -15,7 +15,7 @@
 						<strong>{{ t('serverinfo', 'Whether a reboot is required could not be determined') }}</strong>
 					</template>
 					<template v-else-if="status.rebootReasons.length === 0">
-						<strong>{{ t('serverinfo', 'No reboot required') }}</strong>
+						<strong>{{ rebootConcern?.title }}</strong>
 						<span v-if="status.bootTime" class="os-muted">
 							<!-- TRANSLATORS: Followed by a relative time such as "3 days ago" -->
 							{{ t('serverinfo', 'Last boot') }}
@@ -23,19 +23,13 @@
 						</span>
 					</template>
 					<template v-else>
-						<strong>
-							{{ t('serverinfo', 'Reboot required') }}
-							<span v-if="rebootDays !== null" class="os-muted">{{ formatDays(rebootDays) }}</span>
-						</strong>
-						<ul class="os-reasons">
-							<li v-for="reason in status.rebootReasons" :key="reason.kind + (reason.detail ?? '')">
-								{{ reasonText(reason) }}
-								<span v-if="reason.packages.length" class="os-muted">({{ reason.packages.join(', ') }})</span>
+						<strong>{{ rebootConcern?.title }}</strong>
+						<span v-if="rebootConcern?.detail" class="os-muted">{{ rebootConcern.detail }}</span>
+						<ul v-if="specifics.length" class="os-reasons">
+							<li v-for="specific in specifics" :key="specific">
+								<code>{{ specific }}</code>
 							</li>
 						</ul>
-						<p v-if="rebootConcern?.facts.livePatched" class="os-muted">
-							{{ t('serverinfo', 'A live kernel patch is active ({patches}). It protects the running kernel until the reboot, so the reboot is less urgent.', { patches: (status.livePatches ?? []).join(', ') }) }}
-						</p>
 						<template v-if="status.environment.kind === 'host'">
 							<OsCommand v-if="commands.reboot" :command="commands.reboot" />
 							<p v-else class="os-muted">
@@ -110,7 +104,7 @@
 </template>
 
 <script setup lang="ts">
-import type { OsConcern, OsLevel, OsPayload, OsRebootReason, OsStatus } from '../../types.ts'
+import type { OsConcern, OsLevel, OsPayload, OsStatus } from '../../types.ts'
 
 import { n, t } from '@nextcloud/l10n'
 import { computed } from 'vue'
@@ -120,7 +114,6 @@ import Restart from 'vue-material-design-icons/Restart.vue'
 import SectionHeading from '../SectionHeading.vue'
 import OsCommand from './OsCommand.vue'
 import OsLevelIcon from './OsLevelIcon.vue'
-import { factNumber, formatDays } from '../../osUtils.ts'
 
 const props = defineProps<{
 	status: OsStatus
@@ -135,7 +128,10 @@ defineEmits<{ helper: [] }>()
 const managesPackages = computed(() => props.status.environment.kind === 'host' || props.status.environment.kind === 'system-container')
 const showReboot = computed(() => managesPackages.value)
 
-const rebootDays = computed(() => factNumber(props.rebootConcern?.facts.days))
+/** What the reasons are about: the newer kernel, the updated packages */
+const specifics = computed(() => (props.status.rebootReasons ?? [])
+	.map((reason) => [reason.detail, ...reason.packages].filter((part) => part).join(', '))
+	.filter((specific) => specific !== ''))
 
 const phpLevel = computed<OsLevel>(() => {
 	if (props.php === null) {
@@ -155,26 +151,6 @@ const servicesLevel = computed<OsLevel>(() => {
 const sortedServices = computed(() => [...(props.status.restartServices ?? [])]
 	.sort((a, b) => Number(b.stack) - Number(a.stack) || a.unit.localeCompare(b.unit)))
 
-/**
- * @param reason one reason for the reboot
- */
-function reasonText(reason: OsRebootReason): string {
-	switch (reason.kind) {
-		case 'kernel':
-			return reason.detail
-				// TRANSLATORS: {kernel} is a kernel version such as 6.8.0-47-generic
-				? t('serverinfo', 'Kernel {kernel} is installed but not running yet.', { kernel: reason.detail })
-				: t('serverinfo', 'A newer kernel is installed but not running yet.')
-		case 'kernel-removed':
-			return t('serverinfo', 'The running kernel was removed by an upgrade, so new kernel modules cannot be loaded.')
-		case 'core-library':
-			return t('serverinfo', 'Core system components were updated since the last boot.')
-		case 'microcode':
-			return t('serverinfo', 'Newer processor microcode is installed.')
-		default:
-			return t('serverinfo', 'The distribution asks for a reboot to finish installing updates.')
-	}
-}
 </script>
 
 <style scoped>

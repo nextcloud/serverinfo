@@ -24,7 +24,7 @@
 						<strong>{{ t('serverinfo', 'All system services are running') }}</strong>
 					</template>
 					<template v-else>
-						<strong>{{ n('serverinfo', '%n system service has failed', '%n system services have failed', status.failedUnits.length) }}</strong>
+						<strong>{{ failedConcern?.title }}</strong>
 						<ul class="os-health__units">
 							<li v-for="unit in status.failedUnits" :key="unit">
 								<code>{{ unit }}</code>
@@ -43,12 +43,15 @@
 						<strong>{{ t('serverinfo', 'Time synchronization could not be checked') }}</strong>
 					</template>
 					<template v-else-if="status.timeSynchronized">
-						<strong>{{ t('serverinfo', 'The system clock is synchronized') }}</strong>
+						<strong>{{ timeConcern?.title }}</strong>
 						<span v-if="status.timeSource" class="os-muted">{{ status.timeSource }}</span>
 					</template>
 					<template v-else>
-						<strong>{{ t('serverinfo', 'The system clock is not synchronized') }}</strong>
-						<span class="os-muted">{{ t('serverinfo', 'Two-factor codes, federation and object storage requests fail when the clock drifts. Enable NTP, for example with systemd-timesyncd or chrony.') }}</span>
+						<strong>{{ timeConcern?.title }}</strong>
+						<span class="os-muted">
+							{{ timeConcern?.detail }}
+							{{ t('serverinfo', 'Enable NTP, for example with systemd-timesyncd or chrony.') }}
+						</span>
 						<OsCommand v-if="initSystem === 'systemd'" command="sudo timedatectl set-ntp true" />
 					</template>
 				</div>
@@ -81,7 +84,7 @@
 <script setup lang="ts">
 import type { OsConcern, OsLevel, OsPayload, OsStatus } from '../../types.ts'
 
-import { n, t } from '@nextcloud/l10n'
+import { t } from '@nextcloud/l10n'
 import { computed } from 'vue'
 import HeartPulse from 'vue-material-design-icons/HeartPulse.vue'
 import SectionHeading from '../SectionHeading.vue'

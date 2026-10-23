@@ -79,9 +79,11 @@ export function status(overrides: Partial<OsStatus> = {}): OsStatus {
  * @param id concern
  * @param level its level
  * @param facts what it is based on
+ * @param title its headline, as the server writes it
+ * @param detail its explanation, as the server writes it
  */
-export function concern(id: OsConcern['id'], level: OsConcern['level'], facts: OsConcern['facts'] = {}): OsConcern {
-	return { id, level, facts }
+export function concern(id: OsConcern['id'], level: OsConcern['level'], facts: OsConcern['facts'] = {}, title = '', detail = ''): OsConcern {
+	return { id, level, facts, title, detail }
 }
 
 /**
@@ -94,9 +96,9 @@ export function payload(overrides: Partial<OsPayload> = {}): OsPayload {
 		verdict: {
 			level: 'warning',
 			concerns: [
-				concern('updates', 'warning', { security: 1, other: 1, classified: true, stack: 1, days: 5 }),
-				concern('reboot', 'ok'),
-				concern('support', 'ok', { state: 'supported', ends: '2029-05-31', daysLeft: 954, extended: 'ubuntu-pro', extendedEnds: '2034-04-25' }),
+				concern('updates', 'warning', { security: 1, other: 1, classified: true, stack: 1, days: 5 }, '1 security update pending', '1 of them updates software Nextcloud runs on, such as PHP or the database. The oldest has been waiting for 5 days.'),
+				concern('reboot', 'ok', {}, 'No reboot required'),
+				concern('support', 'ok', { state: 'supported', ends: '2029-05-31', daysLeft: 954, extended: 'ubuntu-pro', extendedEnds: '2034-04-25' }, 'Ubuntu 24.04.3 LTS receives security updates until May 31, 2029'),
 			],
 		},
 		outdated: false,
