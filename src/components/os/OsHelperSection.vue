@@ -68,6 +68,8 @@ const title = computed(() => {
 			return t('serverinfo', 'Not set up')
 		case 'stale':
 			return t('serverinfo', 'The report is out of date')
+		case 'clock-skew':
+			return t('serverinfo', 'The report is dated in the future')
 		case 'previous-boot':
 			return t('serverinfo', 'The report is from before the last reboot')
 		case 'insecure':
@@ -94,6 +96,8 @@ const description = computed(() => {
 			return t('serverinfo', 'Optional. A small script run by root adds what the web server cannot see: which services need a restart to load updated libraries. It also keeps the package lists fresh.')
 		case 'stale':
 			return t('serverinfo', 'The helper has not written a report for more than a day, so it is not used. Check that its cron job still runs.')
+		case 'clock-skew':
+			return t('serverinfo', 'The server clock was set back since the helper wrote it, so it is not used. Check that the system clock is synchronized.')
 		case 'previous-boot':
 			return t('serverinfo', 'Its findings do not apply after a reboot. It is used again after the helper\'s next run.')
 		case 'insecure':

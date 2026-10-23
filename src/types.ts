@@ -134,7 +134,7 @@ export interface PeriodicData {
 export type OsLevel = 'ok' | 'info' | 'warning' | 'error' | 'unknown'
 
 export type OsConcernId = 'updates' | 'reboot' | 'restart' | 'support' | 'package-lists'
-	| 'automatic-updates' | 'failed-units' | 'time-sync' | 'helper'
+	| 'automatic-updates' | 'failed-units' | 'time-sync' | 'helper' | 'freshness'
 
 export interface OsConcern {
 	id: OsConcernId
@@ -172,7 +172,7 @@ export interface OsRebootReason {
 
 export type OsSupportState = 'supported' | 'extended' | 'extended-available' | 'ended' | 'rolling' | 'unknown'
 
-export type OsHelperState = 'absent' | 'ok' | 'stale' | 'previous-boot' | 'other-host' | 'insecure' | 'unreadable' | 'invalid' | 'unsupported'
+export type OsHelperState = 'absent' | 'ok' | 'stale' | 'clock-skew' | 'previous-boot' | 'other-host' | 'insecure' | 'unreadable' | 'invalid' | 'unsupported'
 
 /** The collected operating system status, see OCA\ServerInfo\OsStatus\OsStatus */
 export interface OsStatus {

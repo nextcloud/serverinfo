@@ -53,6 +53,13 @@
 						@refresh="refresh"
 						@settings="settingsOpen = true" />
 
+					<NcNoteCard v-if="stale" type="warning" class="os-view__notice">
+						<p>{{ stale.title }}. {{ stale.detail }}</p>
+						<p v-if="!data.refresh.systemCron">
+							{{ t('serverinfo', 'Until then, run "occ serverinfo:os-status --refresh" on the server to check it now.') }}
+						</p>
+					</NcNoteCard>
+
 					<NcNoteCard v-if="data.outdated" type="info" class="os-view__notice">
 						{{ t('serverinfo', 'Packages were installed or removed since the last check, so some of this may already be resolved.') }}
 						<NcButton variant="tertiary-no-background" :disabled="refreshing || !data.refresh.systemCron" @click="refresh">
@@ -64,7 +71,7 @@
 				<NcNoteCard v-if="refreshing" type="info" class="os-view__notice">
 					{{ t('serverinfo', 'The check runs with the next background jobs, usually within a few minutes. This page updates when it is done.') }}
 				</NcNoteCard>
-				<NcNoteCard v-else-if="(!status || status.state === 'ok') && (!data.refresh.systemCron || refreshError === 'no-cron')" type="info" class="os-view__notice">
+				<NcNoteCard v-else-if="!stale && (!status || status.state === 'ok') && (!data.refresh.systemCron || refreshError === 'no-cron')" type="info" class="os-view__notice">
 					{{ t('serverinfo', '"Check now" needs background jobs to run from system cron. Until then, run "occ serverinfo:os-status --refresh" on the server.') }}
 				</NcNoteCard>
 				<NcNoteCard v-else-if="refreshError === 'rate-limited'" type="warning" class="os-view__notice">
@@ -175,6 +182,11 @@ const settingsOpen = ref(false)
 const helperOpen = ref(false)
 
 const status = computed(() => data.value?.status ?? null)
+/** The stored status is old, or will not be renewed because background jobs do not run from system cron */
+const stale = computed(() => {
+	const freshness = concernOf(data.value, 'freshness')
+	return freshness?.level === 'warning' ? freshness : null
+})
 const managesPackages = computed(() => status.value?.environment.kind === 'host' || status.value?.environment.kind === 'system-container')
 
 // Kept mounted like the other pages, so the first time it becomes visible is
