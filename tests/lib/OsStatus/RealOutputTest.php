@@ -205,7 +205,7 @@ class RealOutputTest extends \Test\TestCase {
 	public function testAlpine(): void {
 		$host = new FakeHost();
 		$host->binaries[] = 'apk';
-		$host->withCommand('apk', ['list', '--upgradable'], FakeHost::fixture('alpine-apk-list-upgradable'))
+		$host->withCommand('apk', ['--no-network', 'list', '--upgradable'], FakeHost::fixture('alpine-apk-list-upgradable'))
 			->withFile('/etc/apk/world', FakeHost::fixture('alpine-apk-world-pinned'));
 
 		$updates = (new Apk($host))->getPendingUpdates();

@@ -180,11 +180,43 @@ class PacmanApkTest extends \Test\TestCase {
 
 	public function testApkWorldPins(): void {
 		$host = new FakeHost();
-		$host->withFile('/etc/apk/world', "alpine-base\nnginx=1.26.2-r0\nphp83<8.4\ncurl@edge\n");
+		$host->withFile('/etc/apk/world', "alpine-base\nnginx=1.26.2-r0\nphp83<8.4\ncurl@edge\nzlib~1.3\nmusl>=1.2\nopenssl@edge<=3.5.8-r0\n!busybox-extras\n-x=1\n");
 
 		$held = (new Apk($host))->getHeldPackages();
 
-		$this->assertSame(['nginx', 'php83', 'curl'], array_map(static fn ($h) => $h->name, $held ?? []));
-		$this->assertSame('=1.26.2-r0', $held[0]->constraint);
+		$this->assertSame(
+			['nginx' => '=1.26.2-r0', 'php83' => '<8.4', 'zlib' => '~1.3', 'openssl' => '@edge<=3.5.8-r0'],
+			array_combine(array_map(static fn ($h) => $h->name, $held ?? []), array_map(static fn ($h) => $h->constraint, $held ?? [])),
+			'A repository tag alone or a lower bound holds nothing back',
+		);
+	}
+
+	public function testApkWorldConstraintsFilterTheUpgradable(): void {
+		$host = new FakeHost();
+		$host->binaries[] = 'apk';
+		$host->withFile('/etc/apk/world', "php83<8.3.20\nzlib~1.3\ncurl@edge\nnginx<1.28\nmusl>=1.2\n")
+			->withCommand('apk', ['--no-network', 'list', '--upgradable'], implode("\n", [
+				'php83-8.3.21-r0 aarch64 {php83} (PHP-3.01 AND BSD-3-Clause) [upgradable from: php83-8.3.19-r0]',
+				'zlib-1.4.0-r0 aarch64 {zlib} (Zlib) [upgradable from: zlib-1.3.2-r1]',
+				'curl-8.18.0-r0 aarch64 {curl} (curl) [upgradable from: curl-8.17.0-r0]',
+				'nginx-1.26.3-r0 aarch64 {nginx} (BSD-2-Clause) [upgradable from: nginx-1.26.2-r0]',
+				'musl-1.2.6-r0 aarch64 {musl} (MIT) [upgradable from: musl-1.2.5-r9]',
+			]));
+
+		$updates = (new Apk($host))->getPendingUpdates();
+
+		$this->assertSame(['curl', 'nginx', 'musl'], array_map(static fn ($u) => $u->name, $updates));
+	}
+
+	public function testApkVersions(): void {
+		$this->assertSame(-1, Apk::compareVersions('3.5.8-r0', '3.5.8-r1'));
+		$this->assertSame(1, Apk::compareVersions('3.5.10-r0', '3.5.9-r3'));
+		$this->assertSame(-1, Apk::compareVersions('1.2_rc1-r0', '1.2-r0'));
+		$this->assertSame(-1, Apk::compareVersions('1.2_pre1', '1.2'));
+		$this->assertSame(1, Apk::compareVersions('1.2_p1-r0', '1.2-r5'));
+		$this->assertTrue(Apk::satisfies('1.3.2-r1', '~', '1.3'));
+		$this->assertFalse(Apk::satisfies('1.30-r0', '~', '1.3'));
+		$this->assertTrue(Apk::satisfies('8.3.19-r0', '<', '8.4'));
+		$this->assertFalse(Apk::satisfies('1.3.2-r2', '=', '1.3.2-r1'));
 	}
 }

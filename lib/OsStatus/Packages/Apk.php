@@ -12,12 +12,16 @@ namespace OCA\ServerInfo\OsStatus\Packages;
 use OCA\ServerInfo\OsStatus\Host\IHost;
 
 /**
- * Alpine Linux. Most Nextcloud installs on Alpine are containers, where the
- * container check comes first; this covers Alpine hosts and LXC guests.
+ * Alpine Linux and its derivatives such as postmarketOS. Most Nextcloud
+ * installs on Alpine are containers, where the container check comes first;
+ * this covers Alpine hosts and LXC guests. apk only reads its cached indexes
+ * here and never goes online.
  *
  * @psalm-api
  */
 class Apk implements IPackageManager {
+	private const WORLD = '/etc/apk/world';
+
 	public function __construct(
 		private IHost $host,
 	) {
@@ -40,7 +44,7 @@ class Apk implements IPackageManager {
 
 	#[\Override]
 	public function getPendingUpdates(): array {
-		$result = $this->host->run('apk', ['list', '--upgradable'], 120);
+		$result = $this->host->run('apk', ['--no-network', 'list', '--upgradable'], 120);
 		if ($result === null) {
 			throw new ProbeException('apk could not be run.');
 		}
@@ -48,18 +52,26 @@ class Apk implements IPackageManager {
 			throw new ProbeException('apk list --upgradable failed: ' . ProbeHelper::firstLine($result->stderr ?: $result->stdout));
 		}
 
-		// apk lists packages pinned to an exact version too, though it never
-		// upgrades them.
-		$pinned = [];
-		foreach ($this->getHeldPackages() ?? [] as $held) {
-			if (str_starts_with($held->constraint ?? '', '=')) {
-				$pinned[$held->name] = true;
+		// apk lists every newer version it knows of, including those the
+		// constraints in /etc/apk/world keep it from installing.
+		$constraints = [];
+		foreach (self::parseWorld($this->host->readFile(self::WORLD, 262144) ?? '') as [$name, $operator, $version]) {
+			if ($operator !== null) {
+				$constraints[$name][] = [$operator, $version];
 			}
 		}
 
 		return array_values(array_filter(
 			self::parseUpgradable($result->stdout),
-			static fn (PendingUpdate $update): bool => !isset($pinned[$update->name]),
+			static function (PendingUpdate $update) use ($constraints): bool {
+				foreach ($constraints[$update->name] ?? [] as [$operator, $version]) {
+					if (!self::satisfies($update->candidateVersion, $operator, $version)) {
+						return false;
+					}
+				}
+
+				return true;
+			},
 		));
 	}
 
@@ -85,23 +97,98 @@ class Apk implements IPackageManager {
 	}
 
 	/**
-	 * Packages pinned to a version or tag in /etc/apk/world.
+	 * Packages whose version /etc/apk/world restricts in a way that can hold
+	 * back an upgrade: "=", "<", "<=" and the fuzzy "~". A repository tag
+	 * alone ("curl@edge") only lets the package come from the tagged
+	 * repository as well, and upgrades go on from there.
 	 */
 	#[\Override]
 	public function getHeldPackages(): ?array {
-		$world = $this->host->readFile('/etc/apk/world', 262144);
+		$world = $this->host->readFile(self::WORLD, 262144);
 		if ($world === null) {
 			return null;
 		}
 
 		$held = [];
-		foreach (preg_split('/\s+/', trim($world)) ?: [] as $entry) {
-			if (preg_match('/^([A-Za-z0-9._+-]+?)((?:[=<>~]|@)\S+)$/', $entry, $matches) === 1) {
-				$held[] = new HeldPackage($matches[1], 'apk world', $matches[2]);
+		foreach (self::parseWorld($world) as [$name, $operator, $version, $tag]) {
+			if ($operator !== null && !in_array($operator, ['>', '>='], true)) {
+				$held[] = new HeldPackage($name, 'apk world', ($tag ?? '') . $operator . $version);
 			}
 		}
 
 		return $held;
+	}
+
+	/**
+	 * Parses the dependencies in /etc/apk/world: name[@tag][operator version].
+	 * Conflicts ("!name") are left out.
+	 *
+	 * @return list<array{0: string, 1: ?string, 2: string, 3: ?string}> [name, operator, version, tag]
+	 */
+	public static function parseWorld(string $world): array {
+		$entries = [];
+		foreach (preg_split('/\s+/', trim($world)) ?: [] as $entry) {
+			if (preg_match('/^([A-Za-z0-9][A-Za-z0-9._+-]*?)(@[A-Za-z0-9._-]+)?(?:(<=|>=|~=|=~|[<>=~])(\S+))?$/', $entry, $matches) !== 1) {
+				continue;
+			}
+			$operator = ($matches[3] ?? '') !== '' ? $matches[3] : null;
+			$entries[] = [
+				$matches[1],
+				$operator === '~=' || $operator === '=~' ? '~' : $operator,
+				$matches[4] ?? '',
+				($matches[2] ?? '') !== '' ? $matches[2] : null,
+			];
+		}
+
+		return $entries;
+	}
+
+	/**
+	 * Whether a version meets a world constraint. "~1.2" matches 1.2 and
+	 * every 1.2.x or 1.2-rN.
+	 */
+	public static function satisfies(string $version, string $operator, string $constraint): bool {
+		if ($operator === '~') {
+			return $version === $constraint
+				|| (str_starts_with($version, $constraint) && in_array($version[strlen($constraint)], ['.', '-', '_'], true));
+		}
+
+		$order = self::compareVersions($version, $constraint);
+
+		return match ($operator) {
+			'=' => $order === 0,
+			'<' => $order < 0,
+			'<=' => $order <= 0,
+			'>' => $order > 0,
+			'>=' => $order >= 0,
+			default => true,
+		};
+	}
+
+	/**
+	 * Compares apk versions such as "3.5.8-r0" or "1.2_rc1-r3": the
+	 * upstream version as PHP's version_compare() orders it, then the -rN
+	 * package release.
+	 */
+	public static function compareVersions(string $a, string $b): int {
+		[$baseA, $releaseA] = self::splitRelease($a);
+		[$baseB, $releaseB] = self::splitRelease($b);
+
+		return version_compare($baseA, $baseB) ?: $releaseA <=> $releaseB;
+	}
+
+	/**
+	 * @return array{0: string, 1: int}
+	 */
+	private static function splitRelease(string $version): array {
+		$release = 0;
+		if (preg_match('/^(.*)-r(\d+)$/', $version, $matches) === 1) {
+			$version = $matches[1];
+			$release = (int)$matches[2];
+		}
+
+		// apk's _pre sorts like a release candidate; version_compare() does not know it.
+		return [str_replace(['_pre', '_'], ['.rc', '.'], $version), $release];
 	}
 
 	#[\Override]
