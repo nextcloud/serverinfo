@@ -323,6 +323,70 @@ class HelperScriptTest extends \Test\TestCase {
 		$this->assertSame([0, $unit === '' ? '' : $unit . "\n"], array_slice($this->functions('system_unit "$1"', $file), 0, 2));
 	}
 
+	/**
+	 * Shell code that replaces stat(1) with the owner and mode given as
+	 * $2 and $3 for the directory $1, and as $4 and $5 for anything else.
+	 */
+	private const FAKE_STAT = 'stat() { if [ "$3" = "$DIR" ]; then o=$DO m=$DM; else o=$PO m=$PM; fi; case "$2" in %u) echo "$o" ;; *) echo "$m" ;; esac; }; DIR=$1 DO=$2 DM=$3 PO=$4 PM=$5; ';
+
+	public static function dataDirectories(): array {
+		return [
+			'root only' => ['0', '755', '0', '755', ''],
+			'setgid, sticky and closed modes' => ['0', '2750', '0', '1755', ''],
+			'directory owned by the web server' => ['33', '755', '0', '755', '/reports must be owned by root'],
+			'directory group writable' => ['0', '775', '0', '755', '/reports must not be writable by group or others'],
+			'directory world writable' => ['0', '757', '0', '755', '/reports must not be writable by group or others'],
+			'parent owned by a user' => ['0', '755', '1000', '755', ' must be owned by root'],
+			'parent world writable' => ['0', '755', '0', '1777', ' must not be writable by group or others'],
+			'parent group writable, setgid' => ['0', '755', '0', '2775', ' must not be writable by group or others'],
+		];
+	}
+
+	#[DataProvider('dataDirectories')]
+	public function testReportDirectoryMustBeRootsAlone(string $owner, string $mode, string $parentOwner, string $parentMode, string $error): void {
+		$directory = $this->temporaryDirectory() . '/reports';
+
+		[$exit, $stdout, $stderr] = $this->functions(
+			self::FAKE_STAT . 'secure_directory "$1" && echo secured',
+			$directory, $owner, $mode, $parentOwner, $parentMode,
+		);
+
+		if ($error === '') {
+			$this->assertSame([0, "secured\n"], [$exit, $stdout], $stderr);
+			$this->assertDirectoryExists($directory);
+		} else {
+			$this->assertSame(1, $exit);
+			$this->assertStringContainsString($error, $stderr);
+		}
+	}
+
+	public function testASymlinkedReportDirectoryIsRefused(): void {
+		$base = $this->temporaryDirectory();
+		mkdir($base . '/elsewhere');
+		symlink($base . '/elsewhere', $base . '/reports');
+
+		[$exit, , $stderr] = $this->functions(self::FAKE_STAT . 'write_report "{}" "$1/os-report.json"', $base . '/reports', '0', '755', '0', '755');
+
+		$this->assertSame(1, $exit);
+		$this->assertStringContainsString('is a symbolic link', $stderr);
+		$this->assertSame(['.', '..'], scandir($base . '/elsewhere'));
+	}
+
+	public function testTheReportReplacesASymlinkInsteadOfFollowingIt(): void {
+		$directory = $this->temporaryDirectory();
+		file_put_contents($directory . '/victim', 'keep');
+		symlink($directory . '/victim', $directory . '/os-report.json');
+
+		[$exit, , $stderr] = $this->functions(self::FAKE_STAT . 'write_report "{\"schema\": 1}" "$1/os-report.json"', $directory, '0', '755', '0', '755');
+
+		$this->assertSame(0, $exit, $stderr);
+		$this->assertSame('keep', file_get_contents($directory . '/victim'));
+		$this->assertFalse(is_link($directory . '/os-report.json'));
+		$this->assertSame("{\"schema\": 1}\n", file_get_contents($directory . '/os-report.json'));
+		$this->assertSame(0o644, fileperms($directory . '/os-report.json') & 0o777);
+		$this->assertSame(['.', '..', 'os-report.json', 'victim'], scandir($directory), 'No temporary file is left');
+	}
+
 	public function testRequiresRoot(): void {
 		if (function_exists('posix_geteuid') && posix_geteuid() === 0) {
 			$this->markTestSkipped('Running as root');
