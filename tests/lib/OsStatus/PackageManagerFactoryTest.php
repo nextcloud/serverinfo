@@ -10,6 +10,7 @@ declare(strict_types=1);
 namespace OCA\ServerInfo\Tests\OsStatus;
 
 use OCA\ServerInfo\OsStatus\Health\SystemdProbe;
+use OCA\ServerInfo\OsStatus\Host\CommandResult;
 use OCA\ServerInfo\OsStatus\OsRelease;
 use OCA\ServerInfo\OsStatus\Packages\Apk;
 use OCA\ServerInfo\OsStatus\Packages\Apt;
@@ -87,6 +88,32 @@ class PackageManagerFactoryTest extends \Test\TestCase {
 
 		$this->assertSame($expected, $manager?->getId());
 		$this->assertSame($classifies, $manager?->classifiesSecurity());
+	}
+
+	/**
+	 * @return array<string, array{string, string, string}>
+	 */
+	public static function hiddenByOpenBasedir(): array {
+		return [
+			'openSUSE Leap 16' => ["ID=\"opensuse-leap\"\nID_LIKE=\"suse opensuse\"\nVERSION_ID=\"16.0\"\n", 'zypper', 'zypper'],
+			'Arch Linux' => ["ID=arch\n", 'pacman', 'pacman'],
+			'Alpine' => ["ID=alpine\nVERSION_ID=3.24.2\n", 'apk', 'apk'],
+		];
+	}
+
+	#[\PHPUnit\Framework\Attributes\DataProvider('hiddenByOpenBasedir')]
+	public function testTriesAPackageManagerOpenBasedirHides(string $osRelease, string $binary, string $expected): void {
+		$this->host->hiddenBinaries = [$binary];
+
+		$this->assertSame($expected, $this->managerFor($osRelease, [])?->getId());
+	}
+
+	public function testDnfNamesATimeout(): void {
+		$manager = $this->managerFor("ID=\"rhel\"\nID_LIKE=\"fedora\"\nVERSION_ID=\"9.6\"\n", ['dnf', 'dnf-3']);
+		$this->host->commands['dnf-3 -q --cacheonly check-update'] = new CommandResult(-1, "Last metadata expiration check\n", '', true);
+
+		$this->expectExceptionMessage('dnf check-update failed: timed out after 180 s');
+		$manager?->getPendingUpdates();
 	}
 
 	public function testRhel9RunsDnf4AsDnf3(): void {

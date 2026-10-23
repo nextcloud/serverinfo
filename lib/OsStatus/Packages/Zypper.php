@@ -67,7 +67,7 @@ class Zypper implements IPackageManager, IReportsDiagnostics {
 
 	#[\Override]
 	public function isAvailable(): bool {
-		return $this->host->hasBinary('zypper');
+		return $this->host->binaryState('zypper') !== false;
 	}
 
 	/**
@@ -338,7 +338,7 @@ class Zypper implements IPackageManager, IReportsDiagnostics {
 			: null;
 		$skipped = $result->exitCode === self::EXIT_REPOS_SKIPPED;
 		if (!self::isComplete($result) || self::parseXml($result->stdout) === null || ($xmlError !== null && !$skipped)) {
-			throw new ProbeException('zypper ' . $arguments[0] . ' failed: ' . ProbeHelper::firstLine($xmlError ?? ($result->stderr ?: $result->stdout)));
+			throw new ProbeException('zypper ' . $arguments[0] . ' failed: ' . ($xmlError !== null ? ProbeHelper::firstLine($xmlError) : $result->failure(180)));
 		}
 		if ($skipped) {
 			$this->diagnostics[] = 'zypper skipped repositories it could not read, so pending updates may be incomplete'

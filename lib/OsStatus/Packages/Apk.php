@@ -34,7 +34,7 @@ class Apk implements IPackageManager {
 
 	#[\Override]
 	public function isAvailable(): bool {
-		return $this->host->hasBinary('apk');
+		return $this->host->binaryState('apk') !== false;
 	}
 
 	#[\Override]
@@ -49,7 +49,7 @@ class Apk implements IPackageManager {
 			throw new ProbeException('apk could not be run.');
 		}
 		if (!$result->succeeded()) {
-			throw new ProbeException('apk list --upgradable failed: ' . ProbeHelper::firstLine($result->stderr ?: $result->stdout));
+			throw new ProbeException('apk list --upgradable failed: ' . $result->failure(120));
 		}
 
 		// apk lists every newer version it knows of, including those the
