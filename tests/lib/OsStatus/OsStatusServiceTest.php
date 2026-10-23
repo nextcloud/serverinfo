@@ -123,6 +123,21 @@ class OsStatusServiceTest extends \Test\TestCase {
 		$this->service->samplePhpProcess();
 	}
 
+	public function testSamplingOnlyWhereTheSystemIsChecked(): void {
+		$this->host->files['/proc/self/maps'] = '';
+		$this->store->expects($this->never())->method('load');
+		$this->store->expects($this->never())->method('savePhpSample');
+
+		$this->restrictedMode = 'yes';
+		$this->service->samplePhpProcess();
+
+		$this->restrictedMode = 'no';
+		$this->host->family = 'BSD';
+		$this->service->samplePhpProcess();
+
+		$this->assertSame([], $this->host->read);
+	}
+
 	public function testFreshnessFollowsTheCronModeAndTheJobInterval(): void {
 		$status = new OsStatus(OsStatus::STATE_OK, self::NOW - 2 * 86400);
 
