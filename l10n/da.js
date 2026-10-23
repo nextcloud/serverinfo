@@ -166,7 +166,7 @@ OC.L10N.register(
     "Version" : "Version",
     "Memory limit" : "Hukommelsesgrænse",
     "Max execution time:" : "Maks udførselstid:",
-    "Upload max size:" : "Max upload størrelse:",
+    "Upload max size:" : "Maks. overførselsstørrelse:",
     "Post max size:" : "Maks. POST-størrelse:",
     "SAPI:" : "SAPI:",
     "Extensions:" : "Udvidelser:",
