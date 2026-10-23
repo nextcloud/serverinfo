@@ -28,10 +28,8 @@ secure:
   runs on (PHP, the web server, the database, Redis …) marked
 - whether a reboot is needed, and why (a newer kernel, updated core libraries,
   the distribution asking for one), with live kernel patches taken into account
-- whether the PHP serving Nextcloud still runs libraries that an update
-  replaced, and which service to restart
-- how long the release still receives security updates, including paid
-  extensions such as Ubuntu Pro, Debian ELTS or RHEL ELS
+- how long the release still receives security updates, and whether a paid
+  extension (Ubuntu Pro or Debian ELTS) is active
 - automatic updates, package list age, held packages, failed system services,
   time synchronisation, SELinux and AppArmor
 
@@ -40,7 +38,7 @@ what can and cannot be known from inside; LXC and systemd-nspawn guests are
 treated like machines without a kernel of their own.
 
 Nothing is installed or changed. To find out, the app reads `/etc/os-release`,
-`/proc` (uptime, `/proc/1/cgroup`, its own process maps), `/sys/class/dmi/id`,
+`/proc` (uptime, `/proc/1/cgroup`), `/sys/class/dmi/id`,
 `/sys/kernel/livepatch`, the SELinux and AppArmor state under `/sys`, the
 package manager's configuration, state and logs, `/run/reboot-required` and the
 installed kernel modules. It runs the package manager's query commands (updates
