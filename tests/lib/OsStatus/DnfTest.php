@@ -12,6 +12,7 @@ namespace OCA\ServerInfo\Tests\OsStatus;
 use OCA\ServerInfo\OsStatus\Health\SystemdProbe;
 use OCA\ServerInfo\OsStatus\Packages\AutomaticUpdates;
 use OCA\ServerInfo\OsStatus\Packages\Dnf;
+use OCA\ServerInfo\OsStatus\Packages\NeedsRootException;
 use OCA\ServerInfo\OsStatus\Packages\ProbeException;
 use OCA\ServerInfo\OsStatus\Packages\Rpm;
 
@@ -22,7 +23,7 @@ class DnfTest extends \Test\TestCase {
 	protected function setUp(): void {
 		parent::setUp();
 		$this->host = new FakeHost();
-		$this->host->binaries[] = 'dnf';
+		$this->host->binaries[] = 'dnf-3';
 		$this->dnf = new Dnf($this->host, new Rpm($this->host), new SystemdProbe($this->host));
 	}
 
@@ -80,8 +81,8 @@ class DnfTest extends \Test\TestCase {
 	}
 
 	public function testPendingUpdatesAreMatchedWithAdvisories(): void {
-		$this->host->withCommand('dnf', ['-q', '--cacheonly', 'check-update'], "openssl-libs.x86_64  1:3.2.2-6.el9_5.1  baseos\ntzdata.noarch  2025a-1.el9  appstream\n", 100)
-			->withCommand('dnf', ['-q', '--cacheonly', 'updateinfo', 'list', '--security', '--available'], "RHSA-2026:1234 Important/Sec. openssl-libs-1:3.2.2-6.el9_5.1.x86_64\n")
+		$this->host->withCommand('dnf-3', ['-q', '--cacheonly', 'check-update'], "openssl-libs.x86_64  1:3.2.2-6.el9_5.1  baseos\ntzdata.noarch  2025a-1.el9  appstream\n", 100)
+			->withCommand('dnf-3', ['-q', '--cacheonly', 'updateinfo', 'list', '--security', '--available'], "RHSA-2026:1234 Important/Sec. openssl-libs-1:3.2.2-6.el9_5.1.x86_64\n")
 			->withCommand('rpm', ['-qa', '--qf', Rpm::QUERY_FORMAT], "openssl-libs 1:3.2.2-6.el9_5 1792000000\ntzdata 0:2024b-2.el9 1792100000\n");
 
 		$updates = $this->dnf->getPendingUpdates();
@@ -97,14 +98,14 @@ class DnfTest extends \Test\TestCase {
 	}
 
 	public function testNoUpdatesSkipsTheAdvisories(): void {
-		$this->host->withCommand('dnf', ['-q', '--cacheonly', 'check-update'], '', 0);
+		$this->host->withCommand('dnf-3', ['-q', '--cacheonly', 'check-update'], '', 0);
 
 		$this->assertSame([], $this->dnf->getPendingUpdates());
-		$this->assertNotContains('dnf -q --cacheonly updateinfo list --security --available', $this->host->ran);
+		$this->assertNotContains('dnf-3 -q --cacheonly updateinfo list --security --available', $this->host->ran);
 	}
 
 	public function testCheckUpdateFailure(): void {
-		$this->host->withCommand('dnf', ['-q', '--cacheonly', 'check-update'], '', 1, "Error: Cache-only enabled but no cache for 'baseos'\n");
+		$this->host->withCommand('dnf-3', ['-q', '--cacheonly', 'check-update'], '', 1, "Error: Cache-only enabled but no cache for 'baseos'\n");
 
 		$this->expectException(ProbeException::class);
 		$this->expectExceptionMessage("no cache for 'baseos'");
@@ -142,7 +143,7 @@ class DnfTest extends \Test\TestCase {
 	}
 
 	public function testNeedsRestartingReboot(): void {
-		$this->host->withCommand('dnf', ['-q', '--cacheonly', 'needs-restarting', '-r'], "Core libraries or services have been updated since boot-up:\n  * glibc\n  * kernel\n\nReboot is required to fully utilize these updates.\n", 1);
+		$this->host->withCommand('dnf-3', ['-q', '--cacheonly', 'needs-restarting', '-r'], "Core libraries or services have been updated since boot-up:\n  * glibc\n  * kernel\n\nReboot is required to fully utilize these updates.\n", 1);
 
 		$reasons = $this->dnf->getRebootReasons();
 
@@ -150,7 +151,7 @@ class DnfTest extends \Test\TestCase {
 	}
 
 	public function testNeedsRestartingNoReboot(): void {
-		$this->host->withCommand('dnf', ['-q', '--cacheonly', 'needs-restarting', '-r'], "No core libraries or services have been updated since boot-up.\n", 0);
+		$this->host->withCommand('dnf-3', ['-q', '--cacheonly', 'needs-restarting', '-r'], "No core libraries or services have been updated since boot-up.\n", 0);
 
 		$this->assertSame([], $this->dnf->getRebootReasons());
 	}
@@ -174,6 +175,40 @@ class DnfTest extends \Test\TestCase {
 		$this->assertSame([], $this->dnf->getRebootReasons());
 		$this->assertFalse($this->dnf->hasOwnRebootCheck());
 		$this->assertSame([], $this->host->ran, 'Not a single dnf process');
+	}
+
+	public function testDnf4RunsAsDnf3EvenWhenDnfIsThere(): void {
+		$this->host->binaries[] = 'dnf';
+		$this->host->withCommand('dnf-3', ['-q', '--cacheonly', 'check-update'], '', 0);
+
+		$this->assertTrue($this->dnf->isAvailable());
+		$this->assertSame([], $this->dnf->getPendingUpdates());
+		$this->assertSame(['dnf-3 -q --cacheonly check-update'], $this->host->ran);
+	}
+
+	public function testDnfThatIsNotDnf4IsNeverRun(): void {
+		$host = new FakeHost();
+		$host->binaries = ['dnf', 'rpm'];
+		$dnf = new Dnf($host, new Rpm($host), new SystemdProbe($host));
+
+		$this->assertTrue($dnf->isAvailable());
+		try {
+			$dnf->getPendingUpdates();
+			$this->fail('An unidentified dnf must not be asked');
+		} catch (NeedsRootException $e) {
+			$this->assertStringContainsString('root helper', $e->getMessage());
+		}
+		$this->assertSame([], $dnf->getRebootReasons());
+		$this->assertFalse($dnf->hasOwnRebootCheck());
+		$this->assertNull($dnf->getHeldPackages());
+		$this->assertSame([], $host->ran);
+	}
+
+	public function testDnf5NextToDnf4IsLeftToTheHelper(): void {
+		$this->host->binaries[] = 'dnf5';
+
+		$this->expectException(NeedsRootException::class);
+		$this->dnf->getPendingUpdates();
 	}
 
 	public function testDnf5WithoutLocks(): void {

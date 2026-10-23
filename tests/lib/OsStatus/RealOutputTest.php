@@ -59,11 +59,11 @@ class RealOutputTest extends \Test\TestCase {
 
 	public function testAlmaLinux9WithDnf4(): void {
 		$host = new FakeHost();
-		$host->binaries[] = 'dnf';
-		$host->withCommand('dnf', ['-q', '--cacheonly', 'check-update'], FakeHost::fixture('alma-9-dnf-check-update-pending'), 100)
-			->withCommand('dnf', ['-q', '--cacheonly', 'updateinfo', 'list', '--security', '--available'], FakeHost::fixture('alma-9-dnf-updateinfo-security'))
-			->withCommand('dnf', ['-q', '--cacheonly', 'versionlock', 'list'], FakeHost::fixture('alma-9-dnf-versionlock'))
-			->withCommand('dnf', ['-q', '--cacheonly', 'needs-restarting', '-r'], FakeHost::fixture('alma-9-dnf-needs-restarting-r'), 1)
+		$host->binaries[] = 'dnf-3';
+		$host->withCommand('dnf-3', ['-q', '--cacheonly', 'check-update'], FakeHost::fixture('alma-9-dnf-check-update-pending'), 100)
+			->withCommand('dnf-3', ['-q', '--cacheonly', 'updateinfo', 'list', '--security', '--available'], FakeHost::fixture('alma-9-dnf-updateinfo-security'))
+			->withCommand('dnf-3', ['-q', '--cacheonly', 'versionlock', 'list'], FakeHost::fixture('alma-9-dnf-versionlock'))
+			->withCommand('dnf-3', ['-q', '--cacheonly', 'needs-restarting', '-r'], FakeHost::fixture('alma-9-dnf-needs-restarting-r'), 1)
 			->withFile('/etc/dnf/automatic.conf', FakeHost::fixture('alma-9-dnf-automatic.conf'));
 		$dnf = new Dnf($host, new Rpm($host), new SystemdProbe($host));
 

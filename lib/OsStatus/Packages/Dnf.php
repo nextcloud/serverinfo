@@ -23,6 +23,10 @@ use OCA\ServerInfo\OsStatus\Reboot\RebootReason;
  * answering, so it is never run as the web server. On dnf 5 systems pending
  * updates come from the root helper, and locks are read from their file.
  *
+ * dnf 4 is run as `dnf-3`, its real binary on RHEL 8 to 10, their rebuilds
+ * and Amazon Linux 2023, because `dnf` may be dnf 5. A system without dnf-3,
+ * or with dnf 5 next to it, is left to the root helper.
+ *
  * @psalm-api
  */
 class Dnf implements IPackageManager {
@@ -37,7 +41,10 @@ class Dnf implements IPackageManager {
 		'dnf-automatic-notifyonly.timer' => false,
 	];
 
-	private ?bool $isDnf5 = null;
+	/** dnf 4's own binary; `dnf` is only a link to it, or to dnf 5 */
+	private const DNF4 = 'dnf-3';
+
+	private ?bool $isDnf4 = null;
 
 	public function __construct(
 		private IHost $host,
@@ -53,7 +60,7 @@ class Dnf implements IPackageManager {
 
 	#[\Override]
 	public function isAvailable(): bool {
-		return $this->host->hasBinary('dnf') || $this->host->hasBinary('dnf5');
+		return $this->host->hasBinary(self::DNF4) || $this->host->hasBinary('dnf5') || $this->host->hasBinary('dnf');
 	}
 
 	#[\Override]
@@ -63,8 +70,10 @@ class Dnf implements IPackageManager {
 
 	#[\Override]
 	public function getPendingUpdates(): array {
-		if ($this->isDnf5()) {
-			throw new ProbeException('dnf 5 can only be asked about pending updates as root, so the root helper reports them on this system.');
+		if (!$this->isDnf4()) {
+			throw new NeedsRootException($this->host->hasBinary('dnf5')
+				? 'dnf 5 can only be asked about pending updates as root, so the root helper reports them on this system.'
+				: 'dnf could not be identified as dnf 4, so it is not run as the web server; the root helper reports pending updates on this system.');
 		}
 
 		$result = $this->dnf(['-q', '--cacheonly', 'check-update'], 180);
@@ -178,7 +187,7 @@ class Dnf implements IPackageManager {
 
 	#[\Override]
 	public function getHeldPackages(): ?array {
-		if ($this->isDnf5()) {
+		if (!$this->isDnf4()) {
 			$locks = $this->host->readFile('/etc/dnf/versionlock.toml', 262144);
 
 			return $locks === null ? ($this->host->fileExists('/etc/dnf') ? [] : null) : self::parseVersionlockToml($locks);
@@ -310,7 +319,7 @@ class Dnf implements IPackageManager {
 	 */
 	#[\Override]
 	public function getRebootReasons(): array {
-		if ($this->isDnf5()) {
+		if (!$this->isDnf4()) {
 			return [];
 		}
 
@@ -333,7 +342,7 @@ class Dnf implements IPackageManager {
 	 */
 	#[\Override]
 	public function hasOwnRebootCheck(): bool {
-		if ($this->isDnf5()) {
+		if (!$this->isDnf4()) {
 			return false;
 		}
 
@@ -356,17 +365,18 @@ class Dnf implements IPackageManager {
 	}
 
 	/**
-	 * Told apart by the binary rather than by running dnf, because running
-	 * dnf 5 as the web server is what has to be avoided.
+	 * Told apart by the binaries rather than by running dnf, because running
+	 * dnf 5 as the web server is what has to be avoided. Where both are
+	 * installed, dnf 5 keeps the system cache and dnf 4's would be stale.
 	 */
-	private function isDnf5(): bool {
-		return $this->isDnf5 ??= $this->host->hasBinary('dnf5');
+	private function isDnf4(): bool {
+		return $this->isDnf4 ??= $this->host->hasBinary(self::DNF4) && !$this->host->hasBinary('dnf5');
 	}
 
 	/**
 	 * @param list<string> $arguments
 	 */
 	private function dnf(array $arguments, int $timeout): ?CommandResult {
-		return $this->host->run($this->host->hasBinary('dnf') ? 'dnf' : 'dnf5', $arguments, $timeout);
+		return $this->host->run(self::DNF4, $arguments, $timeout);
 	}
 }
