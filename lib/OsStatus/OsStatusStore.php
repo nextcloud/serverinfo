@@ -232,6 +232,27 @@ class OsStatusStore {
 	}
 
 	/**
+	 * @return array<string, list<string>> concern id => user ids notified since it last escalated
+	 */
+	public function notifiedUsers(): array {
+		$users = [];
+		foreach ($this->appConfig->getAppValueArray(ConfigLexicon::OS_NOTIFIED_USERS) as $id => $uids) {
+			if (is_string($id) && is_array($uids)) {
+				$users[$id] = array_values(array_filter($uids, is_string(...)));
+			}
+		}
+
+		return $users;
+	}
+
+	/**
+	 * @param array<string, list<string>> $users
+	 */
+	public function setNotifiedUsers(array $users): void {
+		$this->appConfig->setAppValueArray(ConfigLexicon::OS_NOTIFIED_USERS, $users);
+	}
+
+	/**
 	 * @param list<string>|null $scope
 	 */
 	private function inScope(string $key, ?array $scope): bool {

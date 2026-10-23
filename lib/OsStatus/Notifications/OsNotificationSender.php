@@ -17,6 +17,8 @@ use OCA\ServerInfo\OsStatus\Verdict\Concern;
 use OCP\AppFramework\Services\IAppConfig;
 use OCP\AppFramework\Utility\ITimeFactory;
 use OCP\IGroupManager;
+use OCP\Lock\ILockingProvider;
+use OCP\Lock\LockedException;
 use OCP\Notification\IManager;
 use OCP\Notification\INotification;
 use Psr\Log\LoggerInterface;
@@ -25,12 +27,16 @@ use Psr\Log\LoggerInterface;
  * Tells admins when an operating system concern gets worse.
  *
  * Each concern notifies once per escalation (warning, then error), not on
- * every run, and its notification is withdrawn once it is resolved.
+ * every run, and its notification is withdrawn once it is resolved. Admins
+ * who join while a concern is live get it on the next run; admins who
+ * dismissed it do not get it again until it escalates.
  *
  * @psalm-api
  */
 class OsNotificationSender {
 	public const OBJECT_TYPE = 'os';
+	/** Held while syncing, so the job and occ serverinfo:os-status --refresh never notify twice */
+	private const LOCK = 'serverinfo/os-notifications';
 
 	public function __construct(
 		private OsStatusService $service,
@@ -39,15 +45,36 @@ class OsNotificationSender {
 		private IGroupManager $groupManager,
 		private IAppConfig $appConfig,
 		private ITimeFactory $timeFactory,
+		private ILockingProvider $lockingProvider,
 		private LoggerInterface $logger,
 	) {
 	}
 
 	public function sync(): void {
+		try {
+			$this->lockingProvider->acquireLock(self::LOCK, ILockingProvider::LOCK_EXCLUSIVE);
+		} catch (LockedException) {
+			$this->logger->debug('Operating system notifications are being synced by another process');
+			return;
+		}
+
+		try {
+			$this->syncLocked();
+		} finally {
+			$this->lockingProvider->releaseLock(self::LOCK, ILockingProvider::LOCK_EXCLUSIVE);
+		}
+	}
+
+	private function syncLocked(): void {
 		$enabled = $this->appConfig->getAppValueBool(ConfigLexicon::OS_NOTIFICATIONS, true);
 		$verdict = $enabled ? $this->service->evaluate() : null;
-		$notified = $this->store->notifiedLevels();
-		$changed = false;
+		if ($enabled && $verdict === null) {
+			// Without a readable status nothing is known about the notified concerns.
+			return;
+		}
+
+		$notified = $levelsBefore = $this->store->notifiedLevels();
+		$recipients = $usersBefore = $this->store->notifiedUsers();
 
 		foreach (Concern::NOTIFIABLE as $id) {
 			$concern = $verdict?->get($id);
@@ -56,63 +83,105 @@ class OsNotificationSender {
 			if ($concern === null || !$concern->isProblem()) {
 				// Unknown is not resolved: a probe failing once must not
 				// withdraw a standing warning.
-				if ($previous !== null && ($verdict === null || $concern === null || $concern->level !== Concern::LEVEL_UNKNOWN)) {
-					$this->withdraw($id);
-					unset($notified[$id]);
-					$changed = true;
+				if ($previous !== null && ($concern === null || $concern->isResolved()) && $this->withdraw($id)) {
+					unset($notified[$id], $recipients[$id]);
 				}
 				continue;
 			}
 
 			$level = $concern->level;
-			if ($previous === null || Concern::rank($level) > Concern::rank($previous)) {
-				$this->withdraw($id);
-				$this->notifyAdmins($concern);
-				$notified[$id] = $level;
-				$changed = true;
-			} elseif (Concern::rank($level) < Concern::rank($previous)) {
-				// Remember the lower level so a later escalation is announced again.
-				$notified[$id] = $level;
-				$changed = true;
+			$escalated = $previous === null || Concern::rank($level) > Concern::rank($previous);
+			if ($escalated) {
+				foreach ([Concern::LEVEL_WARNING, Concern::LEVEL_ERROR] as $other) {
+					if ($other !== $level) {
+						$this->withdraw($id, $other);
+					}
+				}
 			}
+			$recipients[$id] = $this->notifyAdmins($concern, $escalated ? [] : ($recipients[$id] ?? []));
+			// A lower level is remembered too, so a later escalation reaches
+			// admins who dismissed the notification in between.
+			$notified[$id] = $level;
 		}
 
-		if ($changed) {
+		if ($notified !== $levelsBefore) {
 			$this->store->setNotifiedLevels($notified);
+		}
+		if ($recipients !== $usersBefore) {
+			$this->store->setNotifiedUsers($recipients);
 		}
 	}
 
-	private function notifyAdmins(Concern $concern): void {
+	/**
+	 * Notifies every enabled admin who has not been notified of this concern
+	 * yet and has no notification of it.
+	 *
+	 * @param list<string> $notified admins already notified
+	 * @return list<string> admins notified now or before
+	 */
+	private function notifyAdmins(Concern $concern, array $notified): array {
 		$admins = $this->groupManager->get('admin');
 		if ($admins === null) {
-			return;
+			return $notified;
 		}
 
+		$recipients = [];
 		$time = $this->timeFactory->getDateTime();
 		foreach ($admins->getUsers() as $user) {
 			if (!$user->isEnabled()) {
 				continue;
 			}
 
+			$uid = $user->getUID();
 			try {
-				$notification = $this->notificationManager->createNotification()
-					->setApp(Application::APP_ID)
-					->setUser($user->getUID())
-					->setDateTime($time)
-					->setObject(self::OBJECT_TYPE, $concern->id)
-					->setSubject($concern->id, ['level' => $concern->level]);
-				$this->notificationManager->notify($notification);
+				if (!in_array($uid, $notified, true) && !$this->hasNotification($uid, $concern->id)) {
+					$notification = $this->notificationManager->createNotification()
+						->setApp(Application::APP_ID)
+						->setUser($uid)
+						->setDateTime($time)
+						->setObject(self::OBJECT_TYPE, $concern->id)
+						->setSubject($concern->level);
+					$this->notificationManager->notify($notification);
+				}
+				$recipients[] = $uid;
 			} catch (\Throwable $e) {
 				$this->logger->warning('Could not notify an admin about the operating system status', ['exception' => $e]);
 			}
 		}
+
+		return $recipients;
 	}
 
-	private function withdraw(string $id): void {
+	private function hasNotification(string $uid, string $id): bool {
 		$notification = $this->notificationManager->createNotification()
 			->setApp(Application::APP_ID)
+			->setUser($uid)
 			->setObject(self::OBJECT_TYPE, $id);
-		$this->notificationManager->markProcessed($notification);
+
+		return $this->notificationManager->getCount($notification) > 0;
+	}
+
+	/**
+	 * Removes the notifications of a concern, or only those of one level.
+	 *
+	 * @return bool false when they could not be removed
+	 */
+	private function withdraw(string $id, ?string $level = null): bool {
+		try {
+			$notification = $this->notificationManager->createNotification()
+				->setApp(Application::APP_ID)
+				->setObject(self::OBJECT_TYPE, $id);
+			if ($level !== null) {
+				$notification->setSubject($level);
+			}
+			$this->notificationManager->markProcessed($notification);
+
+			return true;
+		} catch (\Throwable $e) {
+			$this->logger->warning('Could not withdraw an operating system notification', ['exception' => $e]);
+
+			return false;
+		}
 	}
 
 	/**

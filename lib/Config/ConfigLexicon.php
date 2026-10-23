@@ -32,6 +32,7 @@ class ConfigLexicon implements ILexicon {
 	public const CACHED_OS_PHP_PROCESS = 'cached_os_php_process';
 	public const CACHED_OS_PHP_OUTDATED_SINCE = 'cached_os_php_outdated_since';
 	public const OS_NOTIFIED_LEVELS = 'os_notified_levels';
+	public const OS_NOTIFIED_USERS = 'os_notified_users';
 	public const JOB_INTERVAL_OS_STATUS = 'job_interval_os_status';
 	public const OS_HELPER_REPORT_PATH = 'os_helper_report_path';
 	public const OS_NOTIFICATIONS = 'os_notifications';
@@ -114,6 +115,13 @@ class ConfigLexicon implements ILexicon {
 				ValueType::ARRAY,
 				[],
 				'Alert level each operating system concern was last notified at, so admins are told once per escalation',
+				lazy: true,
+			),
+			new Entry(
+				self::OS_NOTIFIED_USERS,
+				ValueType::ARRAY,
+				[],
+				'Admins each operating system concern was notified to since it last escalated, so a dismissed notification is not sent again',
 				lazy: true,
 			),
 			new Entry(

@@ -247,4 +247,9 @@ class OsStatusStoreTest extends \Test\TestCase {
 		$this->assertSame(['updates' => 'warning'], $this->store->notifiedLevels());
 	}
 
+	public function testNotifiedUsersSkipWhatIsNotAUserId(): void {
+		$this->values['os_notified_users'] = ['updates' => ['admin', 7, ['x'], 'ops'], 'reboot' => 'admin', 3 => ['admin']];
+
+		$this->assertSame(['updates' => ['admin', 'ops']], $this->store->notifiedUsers());
+	}
 }
