@@ -92,6 +92,7 @@
 							class="os-view__column"
 							:status="status"
 							:php="data.php"
+							:commands="data.commands"
 							:rebootConcern="concernOf(data, 'reboot')"
 							:restartConcern="concernOf(data, 'restart')"
 							@helper="helperOpen = true" />
@@ -99,6 +100,7 @@
 							class="os-view__column"
 							:status="status"
 							:php="data.php"
+							:initSystem="data.initSystem"
 							:failedConcern="concernOf(data, 'failed-units')"
 							:timeConcern="concernOf(data, 'time-sync')" />
 					</div>

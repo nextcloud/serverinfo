@@ -12,8 +12,12 @@ namespace OCA\ServerInfo\Tests\OsStatus;
 use OCA\ServerInfo\Controller\OsController;
 use OCA\ServerInfo\Jobs\RefreshOsStatus;
 use OCA\ServerInfo\OsStatus\Notifications\OsNotificationSender;
+use OCA\ServerInfo\OsStatus\OsStatus;
 use OCA\ServerInfo\OsStatus\OsStatusCollector;
 use OCA\ServerInfo\OsStatus\OsStatusService;
+use OCA\ServerInfo\OsStatus\Restart\PhpProcessSample;
+use OCA\ServerInfo\OsStatus\Restart\ServiceCommands;
+use OCA\ServerInfo\OsStatus\Restart\ServiceRestart;
 use OCA\ServerInfo\OsStatus\Verdict\Thresholds;
 use OCP\AppFramework\Http;
 use OCP\AppFramework\Services\IAppConfig;
@@ -30,6 +34,7 @@ class OsControllerTest extends \Test\TestCase {
 	private IAppConfig&MockObject $config;
 	private IJobList&MockObject $jobList;
 	private string $cronMode = 'cron';
+	private ?string $initSystem = ServiceCommands::SYSTEMD;
 
 	protected function setUp(): void {
 		parent::setUp();
@@ -44,6 +49,8 @@ class OsControllerTest extends \Test\TestCase {
 
 	private function controller(): OsController {
 		$serverConfig = $this->createMock(IServerConfig::class);
+		$serviceCommands = $this->createMock(ServiceCommands::class);
+		$serviceCommands->method('initSystem')->willReturnCallback(fn (): ?string => $this->initSystem);
 		$serverConfig->method('getValueString')->willReturnCallback(fn (string $app, string $key, string $default): string => $app === 'core' && $key === 'backgroundjobs_mode' ? $this->cronMode : $default);
 
 		return new OsController(
@@ -56,6 +63,7 @@ class OsControllerTest extends \Test\TestCase {
 			$this->createMock(ITimeFactory::class),
 			$this->jobList,
 			$serverConfig,
+			$serviceCommands,
 		);
 	}
 
@@ -126,5 +134,24 @@ class OsControllerTest extends \Test\TestCase {
 		$this->cronMode = 'webcron';
 		$this->jobList = $this->createMock(IJobList::class);
 		$this->assertSame(['systemCron' => false, 'running' => false], $this->controller()->status()->getData()['refresh']);
+	}
+
+	public function testSendsTheCommandsForTheInitSystem(): void {
+		$this->service->method('getStatus')->willReturn(new OsStatus(OsStatus::STATE_OK, 1792411200, restartServices: [new ServiceRestart('cron.service'), new ServiceRestart('foo\\x2dbar.service')]));
+		$this->service->method('getPhpSample')->willReturn(new PhpProcessSample(1792411200, 'fpm-fcgi', ['libssl.so.3'], 'php-fpm83', null));
+
+		$data = $this->controller()->status()->getData();
+		$this->assertSame(ServiceCommands::SYSTEMD, $data['initSystem']);
+		$this->assertSame([
+			'reboot' => 'sudo systemctl reboot',
+			'php' => 'sudo systemctl restart php-fpm83',
+			'services' => ['cron.service' => 'sudo systemctl restart cron', 'foo\\x2dbar.service' => "sudo systemctl restart 'foo\\x2dbar'"],
+		], $data['commands']);
+
+		$this->initSystem = ServiceCommands::OPENRC;
+		$this->assertSame('sudo rc-service php-fpm83 restart', $this->controller()->status()->getData()['commands']['php']);
+
+		$this->initSystem = null;
+		$this->assertSame(['reboot' => null, 'php' => null, 'services' => ['cron.service' => null, 'foo\\x2dbar.service' => null]], $this->controller()->status()->getData()['commands']);
 	}
 }

@@ -11,8 +11,14 @@
 				<OsLevelIcon :level="failedConcern?.level ?? 'unknown'" />
 				<div class="os-checklist__body">
 					<template v-if="status.failedUnits === null">
-						<strong>{{ t('serverinfo', 'System services could not be checked') }}</strong>
-						<span class="os-muted">{{ t('serverinfo', 'systemd is not available to the web server.') }}</span>
+						<template v-if="initSystem === 'systemd'">
+							<strong>{{ t('serverinfo', 'System services could not be checked') }}</strong>
+							<span class="os-muted">{{ t('serverinfo', 'The web server could not ask systemd about them.') }}</span>
+						</template>
+						<template v-else>
+							<strong>{{ t('serverinfo', 'System services are not checked') }}</strong>
+							<span class="os-muted">{{ t('serverinfo', 'Failed services are only checked on systems that run systemd.') }}</span>
+						</template>
 					</template>
 					<template v-else-if="status.failedUnits.length === 0">
 						<strong>{{ t('serverinfo', 'All system services are running') }}</strong>
@@ -43,7 +49,7 @@
 					<template v-else>
 						<strong>{{ t('serverinfo', 'The system clock is not synchronized') }}</strong>
 						<span class="os-muted">{{ t('serverinfo', 'Two-factor codes, federation and object storage requests fail when the clock drifts. Enable NTP, for example with systemd-timesyncd or chrony.') }}</span>
-						<OsCommand command="sudo timedatectl set-ntp true" />
+						<OsCommand v-if="initSystem === 'systemd'" command="sudo timedatectl set-ntp true" />
 					</template>
 				</div>
 			</li>
@@ -85,6 +91,7 @@ import OsLevelIcon from './OsLevelIcon.vue'
 const props = defineProps<{
 	status: OsStatus
 	php: OsPayload['php']
+	initSystem: OsPayload['initSystem']
 	failedConcern: OsConcern | null
 	timeConcern: OsConcern | null
 }>()

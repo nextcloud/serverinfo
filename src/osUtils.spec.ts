@@ -4,7 +4,7 @@
  */
 
 import { describe, expect, it } from 'vitest'
-import { compareLevels, concernLabel, daysSince, environmentLabel, formatDay, formatDays, problems, restartCommand, shellQuote } from './osUtils.ts'
+import { compareLevels, concernLabel, daysSince, environmentLabel, formatDay, formatDays, problems, shellQuote } from './osUtils.ts'
 import { concern, NOW, payload } from './testing/osPayload.ts'
 
 describe('shellQuote', () => {
@@ -85,10 +85,5 @@ describe('labels', () => {
 		expect(environmentLabel({ kind: 'application-container', container: 'docker', virtualization: null })).toBe('Docker container')
 		expect(environmentLabel({ kind: 'system-container', container: 'lxc', virtualization: null })).toBe('LXC container')
 		expect(environmentLabel({ kind: 'host', container: null, virtualization: 'wsl' })).toBe('Windows Subsystem for Linux')
-	})
-
-	it('builds restart commands without the unit suffix', () => {
-		expect(restartCommand('php8.3-fpm.service')).toBe('sudo systemctl restart php8.3-fpm')
-		expect(restartCommand('apache2')).toBe('sudo systemctl restart apache2')
 	})
 })

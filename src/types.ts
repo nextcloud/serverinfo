@@ -230,6 +230,10 @@ export interface OsPayload {
 	/** Packages changed after the status was collected */
 	outdated: boolean
 	php: { sampledAt: number, sapi: string, outdatedLibraries: string[], service: string | null, confinement: string | null } | null
+	/** null when the init system cannot be told */
+	initSystem: 'systemd' | 'openrc' | null
+	/** Commands to copy, for the init system in use; null when it is unknown */
+	commands: { reboot: string | null, php: string | null, services: Record<string, string | null> }
 	thresholds: OsThresholds
 	notifications: boolean
 	/** "Check now" queues a check for system cron; running while one is queued or collecting */
