@@ -18,7 +18,10 @@ use OCA\ServerInfo\OsStatus\Host\IHost;
  * such a tool. A package upgrade writes each file under a new name and renames
  * it into place, which sets the inode change time; package managers keep the
  * build time as the modification time, so only the change time says when a
- * file was installed.
+ * file was installed. A chmod, chown or restore from a backup sets the change
+ * time as well, so the package itself has to have changed since boot too:
+ * dpkg rewrites a package's file list on every install, and otherwise the
+ * package database must have changed.
  *
  * systemd is not among them: its package re-executes PID 1 on upgrade.
  *
@@ -36,6 +39,17 @@ class CoreLibraryProbe {
 		'dbus' => ['/usr/bin/dbus-broker', '/usr/bin/dbus-daemon'],
 	];
 
+	/** The Debian packages that ship each component. */
+	private const DPKG_PACKAGES = [
+		'glibc' => ['libc6'],
+		'dbus' => ['dbus-broker', 'dbus-daemon', 'dbus'],
+	];
+
+	private const DPKG_INFO = '/var/lib/dpkg/info';
+
+	/** Early boot can touch files before the clock settles. */
+	private const BOOT_SLACK = 60;
+
 	public function __construct(
 		private IHost $host,
 	) {
@@ -43,9 +57,10 @@ class CoreLibraryProbe {
 
 	/**
 	 * @param int $bootTime unix timestamp of the last boot
+	 * @param string|null $packageDatabase a file that changes whenever packages are installed
 	 * @return list<RebootReason>
 	 */
-	public function getRebootReasons(int $bootTime): array {
+	public function getRebootReasons(int $bootTime, ?string $packageDatabase = null): array {
 		$changed = [];
 		$since = null;
 
@@ -56,11 +71,18 @@ class CoreLibraryProbe {
 			}
 
 			$changedAt = $this->host->changedAt($file);
-			// A minute of slack: early boot can touch files before the clock settles.
-			if ($changedAt !== null && $changedAt > $bootTime + 60) {
-				$changed[] = $component;
-				$since = $since === null ? $changedAt : min($since, $changedAt);
+			if ($changedAt === null || $changedAt <= $bootTime + self::BOOT_SLACK) {
+				continue;
 			}
+
+			$installedAt = $this->packageChangedAt($component)
+				?? ($packageDatabase !== null ? $this->host->modifiedAt($packageDatabase) : null);
+			if ($installedAt !== null && $installedAt <= $bootTime + self::BOOT_SLACK) {
+				continue;
+			}
+
+			$changed[] = $component;
+			$since = $since === null ? $changedAt : min($since, $changedAt);
 		}
 
 		if ($changed === []) {
@@ -68,6 +90,24 @@ class CoreLibraryProbe {
 		}
 
 		return [new RebootReason(RebootReason::KIND_CORE_LIBRARY, null, $changed, $since)];
+	}
+
+	/**
+	 * When dpkg last installed a package that ships the component, from the
+	 * file lists it rewrites on every install; null when there are none.
+	 */
+	private function packageChangedAt(string $component): ?int {
+		$times = [];
+		foreach (self::DPKG_PACKAGES[$component] ?? [] as $package) {
+			$lists = $this->host->glob(self::DPKG_INFO . '/' . $package . ':*.list');
+			$lists[] = self::DPKG_INFO . '/' . $package . '.list';
+			foreach ($lists as $list) {
+				$times[] = $this->host->modifiedAt($list);
+			}
+		}
+		$times = array_filter($times, 'is_int');
+
+		return $times === [] ? null : max($times);
 	}
 
 	/**

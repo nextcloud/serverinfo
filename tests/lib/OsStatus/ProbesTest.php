@@ -118,6 +118,37 @@ class ProbesTest extends \Test\TestCase {
 		$this->assertSame(5000, $reasons[0]->since);
 	}
 
+	public function testAChangeWithoutAnUpgradeIsNoReason(): void {
+		$this->host->globs['/lib/*-linux-gnu*/libc.so.6'] = ['/lib/x86_64-linux-gnu/libc.so.6'];
+		$this->host->globs['/var/lib/dpkg/info/libc6:*.list'] = ['/var/lib/dpkg/info/libc6:amd64.list'];
+		$this->host->changed['/lib/x86_64-linux-gnu/libc.so.6'] = 5000;
+		$this->host->modified['/var/lib/dpkg/info/libc6:amd64.list'] = 500;
+
+		$this->assertSame([], (new CoreLibraryProbe($this->host))->getRebootReasons(1000, '/var/lib/dpkg/status'), 'A chmod or restore after boot');
+
+		$this->host->modified['/var/lib/dpkg/info/libc6:amd64.list'] = 4990;
+		$this->assertSame(['glibc'], (new CoreLibraryProbe($this->host))->getRebootReasons(1000, '/var/lib/dpkg/status')[0]->packages ?? null);
+	}
+
+	public function testDbusFromAnyOfItsDebianPackages(): void {
+		$this->host->changed['/usr/bin/dbus-daemon'] = 5000;
+		$this->host->modified['/var/lib/dpkg/info/dbus.list'] = 500;
+		$this->host->modified['/var/lib/dpkg/info/dbus-daemon.list'] = 4990;
+
+		$this->assertSame(['dbus'], (new CoreLibraryProbe($this->host))->getRebootReasons(1000)[0]->packages ?? null);
+	}
+
+	public function testThePackageDatabaseCorroboratesWithoutDpkg(): void {
+		$this->host->globs['/lib/ld-musl-*.so.1'] = ['/lib/ld-musl-x86_64.so.1'];
+		$this->host->changed['/lib/ld-musl-x86_64.so.1'] = 5000;
+		$this->host->modified['/lib/apk/db/installed'] = 900;
+
+		$this->assertSame([], (new CoreLibraryProbe($this->host))->getRebootReasons(1000, '/lib/apk/db/installed'));
+
+		$this->host->modified['/lib/apk/db/installed'] = 5000;
+		$this->assertSame(['glibc'], (new CoreLibraryProbe($this->host))->getRebootReasons(1000, '/lib/apk/db/installed')[0]->packages ?? null);
+	}
+
 	public function testCoreLibrariesWithinTheBootSlack(): void {
 		$this->host->changed['/usr/bin/dbus-daemon'] = 1030;
 
