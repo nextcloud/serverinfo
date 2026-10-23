@@ -78,6 +78,7 @@ class ConcernTexts {
 				? $l->t('The system clock is synchronized')
 				: $l->t('The system clock is not synchronized'),
 			Concern::HELPER => $l->t('The root helper report needs attention'),
+			Concern::FRESHNESS => $this->freshnessTitle($concern, $l),
 			default => $concern->id,
 		};
 	}
@@ -146,9 +147,32 @@ class ConcernTexts {
 				return $units === [] ? '' : implode(', ', $units);
 			case Concern::TIME_SYNC:
 				return $concern->level === Concern::LEVEL_OK ? '' : $l->t('Two-factor codes, federation and object storage requests fail when the clock drifts.');
+			case Concern::FRESHNESS:
+				if ($concern->level !== Concern::LEVEL_WARNING) {
+					return '';
+				}
+
+				return ($facts['systemCron'] ?? true) === false
+					? $l->t('The operating system is only checked when background jobs run from system cron, so everything shown here may be out of date. Switch background jobs to Cron in the basic settings.')
+					: $l->t('The background job that checks the operating system has not run for a while, so everything shown here may be out of date. Check that the system cron job for Nextcloud runs.');
 			default:
 				return '';
 		}
+	}
+
+	private function freshnessTitle(Concern $concern, IL10N $l): string {
+		if ($concern->level === Concern::LEVEL_UNKNOWN) {
+			return $l->t('The operating system has not been checked yet');
+		}
+		$age = self::int($concern, 'ageSeconds') ?? 0;
+		if ($concern->level === Concern::LEVEL_OK) {
+			return $l->t('The operating system status is current');
+		}
+		if ($age < 86400) {
+			return $l->n('The operating system was last checked %n hour ago', 'The operating system was last checked %n hours ago', intdiv($age, 3600));
+		}
+
+		return $l->n('The operating system was last checked %n day ago', 'The operating system was last checked %n days ago', intdiv($age, 86400));
 	}
 
 	private function updatesTitle(Concern $concern, IL10N $l): string {

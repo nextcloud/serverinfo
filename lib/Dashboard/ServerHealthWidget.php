@@ -38,6 +38,7 @@ class ServerHealthWidget implements IAPIWidgetV2, IConditionalWidget, IIconWidge
 	private const SHOWN = [
 		Concern::UPDATES, Concern::REBOOT, Concern::RESTART, Concern::SUPPORT,
 		Concern::PACKAGE_LISTS, Concern::FAILED_UNITS, Concern::TIME_SYNC, Concern::AUTOMATIC_UPDATES,
+		Concern::FRESHNESS,
 	];
 
 	public function __construct(
