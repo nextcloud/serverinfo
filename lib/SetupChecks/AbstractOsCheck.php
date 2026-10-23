@@ -13,8 +13,10 @@ use OCA\ServerInfo\AppInfo\Application;
 use OCA\ServerInfo\OsStatus\OsStatusService;
 use OCA\ServerInfo\OsStatus\Verdict\Concern;
 use OCA\ServerInfo\OsStatus\Verdict\ConcernTexts;
+use OCP\IGroupManager;
 use OCP\IL10N;
 use OCP\IURLGenerator;
+use OCP\IUserSession;
 use OCP\SetupCheck\ISetupCheck;
 use OCP\SetupCheck\SetupResult;
 
@@ -24,6 +26,10 @@ use OCP\SetupCheck\SetupResult;
  * Reads the stored status only: the Overview is loaded far too often to run
  * the package manager, and the background job keeps the status current.
  *
+ * Core runs the setup checks for sub-admins too, so a request by anyone but an
+ * admin gets a result that says nothing about the system. occ and cron have no
+ * session user and get the full result.
+ *
  * @psalm-api
  */
 abstract class AbstractOsCheck implements ISetupCheck {
@@ -32,6 +38,8 @@ abstract class AbstractOsCheck implements ISetupCheck {
 		private IURLGenerator $urlGenerator,
 		private OsStatusService $service,
 		private ConcernTexts $texts,
+		private IUserSession $userSession,
+		private IGroupManager $groupManager,
 	) {
 	}
 
@@ -47,6 +55,11 @@ abstract class AbstractOsCheck implements ISetupCheck {
 
 	#[\Override]
 	public function run(): SetupResult {
+		$user = $this->userSession->getUser();
+		if ($user !== null && !$this->groupManager->isAdmin($user->getUID())) {
+			return SetupResult::info($this->l10n->t('Only administrators can see the operating system status.'));
+		}
+
 		$this->service->samplePhpProcess();
 
 		$status = $this->service->getStatus();
