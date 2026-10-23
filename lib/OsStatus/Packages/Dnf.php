@@ -12,6 +12,7 @@ namespace OCA\ServerInfo\OsStatus\Packages;
 use OCA\ServerInfo\OsStatus\Health\SystemdProbe;
 use OCA\ServerInfo\OsStatus\Host\CommandResult;
 use OCA\ServerInfo\OsStatus\Host\IHost;
+use OCA\ServerInfo\OsStatus\OsRelease;
 use OCA\ServerInfo\OsStatus\Reboot\RebootReason;
 
 /**
@@ -29,9 +30,17 @@ use OCA\ServerInfo\OsStatus\Reboot\RebootReason;
  *
  * @psalm-api
  */
-class Dnf implements IPackageManager {
+class Dnf implements IPackageManager, IReportsDiagnostics {
 	/** check-update's exit code when updates are available */
 	private const EXIT_UPDATES = 100;
+
+	/** Where dnf 4 and dnf 5 keep each repository's updateinfo */
+	private const UPDATEINFO = [
+		'/var/cache/dnf/*-updateinfo.solvx',
+		'/var/cache/dnf/*/repodata/*updateinfo*',
+		'/var/cache/libdnf5/*/solv/*-updateinfo.solvx',
+		'/var/cache/libdnf5/*/repodata/*updateinfo*',
+	];
 
 	private const AUTOMATIC_TIMERS = [
 		'dnf-automatic-install.timer' => true,
@@ -47,6 +56,11 @@ class Dnf implements IPackageManager {
 	private ?bool $isDnf4 = null;
 	/** Whether the last getRebootReasons() got an answer from needs-restarting */
 	private ?bool $rebootChecked = null;
+	/** Whether the last getPendingUpdates() could not read the advisories */
+	private bool $advisoriesFailed = false;
+	/** @var list<string> */
+	private array $diagnostics = [];
+	private ?OsRelease $release = null;
 
 	public function __construct(
 		private IHost $host,
@@ -65,13 +79,48 @@ class Dnf implements IPackageManager {
 		return $this->host->hasBinary(self::DNF4) || $this->host->hasBinary('dnf5') || $this->host->hasBinary('dnf');
 	}
 
+	/**
+	 * The same package manager, for the given distribution.
+	 */
+	public function withRelease(OsRelease $release): self {
+		$clone = clone $this;
+		$clone->release = $release;
+
+		return $clone;
+	}
+
+	/**
+	 * Security fixes are told apart by the repositories' updateinfo metadata.
+	 * CentOS Stream publishes none, and neither do many third-party
+	 * repositories; without it every update would look like a non-security one.
+	 */
 	#[\Override]
 	public function classifiesSecurity(): bool {
-		return true;
+		return $this->release?->id !== 'centos' && !$this->advisoriesFailed && $this->hasUpdateinfo();
+	}
+
+	/**
+	 * Whether any repository in the system cache came with updateinfo.
+	 */
+	private function hasUpdateinfo(): bool {
+		foreach (self::UPDATEINFO as $pattern) {
+			if ($this->host->glob($pattern) !== []) {
+				return true;
+			}
+		}
+
+		return false;
+	}
+
+	#[\Override]
+	public function getDiagnostics(): array {
+		return $this->diagnostics;
 	}
 
 	#[\Override]
 	public function getPendingUpdates(): array {
+		$this->advisoriesFailed = false;
+		$this->diagnostics = [];
 		if (!$this->isDnf4()) {
 			throw new NeedsRootException($this->host->hasBinary('dnf5')
 				? 'dnf 5 can only be asked about pending updates as root, so the root helper reports them on this system.'
@@ -82,7 +131,7 @@ class Dnf implements IPackageManager {
 		if ($result === null) {
 			throw new ProbeException('dnf could not be run.');
 		}
-		if ($result->exitCode !== 0 && $result->exitCode !== self::EXIT_UPDATES) {
+		if (($result->exitCode !== 0 && $result->exitCode !== self::EXIT_UPDATES) || $result->timedOut || $result->truncated) {
 			throw new ProbeException('dnf check-update failed: ' . ProbeHelper::firstLine($result->stderr ?: $result->stdout));
 		}
 
@@ -91,7 +140,7 @@ class Dnf implements IPackageManager {
 			return [];
 		}
 
-		$advisories = $this->securityAdvisories();
+		$advisories = $this->classifiesSecurity() ? $this->securityAdvisories() : [];
 		$installed = $this->rpm->getInstalledVersions();
 
 		$updates = [];
@@ -151,14 +200,19 @@ class Dnf implements IPackageManager {
 	}
 
 	/**
-	 * Security advisories for the available updates, by package name.
+	 * Security advisories for the available updates, by package name. When
+	 * they cannot be listed, the updates stay listed but unclassified.
 	 *
 	 * @return array<string, array{ids: list<string>, severity: ?string}>
 	 */
 	private function securityAdvisories(): array {
 		$result = $this->dnf(['-q', '--cacheonly', 'updateinfo', 'list', '--security', '--available'], 180);
 		if ($result === null || !$result->succeeded()) {
-			throw new ProbeException('dnf could not list security advisories: ' . ProbeHelper::firstLine($result?->stderr ?? ''));
+			$this->advisoriesFailed = true;
+			$this->diagnostics[] = 'dnf could not list security advisories, so pending updates are not told apart into security fixes and others: '
+				. ProbeHelper::firstLine($result?->stderr ?: ($result?->timedOut ? 'timed out' : ''));
+
+			return [];
 		}
 
 		return self::parseAdvisories($result->stdout);

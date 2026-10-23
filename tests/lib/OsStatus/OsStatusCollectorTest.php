@@ -291,6 +291,21 @@ class OsStatusCollectorTest extends \Test\TestCase {
 		$this->assertSame([], array_values(array_filter($this->host->ran, static fn (string $c): bool => str_starts_with($c, 'dnf'))), 'dnf 5 never runs');
 	}
 
+	public function testUnclassifiedDnfUpdatesAreKeptWithADiagnostic(): void {
+		$this->host->withFile('/etc/os-release', "NAME=\"AlmaLinux\"\nID=\"almalinux\"\nID_LIKE=\"rhel centos fedora\"\nVERSION_ID=\"9.8\"\nPRETTY_NAME=\"AlmaLinux 9.8\"\n");
+		$this->host->binaries = ['dnf', 'dnf-3'];
+		$this->host->globs['/var/cache/dnf/*-updateinfo.solvx'] = ['/var/cache/dnf/baseos-updateinfo.solvx'];
+		$this->host->modified['/var/cache/dnf/last_makecache'] = self::NOW - 600;
+		$this->host->withCommand('dnf-3', ['-q', '--cacheonly', 'check-update'], FakeHost::fixture('alma-9-dnf-check-update-pending'), 100)
+			->withCommand('dnf-3', ['-q', '--cacheonly', 'updateinfo', 'list', '--security', '--available'], '', 1, "Error: something broke\n");
+
+		$status = $this->collector()->collect();
+
+		$this->assertCount(9, $status->updates ?? []);
+		$this->assertFalse($status->securityClassified);
+		$this->assertContains('dnf could not list security advisories, so pending updates are not told apart into security fixes and others: Error: something broke', $status->diagnostics);
+	}
+
 	public function testFailuresBecomeDiagnostics(): void {
 		$this->host->withCommand('apt-get', ['-s', '-o', 'Debug::NoLocking=1', 'dist-upgrade'], '', 100, "E: The package lists are damaged\n");
 
