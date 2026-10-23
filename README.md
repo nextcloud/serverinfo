@@ -49,14 +49,17 @@ only in simulation mode), `systemctl`, `timedatectl`, `chronyc` and
 
 The status is collected by a background job once an hour, when background
 jobs run from system cron; under AJAX or webcron the commands would hold a web
-request for minutes. Admins can also check it right away with:
+request for minutes. A status older than three job intervals (at least six
+hours), or background jobs that do not run from system cron, count as a
+warning, so an old all-clear is never shown as current. Admins can also check
+it right away with:
 
 ```
 occ serverinfo:os-status [--refresh] [--output=json]
 ```
 
-The command exits with 0, 1, 2 or 3 for ok, warning, error and unknown, so it
-can be used as a monitoring check. Unknown means the status has not been
+The command shows how old the status is and exits with 0, 1, 2 or 3 for ok,
+warning, error and unknown, so it can be used as a monitoring check. Unknown means the status has not been
 collected yet, or nothing is wrong but the pending updates could not be
 determined. When something counts as a warning or an error is set by
 the `os_*_days` app config values, see `lib/Config/ConfigLexicon.php`.

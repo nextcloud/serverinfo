@@ -212,4 +212,41 @@ class OsVerdictTest extends \Test\TestCase {
 
 		$this->assertSame(Concern::LEVEL_WARNING, $this->evaluate($this->osStatus(['updates' => [$this->securityUpdate(0)]]), thresholds: $thresholds)->get(Concern::UPDATES)?->level);
 	}
+
+	public static function dataFreshness(): array {
+		return [
+			'just collected' => [0, true, 3600, Concern::LEVEL_OK],
+			'six hours at an hourly interval' => [6 * 3600, true, 3600, Concern::LEVEL_OK],
+			'past six hours at an hourly interval' => [6 * 3600 + 1, true, 3600, Concern::LEVEL_WARNING],
+			'three daily intervals' => [3 * 86400, true, 86400, Concern::LEVEL_OK],
+			'past three daily intervals' => [3 * 86400 + 1, true, 86400, Concern::LEVEL_WARNING],
+			'fresh but not from system cron' => [0, false, 3600, Concern::LEVEL_WARNING],
+		];
+	}
+
+	#[DataProvider('dataFreshness')]
+	public function testAnOldStatusIsStale(int $age, bool $systemCron, int $interval, string $level): void {
+		$verdict = (new OsVerdict())->evaluate($this->osStatus(['collectedAt' => self::NOW - $age]), null, null, new Thresholds(), self::NOW, $systemCron, $interval);
+
+		$concern = $verdict->get(Concern::FRESHNESS);
+		$this->assertSame($level, $concern?->level);
+		$this->assertSame(['collectedAt' => self::NOW - $age, 'ageSeconds' => $age, 'systemCron' => $systemCron], $concern->facts);
+	}
+
+	public function testAStaleStatusIsAtLeastAWarning(): void {
+		$verdict = (new OsVerdict())->evaluate($this->osStatus(['collectedAt' => self::NOW - 30 * self::DAY, 'updates' => null]), null, null, new Thresholds(), self::NOW);
+
+		$this->assertSame(Concern::LEVEL_UNKNOWN, $verdict->get(Concern::UPDATES)?->level);
+		$this->assertSame(Concern::LEVEL_WARNING, $verdict->level(), 'Old and unknown is not "unknown" but a warning');
+
+		$green = (new OsVerdict())->evaluate($this->osStatus(['collectedAt' => self::NOW - 30 * self::DAY]), new PhpProcessSample(self::NOW, 'fpm-fcgi', [], 'php8.3-fpm', null), null, new Thresholds(), self::NOW);
+		$this->assertSame(Concern::LEVEL_WARNING, $green->level(), 'An all-clear from weeks ago is no all-clear');
+	}
+
+	public function testNothingCollectedIsUnknownFreshness(): void {
+		$concern = (new OsVerdict())->freshness(null, self::NOW, true, 3600);
+
+		$this->assertSame(Concern::LEVEL_UNKNOWN, $concern->level);
+		$this->assertSame(['collectedAt' => null, 'ageSeconds' => null, 'systemCron' => true], $concern->facts);
+	}
 }

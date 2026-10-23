@@ -87,18 +87,21 @@ class OsStatusCollector {
 			$diagnostics[] = '/etc/os-release could not be read, so the distribution is unknown.';
 		}
 
-		$environment = $this->environmentDetector->detect();
-		$uptime = $this->os->getUptime();
+		$environment = $this->probe('The environment', fn (): Environment => $this->environmentDetector->detect(), new Environment(Environment::KIND_HOST), $diagnostics);
+		$uptime = $this->probe('The boot time', fn (): int => $this->os->getUptime(), -1, $diagnostics);
 		$bootTime = $uptime >= 0 ? $now - $uptime : null;
 
-		$support = $release !== null ? $this->supportTable->lookup($release) : SupportStatus::unknown();
+		$support = $release !== null
+			? $this->probe('The support period', fn (): SupportStatus => $this->supportTable->lookup($release), SupportStatus::unknown(), $diagnostics)
+			: SupportStatus::unknown();
 		if ($support->extended !== null) {
-			$support = $support->withExtendedActive($this->subscriptions->isActive($support->extended));
+			$extended = $support->extended;
+			$support = $support->withExtendedActive($this->probe('The extended support subscription', fn (): ?bool => $this->subscriptions->isActive($extended), null, $diagnostics));
 		}
 
 		$packageManager = null;
 		if ($release !== null && $environment->managesPackages()) {
-			$packageManager = $this->packageManagers->forRelease($release);
+			$packageManager = $this->probe('The package manager', fn (): ?IPackageManager => $this->packageManagers->forRelease($release), null, $diagnostics);
 			if ($packageManager === null) {
 				$diagnostics[] = sprintf('No supported package manager was found for %s.', $release->prettyName);
 			}
@@ -118,7 +121,9 @@ class OsStatusCollector {
 			}
 		}
 
-		$listsRefreshedAt = $packageManager?->getListsRefreshedAt();
+		$listsRefreshedAt = $packageManager !== null
+			? $this->probe('The package list age', fn (): ?int => $packageManager->getListsRefreshedAt(), null, $diagnostics)
+			: null;
 		// Without package lists the package manager knows of no newer versions at all.
 		if ($updates === [] && $listsRefreshedAt === null && in_array($packageManager?->getId(), OsVerdict::LISTS_AGE_MATTERS, true)) {
 			$updates = null;
@@ -127,14 +132,15 @@ class OsStatusCollector {
 		}
 
 		$rebootReasons = $environment->managesPackages()
-			? $this->rebootReasons($packageManager, $environment, $bootTime)
+			? $this->probe('Whether a reboot is needed', fn (): array => $this->rebootReasons($packageManager, $environment, $bootTime), null, $diagnostics)
 			: null;
 
-		[$updates, $rebootReasons] = $this->applyFirstSeen(
-			$updates,
-			$packageManager?->classifiesSecurity() ?? false,
-			$rebootReasons,
-			$now,
+		$classified = $packageManager?->classifiesSecurity() ?? false;
+		[$updates, $rebootReasons] = $this->probe(
+			'How long the findings have been pending',
+			fn (): array => $this->applyFirstSeen($updates, $classified, $rebootReasons, $now),
+			[$updates, $rebootReasons],
+			$diagnostics,
 		);
 
 		$omitted = 0;
@@ -144,7 +150,7 @@ class OsStatusCollector {
 			$updates = array_slice($updates, 0, self::MAX_LISTED_UPDATES);
 		}
 
-		$timeSync = $this->timeSync->probe();
+		$timeSync = $this->probe('The time synchronisation', fn (): array => $this->timeSync->probe(), ['synchronized' => null, 'source' => null], $diagnostics);
 
 		return new OsStatus(
 			OsStatus::STATE_OK,
@@ -157,24 +163,49 @@ class OsStatusCollector {
 			$packageManager?->getId(),
 			$updates,
 			$updatesSource,
-			$packageManager?->classifiesSecurity() ?? false,
+			$classified,
 			$omitted,
-			$packageManager?->getHeldPackages(),
+			$packageManager !== null ? $this->probe('The held packages', fn (): ?array => $packageManager->getHeldPackages(), null, $diagnostics) : null,
 			$listsRefreshedAt,
-			$packageManager?->getLastUpgradeAt(),
-			$packageManager?->getAutomaticUpdates() ?? AutomaticUpdates::unknown(),
+			$packageManager !== null ? $this->probe('The last upgrade', fn (): ?int => $packageManager->getLastUpgradeAt(), null, $diagnostics) : null,
+			$packageManager !== null
+				? $this->probe('The automatic updates', fn (): AutomaticUpdates => $packageManager->getAutomaticUpdates(), AutomaticUpdates::unknown(), $diagnostics)
+				: AutomaticUpdates::unknown(),
 			$rebootReasons,
-			$this->security->getLivePatches(),
-			$this->systemd->getFailedUnits(),
+			$this->probe('The live kernel patches', fn (): ?array => $this->security->getLivePatches(), null, $diagnostics),
+			$this->probe('The failed system services', fn (): ?array => $this->systemd->getFailedUnits(), null, $diagnostics),
 			$timeSync['synchronized'],
 			$timeSync['source'],
-			$this->security->getSelinux(),
-			$this->security->getApparmor(),
+			$this->probe('The SELinux state', fn (): ?string => $this->security->getSelinux(), null, $diagnostics),
+			$this->probe('The AppArmor state', fn (): ?string => $this->security->getApparmor(), null, $diagnostics),
 			$packageManager?->getUpgradeCommands() ?? ['all' => null, 'security' => null],
 			$packageManager?->getPackageDatabasePath(),
 			$bootTime,
 			$diagnostics,
 		);
+	}
+
+	/**
+	 * Runs one probe, so that a probe that throws costs its own finding and
+	 * not the whole run.
+	 *
+	 * @template T
+	 * @param string $finding what the probe finds out, to start a sentence with
+	 * @param callable(): T $probe
+	 * @param T $fallback the unknown answer
+	 * @param list<string> $diagnostics
+	 * @param-out list<string> $diagnostics
+	 * @return T
+	 */
+	private function probe(string $finding, callable $probe, mixed $fallback, array &$diagnostics): mixed {
+		try {
+			return $probe();
+		} catch (\Throwable $e) {
+			$this->logger->warning($finding . ' could not be determined', ['exception' => $e]);
+			$diagnostics[] = sprintf('%s could not be determined; see the Nextcloud log.', $finding);
+
+			return $fallback;
+		}
 	}
 
 	/**

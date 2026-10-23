@@ -14,9 +14,12 @@ use OCA\ServerInfo\OsStatus\OsStatus;
 use OCA\ServerInfo\OsStatus\OsStatusCollector;
 use OCA\ServerInfo\OsStatus\OsStatusService;
 use OCA\ServerInfo\OsStatus\Verdict\Concern;
+use OCA\ServerInfo\OsStatus\Verdict\OsVerdict;
+use OCA\ServerInfo\OsStatus\Verdict\Thresholds;
 use OCA\ServerInfo\OsStatus\Verdict\Verdict;
 use PHPUnit\Framework\Attributes\DataProvider;
 use Symfony\Component\Console\Input\InputInterface;
+use Symfony\Component\Console\Output\BufferedOutput;
 use Symfony\Component\Console\Output\OutputInterface;
 
 class ShowOsStatusTest extends \Test\TestCase {
@@ -51,11 +54,36 @@ class ShowOsStatusTest extends \Test\TestCase {
 		$this->assertSame(ShowOsStatus::EXIT_UNKNOWN, $this->execute($service));
 	}
 
-	private function execute(OsStatusService $service): int {
+	public function testAStaleStatusWarnsAndShowsItsAge(): void {
+		$status = new OsStatus(OsStatus::STATE_OK, 1792411200 - 3 * 86400 - 7200);
+		$service = $this->createMock(OsStatusService::class);
+		$service->method('getStatus')->willReturn($status);
+		$service->method('evaluate')->willReturn((new OsVerdict())->evaluate($status, null, null, new Thresholds(), 1792411200));
+
+		$output = new BufferedOutput();
+		$this->assertSame(ShowOsStatus::EXIT_WARNING, $this->execute($service, $output));
+		$this->assertSame('3 d 2 h', json_decode($output->fetch(), true)['statusAge'] ?? null);
+	}
+
+	public static function dataAges(): array {
+		return [
+			[0, '0 min'],
+			[59 * 60 + 59, '59 min'],
+			[3600 + 5 * 60, '1 h 5 min'],
+			[86400 + 3 * 3600 + 120, '1 d 3 h'],
+		];
+	}
+
+	#[DataProvider('dataAges')]
+	public function testAges(int $seconds, string $formatted): void {
+		$this->assertSame($formatted, ShowOsStatus::formatAge($seconds));
+	}
+
+	private function execute(OsStatusService $service, ?OutputInterface $output = null): int {
 		$command = new ShowOsStatus($this->createMock(OsStatusCollector::class), $service);
 		$input = $this->createMock(InputInterface::class);
 		$input->method('getOption')->willReturnMap([['refresh', false], ['output', 'json']]);
 
-		return (new \ReflectionMethod($command, 'execute'))->invoke($command, $input, $this->createMock(OutputInterface::class));
+		return (new \ReflectionMethod($command, 'execute'))->invoke($command, $input, $output ?? $this->createMock(OutputInterface::class));
 	}
 }
