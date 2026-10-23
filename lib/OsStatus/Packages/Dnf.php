@@ -72,7 +72,7 @@ class Dnf implements IPackageManager {
 			throw new ProbeException('dnf could not be run.');
 		}
 		if ($result->exitCode !== 0 && $result->exitCode !== self::EXIT_UPDATES) {
-			throw new ProbeException('dnf check-update failed: ' . self::firstLine($result->stderr ?: $result->stdout));
+			throw new ProbeException('dnf check-update failed: ' . ProbeHelper::firstLine($result->stderr ?: $result->stdout));
 		}
 
 		$available = self::parseCheckUpdate($result->stdout);
@@ -128,7 +128,7 @@ class Dnf implements IPackageManager {
 	private function securityAdvisories(): array {
 		$result = $this->dnf(['-q', '--cacheonly', 'updateinfo', 'list', '--security', '--available'], 180);
 		if ($result === null || !$result->succeeded()) {
-			throw new ProbeException('dnf could not list security advisories: ' . self::firstLine($result?->stderr ?? ''));
+			throw new ProbeException('dnf could not list security advisories: ' . ProbeHelper::firstLine($result?->stderr ?? ''));
 		}
 
 		return self::parseAdvisories($result->stdout);
@@ -255,17 +255,13 @@ class Dnf implements IPackageManager {
 	 */
 	#[\Override]
 	public function getListsRefreshedAt(): ?int {
-		$times = [];
-		foreach (['/var/cache/dnf/*/metalink.xml', '/var/cache/libdnf5/*/metalink.xml', '/var/cache/dnf/*/repodata/repomd.xml', '/var/cache/libdnf5/*/repodata/repomd.xml', '/var/cache/dnf/last_makecache'] as $pattern) {
-			foreach (str_contains($pattern, '*') ? $this->host->glob($pattern) : [$pattern] as $file) {
-				$time = $this->host->modifiedAt($file);
-				if ($time !== null) {
-					$times[] = $time;
-				}
-			}
-		}
-
-		return $times === [] ? null : max($times);
+		return ProbeHelper::newestModified($this->host, [
+			'/var/cache/dnf/*/metalink.xml',
+			'/var/cache/libdnf5/*/metalink.xml',
+			'/var/cache/dnf/*/repodata/repomd.xml',
+			'/var/cache/libdnf5/*/repodata/repomd.xml',
+			'/var/cache/dnf/last_makecache',
+		]);
 	}
 
 	#[\Override]
@@ -372,9 +368,5 @@ class Dnf implements IPackageManager {
 	 */
 	private function dnf(array $arguments, int $timeout): ?CommandResult {
 		return $this->host->run($this->host->hasBinary('dnf') ? 'dnf' : 'dnf5', $arguments, $timeout);
-	}
-
-	private static function firstLine(string $text): string {
-		return mb_substr(trim((string)strtok(trim($text), "\n")), 0, 200);
 	}
 }

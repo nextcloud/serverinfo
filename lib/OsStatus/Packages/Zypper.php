@@ -297,8 +297,7 @@ class Zypper implements IPackageManager {
 			? html_entity_decode($matches[1], ENT_QUOTES | ENT_XML1)
 			: null;
 		if (!$result->succeeded() || $xmlError !== null) {
-			$message = $xmlError ?? trim($result->stderr ?: $result->stdout);
-			throw new ProbeException('zypper ' . $arguments[0] . ' failed: ' . mb_substr($message, 0, 200));
+			throw new ProbeException('zypper ' . $arguments[0] . ' failed: ' . ProbeHelper::firstLine($xmlError ?? ($result->stderr ?: $result->stdout)));
 		}
 
 		return $result->stdout;
@@ -340,17 +339,7 @@ class Zypper implements IPackageManager {
 	 */
 	#[\Override]
 	public function getListsRefreshedAt(): ?int {
-		$times = [];
-		foreach (['/var/cache/zypp/raw/*/cookie', '/var/cache/zypp/solv/*/cookie', '/var/cache/zypp/raw/*/repodata/repomd.xml'] as $pattern) {
-			foreach ($this->host->glob($pattern) as $file) {
-				$time = $this->host->modifiedAt($file);
-				if ($time !== null) {
-					$times[] = $time;
-				}
-			}
-		}
-
-		return $times === [] ? null : max($times);
+		return ProbeHelper::newestModified($this->host, ['/var/cache/zypp/raw/*/cookie', '/var/cache/zypp/solv/*/cookie', '/var/cache/zypp/raw/*/repodata/repomd.xml']);
 	}
 
 	#[\Override]
