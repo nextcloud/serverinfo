@@ -37,6 +37,18 @@ class ConcernTexts {
 	}
 
 	/**
+	 * Why a stored status has no concerns: restricted mode or a system other
+	 * than Linux. Null when it has them.
+	 */
+	public function unavailable(OsStatus $status, IL10N $l): ?string {
+		return match ($status->state) {
+			OsStatus::STATE_RESTRICTED => $l->t('Not checked, because the Monitoring app runs in restricted mode.'),
+			OsStatus::STATE_UNSUPPORTED => $l->t('Only Linux systems are checked.'),
+			default => null,
+		};
+	}
+
+	/**
 	 * A short headline, e.g. "7 security updates pending".
 	 */
 	public function title(Concern $concern, OsStatus $status, IL10N $l): string {

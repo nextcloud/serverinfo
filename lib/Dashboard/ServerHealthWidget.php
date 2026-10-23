@@ -88,7 +88,7 @@ class ServerHealthWidget implements IAPIWidgetV2, IConditionalWidget, IIconWidge
 	public function isEnabled(): bool {
 		$user = $this->userSession->getUser();
 
-		return $user !== null && $this->groupManager->isAdmin($user->getUID());
+		return $user !== null && $this->groupManager->isAdmin($user->getUID()) && $this->service->isApplicable();
 	}
 
 	#[\Override]
@@ -108,8 +108,11 @@ class ServerHealthWidget implements IAPIWidgetV2, IConditionalWidget, IIconWidge
 		}
 
 		$status = $this->service->getStatus();
-		if ($status === null || $status->state !== OsStatus::STATE_OK) {
+		if ($status === null) {
 			return new WidgetItems([], $this->l10n->t('The operating system has not been checked yet.'));
+		}
+		if ($status->state !== OsStatus::STATE_OK) {
+			return new WidgetItems([], $this->texts->unavailable($status, $this->l10n) ?? '');
 		}
 
 		$verdict = $this->service->evaluate($status);

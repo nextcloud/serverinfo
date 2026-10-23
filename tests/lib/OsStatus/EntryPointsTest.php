@@ -167,6 +167,28 @@ class EntryPointsTest extends \Test\TestCase {
 		$this->assertSame([], $widget->getItemsV2('alice')->getItems());
 	}
 
+	public function testWidgetIsHiddenWhereNothingIsChecked(): void {
+		$this->service->method('isApplicable')->willReturn(false);
+		$this->service->expects($this->never())->method('getStatus');
+
+		$this->assertFalse($this->widget(true)->isEnabled());
+	}
+
+	public function testWidgetIsShownToAdminsOfCheckedSystems(): void {
+		$this->service->method('isApplicable')->willReturn(true);
+
+		$this->assertTrue($this->widget(true)->isEnabled());
+	}
+
+	public function testWidgetSaysWhyNothingWasChecked(): void {
+		$this->service->method('getStatus')->willReturn(OsStatus::restricted(1));
+
+		$items = $this->widget(true)->getItemsV2('alice');
+
+		$this->assertSame([], $items->getItems());
+		$this->assertSame('Not checked, because the Monitoring app runs in restricted mode.', $items->getEmptyContentMessage());
+	}
+
 	public function testWidgetListsProblemsFirst(): void {
 		$this->service->method('getStatus')->willReturn(new OsStatus(OsStatus::STATE_OK, 1));
 		$this->service->method('evaluate')->willReturn(new Verdict([
