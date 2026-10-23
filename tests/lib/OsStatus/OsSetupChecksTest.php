@@ -16,12 +16,16 @@ use OCA\ServerInfo\OsStatus\Support\SupportStatus;
 use OCA\ServerInfo\OsStatus\Verdict\Concern;
 use OCA\ServerInfo\OsStatus\Verdict\ConcernTexts;
 use OCA\ServerInfo\OsStatus\Verdict\Verdict;
+use OCA\ServerInfo\SetupChecks\AbstractOsCheck;
 use OCA\ServerInfo\SetupChecks\OsRebootCheck;
 use OCA\ServerInfo\SetupChecks\OsSupportCheck;
 use OCA\ServerInfo\SetupChecks\OsUpdatesCheck;
 use OCP\IDateTimeFormatter;
+use OCP\IGroupManager;
 use OCP\IL10N;
 use OCP\IURLGenerator;
+use OCP\IUser;
+use OCP\IUserSession;
 use OCP\SetupCheck\SetupResult;
 use PHPUnit\Framework\MockObject\MockObject;
 
@@ -29,6 +33,9 @@ class OsSetupChecksTest extends \Test\TestCase {
 	private OsStatusService&MockObject $service;
 	private IL10N $l10n;
 	private IURLGenerator&MockObject $urlGenerator;
+	/** The uid of the session user, null without a session as in occ and cron */
+	private ?string $sessionUser = 'admin';
+	private bool $sessionUserIsAdmin = true;
 
 	protected function setUp(): void {
 		parent::setUp();
@@ -42,6 +49,22 @@ class OsSetupChecksTest extends \Test\TestCase {
 		return new ConcernTexts($this->createMock(IDateTimeFormatter::class));
 	}
 
+	/**
+	 * @param class-string<AbstractOsCheck> $class
+	 */
+	private function check(string $class, ?ConcernTexts $texts = null): AbstractOsCheck {
+		$session = $this->createMock(IUserSession::class);
+		if ($this->sessionUser !== null) {
+			$user = $this->createMock(IUser::class);
+			$user->method('getUID')->willReturn($this->sessionUser);
+			$session->method('getUser')->willReturn($user);
+		}
+		$groups = $this->createMock(IGroupManager::class);
+		$groups->method('isAdmin')->willReturnCallback(fn (string $uid): bool => $uid === $this->sessionUser && $this->sessionUserIsAdmin);
+
+		return new $class($this->l10n, $this->urlGenerator, $this->service, $texts ?? $this->texts(), $session, $groups);
+	}
+
 	private function given(?OsStatus $status, Concern ...$concerns): void {
 		$this->service->method('getStatus')->willReturn($status);
 		$this->service->method('evaluate')->willReturn(new Verdict($concerns));
@@ -50,10 +73,10 @@ class OsSetupChecksTest extends \Test\TestCase {
 	public function testNotCheckedYet(): void {
 		$this->given(null);
 
-		$result = (new OsUpdatesCheck($this->l10n, $this->urlGenerator, $this->service, $this->texts()))->run();
+		$result = $this->check(OsUpdatesCheck::class)->run();
 
 		$this->assertSame(SetupResult::INFO, $result->getSeverity());
-		$this->assertSame('security', (new OsUpdatesCheck($this->l10n, $this->urlGenerator, $this->service, $this->texts()))->getCategory());
+		$this->assertSame('security', $this->check(OsUpdatesCheck::class)->getCategory());
 	}
 
 	public function testTheWorstConcernOfTheCheckDecides(): void {
@@ -64,7 +87,7 @@ class OsSetupChecksTest extends \Test\TestCase {
 			new Concern(Concern::REBOOT, Concern::LEVEL_WARNING, ['days' => 9, 'kinds' => ['kernel']]),
 		);
 
-		$result = (new OsUpdatesCheck($this->l10n, $this->urlGenerator, $this->service, $this->texts()))->run();
+		$result = $this->check(OsUpdatesCheck::class)->run();
 
 		$this->assertSame(SetupResult::ERROR, $result->getSeverity());
 		$this->assertStringContainsString('Package lists were last refreshed 40 days ago', (string)$result->getDescription());
@@ -79,7 +102,7 @@ class OsSetupChecksTest extends \Test\TestCase {
 			new Concern(Concern::FRESHNESS, Concern::LEVEL_WARNING, ['collectedAt' => 1, 'ageSeconds' => 3 * 86400, 'systemCron' => true]),
 		);
 
-		$result = (new OsSupportCheck($this->l10n, $this->urlGenerator, $this->service, $this->texts()))->run();
+		$result = $this->check(OsSupportCheck::class)->run();
 
 		$this->assertSame(SetupResult::WARNING, $result->getSeverity());
 		$this->assertStringContainsString('The operating system was last checked 3 days ago', (string)$result->getDescription());
@@ -93,7 +116,7 @@ class OsSetupChecksTest extends \Test\TestCase {
 			new Concern(Concern::FRESHNESS, Concern::LEVEL_WARNING, ['collectedAt' => 1, 'ageSeconds' => 7200, 'systemCron' => false]),
 		);
 
-		$result = (new OsUpdatesCheck($this->l10n, $this->urlGenerator, $this->service, $this->texts()))->run();
+		$result = $this->check(OsUpdatesCheck::class)->run();
 
 		$this->assertSame(SetupResult::ERROR, $result->getSeverity(), 'An old status never lowers a level');
 		$this->assertStringContainsString('The operating system was last checked 2 hours ago', (string)$result->getDescription());
@@ -107,7 +130,7 @@ class OsSetupChecksTest extends \Test\TestCase {
 			new Concern(Concern::RESTART, Concern::LEVEL_OK, ['php' => false, 'services' => 0]),
 		);
 
-		$result = (new OsRebootCheck($this->l10n, $this->urlGenerator, $this->service, $this->texts()))->run();
+		$result = $this->check(OsRebootCheck::class)->run();
 
 		$this->assertSame(SetupResult::WARNING, $result->getSeverity());
 		$this->assertStringStartsWith('Reboot required. A newer kernel is installed. Pending for 9 days.', (string)$result->getDescription());
@@ -116,7 +139,7 @@ class OsSetupChecksTest extends \Test\TestCase {
 	public function testAllGoodHasNoLink(): void {
 		$this->given(new OsStatus(OsStatus::STATE_OK, 1), new Concern(Concern::REBOOT, Concern::LEVEL_OK), new Concern(Concern::RESTART, Concern::LEVEL_OK));
 
-		$result = (new OsRebootCheck($this->l10n, $this->urlGenerator, $this->service, $this->texts()))->run();
+		$result = $this->check(OsRebootCheck::class)->run();
 
 		$this->assertSame(SetupResult::SUCCESS, $result->getSeverity());
 		$this->assertStringNotContainsString('{link}', (string)$result->getDescription());
@@ -125,7 +148,7 @@ class OsSetupChecksTest extends \Test\TestCase {
 	public function testUnknownIsInfo(): void {
 		$this->given(new OsStatus(OsStatus::STATE_OK, 1), new Concern(Concern::SUPPORT, Concern::LEVEL_UNKNOWN));
 
-		$this->assertSame(SetupResult::INFO, (new OsSupportCheck($this->l10n, $this->urlGenerator, $this->service, $this->texts()))->run()->getSeverity());
+		$this->assertSame(SetupResult::INFO, $this->check(OsSupportCheck::class)->run()->getSeverity());
 	}
 
 	public function testTheSupportSentenceIsFilledIn(): void {
@@ -136,7 +159,7 @@ class OsSetupChecksTest extends \Test\TestCase {
 			new Concern(Concern::SUPPORT, Concern::LEVEL_OK, ['state' => SupportStatus::STATE_SUPPORTED, 'ends' => '2029-05-31']),
 		);
 
-		$result = (new OsSupportCheck($this->l10n, $this->urlGenerator, $this->service, new ConcernTexts($formatter)))->run();
+		$result = $this->check(OsSupportCheck::class, new ConcernTexts($formatter))->run();
 
 		$this->assertSame('Ubuntu 24.04.3 LTS receives security updates until May 31, 2029.', $result->getDescription());
 	}
@@ -144,13 +167,54 @@ class OsSetupChecksTest extends \Test\TestCase {
 	public function testRestrictedMode(): void {
 		$this->given(OsStatus::restricted(1));
 
-		$this->assertSame(SetupResult::SUCCESS, (new OsSupportCheck($this->l10n, $this->urlGenerator, $this->service, $this->texts()))->run()->getSeverity());
+		$this->assertSame(SetupResult::SUCCESS, $this->check(OsSupportCheck::class)->run()->getSeverity());
 	}
 
 	public function testItSamplesThePhpProcess(): void {
 		$this->given(null);
 		$this->service->expects($this->once())->method('samplePhpProcess');
 
-		(new OsRebootCheck($this->l10n, $this->urlGenerator, $this->service, $this->texts()))->run();
+		$this->check(OsRebootCheck::class)->run();
+	}
+
+	private function aPendingSecurityUpdate(): void {
+		$this->given(
+			new OsStatus(OsStatus::STATE_OK, 1),
+			new Concern(Concern::UPDATES, Concern::LEVEL_ERROR, ['classified' => true, 'security' => 3, 'other' => 0]),
+		);
+	}
+
+	public function testAdminsSeeTheStatus(): void {
+		$this->aPendingSecurityUpdate();
+
+		$result = $this->check(OsUpdatesCheck::class)->run();
+
+		$this->assertSame(SetupResult::ERROR, $result->getSeverity());
+		$this->assertStringContainsString('3 security updates pending', (string)$result->getDescription());
+	}
+
+	public function testOccAndCronWithoutASessionSeeTheStatus(): void {
+		$this->sessionUser = null;
+		$this->aPendingSecurityUpdate();
+
+		$result = $this->check(OsUpdatesCheck::class)->run();
+
+		$this->assertSame(SetupResult::ERROR, $result->getSeverity());
+		$this->assertStringContainsString('3 security updates pending', (string)$result->getDescription());
+	}
+
+	public function testSubAdminsLearnNothingAboutTheSystem(): void {
+		$this->sessionUser = 'subadmin';
+		$this->sessionUserIsAdmin = false;
+		$this->aPendingSecurityUpdate();
+		$this->service->expects($this->never())->method('samplePhpProcess');
+
+		foreach ([OsUpdatesCheck::class, OsRebootCheck::class, OsSupportCheck::class] as $class) {
+			$result = $this->check($class)->run();
+
+			$this->assertSame(SetupResult::INFO, $result->getSeverity());
+			$this->assertSame('Only administrators can see the operating system status.', $result->getDescription());
+			$this->assertNull($result->getDescriptionParameters());
+		}
 	}
 }

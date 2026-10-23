@@ -72,9 +72,10 @@ occ serverinfo:os-status [--refresh] [--output=json]
 The command shows how old the status is and exits with 0, 1, 2 or 3 for ok,
 warning, error and unknown, so it can be used as a monitoring check. Unknown means the status has not been
 collected yet, or nothing is wrong but the pending updates could not be
-determined. The same verdict appears as setup checks on Settings → Overview, in
-a notification to admins when a concern escalates, and in the **Server health**
-dashboard widget. When something counts as a warning or an error is set by
+determined. The same verdict appears as setup checks on Settings → Overview
+(only for admins; sub-admins, who may load the setup checks too, get no
+details), in a notification to admins when a concern escalates, and in the
+**Server health** dashboard widget for admins. When something counts as a warning or an error is set by
 the `os_*_days` app config values, see `lib/Config/ConfigLexicon.php`.
 
 Release support dates are bundled with the app (see
