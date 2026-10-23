@@ -59,9 +59,10 @@ class OsStatusService {
 	/**
 	 * Looks at the PHP process serving this request and remembers what it
 	 * found. Cheap: one read of /proc/self/maps, at most once per request.
+	 * Does nothing where the system is not checked at all.
 	 */
 	public function samplePhpProcess(): void {
-		if ($this->sampled || !$this->phpProcessProbe->canSample()) {
+		if ($this->sampled || !$this->isApplicable() || !$this->phpProcessProbe->canSample()) {
 			return;
 		}
 		$this->sampled = true;
