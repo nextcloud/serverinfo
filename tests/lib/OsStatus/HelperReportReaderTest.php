@@ -26,7 +26,9 @@ class HelperReportReaderTest extends \Test\TestCase {
 		$this->host = new FakeHost();
 		$this->reader = new HelperReportReader($this->host);
 		$this->owned(self::PATH, 0o100644);
-		$this->owned('/var/lib/serverinfo', 0o40755);
+		foreach (['/var/lib/serverinfo', '/var/lib', '/var', '/'] as $directory) {
+			$this->owned($directory, 0o40755);
+		}
 	}
 
 	private function owned(string $path, int $mode, int $owner = 0): void {
@@ -183,6 +185,10 @@ class HelperReportReaderTest extends \Test\TestCase {
 			'world writable' => [self::PATH, 0o100646, 0],
 			'directory owned by the web server' => ['/var/lib/serverinfo', 0o40755, 33],
 			'directory world writable' => ['/var/lib/serverinfo', 0o41777, 0],
+			'an ancestor owned by the web server' => ['/var/lib', 0o40755, 33],
+			'an ancestor group writable' => ['/var', 0o40775, 0],
+			'an ancestor world writable with the sticky bit' => ['/var', 0o41777, 0],
+			'the root directory group writable' => ['/', 0o40775, 0],
 		];
 	}
 
@@ -194,6 +200,62 @@ class HelperReportReaderTest extends \Test\TestCase {
 
 		$this->assertSame(HelperState::STATE_INSECURE, $state->state);
 		$this->assertNull($report);
+	}
+
+	public static function dataSymlinks(): array {
+		return [
+			'the report' => [self::PATH],
+			'its directory' => ['/var/lib/serverinfo'],
+			'an ancestor' => ['/var'],
+		];
+	}
+
+	/**
+	 * The helper writes a plain file and refuses symlinked directories, so a
+	 * link anywhere on the path was not set up by it.
+	 */
+	#[DataProvider('dataSymlinks')]
+	public function testSymlinksOnThePathAreInsecure(string $link): void {
+		$this->host->links[$link] = '/srv/elsewhere';
+
+		[$state, $report] = $this->read();
+
+		$this->assertSame(HelperState::STATE_INSECURE, $state->state);
+		$this->assertNull($report);
+	}
+
+	public function testAnAncestorThatCannotBeCheckedIsUnreadable(): void {
+		unset($this->host->owners['/var']);
+
+		$this->assertSame(HelperState::STATE_UNREADABLE, $this->read()[0]->state);
+	}
+
+	public static function dataOpenBasedirAncestors(): array {
+		return [
+			'only the report directory' => [['/var/lib/serverinfo/'], null, HelperState::STATE_OK],
+			'an ancestor within open_basedir is checked' => [['/var/lib'], 33, HelperState::STATE_INSECURE],
+			'an ancestor within open_basedir that cannot be checked' => [['/var/lib/'], null, HelperState::STATE_UNREADABLE],
+		];
+	}
+
+	/**
+	 * Directories open_basedir hides from PHP cannot be inspected; the ones
+	 * it allows are.
+	 *
+	 * @param list<string> $basedir
+	 * @param int|null $libOwner owner of /var/lib, null when it cannot be checked
+	 */
+	#[DataProvider('dataOpenBasedirAncestors')]
+	public function testAncestorsOutsideOpenBasedir(array $basedir, ?int $libOwner, string $expected): void {
+		$this->host->basedir = $basedir;
+		foreach (['/var/lib', '/var', '/'] as $directory) {
+			unset($this->host->owners[$directory]);
+		}
+		if ($libOwner !== null) {
+			$this->owned('/var/lib', 0o40755, $libOwner);
+		}
+
+		$this->assertSame($expected, $this->read()[0]->state);
 	}
 
 	public static function dataRejected(): array {

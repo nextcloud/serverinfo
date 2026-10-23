@@ -14,10 +14,10 @@ use OCA\ServerInfo\OsStatus\Host\IHost;
 /**
  * Reads the report the optional root helper leaves behind.
  *
- * The report is untrusted input. It is only used when it is owned by root
- * and writable by no one else (the web server could otherwise forge an
- * all-clear), small, well-formed, written on this machine since its last boot
- * and recent.
+ * The report is untrusted input. It is only used when it and every
+ * directory above it are owned by root and writable by no one else (the
+ * web server could otherwise forge an all-clear), small, well-formed,
+ * written on this machine since its last boot and recent.
  *
  * @psalm-api
  */
@@ -70,14 +70,9 @@ class HelperReportReader {
 			return [new HelperState($state, $path), null];
 		}
 
-		foreach ([$path, dirname($path)] as $checked) {
-			$ownership = $this->host->ownership($checked);
-			if ($ownership === null) {
-				return [new HelperState(HelperState::STATE_UNREADABLE, $path), null];
-			}
-			if ($ownership['owner'] !== 0 || ($ownership['mode'] & 0o022) !== 0) {
-				return [new HelperState(HelperState::STATE_INSECURE, $path), null];
-			}
+		$security = $this->securityState($path);
+		if ($security !== null) {
+			return [new HelperState($security, $path), null];
 		}
 
 		$content = $this->host->readFile($path, self::MAX_BYTES + 1);
@@ -120,6 +115,34 @@ class HelperReportReader {
 		);
 
 		return [$helperState, $state === HelperState::STATE_OK ? $report : null];
+	}
+
+	/**
+	 * The report and every directory above it must be owned by root,
+	 * writable by no one else, sticky world-writable directories included,
+	 * and no symbolic links: the rules bin/serverinfo-os-report checks the
+	 * directories against before writing. Directories outside open_basedir
+	 * cannot be inspected here and are left to the helper's check.
+	 *
+	 * @return HelperState::STATE_INSECURE|HelperState::STATE_UNREADABLE|null null when the path is secure
+	 */
+	private function securityState(string $path): ?string {
+		for ($checked = $path; ; $checked = dirname($checked)) {
+			if ($this->host->readLink($checked) !== null) {
+				return HelperState::STATE_INSECURE;
+			}
+			$ownership = $this->host->ownership($checked);
+			if ($ownership === null) {
+				if ($checked === $path || !$this->isOutsideOpenBasedir($checked)) {
+					return HelperState::STATE_UNREADABLE;
+				}
+			} elseif ($ownership['owner'] !== 0 || ($ownership['mode'] & 0o022) !== 0) {
+				return HelperState::STATE_INSECURE;
+			}
+			if ($checked === '/') {
+				return null;
+			}
+		}
 	}
 
 	private function isOutsideOpenBasedir(string $path): bool {

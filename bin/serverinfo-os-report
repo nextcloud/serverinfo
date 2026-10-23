@@ -532,22 +532,38 @@ EOF
 	write_report "$REPORT" "$OUTPUT"
 }
 
-# Creates the report's directory ($1) if needed and makes sure it and its
-# parent are root's alone: anyone who can write to them could swap the
-# report, or plant a symlink for root to write through.
+# Makes sure that the directory $1 and every directory above it are root's
+# alone and no symbolic links: anyone who can write to one of them could
+# swap the report, or a directory on its way, for a link and have root
+# write elsewhere. This includes sticky world-writable directories such as
+# /tmp. Directories that do not exist yet are skipped. HelperReportReader
+# applies the same rules to the directories open_basedir lets it see.
+check_directories() {
+	path=$1
+	while :; do
+		[ -L "$path" ] && die "$path is a symbolic link"
+		if [ -e "$path" ]; then
+			[ "$(stat -c %u "$path")" = 0 ] || die "$path must be owned by root"
+			case "$(stat -c %a "$path")" in
+				*[2367]? | *[2367]) die "$path must not be writable by group or others" ;;
+			esac
+		fi
+		parent=$(dirname "$path")
+		[ "$parent" = "$path" ] && return 0
+		path=$parent
+	done
+}
+
+# Creates the report's directory ($1) if needed, only below directories
+# that pass check_directories, and checks it again once it exists.
 secure_directory() {
-	[ -L "$1" ] && die "$1 is a symbolic link"
+	check_directories "$1"
 	if [ ! -d "$1" ]; then
 		# Parent directories get 0755 from the umask set above.
 		# shellcheck disable=SC2174
 		mkdir -p -m 0755 "$1" || die "cannot create $1"
 	fi
-	for path in "$1" "$(dirname "$1")"; do
-		[ "$(stat -c %u "$path")" = 0 ] || die "$path must be owned by root"
-		case "$(stat -c %a "$path")" in
-			*[2367]? | *[2367]) die "$path must not be writable by group or others" ;;
-		esac
-	done
+	check_directories "$1"
 }
 
 # Replaces the report file ($2) with the report ($1) in one step.
