@@ -27,6 +27,7 @@ use OCP\IURLGenerator;
 use OCP\IUser;
 use OCP\IUserSession;
 use OCP\SetupCheck\SetupResult;
+use PHPUnit\Framework\Attributes\DataProvider;
 use PHPUnit\Framework\MockObject\MockObject;
 
 class OsSetupChecksTest extends \Test\TestCase {
@@ -215,6 +216,36 @@ class OsSetupChecksTest extends \Test\TestCase {
 			$this->assertSame(SetupResult::INFO, $result->getSeverity());
 			$this->assertSame('Only administrators can see the operating system status.', $result->getDescription());
 			$this->assertNull($result->getDescriptionParameters());
+		}
+	}
+
+	public static function dataMarkupInTheReleaseName(): array {
+		return [
+			'supported, no link' => [Concern::LEVEL_OK, ['state' => SupportStatus::STATE_SUPPORTED, 'ends' => '2029-05-31'], SetupResult::SUCCESS],
+			'ended, with a link' => [Concern::LEVEL_ERROR, ['state' => SupportStatus::STATE_ENDED, 'ends' => '2024-06-30'], SetupResult::ERROR],
+		];
+	}
+
+	#[DataProvider('dataMarkupInTheReleaseName')]
+	public function testMarkupInTheReleaseNameIsEscaped(string $level, array $facts, string $severity): void {
+		$formatter = $this->createMock(IDateTimeFormatter::class);
+		$formatter->method('formatDate')->willReturn('May 31, 2029');
+		$this->given(
+			new OsStatus(OsStatus::STATE_OK, 1, new OsRelease('ubuntu', ['debian'], 'Ubuntu', 'Ubuntu "Noble" <img src=x onerror=alert(1)> & co', '24.04', 'noble')),
+			new Concern(Concern::SUPPORT, $level, $facts),
+		);
+
+		$result = $this->check(OsSupportCheck::class, new ConcernTexts($formatter))->run();
+		$description = (string)$result->getDescription();
+
+		$this->assertSame($severity, $result->getSeverity());
+		$this->assertStringContainsString('Ubuntu "Noble" &lt;img src=x onerror=alert(1)&gt; &amp; co', $description);
+		$this->assertStringNotContainsString('<', $description);
+		if ($severity === SetupResult::SUCCESS) {
+			$this->assertStringNotContainsString('{link}', $description);
+		} else {
+			$this->assertStringEndsWith(' {link}', $description);
+			$this->assertSame('highlight', $result->getDescriptionParameters()['link']['type'] ?? null);
 		}
 	}
 }

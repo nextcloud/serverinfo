@@ -70,7 +70,7 @@ abstract class AbstractOsCheck implements ISetupCheck {
 		}
 		$unavailable = $this->texts->unavailable($status, $this->l10n);
 		if ($unavailable !== null) {
-			return SetupResult::success($unavailable);
+			return SetupResult::success(self::escape($unavailable));
 		}
 
 		$verdict = $this->service->evaluate($status);
@@ -96,6 +96,7 @@ abstract class AbstractOsCheck implements ISetupCheck {
 				$level = Concern::LEVEL_WARNING;
 			}
 		}
+		$text = self::escape($text);
 		$description = $text . ' {link}';
 
 		return match ($level) {
@@ -104,6 +105,16 @@ abstract class AbstractOsCheck implements ISetupCheck {
 			Concern::LEVEL_INFO => SetupResult::info($description, null, $this->linkParameter()),
 			default => SetupResult::success($text),
 		};
+	}
+
+	/**
+	 * The Overview renders the description as HTML and escapes only the rich
+	 * object parameters. The texts carry strings from the system, such as
+	 * PRETTY_NAME from os-release. Quotes stay: the description never goes
+	 * into an attribute, and occ prints entities without decoding them.
+	 */
+	private static function escape(string $text): string {
+		return htmlspecialchars($text, ENT_NOQUOTES | ENT_SUBSTITUTE);
 	}
 
 	/**
