@@ -15,9 +15,9 @@
 
 			<ol class="os-helper-dialog__steps">
 				<li>
-					<strong>{{ t('serverinfo', 'Install it outside the Nextcloud directory') }}</strong>
+					<strong>{{ t('serverinfo', 'Install it from a fresh copy of this app') }}</strong>
 					<p class="os-muted">
-						{{ t('serverinfo', 'The web server can write to the Nextcloud directory. Running the script from there would let anyone who takes over the web server run code as root, so it is copied to a place only root can change.') }}
+						{{ t('serverinfo', 'Do not copy it from the Nextcloud directory: the web server can change the files there. Download and extract this version of the app, or of Nextcloud, and run this in its serverinfo directory:') }}
 					</p>
 					<OsCommand :command="installCommand" />
 				</li>
@@ -35,7 +35,7 @@
 			</ol>
 
 			<p class="os-muted">
-				{{ t('serverinfo', 'Install it again after updating this app, so the helper stays current. To remove it, delete {script} and {cron}.', { script: helper.installPath, cron: '/etc/cron.d/serverinfo-os-report' }) }}
+				{{ t('serverinfo', 'Install it again the same way after updating this app. To remove it, delete {script} and {cron}.', { script: helper.installPath, cron: '/etc/cron.d/serverinfo-os-report' }) }}
 			</p>
 		</div>
 
@@ -68,7 +68,7 @@ const DEFAULT_REPORT = '/var/lib/serverinfo/os-report.json'
 /** Only a non-default report path needs spelling out, and it is validated server-side. */
 const outputOption = computed(() => (props.helper.reportPath !== DEFAULT_REPORT ? ` --output ${shellQuote(props.helper.reportPath)}` : ''))
 
-const installCommand = computed(() => `sudo install -o root -g root -m 0755 ${shellQuote(props.helper.scriptPath)} ${shellQuote(props.helper.installPath)}`)
+const installCommand = computed(() => `sudo install -o root -g root -m 0755 bin/serverinfo-os-report ${shellQuote(props.helper.installPath)}`)
 // The install and report paths are restricted to plain characters, so the
 // cron line needs no quoting inside its own single quotes.
 const cronCommand = computed(() => `echo '17 */6 * * * root ${props.helper.installPath} --refresh${outputOption.value}' | sudo tee /etc/cron.d/serverinfo-os-report`)

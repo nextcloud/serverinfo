@@ -17,21 +17,19 @@ function commands(helper = payload().helper) {
 }
 
 describe('OsHelperDialog', () => {
-	it('installs the script outside the web root and schedules it', () => {
+	it('installs the script from an extracted release, not the app directory, and schedules it', () => {
 		expect(commands()).toEqual([
-			'sudo install -o root -g root -m 0755 /var/www/nextcloud/apps/serverinfo/bin/serverinfo-os-report /usr/local/sbin/serverinfo-os-report',
+			'sudo install -o root -g root -m 0755 bin/serverinfo-os-report /usr/local/sbin/serverinfo-os-report',
 			"echo '17 */6 * * * root /usr/local/sbin/serverinfo-os-report --refresh' | sudo tee /etc/cron.d/serverinfo-os-report",
 			'sudo /usr/local/sbin/serverinfo-os-report --refresh',
 		])
 	})
 
-	it('quotes an app path with spaces and passes a custom report path', () => {
-		const [install, cron, run] = commands({
+	it('passes a custom report path', () => {
+		const [, cron, run] = commands({
 			...payload().helper,
-			scriptPath: '/srv/my cloud/apps/serverinfo/bin/serverinfo-os-report',
 			reportPath: '/srv/reports/os.json',
 		})
-		expect(install).toContain("'/srv/my cloud/apps/serverinfo/bin/serverinfo-os-report'")
 		expect(cron).toContain('--refresh --output /srv/reports/os.json\'')
 		expect(run).toBe('sudo /usr/local/sbin/serverinfo-os-report --refresh --output /srv/reports/os.json')
 	})

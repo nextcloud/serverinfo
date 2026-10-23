@@ -234,5 +234,5 @@ export interface OsPayload {
 	notifications: boolean
 	/** "Check now" queues a check for system cron; running while one is queued or collecting */
 	refresh: { systemCron: boolean, running: boolean }
-	helper: { bundledVersion: string, scriptPath: string, installPath: string, reportPath: string }
+	helper: { bundledVersion: string, installPath: string, reportPath: string }
 }
