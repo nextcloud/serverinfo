@@ -20,13 +20,15 @@ final class HelperState {
 	public const STATE_OK = 'ok';
 	/** Older than the helper's schedule allows; the cron job probably stopped */
 	public const STATE_STALE = 'stale';
+	/** Dated in the future: the clock of this machine is or was wrong */
+	public const STATE_CLOCK_SKEW = 'clock-skew';
 	/** Written before the last reboot, so its reboot and restart findings are void */
 	public const STATE_PREVIOUS_BOOT = 'previous-boot';
 	/** Written on another machine, e.g. a copied data directory */
 	public const STATE_OTHER_HOST = 'other-host';
 	/** Writable by someone other than root, so it could be forged */
 	public const STATE_INSECURE = 'insecure';
-	/** Exists but cannot be read, e.g. because of open_basedir */
+	/** Exists or may exist, but cannot be read, e.g. because of open_basedir or a directory only root can enter */
 	public const STATE_UNREADABLE = 'unreadable';
 	/** Not valid JSON, too large, or missing required fields */
 	public const STATE_INVALID = 'invalid';
@@ -34,7 +36,7 @@ final class HelperState {
 	public const STATE_UNSUPPORTED = 'unsupported';
 
 	public const STATES = [
-		self::STATE_ABSENT, self::STATE_OK, self::STATE_STALE, self::STATE_PREVIOUS_BOOT, self::STATE_OTHER_HOST,
+		self::STATE_ABSENT, self::STATE_OK, self::STATE_STALE, self::STATE_CLOCK_SKEW, self::STATE_PREVIOUS_BOOT, self::STATE_OTHER_HOST,
 		self::STATE_INSECURE, self::STATE_UNREADABLE, self::STATE_INVALID, self::STATE_UNSUPPORTED,
 	];
 

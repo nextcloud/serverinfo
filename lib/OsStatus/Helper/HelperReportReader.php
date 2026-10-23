@@ -35,6 +35,9 @@ class HelperReportReader {
 	/** Boot times measured from user space differ by a few seconds. */
 	private const BOOT_TIME_TOLERANCE = 120;
 
+	/** How far a report may be dated ahead before the clock counts as wrong. */
+	private const FUTURE_TOLERANCE = 300;
+
 	public function __construct(
 		private IHost $host,
 	) {
@@ -60,13 +63,21 @@ class HelperReportReader {
 		$path = self::sanitizePath($path);
 
 		if (!$this->host->fileExists($path)) {
-			$state = $this->isOutsideOpenBasedir($path) ? HelperState::STATE_UNREADABLE : HelperState::STATE_ABSENT;
+			$state = $this->isOutsideOpenBasedir($path) || $this->isClosedDirectory(dirname($path))
+				? HelperState::STATE_UNREADABLE
+				: HelperState::STATE_ABSENT;
 
 			return [new HelperState($state, $path), null];
 		}
 
-		if (!$this->isRootOnly($path) || !$this->isRootOnly(dirname($path))) {
-			return [new HelperState(HelperState::STATE_INSECURE, $path), null];
+		foreach ([$path, dirname($path)] as $checked) {
+			$ownership = $this->host->ownership($checked);
+			if ($ownership === null) {
+				return [new HelperState(HelperState::STATE_UNREADABLE, $path), null];
+			}
+			if ($ownership['owner'] !== 0 || ($ownership['mode'] & 0o022) !== 0) {
+				return [new HelperState(HelperState::STATE_INSECURE, $path), null];
+			}
 		}
 
 		$content = $this->host->readFile($path, self::MAX_BYTES + 1);
@@ -94,7 +105,8 @@ class HelperReportReader {
 		$state = match (true) {
 			$report->hostname !== $this->host->hostname() => HelperState::STATE_OTHER_HOST,
 			$bootTime !== null && $report->bootTime !== null && abs($report->bootTime - $bootTime) > self::BOOT_TIME_TOLERANCE => HelperState::STATE_PREVIOUS_BOOT,
-			$now - $report->generatedAt > self::MAX_AGE || $report->generatedAt > $now + 300 => HelperState::STATE_STALE,
+			$report->generatedAt > $now + self::FUTURE_TOLERANCE => HelperState::STATE_CLOCK_SKEW,
+			$now - $report->generatedAt > self::MAX_AGE => HelperState::STATE_STALE,
 			default => HelperState::STATE_OK,
 		};
 
@@ -116,8 +128,11 @@ class HelperReportReader {
 			return false;
 		}
 
-		foreach ($allowed as $directory) {
-			if (str_starts_with($path, rtrim($directory, '/') . '/')) {
+		// As PHP does: an entry is a directory whether or not it ends in a
+		// slash, and an entry naming the file itself allows it.
+		foreach ($allowed as $entry) {
+			$entry = rtrim($entry, '/');
+			if ($path === $entry || str_starts_with($path, $entry . '/')) {
 				return false;
 			}
 		}
@@ -126,11 +141,15 @@ class HelperReportReader {
 	}
 
 	/**
-	 * Owned by root and writable by neither group nor others.
+	 * A directory of root's that neither group nor others may enter, so the
+	 * web server cannot tell whether the report is in it.
 	 */
-	private function isRootOnly(string $path): bool {
-		$ownership = $this->host->ownership($path);
+	private function isClosedDirectory(string $directory): bool {
+		$ownership = $this->host->ownership($directory);
 
-		return $ownership !== null && $ownership['owner'] === 0 && ($ownership['mode'] & 0o022) === 0;
+		return $ownership !== null
+			&& $ownership['owner'] === 0
+			&& ($ownership['mode'] & 0o170000) === 0o040000
+			&& ($ownership['mode'] & 0o011) === 0;
 	}
 }
