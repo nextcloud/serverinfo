@@ -13,9 +13,12 @@ use OCA\ServerInfo\Config\ConfigLexicon;
 use OCA\ServerInfo\Jobs\RefreshOsStatus;
 use OCA\ServerInfo\OsStatus\Helper\HelperReportReader;
 use OCA\ServerInfo\OsStatus\Notifications\OsNotificationSender;
+use OCA\ServerInfo\OsStatus\OsStatus;
 use OCA\ServerInfo\OsStatus\OsStatusCollector;
 use OCA\ServerInfo\OsStatus\OsStatusService;
 use OCA\ServerInfo\OsStatus\Restart\ServiceCommands;
+use OCA\ServerInfo\OsStatus\Verdict\Concern;
+use OCA\ServerInfo\OsStatus\Verdict\ConcernTexts;
 use OCA\ServerInfo\OsStatus\Verdict\Thresholds;
 use OCP\AppFramework\Controller;
 use OCP\AppFramework\Http;
@@ -25,6 +28,7 @@ use OCP\AppFramework\Services\IAppConfig;
 use OCP\AppFramework\Utility\ITimeFactory;
 use OCP\BackgroundJob\IJobList;
 use OCP\IAppConfig as IServerConfig;
+use OCP\IL10N;
 use OCP\IRequest;
 
 /**
@@ -49,6 +53,8 @@ class OsController extends Controller {
 		private IJobList $jobList,
 		private IServerConfig $serverConfig,
 		private ServiceCommands $serviceCommands,
+		private ConcernTexts $texts,
+		private IL10N $l10n,
 	) {
 		parent::__construct($appName, $request);
 	}
@@ -119,7 +125,7 @@ class OsController extends Controller {
 		return [
 			'now' => $this->timeFactory->getTime(),
 			'status' => $status?->toArray(),
-			'verdict' => $status !== null ? $this->service->evaluate($status)?->toArray() : null,
+			'verdict' => $status !== null ? $this->verdict($status) : null,
 			'outdated' => $status !== null && $this->service->isOutdated($status),
 			'php' => $php?->toArray(),
 			'initSystem' => $init,
@@ -149,6 +155,25 @@ class OsController extends Controller {
 					$this->appConfig->getAppValueString(ConfigLexicon::OS_HELPER_REPORT_PATH, HelperReportReader::DEFAULT_PATH),
 				),
 			],
+		];
+	}
+
+	/**
+	 * The verdict with each concern's sentences, in the admin's language,
+	 * so the page says the same as setup checks, notifications and widget.
+	 */
+	private function verdict(OsStatus $status): ?array {
+		$verdict = $this->service->evaluate($status);
+		if ($verdict === null) {
+			return null;
+		}
+
+		return [
+			'level' => $verdict->level(),
+			'concerns' => array_map(fn (Concern $concern): array => $concern->toArray() + [
+				'title' => $this->texts->title($concern, $status, $this->l10n),
+				'detail' => $this->texts->detail($concern, $this->l10n),
+			], $verdict->concerns),
 		];
 	}
 

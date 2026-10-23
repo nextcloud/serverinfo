@@ -13,7 +13,7 @@ describe('OsVerdictCard', () => {
 		props: {
 			level,
 			status: status(),
-			concerns: level === 'ok' ? [] : [concern('updates', 'warning', { classified: true, security: 7, other: 0 })],
+			concerns: level === 'ok' ? [] : [concern('updates', 'warning', { classified: true, security: 7, other: 0 }, '7 security updates pending')],
 			refreshing,
 			canRefresh,
 		},
@@ -34,7 +34,7 @@ describe('OsVerdictCard', () => {
 		const wrapper = mountCard('warning')
 		expect(wrapper.text()).toContain('Ubuntu 24.04.3 LTS')
 		expect(wrapper.text()).toContain('Virtual machine (KVM)')
-		expect(wrapper.findAll('.os-verdict__chip').map((chip) => chip.text())).toEqual(['Warning 7 security updates'])
+		expect(wrapper.findAll('.os-verdict__chip').map((chip) => chip.text())).toEqual(['Warning 7 security updates pending'])
 	})
 
 	it('asks for a refresh and shows that one is running', async () => {

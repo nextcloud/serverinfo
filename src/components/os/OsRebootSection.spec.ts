@@ -15,12 +15,13 @@ describe('OsRebootSection', () => {
 				status: status({ rebootReasons: [{ kind: 'kernel', detail: '6.8.0-47-generic', packages: [], since: NOW - 9 * 86400 }] }),
 				php: payload().php,
 				commands: payload().commands,
-				rebootConcern: concern('reboot', 'warning', { days: 9, kinds: ['kernel'], livePatched: false }),
+				rebootConcern: concern('reboot', 'warning', { days: 9, kinds: ['kernel'], livePatched: false }, 'Reboot required', 'A newer kernel is installed. Pending for 9 days.'),
 				restartConcern: concern('restart', 'ok'),
 			},
 		})
-		expect(wrapper.text()).toContain('Kernel 6.8.0-47-generic is installed but not running yet.')
-		expect(wrapper.text()).toContain('for 9 days')
+		expect(wrapper.find('strong').text()).toBe('Reboot required')
+		expect(wrapper.text()).toContain('A newer kernel is installed. Pending for 9 days.')
+		expect(wrapper.find('.os-reasons code').text()).toBe('6.8.0-47-generic')
 		expect(wrapper.text()).toContain('sudo systemctl reboot')
 	})
 

@@ -36,7 +36,7 @@
 				<dt>{{ t('serverinfo', 'Security support') }}</dt>
 				<dd class="os-release__support">
 					<OsLevelIcon :level="supportConcern?.level ?? 'unknown'" :size="18" />
-					<span>{{ supportText }}</span>
+					<span>{{ supportConcern?.title || t('serverinfo', 'Unknown') }}</span>
 				</dd>
 			</dl>
 
@@ -83,14 +83,14 @@
 <script setup lang="ts">
 import type { OsConcern, OsLevel, OsStatus } from '../../types.ts'
 
-import { n, t } from '@nextcloud/l10n'
+import { t } from '@nextcloud/l10n'
 import { computed } from 'vue'
 import NcDateTime from '@nextcloud/vue/components/NcDateTime'
 import NcNoteCard from '@nextcloud/vue/components/NcNoteCard'
 import CalendarClock from 'vue-material-design-icons/CalendarClock.vue'
 import SectionHeading from '../SectionHeading.vue'
 import OsLevelIcon from './OsLevelIcon.vue'
-import { environmentLabel, factNumber, formatDay, PROGRAMMES } from '../../osUtils.ts'
+import { environmentLabel } from '../../osUtils.ts'
 
 const props = defineProps<{
 	status: OsStatus
@@ -99,40 +99,6 @@ const props = defineProps<{
 }>()
 
 const managesPackages = computed(() => props.status.environment.kind === 'host' || props.status.environment.kind === 'system-container')
-
-const supportText = computed(() => {
-	const facts = props.supportConcern?.facts ?? {}
-	const support = props.status.support
-	const programme = PROGRAMMES[support.extended ?? ''] ?? ''
-	const daysLeft = factNumber(facts.daysLeft)
-	const ends = formatDay(typeof facts.ends === 'string' ? facts.ends : null)
-
-	switch (facts.state) {
-		case 'rolling':
-			return t('serverinfo', 'Rolling release: always supported while it is kept up to date')
-		case 'ended':
-			// TRANSLATORS: {date} is a date such as "31 May 2029"
-			return t('serverinfo', 'Ended on {date}. This release no longer receives security updates.', { date: ends })
-		case 'extended-available':
-			return t('serverinfo', 'Standard support ended on {date}. Security updates continue until {extendedDate} only with {programme}.', {
-				date: formatDay(support.securityEnds),
-				extendedDate: formatDay(support.extendedEnds),
-				programme,
-			})
-		case 'extended':
-			return t('serverinfo', 'Covered by {programme} until {date}', { programme, date: ends })
-		case 'supported':
-			if (daysLeft !== null && daysLeft < 365) {
-				return n('serverinfo', 'Until {date}, in %n day', 'Until {date}, in %n days', daysLeft, { date: ends })
-			}
-			return t('serverinfo', 'Until {date}', { date: ends })
-		default:
-			return props.status.support.dataDate
-				// TRANSLATORS: {date} is when the support data bundled with the app was collected
-				? t('serverinfo', 'Unknown: this release is not in the support data from {date}', { date: formatDay(props.status.support.dataDate) })
-				: t('serverinfo', 'Unknown')
-	}
-})
 
 const automaticLevel = computed<OsLevel>(() => props.automaticConcern?.level ?? 'unknown')
 

@@ -140,6 +140,10 @@ export interface OsConcern {
 	id: OsConcernId
 	level: OsLevel
 	facts: Record<string, string | number | boolean | string[] | null>
+	/** Headline in the admin's language, the same one setup checks and notifications use */
+	title: string
+	/** Sentences explaining the headline; empty when it says it all */
+	detail: string
 }
 
 export interface OsPendingUpdate {

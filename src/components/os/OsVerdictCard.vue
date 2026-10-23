@@ -27,7 +27,7 @@
 					class="os-verdict__chip"
 					:class="`os-verdict__chip--${concern.level}`">
 					<OsLevelIcon :level="concern.level" :size="16" />
-					{{ concernLabel(concern) }}
+					{{ concern.title }}
 				</li>
 			</ul>
 
@@ -80,7 +80,7 @@ import ShieldAlert from 'vue-material-design-icons/ShieldAlert.vue'
 import ShieldCheck from 'vue-material-design-icons/ShieldCheck.vue'
 import ShieldOff from 'vue-material-design-icons/ShieldOffOutline.vue'
 import OsLevelIcon from './OsLevelIcon.vue'
-import { concernLabel, environmentLabel, headline } from '../../osUtils.ts'
+import { environmentLabel, headline } from '../../osUtils.ts'
 
 const props = defineProps<{
 	level: OsLevel

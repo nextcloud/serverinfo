@@ -4,7 +4,7 @@
  */
 
 import { describe, expect, it } from 'vitest'
-import { compareLevels, concernLabel, daysSince, environmentLabel, formatDay, formatDays, problems, shellQuote } from './osUtils.ts'
+import { compareLevels, daysSince, environmentLabel, formatDays, problems, shellQuote } from './osUtils.ts'
 import { concern, NOW, payload } from './testing/osPayload.ts'
 
 describe('shellQuote', () => {
@@ -35,12 +35,6 @@ describe('days', () => {
 		expect(formatDays(5)).toBe('for 5 days')
 		expect(formatDays(null)).toBe('')
 	})
-
-	it('formats a support date independently of the browser zone', () => {
-		expect(formatDay('2029-05-31')).toContain('2029')
-		expect(formatDay(null)).toBe('')
-		expect(formatDay('not a date')).toBe('not a date')
-	})
 })
 
 describe('problems', () => {
@@ -69,16 +63,6 @@ describe('problems', () => {
 })
 
 describe('labels', () => {
-	it('names security updates only where they can be told apart', () => {
-		expect(concernLabel(concern('updates', 'warning', { classified: true, security: 7, other: 2 }))).toBe('7 security updates')
-		expect(concernLabel(concern('updates', 'info', { classified: false, security: 0, other: 3 }))).toBe('3 updates')
-	})
-
-	it('says how long a reboot has waited', () => {
-		expect(concernLabel(concern('reboot', 'warning', { days: 9 }))).toBe('Reboot pending for 9 days')
-		expect(concernLabel(concern('reboot', 'info', { days: 0 }))).toBe('Reboot required')
-	})
-
 	it('describes where Nextcloud runs', () => {
 		expect(environmentLabel({ kind: 'host', container: null, virtualization: 'kvm' })).toBe('Virtual machine (KVM)')
 		expect(environmentLabel({ kind: 'host', container: null, virtualization: null })).toBe('Physical machine')

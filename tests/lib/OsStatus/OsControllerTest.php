@@ -18,12 +18,17 @@ use OCA\ServerInfo\OsStatus\OsStatusService;
 use OCA\ServerInfo\OsStatus\Restart\PhpProcessSample;
 use OCA\ServerInfo\OsStatus\Restart\ServiceCommands;
 use OCA\ServerInfo\OsStatus\Restart\ServiceRestart;
+use OCA\ServerInfo\OsStatus\Verdict\Concern;
+use OCA\ServerInfo\OsStatus\Verdict\ConcernTexts;
 use OCA\ServerInfo\OsStatus\Verdict\Thresholds;
+use OCA\ServerInfo\OsStatus\Verdict\Verdict;
 use OCP\AppFramework\Http;
 use OCP\AppFramework\Services\IAppConfig;
 use OCP\AppFramework\Utility\ITimeFactory;
 use OCP\BackgroundJob\IJobList;
 use OCP\IAppConfig as IServerConfig;
+use OCP\IDateTimeFormatter;
+use OCP\IL10N;
 use OCP\IRequest;
 use PHPUnit\Framework\MockObject\MockObject;
 
@@ -49,6 +54,9 @@ class OsControllerTest extends \Test\TestCase {
 
 	private function controller(): OsController {
 		$serverConfig = $this->createMock(IServerConfig::class);
+		$l10n = $this->createMock(IL10N::class);
+		$l10n->method('t')->willReturnCallback(static fn (string $text, array $parameters = []): string => vsprintf($text, $parameters));
+		$l10n->method('n')->willReturnCallback(static fn (string $one, string $many, int $count, array $parameters = []): string => vsprintf(str_replace('%n', (string)$count, $count === 1 ? $one : $many), $parameters));
 		$serviceCommands = $this->createMock(ServiceCommands::class);
 		$serviceCommands->method('initSystem')->willReturnCallback(fn (): ?string => $this->initSystem);
 		$serverConfig->method('getValueString')->willReturnCallback(fn (string $app, string $key, string $default): string => $app === 'core' && $key === 'backgroundjobs_mode' ? $this->cronMode : $default);
@@ -64,6 +72,8 @@ class OsControllerTest extends \Test\TestCase {
 			$this->jobList,
 			$serverConfig,
 			$serviceCommands,
+			new ConcernTexts($this->createMock(IDateTimeFormatter::class)),
+			$l10n,
 		);
 	}
 
@@ -179,5 +189,23 @@ class OsControllerTest extends \Test\TestCase {
 
 		$this->initSystem = null;
 		$this->assertSame(['reboot' => null, 'php' => null, 'services' => ['cron.service' => null, 'foo\\x2dbar.service' => null]], $this->controller()->status()->getData()['commands']);
+	}
+
+	public function testSendsTheSentencesOfEachConcern(): void {
+		$status = new OsStatus(OsStatus::STATE_OK, 1792411200);
+		$this->service->method('getStatus')->willReturn($status);
+		$this->service->method('evaluate')->with($status)->willReturn(new Verdict([
+			new Concern(Concern::UPDATES, Concern::LEVEL_WARNING, ['classified' => true, 'security' => 7, 'other' => 2, 'stack' => 0, 'days' => 4]),
+			new Concern(Concern::TIME_SYNC, Concern::LEVEL_WARNING, ['source' => null]),
+		]));
+
+		$verdict = $this->controller()->status()->getData()['verdict'];
+
+		$this->assertSame(Concern::LEVEL_WARNING, $verdict['level']);
+		$this->assertSame(['id' => 'updates', 'level' => 'warning'], array_intersect_key($verdict['concerns'][0], ['id' => 1, 'level' => 1]));
+		$this->assertSame('7 security updates pending', $verdict['concerns'][0]['title']);
+		$this->assertSame('The oldest has been waiting for 4 days.', $verdict['concerns'][0]['detail']);
+		$this->assertSame('The system clock is not synchronized', $verdict['concerns'][1]['title']);
+		$this->assertStringStartsWith('Two-factor codes', $verdict['concerns'][1]['detail']);
 	}
 }
