@@ -28,6 +28,10 @@ use OCP\IAppConfig as IServerConfig;
  * @psalm-api
  */
 class OsStatusService {
+	private bool $sampled = false;
+	private ?OsStatus $evaluated = null;
+	private ?Verdict $verdictOfEvaluated = null;
+
 	public function __construct(
 		private OsStatusStore $store,
 		private OsVerdict $verdict,
@@ -45,16 +49,18 @@ class OsStatusService {
 
 	/**
 	 * Looks at the PHP process serving this request and remembers what it
-	 * found. Cheap: one read of /proc/self/maps.
+	 * found. Cheap: one read of /proc/self/maps, at most once per request.
 	 */
 	public function samplePhpProcess(): void {
-		if (!$this->phpProcessProbe->canSample()) {
+		if ($this->sampled || !$this->phpProcessProbe->canSample()) {
 			return;
 		}
+		$this->sampled = true;
 
 		$sample = $this->phpProcessProbe->sample($this->store->load()?->release, $this->timeFactory->getTime());
 		if ($sample !== null) {
 			$this->store->savePhpSample($sample);
+			$this->evaluated = null;
 		}
 	}
 
@@ -66,13 +72,20 @@ class OsStatusService {
 		return Thresholds::load($this->appConfig);
 	}
 
+	/**
+	 * Judges the given status, or the stored one. The verdict of the same
+	 * status is reused, because one page load asks for it several times.
+	 */
 	public function evaluate(?OsStatus $status = null): ?Verdict {
 		$status ??= $this->store->load();
 		if ($status === null) {
 			return null;
 		}
+		if ($status === $this->evaluated) {
+			return $this->verdictOfEvaluated;
+		}
 
-		return $this->verdict->evaluate(
+		$this->verdictOfEvaluated = $this->verdict->evaluate(
 			$status,
 			$this->store->loadPhpSample(),
 			$this->store->phpOutdatedSince(),
@@ -81,6 +94,9 @@ class OsStatusService {
 			UpdateOsStatus::runsFromSystemCron($this->serverConfig),
 			UpdateOsStatus::interval($this->serverConfig),
 		);
+		$this->evaluated = $status;
+
+		return $this->verdictOfEvaluated;
 	}
 
 	/**

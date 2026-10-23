@@ -129,8 +129,37 @@ class OsStatusServiceTest extends \Test\TestCase {
 		$this->assertTrue($fresh->facts['systemCron']);
 
 		$this->mode = 'webcron';
-		$stale = $this->service->evaluate($status)?->get(Concern::FRESHNESS);
+		$stale = $this->service->evaluate(new OsStatus(OsStatus::STATE_OK, self::NOW - 2 * 86400))?->get(Concern::FRESHNESS);
 		$this->assertSame(Concern::LEVEL_WARNING, $stale?->level);
 		$this->assertFalse($stale->facts['systemCron']);
+	}
+
+	public function testThePhpProcessIsSampledOncePerRequest(): void {
+		$this->host->files['/proc/self/maps'] = '';
+		$this->store->expects($this->once())->method('savePhpSample');
+
+		$this->service->samplePhpProcess();
+		$this->service->samplePhpProcess();
+	}
+
+	public function testTheVerdictOfTheSameStatusIsReused(): void {
+		$stored = new OsStatus(OsStatus::STATE_OK, self::NOW);
+		$this->store->method('load')->willReturn($stored);
+		$this->store->expects($this->exactly(2))->method('loadPhpSample')->willReturn(null);
+
+		$verdict = $this->service->evaluate();
+		$this->assertSame($verdict, $this->service->evaluate($stored));
+		$this->assertNotSame($verdict, $this->service->evaluate(new OsStatus(OsStatus::STATE_OK, self::NOW)));
+	}
+
+	public function testASampleTakenAfterwardsIsJudged(): void {
+		$stored = new OsStatus(OsStatus::STATE_OK, self::NOW);
+		$this->store->method('load')->willReturn($stored);
+		$this->host->files['/proc/self/maps'] = '';
+
+		$before = $this->service->evaluate();
+		$this->service->samplePhpProcess();
+
+		$this->assertNotSame($before, $this->service->evaluate());
 	}
 }

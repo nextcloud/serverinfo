@@ -246,4 +246,5 @@ class OsStatusStoreTest extends \Test\TestCase {
 
 		$this->assertSame(['updates' => 'warning'], $this->store->notifiedLevels());
 	}
+
 }
