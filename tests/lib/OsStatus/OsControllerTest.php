@@ -15,7 +15,6 @@ use OCA\ServerInfo\OsStatus\Notifications\OsNotificationSender;
 use OCA\ServerInfo\OsStatus\OsStatusCollector;
 use OCA\ServerInfo\OsStatus\OsStatusService;
 use OCA\ServerInfo\OsStatus\Verdict\Thresholds;
-use OCP\App\IAppManager;
 use OCP\AppFramework\Http;
 use OCP\AppFramework\Services\IAppConfig;
 use OCP\AppFramework\Utility\ITimeFactory;
@@ -44,8 +43,6 @@ class OsControllerTest extends \Test\TestCase {
 	}
 
 	private function controller(): OsController {
-		$appManager = $this->createMock(IAppManager::class);
-		$appManager->method('getAppPath')->willReturn('/var/www/nextcloud/apps/serverinfo');
 		$serverConfig = $this->createMock(IServerConfig::class);
 		$serverConfig->method('getValueString')->willReturnCallback(fn (string $app, string $key, string $default): string => $app === 'core' && $key === 'backgroundjobs_mode' ? $this->cronMode : $default);
 
@@ -56,7 +53,6 @@ class OsControllerTest extends \Test\TestCase {
 			$this->collector,
 			$this->notifications,
 			$this->config,
-			$appManager,
 			$this->createMock(ITimeFactory::class),
 			$this->jobList,
 			$serverConfig,
@@ -82,7 +78,7 @@ class OsControllerTest extends \Test\TestCase {
 		$response = $this->controller()->updateSettings((new Thresholds(rebootWarning: 2))->toArray(), false);
 
 		$this->assertSame(Http::STATUS_OK, $response->getStatus());
-		$this->assertSame('/var/www/nextcloud/apps/serverinfo/bin/serverinfo-os-report', $response->getData()['helper']['scriptPath']);
+		$this->assertSame('/usr/local/sbin/serverinfo-os-report', $response->getData()['helper']['installPath']);
 	}
 
 	public function testStatusSamplesThePhpProcess(): void {

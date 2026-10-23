@@ -9,7 +9,6 @@ declare(strict_types=1);
 
 namespace OCA\ServerInfo\Controller;
 
-use OCA\ServerInfo\AppInfo\Application;
 use OCA\ServerInfo\Config\ConfigLexicon;
 use OCA\ServerInfo\Jobs\RefreshOsStatus;
 use OCA\ServerInfo\OsStatus\Helper\HelperReportReader;
@@ -17,7 +16,6 @@ use OCA\ServerInfo\OsStatus\Notifications\OsNotificationSender;
 use OCA\ServerInfo\OsStatus\OsStatusCollector;
 use OCA\ServerInfo\OsStatus\OsStatusService;
 use OCA\ServerInfo\OsStatus\Verdict\Thresholds;
-use OCP\App\IAppManager;
 use OCP\AppFramework\Controller;
 use OCP\AppFramework\Http;
 use OCP\AppFramework\Http\Attribute\UserRateLimit;
@@ -44,7 +42,6 @@ class OsController extends Controller {
 		private OsStatusCollector $collector,
 		private OsNotificationSender $notifications,
 		private IAppConfig $appConfig,
-		private IAppManager $appManager,
 		private ITimeFactory $timeFactory,
 		private IJobList $jobList,
 		private IServerConfig $serverConfig,
@@ -118,7 +115,6 @@ class OsController extends Controller {
 			],
 			'helper' => [
 				'bundledVersion' => HelperReportReader::BUNDLED_VERSION,
-				'scriptPath' => $this->appManager->getAppPath(Application::APP_ID) . '/bin/serverinfo-os-report',
 				'installPath' => self::HELPER_INSTALL_PATH,
 				'reportPath' => HelperReportReader::sanitizePath(
 					$this->appConfig->getAppValueString(ConfigLexicon::OS_HELPER_REPORT_PATH, HelperReportReader::DEFAULT_PATH),
