@@ -10,11 +10,13 @@ declare(strict_types=1);
 namespace OCA\ServerInfo\Tests\OsStatus;
 
 use OCA\ServerInfo\OsStatus\Environment;
+use OCA\ServerInfo\OsStatus\Helper\HelperState;
 use OCA\ServerInfo\OsStatus\OsStatus;
 use OCA\ServerInfo\OsStatus\Packages\AutomaticUpdates;
 use OCA\ServerInfo\OsStatus\Packages\PendingUpdate;
 use OCA\ServerInfo\OsStatus\Reboot\RebootReason;
 use OCA\ServerInfo\OsStatus\Restart\PhpProcessSample;
+use OCA\ServerInfo\OsStatus\Restart\ServiceRestart;
 use OCA\ServerInfo\OsStatus\Support\SupportStatus;
 use OCA\ServerInfo\OsStatus\Verdict\Concern;
 use OCA\ServerInfo\OsStatus\Verdict\OsVerdict;
@@ -38,6 +40,7 @@ class OsVerdictTest extends \Test\TestCase {
 			'listsRefreshedAt' => self::NOW - 3600,
 			'automaticUpdates' => new AutomaticUpdates(AutomaticUpdates::STATE_ENABLED, 'unattended-upgrades', AutomaticUpdates::SCOPE_SECURITY),
 			'rebootReasons' => [],
+			'restartServices' => [],
 			'livePatches' => [],
 			'failedUnits' => [],
 			'timeSynchronized' => true,
@@ -134,19 +137,20 @@ class OsVerdictTest extends \Test\TestCase {
 		$this->assertSame(Concern::LEVEL_ERROR, $mixed?->level, 'A live patch does not cover the C library');
 	}
 
-	public function testRestartOfPhp(): void {
+	public function testRestartOfPhpAndServices(): void {
 		$php = new PhpProcessSample(self::NOW, 'fpm-fcgi', ['libssl.so.3'], 'php8.3-fpm', null);
 
 		$fresh = $this->evaluate($this->osStatus(), $php, self::NOW - 3600)->get(Concern::RESTART);
 		$this->assertSame(Concern::LEVEL_INFO, $fresh?->level);
 		$this->assertTrue($fresh->facts['php']);
 
-		$old = $this->evaluate($this->osStatus(), $php, self::NOW - 4 * self::DAY)->get(Concern::RESTART);
+		$old = $this->evaluate($this->osStatus(['restartServices' => [new ServiceRestart('redis-server.service', self::NOW - 4 * self::DAY)]]))->get(Concern::RESTART);
 		$this->assertSame(Concern::LEVEL_WARNING, $old?->level);
+		$this->assertSame(1, $old->facts['stack']);
 	}
 
 	public function testRestartIsUnknownWithoutAnyInformation(): void {
-		$this->assertSame(Concern::LEVEL_UNKNOWN, $this->evaluate($this->osStatus())->get(Concern::RESTART)?->level);
+		$this->assertSame(Concern::LEVEL_UNKNOWN, $this->evaluate($this->osStatus(['restartServices' => null]))->get(Concern::RESTART)?->level);
 	}
 
 	public static function dataSupport(): array {
@@ -178,13 +182,24 @@ class OsVerdictTest extends \Test\TestCase {
 			'failedUnits' => ['logrotate.service', 'php8.3-fpm.service'],
 			'timeSynchronized' => false,
 			'automaticUpdates' => new AutomaticUpdates(AutomaticUpdates::STATE_DISABLED),
+			'helper' => new HelperState(HelperState::STATE_INSECURE, '/var/lib/serverinfo/os-report.json'),
 		]));
 
 		$this->assertSame(Concern::LEVEL_WARNING, $verdict->get(Concern::FAILED_UNITS)?->level);
 		$this->assertSame(['php8.3-fpm.service'], $verdict->get(Concern::FAILED_UNITS)?->facts['stack']);
 		$this->assertSame(Concern::LEVEL_WARNING, $verdict->get(Concern::TIME_SYNC)?->level);
 		$this->assertSame(Concern::LEVEL_INFO, $verdict->get(Concern::AUTOMATIC_UPDATES)?->level);
+		$this->assertSame(Concern::LEVEL_WARNING, $verdict->get(Concern::HELPER)?->level);
 		$this->assertSame(Concern::LEVEL_WARNING, $verdict->level());
+	}
+
+	public function testAHelperReportFromTheFutureIsWorthMentioning(): void {
+		$verdict = $this->evaluate($this->osStatus([
+			'helper' => new HelperState(HelperState::STATE_CLOCK_SKEW, '/var/lib/serverinfo/os-report.json', self::NOW + 3600, '1.0.0'),
+		]));
+
+		$this->assertSame(Concern::LEVEL_INFO, $verdict->get(Concern::HELPER)?->level);
+		$this->assertSame(HelperState::STATE_CLOCK_SKEW, $verdict->get(Concern::HELPER)?->facts['state']);
 	}
 
 	public function testApplicationContainersSkipWhatIsNotTheirs(): void {
@@ -192,6 +207,7 @@ class OsVerdictTest extends \Test\TestCase {
 			'environment' => new Environment(Environment::KIND_APPLICATION_CONTAINER, 'docker'),
 			'updates' => null,
 			'rebootReasons' => null,
+			'restartServices' => null,
 		]), new PhpProcessSample(self::NOW, 'apache2handler', [], 'apache2', null));
 
 		$ids = array_map(static fn (Concern $c): string => $c->id, $verdict->concerns);

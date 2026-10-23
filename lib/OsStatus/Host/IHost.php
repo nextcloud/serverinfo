@@ -45,6 +45,11 @@ interface IHost {
 	 */
 	public function changedAt(string $path): ?int;
 
+	/**
+	 * @return array{owner: int, mode: int}|null
+	 */
+	public function ownership(string $path): ?array;
+
 	public function readLink(string $path): ?string;
 
 	/**
@@ -82,6 +87,8 @@ interface IHost {
 	 * @param 'r'|'m'|'n' $mode as for php_uname()
 	 */
 	public function uname(string $mode): string;
+
+	public function hostname(): string;
 
 	/**
 	 * As PHP_OS_FAMILY, e.g. "Linux" or "BSD".

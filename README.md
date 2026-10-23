@@ -66,6 +66,56 @@ Release support dates are bundled with the app (see
 `build/update-os-support.php`, data from [endoflife.date](https://endoflife.date),
 MIT License); the app never looks them up online.
 
+### Root helper
+
+The web server cannot see everything: only root can tell which services still
+run code an update replaced, and only root can refresh the package lists. The
+optional script `bin/serverinfo-os-report` adds that. Run as root, it writes a
+small JSON report that the app reads. It only reads the system; it never
+installs, upgrades, restarts or reboots anything.
+
+Install it outside the Nextcloud directory: the web server can write there, so
+a root cron job pointing into it would hand the web server root.
+
+Take the file from a freshly extracted release archive, not from the
+installed app: the Nextcloud server archive, checked against the SHA-256 sum
+or signature published next to it on download.nextcloud.com, or the app's own
+release archive. A copy taken from `apps/serverinfo/bin` is safe from changes
+made after copying, but not from a web server that was already compromised
+and changed the file before. `cmp` shows whether the installed app's file
+still matches the release. Repeat this when an update ships a newer helper
+(the app then reports the installed helper as outdated). The release archive
+does not contain this README; the same instructions are at the top of the
+script.
+
+Extract the file into a new directory that only you can enter, which
+`mktemp -d` creates, so that no one can swap it before root installs it.
+Remove that directory afterwards.
+
+```
+d=$(mktemp -d) &&
+tar -xjf nextcloud-<version>.tar.bz2 -C "$d" nextcloud/apps/serverinfo/bin/serverinfo-os-report &&
+sudo install -o root -g root -m 0755 "$d"/nextcloud/apps/serverinfo/bin/serverinfo-os-report /usr/local/sbin/ &&
+rm -r "$d"
+echo '17 */6 * * * root /usr/local/sbin/serverinfo-os-report --refresh --random-delay' | sudo tee /etc/cron.d/serverinfo-os-report
+```
+
+`--random-delay` waits up to 30 minutes first, so that servers sharing this
+cron line do not all reach the package mirrors at the same minute; leave it
+out when running the helper by hand. Where `flock` is available, a run that
+finds another one still going exits without doing anything. Package manager
+calls are stopped after a time limit where `timeout` is available.
+
+The report is written to `/var/lib/serverinfo/os-report.json`. Use
+`--output` and `occ config:app:set serverinfo os_helper_report_path --value …`
+to put it elsewhere. Every directory on the way to the report must be owned
+by root, writable by no one else and no symbolic link; the helper refuses to
+write anywhere else, such as below /tmp or the Nextcloud directory. The app
+ignores a report that anyone but root could have written, on the same rules
+as far as open_basedir lets it check, one written before the last reboot or
+on another host, one older than 26 hours, and one dated more than five
+minutes in the future (a clock problem).
+
 ## API
 
 The API provides a lot of information about a running Nextcloud

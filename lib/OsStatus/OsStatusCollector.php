@@ -9,10 +9,13 @@ declare(strict_types=1);
 
 namespace OCA\ServerInfo\OsStatus;
 
+use OCA\ServerInfo\Config\ConfigLexicon;
 use OCA\ServerInfo\Os;
 use OCA\ServerInfo\OsStatus\Health\SecurityProbe;
 use OCA\ServerInfo\OsStatus\Health\SystemdProbe;
 use OCA\ServerInfo\OsStatus\Health\TimeSyncProbe;
+use OCA\ServerInfo\OsStatus\Helper\HelperReport;
+use OCA\ServerInfo\OsStatus\Helper\HelperReportReader;
 use OCA\ServerInfo\OsStatus\Host\IHost;
 use OCA\ServerInfo\OsStatus\Packages\AutomaticUpdates;
 use OCA\ServerInfo\OsStatus\Packages\IPackageManager;
@@ -22,6 +25,7 @@ use OCA\ServerInfo\OsStatus\Packages\ProbeException;
 use OCA\ServerInfo\OsStatus\Reboot\CoreLibraryProbe;
 use OCA\ServerInfo\OsStatus\Reboot\KernelProbe;
 use OCA\ServerInfo\OsStatus\Reboot\RebootReason;
+use OCA\ServerInfo\OsStatus\Restart\ServiceRestart;
 use OCA\ServerInfo\OsStatus\Support\SubscriptionProbe;
 use OCA\ServerInfo\OsStatus\Support\SupportStatus;
 use OCA\ServerInfo\OsStatus\Support\SupportTable;
@@ -56,6 +60,7 @@ class OsStatusCollector {
 		private SystemdProbe $systemd,
 		private TimeSyncProbe $timeSync,
 		private SecurityProbe $security,
+		private HelperReportReader $helperReader,
 		private OsStatusStore $store,
 		private LoggerInterface $logger,
 	) {
@@ -91,12 +96,15 @@ class OsStatusCollector {
 		$uptime = $this->probe('The boot time', fn (): int => $this->os->getUptime(), -1, $diagnostics);
 		$bootTime = $uptime >= 0 ? $now - $uptime : null;
 
+		$helperPath = $this->appConfig->getAppValueString(ConfigLexicon::OS_HELPER_REPORT_PATH, HelperReportReader::DEFAULT_PATH);
+		[$helperState, $report] = $this->helperReader->read($helperPath, $bootTime, $now);
+
 		$support = $release !== null
 			? $this->probe('The support period', fn (): SupportStatus => $this->supportTable->lookup($release), SupportStatus::unknown(), $diagnostics)
 			: SupportStatus::unknown();
 		if ($support->extended !== null) {
 			$extended = $support->extended;
-			$support = $support->withExtendedActive($this->probe('The extended support subscription', fn (): ?bool => $this->subscriptions->isActive($extended), null, $diagnostics));
+			$support = $support->withExtendedActive($this->probe('The extended support subscription', fn (): ?bool => $this->subscriptions->isActive($extended), null, $diagnostics) ?? $report?->subscriptionActive);
 		}
 
 		$packageManager = null;
@@ -120,26 +128,33 @@ class OsStatusCollector {
 				$diagnostics[] = 'Pending updates could not be determined; see the Nextcloud log.';
 			}
 		}
+		$reportedUpdates = $report?->pendingUpdates;
+		if ($updates === null && $reportedUpdates !== null && $environment->managesPackages()) {
+			$updates = $reportedUpdates;
+			$updatesSource = OsStatus::SOURCE_HELPER;
+		}
 
-		$listsRefreshedAt = $packageManager !== null
-			? $this->probe('The package list age', fn (): ?int => $packageManager->getListsRefreshedAt(), null, $diagnostics)
-			: null;
+		$listsRefreshedAt = $this->latest(
+			$packageManager !== null ? $this->probe('The package list age', fn (): ?int => $packageManager->getListsRefreshedAt(), null, $diagnostics) : null,
+			$report?->listsRefreshedAt,
+		);
 		// Without package lists the package manager knows of no newer versions at all.
-		if ($updates === [] && $listsRefreshedAt === null && in_array($packageManager?->getId(), OsVerdict::LISTS_AGE_MATTERS, true)) {
+		if ($updates === [] && $updatesSource === OsStatus::SOURCE_SYSTEM && $listsRefreshedAt === null && in_array($packageManager?->getId(), OsVerdict::LISTS_AGE_MATTERS, true)) {
 			$updates = null;
 			$updatesSource = null;
 			$diagnostics[] = 'The package lists could not be found, so pending updates are unknown until the lists are refreshed.';
 		}
 
 		$rebootReasons = $environment->managesPackages()
-			? $this->probe('Whether a reboot is needed', fn (): array => $this->rebootReasons($packageManager, $environment, $bootTime), null, $diagnostics)
+			? $this->probe('Whether a reboot is needed', fn (): array => $this->rebootReasons($packageManager, $environment, $bootTime, $report), null, $diagnostics)
 			: null;
+		$restartServices = $environment->managesPackages() ? $report?->restartServices : null;
 
-		$classified = $packageManager?->classifiesSecurity() ?? false;
-		[$updates, $rebootReasons] = $this->probe(
+		$classified = $packageManager?->classifiesSecurity() ?? ($updatesSource === OsStatus::SOURCE_HELPER);
+		[$updates, $rebootReasons, $restartServices] = $this->probe(
 			'How long the findings have been pending',
-			fn (): array => $this->applyFirstSeen($updates, $classified, $rebootReasons, $now),
-			[$updates, $rebootReasons],
+			fn (): array => $this->applyFirstSeen($updates, $classified, $rebootReasons, $restartServices, $now),
+			[$updates, $rebootReasons, $restartServices],
 			$diagnostics,
 		);
 
@@ -172,6 +187,7 @@ class OsStatusCollector {
 				? $this->probe('The automatic updates', fn (): AutomaticUpdates => $packageManager->getAutomaticUpdates(), AutomaticUpdates::unknown(), $diagnostics)
 				: AutomaticUpdates::unknown(),
 			$rebootReasons,
+			$restartServices,
 			$this->probe('The live kernel patches', fn (): ?array => $this->security->getLivePatches(), null, $diagnostics),
 			$this->probe('The failed system services', fn (): ?array => $this->systemd->getFailedUnits(), null, $diagnostics),
 			$timeSync['synchronized'],
@@ -180,6 +196,7 @@ class OsStatusCollector {
 			$this->probe('The AppArmor state', fn (): ?string => $this->security->getApparmor(), null, $diagnostics),
 			$packageManager?->getUpgradeCommands() ?? ['all' => null, 'security' => null],
 			$packageManager?->getPackageDatabasePath(),
+			$helperState,
 			$bootTime,
 			$diagnostics,
 		);
@@ -228,7 +245,7 @@ class OsStatusCollector {
 	/**
 	 * @return list<RebootReason>
 	 */
-	private function rebootReasons(?IPackageManager $packageManager, Environment $environment, ?int $bootTime): array {
+	private function rebootReasons(?IPackageManager $packageManager, Environment $environment, ?int $bootTime, ?HelperReport $report): array {
 		$reasons = [];
 		$add = static function (RebootReason $reason) use (&$reasons, $environment): void {
 			if (!$environment->ownsKernel() && in_array($reason->kind, [RebootReason::KIND_KERNEL, RebootReason::KIND_KERNEL_REMOVED, RebootReason::KIND_MICROCODE], true)) {
@@ -241,6 +258,9 @@ class OsStatusCollector {
 			$add($reason);
 		}
 		foreach ($this->kernelProbe->getRebootReasons($bootTime) as $reason) {
+			$add($reason);
+		}
+		foreach ($report?->rebootReasons ?? [] as $reason) {
 			$add($reason);
 		}
 
@@ -262,9 +282,10 @@ class OsStatusCollector {
 	 *
 	 * @param list<PendingUpdate>|null $updates
 	 * @param list<RebootReason>|null $reasons
-	 * @return array{0: list<PendingUpdate>|null, 1: list<RebootReason>|null}
+	 * @param list<ServiceRestart>|null $services
+	 * @return array{0: list<PendingUpdate>|null, 1: list<RebootReason>|null, 2: list<ServiceRestart>|null}
 	 */
-	private function applyFirstSeen(?array $updates, bool $classified, ?array $reasons, int $now): array {
+	private function applyFirstSeen(?array $updates, bool $classified, ?array $reasons, ?array $services, int $now): array {
 		$current = [];
 		$scope = [];
 
@@ -282,8 +303,15 @@ class OsStatusCollector {
 				$current['reboot:' . $reason->key()] = $reason->since;
 			}
 		}
+		if ($services !== null) {
+			$scope[] = 'restart';
+			foreach ($services as $service) {
+				$current['restart:' . $service->unit] = null;
+			}
+		}
+
 		if ($scope === []) {
-			return [$updates, $reasons];
+			return [$updates, $reasons, $services];
 		}
 
 		$seen = $this->store->firstSeen($current, $now, $scope);
@@ -296,6 +324,10 @@ class OsStatusCollector {
 			$reasons === null ? null : array_map(
 				static fn (RebootReason $r): RebootReason => $r->withSince($seen['reboot:' . $r->key()] ?? $r->since),
 				$reasons,
+			),
+			$services === null ? null : array_map(
+				static fn (ServiceRestart $s): ServiceRestart => $s->withSince($seen['restart:' . $s->unit] ?? null),
+				$services,
 			),
 		];
 	}
@@ -311,5 +343,11 @@ class OsStatusCollector {
 			<=> [!$b->security, !$b->isStack(), $b->name]);
 
 		return $updates;
+	}
+
+	private function latest(?int ...$times): ?int {
+		$times = array_filter($times, 'is_int');
+
+		return $times === [] ? null : max($times);
 	}
 }

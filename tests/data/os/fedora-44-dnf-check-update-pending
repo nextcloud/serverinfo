@@ -1,0 +1,8 @@
+Upgrades
+curl.aarch64                   8.18.0-14.fc44 updates
+glibc.aarch64                  2.43-9.fc44    updates
+glibc-common.aarch64           2.43-9.fc44    updates
+glibc-minimal-langpack.aarch64 2.43-9.fc44    updates
+libcurl.aarch64                8.18.0-14.fc44 updates
+openssl-libs.aarch64           1:3.5.9-1.fc44 updates
+tzdata.noarch                  2026e-1.fc44   updates

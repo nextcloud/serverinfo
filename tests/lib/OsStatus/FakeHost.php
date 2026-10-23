@@ -107,6 +107,11 @@ class FakeHost implements IHost {
 	}
 
 	#[\Override]
+	public function ownership(string $path): ?array {
+		return $this->owners[$path] ?? null;
+	}
+
+	#[\Override]
 	public function readLink(string $path): ?string {
 		return $this->links[$path] ?? null;
 	}
@@ -160,6 +165,11 @@ class FakeHost implements IHost {
 			'm' => $this->machine,
 			default => $this->host,
 		};
+	}
+
+	#[\Override]
+	public function hostname(): string {
+		return $this->host;
 	}
 
 	#[\Override]

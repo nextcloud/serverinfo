@@ -9,10 +9,13 @@ declare(strict_types=1);
 
 namespace OCA\ServerInfo\OsStatus;
 
+use OCA\ServerInfo\OsStatus\Helper\HelperReportReader;
+use OCA\ServerInfo\OsStatus\Helper\HelperState;
 use OCA\ServerInfo\OsStatus\Packages\AutomaticUpdates;
 use OCA\ServerInfo\OsStatus\Packages\HeldPackage;
 use OCA\ServerInfo\OsStatus\Packages\PendingUpdate;
 use OCA\ServerInfo\OsStatus\Reboot\RebootReason;
+use OCA\ServerInfo\OsStatus\Restart\ServiceRestart;
 use OCA\ServerInfo\OsStatus\Support\SupportStatus;
 
 /**
@@ -32,6 +35,7 @@ final class OsStatus {
 
 	/** Source of a finding */
 	public const SOURCE_SYSTEM = 'system';
+	public const SOURCE_HELPER = 'helper';
 
 	/**
 	 * @param self::STATE_* $state
@@ -39,6 +43,7 @@ final class OsStatus {
 	 * @param self::SOURCE_*|null $updatesSource
 	 * @param list<HeldPackage>|null $held
 	 * @param list<RebootReason>|null $rebootReasons
+	 * @param list<ServiceRestart>|null $restartServices
 	 * @param list<string>|null $livePatches
 	 * @param list<string>|null $failedUnits
 	 * @param array{all: ?string, security: ?string} $upgradeCommands
@@ -64,6 +69,7 @@ final class OsStatus {
 		public readonly ?int $lastUpgradeAt = null,
 		public readonly AutomaticUpdates $automaticUpdates = new AutomaticUpdates(AutomaticUpdates::STATE_UNKNOWN),
 		public readonly ?array $rebootReasons = null,
+		public readonly ?array $restartServices = null,
 		public readonly ?array $livePatches = null,
 		public readonly ?array $failedUnits = null,
 		public readonly ?bool $timeSynchronized = null,
@@ -72,6 +78,7 @@ final class OsStatus {
 		public readonly ?string $apparmor = null,
 		public readonly array $upgradeCommands = ['all' => null, 'security' => null],
 		public readonly ?string $packageDatabase = null,
+		public readonly HelperState $helper = new HelperState(HelperState::STATE_ABSENT, HelperReportReader::DEFAULT_PATH),
 		public readonly ?int $bootTime = null,
 		public readonly array $diagnostics = [],
 	) {
@@ -116,6 +123,7 @@ final class OsStatus {
 			'lastUpgradeAt' => $this->lastUpgradeAt,
 			'automaticUpdates' => $this->automaticUpdates->toArray(),
 			'rebootReasons' => $this->rebootReasons === null ? null : array_map(static fn (RebootReason $r): array => $r->toArray(), $this->rebootReasons),
+			'restartServices' => $this->restartServices === null ? null : array_map(static fn (ServiceRestart $s): array => $s->toArray(), $this->restartServices),
 			'livePatches' => $this->livePatches,
 			'failedUnits' => $this->failedUnits,
 			'timeSynchronized' => $this->timeSynchronized,
@@ -124,6 +132,7 @@ final class OsStatus {
 			'apparmor' => $this->apparmor,
 			'upgradeCommands' => $this->upgradeCommands,
 			'packageDatabase' => $this->packageDatabase,
+			'helper' => $this->helper->toArray(),
 			'bootTime' => $this->bootTime,
 			'diagnostics' => $this->diagnostics,
 		];
@@ -140,7 +149,8 @@ final class OsStatus {
 
 		$state = in_array($data['state'] ?? null, [self::STATE_OK, self::STATE_RESTRICTED, self::STATE_UNSUPPORTED], true)
 			? $data['state'] : self::STATE_OK;
-		$source = ($data['updatesSource'] ?? null) === self::SOURCE_SYSTEM ? self::SOURCE_SYSTEM : null;
+		$source = in_array($data['updatesSource'] ?? null, [self::SOURCE_SYSTEM, self::SOURCE_HELPER], true)
+			? $data['updatesSource'] : null;
 		$commands = is_array($data['upgradeCommands'] ?? null) ? $data['upgradeCommands'] : [];
 
 		return new self(
@@ -161,6 +171,7 @@ final class OsStatus {
 			Values::int($data['lastUpgradeAt'] ?? null),
 			AutomaticUpdates::fromArray($data['automaticUpdates'] ?? null),
 			self::listOf($data['rebootReasons'] ?? null, static fn (mixed $item): ?RebootReason => RebootReason::fromArray($item)),
+			self::listOf($data['restartServices'] ?? null, static fn (mixed $item): ?ServiceRestart => ServiceRestart::fromArray($item)),
 			self::stringList($data['livePatches'] ?? null),
 			self::stringList($data['failedUnits'] ?? null),
 			is_bool($data['timeSynchronized'] ?? null) ? $data['timeSynchronized'] : null,
@@ -172,6 +183,7 @@ final class OsStatus {
 				'security' => is_string($commands['security'] ?? null) ? $commands['security'] : null,
 			],
 			Values::string($data['packageDatabase'] ?? null),
+			HelperState::fromArray($data['helper'] ?? null, HelperReportReader::DEFAULT_PATH),
 			Values::int($data['bootTime'] ?? null),
 			self::stringList($data['diagnostics'] ?? null) ?? [],
 		);
