@@ -209,7 +209,7 @@ class OsStatusCollector {
 		foreach ($packageManager?->getRebootReasons() ?? [] as $reason) {
 			$add($reason);
 		}
-		foreach ($this->kernelProbe->getRebootReasons() as $reason) {
+		foreach ($this->kernelProbe->getRebootReasons($bootTime) as $reason) {
 			$add($reason);
 		}
 

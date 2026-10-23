@@ -76,6 +76,32 @@ class ProbesTest extends \Test\TestCase {
 		$this->assertSame('6.11.3-arch1-1', $reasons[0]->detail);
 	}
 
+	public function testAProviderKernelWithoutModulesIsNoReason(): void {
+		$this->host->release = '6.8.9-x86_64-linode164';
+		$this->kernels(['6.1.0-26-amd64' => 100, '6.1.0-25-amd64' => 50]);
+
+		$this->assertSame([], (new KernelProbe($this->host))->getRebootReasons(1000));
+		$this->assertSame([], (new KernelProbe($this->host))->getRebootReasons(), 'Without a boot time nothing says it changed');
+	}
+
+	public function testAKernelOfAnotherBuildInstalledAfterBoot(): void {
+		$this->host->release = '6.8.9-x86_64-linode164';
+		$this->kernels(['6.1.0-26-amd64' => 2000, '6.1.0-25-amd64' => 50]);
+
+		$reasons = (new KernelProbe($this->host))->getRebootReasons(1000);
+
+		$this->assertSame(RebootReason::KIND_KERNEL_REMOVED, $reasons[0]->kind ?? null);
+		$this->assertSame('6.1.0-26-amd64', $reasons[0]->detail);
+		$this->assertSame(2000, $reasons[0]->since);
+	}
+
+	public function testARemovedKernelOfTheSameBuildNeedsNoBootTime(): void {
+		$this->host->release = '6.11.2-arch1-1';
+		$this->kernels(['6.11.3-arch1-1' => 300]);
+
+		$this->assertSame(RebootReason::KIND_KERNEL_REMOVED, (new KernelProbe($this->host))->getRebootReasons(1000)[0]->kind ?? null, 'The same build is installed');
+	}
+
 	public function testNoModulesToCompareWith(): void {
 		$this->assertSame([], (new KernelProbe($this->host))->getRebootReasons());
 	}
