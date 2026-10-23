@@ -13,8 +13,8 @@ export default defineConfig({
 		include: ['src/**/*.spec.ts'],
 		server: {
 			deps: {
-				// Ships ESM with CSS imports, which Node cannot load untransformed.
-				inline: [/@nextcloud\/vue/],
+				// Ship ESM with CSS imports, which Node cannot load untransformed.
+				inline: [/@nextcloud\/vue/, /@nextcloud\/password-confirmation/],
 			},
 		},
 	},

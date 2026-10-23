@@ -4,6 +4,7 @@
  */
 
 import axios from '@nextcloud/axios'
+import { confirmPassword } from '@nextcloud/password-confirmation'
 import { flushPromises, mount } from '@vue/test-utils'
 import { beforeEach, describe, expect, it, vi } from 'vitest'
 import OsSettingsDialog from './OsSettingsDialog.vue'
@@ -12,6 +13,8 @@ import { payload } from '../../testing/osPayload.ts'
 vi.mock('@nextcloud/axios', () => ({
 	default: { put: vi.fn(), isAxiosError: (e: { isAxiosError?: boolean }) => e?.isAxiosError === true },
 }))
+
+vi.mock('@nextcloud/password-confirmation', () => ({ confirmPassword: vi.fn() }))
 
 const DialogStub = { template: '<div><slot /><slot name="actions" /></div>' }
 
@@ -35,6 +38,7 @@ const saveButton = (wrapper: ReturnType<typeof mountDialog>) => wrapper.findAll(
 describe('OsSettingsDialog', () => {
 	beforeEach(() => {
 		vi.mocked(axios.put).mockReset()
+		vi.mocked(confirmPassword).mockReset().mockResolvedValue()
 	})
 
 	it('refuses an error threshold before the warning threshold', async () => {
@@ -104,5 +108,38 @@ describe('OsSettingsDialog', () => {
 
 		expect(wrapper.emitted('close')).toBeUndefined()
 		expect(wrapper.text()).toContain('The error threshold cannot come before the warning threshold.')
+	})
+
+	it('asks for the password before it saves', async () => {
+		vi.mocked(axios.put).mockResolvedValue({ data: payload() })
+		const wrapper = mountDialog()
+		await saveButton(wrapper).trigger('click')
+		await flushPromises()
+
+		expect(confirmPassword).toHaveBeenCalledTimes(1)
+		expect(vi.mocked(confirmPassword).mock.invocationCallOrder[0]).toBeLessThan(vi.mocked(axios.put).mock.invocationCallOrder[0]!)
+		expect(wrapper.emitted('saved')).toHaveLength(1)
+	})
+
+	it('keeps the form open and unsaved when the password prompt is closed', async () => {
+		vi.mocked(confirmPassword).mockRejectedValue(new Error('Dialog closed'))
+		const wrapper = mountDialog()
+		await field(wrapper, 'warning', 'Security updates pending').setValue('1')
+		await saveButton(wrapper).trigger('click')
+		await flushPromises()
+
+		expect(axios.put).not.toHaveBeenCalled()
+		expect(wrapper.emitted('close')).toBeUndefined()
+		expect(wrapper.text()).not.toContain('The settings could not be saved.')
+		expect(saveButton(wrapper).attributes('disabled')).toBeUndefined()
+		expect((field(wrapper, 'warning', 'Security updates pending').element as HTMLInputElement).value).toBe('1')
+	})
+
+	it('does not ask for the password when the form is invalid', async () => {
+		const wrapper = mountDialog()
+		await field(wrapper, 'error', 'Reboot pending').setValue('2')
+		await saveButton(wrapper).trigger('click')
+
+		expect(confirmPassword).not.toHaveBeenCalled()
 	})
 })
