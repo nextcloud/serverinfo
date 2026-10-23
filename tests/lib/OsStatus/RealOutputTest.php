@@ -9,6 +9,7 @@ declare(strict_types=1);
 
 namespace OCA\ServerInfo\Tests\OsStatus;
 
+use OCA\ServerInfo\Config\ConfigLexicon;
 use OCA\ServerInfo\OsStatus\Health\SystemdProbe;
 use OCA\ServerInfo\OsStatus\OsRelease;
 use OCA\ServerInfo\OsStatus\Packages\Apk;
@@ -19,6 +20,7 @@ use OCA\ServerInfo\OsStatus\Packages\Pacman;
 use OCA\ServerInfo\OsStatus\Packages\PendingUpdate;
 use OCA\ServerInfo\OsStatus\Packages\Rpm;
 use OCA\ServerInfo\OsStatus\Packages\Zypper;
+use OCP\AppFramework\Services\IAppConfig;
 use OCP\AppFramework\Utility\ITimeFactory;
 
 /**
@@ -28,11 +30,13 @@ use OCP\AppFramework\Utility\ITimeFactory;
 class RealOutputTest extends \Test\TestCase {
 	private const NOW = 1792411200;
 
-	private function pacman(FakeHost $host): Pacman {
+	private function pacman(FakeHost $host, bool $network = true): Pacman {
 		$time = $this->createMock(ITimeFactory::class);
 		$time->method('getTime')->willReturn(self::NOW);
+		$appConfig = $this->createMock(IAppConfig::class);
+		$appConfig->method('getAppValueBool')->willReturnMap([[ConfigLexicon::OS_ALLOW_NETWORK, true, true, $network]]);
 
-		return new Pacman($host, $time);
+		return new Pacman($host, $time, $appConfig);
 	}
 
 	/**

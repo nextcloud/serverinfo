@@ -9,7 +9,9 @@ declare(strict_types=1);
 
 namespace OCA\ServerInfo\OsStatus\Packages;
 
+use OCA\ServerInfo\Config\ConfigLexicon;
 use OCA\ServerInfo\OsStatus\Host\IHost;
+use OCP\AppFramework\Services\IAppConfig;
 use OCP\AppFramework\Utility\ITimeFactory;
 
 /**
@@ -19,7 +21,9 @@ use OCP\AppFramework\Utility\ITimeFactory;
  * current without root and without the partial-upgrade hazard of
  * `pacman -Sy`. Where it cannot run, `pacman -Qu` answers from the
  * databases root last synced. Security fixes are only known when arch-audit
- * is installed.
+ * is installed. Both use the network, unlike every other query of the
+ * operating system status, so the os_allow_network app config value can
+ * turn them off.
  *
  * @psalm-api
  */
@@ -38,6 +42,7 @@ class Pacman implements IPackageManager, IReportsDiagnostics {
 	public function __construct(
 		private IHost $host,
 		private ITimeFactory $timeFactory,
+		private IAppConfig $appConfig,
 	) {
 	}
 
@@ -53,7 +58,11 @@ class Pacman implements IPackageManager, IReportsDiagnostics {
 
 	#[\Override]
 	public function classifiesSecurity(): bool {
-		return !$this->auditFailed && $this->host->hasBinary('arch-audit');
+		return !$this->auditFailed && $this->networkAllowed() && $this->host->hasBinary('arch-audit');
+	}
+
+	private function networkAllowed(): bool {
+		return $this->appConfig->getAppValueBool(ConfigLexicon::OS_ALLOW_NETWORK, true, true);
 	}
 
 	#[\Override]
@@ -67,7 +76,7 @@ class Pacman implements IPackageManager, IReportsDiagnostics {
 		$this->auditFailed = false;
 		$this->diagnostics = [];
 
-		if ($this->host->hasBinary('checkupdates')) {
+		if ($this->networkAllowed() && $this->host->hasBinary('checkupdates')) {
 			$result = $this->host->run('checkupdates', [], 180);
 			if ($result !== null && !$result->timedOut && !$result->truncated
 				&& ($result->exitCode === 0 || $result->exitCode === self::EXIT_NO_UPDATES)) {

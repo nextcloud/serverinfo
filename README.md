@@ -46,6 +46,15 @@ installed kernel modules. It runs the package manager's query commands (updates
 only in simulation mode), `systemctl`, `timedatectl`, `chronyc` and
 `systemd-detect-virt`. Anything it may not read or run is reported as unknown.
 
+These queries stay offline, with one exception: on Arch, `checkupdates`
+downloads the package databases into a temporary directory of the web server
+user, and `arch-audit` fetches the security advisories from
+security.archlinux.org. To keep Arch offline as well, run
+`occ config:app:set serverinfo os_allow_network --type=boolean --value=false`.
+Pending updates then come from the databases root last synced, the age of
+those databases counts as the package list age, and security fixes are not
+told apart.
+
 The status is collected by a background job once an hour, when background
 jobs run from system cron; under AJAX or webcron the commands would hold a web
 request for minutes. A status older than three job intervals (at least six

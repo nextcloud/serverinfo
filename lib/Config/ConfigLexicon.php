@@ -41,6 +41,7 @@ class ConfigLexicon implements ILexicon {
 	public const OS_EOL_WARNING_DAYS = 'os_eol_warning_days';
 	public const OS_LISTS_WARNING_DAYS = 'os_lists_warning_days';
 	public const OS_LISTS_ERROR_DAYS = 'os_lists_error_days';
+	public const OS_ALLOW_NETWORK = 'os_allow_network';
 
 	#[\Override]
 	public function getStrictness(): Strictness {
@@ -127,6 +128,13 @@ class ConfigLexicon implements ILexicon {
 			new Entry(self::OS_EOL_WARNING_DAYS, ValueType::INT, 90, 'Days before the end of security support that a warning starts', lazy: true),
 			new Entry(self::OS_LISTS_WARNING_DAYS, ValueType::INT, 7, 'Days without a package list refresh before a warning', lazy: true),
 			new Entry(self::OS_LISTS_ERROR_DAYS, ValueType::INT, 30, 'Days without a package list refresh before an error', lazy: true),
+			new Entry(
+				self::OS_ALLOW_NETWORK,
+				ValueType::BOOL,
+				true,
+				'Whether the operating system status may use the network as the web server user: on Arch, checkupdates syncs its own package databases and arch-audit fetches the security advisories',
+				lazy: true,
+			),
 		];
 	}
 

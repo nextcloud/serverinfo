@@ -62,6 +62,7 @@ class OsStatusCollectorTest extends \Test\TestCase {
 	private function collector(int $now = self::NOW): OsStatusCollector {
 		$appConfig = $this->createMock(IAppConfig::class);
 		$appConfig->method('getAppValueString')->willReturnCallback(fn (string $key, string $default = ''): string => (string)($this->config[$key] ?? $default));
+		$appConfig->method('getAppValueBool')->willReturnCallback(fn (string $key, bool $default = false): bool => (bool)($this->config[$key] ?? $default));
 		$appConfig->method('getAppValueArray')->willReturnCallback(fn (string $key): array => $this->config[$key] ?? []);
 		$appConfig->method('setAppValueArray')->willReturnCallback(function (string $key, array $value): bool {
 			$this->config[$key] = $value;
@@ -89,7 +90,7 @@ class OsStatusCollectorTest extends \Test\TestCase {
 			new EnvironmentDetector($host),
 			new SupportTable(),
 			new SubscriptionProbe($host),
-			new PackageManagerFactory(new Apt($host, $systemd), new Dnf($host, $rpm, $systemd), new Zypper($host, $rpm, $systemd), new Pacman($host, $time), new Apk($host)),
+			new PackageManagerFactory(new Apt($host, $systemd), new Dnf($host, $rpm, $systemd), new Zypper($host, $rpm, $systemd), new Pacman($host, $time, $appConfig), new Apk($host)),
 			new KernelProbe($host),
 			new CoreLibraryProbe($host),
 			$systemd,
