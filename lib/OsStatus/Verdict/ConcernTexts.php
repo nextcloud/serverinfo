@@ -199,12 +199,12 @@ class ConcernTexts {
 	}
 
 	/**
-	 * @return list<string>
+	 * @return list<string> the fact's string items; anything else is skipped
 	 */
 	private static function strings(Concern $concern, string $fact): array {
 		$value = $concern->facts[$fact] ?? null;
 
-		return is_array($value) ? $value : [];
+		return is_array($value) ? array_values(array_filter($value, is_string(...))) : [];
 	}
 
 	private function date(?string $date, IL10N $l): string {
