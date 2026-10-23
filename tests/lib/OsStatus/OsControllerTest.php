@@ -78,6 +78,32 @@ class OsControllerTest extends \Test\TestCase {
 		$this->assertSame(['field' => 'rebootWarning'], $response->getData(), 'The first missing field is named');
 	}
 
+	public function testSettingsWithoutNotificationsAreRejected(): void {
+		$this->config->expects($this->never())->method('setAppValueInt');
+		$this->notifications->expects($this->never())->method('sync');
+
+		$response = $this->controller()->updateSettings((new Thresholds())->toArray());
+
+		$this->assertSame(Http::STATUS_BAD_REQUEST, $response->getStatus());
+		$this->assertSame(['field' => 'notifications'], $response->getData());
+	}
+
+	public function testSettingsWithoutThresholdsAreRejected(): void {
+		$response = $this->controller()->updateSettings('3', true);
+
+		$this->assertSame(Http::STATUS_BAD_REQUEST, $response->getStatus());
+		$this->assertSame(['field' => 'securityWarning'], $response->getData());
+	}
+
+	public function testSendsTheDefaultsAndLimitsOfTheSettings(): void {
+		$data = $this->controller()->status()->getData();
+
+		$this->assertSame((new Thresholds())->toArray(), $data['settingsDefaults']['thresholds']);
+		$this->assertTrue($data['settingsDefaults']['notifications']);
+		$this->assertSame(3650, $data['thresholdLimits']['maxDays']);
+		$this->assertContains(['rebootWarning', 'rebootError'], $data['thresholdLimits']['pairs']);
+	}
+
 	public function testValidSettingsAreStoredAndApplied(): void {
 		$this->config->expects($this->exactly(8))->method('setAppValueInt');
 		$this->config->expects($this->once())->method('setAppValueBool')->with('os_notifications', false);

@@ -135,6 +135,8 @@
 			v-if="settingsOpen && data"
 			:thresholds="data.thresholds"
 			:notifications="data.notifications"
+			:defaults="data.settingsDefaults"
+			:limits="data.thresholdLimits"
 			@saved="data = $event"
 			@close="settingsOpen = false" />
 		<OsHelperDialog

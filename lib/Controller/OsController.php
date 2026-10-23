@@ -35,6 +35,8 @@ use OCP\IRequest;
 class OsController extends Controller {
 	/** Where the setup instructions tell admins to install the helper. */
 	public const HELPER_INSTALL_PATH = '/usr/local/sbin/serverinfo-os-report';
+	/** Whether admins are notified when nothing was chosen */
+	private const NOTIFICATIONS_DEFAULT = true;
 
 	public function __construct(
 		string $appName,
@@ -83,13 +85,19 @@ class OsController extends Controller {
 	}
 
 	/**
-	 * @param array<string, mixed> $thresholds days per setting, see Thresholds
+	 * Both values are required; a request without one is rejected with the
+	 * name of the missing field.
+	 *
+	 * @param mixed $thresholds days per setting, see Thresholds
 	 */
-	public function updateSettings(array $thresholds, bool $notifications): JSONResponse {
+	public function updateSettings(mixed $thresholds = null, ?bool $notifications = null): JSONResponse {
 		try {
-			$validated = Thresholds::fromInput($thresholds);
+			$validated = Thresholds::fromInput(is_array($thresholds) ? $thresholds : []);
 		} catch (\InvalidArgumentException $e) {
 			return new JSONResponse(['field' => $e->getMessage()], Http::STATUS_BAD_REQUEST);
+		}
+		if ($notifications === null) {
+			return new JSONResponse(['field' => 'notifications'], Http::STATUS_BAD_REQUEST);
 		}
 
 		$validated->save($this->appConfig);
@@ -121,7 +129,15 @@ class OsController extends Controller {
 				'services' => $services,
 			],
 			'thresholds' => $this->service->getThresholds()->toArray(),
-			'notifications' => $this->appConfig->getAppValueBool(ConfigLexicon::OS_NOTIFICATIONS, true),
+			'notifications' => $this->appConfig->getAppValueBool(ConfigLexicon::OS_NOTIFICATIONS, self::NOTIFICATIONS_DEFAULT),
+			'settingsDefaults' => [
+				'thresholds' => (new Thresholds())->toArray(),
+				'notifications' => self::NOTIFICATIONS_DEFAULT,
+			],
+			'thresholdLimits' => [
+				'maxDays' => Thresholds::MAX_DAYS,
+				'pairs' => Thresholds::PAIRS,
+			],
 			'refresh' => [
 				'systemCron' => $this->hasSystemCron(),
 				'running' => $this->collector->isCollecting() || $this->jobList->has(RefreshOsStatus::class, null),

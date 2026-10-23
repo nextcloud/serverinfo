@@ -114,6 +114,11 @@ export function payload(overrides: Partial<OsPayload> = {}): OsPayload {
 			listsError: 30,
 		},
 		notifications: true,
+		settingsDefaults: {
+			thresholds: { securityWarning: 3, securityError: 14, rebootWarning: 7, rebootError: 30, restartWarning: 3, eolWarning: 90, listsWarning: 7, listsError: 30 },
+			notifications: true,
+		},
+		thresholdLimits: { maxDays: 3650, pairs: [['securityWarning', 'securityError'], ['rebootWarning', 'rebootError'], ['listsWarning', 'listsError']] },
 		refresh: { systemCron: true, running: false },
 		helper: {
 			bundledVersion: '1.0.0',
