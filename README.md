@@ -79,8 +79,14 @@ a root cron job pointing into it would hand the web server root.
 
 ```
 sudo install -o root -g root -m 0755 apps/serverinfo/bin/serverinfo-os-report /usr/local/sbin/
-echo '17 */6 * * * root /usr/local/sbin/serverinfo-os-report --refresh' | sudo tee /etc/cron.d/serverinfo-os-report
+echo '17 */6 * * * root /usr/local/sbin/serverinfo-os-report --refresh --random-delay' | sudo tee /etc/cron.d/serverinfo-os-report
 ```
+
+`--random-delay` waits up to 30 minutes first, so that servers sharing this
+cron line do not all reach the package mirrors at the same minute; leave it
+out when running the helper by hand. Where `flock` is available, a run that
+finds another one still going exits without doing anything. Package manager
+calls are stopped after a time limit where `timeout` is available.
 
 The report is written to `/var/lib/serverinfo/os-report.json`. Use
 `--output` and `occ config:app:set serverinfo os_helper_report_path --value …`
