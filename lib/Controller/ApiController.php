@@ -12,6 +12,7 @@ namespace OCA\ServerInfo\Controller;
 use OCA\ServerInfo\DatabaseStatistics;
 use OCA\ServerInfo\FpmStatistics;
 use OCA\ServerInfo\Os;
+use OCA\ServerInfo\OsStatus\OsStatusService;
 use OCA\ServerInfo\PhpStatistics;
 use OCA\ServerInfo\SessionStatistics;
 use OCA\ServerInfo\ShareStatistics;
@@ -42,6 +43,7 @@ class ApiController extends OCSController {
 		private ShareStatistics $shareStatistics,
 		private SessionStatistics $sessionStatistics,
 		private UptimeFormatter $uptimeFormatter,
+		private OsStatusService $osStatus,
 	) {
 		parent::__construct($appName, $request);
 	}
@@ -79,14 +81,14 @@ class ApiController extends OCSController {
 	 * @PublicPage
 	 * @BruteForceProtection(action=serverinfo)
 	 */
-	public function info(bool $skipApps = true, bool $skipUpdate = true): DataResponse {
+	public function info(bool $skipApps = true, bool $skipUpdate = true, bool $skipOs = true): DataResponse {
 		if (!$this->checkAuthorized()) {
 			$response = new DataResponse(['message' => 'Unauthorized']);
 			$response->throttle();
 			$response->setStatus(Http::STATUS_UNAUTHORIZED);
 			return $response;
 		}
-		return new DataResponse([
+		$data = [
 			'nextcloud' => [
 				'system' => $this->systemStatistics->getSystemStatistics($skipApps, $skipUpdate),
 				'storage' => $this->storageStatistics->getStorageStatistics(),
@@ -99,7 +101,12 @@ class ApiController extends OCSController {
 				'database' => $this->databaseStatistics->getDatabaseStatistics()
 			],
 			'activeUsers' => $this->sessionStatistics->getSessionStatistics()
-		]);
+		];
+		if (!$skipOs) {
+			$data['server']['os'] = $this->osStatus->monitoringSummary();
+		}
+
+		return new DataResponse($data);
 	}
 
 	public function BasicData(): DataResponse {

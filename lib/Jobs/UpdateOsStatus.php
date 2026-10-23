@@ -11,13 +11,14 @@ namespace OCA\ServerInfo\Jobs;
 
 use OCA\ServerInfo\AppInfo\Application;
 use OCA\ServerInfo\Config\ConfigLexicon;
+use OCA\ServerInfo\OsStatus\Notifications\OsNotificationSender;
 use OCA\ServerInfo\OsStatus\OsStatusCollector;
 use OCP\AppFramework\Utility\ITimeFactory;
 use OCP\BackgroundJob\TimedJob;
 use OCP\IAppConfig;
 
 /**
- * Collects the operating system status.
+ * Collects the operating system status and notifies admins of escalations.
  *
  * Time sensitive on purpose: a maintenance window would hold a pending
  * security update back from the admin for most of a day.
@@ -33,6 +34,7 @@ class UpdateOsStatus extends TimedJob {
 	public function __construct(
 		ITimeFactory $time,
 		private OsStatusCollector $collector,
+		private OsNotificationSender $notifications,
 		private IAppConfig $appConfig,
 	) {
 		parent::__construct($time);
@@ -45,7 +47,9 @@ class UpdateOsStatus extends TimedJob {
 			return;
 		}
 
-		$this->collector->collectAndStore();
+		if ($this->collector->collectAndStore() !== null) {
+			$this->notifications->sync();
+		}
 	}
 
 	/**

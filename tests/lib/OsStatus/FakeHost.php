@@ -43,6 +43,8 @@ class FakeHost implements IHost {
 	public array $basedir = [];
 	/** @var list<string> commands that were run, for assertions */
 	public array $ran = [];
+	/** @var list<string> paths that were read, for assertions */
+	public array $read = [];
 	public bool $commandsAllowed = true;
 	public string $release = '6.8.0-45-generic';
 	public string $machine = 'x86_64';
@@ -83,11 +85,13 @@ class FakeHost implements IHost {
 
 	#[\Override]
 	public function readFile(string $path, int $maxBytes = 1048576): ?string {
+		$this->read[] = $path;
 		return isset($this->files[$path]) ? substr($this->files[$path], 0, $maxBytes) : null;
 	}
 
 	#[\Override]
 	public function readFileTail(string $path, int $maxBytes = 262144): ?string {
+		$this->read[] = $path;
 		return isset($this->files[$path]) ? substr($this->files[$path], -$maxBytes) : null;
 	}
 
@@ -113,6 +117,7 @@ class FakeHost implements IHost {
 
 	#[\Override]
 	public function readLink(string $path): ?string {
+		$this->read[] = $path;
 		return $this->links[$path] ?? null;
 	}
 

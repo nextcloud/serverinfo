@@ -56,4 +56,19 @@ final class Verdict {
 
 		return null;
 	}
+
+	/**
+	 * Concerns at or above the given level, most severe first.
+	 *
+	 * @return list<Concern>
+	 */
+	public function atLeast(string $level): array {
+		$matching = array_values(array_filter(
+			$this->concerns,
+			static fn (Concern $concern): bool => Concern::rank($concern->level) >= Concern::rank($level) && $concern->level !== Concern::LEVEL_UNKNOWN,
+		));
+		usort($matching, static fn (Concern $a, Concern $b): int => Concern::rank($b->level) <=> Concern::rank($a->level));
+
+		return $matching;
+	}
 }

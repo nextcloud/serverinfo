@@ -10,6 +10,8 @@ declare(strict_types=1);
 namespace OCA\ServerInfo\Tests\Jobs;
 
 use OCA\ServerInfo\Jobs\UpdateOsStatus;
+use OCA\ServerInfo\OsStatus\Notifications\OsNotificationSender;
+use OCA\ServerInfo\OsStatus\OsStatus;
 use OCA\ServerInfo\OsStatus\OsStatusCollector;
 use OCP\AppFramework\Utility\ITimeFactory;
 use OCP\IAppConfig;
@@ -30,9 +32,11 @@ class UpdateOsStatusTest extends \Test\TestCase {
 		$appConfig->method('getValueInt')->willReturn(3600);
 		$appConfig->method('getValueString')->with('core', 'backgroundjobs_mode', 'ajax')->willReturn($mode);
 		$collector = $this->createMock(OsStatusCollector::class);
-		$collector->expects($this->exactly($runs))->method('collectAndStore');
+		$collector->expects($this->exactly($runs))->method('collectAndStore')->willReturn(OsStatus::restricted(1792411200));
+		$notifications = $this->createMock(OsNotificationSender::class);
+		$notifications->expects($this->exactly($runs))->method('sync');
 
-		$job = new UpdateOsStatus($this->createMock(ITimeFactory::class), $collector, $appConfig);
+		$job = new UpdateOsStatus($this->createMock(ITimeFactory::class), $collector, $notifications, $appConfig);
 		(new \ReflectionMethod($job, 'run'))->invoke($job, null);
 	}
 }

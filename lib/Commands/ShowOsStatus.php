@@ -9,6 +9,7 @@ declare(strict_types=1);
 
 namespace OCA\ServerInfo\Commands;
 
+use OCA\ServerInfo\OsStatus\Notifications\OsNotificationSender;
 use OCA\ServerInfo\OsStatus\OsStatusCollector;
 use OCA\ServerInfo\OsStatus\OsStatusService;
 use OCA\ServerInfo\OsStatus\Verdict\Concern;
@@ -34,6 +35,7 @@ class ShowOsStatus {
 	public function __construct(
 		private OsStatusCollector $collector,
 		private OsStatusService $service,
+		private OsNotificationSender $notifications,
 	) {
 	}
 
@@ -51,6 +53,7 @@ class ShowOsStatus {
 
 				return self::EXIT_UNKNOWN;
 			}
+			$this->notifications->sync();
 		}
 
 		$status = $this->service->getStatus();

@@ -32,6 +32,9 @@ final class Concern {
 	public const FRESHNESS = 'freshness';
 	public const HELPER = 'helper';
 
+	/** Concerns worth a notification when they escalate */
+	public const NOTIFIABLE = [self::UPDATES, self::REBOOT, self::RESTART, self::SUPPORT];
+
 	/**
 	 * @param self::LEVEL_* $level
 	 * @param array<string, scalar|list<string>|null> $facts what the level is based on, for display
@@ -64,5 +67,17 @@ final class Concern {
 			self::LEVEL_WARNING => self::LEVEL_INFO,
 			default => $level,
 		};
+	}
+
+	public function isProblem(): bool {
+		return self::rank($this->level) >= self::rank(self::LEVEL_WARNING);
+	}
+
+	/**
+	 * Known and not a problem. Unknown is never resolved: a probe failing once
+	 * says nothing about whether the problem went away.
+	 */
+	public function isResolved(): bool {
+		return $this->level !== self::LEVEL_UNKNOWN && !$this->isProblem();
 	}
 }
