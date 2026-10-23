@@ -31,6 +31,13 @@ class Apt implements IPackageManager {
 	private const LISTS = '/var/lib/apt/lists';
 	private const UPDATE_SUCCESS_STAMP = '/var/lib/apt/periodic/update-success-stamp';
 
+	/** A Debian package name, with an optional ":arch" qualifier */
+	private const PACKAGE_NAME = '/^[a-z0-9][a-z0-9+.:-]*$/';
+	/** A Debian version: [epoch:]upstream[-revision] */
+	private const VERSION = '/^[A-Za-z0-9][A-Za-z0-9.+~:_-]{0,127}$/';
+	/** An archive as apt describes it, e.g. "Debian-Security:12/stable-security" or "Debian Backports:12/bookworm-backports" */
+	private const ORIGIN = '/^[A-Za-z0-9][A-Za-z0-9 .+~:_\/-]{0,127}$/';
+
 	public function __construct(
 		private IHost $host,
 		private SystemdProbe $systemd,
@@ -68,6 +75,7 @@ class Apt implements IPackageManager {
 	/**
 	 * Parses the "Inst" lines of an `apt-get -s` run, e.g.
 	 * Inst libssl3 [3.0.11-1~deb12u2] (3.0.15-1~deb12u1 Debian:12.8/stable, Debian-Security:12/stable-security [amd64])
+	 * A line whose name, versions or archives do not look like apt's is left out.
 	 *
 	 * @return list<PendingUpdate>
 	 */
@@ -79,6 +87,13 @@ class Apt implements IPackageManager {
 			}
 
 			$origins = array_values(array_filter(array_map('trim', explode(',', $matches[4]))));
+			if (preg_match(self::PACKAGE_NAME, $matches[1]) !== 1
+				|| ($matches[2] !== '' && preg_match(self::VERSION, $matches[2]) !== 1)
+				|| preg_match(self::VERSION, $matches[3]) !== 1
+				|| array_filter($origins, static fn (string $origin): bool => preg_match(self::ORIGIN, $origin) !== 1) !== []) {
+				continue;
+			}
+
 			$security = false;
 			foreach ($origins as $origin) {
 				$slash = strrpos($origin, '/');
@@ -110,7 +125,7 @@ class Apt implements IPackageManager {
 		$held = [];
 		foreach (preg_split('/\R/', trim($result->stdout)) ?: [] as $name) {
 			$name = trim($name);
-			if (preg_match('/^[a-z0-9][a-z0-9+.:-]*$/', $name) === 1) {
+			if (preg_match(self::PACKAGE_NAME, $name) === 1) {
 				$held[] = new HeldPackage($name, 'apt-mark hold');
 			}
 		}
@@ -248,7 +263,7 @@ class Apt implements IPackageManager {
 		$list = $this->host->readFile(self::REBOOT_REQUIRED . '.pkgs', 65536) ?? '';
 		foreach (preg_split('/\R/', $list) ?: [] as $package) {
 			$package = trim($package);
-			if (preg_match('/^[a-z0-9][a-z0-9+.:-]*$/', $package) === 1) {
+			if (preg_match(self::PACKAGE_NAME, $package) === 1) {
 				$packages[$package] = true;
 			}
 		}
