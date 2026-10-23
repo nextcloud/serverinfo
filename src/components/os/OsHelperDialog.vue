@@ -71,7 +71,7 @@ const outputOption = computed(() => (props.helper.reportPath !== DEFAULT_REPORT 
 const installCommand = computed(() => `sudo install -o root -g root -m 0755 bin/serverinfo-os-report ${shellQuote(props.helper.installPath)}`)
 // The install and report paths are restricted to plain characters, so the
 // cron line needs no quoting inside its own single quotes.
-const cronCommand = computed(() => `echo '17 */6 * * * root ${props.helper.installPath} --refresh${outputOption.value}' | sudo tee /etc/cron.d/serverinfo-os-report`)
+const cronCommand = computed(() => `echo '17 */6 * * * root ${props.helper.installPath} --refresh --random-delay${outputOption.value}' | sudo tee /etc/cron.d/serverinfo-os-report`)
 const runCommand = computed(() => `sudo ${shellQuote(props.helper.installPath)} --refresh${outputOption.value}`)
 </script>
 

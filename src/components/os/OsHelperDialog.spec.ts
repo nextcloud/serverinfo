@@ -20,7 +20,7 @@ describe('OsHelperDialog', () => {
 	it('installs the script from an extracted release, not the app directory, and schedules it', () => {
 		expect(commands()).toEqual([
 			'sudo install -o root -g root -m 0755 bin/serverinfo-os-report /usr/local/sbin/serverinfo-os-report',
-			"echo '17 */6 * * * root /usr/local/sbin/serverinfo-os-report --refresh' | sudo tee /etc/cron.d/serverinfo-os-report",
+			"echo '17 */6 * * * root /usr/local/sbin/serverinfo-os-report --refresh --random-delay' | sudo tee /etc/cron.d/serverinfo-os-report",
 			'sudo /usr/local/sbin/serverinfo-os-report --refresh',
 		])
 	})
@@ -30,7 +30,7 @@ describe('OsHelperDialog', () => {
 			...payload().helper,
 			reportPath: '/srv/reports/os.json',
 		})
-		expect(cron).toContain('--refresh --output /srv/reports/os.json\'')
+		expect(cron).toContain('--refresh --random-delay --output /srv/reports/os.json\'')
 		expect(run).toBe('sudo /usr/local/sbin/serverinfo-os-report --refresh --output /srv/reports/os.json')
 	})
 })
