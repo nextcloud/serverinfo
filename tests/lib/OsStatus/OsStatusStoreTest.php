@@ -9,12 +9,13 @@ declare(strict_types=1);
 
 namespace OCA\ServerInfo\Tests\OsStatus;
 
+use OCA\ServerInfo\Config\ConfigLexicon;
 use OCA\ServerInfo\OsStatus\OsStatusStore;
 use OCA\ServerInfo\OsStatus\Restart\PhpProcessSample;
 use OCP\AppFramework\Services\IAppConfig;
 
 class OsStatusStoreTest extends \Test\TestCase {
-	/** @var array<string, array> */
+	/** @var array<string, array|int> */
 	private array $values = [];
 	private int $writes = 0;
 	private OsStatusStore $store;
@@ -22,8 +23,15 @@ class OsStatusStoreTest extends \Test\TestCase {
 	protected function setUp(): void {
 		parent::setUp();
 		$config = $this->createMock(IAppConfig::class);
-		$config->method('getAppValueArray')->willReturnCallback(fn (string $key): array => $this->values[$key] ?? []);
+		$config->method('getAppValueArray')->willReturnCallback(fn (string $key): array => (array)($this->values[$key] ?? []));
 		$config->method('setAppValueArray')->willReturnCallback(function (string $key, array $value): bool {
+			$this->values[$key] = $value;
+			$this->writes++;
+
+			return true;
+		});
+		$config->method('getAppValueInt')->willReturnCallback(fn (string $key): int => $this->values[$key] ?? 0);
+		$config->method('setAppValueInt')->willReturnCallback(function (string $key, int $value): bool {
 			$this->values[$key] = $value;
 			$this->writes++;
 
@@ -68,5 +76,16 @@ class OsStatusStoreTest extends \Test\TestCase {
 
 		$this->store->savePhpSample(new PhpProcessSample(2000, 'fpm-fcgi', [], 'php-fpm', null));
 		$this->assertNull($this->store->phpOutdatedSince());
+	}
+
+	public function testThePhpSampleLeavesTheCollectorsFirstSeenTimesAlone(): void {
+		$this->store->firstSeen(['update:a:1' => null], 100, ['update']);
+		$stored = $this->values[ConfigLexicon::CACHED_OS_FIRST_SEEN];
+
+		$this->store->savePhpSample(new PhpProcessSample(1120, 'fpm-fcgi', ['libssl.so.3'], 'php-fpm', null));
+		$this->store->savePhpSample(new PhpProcessSample(2000, 'fpm-fcgi', ['libssl.so.3'], 'php-fpm', null));
+
+		$this->assertSame($stored, $this->values[ConfigLexicon::CACHED_OS_FIRST_SEEN]);
+		$this->assertSame(1120, $this->store->phpOutdatedSince(), 'Still outdated, so still counting from the first sighting');
 	}
 }
