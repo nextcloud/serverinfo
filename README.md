@@ -103,8 +103,9 @@ calls are stopped after a time limit where `timeout` is available.
 The report is written to `/var/lib/serverinfo/os-report.json`. Use
 `--output` and `occ config:app:set serverinfo os_helper_report_path --value …`
 to put it elsewhere. The app ignores a report that anyone but root could have
-written, one written before the last reboot or on another host, and one older
-than 26 hours.
+written, one written before the last reboot or on another host, one older
+than 26 hours, and one dated more than five minutes in the future (a clock
+problem).
 
 ## API
 

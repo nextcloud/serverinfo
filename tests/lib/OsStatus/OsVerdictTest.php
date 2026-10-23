@@ -193,6 +193,15 @@ class OsVerdictTest extends \Test\TestCase {
 		$this->assertSame(Concern::LEVEL_WARNING, $verdict->level());
 	}
 
+	public function testAHelperReportFromTheFutureIsWorthMentioning(): void {
+		$verdict = $this->evaluate($this->osStatus([
+			'helper' => new HelperState(HelperState::STATE_CLOCK_SKEW, '/var/lib/serverinfo/os-report.json', self::NOW + 3600, '1.0.0'),
+		]));
+
+		$this->assertSame(Concern::LEVEL_INFO, $verdict->get(Concern::HELPER)?->level);
+		$this->assertSame(HelperState::STATE_CLOCK_SKEW, $verdict->get(Concern::HELPER)?->facts['state']);
+	}
+
 	public function testApplicationContainersSkipWhatIsNotTheirs(): void {
 		$verdict = $this->evaluate($this->osStatus([
 			'environment' => new Environment(Environment::KIND_APPLICATION_CONTAINER, 'docker'),

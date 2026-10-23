@@ -26,6 +26,12 @@ final class HelperReport {
 	/** Longest list taken from a report; anything beyond is ignored. */
 	private const MAX_ITEMS = 2000;
 
+	/** Longest string taken for a field of an item; a longer one counts as missing. */
+	private const MAX_STRING = 255;
+
+	/** Most entries taken for a list inside an item, e.g. an update's advisories. */
+	private const MAX_NESTED = 100;
+
 	/**
 	 * @param list<PendingUpdate>|null $pendingUpdates
 	 * @param list<ServiceRestart>|null $restartServices
@@ -54,14 +60,14 @@ final class HelperReport {
 		$generatedAt = $data['generatedAt'] ?? null;
 		$version = $data['helperVersion'] ?? null;
 		$hostname = $data['hostname'] ?? null;
-		if (!is_int($generatedAt) || !is_string($version) || preg_match('/^\d+\.\d+\.\d+$/', $version) !== 1
-			|| !is_string($hostname) || $hostname === '') {
+		if (!is_int($generatedAt) || !is_string($version) || preg_match('/^\d{1,5}\.\d{1,5}\.\d{1,5}$/', $version) !== 1
+			|| !is_string($hostname) || $hostname === '' || strlen($hostname) > 253) {
 			throw new \InvalidArgumentException('Required fields are missing');
 		}
 
 		$pendingUpdates = null;
 		if (is_array($data['pendingUpdates'] ?? null)) {
-			$pendingUpdates = self::mapList($data['pendingUpdates'], static fn (mixed $item): ?PendingUpdate => PendingUpdate::fromArray($item));
+			$pendingUpdates = self::mapList($data['pendingUpdates'], static fn (mixed $item): ?PendingUpdate => PendingUpdate::fromArray(self::capped($item)));
 		}
 
 		$restartServices = null;
@@ -74,7 +80,7 @@ final class HelperReport {
 
 		$rebootReasons = [];
 		if (is_array($data['rebootReasons'] ?? null)) {
-			$rebootReasons = self::mapList($data['rebootReasons'], static fn (mixed $item): ?RebootReason => RebootReason::fromArray($item));
+			$rebootReasons = self::mapList($data['rebootReasons'], static fn (mixed $item): ?RebootReason => RebootReason::fromArray(self::capped($item)));
 		}
 
 		$errors = [];
@@ -100,6 +106,28 @@ final class HelperReport {
 			is_array($subscription) && is_bool($subscription['active'] ?? null) ? $subscription['active'] : null,
 			$errors,
 		);
+	}
+
+	/**
+	 * Drops strings longer than MAX_STRING from an item, also inside its
+	 * lists, which are cut to MAX_NESTED entries. A required field that is
+	 * dropped makes the item invalid.
+	 */
+	private static function capped(mixed $item): mixed {
+		if (!is_array($item)) {
+			return $item;
+		}
+
+		$fits = static fn (mixed $value): bool => !is_string($value) || strlen($value) <= self::MAX_STRING;
+		foreach ($item as $key => $value) {
+			if (!$fits($value)) {
+				unset($item[$key]);
+			} elseif (is_array($value)) {
+				$item[$key] = array_slice(array_values(array_filter($value, $fits)), 0, self::MAX_NESTED);
+			}
+		}
+
+		return $item;
 	}
 
 	/**

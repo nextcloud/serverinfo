@@ -90,6 +90,92 @@ class HelperReportReaderTest extends \Test\TestCase {
 		$this->assertSame(HelperState::STATE_UNREADABLE, $this->reader->read(self::PATH, self::BOOT, self::NOW)[0]->state);
 	}
 
+	public static function dataDirectories(): array {
+		return [
+			'only root may enter' => [0o40700, 0, HelperState::STATE_UNREADABLE],
+			'only root may list' => [0o40711, 0, HelperState::STATE_ABSENT],
+			'the group may enter' => [0o40750, 0, HelperState::STATE_ABSENT],
+			'owned by someone else' => [0o40700, 1000, HelperState::STATE_ABSENT],
+		];
+	}
+
+	/**
+	 * A report that cannot be seen is unreadable rather than absent when the
+	 * web server cannot enter its directory.
+	 */
+	#[DataProvider('dataDirectories')]
+	public function testAReportInADirectoryTheWebServerCannotEnter(int $mode, int $owner, string $expected): void {
+		unset($this->host->owners[self::PATH]);
+		$this->owned('/var/lib/serverinfo', $mode, $owner);
+
+		$this->assertSame($expected, $this->reader->read(self::PATH, self::BOOT, self::NOW)[0]->state);
+	}
+
+	public function testADirectoryThatCannotBeCheckedIsUnreadable(): void {
+		unset($this->host->owners['/var/lib/serverinfo']);
+
+		[$state, $report] = $this->read();
+
+		$this->assertSame(HelperState::STATE_UNREADABLE, $state->state);
+		$this->assertNull($report);
+	}
+
+	public static function dataOpenBasedir(): array {
+		return [
+			'the directory' => [['/var/lib/serverinfo'], HelperState::STATE_ABSENT],
+			'the directory with a slash' => [['/var/lib/serverinfo/'], HelperState::STATE_ABSENT],
+			'the file itself' => [['/var/www', '/var/lib/serverinfo/os-report.json'], HelperState::STATE_ABSENT],
+			'everything' => [['/'], HelperState::STATE_ABSENT],
+			'a directory whose name starts the same' => [['/var/lib/server'], HelperState::STATE_UNREADABLE],
+			'a file whose name starts the same' => [['/var/lib/serverinfo/os-report'], HelperState::STATE_UNREADABLE],
+		];
+	}
+
+	/**
+	 * @param list<string> $basedir
+	 */
+	#[DataProvider('dataOpenBasedir')]
+	public function testOpenBasedirEntries(array $basedir, string $expected): void {
+		$this->host->basedir = $basedir;
+		unset($this->host->owners[self::PATH]);
+
+		$this->assertSame($expected, $this->reader->read(self::PATH, self::BOOT, self::NOW)[0]->state);
+	}
+
+	public function testASlightlyFastClockIsTolerated(): void {
+		$this->assertSame(HelperState::STATE_OK, $this->read($this->report(['generatedAt' => self::NOW + 200]))[0]->state);
+	}
+
+	public function testLongStringsAreNotTaken(): void {
+		$long = str_repeat('a', 256);
+		[$state, $report] = $this->read($this->report([
+			'hostname' => 'cloud.example.org',
+			'pendingUpdates' => [
+				['name' => $long, 'candidate' => '1-1'],
+				['name' => 'openssl', 'candidate' => $long],
+				[
+					'name' => 'glibc', 'candidate' => '2.39-1', 'installed' => $long, 'origin' => $long, 'severity' => $long,
+					'security' => true, 'advisories' => [$long, ...array_map(static fn (int $i): string => 'USN-' . $i, range(1, 150))],
+				],
+			],
+			'rebootReasons' => [['kind' => 'kernel', 'detail' => $long, 'packages' => [$long, 'linux-image']]],
+		]));
+
+		$this->assertSame(HelperState::STATE_OK, $state->state);
+		$this->assertCount(1, $report->pendingUpdates);
+		$update = $report->pendingUpdates[0];
+		$this->assertSame(['glibc', '2.39-1', null, null, null, true], [$update->name, $update->candidateVersion, $update->installedVersion, $update->origin, $update->severity, $update->security]);
+		$this->assertCount(100, $update->advisories);
+		$this->assertSame('USN-1', $update->advisories[0]);
+		$this->assertNull($report->rebootReasons[0]->detail);
+		$this->assertSame(['linux-image'], $report->rebootReasons[0]->packages);
+	}
+
+	public function testOverlongHostnamesOrVersionsAreInvalid(): void {
+		$this->assertSame(HelperState::STATE_INVALID, $this->read($this->report(['hostname' => str_repeat('a', 254)]))[0]->state);
+		$this->assertSame(HelperState::STATE_INVALID, $this->read($this->report(['helperVersion' => '1.0.' . str_repeat('1', 6)]))[0]->state);
+	}
+
 	public static function dataInsecure(): array {
 		return [
 			'owned by the web server' => [self::PATH, 0o100644, 33],
@@ -125,7 +211,7 @@ class HelperReportReaderTest extends \Test\TestCase {
 			'other host' => [json_encode(['hostname' => 'elsewhere'] + $base), HelperState::STATE_OTHER_HOST],
 			'previous boot' => [json_encode(['bootTime' => self::BOOT - 86400] + $base), HelperState::STATE_PREVIOUS_BOOT],
 			'stale' => [json_encode(['generatedAt' => self::NOW - 27 * 3600] + $base), HelperState::STATE_STALE],
-			'from the future' => [json_encode(['generatedAt' => self::NOW + 3600] + $base), HelperState::STATE_STALE],
+			'from the future' => [json_encode(['generatedAt' => self::NOW + 3600] + $base), HelperState::STATE_CLOCK_SKEW],
 			'too large' => [json_encode($base + ['padding' => str_repeat('x', 1024 * 1024)]), HelperState::STATE_INVALID],
 			'too deep' => [str_repeat('[', 40) . str_repeat(']', 40), HelperState::STATE_INVALID],
 		];
