@@ -11,6 +11,7 @@ namespace OCA\ServerInfo\Controller;
 
 use OCA\ServerInfo\AppInfo\Application;
 use OCA\ServerInfo\Config\ConfigLexicon;
+use OCA\ServerInfo\Jobs\RefreshOsStatus;
 use OCA\ServerInfo\OsStatus\Helper\HelperReportReader;
 use OCA\ServerInfo\OsStatus\Notifications\OsNotificationSender;
 use OCA\ServerInfo\OsStatus\OsStatusCollector;
@@ -23,6 +24,8 @@ use OCP\AppFramework\Http\Attribute\UserRateLimit;
 use OCP\AppFramework\Http\JSONResponse;
 use OCP\AppFramework\Services\IAppConfig;
 use OCP\AppFramework\Utility\ITimeFactory;
+use OCP\BackgroundJob\IJobList;
+use OCP\IAppConfig as IServerConfig;
 use OCP\IRequest;
 
 /**
@@ -43,6 +46,8 @@ class OsController extends Controller {
 		private IAppConfig $appConfig,
 		private IAppManager $appManager,
 		private ITimeFactory $timeFactory,
+		private IJobList $jobList,
+		private IServerConfig $serverConfig,
 	) {
 		parent::__construct($appName, $request);
 	}
@@ -58,20 +63,24 @@ class OsController extends Controller {
 	}
 
 	/**
-	 * Collects the status now instead of waiting for the background job.
-	 * This runs the package manager, so it is rate limited.
+	 * Asks for a check now instead of waiting for the next scheduled one.
+	 * The package manager may run for minutes, so the check is queued for
+	 * the next cron run and the page polls the status until it changes.
+	 * Background jobs that run inside web requests (AJAX, webcron) would
+	 * hold a web server worker for that long, so this needs system cron.
 	 */
 	#[UserRateLimit(limit: 6, period: 600)]
 	public function refresh(): JSONResponse {
-		$status = $this->collector->collectAndStore();
-		$this->service->samplePhpProcess();
-		if ($status === null) {
-			return new JSONResponse(['message' => 'The operating system status could not be collected; see the Nextcloud log.'], Http::STATUS_INTERNAL_SERVER_ERROR);
+		if (!$this->hasSystemCron()) {
+			return new JSONResponse(['reason' => 'cron'], Http::STATUS_CONFLICT);
+		}
+		if ($this->collector->isCollecting()) {
+			return new JSONResponse(['reason' => 'running'], Http::STATUS_CONFLICT);
 		}
 
-		$this->notifications->sync();
+		$this->jobList->add(RefreshOsStatus::class);
 
-		return new JSONResponse($this->payload());
+		return new JSONResponse(['reason' => 'queued'], Http::STATUS_ACCEPTED);
 	}
 
 	/**
@@ -103,6 +112,10 @@ class OsController extends Controller {
 			'php' => $php?->toArray(),
 			'thresholds' => $this->service->getThresholds()->toArray(),
 			'notifications' => $this->appConfig->getAppValueBool(ConfigLexicon::OS_NOTIFICATIONS, true),
+			'refresh' => [
+				'systemCron' => $this->hasSystemCron(),
+				'running' => $this->collector->isCollecting() || $this->jobList->has(RefreshOsStatus::class, null),
+			],
 			'helper' => [
 				'bundledVersion' => HelperReportReader::BUNDLED_VERSION,
 				'scriptPath' => $this->appManager->getAppPath(Application::APP_ID) . '/bin/serverinfo-os-report',
@@ -112,5 +125,9 @@ class OsController extends Controller {
 				),
 			],
 		];
+	}
+
+	private function hasSystemCron(): bool {
+		return $this->serverConfig->getValueString('core', 'backgroundjobs_mode', 'ajax') === 'cron';
 	}
 }

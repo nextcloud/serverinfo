@@ -40,6 +40,9 @@ use OCP\Files\SimpleFS\ISimpleFile;
 use OCP\Files\SimpleFS\ISimpleFolder;
 use OCP\ICache;
 use OCP\ICacheFactory;
+use OCP\Lock\ILockingProvider;
+use OCP\Lock\LockedException;
+use PHPUnit\Framework\MockObject\MockObject;
 use Psr\Log\LoggerInterface;
 
 class OsStatusCollectorTest extends \Test\TestCase {
@@ -51,9 +54,11 @@ class OsStatusCollectorTest extends \Test\TestCase {
 	private array $config = [];
 	private ?string $stored = null;
 	private ?TimeSyncProbe $timeSync = null;
+	private ILockingProvider&MockObject $locks;
 
 	protected function setUp(): void {
 		parent::setUp();
+		$this->locks = $this->createMock(ILockingProvider::class);
 		$this->host = new FakeHost();
 		$this->host->host = 'cloud.example.org';
 		$this->host->withFile('/etc/os-release', FakeHost::fixture('ubuntu-24.04-os-release'));
@@ -99,6 +104,7 @@ class OsStatusCollectorTest extends \Test\TestCase {
 			new HelperReportReader($host),
 			new OsStatusStore($appConfig, $this->appData(), $cacheFactory),
 			$this->createMock(LoggerInterface::class),
+			$this->locks,
 		);
 	}
 
@@ -375,5 +381,22 @@ class OsStatusCollectorTest extends \Test\TestCase {
 		$this->collector()->collectAndStore();
 
 		$this->assertSame(1, json_decode((string)$this->stored, true)['schema'] ?? null);
+	}
+
+	public function testCollectAndStoreHoldsTheLock(): void {
+		$this->withPendingUpdates();
+		$this->locks->expects($this->once())->method('acquireLock')->with(OsStatusCollector::LOCK, ILockingProvider::LOCK_EXCLUSIVE);
+		$this->locks->expects($this->once())->method('releaseLock')->with(OsStatusCollector::LOCK, ILockingProvider::LOCK_EXCLUSIVE);
+
+		$this->assertNotNull($this->collector()->collectAndStore());
+	}
+
+	public function testCollectAndStoreSkipsWhileAnotherCollectionRuns(): void {
+		$this->locks->method('acquireLock')->willThrowException(new LockedException(OsStatusCollector::LOCK));
+		$this->locks->expects($this->never())->method('releaseLock');
+
+		$this->assertNull($this->collector()->collectAndStore());
+		$this->assertSame([], $this->host->ran);
+		$this->assertNull($this->stored, 'Nothing was saved');
 	}
 }

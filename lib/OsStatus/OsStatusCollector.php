@@ -34,6 +34,8 @@ use OCA\ServerInfo\OsStatus\Support\SupportTable;
 use OCA\ServerInfo\OsStatus\Verdict\OsVerdict;
 use OCP\AppFramework\Services\IAppConfig;
 use OCP\AppFramework\Utility\ITimeFactory;
+use OCP\Lock\ILockingProvider;
+use OCP\Lock\LockedException;
 use Psr\Log\LoggerInterface;
 
 /**
@@ -47,6 +49,9 @@ use Psr\Log\LoggerInterface;
 class OsStatusCollector {
 	/** More pending updates than this are counted but not listed. */
 	public const MAX_LISTED_UPDATES = 500;
+
+	/** Held while a collection runs, so package managers never run twice at once. */
+	public const LOCK = 'serverinfo/os-status-collection';
 
 	public function __construct(
 		private IHost $host,
@@ -65,6 +70,7 @@ class OsStatusCollector {
 		private HelperReportReader $helperReader,
 		private OsStatusStore $store,
 		private LoggerInterface $logger,
+		private ILockingProvider $locks,
 	) {
 	}
 
@@ -239,9 +245,18 @@ class OsStatusCollector {
 
 	/**
 	 * Collects and stores the result, logging rather than throwing so a
-	 * failure does not take the background job queue down with it.
+	 * failure does not take the background job queue down with it. Returns
+	 * null without collecting while another collection runs.
 	 */
 	public function collectAndStore(): ?OsStatus {
+		try {
+			$this->locks->acquireLock(self::LOCK, ILockingProvider::LOCK_EXCLUSIVE);
+		} catch (LockedException) {
+			$this->logger->info('The operating system status is already being collected');
+
+			return null;
+		}
+
 		try {
 			$status = $this->collect();
 			$this->store->save($status);
@@ -251,7 +266,16 @@ class OsStatusCollector {
 			$this->logger->error('The operating system status could not be collected', ['exception' => $e]);
 
 			return null;
+		} finally {
+			$this->locks->releaseLock(self::LOCK, ILockingProvider::LOCK_EXCLUSIVE);
 		}
+	}
+
+	/**
+	 * Whether a collection is running right now, in any process.
+	 */
+	public function isCollecting(): bool {
+		return $this->locks->isLocked(self::LOCK, ILockingProvider::LOCK_EXCLUSIVE);
 	}
 
 	/**

@@ -232,5 +232,7 @@ export interface OsPayload {
 	php: { sampledAt: number, sapi: string, outdatedLibraries: string[], service: string | null, confinement: string | null } | null
 	thresholds: OsThresholds
 	notifications: boolean
+	/** "Check now" queues a check for system cron; running while one is queued or collecting */
+	refresh: { systemCron: boolean, running: boolean }
 	helper: { bundledVersion: string, scriptPath: string, installPath: string, reportPath: string }
 }

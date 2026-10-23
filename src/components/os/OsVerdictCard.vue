@@ -45,7 +45,7 @@
 		</div>
 
 		<div class="os-verdict__actions">
-			<NcButton :disabled="refreshing" @click="$emit('refresh')">
+			<NcButton :disabled="refreshing || !canRefresh" @click="$emit('refresh')">
 				<template #icon>
 					<NcLoadingIcon v-if="refreshing" :size="20" />
 					<Refresh v-else :size="20" />
@@ -87,6 +87,8 @@ const props = defineProps<{
 	status: OsStatus
 	concerns: OsConcern[]
 	refreshing: boolean
+	/** False when background jobs do not run from system cron, which runs the check */
+	canRefresh: boolean
 }>()
 
 defineEmits<{ refresh: [], settings: [] }>()
