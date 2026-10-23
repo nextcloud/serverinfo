@@ -361,6 +361,66 @@ class HelperScriptTest extends \Test\TestCase {
 		}
 	}
 
+	/**
+	 * Shell code that replaces stat(1) with owner $2 and mode $3 for the
+	 * path $1, and root and 755 for anything else.
+	 */
+	private const FAKE_STAT_ONE = 'stat() { o=0 m=755; if [ "$3" = "$CHECKED" ]; then o=$CO m=$CM; fi; case "$2" in %u) echo "$o" ;; *) echo "$m" ;; esac; }; CHECKED=$1 CO=$2 CM=$3; ';
+
+	public static function dataAncestors(): array {
+		return [
+			'root only' => ['0', '755', ''],
+			'owned by the web server' => ['33', '755', ' must be owned by root'],
+			'group writable' => ['0', '775', ' must not be writable by group or others'],
+			'world writable with the sticky bit, like /tmp' => ['0', '1777', ' must not be writable by group or others'],
+		];
+	}
+
+	/**
+	 * Every directory above the report's is checked, and nothing is created
+	 * below one that fails.
+	 */
+	#[DataProvider('dataAncestors')]
+	public function testEveryDirectoryAboveTheReportIsChecked(string $owner, string $mode, string $error): void {
+		$base = $this->temporaryDirectory();
+		mkdir($base . '/a');
+
+		[$exit, $stdout, $stderr] = $this->functions(
+			self::FAKE_STAT_ONE . 'secure_directory "$4" && echo secured',
+			$base . '/a', $owner, $mode, $base . '/a/b/reports',
+		);
+
+		if ($error === '') {
+			$this->assertSame([0, "secured\n"], [$exit, $stdout], $stderr);
+			$this->assertDirectoryExists($base . '/a/b/reports');
+		} else {
+			$this->assertSame(1, $exit);
+			$this->assertStringContainsString($base . '/a' . $error, $stderr);
+			$this->assertDirectoryDoesNotExist($base . '/a/b');
+		}
+	}
+
+	public function testTheWalkReachesTheRootDirectory(): void {
+		$directory = $this->temporaryDirectory();
+
+		[$exit, , $stderr] = $this->functions(self::FAKE_STAT_ONE . 'secure_directory "$4"', '/', '0', '775', $directory);
+
+		$this->assertSame(1, $exit);
+		$this->assertStringContainsString('/ must not be writable by group or others', $stderr);
+	}
+
+	public function testASymlinkedAncestorIsRefused(): void {
+		$base = $this->temporaryDirectory();
+		mkdir($base . '/real');
+		symlink($base . '/real', $base . '/link');
+
+		[$exit, , $stderr] = $this->functions(self::FAKE_STAT_ONE . 'secure_directory "$4"', '', '0', '755', $base . '/link/sub/reports');
+
+		$this->assertSame(1, $exit);
+		$this->assertStringContainsString($base . '/link is a symbolic link', $stderr);
+		$this->assertSame(['.', '..'], scandir($base . '/real'));
+	}
+
 	public function testASymlinkedReportDirectoryIsRefused(): void {
 		$base = $this->temporaryDirectory();
 		mkdir($base . '/elsewhere');

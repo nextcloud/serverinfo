@@ -108,10 +108,13 @@ calls are stopped after a time limit where `timeout` is available.
 
 The report is written to `/var/lib/serverinfo/os-report.json`. Use
 `--output` and `occ config:app:set serverinfo os_helper_report_path --value …`
-to put it elsewhere. The app ignores a report that anyone but root could have
-written, one written before the last reboot or on another host, one older
-than 26 hours, and one dated more than five minutes in the future (a clock
-problem).
+to put it elsewhere. Every directory on the way to the report must be owned
+by root, writable by no one else and no symbolic link; the helper refuses to
+write anywhere else, such as below /tmp or the Nextcloud directory. The app
+ignores a report that anyone but root could have written, on the same rules
+as far as open_basedir lets it check, one written before the last reboot or
+on another host, one older than 26 hours, and one dated more than five
+minutes in the future (a clock problem).
 
 ## API
 

@@ -216,10 +216,19 @@ class OsStatusCollectorTest extends \Test\TestCase {
 		$this->assertNotContains('apt-get -s -o Debug::NoLocking=1 dist-upgrade', $this->host->ran);
 	}
 
+	/**
+	 * The helper's report and every directory above it are root's alone.
+	 */
+	private function withRootsHelperReportPath(): void {
+		$this->host->owners[HelperReportReader::DEFAULT_PATH] = ['owner' => 0, 'mode' => 0o100644];
+		foreach (['/var/lib/serverinfo', '/var/lib', '/var', '/'] as $directory) {
+			$this->host->owners[$directory] = ['owner' => 0, 'mode' => 0o40755];
+		}
+	}
+
 	public function testHelperFillsWhatTheWebServerCannotSee(): void {
 		$this->withPendingUpdates();
-		$this->host->owners[HelperReportReader::DEFAULT_PATH] = ['owner' => 0, 'mode' => 0o100644];
-		$this->host->owners['/var/lib/serverinfo'] = ['owner' => 0, 'mode' => 0o40755];
+		$this->withRootsHelperReportPath();
 		$this->host->withFile(HelperReportReader::DEFAULT_PATH, (string)json_encode([
 			'schema' => 1, 'helperVersion' => '1.0.0', 'generatedAt' => self::NOW - 600, 'hostname' => 'cloud.example.org',
 			'bootTime' => self::BOOT, 'listsRefreshedAt' => self::NOW - 600,
@@ -237,8 +246,7 @@ class OsStatusCollectorTest extends \Test\TestCase {
 	}
 
 	public function testUpdatesFromTheHelperWhenTheWebServerCannotAsk(): void {
-		$this->host->owners[HelperReportReader::DEFAULT_PATH] = ['owner' => 0, 'mode' => 0o100644];
-		$this->host->owners['/var/lib/serverinfo'] = ['owner' => 0, 'mode' => 0o40755];
+		$this->withRootsHelperReportPath();
 		$this->host->withFile(HelperReportReader::DEFAULT_PATH, (string)json_encode([
 			'schema' => 1, 'helperVersion' => '1.0.0', 'generatedAt' => self::NOW - 600, 'hostname' => 'cloud.example.org',
 			'bootTime' => self::BOOT,
