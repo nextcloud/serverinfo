@@ -24,6 +24,13 @@ class Rpm {
 		'/var/lib/rpm/Packages',
 	];
 
+	/**
+	 * An architecture: x86_64, x86_64_v2, aarch64, ppc64, s390, noarch, src …
+	 * Any token works, as long as it starts with a letter, so that a version
+	 * such as the "22" of "go1.22" is not taken for one.
+	 */
+	public const ARCH = '[a-z][a-z0-9_]*';
+
 	public const QUERY_FORMAT = '%{NAME} %{EPOCHNUM}:%{VERSION}-%{RELEASE} %{INSTALLTIME}\n';
 
 	/** @var array<string, string>|null */
@@ -89,10 +96,12 @@ class Rpm {
 	/**
 	 * Splits "name-[epoch:]version-release.arch" into name and version.
 	 *
+	 * @param bool $withArch whether the string ends in an architecture; a
+	 *                       release such as "1.el9" ends like one
 	 * @return array{0: string, 1: string}|null
 	 */
-	public static function splitNevra(string $nevra): ?array {
-		$withoutArch = preg_replace('/\.(x86_64|aarch64|i[3-6]86|noarch|ppc64le|s390x|armv7hl|riscv64|src)$/', '', $nevra) ?? $nevra;
+	public static function splitNevra(string $nevra, bool $withArch = true): ?array {
+		$withoutArch = $withArch ? (preg_replace('/\.' . self::ARCH . '$/', '', $nevra) ?? $nevra) : $nevra;
 		if (preg_match('/^(.+)-([^-]+-[^-]+)$/', $withoutArch, $matches) !== 1) {
 			return null;
 		}

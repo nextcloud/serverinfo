@@ -43,6 +43,17 @@ class DnfTest extends \Test\TestCase {
 		], $updates);
 	}
 
+	public function testAcceptsEveryArchitecture(): void {
+		$updates = Dnf::parseCheckUpdate(implode("\n", [
+			'openssl-libs.x86_64_v2           1:3.2.2-6.el10_0.1         baseos',
+			'glibc.ppc64                      2.39-37.el10               baseos',
+			'zlib-ng.s390                     2.2.3-1.el10               baseos',
+			'python3.12-pip.noarch            23.2.1-4.el10              appstream',
+		]));
+
+		$this->assertSame(['openssl-libs', 'glibc', 'zlib-ng', 'python3.12-pip'], array_keys($updates));
+	}
+
 	public function testParsesDnf4Advisories(): void {
 		$advisories = Dnf::parseAdvisories(implode("\n", [
 			'RHSA-2026:1234 Important/Sec.  openssl-libs-1:3.2.2-6.el9_5.1.x86_64',
@@ -103,7 +114,7 @@ class DnfTest extends \Test\TestCase {
 	public function testVersionlock(): void {
 		$dnf4 = Dnf::parseVersionlock("Last metadata expiration check: 0:10:00 ago.\nmariadb-server-3:10.11.10-1.el9.*\n");
 		$this->assertSame('mariadb-server', $dnf4[0]->name);
-		$this->assertSame('3:10.11.10-1.el9', $dnf4[0]->constraint);
+		$this->assertSame('3:10.11.10-1.el9', $dnf4[0]->constraint, 'The release is not taken for an architecture');
 
 		$dnf5 = Dnf::parseVersionlock("# Added by 'versionlock add' command on 2026-10-01 10:00:00\nPackage name: nginx\nevr = 1.26.2-1.fc43\n");
 		$this->assertSame('nginx', $dnf5[0]->name);
@@ -191,6 +202,9 @@ class DnfTest extends \Test\TestCase {
 	public function testSplitNevra(): void {
 		$this->assertSame(['openssl-libs', '1:3.2.2-6.el9_5.1'], Rpm::splitNevra('openssl-libs-1:3.2.2-6.el9_5.1.x86_64'));
 		$this->assertSame(['python3-dnf-plugin-versionlock', '4.3.0-16.el9'], Rpm::splitNevra('python3-dnf-plugin-versionlock-4.3.0-16.el9.noarch'));
+		$this->assertSame(['openssl-libs', '1:3.2.2-6.el10_0.1'], Rpm::splitNevra('openssl-libs-1:3.2.2-6.el10_0.1.x86_64_v2'));
+		$this->assertSame(['glibc', '2.39-37.el10'], Rpm::splitNevra('glibc-2.39-37.el10.s390'));
+		$this->assertSame(['sudo', '0:1.9.17p2-3.el9_8.1'], Rpm::splitNevra('sudo-0:1.9.17p2-3.el9_8.1', false));
 		$this->assertNull(Rpm::splitNevra('nonsense'));
 	}
 }
