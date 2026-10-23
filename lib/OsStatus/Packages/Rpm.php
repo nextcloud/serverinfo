@@ -24,8 +24,11 @@ class Rpm {
 		'/var/lib/rpm/Packages',
 	];
 
+	public const QUERY_FORMAT = '%{NAME} %{EPOCHNUM}:%{VERSION}-%{RELEASE} %{INSTALLTIME}\n';
+
 	/** @var array<string, string>|null */
 	private ?array $installed = null;
+	private ?int $lastInstallTime = null;
 
 	public function __construct(
 		private IHost $host,
@@ -48,35 +51,39 @@ class Rpm {
 	 * @return array<string, string>
 	 */
 	public function getInstalledVersions(): array {
-		if ($this->installed !== null) {
-			return $this->installed;
-		}
+		$this->query();
 
-		$this->installed = [];
-		$result = $this->host->run('rpm', ['-qa', '--qf', '%{NAME} %{EPOCHNUM}:%{VERSION}-%{RELEASE}\n'], 60);
-		if ($result === null || !$result->succeeded()) {
-			return $this->installed;
-		}
-
-		foreach (preg_split('/\R/', $result->stdout) ?: [] as $line) {
-			if (preg_match('/^(\S+) (\d+):(\S+)$/', trim($line), $matches) === 1) {
-				// Several versions of a name (kernels) keep the last listed.
-				$this->installed[$matches[1]] = $matches[2] === '0' ? $matches[3] : $matches[2] . ':' . $matches[3];
-			}
-		}
-
-		return $this->installed;
+		return $this->installed ?? [];
 	}
 
 	public function getLastInstallTime(): ?int {
-		$result = $this->host->run('rpm', ['-qa', '--qf', '%{INSTALLTIME}\n'], 60);
-		if ($result === null || !$result->succeeded()) {
-			return null;
+		$this->query();
+
+		return $this->lastInstallTime;
+	}
+
+	/**
+	 * Reads every installed package with its install time in one rpm run.
+	 */
+	private function query(): void {
+		if ($this->installed !== null) {
+			return;
 		}
 
-		$times = array_map('intval', array_filter(preg_split('/\R/', $result->stdout) ?: [], 'ctype_digit'));
+		$this->installed = [];
+		$result = $this->host->run('rpm', ['-qa', '--qf', self::QUERY_FORMAT], 60);
+		if ($result === null || !$result->succeeded()) {
+			return;
+		}
 
-		return $times === [] ? null : max($times);
+		foreach (preg_split('/\R/', $result->stdout) ?: [] as $line) {
+			if (preg_match('/^(\S+) (\d+):(\S+) (\d+)$/', trim($line), $matches) !== 1) {
+				continue;
+			}
+			// Several versions of a name (kernels) keep the last listed.
+			$this->installed[$matches[1]] = $matches[2] === '0' ? $matches[3] : $matches[2] . ':' . $matches[3];
+			$this->lastInstallTime = max($this->lastInstallTime ?? 0, (int)$matches[4]);
+		}
 	}
 
 	/**

@@ -71,7 +71,7 @@ class DnfTest extends \Test\TestCase {
 	public function testPendingUpdatesAreMatchedWithAdvisories(): void {
 		$this->host->withCommand('dnf', ['-q', '--cacheonly', 'check-update'], "openssl-libs.x86_64  1:3.2.2-6.el9_5.1  baseos\ntzdata.noarch  2025a-1.el9  appstream\n", 100)
 			->withCommand('dnf', ['-q', '--cacheonly', 'updateinfo', 'list', '--security', '--available'], "RHSA-2026:1234 Important/Sec. openssl-libs-1:3.2.2-6.el9_5.1.x86_64\n")
-			->withCommand('rpm', ['-qa', '--qf', '%{NAME} %{EPOCHNUM}:%{VERSION}-%{RELEASE}\n'], "openssl-libs 1:3.2.2-6.el9_5\ntzdata 0:2024b-2.el9\n");
+			->withCommand('rpm', ['-qa', '--qf', Rpm::QUERY_FORMAT], "openssl-libs 1:3.2.2-6.el9_5 1792000000\ntzdata 0:2024b-2.el9 1792100000\n");
 
 		$updates = $this->dnf->getPendingUpdates();
 
@@ -81,6 +81,8 @@ class DnfTest extends \Test\TestCase {
 		$this->assertSame('1:3.2.2-6.el9_5', $updates[0]->installedVersion);
 		$this->assertFalse($updates[1]->security);
 		$this->assertSame('2024b-2.el9', $updates[1]->installedVersion);
+		$this->assertSame(1792100000, $this->dnf->getLastUpgradeAt());
+		$this->assertCount(1, array_filter($this->host->ran, static fn (string $command): bool => str_starts_with($command, 'rpm ')), 'rpm -qa runs once');
 	}
 
 	public function testNoUpdatesSkipsTheAdvisories(): void {
@@ -168,6 +170,14 @@ class DnfTest extends \Test\TestCase {
 		$this->host->modified['/etc/dnf'] = 1;
 
 		$this->assertSame([], $this->dnf->getHeldPackages());
+	}
+
+	public function testListsRefreshTimeIncludesSingleFiles(): void {
+		$this->host->globs['/var/cache/dnf/*/metalink.xml'] = ['/var/cache/dnf/baseos-1/metalink.xml'];
+		$this->host->modified['/var/cache/dnf/baseos-1/metalink.xml'] = 1792438330;
+		$this->host->modified['/var/cache/dnf/last_makecache'] = 1792438500;
+
+		$this->assertSame(1792438500, $this->dnf->getListsRefreshedAt());
 	}
 
 	public function testListsRefreshTimeFromMetalinks(): void {

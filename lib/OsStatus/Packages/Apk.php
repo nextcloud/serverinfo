@@ -45,7 +45,7 @@ class Apk implements IPackageManager {
 			throw new ProbeException('apk could not be run.');
 		}
 		if (!$result->succeeded()) {
-			throw new ProbeException('apk list --upgradable failed: ' . mb_substr(trim($result->stderr), 0, 200));
+			throw new ProbeException('apk list --upgradable failed: ' . ProbeHelper::firstLine($result->stderr ?: $result->stdout));
 		}
 
 		// apk lists packages pinned to an exact version too, though it never
@@ -106,15 +106,7 @@ class Apk implements IPackageManager {
 
 	#[\Override]
 	public function getListsRefreshedAt(): ?int {
-		$times = [];
-		foreach ($this->host->glob('/var/cache/apk/APKINDEX.*.tar.gz') as $index) {
-			$time = $this->host->modifiedAt($index);
-			if ($time !== null) {
-				$times[] = $time;
-			}
-		}
-
-		return $times === [] ? null : max($times);
+		return ProbeHelper::newestModified($this->host, ['/var/cache/apk/APKINDEX.*.tar.gz']);
 	}
 
 	#[\Override]

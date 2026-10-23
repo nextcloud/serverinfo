@@ -62,7 +62,7 @@ class Pacman implements IPackageManager {
 		}
 		// pacman -Qu exits 1 when nothing is upgradable.
 		if (!$result->succeeded() && trim($result->stdout) !== '') {
-			throw new ProbeException('pacman -Qu failed: ' . mb_substr(trim($result->stderr), 0, 200));
+			throw new ProbeException('pacman -Qu failed: ' . ProbeHelper::firstLine($result->stderr));
 		}
 
 		return $this->withSecurity(self::parseUpdates($result->stdout));
