@@ -57,7 +57,7 @@ class OsNotifier implements INotifier {
 
 		$status = $this->service->getStatus();
 		$concern = $status !== null ? $this->service->evaluate($status)?->get($notification->getObjectId()) : null;
-		if ($status === null || $concern === null || !$concern->isProblem()) {
+		if ($concern !== null && $concern->isResolved()) {
 			throw new AlreadyProcessedException();
 		}
 
@@ -65,13 +65,19 @@ class OsNotifier implements INotifier {
 		$link = $this->urlGenerator->linkToRouteAbsolute('settings.AdminSettings.index', ['section' => Application::APP_ID]) . '#os';
 
 		$notification
-			->setParsedSubject($this->texts->title($concern, $status, $l))
 			->setLink($link)
 			->setIcon($this->urlGenerator->getAbsoluteURL($this->urlGenerator->imagePath(Application::APP_ID, 'app-dark.svg')));
 
-		$detail = $this->texts->detail($concern, $l);
-		if ($detail !== '') {
-			$notification->setParsedMessage($detail);
+		// Without a judgeable concern the notification stays: deleting it here
+		// would lose it for good while the concern may still be live.
+		if ($status === null || $concern === null || !$concern->isProblem()) {
+			$notification->setParsedSubject($l->t('The operating system needs attention'));
+		} else {
+			$notification->setParsedSubject($this->texts->title($concern, $status, $l));
+			$detail = $this->texts->detail($concern, $l);
+			if ($detail !== '') {
+				$notification->setParsedMessage($detail);
+			}
 		}
 
 		$action = $notification->createAction();

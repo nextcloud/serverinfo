@@ -25,8 +25,10 @@ use OCP\IUser;
 use OCP\IUserSession;
 use OCP\L10N\IFactory;
 use OCP\Notification\AlreadyProcessedException;
+use OCP\Notification\IAction;
 use OCP\Notification\INotification;
 use OCP\Notification\UnknownNotificationException;
+use PHPUnit\Framework\Attributes\DataProvider;
 use PHPUnit\Framework\MockObject\MockObject;
 
 class EntryPointsTest extends \Test\TestCase {
@@ -74,6 +76,72 @@ class EntryPointsTest extends \Test\TestCase {
 		$sender->method('isCurrent')->willReturn(true);
 		$this->service->method('getStatus')->willReturn(new OsStatus(OsStatus::STATE_OK, 1));
 		$this->service->method('evaluate')->willReturn(new Verdict([new Concern(Concern::UPDATES, Concern::LEVEL_OK)]));
+
+		$this->expectException(AlreadyProcessedException::class);
+		$this->notifier($sender)->prepare($this->notification('serverinfo', 'os', 'updates'), 'en');
+	}
+
+	/**
+	 * A notification of a live concern that remembers its parsed subject.
+	 */
+	private function liveNotification(string $objectId, ?string &$subject): INotification&MockObject {
+		$notification = $this->notification('serverinfo', 'os', $objectId);
+		foreach (['setLink', 'setIcon', 'setParsedMessage', 'addParsedAction'] as $setter) {
+			$notification->method($setter)->willReturnSelf();
+		}
+		$notification->method('setParsedSubject')->willReturnCallback(function (string $text) use (&$subject, $notification): INotification {
+			$subject = $text;
+
+			return $notification;
+		});
+		$action = $this->createMock(IAction::class);
+		foreach (['setParsedLabel', 'setLink', 'setPrimary'] as $setter) {
+			$action->method($setter)->willReturnSelf();
+		}
+		$notification->method('createAction')->willReturn($action);
+
+		return $notification;
+	}
+
+	private function currentSender(): OsNotificationSender&MockObject {
+		$sender = $this->createMock(OsNotificationSender::class);
+		$sender->method('isCurrent')->willReturn(true);
+
+		return $sender;
+	}
+
+	public function testNotifierRendersALiveConcern(): void {
+		$this->service->method('getStatus')->willReturn(new OsStatus(OsStatus::STATE_OK, 1));
+		$this->service->method('evaluate')->willReturn(new Verdict([
+			new Concern(Concern::UPDATES, Concern::LEVEL_WARNING, ['classified' => true, 'security' => 4, 'other' => 0]),
+		]));
+
+		$this->notifier($this->currentSender())->prepare($this->liveNotification('updates', $subject), 'en');
+
+		$this->assertSame('4 security updates pending', $subject);
+	}
+
+	public static function dataNotJudgeable(): array {
+		return [
+			'unknown' => [new OsStatus(OsStatus::STATE_OK, 1), [new Concern(Concern::UPDATES, Concern::LEVEL_UNKNOWN)]],
+			'missing from the verdict' => [new OsStatus(OsStatus::STATE_OK, 1), []],
+			'no readable status' => [null, []],
+		];
+	}
+
+	#[DataProvider('dataNotJudgeable')]
+	public function testNotifierKeepsConcernsItCannotJudge(?OsStatus $status, array $concerns): void {
+		$this->service->method('getStatus')->willReturn($status);
+		$this->service->method('evaluate')->willReturn($status === null ? null : new Verdict($concerns));
+
+		$this->notifier($this->currentSender())->prepare($this->liveNotification('updates', $subject), 'en');
+
+		$this->assertSame('The operating system needs attention', $subject);
+	}
+
+	public function testNotifierDropsNotificationsTheSenderWithdrew(): void {
+		$sender = $this->createMock(OsNotificationSender::class);
+		$sender->method('isCurrent')->willReturn(false);
 
 		$this->expectException(AlreadyProcessedException::class);
 		$this->notifier($sender)->prepare($this->notification('serverinfo', 'os', 'updates'), 'en');

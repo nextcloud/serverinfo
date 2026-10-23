@@ -72,4 +72,12 @@ final class Concern {
 	public function isProblem(): bool {
 		return self::rank($this->level) >= self::rank(self::LEVEL_WARNING);
 	}
+
+	/**
+	 * Known and not a problem. Unknown is never resolved: a probe failing once
+	 * says nothing about whether the problem went away.
+	 */
+	public function isResolved(): bool {
+		return $this->level !== self::LEVEL_UNKNOWN && !$this->isProblem();
+	}
 }
