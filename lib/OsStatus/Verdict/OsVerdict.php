@@ -27,7 +27,7 @@ use OCA\ServerInfo\OsStatus\Support\SupportStatus;
  */
 class OsVerdict {
 	/** Package managers whose metadata is refreshed in place and can go stale */
-	public const LISTS_AGE_MATTERS = ['apt', 'dnf', 'zypper', 'apk'];
+	public const LISTS_AGE_MATTERS = ['apt', 'dnf', 'zypper', 'apk', 'pacman'];
 
 	/** A status older than this many collection intervals is stale, */
 	public const STALE_AFTER_INTERVALS = 3;

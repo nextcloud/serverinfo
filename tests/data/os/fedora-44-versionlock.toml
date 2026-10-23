@@ -1,0 +1,19 @@
+version = "1.0"
+
+[[packages]]
+name = "sudo"
+comment = "Added by 'versionlock add' command on 2026-10-19 19:33:30"
+
+[[packages.conditions]]
+key = "evr"
+comparator = "="
+value = "1.9.17-10.p2.fc44"
+
+[[packages]]
+name = "curl"
+comment = "Added by 'versionlock add' command on 2026-10-19 19:33:30"
+
+[[packages.conditions]]
+key = "evr"
+comparator = "="
+value = "8.18.0-14.fc44"

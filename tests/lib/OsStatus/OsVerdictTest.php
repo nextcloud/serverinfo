@@ -104,10 +104,12 @@ class OsVerdictTest extends \Test\TestCase {
 		$fresh = $this->evaluate($this->osStatus(['listsRefreshedAt' => self::NOW - 6 * self::DAY]));
 		$stale = $this->evaluate($this->osStatus(['listsRefreshedAt' => self::NOW - 7 * self::DAY]));
 		$pacman = $this->evaluate($this->osStatus(['packageManager' => 'pacman', 'listsRefreshedAt' => self::NOW - 90 * self::DAY]));
+		$pacmanSynced = $this->evaluate($this->osStatus(['packageManager' => 'pacman', 'listsRefreshedAt' => self::NOW]));
 
 		$this->assertFalse($fresh->get(Concern::UPDATES)?->facts['listsStale']);
 		$this->assertTrue($stale->get(Concern::UPDATES)?->facts['listsStale']);
-		$this->assertFalse($pacman->get(Concern::UPDATES)?->facts['listsStale']);
+		$this->assertTrue($pacman->get(Concern::UPDATES)?->facts['listsStale'], 'pacman -Qu answers from root\'s databases');
+		$this->assertFalse($pacmanSynced->get(Concern::UPDATES)?->facts['listsStale']);
 	}
 
 	public function testUnknownUpdatesLeaveNoAllClear(): void {
@@ -174,7 +176,8 @@ class OsVerdictTest extends \Test\TestCase {
 		$this->assertSame(Concern::LEVEL_OK, $this->evaluate($this->osStatus(['listsRefreshedAt' => self::NOW - 6 * self::DAY]))->get(Concern::PACKAGE_LISTS)?->level);
 		$this->assertSame(Concern::LEVEL_WARNING, $this->evaluate($this->osStatus(['listsRefreshedAt' => self::NOW - 7 * self::DAY]))->get(Concern::PACKAGE_LISTS)?->level);
 		$this->assertSame(Concern::LEVEL_ERROR, $this->evaluate($this->osStatus(['listsRefreshedAt' => self::NOW - 31 * self::DAY]))->get(Concern::PACKAGE_LISTS)?->level);
-		$this->assertSame(Concern::LEVEL_OK, $this->evaluate($this->osStatus(['packageManager' => 'pacman', 'listsRefreshedAt' => null]))->get(Concern::PACKAGE_LISTS)?->level);
+		$this->assertSame(Concern::LEVEL_UNKNOWN, $this->evaluate($this->osStatus(['packageManager' => 'pacman', 'listsRefreshedAt' => null]))->get(Concern::PACKAGE_LISTS)?->level);
+		$this->assertSame(Concern::LEVEL_ERROR, $this->evaluate($this->osStatus(['packageManager' => 'pacman', 'listsRefreshedAt' => self::NOW - 31 * self::DAY]))->get(Concern::PACKAGE_LISTS)?->level);
 	}
 
 	public function testHealth(): void {

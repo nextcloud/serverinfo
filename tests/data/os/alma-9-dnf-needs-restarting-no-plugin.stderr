@@ -1,0 +1,2 @@
+No such command: needs-restarting. Please use /usr/bin/dnf --help
+It could be a DNF plugin command, try: "dnf install 'dnf-command(needs-restarting)'"

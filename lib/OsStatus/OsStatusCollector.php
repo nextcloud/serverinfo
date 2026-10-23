@@ -19,6 +19,8 @@ use OCA\ServerInfo\OsStatus\Helper\HelperReportReader;
 use OCA\ServerInfo\OsStatus\Host\IHost;
 use OCA\ServerInfo\OsStatus\Packages\AutomaticUpdates;
 use OCA\ServerInfo\OsStatus\Packages\IPackageManager;
+use OCA\ServerInfo\OsStatus\Packages\IReportsDiagnostics;
+use OCA\ServerInfo\OsStatus\Packages\NeedsRootException;
 use OCA\ServerInfo\OsStatus\Packages\PackageManagerFactory;
 use OCA\ServerInfo\OsStatus\Packages\PendingUpdate;
 use OCA\ServerInfo\OsStatus\Packages\ProbeException;
@@ -117,10 +119,13 @@ class OsStatusCollector {
 
 		$updates = null;
 		$updatesSource = null;
+		$needsRoot = null;
 		if ($packageManager !== null) {
 			try {
 				$updates = $packageManager->getPendingUpdates();
 				$updatesSource = OsStatus::SOURCE_SYSTEM;
+			} catch (NeedsRootException $e) {
+				$needsRoot = $e->getMessage();
 			} catch (ProbeException $e) {
 				$diagnostics[] = $e->getMessage();
 			} catch (\Throwable $e) {
@@ -132,6 +137,9 @@ class OsStatusCollector {
 		if ($updates === null && $reportedUpdates !== null && $environment->managesPackages()) {
 			$updates = $reportedUpdates;
 			$updatesSource = OsStatus::SOURCE_HELPER;
+		}
+		if ($needsRoot !== null && $updatesSource !== OsStatus::SOURCE_HELPER) {
+			$diagnostics[] = $needsRoot;
 		}
 
 		$listsRefreshedAt = $this->latest(
@@ -163,6 +171,10 @@ class OsStatusCollector {
 			$updates = self::sortUpdates($updates);
 			$omitted = max(0, count($updates) - self::MAX_LISTED_UPDATES);
 			$updates = array_slice($updates, 0, self::MAX_LISTED_UPDATES);
+		}
+
+		if ($packageManager instanceof IReportsDiagnostics) {
+			array_push($diagnostics, ...$packageManager->getDiagnostics());
 		}
 
 		$timeSync = $this->probe('The time synchronisation', fn (): array => $this->timeSync->probe(), ['synchronized' => null, 'source' => null], $diagnostics);

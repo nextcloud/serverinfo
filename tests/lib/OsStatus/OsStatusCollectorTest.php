@@ -20,8 +20,13 @@ use OCA\ServerInfo\OsStatus\Helper\HelperState;
 use OCA\ServerInfo\OsStatus\OsStatus;
 use OCA\ServerInfo\OsStatus\OsStatusCollector;
 use OCA\ServerInfo\OsStatus\OsStatusStore;
+use OCA\ServerInfo\OsStatus\Packages\Apk;
 use OCA\ServerInfo\OsStatus\Packages\Apt;
+use OCA\ServerInfo\OsStatus\Packages\Dnf;
 use OCA\ServerInfo\OsStatus\Packages\PackageManagerFactory;
+use OCA\ServerInfo\OsStatus\Packages\Pacman;
+use OCA\ServerInfo\OsStatus\Packages\Rpm;
+use OCA\ServerInfo\OsStatus\Packages\Zypper;
 use OCA\ServerInfo\OsStatus\Reboot\CoreLibraryProbe;
 use OCA\ServerInfo\OsStatus\Reboot\KernelProbe;
 use OCA\ServerInfo\OsStatus\Reboot\RebootReason;
@@ -57,6 +62,7 @@ class OsStatusCollectorTest extends \Test\TestCase {
 	private function collector(int $now = self::NOW): OsStatusCollector {
 		$appConfig = $this->createMock(IAppConfig::class);
 		$appConfig->method('getAppValueString')->willReturnCallback(fn (string $key, string $default = ''): string => (string)($this->config[$key] ?? $default));
+		$appConfig->method('getAppValueBool')->willReturnCallback(fn (string $key, bool $default = false): bool => (bool)($this->config[$key] ?? $default));
 		$appConfig->method('getAppValueArray')->willReturnCallback(fn (string $key): array => $this->config[$key] ?? []);
 		$appConfig->method('setAppValueArray')->willReturnCallback(function (string $key, array $value): bool {
 			$this->config[$key] = $value;
@@ -74,6 +80,7 @@ class OsStatusCollectorTest extends \Test\TestCase {
 
 		$host = $this->host;
 		$systemd = new SystemdProbe($host);
+		$rpm = new Rpm($host);
 
 		return new OsStatusCollector(
 			$host,
@@ -83,7 +90,7 @@ class OsStatusCollectorTest extends \Test\TestCase {
 			new EnvironmentDetector($host),
 			new SupportTable(),
 			new SubscriptionProbe($host),
-			new PackageManagerFactory(new Apt($host, $systemd)),
+			new PackageManagerFactory(new Apt($host, $systemd), new Dnf($host, $rpm, $systemd), new Zypper($host, $rpm, $systemd), new Pacman($host, $time, $appConfig), new Apk($host)),
 			new KernelProbe($host),
 			new CoreLibraryProbe($host),
 			$systemd,
@@ -259,6 +266,45 @@ class OsStatusCollectorTest extends \Test\TestCase {
 		$this->assertSame(OsStatus::SOURCE_HELPER, $status->updatesSource);
 		$this->assertSame('openssl', $status->updates[0]->name);
 		$this->assertContains('No supported package manager was found for Ubuntu 24.04.3 LTS.', $status->diagnostics);
+	}
+
+	public function testDnf5LeavesTheUpdatesToTheHelperWithoutComplaint(): void {
+		$this->host->withFile('/etc/os-release', "NAME=\"Fedora Linux\"\nID=fedora\nVERSION_ID=44\nPRETTY_NAME=\"Fedora Linux 44\"\n");
+		$this->host->binaries = ['dnf', 'dnf5'];
+
+		$without = $this->collector()->collect();
+
+		$this->assertSame('dnf', $without->packageManager);
+		$this->assertNull($without->updates);
+		$this->assertContains('dnf 5 can only be asked about pending updates as root, so the root helper reports them on this system.', $without->diagnostics);
+
+		$this->withRootsHelperReportPath();
+		$this->host->withFile(HelperReportReader::DEFAULT_PATH, (string)json_encode([
+			'schema' => 1, 'helperVersion' => '1.0.0', 'generatedAt' => self::NOW - 600, 'hostname' => 'cloud.example.org',
+			'bootTime' => self::BOOT, 'listsRefreshedAt' => self::NOW - 600,
+			'pendingUpdates' => [['name' => 'openssl-libs', 'installed' => '1', 'candidate' => '2', 'security' => true]],
+		]));
+
+		$with = $this->collector()->collect();
+
+		$this->assertSame(OsStatus::SOURCE_HELPER, $with->updatesSource);
+		$this->assertSame([], array_values(array_filter($with->diagnostics, static fn (string $d): bool => str_contains($d, 'dnf 5'))));
+		$this->assertSame([], array_values(array_filter($this->host->ran, static fn (string $c): bool => str_starts_with($c, 'dnf'))), 'dnf 5 never runs');
+	}
+
+	public function testUnclassifiedDnfUpdatesAreKeptWithADiagnostic(): void {
+		$this->host->withFile('/etc/os-release', "NAME=\"AlmaLinux\"\nID=\"almalinux\"\nID_LIKE=\"rhel centos fedora\"\nVERSION_ID=\"9.8\"\nPRETTY_NAME=\"AlmaLinux 9.8\"\n");
+		$this->host->binaries = ['dnf', 'dnf-3'];
+		$this->host->globs['/var/cache/dnf/*-updateinfo.solvx'] = ['/var/cache/dnf/baseos-updateinfo.solvx'];
+		$this->host->modified['/var/cache/dnf/last_makecache'] = self::NOW - 600;
+		$this->host->withCommand('dnf-3', ['-q', '--cacheonly', 'check-update'], FakeHost::fixture('alma-9-dnf-check-update-pending'), 100)
+			->withCommand('dnf-3', ['-q', '--cacheonly', 'updateinfo', 'list', '--security', '--available'], '', 1, "Error: something broke\n");
+
+		$status = $this->collector()->collect();
+
+		$this->assertCount(9, $status->updates ?? []);
+		$this->assertFalse($status->securityClassified);
+		$this->assertContains('dnf could not list security advisories, so pending updates are not told apart into security fixes and others: Error: something broke', $status->diagnostics);
 	}
 
 	public function testFailuresBecomeDiagnostics(): void {

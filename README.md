@@ -33,7 +33,8 @@ secure:
 - automatic updates, package list age, held packages, failed system services,
   time synchronisation, SELinux and AppArmor
 
-Debian and Ubuntu are supported. Inside Docker, Podman, Kubernetes or a snap the status says
+Debian, Ubuntu, RHEL and its rebuilds, Fedora, openSUSE and SLES, Arch and
+Alpine are supported. Inside Docker, Podman, Kubernetes or a snap the status says
 what can and cannot be known from inside; LXC and systemd-nspawn guests are
 treated like machines without a kernel of their own.
 
@@ -44,6 +45,16 @@ package manager's configuration, state and logs, `/run/reboot-required` and the
 installed kernel modules. It runs the package manager's query commands (updates
 only in simulation mode), `systemctl`, `timedatectl`, `chronyc` and
 `systemd-detect-virt`. Anything it may not read or run is reported as unknown.
+
+These queries stay offline, with one exception: on Arch, `checkupdates`
+downloads the package databases from the mirrors in
+`/etc/pacman.d/mirrorlist` into a temporary directory of the web server user,
+and `arch-audit` fetches the security advisories from security.archlinux.org.
+These are the only outbound connections the operating system status makes. To keep Arch offline as well, run
+`occ config:app:set serverinfo os_allow_network --type=boolean --value=false`.
+Pending updates then come from the databases root last synced, the age of
+those databases counts as the package list age, and security fixes are not
+told apart.
 
 The status is collected by a background job once an hour, when background
 jobs run from system cron; under AJAX or webcron the commands would hold a web
@@ -69,8 +80,10 @@ MIT License); the app never looks them up online.
 ### Root helper
 
 The web server cannot see everything: only root can tell which services still
-run code an update replaced, and only root can refresh the package lists. The
-optional script `bin/serverinfo-os-report` adds that. Run as root, it writes a
+run code an update replaced, and only root can refresh the package lists. On
+Fedora and other systems with dnf 5, only root can list pending updates at all:
+dnf 5 would first copy its whole cache into the web server's home. The
+optional script `bin/serverinfo-os-report` adds all of that. Run as root, it writes a
 small JSON report that the app reads. It only reads the system; it never
 installs, upgrades, restarts or reboots anything.
 
