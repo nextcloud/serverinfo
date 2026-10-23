@@ -17,10 +17,9 @@ use OCA\ServerInfo\OsStatus\Verdict\Concern;
 use OCA\ServerInfo\OsStatus\Verdict\OsVerdict;
 use OCA\ServerInfo\OsStatus\Verdict\Thresholds;
 use OCA\ServerInfo\OsStatus\Verdict\Verdict;
+use OCP\Console\Attribute\AsCommand;
+use OCP\Console\IOutput;
 use PHPUnit\Framework\Attributes\DataProvider;
-use Symfony\Component\Console\Input\InputInterface;
-use Symfony\Component\Console\Output\BufferedOutput;
-use Symfony\Component\Console\Output\OutputInterface;
 
 class ShowOsStatusTest extends \Test\TestCase {
 	public static function dataExitCodes(): array {
@@ -60,9 +59,9 @@ class ShowOsStatusTest extends \Test\TestCase {
 		$service->method('getStatus')->willReturn($status);
 		$service->method('evaluate')->willReturn((new OsVerdict())->evaluate($status, null, null, new Thresholds(), 1792411200));
 
-		$output = new BufferedOutput();
-		$this->assertSame(ShowOsStatus::EXIT_WARNING, $this->execute($service, $output));
-		$this->assertSame('3 d 2 h', json_decode($output->fetch(), true)['statusAge'] ?? null);
+		$written = [];
+		$this->assertSame(ShowOsStatus::EXIT_WARNING, $this->execute($service, $written));
+		$this->assertSame('3 d 2 h', $written['statusAge'] ?? null);
 	}
 
 	public static function dataAges(): array {
@@ -79,11 +78,25 @@ class ShowOsStatusTest extends \Test\TestCase {
 		$this->assertSame($formatted, ShowOsStatus::formatAge($seconds));
 	}
 
-	private function execute(OsStatusService $service, ?OutputInterface $output = null): int {
-		$command = new ShowOsStatus($this->createMock(OsStatusCollector::class), $service);
-		$input = $this->createMock(InputInterface::class);
-		$input->method('getOption')->willReturnMap([['refresh', false], ['output', 'json']]);
+	public function testIsAnOccCommandWithAnOutputFormat(): void {
+		$attributes = (new \ReflectionClass(ShowOsStatus::class))->getAttributes(AsCommand::class);
 
-		return (new \ReflectionMethod($command, 'execute'))->invoke($command, $input, $output ?? $this->createMock(OutputInterface::class));
+		$this->assertCount(1, $attributes);
+		$command = $attributes[0]->newInstance();
+		$this->assertSame('serverinfo:os-status', $command->name);
+		$this->assertTrue($command->supportsOutputFormat);
+	}
+
+	/**
+	 * @param array<string, mixed> $written receives what the command writes as its result
+	 */
+	private function execute(OsStatusService $service, array &$written = [], bool $refresh = false, ?OsStatusCollector $collector = null): int {
+		$command = new ShowOsStatus($collector ?? $this->createMock(OsStatusCollector::class), $service);
+		$output = $this->createMock(IOutput::class);
+		$output->method('writeArrayInOutputFormat')->willReturnCallback(static function (iterable $items) use (&$written): void {
+			$written = is_array($items) ? $items : iterator_to_array($items);
+		});
+
+		return $command($output, $refresh);
 	}
 }
