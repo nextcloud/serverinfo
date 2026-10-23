@@ -88,9 +88,15 @@ still matches the release. Repeat this when an update ships a newer helper
 does not contain this README; the same instructions are at the top of the
 script.
 
+Extract the file into a new directory that only you can enter, which
+`mktemp -d` creates, so that no one can swap it before root installs it.
+Remove that directory afterwards.
+
 ```
-tar -xjf nextcloud-<version>.tar.bz2 nextcloud/apps/serverinfo/bin/serverinfo-os-report
-sudo install -o root -g root -m 0755 nextcloud/apps/serverinfo/bin/serverinfo-os-report /usr/local/sbin/
+d=$(mktemp -d) &&
+tar -xjf nextcloud-<version>.tar.bz2 -C "$d" nextcloud/apps/serverinfo/bin/serverinfo-os-report &&
+sudo install -o root -g root -m 0755 "$d"/nextcloud/apps/serverinfo/bin/serverinfo-os-report /usr/local/sbin/ &&
+rm -r "$d"
 echo '17 */6 * * * root /usr/local/sbin/serverinfo-os-report --refresh --random-delay' | sudo tee /etc/cron.d/serverinfo-os-report
 ```
 
