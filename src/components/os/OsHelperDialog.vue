@@ -35,7 +35,7 @@
 			</ol>
 
 			<p class="os-muted">
-				{{ t('serverinfo', 'Install it again the same way after updating this app. To remove it, delete {script} and {cron}.', { script: helper.installPath, cron: '/etc/cron.d/serverinfo-os-report' }) }}
+				{{ t('serverinfo', 'Install it again the same way after updating this app. To remove it, delete {script} and {cron}.', { script: helper.installPath, cron: '/etc/cron.d/serverinfo-os-report' }, PLAIN) }}
 			</p>
 		</div>
 
@@ -55,7 +55,7 @@ import { computed } from 'vue'
 import NcButton from '@nextcloud/vue/components/NcButton'
 import NcDialog from '@nextcloud/vue/components/NcDialog'
 import OsCommand from './OsCommand.vue'
-import { shellQuote } from '../../osUtils.ts'
+import { PLAIN, shellQuote } from '../../osUtils.ts'
 
 const props = defineProps<{
 	helper: OsPayload['helper']

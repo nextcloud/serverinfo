@@ -7,6 +7,12 @@ import type { OsConcern, OsConcernId, OsLevel, OsPayload, OsStatus } from './typ
 
 import { n, t } from '@nextcloud/l10n'
 
+/**
+ * Options for t() and n() where Vue inserts the result as text. Vue escapes
+ * it already, so the placeholders must not be escaped or sanitized as HTML.
+ */
+export const PLAIN = { escape: false, sanitize: false }
+
 const RANK: Record<OsLevel, number> = { unknown: 0, ok: 0, info: 1, warning: 2, error: 3 }
 
 /**
@@ -70,7 +76,7 @@ export function environmentLabel(environment: OsStatus['environment']): string {
 		case 'application-container':
 		case 'system-container':
 			// TRANSLATORS: {technology} is a container technology such as Docker, LXC or Podman
-			return t('serverinfo', '{technology} container', { technology: containerName(environment.container) })
+			return t('serverinfo', '{technology} container', { technology: containerName(environment.container) }, PLAIN)
 		case 'snap':
 			return t('serverinfo', 'Snap package')
 		default:
@@ -79,7 +85,7 @@ export function environmentLabel(environment: OsStatus['environment']): string {
 			}
 			return virtualization
 				// TRANSLATORS: {hypervisor} is the name of a hypervisor such as KVM or VMware
-				? t('serverinfo', 'Virtual machine ({hypervisor})', { hypervisor: hypervisorName(virtualization) })
+				? t('serverinfo', 'Virtual machine ({hypervisor})', { hypervisor: hypervisorName(virtualization) }, PLAIN)
 				: t('serverinfo', 'Physical machine')
 	}
 }

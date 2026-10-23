@@ -61,6 +61,7 @@ import NcCheckboxRadioSwitch from '@nextcloud/vue/components/NcCheckboxRadioSwit
 import NcDialog from '@nextcloud/vue/components/NcDialog'
 import NcNoteCard from '@nextcloud/vue/components/NcNoteCard'
 import NcTextField from '@nextcloud/vue/components/NcTextField'
+import { PLAIN } from '../../osUtils.ts'
 
 const props = defineProps<{
 	thresholds: OsThresholds
@@ -127,7 +128,7 @@ const errorText = computed(() => {
 	const value = Number(form[invalid.value])
 	return Number.isInteger(value) && value >= 0 && value <= props.limits.maxDays
 		? t('serverinfo', 'The error threshold cannot come before the warning threshold.')
-		: t('serverinfo', 'Enter a whole number of days between 0 and {max}.', { max: props.limits.maxDays })
+		: t('serverinfo', 'Enter a whole number of days between 0 and {max}.', { max: props.limits.maxDays }, PLAIN)
 })
 
 /**

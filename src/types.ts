@@ -230,6 +230,8 @@ export interface OsPayload {
 	/** Server clock, so ages never depend on the browser's */
 	now: number
 	status: OsStatus | null
+	/** The system's name, e.g. "FreeBSD 14.1-RELEASE amd64"; only for an unsupported system */
+	osName: string | null
 	verdict: { level: OsLevel, concerns: OsConcern[] } | null
 	/** Packages changed after the status was collected */
 	outdated: boolean

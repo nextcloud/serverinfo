@@ -11,6 +11,7 @@ namespace OCA\ServerInfo\Tests\OsStatus;
 
 use OCA\ServerInfo\Controller\OsController;
 use OCA\ServerInfo\Jobs\RefreshOsStatus;
+use OCA\ServerInfo\Os;
 use OCA\ServerInfo\OsStatus\Notifications\OsNotificationSender;
 use OCA\ServerInfo\OsStatus\OsStatus;
 use OCA\ServerInfo\OsStatus\OsStatusCollector;
@@ -57,6 +58,8 @@ class OsControllerTest extends \Test\TestCase {
 		$l10n = $this->createMock(IL10N::class);
 		$l10n->method('t')->willReturnCallback(static fn (string $text, array $parameters = []): string => vsprintf($text, $parameters));
 		$l10n->method('n')->willReturnCallback(static fn (string $one, string $many, int $count, array $parameters = []): string => vsprintf(str_replace('%n', (string)$count, $count === 1 ? $one : $many), $parameters));
+		$os = $this->createMock(Os::class);
+		$os->method('getOSName')->willReturn('FreeBSD 14.1-RELEASE amd64');
 		$serviceCommands = $this->createMock(ServiceCommands::class);
 		$serviceCommands->method('initSystem')->willReturnCallback(fn (): ?string => $this->initSystem);
 		$serverConfig->method('getValueString')->willReturnCallback(fn (string $app, string $key, string $default): string => $app === 'core' && $key === 'backgroundjobs_mode' ? $this->cronMode : $default);
@@ -74,6 +77,7 @@ class OsControllerTest extends \Test\TestCase {
 			$serviceCommands,
 			new ConcernTexts($this->createMock(IDateTimeFormatter::class)),
 			$l10n,
+			$os,
 		);
 	}
 
@@ -207,5 +211,12 @@ class OsControllerTest extends \Test\TestCase {
 		$this->assertSame('The oldest has been waiting for 4 days.', $verdict['concerns'][0]['detail']);
 		$this->assertSame('The system clock is not synchronized', $verdict['concerns'][1]['title']);
 		$this->assertStringStartsWith('Two-factor codes', $verdict['concerns'][1]['detail']);
+	}
+
+	public function testNamesTheSystemOnlyWhenItIsNotSupported(): void {
+		$this->service->method('getStatus')->willReturnOnConsecutiveCalls(OsStatus::unsupported(1792411200, '14.1-RELEASE', 'amd64'), OsStatus::restricted(1792411200));
+
+		$this->assertSame('FreeBSD 14.1-RELEASE amd64', $this->controller()->status()->getData()['osName']);
+		$this->assertNull($this->controller()->status()->getData()['osName']);
 	}
 }

@@ -40,7 +40,7 @@
 				</NcNoteCard>
 
 				<NcNoteCard v-else-if="status.state === 'unsupported'" type="info">
-					{{ t('serverinfo', 'Only Linux systems are checked. This server runs {os}.', { os: status.kernel }) }}
+					{{ t('serverinfo', 'Only Linux systems are checked. This server runs {os}.', { os: data.osName ?? status.kernel }, PLAIN) }}
 				</NcNoteCard>
 
 				<template v-else>
@@ -165,7 +165,7 @@ import OsUpdatesSection from '../components/os/OsUpdatesSection.vue'
 import OsVerdictCard from '../components/os/OsVerdictCard.vue'
 import SectionSkeleton from '../components/SectionSkeleton.vue'
 import { useOsStatus } from '../composables/useOsStatus.ts'
-import { concernOf, problems } from '../osUtils.ts'
+import { concernOf, PLAIN, problems } from '../osUtils.ts'
 
 const props = defineProps<{ active: boolean }>()
 
