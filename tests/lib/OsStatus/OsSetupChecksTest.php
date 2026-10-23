@@ -35,7 +35,7 @@ class OsSetupChecksTest extends \Test\TestCase {
 		$this->service = $this->createMock(OsStatusService::class);
 		$this->l10n = new FakeL10N();
 		$this->urlGenerator = $this->createMock(IURLGenerator::class);
-		$this->urlGenerator->method('linkToRoute')->willReturn('/settings/admin/serverinfo');
+		$this->urlGenerator->method('linkToRouteAbsolute')->willReturn('https://cloud.example.org/settings/admin/serverinfo');
 	}
 
 	private function texts(): ConcernTexts {
@@ -69,7 +69,7 @@ class OsSetupChecksTest extends \Test\TestCase {
 		$this->assertSame(SetupResult::ERROR, $result->getSeverity());
 		$this->assertStringContainsString('Package lists were last refreshed 40 days ago', (string)$result->getDescription());
 		$this->assertStringEndsWith('{link}', (string)$result->getDescription());
-		$this->assertSame('/settings/admin/serverinfo#os', $result->getDescriptionParameters()['link']['link'] ?? null);
+		$this->assertSame('https://cloud.example.org/settings/admin/serverinfo#os', $result->getDescriptionParameters()['link']['link'] ?? null);
 	}
 
 	public function testRebootCheck(): void {

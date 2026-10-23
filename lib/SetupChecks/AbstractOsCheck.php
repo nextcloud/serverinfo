@@ -97,7 +97,7 @@ abstract class AbstractOsCheck implements ISetupCheck {
 				'type' => 'highlight',
 				'id' => 'serverinfo-os',
 				'name' => $this->l10n->t('Show the operating system status…'),
-				'link' => $this->urlGenerator->linkToRoute('settings.AdminSettings.index', ['section' => Application::APP_ID]) . '#os',
+				'link' => $this->urlGenerator->linkToRouteAbsolute('settings.AdminSettings.index', ['section' => Application::APP_ID]) . '#os',
 			],
 		];
 	}
