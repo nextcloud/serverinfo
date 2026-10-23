@@ -93,6 +93,7 @@ export function payload(overrides: Partial<OsPayload> = {}): OsPayload {
 	return {
 		now: NOW,
 		status: status(),
+		osName: null,
 		verdict: {
 			level: 'warning',
 			concerns: [

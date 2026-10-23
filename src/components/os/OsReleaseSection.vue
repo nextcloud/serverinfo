@@ -90,7 +90,7 @@ import NcNoteCard from '@nextcloud/vue/components/NcNoteCard'
 import CalendarClock from 'vue-material-design-icons/CalendarClock.vue'
 import SectionHeading from '../SectionHeading.vue'
 import OsLevelIcon from './OsLevelIcon.vue'
-import { environmentLabel } from '../../osUtils.ts'
+import { environmentLabel, PLAIN } from '../../osUtils.ts'
 
 const props = defineProps<{
 	status: OsStatus
@@ -108,8 +108,8 @@ const automaticText = computed(() => {
 	if (automatic.state === 'enabled') {
 		return automatic.scope === 'security'
 			// TRANSLATORS: {tool} is a program such as unattended-upgrades or dnf-automatic
-			? t('serverinfo', 'Security updates are installed automatically by {tool}', { tool })
-			: t('serverinfo', 'Updates are installed automatically by {tool}', { tool })
+			? t('serverinfo', 'Security updates are installed automatically by {tool}', { tool }, PLAIN)
+			: t('serverinfo', 'Updates are installed automatically by {tool}', { tool }, PLAIN)
 	}
 	if (automatic.state === 'disabled') {
 		return automatic.scope === 'download'

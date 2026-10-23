@@ -173,7 +173,7 @@ import FilterPills from '../FilterPills.vue'
 import SectionHeading from '../SectionHeading.vue'
 import StatTile from '../StatTile.vue'
 import OsCommand from './OsCommand.vue'
-import { daysSince, formatDays } from '../../osUtils.ts'
+import { daysSince, formatDays, PLAIN } from '../../osUtils.ts'
 
 const props = defineProps<{
 	status: OsStatus
@@ -242,17 +242,17 @@ const listsDescription = computed(() => {
 	const manager = props.status.packageManager ?? ''
 	if (props.status.updatesSource === 'helper') {
 		// TRANSLATORS: {tool} is a package manager such as apt or dnf
-		return t('serverinfo', 'As reported by the root helper using {tool}.', { tool: manager })
+		return t('serverinfo', 'As reported by the root helper using {tool}.', { tool: manager }, PLAIN)
 	}
 	if (props.status.listsRefreshedAt === null) {
 		// TRANSLATORS: {tool} is a package manager such as apt or dnf
-		return t('serverinfo', 'As {tool} sees it.', { tool: manager })
+		return t('serverinfo', 'As {tool} sees it.', { tool: manager }, PLAIN)
 	}
 	const days = daysSince(props.now, props.status.listsRefreshedAt) ?? 0
 	return days === 0
 		// TRANSLATORS: {tool} is a package manager such as apt or dnf
-		? t('serverinfo', 'As {tool} sees it. Package lists were refreshed today.', { tool: manager })
-		: n('serverinfo', 'As {tool} sees it. Package lists were refreshed %n day ago.', 'As {tool} sees it. Package lists were refreshed %n days ago.', days, { tool: manager })
+		? t('serverinfo', 'As {tool} sees it. Package lists were refreshed today.', { tool: manager }, PLAIN)
+		: n('serverinfo', 'As {tool} sees it. Package lists were refreshed %n day ago.', 'As {tool} sees it. Package lists were refreshed %n days ago.', days, { tool: manager }, PLAIN)
 })
 
 /**

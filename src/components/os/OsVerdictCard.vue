@@ -15,7 +15,7 @@
 			<p class="os-verdict__system">
 				<span v-if="status.release">{{ status.release.prettyName }}</span>
 				<span class="os-verdict__dot" aria-hidden="true">·</span>
-				<span>{{ t('serverinfo', 'Kernel {kernel}', { kernel: status.kernel }) }}</span>
+				<span>{{ t('serverinfo', 'Kernel {kernel}', { kernel: status.kernel }, PLAIN) }}</span>
 				<span class="os-verdict__dot" aria-hidden="true">·</span>
 				<span>{{ environmentLabel(status.environment) }}</span>
 			</p>
@@ -80,7 +80,7 @@ import ShieldAlert from 'vue-material-design-icons/ShieldAlert.vue'
 import ShieldCheck from 'vue-material-design-icons/ShieldCheck.vue'
 import ShieldOff from 'vue-material-design-icons/ShieldOffOutline.vue'
 import OsLevelIcon from './OsLevelIcon.vue'
-import { environmentLabel, headline } from '../../osUtils.ts'
+import { environmentLabel, headline, PLAIN } from '../../osUtils.ts'
 
 const props = defineProps<{
 	level: OsLevel

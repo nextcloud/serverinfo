@@ -13,6 +13,7 @@ use OCA\ServerInfo\OperatingSystems\Dummy;
 use OCA\ServerInfo\OperatingSystems\FreeBSD;
 use OCA\ServerInfo\OperatingSystems\IOperatingSystem;
 use OCA\ServerInfo\OperatingSystems\Linux;
+use OCA\ServerInfo\OsStatus\Host\IHost;
 use OCA\ServerInfo\OsStatus\OsRelease;
 use OCA\ServerInfo\Resources\CPU;
 use OCA\ServerInfo\Resources\Memory;
@@ -24,13 +25,15 @@ class Os implements IOperatingSystem {
 	private const BOOT_TIME_TTL = 60;
 
 	private IOperatingSystem $backend;
+	private bool $restrictedMode;
 
 	public function __construct(
 		IConfig $config,
 		private IAppConfig $appConfig,
+		private IHost $host,
 	) {
-		$restrictedMode = $config->getAppValue('serverinfo', 'restricted_mode', 'no') === 'yes';
-		$this->backend = $this->getBackend($restrictedMode ? 'Dummy' : PHP_OS);
+		$this->restrictedMode = $config->getAppValue('serverinfo', 'restricted_mode', 'no') === 'yes';
+		$this->backend = $this->getBackend($this->restrictedMode ? 'Dummy' : PHP_OS);
 	}
 
 	/**
@@ -69,12 +72,12 @@ class Os implements IOperatingSystem {
 	 */
 	public function getOSName(): string {
 		$kernel = PHP_OS . ' ' . php_uname('r') . ' ' . php_uname('m');
-		if (!$this->backend instanceof Linux) {
+		if ($this->restrictedMode || $this->host->osFamily() !== 'Linux') {
 			return $kernel;
 		}
 
-		$content = @file_get_contents('/etc/os-release', false, null, 0, 65536);
-		$release = is_string($content) ? OsRelease::parse($content) : null;
+		$content = $this->host->readFile('/etc/os-release', 65536) ?? $this->host->readFile('/usr/lib/os-release', 65536);
+		$release = $content !== null ? OsRelease::parse($content) : null;
 		if ($release === null) {
 			return $kernel;
 		}

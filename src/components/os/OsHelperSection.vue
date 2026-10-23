@@ -37,6 +37,7 @@ import Console from 'vue-material-design-icons/Console.vue'
 import ShieldLock from 'vue-material-design-icons/ShieldLock.vue'
 import SectionHeading from '../SectionHeading.vue'
 import OsLevelIcon from './OsLevelIcon.vue'
+import { PLAIN } from '../../osUtils.ts'
 
 const props = defineProps<{
 	helper: OsStatus['helper']
@@ -96,15 +97,15 @@ const description = computed(() => {
 		case 'previous-boot':
 			return t('serverinfo', 'Its findings do not apply after a reboot. It is used again after the helper\'s next run.')
 		case 'insecure':
-			return t('serverinfo', '{path} or its directory is not owned by root or can be written by other users, which would let them forge it.', { path })
+			return t('serverinfo', '{path} or its directory is not owned by root or can be written by other users, which would let them forge it.', { path }, PLAIN)
 		case 'unreadable':
-			return t('serverinfo', '{path} exists, but the web server may not read it. open_basedir may exclude it.', { path })
+			return t('serverinfo', '{path} exists, but the web server may not read it. open_basedir may exclude it.', { path }, PLAIN)
 		case 'other-host':
-			return t('serverinfo', '{path} names a different host. Run the helper on this machine.', { path })
+			return t('serverinfo', '{path} names a different host. Run the helper on this machine.', { path }, PLAIN)
 		case 'unsupported':
 			return t('serverinfo', 'Install the helper again from this version of the app.')
 		default:
-			return t('serverinfo', '{path} is not a report the helper wrote. Run the helper again.', { path })
+			return t('serverinfo', '{path} is not a report the helper wrote. Run the helper again.', { path }, PLAIN)
 	}
 })
 </script>

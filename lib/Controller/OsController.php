@@ -11,6 +11,7 @@ namespace OCA\ServerInfo\Controller;
 
 use OCA\ServerInfo\Config\ConfigLexicon;
 use OCA\ServerInfo\Jobs\RefreshOsStatus;
+use OCA\ServerInfo\Os;
 use OCA\ServerInfo\OsStatus\Helper\HelperReportReader;
 use OCA\ServerInfo\OsStatus\Notifications\OsNotificationSender;
 use OCA\ServerInfo\OsStatus\OsStatus;
@@ -55,6 +56,7 @@ class OsController extends Controller {
 		private ServiceCommands $serviceCommands,
 		private ConcernTexts $texts,
 		private IL10N $l10n,
+		private Os $os,
 	) {
 		parent::__construct($appName, $request);
 	}
@@ -125,6 +127,7 @@ class OsController extends Controller {
 		return [
 			'now' => $this->timeFactory->getTime(),
 			'status' => $status?->toArray(),
+			'osName' => $status?->state === OsStatus::STATE_UNSUPPORTED ? $this->os->getOSName() : null,
 			'verdict' => $status !== null ? $this->verdict($status) : null,
 			'outdated' => $status !== null && $this->service->isOutdated($status),
 			'php' => $php?->toArray(),

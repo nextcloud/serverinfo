@@ -70,4 +70,8 @@ describe('labels', () => {
 		expect(environmentLabel({ kind: 'system-container', container: 'lxc', virtualization: null })).toBe('LXC container')
 		expect(environmentLabel({ kind: 'host', container: null, virtualization: 'wsl' })).toBe('Windows Subsystem for Linux')
 	})
+
+	it('leaves escaping to Vue', () => {
+		expect(environmentLabel({ kind: 'application-container', container: 'r&d <lab>', virtualization: null })).toBe('r&d <lab> container')
+	})
 })

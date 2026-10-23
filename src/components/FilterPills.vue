@@ -3,7 +3,7 @@
   - SPDX-License-Identifier: AGPL-3.0-or-later
 -->
 <template>
-	<nav class="filter-pills" :aria-label="label">
+	<div class="filter-pills" role="group" :aria-label="label">
 		<button
 			v-for="option in options"
 			:key="option.id"
@@ -15,7 +15,7 @@
 			{{ option.label }}
 			<span class="filter-pills__count">{{ option.count }}</span>
 		</button>
-	</nav>
+	</div>
 </template>
 
 <script setup lang="ts" generic="T extends string">
