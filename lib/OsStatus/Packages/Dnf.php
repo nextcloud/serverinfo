@@ -45,6 +45,8 @@ class Dnf implements IPackageManager {
 	private const DNF4 = 'dnf-3';
 
 	private ?bool $isDnf4 = null;
+	/** Whether the last getRebootReasons() got an answer from needs-restarting */
+	private ?bool $rebootChecked = null;
 
 	public function __construct(
 		private IHost $host,
@@ -315,19 +317,32 @@ class Dnf implements IPackageManager {
 	}
 
 	/**
-	 * `needs-restarting -r` exits 1 when core packages were updated since boot.
+	 * `needs-restarting -r` exits 1 and says "Reboot is required" when core
+	 * packages were updated since boot. dnf exits 1 for its own errors too,
+	 * e.g. "No such command" where the plugin is not installed, so the exit
+	 * code alone means nothing.
 	 */
 	#[\Override]
 	public function getRebootReasons(): array {
+		$this->rebootChecked = false;
 		if (!$this->isDnf4()) {
 			return [];
 		}
 
 		$result = $this->dnf(['-q', '--cacheonly', 'needs-restarting', '-r'], 120);
-		if ($result === null || $result->exitCode !== 1 || $result->timedOut) {
+		if ($result === null || $result->timedOut || $result->truncated) {
+			return [];
+		}
+		if ($result->exitCode === 0) {
+			$this->rebootChecked = true;
+
+			return [];
+		}
+		if ($result->exitCode !== 1 || preg_match('/^Reboot is required/m', $result->stdout) !== 1) {
 			return [];
 		}
 
+		$this->rebootChecked = true;
 		$packages = [];
 		if (preg_match_all('/^\s*\*\s*(\S+)/m', $result->stdout, $matches) > 0) {
 			$packages = array_values(array_unique($matches[1]));
@@ -337,18 +352,17 @@ class Dnf implements IPackageManager {
 	}
 
 	/**
-	 * dnf 5's needs-restarting cannot run unprivileged; there the generic
-	 * kernel and core library checks answer instead.
+	 * Whether needs-restarting gave an answer. dnf 5's cannot run
+	 * unprivileged; there, and wherever it failed, the generic kernel and core
+	 * library checks answer instead.
 	 */
 	#[\Override]
 	public function hasOwnRebootCheck(): bool {
-		if (!$this->isDnf4()) {
-			return false;
+		if ($this->rebootChecked === null) {
+			$this->getRebootReasons();
 		}
 
-		$result = $this->dnf(['-q', 'needs-restarting', '--help'], 30);
-
-		return $result !== null && $result->succeeded();
+		return $this->rebootChecked === true;
 	}
 
 	#[\Override]

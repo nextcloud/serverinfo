@@ -10,6 +10,7 @@ declare(strict_types=1);
 namespace OCA\ServerInfo\Tests\OsStatus;
 
 use OCA\ServerInfo\OsStatus\Health\SystemdProbe;
+use OCA\ServerInfo\OsStatus\Host\CommandResult;
 use OCA\ServerInfo\OsStatus\Packages\AutomaticUpdates;
 use OCA\ServerInfo\OsStatus\Packages\Dnf;
 use OCA\ServerInfo\OsStatus\Packages\NeedsRootException;
@@ -154,6 +155,29 @@ class DnfTest extends \Test\TestCase {
 		$this->host->withCommand('dnf-3', ['-q', '--cacheonly', 'needs-restarting', '-r'], "No core libraries or services have been updated since boot-up.\n", 0);
 
 		$this->assertSame([], $this->dnf->getRebootReasons());
+		$this->assertTrue($this->dnf->hasOwnRebootCheck());
+		$this->assertCount(1, $this->host->ran, 'needs-restarting runs once');
+	}
+
+	public function testNeedsRestartingWithoutThePlugin(): void {
+		$this->host->withCommand('dnf-3', ['-q', '--cacheonly', 'needs-restarting', '-r'], '', 1, FakeHost::fixture('alma-9-dnf-needs-restarting-no-plugin.stderr'));
+
+		$this->assertSame([], $this->dnf->getRebootReasons(), 'A missing plugin is no reason to reboot');
+		$this->assertFalse($this->dnf->hasOwnRebootCheck(), 'The generic core library check answers instead');
+	}
+
+	public function testNeedsRestartingWithoutCache(): void {
+		$this->host->withCommand('dnf-3', ['-q', '--cacheonly', 'needs-restarting', '-r'], '', 1, FakeHost::fixture('alma-9-dnf-check-update-no-cache.stderr'));
+
+		$this->assertSame([], $this->dnf->getRebootReasons());
+		$this->assertFalse($this->dnf->hasOwnRebootCheck());
+	}
+
+	public function testNeedsRestartingTimeout(): void {
+		$this->host->commands['dnf-3 -q --cacheonly needs-restarting -r'] = new CommandResult(1, "Reboot is required to fully utilize these updates.\n", '', true);
+
+		$this->assertSame([], $this->dnf->getRebootReasons());
+		$this->assertFalse($this->dnf->hasOwnRebootCheck());
 	}
 
 	public function testDnf5IsNeverRunAsTheWebServer(): void {
