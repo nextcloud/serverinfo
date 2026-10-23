@@ -112,6 +112,11 @@
 									{{ formatDays(daysSince(now, update.since)) }}
 								</td>
 							</tr>
+							<tr v-if="visible.length === 0">
+								<td colspan="4" class="os-updates__none">
+									{{ t('serverinfo', 'No pending update matches this filter.') }}
+								</td>
+							</tr>
 						</tbody>
 					</table>
 				</div>
@@ -155,7 +160,7 @@
 import type { OsConcern, OsPendingUpdate, OsStatus } from '../../types.ts'
 
 import { n, t } from '@nextcloud/l10n'
-import { computed, ref } from 'vue'
+import { computed, ref, watch } from 'vue'
 import NcButton from '@nextcloud/vue/components/NcButton'
 import NcEmptyContent from '@nextcloud/vue/components/NcEmptyContent'
 import NcNoteCard from '@nextcloud/vue/components/NcNoteCard'
@@ -181,11 +186,20 @@ defineEmits<{ helper: [] }>()
 /** Rows shown before "Show all" */
 const limit = 12
 
-const filter = ref<'security' | 'stack' | 'all'>(props.status.securityClassified ? 'security' : 'all')
-const expanded = ref(false)
-
 const updates = computed<OsPendingUpdate[]>(() => props.status.updates ?? [])
 const security = computed(() => updates.value.filter((update) => update.security))
+
+/** Security updates first where there are any, everything otherwise */
+const defaultFilter = () => (props.status.securityClassified && security.value.length > 0 ? 'security' : 'all')
+
+const filter = ref<'security' | 'stack' | 'all'>(defaultFilter())
+const expanded = ref(false)
+
+// A new check brings a new list, which may not have what the filter shows.
+watch(() => props.status.collectedAt, () => {
+	filter.value = defaultFilter()
+	expanded.value = false
+})
 const others = computed(() => updates.value.filter((update) => !update.security))
 const stack = computed(() => updates.value.filter((update) => update.stack))
 
@@ -350,6 +364,11 @@ function severityClass(severity: string): string {
 	grid-template-columns: repeat(auto-fit, minmax(min(320px, 100%), 1fr));
 	gap: 12px;
 	margin-block-start: 16px;
+}
+
+.os-updates__none {
+	color: var(--color-text-maxcontrast);
+	text-align: center;
 }
 
 @media (width <= 700px) {
