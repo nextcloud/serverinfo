@@ -31,15 +31,13 @@ use PHPUnit\Framework\MockObject\MockObject;
 
 class EntryPointsTest extends \Test\TestCase {
 	private OsStatusService&MockObject $service;
-	private IL10N&MockObject $l10n;
+	private IL10N $l10n;
 	private IURLGenerator&MockObject $urlGenerator;
 
 	protected function setUp(): void {
 		parent::setUp();
 		$this->service = $this->createMock(OsStatusService::class);
-		$this->l10n = $this->createMock(IL10N::class);
-		$this->l10n->method('t')->willReturnArgument(0);
-		$this->l10n->method('n')->willReturnCallback(static fn (string $one, string $many, int $count): string => str_replace('%n', (string)$count, $count === 1 ? $one : $many));
+		$this->l10n = new FakeL10N();
 		$this->urlGenerator = $this->createMock(IURLGenerator::class);
 		$this->urlGenerator->method('linkToRouteAbsolute')->willReturn('https://cloud.example.org/settings/admin/serverinfo');
 		$this->urlGenerator->method('imagePath')->willReturnCallback(static fn (string $app, string $image): string => "/apps/$app/img/$image");
