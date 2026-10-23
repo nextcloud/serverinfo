@@ -12,6 +12,7 @@ namespace OCA\ServerInfo\Tests\OsStatus;
 use OCA\ServerInfo\OsStatus\Helper\HelperReport;
 use OCA\ServerInfo\OsStatus\Helper\HelperReportReader;
 use OCA\ServerInfo\OsStatus\Host\CommandRunner;
+use PHPUnit\Framework\Attributes\DataProvider;
 
 /**
  * The parts of bin/serverinfo-os-report that can run without root.
@@ -297,6 +298,29 @@ class HelperScriptTest extends \Test\TestCase {
 			'print "$nrconf{interpscan} $nrconf{sendnotify}";',
 		]), $directory . '/config'], 10);
 		$this->assertSame([0, '0 0'], [$result?->exitCode, $result?->stdout], (string)$result?->stderr);
+	}
+
+	public static function dataCgroups(): array {
+		return [
+			'cgroup v2' => ["0::/system.slice/php8.3-fpm.service\n", 'php8.3-fpm.service'],
+			'nested slice' => ["0::/system.slice/system-getty.slice/getty@tty1.service\n", 'getty@tty1.service'],
+			'cgroup v1' => ["12:pids:/system.slice/nginx.service\n1:name=systemd:/system.slice/nginx.service\n", 'nginx.service'],
+			'hybrid' => ["1:name=systemd:/system.slice/nginx.service\n0::/system.slice/nginx.service\n", 'nginx.service'],
+			'a user unit named like a system one' => ["0::/user.slice/user-1000.slice/user@1000.service/app.slice/php8.3-fpm.service\n", ''],
+			'a user unit in cgroup v1' => ["1:name=systemd:/user.slice/user-1000.slice/user@1000.service/php8.3-fpm.service\n", ''],
+			'the user manager' => ["0::/user.slice/user-1000.slice/user@1000.service/init.scope\n", ''],
+			'a login session' => ["0::/user.slice/user-1000.slice/session-3.scope\n", ''],
+			'a delegated subtree' => ["0::/system.slice/docker.service/payload\n", ''],
+			'init' => ["0::/init.scope\n", ''],
+		];
+	}
+
+	#[DataProvider('dataCgroups')]
+	public function testOnlySystemServicesAreTakenFromCgroups(string $cgroup, string $unit): void {
+		$file = $this->temporaryDirectory() . '/cgroup';
+		file_put_contents($file, $cgroup);
+
+		$this->assertSame([0, $unit === '' ? '' : $unit . "\n"], array_slice($this->functions('system_unit "$1"', $file), 0, 2));
 	}
 
 	public function testRequiresRoot(): void {
