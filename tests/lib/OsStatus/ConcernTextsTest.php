@@ -96,6 +96,13 @@ class ConcernTextsTest extends \Test\TestCase {
 		$this->assertSame($expected, $this->texts->title(new Concern(Concern::SUPPORT, $level, $facts), $this->status, $this->l));
 	}
 
+	public function testConcernsThatCouldNotBeDeterminedSaySo(): void {
+		$this->assertSame('Whether a reboot is required could not be determined', $this->texts->title(new Concern(Concern::REBOOT, Concern::LEVEL_UNKNOWN), $this->status, $this->l));
+		$this->assertSame('Time synchronization could not be checked', $this->texts->title(new Concern(Concern::TIME_SYNC, Concern::LEVEL_UNKNOWN), $this->status, $this->l));
+		$this->assertSame('Pending updates could not be determined', $this->texts->title(new Concern(Concern::UPDATES, Concern::LEVEL_UNKNOWN), $this->status, $this->l));
+		$this->assertSame('The support status of Ubuntu 22.04.5 LTS is unknown', $this->texts->title(new Concern(Concern::SUPPORT, Concern::LEVEL_UNKNOWN), $this->status, $this->l));
+	}
+
 	public function testFreshness(): void {
 		$texts = $this->texts;
 		$status = $this->status;
