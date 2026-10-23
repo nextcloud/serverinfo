@@ -96,6 +96,17 @@ class ConcernTextsTest extends \Test\TestCase {
 		$this->assertSame($expected, $this->texts->title(new Concern(Concern::SUPPORT, $level, $facts), $this->status, $this->l));
 	}
 
+	public function testFreshness(): void {
+		$texts = $this->texts;
+		$status = $this->status;
+
+		$this->assertSame('The operating system status is current', $texts->title(new Concern(Concern::FRESHNESS, Concern::LEVEL_OK, ['ageSeconds' => 60]), $status, $this->l));
+		$this->assertSame('', $texts->detail(new Concern(Concern::FRESHNESS, Concern::LEVEL_OK, ['systemCron' => true]), $this->l));
+		$this->assertSame('The operating system has not been checked yet', $texts->title(new Concern(Concern::FRESHNESS, Concern::LEVEL_UNKNOWN), $status, $this->l));
+		$this->assertSame('The operating system was last checked 1 day ago', $texts->title(new Concern(Concern::FRESHNESS, Concern::LEVEL_WARNING, ['ageSeconds' => 86400 + 60]), $status, $this->l));
+		$this->assertStringStartsWith('The operating system is only checked when background jobs run from system cron', $texts->detail(new Concern(Concern::FRESHNESS, Concern::LEVEL_WARNING, ['systemCron' => false]), $this->l));
+	}
+
 	public function testRestartPrefersThePhpMessage(): void {
 		$concern = new Concern(Concern::RESTART, Concern::LEVEL_WARNING, ['php' => true, 'services' => 2, 'days' => 4]);
 

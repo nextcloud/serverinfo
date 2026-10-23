@@ -72,6 +72,34 @@ class OsSetupChecksTest extends \Test\TestCase {
 		$this->assertSame('https://cloud.example.org/settings/admin/serverinfo#os', $result->getDescriptionParameters()['link']['link'] ?? null);
 	}
 
+	public function testAnOldStatusMakesEveryCheckAWarning(): void {
+		$this->given(
+			new OsStatus(OsStatus::STATE_OK, 1),
+			new Concern(Concern::SUPPORT, Concern::LEVEL_OK, ['state' => 'rolling']),
+			new Concern(Concern::FRESHNESS, Concern::LEVEL_WARNING, ['collectedAt' => 1, 'ageSeconds' => 3 * 86400, 'systemCron' => true]),
+		);
+
+		$result = (new OsSupportCheck($this->l10n, $this->urlGenerator, $this->service, $this->texts()))->run();
+
+		$this->assertSame(SetupResult::WARNING, $result->getSeverity());
+		$this->assertStringContainsString('The operating system was last checked 3 days ago', (string)$result->getDescription());
+		$this->assertStringContainsString('Check that the system cron job for Nextcloud runs.', (string)$result->getDescription());
+	}
+
+	public function testWithoutSystemCronTheChecksSayHowToFixIt(): void {
+		$this->given(
+			new OsStatus(OsStatus::STATE_OK, 1),
+			new Concern(Concern::UPDATES, Concern::LEVEL_ERROR, ['classified' => true, 'security' => 3, 'other' => 0]),
+			new Concern(Concern::FRESHNESS, Concern::LEVEL_WARNING, ['collectedAt' => 1, 'ageSeconds' => 7200, 'systemCron' => false]),
+		);
+
+		$result = (new OsUpdatesCheck($this->l10n, $this->urlGenerator, $this->service, $this->texts()))->run();
+
+		$this->assertSame(SetupResult::ERROR, $result->getSeverity(), 'An old status never lowers a level');
+		$this->assertStringContainsString('The operating system was last checked 2 hours ago', (string)$result->getDescription());
+		$this->assertStringContainsString('Switch background jobs to Cron', (string)$result->getDescription());
+	}
+
 	public function testRebootCheck(): void {
 		$this->given(
 			new OsStatus(OsStatus::STATE_OK, 1),

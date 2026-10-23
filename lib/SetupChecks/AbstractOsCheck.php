@@ -73,9 +73,19 @@ abstract class AbstractOsCheck implements ISetupCheck {
 		$worst = $concerns[0];
 
 		$text = trim($this->texts->title($worst, $status, $this->l10n) . '. ' . $this->texts->detail($worst, $this->l10n));
+		$level = $worst->level;
+
+		// Every check judges the stored status, so an old one makes each of them doubtful.
+		$freshness = $verdict?->get(Concern::FRESHNESS);
+		if ($freshness !== null && $freshness->level === Concern::LEVEL_WARNING) {
+			$text .= ' ' . $this->texts->title($freshness, $status, $this->l10n) . '. ' . $this->texts->detail($freshness, $this->l10n);
+			if (Concern::rank($level) < Concern::rank(Concern::LEVEL_WARNING)) {
+				$level = Concern::LEVEL_WARNING;
+			}
+		}
 		$description = $text . ' {link}';
 
-		return match ($worst->level) {
+		return match ($level) {
 			Concern::LEVEL_ERROR => SetupResult::error($description, null, $this->linkParameter()),
 			Concern::LEVEL_WARNING => SetupResult::warning($description, null, $this->linkParameter()),
 			Concern::LEVEL_INFO => SetupResult::info($description, null, $this->linkParameter()),
