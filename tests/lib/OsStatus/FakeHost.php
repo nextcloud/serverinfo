@@ -37,6 +37,8 @@ class FakeHost implements IHost {
 	public array $env = [];
 	/** @var list<string> */
 	public array $binaries = [];
+	/** @var list<string> binaries that may be installed, but open_basedir hides them */
+	public array $hiddenBinaries = [];
 	/** @var list<string> */
 	public array $basedir = [];
 	/** @var list<string> commands that were run, for assertions */
@@ -129,6 +131,16 @@ class FakeHost implements IHost {
 	#[\Override]
 	public function hasBinary(string $binary): bool {
 		return $this->commandsAllowed && in_array($binary, $this->binaries, true);
+	}
+
+	#[\Override]
+	public function binaryState(string $binary): ?bool {
+		return match (true) {
+			!$this->commandsAllowed => false,
+			in_array($binary, $this->binaries, true) => true,
+			in_array($binary, $this->hiddenBinaries, true) => null,
+			default => false,
+		};
 	}
 
 	#[\Override]

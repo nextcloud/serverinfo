@@ -30,6 +30,9 @@ class CommandRunner {
 	/** Waiting for output may be interrupted by a signal; failing this often in a row is an error. */
 	private const MAX_SELECT_FAILURES = 3;
 
+	/** @var array<string, string|false> binary => the path it runs from, or false when it is missing */
+	private array $found = [];
+
 	public function isAvailable(): bool {
 		return function_exists('proc_open')
 			&& function_exists('proc_get_status')
@@ -38,13 +41,19 @@ class CommandRunner {
 	}
 
 	public function resolve(string $binary): ?string {
-		foreach ($this->candidates($binary) as [$path, $verified]) {
-			if ($verified) {
-				return $path;
-			}
-		}
+		$found = $this->found[$binary] ?? $this->lookUp($binary);
 
-		return null;
+		return is_string($found) ? $found : null;
+	}
+
+	/**
+	 * Whether a binary is installed: null when open_basedir hides the system
+	 * directories and it has not been run yet.
+	 */
+	public function state(string $binary): ?bool {
+		$found = $this->found[$binary] ?? $this->lookUp($binary);
+
+		return $found === null ? null : is_string($found);
 	}
 
 	/**
@@ -55,7 +64,15 @@ class CommandRunner {
 			return null;
 		}
 
-		foreach ($this->candidates($binary) as [$path, $verified]) {
+		$found = $this->found[$binary] ?? null;
+		if ($found === false) {
+			return null;
+		}
+
+		$candidates = is_string($found) ? [[$found, true]] : $this->candidates($binary);
+		$guessesOnly = true;
+		foreach ($candidates as [$path, $verified]) {
+			$guessesOnly = $guessesOnly && !$verified;
 			$result = $this->execute($path, $arguments, max(1, $timeout));
 			if ($result === null) {
 				continue;
@@ -67,10 +84,33 @@ class CommandRunner {
 				continue;
 			}
 
+			$this->found[$binary] = $path;
+
 			return $result;
 		}
 
+		// Every guess failed to start, so the binary is not there.
+		if ($guessesOnly) {
+			$this->found[$binary] = false;
+		}
+
 		return null;
+	}
+
+	/**
+	 * Looks a binary up on disk and remembers a definite answer.
+	 *
+	 * @return string|false|null the path, false when it is missing, null when only running it can tell
+	 */
+	private function lookUp(string $binary): string|false|null {
+		$candidates = $this->candidates($binary);
+		if ($candidates === []) {
+			return $this->found[$binary] = false;
+		}
+
+		[$path, $verified] = $candidates[0];
+
+		return $verified ? $this->found[$binary] = $path : null;
 	}
 
 	/**
@@ -115,14 +155,14 @@ class CommandRunner {
 		return @is_file($path) && @is_executable($path);
 	}
 
-	private function hasOpenBasedir(): bool {
+	protected function hasOpenBasedir(): bool {
 		return trim((string)ini_get('open_basedir')) !== '';
 	}
 
 	/**
 	 * @param list<string> $arguments
 	 */
-	private function execute(string $path, array $arguments, int $timeout): ?CommandResult {
+	protected function execute(string $path, array $arguments, int $timeout): ?CommandResult {
 		$descriptors = [
 			0 => ['file', '/dev/null', 'r'],
 			1 => ['pipe', 'w'],

@@ -15,6 +15,8 @@ namespace OCA\ServerInfo\OsStatus\Host;
  * Every method answers "unknown" (null, false or an empty list) instead of
  * throwing, because a web server is routinely denied parts of the system:
  * open_basedir, ProcSubset=pid, disabled functions, missing binaries.
+ *
+ * @psalm-api
  */
 interface IHost {
 	/**
@@ -60,7 +62,17 @@ interface IHost {
 	 */
 	public function run(string $binary, array $arguments = [], int $timeout = 10): ?CommandResult;
 
+	/**
+	 * Whether a binary is known to be installed.
+	 */
 	public function hasBinary(string $binary): bool;
+
+	/**
+	 * Whether a binary is installed: true or false when that is known, null
+	 * when only running it can tell, because open_basedir hides the system
+	 * directories.
+	 */
+	public function binaryState(string $binary): ?bool;
 
 	public function canRunCommands(): bool;
 

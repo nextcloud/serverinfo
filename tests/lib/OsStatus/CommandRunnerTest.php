@@ -9,6 +9,7 @@ declare(strict_types=1);
 
 namespace OCA\ServerInfo\Tests\OsStatus;
 
+use OCA\ServerInfo\OsStatus\Host\CommandResult;
 use OCA\ServerInfo\OsStatus\Host\CommandRunner;
 
 /**
@@ -106,6 +107,42 @@ class CommandRunnerTest extends \Test\TestCase {
 		$this->assertSame('timed out after 120 s', $this->runner->run('sh', ['-c', 'sleep 30'], 1)?->failure(120));
 		$this->assertSame('E: broken', $this->runner->run('sh', ['-c', 'echo out; printf "E: broken\\nmore\\n" >&2; exit 100'], 10)?->failure(10));
 		$this->assertSame('exit code 4', $this->runner->run('sh', ['-c', 'exit 4'], 10)?->failure(10));
+	}
+
+	public function testBinaryStates(): void {
+		$this->assertTrue($this->runner->state('sh'));
+		$this->assertFalse($this->runner->state('serverinfo-no-such-binary'));
+	}
+
+	public function testUnderOpenBasedirAMissingBinaryIsTriedOnce(): void {
+		$runner = new class extends CommandRunner {
+			public int $started = 0;
+
+			#[\Override]
+			protected function hasOpenBasedir(): bool {
+				return true;
+			}
+
+			#[\Override]
+			protected function execute(string $path, array $arguments, int $timeout): ?CommandResult {
+				$this->started++;
+
+				return parent::execute($path, $arguments, $timeout);
+			}
+		};
+
+		$this->assertNull($runner->state('serverinfo-no-such-binary'), 'Hidden directories cannot tell');
+		$this->assertNull($runner->run('serverinfo-no-such-binary', [], 5));
+		$started = $runner->started;
+		$this->assertGreaterThan(0, $started);
+
+		$this->assertFalse($runner->state('serverinfo-no-such-binary'), 'Running it told');
+		$this->assertNull($runner->run('serverinfo-no-such-binary', [], 5));
+		$this->assertSame($started, $runner->started, 'A missing binary is not tried again');
+
+		$this->assertSame("ok\n", $runner->run('sh', ['-c', 'echo ok'], 5)?->stdout);
+		$this->assertSame("ok\n", $runner->run('sh', ['-c', 'echo ok'], 5)?->stdout);
+		$this->assertSame($started + 2, $runner->started, 'A found binary runs from where it was found');
 	}
 
 	public function testUnknownBinaries(): void {

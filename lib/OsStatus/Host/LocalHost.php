@@ -108,6 +108,11 @@ class LocalHost implements IHost {
 	}
 
 	#[\Override]
+	public function binaryState(string $binary): ?bool {
+		return $this->runner->isAvailable() ? $this->runner->state($binary) : false;
+	}
+
+	#[\Override]
 	public function canRunCommands(): bool {
 		return $this->runner->isAvailable();
 	}
