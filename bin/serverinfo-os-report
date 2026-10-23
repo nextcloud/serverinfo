@@ -447,28 +447,38 @@ EOF
 		exit 0
 	fi
 
-	# The directory must be root's alone: anyone who can write to it could swap
-	# the report, or plant a symlink for root to write through.
-	directory=$(dirname "$OUTPUT")
-	[ -L "$directory" ] && die "$directory is a symbolic link"
-	if [ ! -d "$directory" ]; then
+	write_report "$REPORT" "$OUTPUT"
+}
+
+# Creates the report's directory ($1) if needed and makes sure it and its
+# parent are root's alone: anyone who can write to them could swap the
+# report, or plant a symlink for root to write through.
+secure_directory() {
+	[ -L "$1" ] && die "$1 is a symbolic link"
+	if [ ! -d "$1" ]; then
 		# Parent directories get 0755 from the umask set above.
 		# shellcheck disable=SC2174
-		mkdir -p -m 0755 "$directory" || die "cannot create $directory"
+		mkdir -p -m 0755 "$1" || die "cannot create $1"
 	fi
-	for path in "$directory" "$(dirname "$directory")"; do
+	for path in "$1" "$(dirname "$1")"; do
 		[ "$(stat -c %u "$path")" = 0 ] || die "$path must be owned by root"
 		case "$(stat -c %a "$path")" in
 			*[2367]? | *[2367]) die "$path must not be writable by group or others" ;;
 		esac
 	done
+}
+
+# Replaces the report file ($2) with the report ($1) in one step.
+write_report() {
+	directory=$(dirname "$2")
+	secure_directory "$directory"
 
 	temporary=$(mktemp "$directory/.os-report.XXXXXX") || die "cannot write to $directory"
 	trap 'rm -f "$temporary"' EXIT
-	printf '%s\n' "$REPORT" > "$temporary" || die "cannot write $temporary"
+	printf '%s\n' "$1" > "$temporary" || die "cannot write $temporary"
 	chmod 0644 "$temporary"
 	# rename(2) replaces a symbolic link at the target instead of following it.
-	mv -f "$temporary" "$OUTPUT" || die "cannot replace $OUTPUT"
+	mv -f "$temporary" "$2" || die "cannot replace $2"
 	trap - EXIT
 }
 
