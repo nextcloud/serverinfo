@@ -31,6 +31,7 @@ class ConfigLexicon implements ILexicon {
 	public const CACHED_OS_STATUS = 'cached_os_status';
 	public const CACHED_OS_FIRST_SEEN = 'cached_os_first_seen';
 	public const CACHED_OS_PHP_PROCESS = 'cached_os_php_process';
+	public const CACHED_OS_PHP_OUTDATED_SINCE = 'cached_os_php_outdated_since';
 	public const JOB_INTERVAL_OS_STATUS = 'job_interval_os_status';
 	public const OS_SECURITY_WARNING_DAYS = 'os_security_warning_days';
 	public const OS_SECURITY_ERROR_DAYS = 'os_security_error_days';
@@ -95,7 +96,7 @@ class ConfigLexicon implements ILexicon {
 				self::CACHED_OS_FIRST_SEEN,
 				ValueType::ARRAY,
 				[],
-				'When each pending security update, reboot reason and restart was first seen, for the alert thresholds',
+				'When each pending security update and reboot reason was first seen, for the alert thresholds',
 				lazy: true,
 			),
 			new Entry(
@@ -103,6 +104,13 @@ class ConfigLexicon implements ILexicon {
 				ValueType::ARRAY,
 				[],
 				'What the last web request saw of its own PHP process: libraries replaced on disk since it started',
+				lazy: true,
+			),
+			new Entry(
+				self::CACHED_OS_PHP_OUTDATED_SINCE,
+				ValueType::INT,
+				0,
+				'When web requests first saw their PHP process running replaced libraries, 0 when they do not',
 				lazy: true,
 			),
 			new Entry(

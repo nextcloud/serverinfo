@@ -52,7 +52,13 @@ class OsStatusStore {
 		}
 
 		$this->appConfig->setAppValueArray(ConfigLexicon::CACHED_OS_PHP_PROCESS, $sample->toArray());
-		$this->firstSeen($sample->isOutdated() ? ['php-process' => null] : [], $sample->sampledAt, ['php-process']);
+
+		$since = $this->phpOutdatedSince();
+		if ($sample->isOutdated() && $since === null) {
+			$this->appConfig->setAppValueInt(ConfigLexicon::CACHED_OS_PHP_OUTDATED_SINCE, $sample->sampledAt);
+		} elseif (!$sample->isOutdated() && $since !== null) {
+			$this->appConfig->setAppValueInt(ConfigLexicon::CACHED_OS_PHP_OUTDATED_SINCE, 0);
+		}
 	}
 
 	public function loadPhpSample(): ?PhpProcessSample {
@@ -61,12 +67,14 @@ class OsStatusStore {
 
 	/**
 	 * When the PHP process was first seen running outdated libraries.
+	 *
+	 * Web requests keep this under a key of its own, because the collector
+	 * rewrites the first-seen times of everything else at the same time.
 	 */
 	public function phpOutdatedSince(): ?int {
-		$seen = $this->appConfig->getAppValueArray(ConfigLexicon::CACHED_OS_FIRST_SEEN);
-		$since = $seen['php-process'] ?? null;
+		$since = $this->appConfig->getAppValueInt(ConfigLexicon::CACHED_OS_PHP_OUTDATED_SINCE);
 
-		return is_int($since) ? $since : null;
+		return $since > 0 ? $since : null;
 	}
 
 	/**
