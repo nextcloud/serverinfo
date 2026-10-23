@@ -20,6 +20,8 @@ class HelperScriptTest extends \Test\TestCase {
 	private const SCRIPT = __DIR__ . '/../../../bin/serverinfo-os-report';
 
 	private CommandRunner $runner;
+	/** @var list<string> */
+	private array $temporary = [];
 
 	protected function setUp(): void {
 		parent::setUp();
@@ -64,20 +66,51 @@ class HelperScriptTest extends \Test\TestCase {
 	}
 
 	/**
-	 * Runs dnf_updates_json from the script on captured output.
+	 * Runs shell code with the script's functions loaded; the arguments are
+	 * $1, $2, ... to the code.
+	 *
+	 * @return array{0: int, 1: string, 2: string} exit code, stdout and stderr
 	 */
-	private function dnfUpdates(string $checkUpdate, string $advisories, string $installed): array {
+	private function functions(string $code, string ...$arguments): array {
 		$script = realpath(self::SCRIPT) ?: self::SCRIPT;
 		$result = $this->runner->run('sh', [
 			'-c',
-			'SERVERINFO_OS_REPORT_FUNCTIONS_ONLY=1; . "$1"; dnf_updates_json "$2" "$3" "$4"',
-			'sh', $script, $checkUpdate, $advisories, $installed,
+			'SERVERINFO_OS_REPORT_FUNCTIONS_ONLY=1; . "$0"; ' . $code,
+			$script, ...$arguments,
 		], 30);
-		$this->assertSame(0, $result?->exitCode, (string)$result?->stderr);
+		$this->assertNotNull($result);
+
+		return [$result->exitCode, $result->stdout, $result->stderr];
+	}
+
+	/**
+	 * A directory for one test, removed afterwards.
+	 */
+	private function temporaryDirectory(): string {
+		$directory = sys_get_temp_dir() . '/serverinfo-helper-' . bin2hex(random_bytes(6));
+		mkdir($directory, 0o700);
+		$this->temporary[] = $directory;
+
+		return realpath($directory) ?: $directory;
+	}
+
+	protected function tearDown(): void {
+		foreach ($this->temporary as $directory) {
+			$this->runner->run('rm', ['-rf', $directory], 10);
+		}
+		parent::tearDown();
+	}
+
+	/**
+	 * Runs dnf_updates_json from the script on captured output.
+	 */
+	private function dnfUpdates(string $checkUpdate, string $advisories, string $installed): array {
+		[$exit, $stdout, $stderr] = $this->functions('dnf_updates_json "$1" "$2" "$3"', $checkUpdate, $advisories, $installed);
+		$this->assertSame(0, $exit, $stderr);
 
 		$report = HelperReport::fromArray([
 			'generatedAt' => 1, 'helperVersion' => '1.0.0', 'hostname' => 'h',
-			'pendingUpdates' => json_decode($result->stdout, true, 16, JSON_THROW_ON_ERROR),
+			'pendingUpdates' => json_decode($stdout, true, 16, JSON_THROW_ON_ERROR),
 		]);
 
 		$updates = [];
@@ -123,6 +156,77 @@ class HelperScriptTest extends \Test\TestCase {
 
 		$this->assertSame(['ok'], array_keys($updates));
 		$this->assertSame([], $updates['ok'][3]);
+	}
+
+	public function testNeedrestartBatchOutput(): void {
+		$output = implode("\n", [
+			'NEEDRESTART-VER: 3.6',
+			'NEEDRESTART-KCUR: 6.8.0-45-generic',
+			'NEEDRESTART-KEXP: 6.8.0-48-generic',
+			'NEEDRESTART-KSTA: 3',
+			'NEEDRESTART-UCSTA: 2',
+			'NEEDRESTART-SVC: php8.3-fpm.service',
+			'NEEDRESTART-SVC: ssh',
+			'NEEDRESTART-SVC: php8.3-fpm.service',
+			'NEEDRESTART-SVC: bad;unit',
+			'NEEDRESTART-SESS: frank @ session #3',
+		]);
+
+		[$exit, $stdout] = $this->functions('parse_needrestart "$1"; printf "%s|%s" "$SERVICES" "$REBOOT_REASONS"', $output);
+
+		$this->assertSame(0, $exit);
+		$this->assertSame("php8.3-fpm.service\nssh.service\n|"
+			. '{"kind":"kernel","detail":"6.8.0-48-generic"},{"kind":"microcode","detail":null}', $stdout);
+	}
+
+	public function testNeedrestartWithoutKernelOrMicrocodeFindings(): void {
+		[$exit, $stdout] = $this->functions(
+			'parse_needrestart "$1"; printf "%s|%s" "$SERVICES" "$REBOOT_REASONS"',
+			"NEEDRESTART-VER: 3.11\nNEEDRESTART-KCUR: 7.0.0-38-generic\nNEEDRESTART-KEXP: 7.0.0-38-generic\nNEEDRESTART-KSTA: 1\n",
+		);
+
+		$this->assertSame([0, '|'], [$exit, $stdout]);
+	}
+
+	public function testOutputThatIsNotNeedrestartsIsRejected(): void {
+		$this->assertSame(1, $this->functions('parse_needrestart "$1"', "Scanning processes...\n")[0]);
+	}
+
+	/**
+	 * needrestart runs with a configuration that turns off its interpreter
+	 * scan, read from a pipe.
+	 */
+	public function testNeedrestartRunsWithoutInterpreterScan(): void {
+		$directory = $this->temporaryDirectory();
+		file_put_contents($directory . '/needrestart', implode("\n", [
+			'#!/bin/sh',
+			'printf "%s\n" "$*" > "$CAPTURE/arguments"',
+			'cat "$2" > "$CAPTURE/config"',
+			'printf "NEEDRESTART-VER: 3.6\nNEEDRESTART-SVC: nginx.service\n"',
+		]) . "\n");
+		chmod($directory . '/needrestart', 0o755);
+
+		[$exit, $stdout, $stderr] = $this->functions(
+			'CAPTURE=$1; export CAPTURE; PATH="$1:$PATH"; from_needrestart; printf "%s" "$SERVICES"',
+			$directory,
+		);
+
+		$this->assertSame([0, "nginx.service\n"], [$exit, $stdout], $stderr);
+		$this->assertSame("-c /dev/stdin -b -r l\n", file_get_contents($directory . '/arguments'));
+		$config = (string)file_get_contents($directory . '/config');
+		$this->assertStringContainsString('$nrconf{interpscan} = 0;', $config);
+
+		if ($this->runner->resolve('perl') === null) {
+			return;
+		}
+		// Evaluated the way needrestart evaluates its configuration.
+		$result = $this->runner->run('perl', ['-e', implode(' ', [
+			'our %nrconf = (interpscan => 1, sendnotify => 1);',
+			'eval do { local $/; open my $fh, $ARGV[0] or die "ERROR: $!\n"; my $cfg = <$fh>; close($fh); $cfg; };',
+			'die "Error parsing: $@" if $@;',
+			'print "$nrconf{interpscan} $nrconf{sendnotify}";',
+		]), $directory . '/config'], 10);
+		$this->assertSame([0, '0 0'], [$result?->exitCode, $result?->stdout], (string)$result?->stderr);
 	}
 
 	public function testRequiresRoot(): void {
