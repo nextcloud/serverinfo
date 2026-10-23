@@ -53,7 +53,7 @@ class Pacman implements IPackageManager, IReportsDiagnostics {
 
 	#[\Override]
 	public function isAvailable(): bool {
-		return $this->host->hasBinary('pacman');
+		return $this->host->binaryState('pacman') !== false;
 	}
 
 	#[\Override]
@@ -95,7 +95,7 @@ class Pacman implements IPackageManager, IReportsDiagnostics {
 		// pacman -Qu exits 1 without a word when nothing is upgradable.
 		$nothing = $result->exitCode === 1 && trim($result->stdout) === '' && trim($result->stderr) === '';
 		if (!$nothing && !$result->succeeded()) {
-			throw new ProbeException('pacman -Qu failed: ' . ProbeHelper::firstLine($result->stderr ?: $result->stdout ?: 'exit code ' . $result->exitCode));
+			throw new ProbeException('pacman -Qu failed: ' . $result->failure(60));
 		}
 
 		return $this->withSecurity(self::parseUpdates($result->stdout));

@@ -132,7 +132,7 @@ class Dnf implements IPackageManager, IReportsDiagnostics {
 			throw new ProbeException('dnf could not be run.');
 		}
 		if (($result->exitCode !== 0 && $result->exitCode !== self::EXIT_UPDATES) || $result->timedOut || $result->truncated) {
-			throw new ProbeException('dnf check-update failed: ' . ProbeHelper::firstLine($result->stderr ?: $result->stdout));
+			throw new ProbeException('dnf check-update failed: ' . $result->failure(180));
 		}
 
 		$available = self::parseCheckUpdate($result->stdout);
@@ -210,7 +210,7 @@ class Dnf implements IPackageManager, IReportsDiagnostics {
 		if ($result === null || !$result->succeeded()) {
 			$this->advisoriesFailed = true;
 			$this->diagnostics[] = 'dnf could not list security advisories, so pending updates are not told apart into security fixes and others: '
-				. ProbeHelper::firstLine($result?->stderr ?: ($result?->timedOut ? 'timed out' : ''));
+				. ($result?->failure(180) ?? 'dnf could not be run');
 
 			return [];
 		}
