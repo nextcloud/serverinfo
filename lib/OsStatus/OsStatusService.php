@@ -9,6 +9,7 @@ declare(strict_types=1);
 
 namespace OCA\ServerInfo\OsStatus;
 
+use OCA\ServerInfo\Jobs\UpdateOsStatus;
 use OCA\ServerInfo\OsStatus\Host\IHost;
 use OCA\ServerInfo\OsStatus\Restart\PhpProcessProbe;
 use OCA\ServerInfo\OsStatus\Restart\PhpProcessSample;
@@ -17,6 +18,7 @@ use OCA\ServerInfo\OsStatus\Verdict\Thresholds;
 use OCA\ServerInfo\OsStatus\Verdict\Verdict;
 use OCP\AppFramework\Services\IAppConfig;
 use OCP\AppFramework\Utility\ITimeFactory;
+use OCP\IAppConfig as IServerConfig;
 
 /**
  * Reads the stored status and judges it. Everything that shows the
@@ -32,6 +34,7 @@ class OsStatusService {
 		private IAppConfig $appConfig,
 		private ITimeFactory $timeFactory,
 		private IHost $host,
+		private IServerConfig $serverConfig,
 	) {
 	}
 
@@ -74,6 +77,8 @@ class OsStatusService {
 			$this->store->phpOutdatedSince(),
 			$this->getThresholds(),
 			$this->timeFactory->getTime(),
+			UpdateOsStatus::runsFromSystemCron($this->serverConfig),
+			UpdateOsStatus::interval($this->serverConfig),
 		);
 	}
 

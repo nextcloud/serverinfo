@@ -13,9 +13,11 @@ use OCA\ServerInfo\OsStatus\OsStatus;
 use OCA\ServerInfo\OsStatus\OsStatusService;
 use OCA\ServerInfo\OsStatus\OsStatusStore;
 use OCA\ServerInfo\OsStatus\Restart\PhpProcessProbe;
+use OCA\ServerInfo\OsStatus\Verdict\Concern;
 use OCA\ServerInfo\OsStatus\Verdict\OsVerdict;
 use OCP\AppFramework\Services\IAppConfig;
 use OCP\AppFramework\Utility\ITimeFactory;
+use OCP\IAppConfig as IServerConfig;
 use PHPUnit\Framework\MockObject\MockObject;
 
 class OsStatusServiceTest extends \Test\TestCase {
@@ -23,6 +25,7 @@ class OsStatusServiceTest extends \Test\TestCase {
 
 	private OsStatusStore&MockObject $store;
 	private FakeHost $host;
+	private string $mode = 'cron';
 	private OsStatusService $service;
 
 	protected function setUp(): void {
@@ -38,7 +41,11 @@ class OsStatusServiceTest extends \Test\TestCase {
 		$time = $this->createMock(ITimeFactory::class);
 		$time->method('getTime')->willReturn(self::NOW);
 
-		$this->service = new OsStatusService($this->store, new OsVerdict(), new PhpProcessProbe($this->host), $config, $time, $this->host);
+		$serverConfig = $this->createMock(IServerConfig::class);
+		$serverConfig->method('getValueString')->willReturnCallback(fn (string $app, string $key, string $default = ''): string => $app === 'core' && $key === 'backgroundjobs_mode' ? $this->mode : $default);
+		$serverConfig->method('getValueInt')->willReturnCallback(static fn (string $app, string $key): int => $app === 'serverinfo' && $key === 'job_interval_os_status' ? 86400 : 0);
+
+		$this->service = new OsStatusService($this->store, new OsVerdict(), new PhpProcessProbe($this->host), $config, $time, $this->host, $serverConfig);
 	}
 
 	public function testOutdatedWhenPackagesChangedAfterTheCheck(): void {
@@ -56,5 +63,18 @@ class OsStatusServiceTest extends \Test\TestCase {
 		$this->store->expects($this->never())->method('savePhpSample');
 
 		$this->service->samplePhpProcess();
+	}
+
+	public function testFreshnessFollowsTheCronModeAndTheJobInterval(): void {
+		$status = new OsStatus(OsStatus::STATE_OK, self::NOW - 2 * 86400);
+
+		$fresh = $this->service->evaluate($status)?->get(Concern::FRESHNESS);
+		$this->assertSame(Concern::LEVEL_OK, $fresh?->level, 'Two days are within three daily runs');
+		$this->assertTrue($fresh->facts['systemCron']);
+
+		$this->mode = 'webcron';
+		$stale = $this->service->evaluate($status)?->get(Concern::FRESHNESS);
+		$this->assertSame(Concern::LEVEL_WARNING, $stale?->level);
+		$this->assertFalse($stale->facts['systemCron']);
 	}
 }

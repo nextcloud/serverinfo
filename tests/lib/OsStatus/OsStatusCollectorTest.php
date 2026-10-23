@@ -43,6 +43,7 @@ class OsStatusCollectorTest extends \Test\TestCase {
 	/** @var array<string, mixed> */
 	private array $config = [];
 	private ?string $stored = null;
+	private ?TimeSyncProbe $timeSync = null;
 
 	protected function setUp(): void {
 		parent::setUp();
@@ -84,7 +85,7 @@ class OsStatusCollectorTest extends \Test\TestCase {
 			new KernelProbe($host),
 			new CoreLibraryProbe($host),
 			$systemd,
-			new TimeSyncProbe($host),
+			$this->timeSync ?? new TimeSyncProbe($host),
 			new SecurityProbe($host),
 			new OsStatusStore($appConfig, $this->appData(), $cacheFactory),
 			$this->createMock(LoggerInterface::class),
@@ -247,6 +248,19 @@ class OsStatusCollectorTest extends \Test\TestCase {
 
 		$this->assertSame('apt', $status->packageManager);
 		$this->assertCount(2, $status->updates ?? []);
+	}
+
+	public function testAThrowingProbeCostsOnlyItsOwnFinding(): void {
+		$this->withPendingUpdates();
+		$this->host->modified['/var/lib/apt/periodic/update-success-stamp'] = self::NOW - 3600;
+		$this->timeSync = $this->createMock(TimeSyncProbe::class);
+		$this->timeSync->method('probe')->willThrowException(new \RuntimeException('broken'));
+
+		$status = $this->collector()->collect();
+
+		$this->assertCount(2, $status->updates ?? []);
+		$this->assertNull($status->timeSynchronized);
+		$this->assertContains('The time synchronisation could not be determined; see the Nextcloud log.', $status->diagnostics);
 	}
 
 	public function testWithoutProcesses(): void {

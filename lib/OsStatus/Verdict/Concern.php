@@ -28,6 +28,8 @@ final class Concern {
 	public const AUTOMATIC_UPDATES = 'automatic-updates';
 	public const FAILED_UNITS = 'failed-units';
 	public const TIME_SYNC = 'time-sync';
+	/** Whether the stored status still describes the system */
+	public const FRESHNESS = 'freshness';
 
 	/**
 	 * @param self::LEVEL_* $level

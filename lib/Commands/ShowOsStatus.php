@@ -67,11 +67,13 @@ class ShowOsStatus extends Base {
 			);
 		}
 		$pendingDays = $verdict?->get(Concern::UPDATES)?->facts['days'] ?? null;
+		$age = $verdict?->get(Concern::FRESHNESS)?->facts['ageSeconds'] ?? null;
 		$securityUpdates = $status->securityUpdates();
 
 		$this->writeArrayInOutputFormat($input, $output, [
 			'level' => $verdict?->level() ?? Concern::LEVEL_UNKNOWN,
 			'collectedAt' => date(DATE_ATOM, $status->collectedAt),
+			'statusAge' => is_int($age) ? self::formatAge($age) : 'unknown',
 			'release' => $status->release?->prettyName ?? 'unknown',
 			'kernel' => $status->kernel,
 			'environment' => $status->environment->kind,
@@ -84,6 +86,17 @@ class ShowOsStatus extends Base {
 		]);
 
 		return self::exitCode($verdict?->level());
+	}
+
+	/**
+	 * A duration in its two largest units, e.g. "3 d 4 h" or "12 min".
+	 */
+	public static function formatAge(int $seconds): string {
+		return match (true) {
+			$seconds >= 86400 => sprintf('%d d %d h', intdiv($seconds, 86400), intdiv($seconds % 86400, 3600)),
+			$seconds >= 3600 => sprintf('%d h %d min', intdiv($seconds, 3600), intdiv($seconds % 3600, 60)),
+			default => sprintf('%d min', intdiv(max(0, $seconds), 60)),
+		};
 	}
 
 	/**

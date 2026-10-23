@@ -27,9 +27,18 @@ class OsVerdict {
 	/** Package managers whose metadata is refreshed in place and can go stale */
 	public const LISTS_AGE_MATTERS = ['apt', 'dnf', 'zypper', 'apk'];
 
+	/** A status older than this many collection intervals is stale, */
+	public const STALE_AFTER_INTERVALS = 3;
+	/** but never younger than this, in seconds. */
+	public const STALE_AFTER_MIN = 6 * 3600;
+
 	private const DAY = 86400;
 
-	public function evaluate(OsStatus $status, ?PhpProcessSample $php, ?int $phpOutdatedSince, Thresholds $thresholds, int $now): Verdict {
+	/**
+	 * @param bool $systemCron whether background jobs run from system cron, which the collection needs
+	 * @param int $collectInterval seconds between two collections
+	 */
+	public function evaluate(OsStatus $status, ?PhpProcessSample $php, ?int $phpOutdatedSince, Thresholds $thresholds, int $now, bool $systemCron = true, int $collectInterval = 3600): Verdict {
 		if ($status->state !== OsStatus::STATE_OK) {
 			return new Verdict([]);
 		}
@@ -49,8 +58,33 @@ class OsVerdict {
 		}
 		$concerns[] = $this->failedUnits($status);
 		$concerns[] = $this->timeSync($status);
+		$concerns[] = $this->freshness($status, $now, $systemCron, $collectInterval);
 
 		return new Verdict($concerns);
+	}
+
+	/**
+	 * Whether the stored status still describes the system. Only the
+	 * background job collects it, and only from system cron, so without
+	 * system cron or with cron stopped it silently stops changing.
+	 *
+	 * @param OsStatus|null $status null when nothing has been collected
+	 */
+	public function freshness(?OsStatus $status, int $now, bool $systemCron, int $collectInterval): Concern {
+		$facts = [
+			'collectedAt' => $status?->collectedAt,
+			'ageSeconds' => null,
+			'systemCron' => $systemCron,
+		];
+		if ($status === null) {
+			return new Concern(Concern::FRESHNESS, Concern::LEVEL_UNKNOWN, $facts);
+		}
+
+		$age = max(0, $now - $status->collectedAt);
+		$facts['ageSeconds'] = $age;
+		$stale = $age > max(self::STALE_AFTER_MIN, self::STALE_AFTER_INTERVALS * $collectInterval);
+
+		return new Concern(Concern::FRESHNESS, $stale || !$systemCron ? Concern::LEVEL_WARNING : Concern::LEVEL_OK, $facts);
 	}
 
 	private function updates(OsStatus $status, Thresholds $thresholds, int $now): Concern {

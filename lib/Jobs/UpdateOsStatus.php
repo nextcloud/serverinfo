@@ -28,21 +28,34 @@ use OCP\IAppConfig;
  * @psalm-api
  */
 class UpdateOsStatus extends TimedJob {
+	private const MIN_INTERVAL = 300;
+
 	public function __construct(
 		ITimeFactory $time,
 		private OsStatusCollector $collector,
 		private IAppConfig $appConfig,
 	) {
 		parent::__construct($time);
-		$this->setInterval(max(300, $appConfig->getValueInt(Application::APP_ID, ConfigLexicon::JOB_INTERVAL_OS_STATUS)));
+		$this->setInterval(self::interval($appConfig));
 	}
 
 	#[\Override]
 	protected function run($argument): void {
-		if ($this->appConfig->getValueString('core', 'backgroundjobs_mode', 'ajax') !== 'cron') {
+		if (!self::runsFromSystemCron($this->appConfig)) {
 			return;
 		}
 
 		$this->collector->collectAndStore();
+	}
+
+	/**
+	 * Seconds between two collections.
+	 */
+	public static function interval(IAppConfig $appConfig): int {
+		return max(self::MIN_INTERVAL, $appConfig->getValueInt(Application::APP_ID, ConfigLexicon::JOB_INTERVAL_OS_STATUS));
+	}
+
+	public static function runsFromSystemCron(IAppConfig $appConfig): bool {
+		return $appConfig->getValueString('core', 'backgroundjobs_mode', 'ajax') === 'cron';
 	}
 }
