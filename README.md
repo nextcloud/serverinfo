@@ -47,9 +47,10 @@ only in simulation mode), `systemctl`, `timedatectl`, `chronyc` and
 `systemd-detect-virt`. Anything it may not read or run is reported as unknown.
 
 These queries stay offline, with one exception: on Arch, `checkupdates`
-downloads the package databases into a temporary directory of the web server
-user, and `arch-audit` fetches the security advisories from
-security.archlinux.org. To keep Arch offline as well, run
+downloads the package databases from the mirrors in
+`/etc/pacman.d/mirrorlist` into a temporary directory of the web server user,
+and `arch-audit` fetches the security advisories from security.archlinux.org.
+These are the only outbound connections the operating system status makes. To keep Arch offline as well, run
 `occ config:app:set serverinfo os_allow_network --type=boolean --value=false`.
 Pending updates then come from the databases root last synced, the age of
 those databases counts as the package list age, and security fixes are not

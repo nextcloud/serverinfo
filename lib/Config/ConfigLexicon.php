@@ -132,7 +132,7 @@ class ConfigLexicon implements ILexicon {
 				self::OS_ALLOW_NETWORK,
 				ValueType::BOOL,
 				true,
-				'Whether the operating system status may use the network as the web server user: on Arch, checkupdates syncs its own package databases and arch-audit fetches the security advisories',
+				'Whether the operating system status may use the network as the web server user: on Arch, checkupdates syncs its own package databases from the pacman mirrors and arch-audit fetches the security advisories from security.archlinux.org',
 				lazy: true,
 			),
 		];
