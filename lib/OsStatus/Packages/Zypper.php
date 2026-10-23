@@ -10,7 +10,9 @@ declare(strict_types=1);
 namespace OCA\ServerInfo\OsStatus\Packages;
 
 use OCA\ServerInfo\OsStatus\Health\SystemdProbe;
+use OCA\ServerInfo\OsStatus\Host\CommandResult;
 use OCA\ServerInfo\OsStatus\Host\IHost;
+use OCA\ServerInfo\OsStatus\OsRelease;
 use OCA\ServerInfo\OsStatus\Reboot\RebootReason;
 
 /**
@@ -24,9 +26,29 @@ use OCA\ServerInfo\OsStatus\Reboot\RebootReason;
  *
  * @psalm-api
  */
-class Zypper implements IPackageManager {
+class Zypper implements IPackageManager, IReportsDiagnostics {
 	/** `zypper needs-rebooting` exits with this when a reboot is needed */
 	private const EXIT_REBOOT_NEEDED = 102;
+
+	/**
+	 * Informational exit codes, after which the output is complete: updates
+	 * or security updates needed (100, 101), reboot or restart needed (102,
+	 * 103), a name not found (104) and repositories skipped (106). 105 means
+	 * zypper was interrupted.
+	 */
+	private const EXIT_INFORMATIONAL = [100, 101, 102, 103, 104, 106];
+
+	/** Some repositories could not be read and were left out */
+	private const EXIT_REPOS_SKIPPED = 106;
+
+	/** Another process holds the package manager lock */
+	private const EXIT_LOCKED = 7;
+
+	private const ROLLING = ['opensuse-tumbleweed', 'opensuse-microos', 'opensuse-slowroll'];
+
+	private ?OsRelease $release = null;
+	/** @var list<string> */
+	private array $diagnostics = [];
 
 	/** Patches looked up at once; more stay patch rows of their own. */
 	private const MAX_PATCH_LOOKUP = 100;
@@ -49,6 +71,16 @@ class Zypper implements IPackageManager {
 	}
 
 	/**
+	 * The same package manager, for the given distribution.
+	 */
+	public function withRelease(OsRelease $release): self {
+		$clone = clone $this;
+		$clone->release = $release;
+
+		return $clone;
+	}
+
+	/**
 	 * Tumbleweed and MicroOS publish no patches, only new package versions,
 	 * so there is nothing to tell security fixes by.
 	 */
@@ -58,13 +90,17 @@ class Zypper implements IPackageManager {
 	}
 
 	private function isRolling(): bool {
-		$release = $this->host->readFile('/etc/os-release', 65536) ?? '';
+		return in_array($this->release?->id, self::ROLLING, true);
+	}
 
-		return preg_match('/^ID="?opensuse-(tumbleweed|microos|slowroll)"?$/m', $release) === 1;
+	#[\Override]
+	public function getDiagnostics(): array {
+		return array_values(array_unique($this->diagnostics));
 	}
 
 	#[\Override]
 	public function getPendingUpdates(): array {
+		$this->diagnostics = [];
 		if ($this->isRolling()) {
 			return self::parsePackageUpdates($this->zypperXml(['list-updates']));
 		}
@@ -85,14 +121,14 @@ class Zypper implements IPackageManager {
 	private function patchPackages(array $patches): array {
 		$names = array_values(array_filter(
 			array_map(static fn (PendingUpdate $patch): string => $patch->name, $patches),
-			static fn (string $name): bool => preg_match('/^[A-Za-z0-9._:+-]+$/', $name) === 1,
+			static fn (string $name): bool => preg_match('/^[A-Za-z0-9][A-Za-z0-9._:+-]*$/', $name) === 1,
 		));
 		if ($names === []) {
 			return [];
 		}
 
 		$result = $this->host->run('zypper', ['--non-interactive', '--no-refresh', 'info', '-t', 'patch', ...array_slice($names, 0, self::MAX_PATCH_LOOKUP)], 180);
-		if ($result === null || !$result->succeeded()) {
+		if ($result === null || !self::isComplete($result)) {
 			return [];
 		}
 
@@ -292,21 +328,38 @@ class Zypper implements IPackageManager {
 		if ($result === null) {
 			throw new ProbeException('zypper could not be run.');
 		}
+		if ($result->exitCode === self::EXIT_LOCKED) {
+			throw new ProbeException('zypper is busy: another program holds the package manager lock, so pending updates could not be listed this time.');
+		}
+
 		// zypper reports trouble inside the XML stream as <message type="error">.
 		$xmlError = preg_match('#<message type="error">([^<]*)</message>#', $result->stdout, $matches) === 1
 			? html_entity_decode($matches[1], ENT_QUOTES | ENT_XML1)
 			: null;
-		if (!$result->succeeded() || $xmlError !== null) {
+		$skipped = $result->exitCode === self::EXIT_REPOS_SKIPPED;
+		if (!self::isComplete($result) || self::parseXml($result->stdout) === null || ($xmlError !== null && !$skipped)) {
 			throw new ProbeException('zypper ' . $arguments[0] . ' failed: ' . ProbeHelper::firstLine($xmlError ?? ($result->stderr ?: $result->stdout)));
+		}
+		if ($skipped) {
+			$this->diagnostics[] = 'zypper skipped repositories it could not read, so pending updates may be incomplete'
+				. ($xmlError !== null ? ': ' . ProbeHelper::firstLine($xmlError) : '.');
 		}
 
 		return $result->stdout;
 	}
 
+	/**
+	 * Whether zypper finished with its whole output.
+	 */
+	private static function isComplete(CommandResult $result): bool {
+		return ($result->exitCode === 0 || in_array($result->exitCode, self::EXIT_INFORMATIONAL, true))
+			&& !$result->timedOut && !$result->truncated;
+	}
+
 	#[\Override]
 	public function getHeldPackages(): ?array {
 		$result = $this->host->run('zypper', ['--non-interactive', '--no-refresh', '--xmlout', 'locks'], 60);
-		if ($result === null || !$result->succeeded()) {
+		if ($result === null || !self::isComplete($result)) {
 			return null;
 		}
 
@@ -368,14 +421,16 @@ class Zypper implements IPackageManager {
 		return $this->systemd->isRunning() ? new AutomaticUpdates(AutomaticUpdates::STATE_DISABLED) : AutomaticUpdates::unknown();
 	}
 
+	/**
+	 * `zypper needs-rebooting` only knows what /etc/zypp/needreboot lists,
+	 * which is nothing at all on some images, so its "no" is not a complete
+	 * answer and the generic core library check still runs.
+	 */
 	#[\Override]
 	public function getRebootReasons(): array {
 		$result = $this->host->run('zypper', ['--non-interactive', 'needs-rebooting'], 60);
-		if ($result !== null && $result->exitCode === self::EXIT_REBOOT_NEEDED) {
-			return [new RebootReason(RebootReason::KIND_DISTRIBUTION, null, [], $this->host->modifiedAt('/run/reboot-needed'))];
-		}
-
-		if ($result === null && $this->host->fileExists('/run/reboot-needed')) {
+		if (($result !== null && $result->exitCode === self::EXIT_REBOOT_NEEDED)
+			|| ($result === null && $this->host->fileExists('/run/reboot-needed'))) {
 			return [new RebootReason(RebootReason::KIND_DISTRIBUTION, null, [], $this->host->modifiedAt('/run/reboot-needed'))];
 		}
 
@@ -384,9 +439,7 @@ class Zypper implements IPackageManager {
 
 	#[\Override]
 	public function hasOwnRebootCheck(): bool {
-		$result = $this->host->run('zypper', ['--non-interactive', 'needs-rebooting'], 60);
-
-		return $result !== null && ($result->exitCode === 0 || $result->exitCode === self::EXIT_REBOOT_NEEDED);
+		return false;
 	}
 
 	#[\Override]

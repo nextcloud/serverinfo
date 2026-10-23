@@ -157,9 +157,10 @@ class RealOutputTest extends \Test\TestCase {
 	public function testOpenSuseTumbleweed(): void {
 		$host = new FakeHost();
 		$host->binaries[] = 'zypper';
-		$host->withFile('/etc/os-release', FakeHost::fixture('tumbleweed-os-release'))
-			->withCommand('zypper', ['--non-interactive', '--no-refresh', '--xmlout', 'list-updates'], FakeHost::fixture('tumbleweed-zypper-updates.xml'));
-		$zypper = new Zypper($host, new Rpm($host), new SystemdProbe($host));
+		$host->withCommand('zypper', ['--non-interactive', '--no-refresh', '--xmlout', 'list-updates'], FakeHost::fixture('tumbleweed-zypper-updates.xml'));
+		$release = OsRelease::parse(FakeHost::fixture('tumbleweed-os-release'));
+		$this->assertNotNull($release);
+		$zypper = (new Zypper($host, new Rpm($host), new SystemdProbe($host)))->withRelease($release);
 
 		$this->assertFalse($zypper->classifiesSecurity());
 		$this->assertSame(['openSUSE-build-key', 'update-test-reboot-needed', 'update-test-security'], array_keys(self::names($zypper->getPendingUpdates())));

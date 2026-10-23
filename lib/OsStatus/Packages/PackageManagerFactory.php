@@ -30,7 +30,7 @@ class PackageManagerFactory {
 	public function forRelease(OsRelease $release): ?IPackageManager {
 		$candidate = match (true) {
 			$release->isLike('debian') || $release->isLike('ubuntu') => $this->apt->withRelease($release),
-			$release->isLike('suse') || str_starts_with($release->id, 'opensuse') || $release->id === 'sles' || $release->id === 'sled' => $this->zypper,
+			$release->isLike('suse') || str_starts_with($release->id, 'opensuse') || $release->id === 'sles' || $release->id === 'sled' => $this->zypper->withRelease($release),
 			$release->isLike('fedora') || $release->isLike('rhel') || $release->isLike('centos') || in_array($release->id, ['amzn', 'ol', 'almalinux', 'rocky'], true) => $this->dnf->withRelease($release),
 			$release->isLike('arch') => $this->pacman,
 			$release->id === 'alpine' => $this->apk,

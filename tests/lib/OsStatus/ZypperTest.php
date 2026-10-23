@@ -10,6 +10,8 @@ declare(strict_types=1);
 namespace OCA\ServerInfo\Tests\OsStatus;
 
 use OCA\ServerInfo\OsStatus\Health\SystemdProbe;
+use OCA\ServerInfo\OsStatus\Host\CommandResult;
+use OCA\ServerInfo\OsStatus\OsRelease;
 use OCA\ServerInfo\OsStatus\Packages\PendingUpdate;
 use OCA\ServerInfo\OsStatus\Packages\ProbeException;
 use OCA\ServerInfo\OsStatus\Packages\Rpm;
@@ -97,12 +99,77 @@ class ZypperTest extends \Test\TestCase {
 	}
 
 	public function testTumbleweedHasNoPatches(): void {
-		$this->host->withFile('/etc/os-release', "NAME=\"openSUSE Tumbleweed\"\nID=\"opensuse-tumbleweed\"\n")
+		$this->host->withCommand('zypper', ['--non-interactive', '--no-refresh', '--xmlout', 'list-updates'], self::UPDATES);
+		$release = OsRelease::parse("NAME=\"openSUSE Tumbleweed\"\nID=\"opensuse-tumbleweed\"\n");
+		$this->assertNotNull($release);
+		$zypper = $this->zypper->withRelease($release);
+
+		$this->assertFalse($zypper->classifiesSecurity());
+		$this->assertCount(1, $zypper->getPendingUpdates());
+		$this->assertStringContainsString('dup', $zypper->getUpgradeCommands()['all']);
+	}
+
+	public function testSkippedRepositoriesStillGiveUpdates(): void {
+		$this->host->withCommand('zypper', ['--non-interactive', '--no-refresh', '--xmlout', 'list-patches', '--category', 'security'], self::PATCHES, 106)
+			->withCommand('zypper', ['--non-interactive', '--no-refresh', '--xmlout', 'list-updates'],
+				str_replace('<update-status', "<message type=\"error\">Repository &apos;SLE-Module-Python3&apos; is out-of-date.</message>\n<update-status", self::UPDATES), 106);
+
+		$this->assertCount(2, $this->zypper->getPendingUpdates());
+		$this->assertSame(["zypper skipped repositories it could not read, so pending updates may be incomplete: Repository 'SLE-Module-Python3' is out-of-date."], array_values(array_filter(
+			$this->zypper->getDiagnostics(),
+			static fn (string $d): bool => str_contains($d, 'Python3'),
+		)));
+		$this->assertContains('zypper skipped repositories it could not read, so pending updates may be incomplete.', $this->zypper->getDiagnostics());
+	}
+
+	public function testInformationalExitCodesAreNotFailures(): void {
+		$this->host->withCommand('zypper', ['--non-interactive', '--no-refresh', '--xmlout', 'list-patches', '--category', 'security'], self::PATCHES, 101)
+			->withCommand('zypper', ['--non-interactive', '--no-refresh', '--xmlout', 'list-updates'], self::UPDATES, 100);
+
+		$this->assertCount(2, $this->zypper->getPendingUpdates());
+		$this->assertSame([], $this->zypper->getDiagnostics());
+	}
+
+	public function testLockedZypperIsBusy(): void {
+		$this->host->withCommand('zypper', ['--non-interactive', '--no-refresh', '--xmlout', 'list-patches', '--category', 'security'], '', 7, "System management is locked by the application with pid 4242 (zypper).\n");
+
+		$this->expectException(ProbeException::class);
+		$this->expectExceptionMessage('zypper is busy');
+		$this->zypper->getPendingUpdates();
+	}
+
+	/**
+	 * @return array<string, array{int, string, bool}>
+	 */
+	public static function failedRuns(): array {
+		return [
+			'zypp problem' => [4, self::PATCHES, false],
+			'interrupted' => [105, self::PATCHES, false],
+			'no XML' => [106, 'Segmentation fault', false],
+			'timed out' => [0, self::PATCHES, true],
+		];
+	}
+
+	#[\PHPUnit\Framework\Attributes\DataProvider('failedRuns')]
+	public function testFailedRuns(int $exitCode, string $stdout, bool $timedOut): void {
+		$this->host->commands['zypper --non-interactive --no-refresh --xmlout list-patches --category security'] = new CommandResult($exitCode, $stdout, 'Problem', $timedOut);
+
+		$this->expectException(ProbeException::class);
+		$this->expectExceptionMessage('zypper list-patches failed');
+		$this->zypper->getPendingUpdates();
+	}
+
+	public function testPatchNamesMustStartWithALetterOrDigit(): void {
+		$patches = '<?xml version="1.0"?><stream><update-status><update-list>'
+			. '<update kind="patch" name="--help" edition="1" status="needed" category="security"/>'
+			. '<update kind="patch" name="openSUSE-Leap-16.0-1157" edition="1" status="needed" category="security"/>'
+			. '</update-list></update-status></stream>';
+		$this->host->withCommand('zypper', ['--non-interactive', '--no-refresh', '--xmlout', 'list-patches', '--category', 'security'], $patches)
 			->withCommand('zypper', ['--non-interactive', '--no-refresh', '--xmlout', 'list-updates'], self::UPDATES);
 
-		$this->assertFalse($this->zypper->classifiesSecurity());
-		$this->assertCount(1, $this->zypper->getPendingUpdates());
-		$this->assertStringContainsString('dup', $this->zypper->getUpgradeCommands()['all']);
+		$this->zypper->getPendingUpdates();
+
+		$this->assertContains('zypper --non-interactive --no-refresh info -t patch openSUSE-Leap-16.0-1157', $this->host->ran);
 	}
 
 	public function testPatchConflictsWithAnyArchitecture(): void {
@@ -130,6 +197,7 @@ class ZypperTest extends \Test\TestCase {
 
 		$this->host->withCommand('zypper', ['--non-interactive', 'needs-rebooting'], "No core libraries or services have been updated since the last system boot.\n", 0);
 		$this->assertSame([], $this->zypper->getRebootReasons());
-		$this->assertTrue($this->zypper->hasOwnRebootCheck());
+		$this->assertFalse($this->zypper->hasOwnRebootCheck(), 'needs-rebooting only knows what /etc/zypp/needreboot lists');
+		$this->assertCount(2, $this->host->ran, 'hasOwnRebootCheck() runs nothing');
 	}
 }
