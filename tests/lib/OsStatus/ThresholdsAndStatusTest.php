@@ -22,8 +22,39 @@ use OCA\ServerInfo\OsStatus\Restart\ServiceRestart;
 use OCA\ServerInfo\OsStatus\Support\SupportStatus;
 use OCA\ServerInfo\OsStatus\Verdict\Thresholds;
 use OCP\AppFramework\Services\IAppConfig;
+use PHPUnit\Framework\Attributes\DataProvider;
 
 class ThresholdsAndStatusTest extends \Test\TestCase {
+	private const VALID = [
+		'securityWarning' => 3, 'securityError' => 14, 'rebootWarning' => 7, 'rebootError' => 30,
+		'restartWarning' => 3, 'eolWarning' => 90, 'listsWarning' => 7, 'listsError' => 30,
+	];
+
+	public function testValidInput(): void {
+		$thresholds = Thresholds::fromInput(['securityWarning' => '0'] + self::VALID);
+
+		$this->assertSame(0, $thresholds->securityWarning);
+		$this->assertSame(self::VALID['listsError'], $thresholds->toArray()['listsError']);
+	}
+
+	public static function dataInvalidInput(): array {
+		return [
+			'missing' => [array_diff_key(self::VALID, ['eolWarning' => 1]), 'eolWarning'],
+			'negative' => [['rebootWarning' => -1] + self::VALID, 'rebootWarning'],
+			'too large' => [['listsWarning' => 3651] + self::VALID, 'listsWarning'],
+			'fraction' => [['restartWarning' => 1.5] + self::VALID, 'restartWarning'],
+			'text' => [['securityError' => '14 days'] + self::VALID, 'securityError'],
+			'error before warning' => [['securityWarning' => 10, 'securityError' => 5] + self::VALID, 'securityError'],
+		];
+	}
+
+	#[DataProvider('dataInvalidInput')]
+	public function testInvalidInputNamesTheField(array $input, string $field): void {
+		$this->expectException(\InvalidArgumentException::class);
+		$this->expectExceptionMessage($field);
+		Thresholds::fromInput($input);
+	}
+
 	public function testStatusRoundTrip(): void {
 		$status = new OsStatus(
 			OsStatus::STATE_OK,

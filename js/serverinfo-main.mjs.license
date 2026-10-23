@@ -19,6 +19,7 @@ SPDX-FileCopyrightText: Nextcloud GmbH and Nextcloud contributors
 SPDX-FileCopyrightText: Rob Cresswell <robcresswell@pm.me>
 SPDX-FileCopyrightText: atomiks
 SPDX-FileCopyrightText: chart.js developers
+SPDX-FileCopyrightText: debounce developers
 SPDX-FileCopyrightText: escape-html developers
 SPDX-FileCopyrightText: serverinfo developers
 
@@ -47,8 +48,14 @@ This file is generated from multiple sources. Included packages:
 - @nextcloud/browser-storage
 	- version: 0.5.0
 	- license: GPL-3.0-or-later
+- @nextcloud/capabilities
+	- version: 1.2.1
+	- license: GPL-3.0-or-later
 - @nextcloud/event-bus
 	- version: 3.3.3
+	- license: GPL-3.0-or-later
+- @nextcloud/initial-state
+	- version: 3.0.0
 	- license: GPL-3.0-or-later
 - @nextcloud/l10n
 	- version: 3.4.1
@@ -56,6 +63,9 @@ This file is generated from multiple sources. Included packages:
 - @nextcloud/logger
 	- version: 3.0.3
 	- license: GPL-3.0-or-later
+- @nextcloud/password-confirmation
+	- version: 6.1.0
+	- license: MIT
 - @nextcloud/router
 	- version: 3.2.0
 	- license: GPL-3.0-or-later
@@ -66,7 +76,7 @@ This file is generated from multiple sources. Included packages:
 	- version: 4.1.0
 	- license: MIT
 - @vitejs/plugin-vue
-	- version: 6.0.7
+	- version: 6.0.10
 	- license: MIT
 - @vue/reactivity
 	- version: 3.5.43
@@ -91,6 +101,9 @@ This file is generated from multiple sources. Included packages:
 	- license: MIT
 - chart.js
 	- version: 4.5.1
+	- license: MIT
+- debounce
+	- version: 3.0.0
 	- license: MIT
 - dompurify
 	- version: 3.4.16

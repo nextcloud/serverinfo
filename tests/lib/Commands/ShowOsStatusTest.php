@@ -54,6 +54,15 @@ class ShowOsStatusTest extends \Test\TestCase {
 		$this->assertSame(ShowOsStatus::EXIT_UNKNOWN, $this->execute($service));
 	}
 
+	public function testRefreshDoesNotWaitForARunningCollection(): void {
+		$collector = $this->createMock(OsStatusCollector::class);
+		$collector->method('isCollecting')->willReturn(true);
+		$collector->expects($this->never())->method('collectAndStore');
+		$written = [];
+
+		$this->assertSame(ShowOsStatus::EXIT_UNKNOWN, $this->execute($this->createMock(OsStatusService::class), $written, true, $collector));
+	}
+
 	public function testAStaleStatusWarnsAndShowsItsAge(): void {
 		$status = new OsStatus(OsStatus::STATE_OK, 1792411200 - 3 * 86400 - 7200);
 		$service = $this->createMock(OsStatusService::class);

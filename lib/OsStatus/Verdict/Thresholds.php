@@ -33,7 +33,7 @@ final class Thresholds {
 	];
 
 	/** Pairs where the error threshold may not come before the warning one. */
-	private const PAIRS = [
+	public const PAIRS = [
 		['securityWarning', 'securityError'],
 		['rebootWarning', 'rebootError'],
 		['listsWarning', 'listsError'],
@@ -61,5 +61,55 @@ final class Thresholds {
 		}
 
 		return new self(...$values);
+	}
+
+	/**
+	 * Validates a complete set of thresholds from user input.
+	 *
+	 * @param array<string, mixed> $input
+	 * @throws \InvalidArgumentException naming the offending setting
+	 */
+	public static function fromInput(array $input): self {
+		$values = [];
+		foreach (array_keys(self::KEYS) as $name) {
+			$value = $input[$name] ?? null;
+			if (is_string($value) && preg_match('/^\d+$/', $value) === 1) {
+				$value = (int)$value;
+			}
+			if (!is_int($value) || $value < 0 || $value > self::MAX_DAYS) {
+				throw new \InvalidArgumentException($name);
+			}
+			$values[$name] = $value;
+		}
+
+		foreach (self::PAIRS as [$warning, $error]) {
+			if ($values[$error] < $values[$warning]) {
+				throw new \InvalidArgumentException($error);
+			}
+		}
+
+		return new self(...$values);
+	}
+
+	public function save(IAppConfig $appConfig): void {
+		foreach ($this->toArray() as $name => $value) {
+			$appConfig->setAppValueInt(self::KEYS[$name], $value);
+		}
+	}
+
+	/**
+	 * @return array<string, int>
+	 */
+	public function toArray(): array {
+		return [
+			'securityWarning' => $this->securityWarning,
+			'securityError' => $this->securityError,
+			'rebootWarning' => $this->rebootWarning,
+			'rebootError' => $this->rebootError,
+			'restartWarning' => $this->restartWarning,
+			'eolWarning' => $this->eolWarning,
+			'listsWarning' => $this->listsWarning,
+			'listsError' => $this->listsError,
+		];
 	}
 }

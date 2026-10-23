@@ -37,6 +37,7 @@
 		<BackgroundJobsView
 			v-show="view === 'background-jobs'"
 			:periodicData="periodicData" />
+		<OsView v-show="view === 'os'" :active="view === 'os'" />
 	</div>
 </template>
 
@@ -50,13 +51,14 @@ import NcNoteCard from '@nextcloud/vue/components/NcNoteCard'
 import SettingsNavigation from '../components/SettingsNavigation.vue'
 import BackgroundJobsView from './BackgroundJobsView.vue'
 import DatabaseView from './DatabaseView.vue'
+import OsView from './OsView.vue'
 import StatusView from './StatusView.vue'
 import { useLiveData } from '../composables/useLiveData.ts'
 import { useStaticData } from '../composables/useStaticData.ts'
 
 defineOptions({ name: 'ServerInfo' })
 
-const VIEWS: SettingsView[] = ['status', 'database', 'background-jobs']
+const VIEWS: SettingsView[] = ['status', 'database', 'background-jobs', 'os']
 
 /**
  * Reads the page out of the URL fragment so that a link can point straight at

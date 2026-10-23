@@ -3,7 +3,7 @@
   - SPDX-License-Identifier: AGPL-3.0-or-later
 -->
 <template>
-	<!-- TRANSLATORS: Accessible name of the switch between the two Monitoring pages, noun -->
+	<!-- TRANSLATORS: Accessible name of the switch between the Monitoring pages, noun -->
 	<NcRadioGroup
 		v-model="view"
 		class="settings-navigation"
@@ -27,6 +27,12 @@
 				<Update :size="20" />
 			</template>
 		</NcRadioGroupButton>
+		<!-- TRANSLATORS: Name of the page showing pending updates, reboots and support of the Linux distribution, noun -->
+		<NcRadioGroupButton value="os" :label="t('serverinfo', 'Operating system')">
+			<template #icon>
+				<ServerSecurity :size="20" />
+			</template>
+		</NcRadioGroupButton>
 	</NcRadioGroup>
 </template>
 
@@ -38,6 +44,7 @@ import NcRadioGroup from '@nextcloud/vue/components/NcRadioGroup'
 import NcRadioGroupButton from '@nextcloud/vue/components/NcRadioGroupButton'
 import Database from 'vue-material-design-icons/Database.vue'
 import Monitor from 'vue-material-design-icons/Monitor.vue'
+import ServerSecurity from 'vue-material-design-icons/ServerSecurity.vue'
 import Update from 'vue-material-design-icons/Update.vue'
 
 const view = defineModel<SettingsView>({ required: true })
@@ -56,7 +63,7 @@ const view = defineModel<SettingsView>({ required: true })
 	margin-block-end: 12px;
 }
 
-/* "Background jobs" otherwise wraps onto a second line and leaves the two
+/* "Background jobs" otherwise wraps onto a second line and leaves the
    buttons looking mismatched. */
 .settings-navigation :deep([class*='radioGroupButton']) {
 	white-space: nowrap;
