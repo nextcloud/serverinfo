@@ -22,7 +22,7 @@
 						v-model="form[field.key]"
 						type="number"
 						min="0"
-						:max="MAX_DAYS"
+						:max="limits.maxDays"
 						:label="field.label"
 						:error="invalid === field.key"
 						:helperText="invalid === field.key ? errorText : ''" />
@@ -65,22 +65,11 @@ import NcTextField from '@nextcloud/vue/components/NcTextField'
 const props = defineProps<{
 	thresholds: OsThresholds
 	notifications: boolean
+	defaults: OsPayload['settingsDefaults']
+	limits: OsPayload['thresholdLimits']
 }>()
 
 const emit = defineEmits<{ close: [], saved: [payload: OsPayload] }>()
-
-const MAX_DAYS = 3650
-
-const DEFAULTS: OsThresholds = {
-	securityWarning: 3,
-	securityError: 14,
-	rebootWarning: 7,
-	rebootError: 30,
-	restartWarning: 3,
-	eolWarning: 90,
-	listsWarning: 7,
-	listsError: 30,
-}
 
 type Key = keyof OsThresholds
 
@@ -136,9 +125,9 @@ const errorText = computed(() => {
 		return ''
 	}
 	const value = Number(form[invalid.value])
-	return Number.isInteger(value) && value >= 0 && value <= MAX_DAYS
+	return Number.isInteger(value) && value >= 0 && value <= props.limits.maxDays
 		? t('serverinfo', 'The error threshold cannot come before the warning threshold.')
-		: t('serverinfo', 'Enter a whole number of days between 0 and {max}.', { max: MAX_DAYS })
+		: t('serverinfo', 'Enter a whole number of days between 0 and {max}.', { max: props.limits.maxDays })
 })
 
 /**
@@ -146,14 +135,13 @@ const errorText = computed(() => {
  * before the request is made.
  */
 function validate(): Key | null {
-	for (const key of Object.keys(DEFAULTS) as Key[]) {
+	for (const key of Object.keys(props.defaults.thresholds) as Key[]) {
 		const value = Number(form[key])
-		if (form[key].trim() === '' || !Number.isInteger(value) || value < 0 || value > MAX_DAYS) {
+		if (form[key].trim() === '' || !Number.isInteger(value) || value < 0 || value > props.limits.maxDays) {
 			return key
 		}
 	}
-	const pairs: Array<[Key, Key]> = [['securityWarning', 'securityError'], ['rebootWarning', 'rebootError'], ['listsWarning', 'listsError']]
-	for (const [warning, error] of pairs) {
+	for (const [warning, error] of props.limits.pairs) {
 		if (Number(form[error]) < Number(form[warning])) {
 			return error
 		}
@@ -162,9 +150,10 @@ function validate(): Key | null {
 }
 
 function reset() {
-	for (const [key, value] of Object.entries(DEFAULTS)) {
+	for (const [key, value] of Object.entries(props.defaults.thresholds)) {
 		form[key as Key] = String(value)
 	}
+	notify.value = props.defaults.notifications
 	invalid.value = null
 }
 
@@ -183,7 +172,7 @@ async function save() {
 		emit('close')
 	} catch (caught) {
 		const field = axios.isAxiosError(caught) ? caught.response?.data?.field : undefined
-		if (typeof field === 'string' && field in DEFAULTS) {
+		if (typeof field === 'string' && field in props.defaults.thresholds) {
 			invalid.value = field as Key
 		} else {
 			failed.value = true

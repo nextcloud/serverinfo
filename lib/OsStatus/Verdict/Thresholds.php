@@ -33,7 +33,7 @@ final class Thresholds {
 	];
 
 	/** Pairs where the error threshold may not come before the warning one. */
-	private const PAIRS = [
+	public const PAIRS = [
 		['securityWarning', 'securityError'],
 		['rebootWarning', 'rebootError'],
 		['listsWarning', 'listsError'],

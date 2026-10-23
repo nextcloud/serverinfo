@@ -236,6 +236,10 @@ export interface OsPayload {
 	commands: { reboot: string | null, php: string | null, services: Record<string, string | null> }
 	thresholds: OsThresholds
 	notifications: boolean
+	/** What "Restore defaults" in the alert settings restores */
+	settingsDefaults: { thresholds: OsThresholds, notifications: boolean }
+	/** What the server accepts as thresholds: whole days up to maxDays, each error at or after its warning */
+	thresholdLimits: { maxDays: number, pairs: Array<[keyof OsThresholds, keyof OsThresholds]> }
 	/** "Check now" queues a check for system cron; running while one is queued or collecting */
 	refresh: { systemCron: boolean, running: boolean }
 	helper: { bundledVersion: string, installPath: string, reportPath: string }

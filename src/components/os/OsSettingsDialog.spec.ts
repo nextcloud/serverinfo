@@ -15,9 +15,10 @@ vi.mock('@nextcloud/axios', () => ({
 
 const DialogStub = { template: '<div><slot /><slot name="actions" /></div>' }
 
-function mountDialog() {
+function mountDialog(overrides: Partial<InstanceType<typeof OsSettingsDialog>['$props']> = {}) {
+	const data = payload()
 	return mount(OsSettingsDialog, {
-		props: { thresholds: payload().thresholds, notifications: true },
+		props: { thresholds: data.thresholds, notifications: true, defaults: data.settingsDefaults, limits: data.thresholdLimits, ...overrides },
 		global: { stubs: { NcDialog: DialogStub } },
 	})
 }
@@ -67,6 +68,32 @@ describe('OsSettingsDialog', () => {
 		expect(body.notifications).toBe(true)
 		expect(wrapper.emitted('saved')).toHaveLength(1)
 		expect(wrapper.emitted('close')).toHaveLength(1)
+	})
+
+	it('takes the limits from the server', async () => {
+		const wrapper = mountDialog({ limits: { ...payload().thresholdLimits, maxDays: 100 } })
+		await field(wrapper, 'warning', 'Security updates pending').setValue('101')
+		await saveButton(wrapper).trigger('click')
+
+		expect(axios.put).not.toHaveBeenCalled()
+		expect(wrapper.text()).toContain('Enter a whole number of days between 0 and 100.')
+	})
+
+	it('restores the defaults from the server, notifications included', async () => {
+		vi.mocked(axios.put).mockResolvedValue({ data: payload() })
+		const wrapper = mountDialog({
+			thresholds: { ...payload().thresholds, rebootWarning: 1 },
+			notifications: false,
+			defaults: { thresholds: { ...payload().thresholds, securityWarning: 5 }, notifications: true },
+		})
+		await wrapper.findAll('button').find((button) => button.text() === 'Restore defaults')!.trigger('click')
+		await saveButton(wrapper).trigger('click')
+		await flushPromises()
+
+		const [, body] = vi.mocked(axios.put).mock.calls[0] as [string, { thresholds: Record<string, number>, notifications: boolean }]
+		expect(body.thresholds.securityWarning).toBe(5)
+		expect(body.thresholds.rebootWarning).toBe(7)
+		expect(body.notifications).toBe(true)
 	})
 
 	it('marks the field the server rejected', async () => {
