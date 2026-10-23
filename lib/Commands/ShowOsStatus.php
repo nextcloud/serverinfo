@@ -9,18 +9,22 @@ declare(strict_types=1);
 
 namespace OCA\ServerInfo\Commands;
 
-use OC\Core\Command\Base;
 use OCA\ServerInfo\OsStatus\OsStatusCollector;
 use OCA\ServerInfo\OsStatus\OsStatusService;
 use OCA\ServerInfo\OsStatus\Verdict\Concern;
-use Symfony\Component\Console\Input\InputInterface;
-use Symfony\Component\Console\Input\InputOption;
-use Symfony\Component\Console\Output\OutputInterface;
+use OCP\Console\Attribute\AsCommand;
+use OCP\Console\Attribute\Option;
+use OCP\Console\IOutput;
 
 /**
  * @psalm-api
  */
-class ShowOsStatus extends Base {
+#[AsCommand(
+	name: 'serverinfo:os-status',
+	description: 'Shows pending operating system updates, reboots and other concerns',
+	supportsOutputFormat: true,
+)]
+class ShowOsStatus {
 	/** Exit codes of monitoring plugins */
 	public const EXIT_OK = 0;
 	public const EXIT_WARNING = 1;
@@ -31,19 +35,17 @@ class ShowOsStatus extends Base {
 		private OsStatusCollector $collector,
 		private OsStatusService $service,
 	) {
-		parent::__construct();
 	}
 
-	#[\Override]
-	public function configure(): void {
-		parent::configure();
-		$this->setName('serverinfo:os-status')
-			->setDescription('Shows pending operating system updates, reboots and other concerns')
-			->addOption('refresh', 'r', InputOption::VALUE_NONE, 'Collect the status now instead of showing the stored one');
-	}
-
-	public function execute(InputInterface $input, OutputInterface $output): int {
-		if ($input->getOption('refresh')) {
+	/**
+	 * @return self::EXIT_* the monitoring plugin exit code, which needs 3 for unknown
+	 */
+	public function __invoke(
+		IOutput $output,
+		#[Option(description: 'Collect the status now instead of showing the stored one', shortcut: 'r')]
+		bool $refresh = false,
+	): int {
+		if ($refresh) {
 			if ($this->collector->collectAndStore() === null) {
 				$output->writeln('<error>The operating system status could not be collected; see the Nextcloud log.</error>');
 
@@ -70,7 +72,7 @@ class ShowOsStatus extends Base {
 		$age = $verdict?->get(Concern::FRESHNESS)?->facts['ageSeconds'] ?? null;
 		$securityUpdates = $status->securityUpdates();
 
-		$this->writeArrayInOutputFormat($input, $output, [
+		$output->writeArrayInOutputFormat([
 			'level' => $verdict?->level() ?? Concern::LEVEL_UNKNOWN,
 			'collectedAt' => date(DATE_ATOM, $status->collectedAt),
 			'statusAge' => is_int($age) ? self::formatAge($age) : 'unknown',
@@ -101,6 +103,7 @@ class ShowOsStatus extends Base {
 
 	/**
 	 * @param Concern::LEVEL_*|null $level
+	 * @return self::EXIT_*
 	 */
 	public static function exitCode(?string $level): int {
 		return match ($level) {
