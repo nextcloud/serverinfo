@@ -211,16 +211,20 @@ from_proc() {
 			/ \(deleted\)$/ && $6 ~ /\.so/ && $6 !~ /^\/(dev|memfd:|tmp|var\/tmp|run|proc|SYSV)/ { found = 1; exit }
 			END { exit found ? 0 : 1 }
 		' "$dir/maps" 2>/dev/null || continue
-		unit=$(sed -n \
-			-e 's#^0::/.*/\([^/]*\.service\)$#\1#p' \
-			-e 's#^[0-9]*:name=systemd:/.*/\([^/]*\.service\)$#\1#p' \
-			"$dir/cgroup" 2>/dev/null | head -n 1)
-		case "$unit" in
-			'' | user@*) continue ;;
-		esac
-		add_service "$unit"
+		unit=$(system_unit "$dir/cgroup")
+		[ -n "$unit" ] && add_service "$unit"
 	done
 	return 0
+}
+
+# Prints the system service a process belongs to, from its cgroup file
+# ($1): cgroup v2 (0::/system.slice/...) or the systemd hierarchy of v1.
+# Units under user.slice are users' own and are left out.
+system_unit() {
+	sed -n \
+		-e 's#^0::/system\.slice/\(.*/\)\{0,1\}\([^/]*\.service\)$#\2#p' \
+		-e 's#^[0-9]*:name=systemd:/system\.slice/\(.*/\)\{0,1\}\([^/]*\.service\)$#\2#p' \
+		"$1" 2>/dev/null | head -n 1
 }
 
 # Prints pending dnf updates as a JSON list, from the output of
