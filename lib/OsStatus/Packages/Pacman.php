@@ -10,24 +10,34 @@ declare(strict_types=1);
 namespace OCA\ServerInfo\OsStatus\Packages;
 
 use OCA\ServerInfo\OsStatus\Host\IHost;
+use OCP\AppFramework\Utility\ITimeFactory;
 
 /**
  * Arch Linux and its derivatives.
  *
  * `checkupdates` syncs a private copy of the package databases, so it is
  * current without root and without the partial-upgrade hazard of
- * `pacman -Sy`. Security fixes are only known when arch-audit is installed.
+ * `pacman -Sy`. Where it cannot run, `pacman -Qu` answers from the
+ * databases root last synced. Security fixes are only known when arch-audit
+ * is installed.
  *
  * @psalm-api
  */
-class Pacman implements IPackageManager {
+class Pacman implements IPackageManager, IReportsDiagnostics {
 	/** checkupdates exits with 2 when there is nothing to update */
 	private const EXIT_NO_UPDATES = 2;
 
 	private const LOG = '/var/log/pacman.log';
 
+	/** When checkupdates last synced its own databases, in this collection */
+	private ?int $syncedAt = null;
+	private bool $auditFailed = false;
+	/** @var list<string> */
+	private array $diagnostics = [];
+
 	public function __construct(
 		private IHost $host,
+		private ITimeFactory $timeFactory,
 	) {
 	}
 
@@ -43,26 +53,40 @@ class Pacman implements IPackageManager {
 
 	#[\Override]
 	public function classifiesSecurity(): bool {
-		return $this->host->hasBinary('arch-audit');
+		return !$this->auditFailed && $this->host->hasBinary('arch-audit');
+	}
+
+	#[\Override]
+	public function getDiagnostics(): array {
+		return $this->diagnostics;
 	}
 
 	#[\Override]
 	public function getPendingUpdates(): array {
+		$this->syncedAt = null;
+		$this->auditFailed = false;
+		$this->diagnostics = [];
+
 		if ($this->host->hasBinary('checkupdates')) {
 			$result = $this->host->run('checkupdates', [], 180);
-			if ($result !== null && ($result->succeeded() || $result->exitCode === self::EXIT_NO_UPDATES)) {
+			if ($result !== null && !$result->timedOut && !$result->truncated
+				&& ($result->exitCode === 0 || $result->exitCode === self::EXIT_NO_UPDATES)) {
+				$this->syncedAt = $this->timeFactory->getTime();
+
 				return $this->withSecurity(self::parseUpdates($result->stdout));
 			}
+			$this->diagnostics[] = 'checkupdates could not sync the package databases, so pending updates come from the databases root last synced'
+				. ($result !== null && trim($result->stderr) !== '' ? ': ' . ProbeHelper::firstLine($result->stderr) : '.');
 		}
 
-		// Falls back to the databases root last synced.
 		$result = $this->host->run('pacman', ['-Qu'], 60);
 		if ($result === null) {
 			throw new ProbeException('pacman could not be run.');
 		}
-		// pacman -Qu exits 1 when nothing is upgradable.
-		if (!$result->succeeded() && trim($result->stdout) !== '') {
-			throw new ProbeException('pacman -Qu failed: ' . ProbeHelper::firstLine($result->stderr));
+		// pacman -Qu exits 1 without a word when nothing is upgradable.
+		$nothing = $result->exitCode === 1 && trim($result->stdout) === '' && trim($result->stderr) === '';
+		if (!$nothing && !$result->succeeded()) {
+			throw new ProbeException('pacman -Qu failed: ' . ProbeHelper::firstLine($result->stderr ?: $result->stdout ?: 'exit code ' . $result->exitCode));
 		}
 
 		return $this->withSecurity(self::parseUpdates($result->stdout));
@@ -99,7 +123,11 @@ class Pacman implements IPackageManager {
 
 		$result = $this->host->run('arch-audit', ['--upgradable', '--quiet'], 120);
 		if ($result === null || !$result->succeeded()) {
-			throw new ProbeException('arch-audit could not be run.');
+			$this->auditFailed = true;
+			$this->diagnostics[] = 'arch-audit could not be run, so pending updates are not told apart into security fixes and others'
+				. ($result !== null && trim($result->stderr) !== '' ? ': ' . ProbeHelper::firstLine($result->stderr) : '.');
+
+			return $updates;
 		}
 
 		// Each line starts with the package name, followed by a description
@@ -148,11 +176,14 @@ class Pacman implements IPackageManager {
 	}
 
 	/**
-	 * checkupdates fetches fresh databases itself, so there are no lists to age.
+	 * checkupdates fetches fresh databases itself. Otherwise the answer came
+	 * from root's databases, which pacman replaces in the sync directory when
+	 * they changed upstream; the files keep the mirror's time, the directory
+	 * the time of the download.
 	 */
 	#[\Override]
 	public function getListsRefreshedAt(): ?int {
-		return null;
+		return $this->syncedAt ?? ProbeHelper::newestModified($this->host, ['/var/lib/pacman/sync/*.db', '/var/lib/pacman/sync']);
 	}
 
 	#[\Override]

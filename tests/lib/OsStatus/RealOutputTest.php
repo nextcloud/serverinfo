@@ -19,12 +19,22 @@ use OCA\ServerInfo\OsStatus\Packages\Pacman;
 use OCA\ServerInfo\OsStatus\Packages\PendingUpdate;
 use OCA\ServerInfo\OsStatus\Packages\Rpm;
 use OCA\ServerInfo\OsStatus\Packages\Zypper;
+use OCP\AppFramework\Utility\ITimeFactory;
 
 /**
  * Output captured from real systems (arm64 containers of each distribution,
  * October 2026), run as an unprivileged user unless named otherwise.
  */
 class RealOutputTest extends \Test\TestCase {
+	private const NOW = 1792411200;
+
+	private function pacman(FakeHost $host): Pacman {
+		$time = $this->createMock(ITimeFactory::class);
+		$time->method('getTime')->willReturn(self::NOW);
+
+		return new Pacman($host, $time);
+	}
+
 	/**
 	 * @param list<PendingUpdate> $updates
 	 * @return array<string, bool> name => security
@@ -176,7 +186,7 @@ class RealOutputTest extends \Test\TestCase {
 		$host->withCommand('checkupdates', [], FakeHost::fixture('arch-checkupdates-pending'))
 			->withCommand('arch-audit', ['--upgradable', '--quiet'], FakeHost::fixture('arch-audit-u-pending'));
 
-		$this->assertSame(['python-urllib3' => true], self::names((new Pacman($host))->getPendingUpdates()));
+		$this->assertSame(['python-urllib3' => true], self::names($this->pacman($host)->getPendingUpdates()));
 	}
 
 	public function testArchFallsBackWhenCheckupdatesCannotRun(): void {
@@ -185,7 +195,7 @@ class RealOutputTest extends \Test\TestCase {
 		$host->withCommand('checkupdates', [], '', 1, "==> ERROR: Cannot find the fakeroot binary.\n")
 			->withCommand('pacman', ['-Qu'], "python-urllib3 1.26.3-1 -> 2.8.0-1\n");
 
-		$this->assertSame(['python-urllib3' => false], self::names((new Pacman($host))->getPendingUpdates()));
+		$this->assertSame(['python-urllib3' => false], self::names($this->pacman($host)->getPendingUpdates()));
 	}
 
 	public function testAlpine(): void {

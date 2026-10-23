@@ -89,7 +89,7 @@ class OsStatusCollectorTest extends \Test\TestCase {
 			new EnvironmentDetector($host),
 			new SupportTable(),
 			new SubscriptionProbe($host),
-			new PackageManagerFactory(new Apt($host, $systemd), new Dnf($host, $rpm, $systemd), new Zypper($host, $rpm, $systemd), new Pacman($host), new Apk($host)),
+			new PackageManagerFactory(new Apt($host, $systemd), new Dnf($host, $rpm, $systemd), new Zypper($host, $rpm, $systemd), new Pacman($host, $time), new Apk($host)),
 			new KernelProbe($host),
 			new CoreLibraryProbe($host),
 			$systemd,
