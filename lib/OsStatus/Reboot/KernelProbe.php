@@ -22,15 +22,19 @@ use OCA\ServerInfo\OsStatus\Host\IHost;
 class KernelProbe {
 	private const MODULE_ROOTS = ['/lib/modules', '/usr/lib/modules'];
 
+	/** Early boot can touch files before the clock settles. */
+	private const BOOT_SLACK = 60;
+
 	public function __construct(
 		private IHost $host,
 	) {
 	}
 
 	/**
+	 * @param int|null $bootTime unix timestamp of the last boot, null when unknown
 	 * @return list<RebootReason>
 	 */
-	public function getRebootReasons(): array {
+	public function getRebootReasons(?int $bootTime = null): array {
 		$running = trim($this->host->uname('r'));
 		$installed = $this->installedKernels();
 		if ($running === '' || $installed === []) {
@@ -38,29 +42,46 @@ class KernelProbe {
 			return [];
 		}
 
-		if (!isset($installed[$running])) {
-			// Arch and others delete the running kernel's modules on upgrade.
-			$newest = $this->newest(array_keys($installed));
-
-			return [new RebootReason(
-				RebootReason::KIND_KERNEL_REMOVED,
-				$newest,
-				[],
-				$newest !== null ? $installed[$newest] : null,
-			)];
-		}
-
 		$flavour = self::flavour($running);
 		$sameFlavour = array_values(array_filter(
 			array_keys($installed),
 			static fn (string $release): bool => self::flavour($release) === $flavour,
 		));
+
+		if (!isset($installed[$running])) {
+			return $this->removed($installed, $sameFlavour, $bootTime);
+		}
+
 		$newest = $this->newest($sameFlavour);
 		if ($newest === null || $newest === $running || version_compare($newest, $running, '<=')) {
 			return [];
 		}
 
 		return [new RebootReason(RebootReason::KIND_KERNEL, $newest, [], $installed[$newest])];
+	}
+
+	/**
+	 * The running kernel has no modules on disk. Arch and others delete them
+	 * when they upgrade the kernel, but a kernel the provider or a netboot
+	 * server supplies never had any, and no reboot changes that. So this is
+	 * only a reason when an installed kernel of the same build exists, or
+	 * when the newest one was installed after the boot.
+	 *
+	 * @param array<string, ?int> $installed
+	 * @param list<string> $sameFlavour
+	 * @return list<RebootReason>
+	 */
+	private function removed(array $installed, array $sameFlavour, ?int $bootTime): array {
+		$newest = $this->newest($sameFlavour);
+		if ($newest === null) {
+			$newest = $this->newest(array_keys($installed));
+			$installedAt = $newest !== null ? $installed[$newest] : null;
+			if ($newest === null || $bootTime === null || $installedAt === null || $installedAt <= $bootTime + self::BOOT_SLACK) {
+				return [];
+			}
+		}
+
+		return [new RebootReason(RebootReason::KIND_KERNEL_REMOVED, $newest, [], $installed[$newest])];
 	}
 
 	/**
