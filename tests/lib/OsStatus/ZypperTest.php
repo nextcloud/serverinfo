@@ -105,6 +105,19 @@ class ZypperTest extends \Test\TestCase {
 		$this->assertStringContainsString('dup', $this->zypper->getUpgradeCommands()['all']);
 	}
 
+	public function testPatchConflictsWithAnyArchitecture(): void {
+		$coverage = Zypper::parsePatchConflicts(implode("\n", [
+			'Information for patch SUSE-SLE-Module-Basesystem-15-SP6-2026-1:',
+			'Conflicts   : [4]',
+			'    libopenssl3.s390x < 3.1.4-150600.5.27.1',
+			'    libopenssl3.x86_64_v3 < 3.1.4-150600.5.27.1',
+			'    go1.22 < 1.22.5-150000.1.3.1',
+			'    glibc.ppc64 < 2.38-150600.14.1',
+		]));
+
+		$this->assertSame(['libopenssl3', 'go1.22', 'glibc'], $coverage['SUSE-SLE-Module-Basesystem-15-SP6-2026-1']);
+	}
+
 	public function testLocks(): void {
 		$locks = Zypper::parseLocks("<?xml version='1.0'?><stream><locks><lock number=\"1\"><name>kernel-default</name><type>package</type></lock></locks></stream>");
 

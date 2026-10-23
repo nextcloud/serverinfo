@@ -120,7 +120,7 @@ class Zypper implements IPackageManager {
 				$inConflicts = true;
 				continue;
 			}
-			if ($inConflicts && preg_match('/^\s+([A-Za-z0-9._+-]+?)(?:\.(?:x86_64|aarch64|i[3-6]86|noarch|ppc64le|s390x|armv7hl|riscv64|src))?\s*[<=>]/', $line, $matches) === 1) {
+			if ($inConflicts && preg_match('/^\s+([A-Za-z0-9._+-]+?)(?:\.' . Rpm::ARCH . ')?\s*[<=>]/', $line, $matches) === 1) {
 				$packages[$patch][$matches[1]] = true;
 				continue;
 			}

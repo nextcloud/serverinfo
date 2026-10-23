@@ -112,7 +112,7 @@ class Dnf implements IPackageManager {
 			if (preg_match('/^Obsoleting|^Security:/i', $line) === 1) {
 				break;
 			}
-			if (preg_match('/^(\S+)\.(x86_64|aarch64|i[3-6]86|noarch|ppc64le|s390x|armv7hl|riscv64)\s+(\S+)\s+(\S+)\s*$/', $line, $matches) === 1) {
+			if (preg_match('/^(\S+)\.(' . Rpm::ARCH . ')\s+(\S+)\s+(\S+)\s*$/', $line, $matches) === 1) {
 				$updates[$matches[1]] = [$matches[3], $matches[4]];
 			}
 		}
@@ -216,7 +216,7 @@ class Dnf implements IPackageManager {
 				continue;
 			}
 			$pattern = preg_replace('/\.\*$/', '', $line) ?? $line;
-			$split = Rpm::splitNevra($pattern);
+			$split = Rpm::splitNevra($pattern, false);
 			$name = $split[0] ?? $pattern;
 			if (preg_match('/^[A-Za-z0-9._+-]+$/', $name) === 1) {
 				$held[$name] = new HeldPackage($name, 'dnf versionlock', $split[1] ?? null);
