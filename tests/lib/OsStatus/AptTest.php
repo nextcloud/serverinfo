@@ -63,6 +63,39 @@ class AptTest extends \Test\TestCase {
 		$this->assertFalse($curl->security, 'A point release is not a security update');
 	}
 
+	public function testKeepsRealNamesVersionsAndArchives(): void {
+		$updates = Apt::parseSimulation(implode("\n", [
+			'Inst libc6:i386 [1:2.36-9+deb12u7] (1:2.36-9+deb12u9 Debian Backports:12/bookworm-backports [i386])',
+			'Inst tzdata [2024a-2ubuntu1] (2026e-0ubuntu0.24.04.1 Ubuntu:24.04/noble-updates [all])',
+			'Inst libssl3 [3.0.20-1~deb12u2] (3.0.22-1~deb12u1 Debian-Security:12/oldstable-security [arm64])',
+			'Inst php8.3-cli (8.3.12-1+0~20240927.43+debian12~1.gbp_abc LP-PPA-ondrej-php:12/bookworm [amd64])',
+		]));
+
+		$this->assertSame(['libc6:i386', 'tzdata', 'libssl3', 'php8.3-cli'], array_map(static fn ($u) => $u->name, $updates));
+		$this->assertSame('1:2.36-9+deb12u7', $updates[0]->installedVersion);
+		$this->assertSame('Debian Backports:12/bookworm-backports', $updates[0]->origin);
+		$this->assertSame('8.3.12-1+0~20240927.43+debian12~1.gbp_abc', $updates[3]->candidateVersion);
+	}
+
+	public static function dataMalformedLines(): array {
+		return [
+			'upper-case name' => ['Inst LibSSL3 [1.0] (1.1 Debian:12/stable [amd64])'],
+			'markup in the name' => ['Inst <b>x</b> [1.0] (1.1 Debian:12/stable [amd64])'],
+			'markup in the installed version' => ['Inst libssl3 [1.0<script>] (1.1 Debian:12/stable [amd64])'],
+			'quote in the candidate' => ['Inst libssl3 [1.0] (1.1"x Debian:12/stable [amd64])'],
+			'overlong candidate' => ['Inst libssl3 [1.0] (' . str_repeat('1', 129) . ' Debian:12/stable [amd64])'],
+			'markup in an archive' => ['Inst libssl3 [1.0] (1.1 Debian:12/stable, <img src=x>:1/x [amd64])'],
+			'overlong archive' => ['Inst libssl3 [1.0] (1.1 ' . str_repeat('a', 129) . ':12/stable [amd64])'],
+		];
+	}
+
+	#[DataProvider('dataMalformedLines')]
+	public function testMalformedLinesAreLeftOut(string $line): void {
+		$updates = Apt::parseSimulation($line . "\nInst curl [7.88.1-10+deb12u7] (7.88.1-10+deb12u8 Debian:12.8/stable [amd64])");
+
+		$this->assertSame(['curl'], array_map(static fn ($u) => $u->name, $updates));
+	}
+
 	public function testFailuresAreReported(): void {
 		$this->host->withCommand('apt-get', self::SIMULATE, '', 100, "E: Could not open lock file\n");
 
