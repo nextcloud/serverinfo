@@ -25,7 +25,7 @@ class PackageManagerFactory {
 
 	public function forRelease(OsRelease $release): ?IPackageManager {
 		$candidate = match (true) {
-			$release->isLike('debian') || $release->isLike('ubuntu') => $this->apt,
+			$release->isLike('debian') || $release->isLike('ubuntu') => $this->apt->withRelease($release),
 			default => null,
 		};
 

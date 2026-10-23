@@ -9,6 +9,7 @@ declare(strict_types=1);
 
 namespace OCA\ServerInfo\Tests\OsStatus;
 
+use OCA\ServerInfo\OsStatus\OsRelease;
 use OCA\ServerInfo\OsStatus\Packages\Apt;
 use OCA\ServerInfo\OsStatus\Packages\AutomaticUpdates;
 use OCA\ServerInfo\OsStatus\Packages\PendingUpdate;
@@ -32,7 +33,7 @@ class RealOutputTest extends \Test\TestCase {
 	}
 
 	public function testDebian12(): void {
-		$updates = Apt::parseSimulation(FakeHost::fixture('debian-12-apt-get-s-pending'));
+		$updates = Apt::parseSimulation(FakeHost::fixture('debian-12-apt-get-s-pending'), new OsRelease('debian', [], 'Debian GNU/Linux', 'Debian GNU/Linux 12 (bookworm)', '12', 'bookworm'));
 
 		// tzdata is held, so the simulation leaves it out.
 		$this->assertSame(['libssl3' => true, 'openssl' => true], self::names($updates));
@@ -42,7 +43,7 @@ class RealOutputTest extends \Test\TestCase {
 	}
 
 	public function testUbuntu2404(): void {
-		$updates = Apt::parseSimulation(FakeHost::fixture('ubuntu-24.04-apt-get-s-pending'));
+		$updates = Apt::parseSimulation(FakeHost::fixture('ubuntu-24.04-apt-get-s-pending'), OsRelease::parse(FakeHost::fixture('ubuntu-24.04-os-release')));
 
 		$this->assertSame([
 			'libc6' => true, 'libc-bin' => true, 'libssl3t64' => true, 'openssl' => true,
