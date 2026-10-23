@@ -11,6 +11,7 @@ namespace OCA\ServerInfo\Tests\OsStatus;
 
 use OCA\ServerInfo\OsStatus\Health\SystemdProbe;
 use OCA\ServerInfo\OsStatus\Host\CommandResult;
+use OCA\ServerInfo\OsStatus\OsRelease;
 use OCA\ServerInfo\OsStatus\Packages\Apt;
 use OCA\ServerInfo\OsStatus\Packages\AutomaticUpdates;
 use OCA\ServerInfo\OsStatus\Packages\ProbeException;
@@ -29,6 +30,13 @@ class AptTest extends \Test\TestCase {
 		$this->apt = new Apt($this->host, new SystemdProbe($this->host));
 	}
 
+	/**
+	 * @param list<string> $idLike
+	 */
+	private static function release(string $id, array $idLike = []): OsRelease {
+		return new OsRelease($id, $idLike, $id, $id, null, null);
+	}
+
 	public function testPhasedUpdatesAreNotPending(): void {
 		$this->host->withCommand('apt-get', self::SIMULATE, FakeHost::fixture('ubuntu-26.04-apt-get-s-phased'));
 
@@ -45,7 +53,7 @@ class AptTest extends \Test\TestCase {
 			'Inst curl [7.88.1-10+deb12u7] (7.88.1-10+deb12u8 Debian:12.8/stable [amd64])',
 			'Conf libssl3t64 (3.0.13-0ubuntu3.5 Ubuntu:24.04/noble-updates [amd64])',
 			'Remv old-package [1.0]',
-		]));
+		]), self::release('ubuntu', ['debian']));
 
 		$this->assertCount(5, $updates);
 		[$ssl, $tz, $kernel, $libc, $curl] = $updates;
@@ -94,6 +102,57 @@ class AptTest extends \Test\TestCase {
 		$updates = Apt::parseSimulation($line . "\nInst curl [7.88.1-10+deb12u7] (7.88.1-10+deb12u8 Debian:12.8/stable [amd64])");
 
 		$this->assertSame(['curl'], array_map(static fn ($u) => $u->name, $updates));
+	}
+
+	public static function dataSecurityArchives(): array {
+		return [
+			'Debian' => ['Debian-Security:12/stable-security', self::release('debian'), true],
+			'Debian point release' => ['Debian:12.8/stable', self::release('debian'), false],
+			'Ubuntu' => ['Ubuntu:24.04/noble-security', self::release('ubuntu', ['debian']), true],
+			'Ubuntu updates' => ['Ubuntu:24.04/noble-updates', self::release('ubuntu', ['debian']), false],
+			'Ubuntu Pro infra' => ['UbuntuESM:24.04/noble-infra-security', self::release('ubuntu', ['debian']), true],
+			'Ubuntu Pro apps' => ['UbuntuESMApps:24.04/noble-apps-security', self::release('ubuntu', ['debian']), true],
+			'Ubuntu Pro updates' => ['UbuntuESM:24.04/noble-infra-updates', self::release('ubuntu', ['debian']), false],
+			'derivative of Ubuntu' => ['Ubuntu:24.04/noble-security', self::release('linuxmint', ['ubuntu', 'debian']), true],
+			'derivative with its own archive' => ['Devuan:5.0/daedalus-security', self::release('devuan', ['debian']), true],
+			'third party' => ['packages.example.com:1.0/stable-security', self::release('debian'), false],
+			'third party with a label' => ['Example:12/bookworm-security', self::release('debian'), false],
+			'another distribution' => ['Ubuntu:24.04/noble-security', self::release('debian'), false],
+			'no label' => ['12/stable-security', self::release('debian'), false],
+		];
+	}
+
+	#[DataProvider('dataSecurityArchives')]
+	public function testSecurityUpdatesComeFromTheDistribution(string $archive, OsRelease $release, bool $security): void {
+		$updates = Apt::parseSimulation("Inst libssl3 [1.0] (1.1 $archive [amd64])", $release);
+
+		$this->assertCount(1, $updates);
+		$this->assertSame($security, $updates[0]->security);
+	}
+
+	public function testSpoofedSecuritySuiteNextToTheDistributionsOwn(): void {
+		$updates = Apt::parseSimulation(implode("\n", [
+			'Inst nginx [1.22.1-9] (1.26.0-1~bookworm nginx:12/bookworm-security [amd64])',
+			'Inst libssl3 [3.0.11-1~deb12u2] (3.0.15-1~deb12u1 Debian:12.8/stable, Debian-Security:12/stable-security [amd64])',
+		]), self::release('debian'));
+
+		$this->assertSame([false, true], array_map(static fn ($u) => $u->security, $updates));
+	}
+
+	public function testSecurityNeedsTheRelease(): void {
+		$this->assertFalse($this->apt->classifiesSecurity());
+		$this->assertTrue($this->apt->withRelease(self::release('debian'))->classifiesSecurity());
+
+		$updates = Apt::parseSimulation('Inst libssl3 [1.0] (1.1 Debian-Security:12/stable-security [amd64])');
+		$this->assertFalse($updates[0]->security);
+	}
+
+	public function testPendingUpdatesUseTheRelease(): void {
+		$this->host->withCommand('apt-get', self::SIMULATE, "Inst libssl3 [1.0] (1.1 Debian-Security:12/stable-security [amd64])\n");
+
+		$updates = $this->apt->withRelease(self::release('debian'))->getPendingUpdates();
+
+		$this->assertTrue($updates[0]->security);
 	}
 
 	public function testFailuresAreReported(): void {

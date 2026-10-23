@@ -12,6 +12,7 @@ namespace OCA\ServerInfo\OsStatus\Packages;
 use OCA\ServerInfo\OsStatus\Health\SystemdProbe;
 use OCA\ServerInfo\OsStatus\Host\IHost;
 use OCA\ServerInfo\OsStatus\Host\SystemTimeZone;
+use OCA\ServerInfo\OsStatus\OsRelease;
 use OCA\ServerInfo\OsStatus\Reboot\RebootReason;
 
 /**
@@ -38,6 +39,8 @@ class Apt implements IPackageManager {
 	/** An archive as apt describes it, e.g. "Debian-Security:12/stable-security" or "Debian Backports:12/bookworm-backports" */
 	private const ORIGIN = '/^[A-Za-z0-9][A-Za-z0-9 .+~:_\/-]{0,127}$/';
 
+	private ?OsRelease $release = null;
+
 	public function __construct(
 		private IHost $host,
 		private SystemdProbe $systemd,
@@ -54,9 +57,23 @@ class Apt implements IPackageManager {
 		return $this->host->binaryState('apt-get') !== false;
 	}
 
+	/**
+	 * The same package manager, for the given distribution.
+	 */
+	public function withRelease(OsRelease $release): self {
+		$clone = clone $this;
+		$clone->release = $release;
+
+		return $clone;
+	}
+
+	/**
+	 * Security updates are told apart by the distribution's own archives,
+	 * so they need to know which distribution this is.
+	 */
 	#[\Override]
 	public function classifiesSecurity(): bool {
-		return true;
+		return $this->release !== null;
 	}
 
 	#[\Override]
@@ -69,17 +86,18 @@ class Apt implements IPackageManager {
 			throw new ProbeException('apt-get -s dist-upgrade failed: ' . $result->failure(self::SIMULATE_TIMEOUT));
 		}
 
-		return self::parseSimulation($result->stdout);
+		return self::parseSimulation($result->stdout, $this->release);
 	}
 
 	/**
 	 * Parses the "Inst" lines of an `apt-get -s` run, e.g.
 	 * Inst libssl3 [3.0.11-1~deb12u2] (3.0.15-1~deb12u1 Debian:12.8/stable, Debian-Security:12/stable-security [amd64])
 	 * A line whose name, versions or archives do not look like apt's is left out.
+	 * Without the release, no update is counted as a security update.
 	 *
 	 * @return list<PendingUpdate>
 	 */
-	public static function parseSimulation(string $output): array {
+	public static function parseSimulation(string $output, ?OsRelease $release = null): array {
 		$updates = [];
 		foreach (preg_split('/\R/', $output) ?: [] as $line) {
 			if (preg_match('/^Inst (\S+)(?: \[([^\]]*)\])? \((\S+) ([^()\[]*?)(?: \[[^\]]*\])?\)/', $line, $matches) !== 1) {
@@ -96,9 +114,7 @@ class Apt implements IPackageManager {
 
 			$security = false;
 			foreach ($origins as $origin) {
-				$slash = strrpos($origin, '/');
-				$suite = $slash === false ? $origin : substr($origin, $slash + 1);
-				if (str_ends_with($suite, '-security') || stripos($origin, 'Debian-Security') !== false) {
+				if ($release !== null && self::isSecurityArchive($origin, $release)) {
 					$security = true;
 				}
 			}
@@ -113,6 +129,27 @@ class Apt implements IPackageManager {
 		}
 
 		return array_values($updates);
+	}
+
+	/**
+	 * Whether an archive ("Label:Version/Suite") is a "-security" suite of the
+	 * distribution or one it derives from: the label must be the os-release
+	 * ID or an ID_LIKE entry, optionally followed by "-Security", "ESM" or
+	 * "ESMApps". A third-party suite named "*-security" does not count; one
+	 * that copies the distribution's label still would.
+	 */
+	private static function isSecurityArchive(string $archive, OsRelease $release): bool {
+		$colon = strpos($archive, ':');
+		if ($colon === false) {
+			return false;
+		}
+
+		$slash = strrpos($archive, '/');
+		$suite = substr($archive, $slash === false ? $colon + 1 : $slash + 1);
+		$label = strtolower(substr($archive, 0, $colon));
+		$distribution = (string)preg_replace('/(?:-security|esm|esmapps)$/', '', $label);
+
+		return str_ends_with($suite, '-security') && $release->isLike($distribution);
 	}
 
 	#[\Override]
