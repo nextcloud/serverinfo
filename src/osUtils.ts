@@ -221,15 +221,6 @@ export function formatDays(days: number | null): string {
 }
 
 /**
- * The command that restarts a service, for the init system in use.
- *
- * @param unit systemd unit or service name
- */
-export function restartCommand(unit: string): string {
-	return `sudo systemctl restart ${unit.replace(/\.service$/, '')}`
-}
-
-/**
  * Quotes a value for a POSIX shell, so a copied command works whatever the
  * path contains.
  *

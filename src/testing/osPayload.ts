@@ -101,6 +101,8 @@ export function payload(overrides: Partial<OsPayload> = {}): OsPayload {
 		},
 		outdated: false,
 		php: { sampledAt: NOW - 60, sapi: 'fpm-fcgi', outdatedLibraries: [], service: 'php8.3-fpm', confinement: null },
+		initSystem: 'systemd',
+		commands: { reboot: 'sudo systemctl reboot', php: 'sudo systemctl restart php8.3-fpm', services: {} },
 		thresholds: {
 			securityWarning: 3,
 			securityError: 14,

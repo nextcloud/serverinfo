@@ -36,7 +36,12 @@
 						<p v-if="rebootConcern?.facts.livePatched" class="os-muted">
 							{{ t('serverinfo', 'A live kernel patch is active ({patches}). It protects the running kernel until the reboot, so the reboot is less urgent.', { patches: (status.livePatches ?? []).join(', ') }) }}
 						</p>
-						<OsCommand v-if="status.environment.kind === 'host'" command="sudo systemctl reboot" />
+						<template v-if="status.environment.kind === 'host'">
+							<OsCommand v-if="commands.reboot" :command="commands.reboot" />
+							<p v-else class="os-muted">
+								{{ t('serverinfo', 'Reboot the machine to apply the updates.') }}
+							</p>
+						</template>
 						<p v-else class="os-muted">
 							{{ t('serverinfo', 'This system runs in a container: restart the container to apply the update.') }}
 						</p>
@@ -62,7 +67,7 @@
 							{{ t('serverinfo', 'These were updated on disk, but PHP still has the old versions loaded:') }}
 							<code>{{ php.outdatedLibraries.slice(0, 8).join(', ') }}</code>
 						</span>
-						<OsCommand v-if="php.service" :command="restartCommand(php.service)" />
+						<OsCommand v-if="commands.php" :command="commands.php" />
 					</template>
 				</div>
 			</li>
@@ -87,7 +92,14 @@
 						<strong>{{ n('serverinfo', '%n service needs a restart', '%n services need a restart', status.restartServices.length) }}</strong>
 						<ul class="os-services">
 							<li v-for="service in sortedServices" :key="service.unit">
-								<OsCommand :command="restartCommand(service.unit)" :label="service.stack ? t('serverinfo', 'Nextcloud stack') : undefined" />
+								<OsCommand
+									v-if="commands.services[service.unit]"
+									:command="commands.services[service.unit]!"
+									:label="service.stack ? t('serverinfo', 'Nextcloud stack') : undefined" />
+								<template v-else>
+									<code>{{ service.unit }}</code>
+									<span v-if="service.stack" class="os-tag os-tag--primary">{{ t('serverinfo', 'Nextcloud stack') }}</span>
+								</template>
 							</li>
 						</ul>
 					</template>
@@ -108,11 +120,12 @@ import Restart from 'vue-material-design-icons/Restart.vue'
 import SectionHeading from '../SectionHeading.vue'
 import OsCommand from './OsCommand.vue'
 import OsLevelIcon from './OsLevelIcon.vue'
-import { factNumber, formatDays, restartCommand } from '../../osUtils.ts'
+import { factNumber, formatDays } from '../../osUtils.ts'
 
 const props = defineProps<{
 	status: OsStatus
 	php: OsPayload['php']
+	commands: OsPayload['commands']
 	rebootConcern: OsConcern | null
 	restartConcern: OsConcern | null
 }>()

@@ -15,6 +15,7 @@ use OCA\ServerInfo\OsStatus\Helper\HelperReportReader;
 use OCA\ServerInfo\OsStatus\Notifications\OsNotificationSender;
 use OCA\ServerInfo\OsStatus\OsStatusCollector;
 use OCA\ServerInfo\OsStatus\OsStatusService;
+use OCA\ServerInfo\OsStatus\Restart\ServiceCommands;
 use OCA\ServerInfo\OsStatus\Verdict\Thresholds;
 use OCP\AppFramework\Controller;
 use OCP\AppFramework\Http;
@@ -45,6 +46,7 @@ class OsController extends Controller {
 		private ITimeFactory $timeFactory,
 		private IJobList $jobList,
 		private IServerConfig $serverConfig,
+		private ServiceCommands $serviceCommands,
 	) {
 		parent::__construct($appName, $request);
 	}
@@ -100,6 +102,11 @@ class OsController extends Controller {
 	private function payload(): array {
 		$status = $this->service->getStatus();
 		$php = $this->service->getPhpSample();
+		$init = $this->serviceCommands->initSystem();
+		$services = [];
+		foreach ($status?->restartServices ?? [] as $service) {
+			$services[$service->unit] = ServiceCommands::restart($init, $service->unit);
+		}
 
 		return [
 			'now' => $this->timeFactory->getTime(),
@@ -107,6 +114,12 @@ class OsController extends Controller {
 			'verdict' => $status !== null ? $this->service->evaluate($status)?->toArray() : null,
 			'outdated' => $status !== null && $this->service->isOutdated($status),
 			'php' => $php?->toArray(),
+			'initSystem' => $init,
+			'commands' => [
+				'reboot' => ServiceCommands::reboot($init),
+				'php' => $php !== null && $php->service !== null ? ServiceCommands::restart($init, $php->service) : null,
+				'services' => $services,
+			],
 			'thresholds' => $this->service->getThresholds()->toArray(),
 			'notifications' => $this->appConfig->getAppValueBool(ConfigLexicon::OS_NOTIFICATIONS, true),
 			'refresh' => [
