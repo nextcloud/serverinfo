@@ -17,9 +17,9 @@ function commands(helper = payload().helper) {
 }
 
 describe('OsHelperDialog', () => {
-	it('installs the script from an extracted release, not the app directory, and schedules it', () => {
+	it('installs the script from a private copy of the release archive, not the app directory, and schedules it', () => {
 		expect(commands()).toEqual([
-			'sudo install -o root -g root -m 0755 bin/serverinfo-os-report /usr/local/sbin/serverinfo-os-report',
+			'd=$(mktemp -d) && tar -xjf nextcloud-<version>.tar.bz2 -C "$d" nextcloud/apps/serverinfo/bin/serverinfo-os-report && sudo install -o root -g root -m 0755 "$d"/nextcloud/apps/serverinfo/bin/serverinfo-os-report /usr/local/sbin/serverinfo-os-report && rm -r "$d"',
 			"echo '17 */6 * * * root /usr/local/sbin/serverinfo-os-report --refresh --random-delay' | sudo tee /etc/cron.d/serverinfo-os-report",
 			'sudo /usr/local/sbin/serverinfo-os-report --refresh',
 		])
