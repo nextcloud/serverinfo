@@ -217,7 +217,7 @@ class OsStatusCollector {
 			|| array_filter($reasons, static fn (RebootReason $r): bool => $r->kind === RebootReason::KIND_DISTRIBUTION) !== [];
 		// A system container may see the host's uptime, which says nothing about when its own processes started.
 		if (!$hasDistributionAnswer && $bootTime !== null && $environment->kind !== Environment::KIND_SYSTEM_CONTAINER) {
-			foreach ($this->coreLibraryProbe->getRebootReasons($bootTime) as $reason) {
+			foreach ($this->coreLibraryProbe->getRebootReasons($bootTime, $packageManager?->getPackageDatabasePath()) as $reason) {
 				$add($reason);
 			}
 		}
