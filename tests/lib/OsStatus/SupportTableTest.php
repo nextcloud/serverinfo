@@ -73,7 +73,7 @@ class SupportTableTest extends \Test\TestCase {
 	}
 
 	public function testAMissingTableKnowsNothing(): void {
-		$table = new SupportTable('/nonexistent/os-support.json');
+		$table = SupportTable::fromFile('/nonexistent/os-support.json');
 
 		$this->assertSame(SupportStatus::STATE_UNKNOWN, $table->lookup($this->release('ubuntu', '24.04'))->state(time()));
 	}
