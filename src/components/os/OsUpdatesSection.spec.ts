@@ -22,14 +22,35 @@ describe('OsUpdatesSection', () => {
 		expect(rows(wrapper)).toEqual(['openssl', 'tzdata'])
 	})
 
+	it('says when the filter matches nothing', async () => {
+		const wrapper = mount(OsUpdatesSection, { props: { status: status({ updates: [update({ stack: false })] }), concern: null, now: NOW } })
+		await wrapper.findAll('.filter-pills__pill').find((pill) => pill.text().startsWith('Nextcloud stack'))!.trigger('click')
+
+		expect(wrapper.findAll('tbody tr')).toHaveLength(1)
+		expect(wrapper.find('tbody').text()).toBe('No pending update matches this filter.')
+	})
+
+	it('picks the filter again for a new check', async () => {
+		const wrapper = mount(OsUpdatesSection, { props: { status: status(), concern: null, now: NOW } })
+		expect(rows(wrapper)).toEqual(['openssl'])
+
+		await wrapper.setProps({ status: status({ collectedAt: NOW, updates: [update({ name: 'tzdata', security: false, stack: false })] }) })
+		expect(rows(wrapper)).toEqual(['tzdata'])
+
+		await wrapper.setProps({ status: status({ collectedAt: NOW + 60 }) })
+		expect(rows(wrapper)).toEqual(['openssl'])
+	})
+
 	it('offers the security and the full upgrade command', () => {
 		const wrapper = mount(OsUpdatesSection, { props: { status: status(), concern: null, now: NOW } })
 		const commands = wrapper.findAll('.os-command__code').map((code) => code.text())
 		expect(commands).toEqual(['sudo unattended-upgrade -v', 'sudo apt update && sudo apt full-upgrade'])
 	})
 
-	it('does not call a system without security updates fully patched', () => {
+	it('shows all updates when none of them is a security update', () => {
 		const wrapper = mount(OsUpdatesSection, { props: { status: status({ updates: [update({ name: 'libc6', security: false })] }), concern: concern('updates', 'ok'), now: NOW } })
+		expect(rows(wrapper)).toEqual(['libc6'])
+		expect(wrapper.find('.filter-pills__pill--active').text()).toBe('All 1')
 		expect(wrapper.text()).toContain('Regular updates carry fixes too')
 
 		const withSecurity = mount(OsUpdatesSection, { props: { status: status(), concern: concern('updates', 'warning'), now: NOW } })
