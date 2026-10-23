@@ -28,7 +28,6 @@ class ConfigLexicon implements ILexicon {
 
 	public const CACHED_DB_CHECK = 'cached_db_check';
 
-	public const CACHED_OS_STATUS = 'cached_os_status';
 	public const CACHED_OS_FIRST_SEEN = 'cached_os_first_seen';
 	public const CACHED_OS_PHP_PROCESS = 'cached_os_php_process';
 	public const CACHED_OS_PHP_OUTDATED_SINCE = 'cached_os_php_outdated_since';
@@ -83,13 +82,6 @@ class ConfigLexicon implements ILexicon {
 				ValueType::ARRAY,
 				[],
 				'Outcome of the last database check run, read by the setup check on Settings > Overview',
-				lazy: true,
-			),
-			new Entry(
-				self::CACHED_OS_STATUS,
-				ValueType::ARRAY,
-				[],
-				'Operating system status as last collected by OCA\ServerInfo\Jobs\UpdateOsStatus',
 				lazy: true,
 			),
 			new Entry(

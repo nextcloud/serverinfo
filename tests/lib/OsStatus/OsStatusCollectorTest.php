@@ -9,7 +9,6 @@ declare(strict_types=1);
 
 namespace OCA\ServerInfo\Tests\OsStatus;
 
-use OCA\ServerInfo\Config\ConfigLexicon;
 use OCA\ServerInfo\Os;
 use OCA\ServerInfo\OsStatus\Environment;
 use OCA\ServerInfo\OsStatus\EnvironmentDetector;
@@ -29,6 +28,11 @@ use OCA\ServerInfo\OsStatus\Support\SupportStatus;
 use OCA\ServerInfo\OsStatus\Support\SupportTable;
 use OCP\AppFramework\Services\IAppConfig;
 use OCP\AppFramework\Utility\ITimeFactory;
+use OCP\Files\IAppData;
+use OCP\Files\SimpleFS\ISimpleFile;
+use OCP\Files\SimpleFS\ISimpleFolder;
+use OCP\ICache;
+use OCP\ICacheFactory;
 use Psr\Log\LoggerInterface;
 
 class OsStatusCollectorTest extends \Test\TestCase {
@@ -38,6 +42,7 @@ class OsStatusCollectorTest extends \Test\TestCase {
 	private FakeHost $host;
 	/** @var array<string, mixed> */
 	private array $config = [];
+	private ?string $stored = null;
 
 	protected function setUp(): void {
 		parent::setUp();
@@ -61,6 +66,9 @@ class OsStatusCollectorTest extends \Test\TestCase {
 		$os = $this->createMock(Os::class);
 		$os->method('getUptime')->willReturn($now - self::BOOT);
 
+		$cacheFactory = $this->createMock(ICacheFactory::class);
+		$cacheFactory->method('createDistributed')->willReturn($this->createMock(ICache::class));
+
 		$host = $this->host;
 		$systemd = new SystemdProbe($host);
 
@@ -78,9 +86,25 @@ class OsStatusCollectorTest extends \Test\TestCase {
 			$systemd,
 			new TimeSyncProbe($host),
 			new SecurityProbe($host),
-			new OsStatusStore($appConfig),
+			new OsStatusStore($appConfig, $this->appData(), $cacheFactory),
 			$this->createMock(LoggerInterface::class),
 		);
+	}
+
+	/**
+	 * App data that keeps the stored status in $this->stored.
+	 */
+	private function appData(): IAppData {
+		$folder = $this->createMock(ISimpleFolder::class);
+		$folder->method('newFile')->willReturnCallback(function (string $name, mixed $content = null): ISimpleFile {
+			$this->stored = (string)$content;
+
+			return $this->createMock(ISimpleFile::class);
+		});
+		$appData = $this->createMock(IAppData::class);
+		$appData->method('getFolder')->willReturn($folder);
+
+		return $appData;
 	}
 
 	private function withPendingUpdates(): void {
@@ -240,6 +264,6 @@ class OsStatusCollectorTest extends \Test\TestCase {
 
 		$this->collector()->collectAndStore();
 
-		$this->assertSame(1, $this->config[ConfigLexicon::CACHED_OS_STATUS]['schema'] ?? null);
+		$this->assertSame(1, json_decode((string)$this->stored, true)['schema'] ?? null);
 	}
 }
