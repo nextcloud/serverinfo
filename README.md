@@ -77,8 +77,20 @@ installs, upgrades, restarts or reboots anything.
 Install it outside the Nextcloud directory: the web server can write there, so
 a root cron job pointing into it would hand the web server root.
 
+Take the file from a freshly extracted release archive, not from the
+installed app: the Nextcloud server archive, checked against the SHA-256 sum
+or signature published next to it on download.nextcloud.com, or the app's own
+release archive. A copy taken from `apps/serverinfo/bin` is safe from changes
+made after copying, but not from a web server that was already compromised
+and changed the file before. `cmp` shows whether the installed app's file
+still matches the release. Repeat this when an update ships a newer helper
+(the app then reports the installed helper as outdated). The release archive
+does not contain this README; the same instructions are at the top of the
+script.
+
 ```
-sudo install -o root -g root -m 0755 apps/serverinfo/bin/serverinfo-os-report /usr/local/sbin/
+tar -xjf nextcloud-<version>.tar.bz2 nextcloud/apps/serverinfo/bin/serverinfo-os-report
+sudo install -o root -g root -m 0755 nextcloud/apps/serverinfo/bin/serverinfo-os-report /usr/local/sbin/
 echo '17 */6 * * * root /usr/local/sbin/serverinfo-os-report --refresh --random-delay' | sudo tee /etc/cron.d/serverinfo-os-report
 ```
 
