@@ -89,6 +89,16 @@ class AptTest extends \Test\TestCase {
 		$this->apt->getPendingUpdates();
 	}
 
+	public function testAvailability(): void {
+		$this->assertFalse($this->apt->isAvailable(), 'Known to be missing');
+
+		$this->host->hiddenBinaries = ['apt-get'];
+		$this->assertTrue($this->apt->isAvailable(), 'Hidden by open_basedir, so it is tried');
+
+		$this->host->binaries = ['apt-get'];
+		$this->assertTrue($this->apt->isAvailable());
+	}
+
 	public function testMissingAptGetIsReported(): void {
 		$this->expectException(ProbeException::class);
 		$this->apt->getPendingUpdates();

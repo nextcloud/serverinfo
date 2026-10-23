@@ -23,6 +23,10 @@ interface IPackageManager {
 	 */
 	public function getId(): string;
 
+	/**
+	 * False only when the tool is known to be missing; when open_basedir
+	 * hides it, it is assumed to be there and running it tells.
+	 */
 	public function isAvailable(): bool;
 
 	/**

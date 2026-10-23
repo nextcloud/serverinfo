@@ -212,6 +212,19 @@ class OsStatusCollectorTest extends \Test\TestCase {
 		$this->assertSame([], $this->collector()->collect()->updates);
 	}
 
+	public function testAptIsRunWhenOpenBasedirHidesIt(): void {
+		$this->withPendingUpdates();
+		$this->host->binaries = [];
+		$this->host->hiddenBinaries = ['apt-get'];
+		$this->host->basedir = ['/var/www'];
+		$this->host->modified['/var/lib/apt/periodic/update-success-stamp'] = self::NOW - 3600;
+
+		$status = $this->collector()->collect();
+
+		$this->assertSame('apt', $status->packageManager);
+		$this->assertCount(2, $status->updates ?? []);
+	}
+
 	public function testWithoutProcesses(): void {
 		$this->host->commandsAllowed = false;
 

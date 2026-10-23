@@ -42,7 +42,7 @@ class Apt implements IPackageManager {
 
 	#[\Override]
 	public function isAvailable(): bool {
-		return $this->host->hasBinary('apt-get');
+		return $this->host->binaryState('apt-get') !== false;
 	}
 
 	#[\Override]

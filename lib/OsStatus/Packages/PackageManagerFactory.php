@@ -13,7 +13,7 @@ use OCA\ServerInfo\OsStatus\OsRelease;
 
 /**
  * Picks the package manager of a distribution from its os-release identity,
- * and only then checks that the tool is actually installed.
+ * and only then checks that the tool is not known to be missing.
  *
  * @psalm-api
  */
