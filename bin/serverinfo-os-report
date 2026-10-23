@@ -146,19 +146,40 @@ add_reboot_reason() {
 	REBOOT_REASONS="${REBOOT_REASONS:+$REBOOT_REASONS,}$item"
 }
 
+# The configuration needrestart runs with, as Perl it evaluates: the system
+# configuration, then no interpreter scan. That scan runs interpreters with
+# settings taken from the processes it inspects, which their owners control
+# (CVE-2024-48990, CVE-2024-48992 and others), so root must not run it on a
+# schedule. Options given on the command line (-b, -r l) take precedence.
+# shellcheck disable=SC2016
+NEEDRESTART_CONFIG='if (-r q(/etc/needrestart/needrestart.conf)) {
+	eval do { local $/; open my $fh, q(<), q(/etc/needrestart/needrestart.conf) or die "ERROR: $!\n"; <$fh> };
+	die $@ if $@;
+}
+$nrconf{interpscan} = 0;
+$nrconf{sendnotify} = 0;'
+
+# The configuration reaches needrestart through a pipe, so there is no file
+# anyone could change between writing and reading it. If needrestart cannot
+# read or evaluate it, it exits with an error instead of using its defaults.
 from_needrestart() {
 	command -v needrestart >/dev/null 2>&1 || return 1
-	output=$(run_limited 300 needrestart -b -r l 2>/dev/null) || return 1
-	printf '%s\n' "$output" | grep -q '^NEEDRESTART-VER:' || return 1
+	output=$(printf '%s\n' "$NEEDRESTART_CONFIG" | run_limited 300 needrestart -c /dev/stdin -b -r l 2>/dev/null) || return 1
+	parse_needrestart "$output"
+}
 
-	add_services "$(printf '%s\n' "$output" | sed -n 's/^NEEDRESTART-SVC: *//p')"
+# Takes services and reboot reasons from needrestart's batch output ($1).
+parse_needrestart() {
+	printf '%s\n' "$1" | grep -q '^NEEDRESTART-VER:' || return 1
 
-	kernel_status=$(printf '%s\n' "$output" | sed -n 's/^NEEDRESTART-KSTA: *//p')
-	expected=$(printf '%s\n' "$output" | sed -n 's/^NEEDRESTART-KEXP: *//p')
+	add_services "$(printf '%s\n' "$1" | sed -n 's/^NEEDRESTART-SVC: *//p')"
+
+	kernel_status=$(printf '%s\n' "$1" | sed -n 's/^NEEDRESTART-KSTA: *//p')
+	expected=$(printf '%s\n' "$1" | sed -n 's/^NEEDRESTART-KEXP: *//p')
 	case "$kernel_status" in
 		2 | 3) add_reboot_reason kernel "$expected" ;;
 	esac
-	microcode_status=$(printf '%s\n' "$output" | sed -n 's/^NEEDRESTART-UCSTA: *//p')
+	microcode_status=$(printf '%s\n' "$1" | sed -n 's/^NEEDRESTART-UCSTA: *//p')
 	[ "$microcode_status" = 2 ] && add_reboot_reason microcode ''
 	return 0
 }
