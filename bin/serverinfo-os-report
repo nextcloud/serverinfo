@@ -20,7 +20,7 @@
 # to, so that the web server can never change what root runs:
 #
 #   sudo install -o root -g root -m 0755 apps/serverinfo/bin/serverinfo-os-report /usr/local/sbin/
-#   echo '17 */6 * * * root /usr/local/sbin/serverinfo-os-report --refresh' | sudo tee /etc/cron.d/serverinfo-os-report
+#   echo '17 */6 * * * root /usr/local/sbin/serverinfo-os-report --refresh --random-delay' | sudo tee /etc/cron.d/serverinfo-os-report
 #
 # Report format (schema 1), all fields but the first five optional:
 #   schema, helperVersion, generatedAt (unix time), hostname, bootTime (unix time),
@@ -45,19 +45,25 @@ export PATH LC_ALL LANG
 VERSION=1.0.0
 SCHEMA=1
 OUTPUT=/var/lib/serverinfo/os-report.json
+LOCK=/run/serverinfo-os-report.lock
 REFRESH=0
+RANDOM_DELAY=0
 DRY_RUN=0
+TEMPORARY=
+TIMEOUT_MODE=
 ERRORS=
 SERVICES=
 REBOOT_REASONS=
 
 usage() {
 	cat <<EOF
-Usage: serverinfo-os-report [--refresh] [--output FILE] [--dry-run]
+Usage: serverinfo-os-report [--refresh] [--random-delay] [--output FILE] [--dry-run]
 
 Writes the operating system report the Nextcloud Monitoring app reads.
 
   --refresh      refresh the package lists first (apt-get update, dnf makecache, ...)
+  --random-delay wait up to 30 minutes first, so that servers sharing a cron
+                 schedule do not all reach the mirrors at once
   --output FILE  where to write the report (default: $OUTPUT)
   --dry-run      print the report instead of writing it
   --version      print the version and exit
@@ -91,14 +97,70 @@ is_token() {
 	esac
 }
 
+# Removes the temporary report, if there is one.
+cleanup() {
+	if [ -n "$TEMPORARY" ]; then
+		rm -f "$TEMPORARY"
+		TEMPORARY=
+	fi
+}
+
+# Cleans up on every exit; a signal ends the run with an error.
+set_traps() {
+	trap cleanup EXIT
+	trap 'cleanup; exit 1' HUP INT TERM
+}
+
+# How run_limited can stop a command: "kill" when timeout(1) takes -k,
+# "term" when it only sends SIGTERM, "none" without timeout(1) or with the
+# busybox before 1.30, which has another syntax.
+timeout_mode() {
+	if ! command -v timeout >/dev/null 2>&1; then
+		echo none
+	elif timeout -k 1 10 true >/dev/null 2>&1; then
+		echo kill
+	elif timeout 10 true >/dev/null 2>&1; then
+		echo term
+	else
+		echo none
+	fi
+}
+
+# Runs a command ($2 ...) for at most $1 seconds, and kills it 30 seconds
+# after that if it ignores SIGTERM. The lock is not passed on, so nothing
+# the command leaves running can hold it.
 run_limited() {
 	limit=$1
 	shift
-	if command -v timeout >/dev/null 2>&1; then
-		timeout "$limit" "$@"
-	else
-		"$@"
+	[ -n "$TIMEOUT_MODE" ] || TIMEOUT_MODE=$(timeout_mode)
+	case "$TIMEOUT_MODE" in
+		kill) timeout -k 30 "$limit" "$@" 9>&- ;;
+		term) timeout "$limit" "$@" 9>&- ;;
+		*) "$@" 9>&- ;;
+	esac
+}
+
+# Exits quietly when another run holds the lock. Without flock(1), as in
+# some busybox builds, runs are not locked; each still writes its own
+# temporary file and renames it into place.
+take_lock() {
+	command -v flock >/dev/null 2>&1 || return 0
+	[ -d "$(dirname "$LOCK")" ] || return 0
+	exec 9>>"$LOCK"
+	if ! flock -n 9; then
+		[ -t 2 ] && printf 'serverinfo-os-report: another run is still going\n' >&2
+		exit 0
 	fi
+}
+
+# Waits a random time of up to 30 minutes; does not wait without a source
+# of random numbers.
+random_delay() {
+	number=$(od -An -N2 -tu2 /dev/urandom 2>/dev/null | tr -d ' \n')
+	case "$number" in
+		'' | *[!0-9]*) return 0 ;;
+	esac
+	sleep $((number % 1800))
 }
 
 os_value() {
@@ -307,6 +369,7 @@ main() {
 	while [ $# -gt 0 ]; do
 		case "$1" in
 			--refresh) REFRESH=1 ;;
+			--random-delay) RANDOM_DELAY=1 ;;
 			--dry-run) DRY_RUN=1 ;;
 			--output)
 				[ $# -ge 2 ] || die '--output needs a file name'
@@ -331,6 +394,11 @@ main() {
 
 	[ "$(id -u)" -eq 0 ] || die 'must run as root'
 	cd / || exit 1
+
+	set_traps
+	[ "$RANDOM_DELAY" -eq 1 ] && random_delay
+	take_lock
+	TIMEOUT_MODE=$(timeout_mode)
 
 	# --- identity -----------------------------------------------------------
 
@@ -472,14 +540,16 @@ secure_directory() {
 write_report() {
 	directory=$(dirname "$2")
 	secure_directory "$directory"
+	# mv would move the report into a directory of that name, or into the
+	# one a symbolic link of that name points to.
+	[ -d "$2" ] && die "$2 is a directory"
 
-	temporary=$(mktemp "$directory/.os-report.XXXXXX") || die "cannot write to $directory"
-	trap 'rm -f "$temporary"' EXIT
-	printf '%s\n' "$1" > "$temporary" || die "cannot write $temporary"
-	chmod 0644 "$temporary"
-	# rename(2) replaces a symbolic link at the target instead of following it.
-	mv -f "$temporary" "$2" || die "cannot replace $2"
-	trap - EXIT
+	TEMPORARY=$(mktemp "$directory/.os-report.XXXXXX") || die "cannot write to $directory"
+	printf '%s\n' "$1" > "$TEMPORARY" || die "cannot write $TEMPORARY"
+	chmod 0644 "$TEMPORARY"
+	# rename(2) replaces a symbolic link to a file instead of following it.
+	mv -f "$TEMPORARY" "$2" || die "cannot replace $2"
+	TEMPORARY=
 }
 
 # Tests load the functions above without running anything.

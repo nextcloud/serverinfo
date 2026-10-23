@@ -52,6 +52,7 @@ class HelperScriptTest extends \Test\TestCase {
 
 		$this->assertSame(0, $exit);
 		$this->assertStringContainsString('--refresh', $stdout);
+		$this->assertStringContainsString('--random-delay', $stdout);
 	}
 
 	public function testUnknownOptions(): void {
@@ -385,6 +386,109 @@ class HelperScriptTest extends \Test\TestCase {
 		$this->assertSame("{\"schema\": 1}\n", file_get_contents($directory . '/os-report.json'));
 		$this->assertSame(0o644, fileperms($directory . '/os-report.json') & 0o777);
 		$this->assertSame(['.', '..', 'os-report.json', 'victim'], scandir($directory), 'No temporary file is left');
+	}
+
+	public function testTheReportIsNeverMovedIntoADirectory(): void {
+		$directory = $this->temporaryDirectory();
+		mkdir($directory . '/os-report.json');
+		mkdir($directory . '/elsewhere');
+		symlink($directory . '/elsewhere', $directory . '/linked.json');
+
+		foreach (['os-report.json', 'linked.json'] as $name) {
+			[$exit, , $stderr] = $this->functions(self::FAKE_STAT . 'write_report "{}" "$1/' . $name . '"', $directory, '0', '755', '0', '755');
+
+			$this->assertSame(1, $exit, $name);
+			$this->assertStringContainsString('is a directory', $stderr, $name);
+		}
+		$this->assertSame(['.', '..'], scandir($directory . '/os-report.json'));
+		$this->assertSame(['.', '..'], scandir($directory . '/elsewhere'));
+		$this->assertSame(['.', '..', 'elsewhere', 'linked.json', 'os-report.json'], scandir($directory));
+	}
+
+	public function testASignalRemovesTheTemporaryReportAndFails(): void {
+		$directory = $this->temporaryDirectory();
+
+		[$exit, $stdout] = $this->functions(
+			'set_traps; TEMPORARY=$1/.os-report.test; : > "$TEMPORARY"; kill -TERM $$; echo still running',
+			$directory,
+		);
+
+		$this->assertSame([1, ''], [$exit, $stdout]);
+		$this->assertSame(['.', '..'], scandir($directory));
+	}
+
+	public static function dataTimeouts(): array {
+		return [
+			'coreutils and busybox 1.30 or later' => [':', "-k 30 300 echo run\n"],
+			'timeout without -k' => ['[ "$1" = -k ] && exit 125', "300 echo run\n"],
+			'busybox before 1.30' => ['exit 1', ''],
+		];
+	}
+
+	/**
+	 * Commands get a kill timeout where timeout(1) supports one, and run
+	 * without a limit where it does not understand the arguments at all.
+	 */
+	#[DataProvider('dataTimeouts')]
+	public function testCommandsAreTimeLimitedAsFarAsTimeoutAllows(string $behaviour, string $called): void {
+		$directory = $this->temporaryDirectory();
+		$this->fakeCommand($directory, 'timeout', [
+			$behaviour,
+			'case "$*" in *" true") ;; *) printf "%s\n" "$*" >> "$CAPTURE/calls" ;; esac',
+			'[ "$1" = -k ] && shift 2',
+			'shift',
+			'exec "$@"',
+		]);
+
+		[$exit, $stdout, $stderr] = $this->functions('CAPTURE=$1; export CAPTURE; PATH="$1:$PATH"; run_limited 300 echo run', $directory);
+
+		$this->assertSame([0, "run\n"], [$exit, $stdout], $stderr);
+		$this->assertSame($called, (string)@file_get_contents($directory . '/calls'));
+	}
+
+	public function testCommandsDoNotInheritTheLock(): void {
+		[$exit] = $this->functions('exec 9>/dev/null; TIMEOUT_MODE=none; run_limited 5 sh -c "echo held >&9"');
+
+		$this->assertNotSame(0, $exit);
+	}
+
+	public static function dataLocks(): array {
+		return [
+			'free' => ['exit 0', [0, "running\n"]],
+			'held by another run' => ['exit 1', [0, '']],
+		];
+	}
+
+	#[DataProvider('dataLocks')]
+	public function testOnlyOneRunAtATime(string $flock, array $expected): void {
+		$directory = $this->temporaryDirectory();
+		$this->fakeCommand($directory, 'flock', ['[ "$*" = "-n 9" ] || exit 2', $flock]);
+
+		$result = $this->functions('LOCK=$1/os-report.lock; PATH="$1:$PATH"; take_lock; echo running', $directory);
+
+		$this->assertSame($expected, array_slice($result, 0, 2), $result[2]);
+		$this->assertFileExists($directory . '/os-report.lock');
+	}
+
+	public function testRunsUnlockedWithoutFlock(): void {
+		$directory = $this->temporaryDirectory();
+		$dirname = $this->runner->resolve('dirname');
+		$this->assertNotNull($dirname);
+		symlink($dirname, $directory . '/dirname');
+
+		[$exit, $stdout] = $this->functions('LOCK=$1/os-report.lock; PATH=$1; take_lock; echo running', $directory);
+
+		$this->assertSame([0, "running\n"], [$exit, $stdout]);
+	}
+
+	public function testTheRandomDelayIsAtMostHalfAnHour(): void {
+		for ($i = 0; $i < 5; $i++) {
+			[$exit, $stdout] = $this->functions('sleep() { echo "$1"; }; random_delay');
+
+			$this->assertSame(0, $exit);
+			$this->assertMatchesRegularExpression('/^\d+\n$/', $stdout);
+			$this->assertLessThan(1800, (int)$stdout);
+		}
 	}
 
 	public function testRequiresRoot(): void {
