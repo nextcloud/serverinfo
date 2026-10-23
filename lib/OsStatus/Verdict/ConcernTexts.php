@@ -53,6 +53,21 @@ class ConcernTexts {
 	 */
 	public function title(Concern $concern, OsStatus $status, IL10N $l): string {
 		$facts = $concern->facts;
+		if ($concern->level === Concern::LEVEL_UNKNOWN) {
+			$unknown = match ($concern->id) {
+				Concern::UPDATES => $l->t('Pending updates could not be determined'),
+				Concern::REBOOT => $l->t('Whether a reboot is required could not be determined'),
+				Concern::RESTART => $l->t('Whether services need a restart could not be determined'),
+				Concern::PACKAGE_LISTS => $l->t('The age of the package lists could not be determined'),
+				Concern::AUTOMATIC_UPDATES => $l->t('Whether automatic updates are enabled could not be determined'),
+				Concern::FAILED_UNITS => $l->t('System services could not be checked'),
+				Concern::TIME_SYNC => $l->t('Time synchronization could not be checked'),
+				default => null,
+			};
+			if ($unknown !== null) {
+				return $unknown;
+			}
+		}
 
 		return match ($concern->id) {
 			Concern::UPDATES => $this->updatesTitle($concern, $l),
