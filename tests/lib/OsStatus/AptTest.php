@@ -168,11 +168,51 @@ class AptTest extends \Test\TestCase {
 		$this->assertSame([], $this->apt->getRebootReasons());
 	}
 
-	public function testListsRefreshTimeComesFromAptsOwnFiles(): void {
-		$this->host->modified['/var/lib/apt/lists/partial'] = 1760400000;
-		$this->host->modified['/var/lib/apt/periodic/update-success-stamp'] = 1760300000;
+	/**
+	 * Fills the host with the timestamps of a real `ls -la --time-style=+%s`
+	 * of /var/lib/apt/lists.
+	 */
+	private function listsFromFixture(string $name): void {
+		foreach (preg_split('/\R/', FakeHost::fixture($name)) ?: [] as $line) {
+			if (preg_match('/^[-d]\S+\s+\d+\s+\S+\s+\S+\s+\d+\s+(\d+)\s+(\S+)$/', $line, $matches) !== 1 || in_array($matches[2], ['.', '..'], true)) {
+				continue;
+			}
 
-		$this->assertSame(1760400000, $this->apt->getListsRefreshedAt());
+			$path = '/var/lib/apt/lists/' . $matches[2];
+			$this->host->modified[$path] = (int)$matches[1];
+			foreach (['*InRelease', '*_Release'] as $pattern) {
+				if (fnmatch($pattern, $matches[2])) {
+					$this->host->globs['/var/lib/apt/lists/' . $pattern][] = $path;
+				}
+			}
+		}
+	}
+
+	public function testListsRefreshTimeIsTheSuccessStamp(): void {
+		$this->listsFromFixture('debian-12-ls-apt-lists');
+		$this->host->modified['/var/lib/apt/periodic/update-success-stamp'] = 1792430940;
+
+		$this->assertSame(1792430940, $this->apt->getListsRefreshedAt());
+	}
+
+	public function testListsRefreshTimeFallsBackToTheNewestReleaseFile(): void {
+		$this->listsFromFixture('debian-12-ls-apt-lists');
+
+		$this->assertSame(1792418975, $this->apt->getListsRefreshedAt(), 'bookworm-updates, not the newer lists/partial');
+	}
+
+	public function testListsRefreshTimeFromReleaseFilesWithoutInRelease(): void {
+		$this->host->globs['/var/lib/apt/lists/*_Release'] = ['/var/lib/apt/lists/mirror.example.org_debian_dists_bookworm_Release'];
+		$this->host->modified['/var/lib/apt/lists/mirror.example.org_debian_dists_bookworm_Release'] = 1792000000;
+		$this->host->modified['/var/lib/apt/lists/partial'] = 1792400000;
+
+		$this->assertSame(1792000000, $this->apt->getListsRefreshedAt());
+	}
+
+	public function testNoListsNoRefreshTime(): void {
+		$this->host->modified['/var/lib/apt/lists/partial'] = 1792400000;
+
+		$this->assertNull($this->apt->getListsRefreshedAt(), 'A failing apt-get update still writes lists/partial');
 	}
 
 	public function testLastUpgradeIsReadInTheSystemTimeZone(): void {

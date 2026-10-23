@@ -28,6 +28,8 @@ class Apt implements IPackageManager {
 	private const DPKG_LOG = '/var/log/dpkg.log';
 	private const DPKG_STATUS = '/var/lib/dpkg/status';
 	private const SIMULATE_TIMEOUT = 120;
+	private const LISTS = '/var/lib/apt/lists';
+	private const UPDATE_SUCCESS_STAMP = '/var/lib/apt/periodic/update-success-stamp';
 
 	public function __construct(
 		private IHost $host,
@@ -117,16 +119,27 @@ class Apt implements IPackageManager {
 	}
 
 	/**
-	 * `apt-get update` writes into lists/partial every time it runs, whether
-	 * or not anything changed upstream; the InRelease files themselves carry
-	 * the mirror's timestamp, not ours.
+	 * update-success-stamp is touched after every `apt-get update` that
+	 * succeeded, where a hook for it is installed. Otherwise the newest
+	 * release file tells: apt only moves one into place after verifying it,
+	 * and keeps the mirror's modification time, so it is when the lists were
+	 * refreshed at the earliest. lists/partial is not used: it is written on
+	 * every run, also on one that fails.
 	 */
 	#[\Override]
 	public function getListsRefreshedAt(): ?int {
-		$times = array_filter([
-			$this->host->modifiedAt('/var/lib/apt/lists/partial'),
-			$this->host->modifiedAt('/var/lib/apt/periodic/update-success-stamp'),
-		], 'is_int');
+		$stamp = $this->host->modifiedAt(self::UPDATE_SUCCESS_STAMP);
+		if ($stamp !== null) {
+			return $stamp;
+		}
+
+		$times = [];
+		foreach (['*InRelease', '*_Release'] as $pattern) {
+			foreach ($this->host->glob(self::LISTS . '/' . $pattern) as $file) {
+				$times[] = $this->host->modifiedAt($file);
+			}
+		}
+		$times = array_filter($times, 'is_int');
 
 		return $times === [] ? null : max($times);
 	}

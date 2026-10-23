@@ -117,7 +117,7 @@ class OsStatusCollectorTest extends \Test\TestCase {
 			->withCommand('timedatectl', ['show', '--property=NTPSynchronized', '--value'], "yes\n")
 			->withFile('/run/reboot-required', "*** System restart required ***\n", self::NOW - 2 * 86400)
 			->withFile('/var/lib/ubuntu-advantage/status.json', FakeHost::fixture('ubuntu-pro-status-unattached.json'));
-		$this->host->modified['/var/lib/apt/lists/partial'] = self::NOW - 3600;
+		$this->host->modified['/var/lib/apt/periodic/update-success-stamp'] = self::NOW - 3600;
 
 		$status = $this->collector()->collect();
 
@@ -207,7 +207,7 @@ class OsStatusCollectorTest extends \Test\TestCase {
 
 	public function testNoUpdatesWithRefreshedPackageLists(): void {
 		$this->host->withCommand('apt-get', ['-s', '-o', 'Debug::NoLocking=1', 'dist-upgrade'], '');
-		$this->host->modified['/var/lib/apt/lists/partial'] = self::NOW - 3600;
+		$this->host->modified['/var/lib/apt/periodic/update-success-stamp'] = self::NOW - 3600;
 
 		$this->assertSame([], $this->collector()->collect()->updates);
 	}
