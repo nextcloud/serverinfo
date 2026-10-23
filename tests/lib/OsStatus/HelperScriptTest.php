@@ -158,6 +158,18 @@ class HelperScriptTest extends \Test\TestCase {
 		$this->assertSame([], $updates['ok'][3]);
 	}
 
+	public function testInstalledVersionsThatAreNotPlainAreDropped(): void {
+		[$exit, $stdout, $stderr] = $this->functions(
+			'dnf_updates_json "$1" "" "$2"',
+			"ok.noarch 2-1 base\nfine.noarch 3-1 base\n",
+			"ok 0:1-1\\\"]\nfine 0:2-1\n",
+		);
+
+		$this->assertSame(0, $exit, $stderr);
+		$updates = json_decode($stdout, true, 16, JSON_THROW_ON_ERROR);
+		$this->assertSame([null, '2-1'], array_column($updates, 'installed'));
+	}
+
 	public function testNeedrestartBatchOutput(): void {
 		$output = implode("\n", [
 			'NEEDRESTART-VER: 3.6',

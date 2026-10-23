@@ -240,7 +240,7 @@ dnf_updates_json() {
 			s = tolower(s)
 			return s == "critical" ? 4 : s == "important" ? 3 : s == "moderate" ? 2 : s == "low" ? 1 : 0
 		}
-		$1 == "I" && NF == 3 { version = $3; sub(/^0:/, "", version); installed[$2] = version; next }
+		$1 == "I" && NF == 3 && token($3) { version = $3; sub(/^0:/, "", version); installed[$2] = version; next }
 		$1 == "A" {
 			if ($3 ~ /\/Sec\.$/) { severity = $3; sub(/\/Sec\.$/, "", severity); nevra = $4 }
 			else if ($3 == "security") { severity = $4; nevra = $5 }
