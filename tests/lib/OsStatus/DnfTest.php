@@ -45,6 +45,32 @@ class DnfTest extends \Test\TestCase {
 		], $updates);
 	}
 
+	public function testJoinsWrappedCheckUpdateLines(): void {
+		// dnf 4 fits the columns into 80 characters and continues a row on the
+		// next line after a column that does not fit (dnf/cli/output.py).
+		$updates = Dnf::parseCheckUpdate(implode("\n", [
+			'',
+			'glibc.aarch64            2.34-283.el9_8   rhel-9-for-aarch64-baseos-rpms',
+			'glibc-minimal-langpack.aarch64',
+			'                         2.34-283.el9_8   rhel-9-for-aarch64-baseos-rpms',
+			'python3-cryptography-vectors.noarch',
+			'                         38.0.4-1.el9_4.20260101.1',
+			'                                          rhel-9-for-aarch64-appstream-rpms',
+			'tzdata.noarch            2026e-1.el9_8    rhel-9-for-aarch64-baseos-rpms',
+			'not-a-package-line',
+			'Obsoleting Packages',
+			'grub2-tools.aarch64',
+			'                         1:2.06-92.el9    rhel-9-for-aarch64-baseos-rpms',
+		]));
+
+		$this->assertSame([
+			'glibc' => ['2.34-283.el9_8', 'rhel-9-for-aarch64-baseos-rpms'],
+			'glibc-minimal-langpack' => ['2.34-283.el9_8', 'rhel-9-for-aarch64-baseos-rpms'],
+			'python3-cryptography-vectors' => ['38.0.4-1.el9_4.20260101.1', 'rhel-9-for-aarch64-appstream-rpms'],
+			'tzdata' => ['2026e-1.el9_8', 'rhel-9-for-aarch64-baseos-rpms'],
+		], $updates);
+	}
+
 	public function testAcceptsEveryArchitecture(): void {
 		$updates = Dnf::parseCheckUpdate(implode("\n", [
 			'openssl-libs.x86_64_v2           1:3.2.2-6.el10_0.1         baseos',

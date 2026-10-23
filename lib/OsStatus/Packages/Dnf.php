@@ -115,16 +115,35 @@ class Dnf implements IPackageManager {
 	 * Parses `dnf check-update`: "name.arch  version-release  repository",
 	 * up to the "Obsoleting Packages" section.
 	 *
+	 * Without a terminal dnf 4 lays the columns out in 80 characters and
+	 * moves whatever follows a column that is too wide onto the next line,
+	 * indented. Such continuation lines are joined to the line they continue.
+	 *
 	 * @return array<string, array{0: string, 1: string}> name => [version, repository]
 	 */
 	public static function parseCheckUpdate(string $output): array {
-		$updates = [];
+		$rows = [];
 		foreach (preg_split('/\R/', $output) ?: [] as $line) {
 			if (preg_match('/^Obsoleting|^Security:/i', $line) === 1) {
 				break;
 			}
-			if (preg_match('/^(\S+)\.(' . Rpm::ARCH . ')\s+(\S+)\s+(\S+)\s*$/', $line, $matches) === 1) {
-				$updates[$matches[1]] = [$matches[3], $matches[4]];
+			if (trim($line) === '') {
+				continue;
+			}
+
+			$columns = preg_split('/\s+/', trim($line)) ?: [];
+			$last = array_key_last($rows);
+			if ($last !== null && count($rows[$last]) < 3 && preg_match('/^\s/', $line) === 1) {
+				$rows[$last] = array_merge($rows[$last], $columns);
+			} else {
+				$rows[] = $columns;
+			}
+		}
+
+		$updates = [];
+		foreach ($rows as $columns) {
+			if (count($columns) === 3 && preg_match('/^(\S+)\.' . Rpm::ARCH . '$/', $columns[0], $matches) === 1) {
+				$updates[$matches[1]] = [$columns[1], $columns[2]];
 			}
 		}
 
