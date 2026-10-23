@@ -60,6 +60,7 @@ class RealOutputTest extends \Test\TestCase {
 	public function testAlmaLinux9WithDnf4(): void {
 		$host = new FakeHost();
 		$host->binaries[] = 'dnf-3';
+		$host->globs['/var/cache/dnf/*-updateinfo.solvx'] = ['/var/cache/dnf/appstream-updateinfo.solvx', '/var/cache/dnf/baseos-updateinfo.solvx', '/var/cache/dnf/crb-updateinfo.solvx'];
 		$host->withCommand('dnf-3', ['-q', '--cacheonly', 'check-update'], FakeHost::fixture('alma-9-dnf-check-update-pending'), 100)
 			->withCommand('dnf-3', ['-q', '--cacheonly', 'updateinfo', 'list', '--security', '--available'], FakeHost::fixture('alma-9-dnf-updateinfo-security'))
 			->withCommand('dnf-3', ['-q', '--cacheonly', 'versionlock', 'list'], FakeHost::fixture('alma-9-dnf-versionlock'))

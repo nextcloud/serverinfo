@@ -19,6 +19,7 @@ use OCA\ServerInfo\OsStatus\Helper\HelperReportReader;
 use OCA\ServerInfo\OsStatus\Host\IHost;
 use OCA\ServerInfo\OsStatus\Packages\AutomaticUpdates;
 use OCA\ServerInfo\OsStatus\Packages\IPackageManager;
+use OCA\ServerInfo\OsStatus\Packages\IReportsDiagnostics;
 use OCA\ServerInfo\OsStatus\Packages\NeedsRootException;
 use OCA\ServerInfo\OsStatus\Packages\PackageManagerFactory;
 use OCA\ServerInfo\OsStatus\Packages\PendingUpdate;
@@ -170,6 +171,10 @@ class OsStatusCollector {
 			$updates = self::sortUpdates($updates);
 			$omitted = max(0, count($updates) - self::MAX_LISTED_UPDATES);
 			$updates = array_slice($updates, 0, self::MAX_LISTED_UPDATES);
+		}
+
+		if ($packageManager instanceof IReportsDiagnostics) {
+			array_push($diagnostics, ...$packageManager->getDiagnostics());
 		}
 
 		$timeSync = $this->probe('The time synchronisation', fn (): array => $this->timeSync->probe(), ['synchronized' => null, 'source' => null], $diagnostics);
