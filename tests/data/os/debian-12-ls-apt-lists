@@ -1,0 +1,18 @@
+/var/lib/apt/lists/:
+total 19160
+drwxr-xr-x 1 root root     4096 1792431065 .
+drwxr-xr-x 1 root root     4096 1792432168 ..
+drwxr-xr-x 2 _apt root     4096 1792430934 auxfiles
+-rw-r--r-- 1 root root    34770 1792345598 deb.debian.org_debian-security_dists_bookworm-security_InRelease
+-rw-r--r-- 1 root root   706000 1792315332 deb.debian.org_debian-security_dists_bookworm-security_main_binary-arm64_Packages.lz4
+-rw-r--r-- 1 root root    55403 1792418975 deb.debian.org_debian_dists_bookworm-updates_InRelease
+-rw-r--r-- 1 root root    11617 1754661485 deb.debian.org_debian_dists_bookworm-updates_main_binary-arm64_Packages.lz4
+-rw-r--r-- 1 root root   151075 1783765271 deb.debian.org_debian_dists_bookworm_InRelease
+-rw-r--r-- 1 root root 18630901 1783763355 deb.debian.org_debian_dists_bookworm_main_binary-arm64_Packages.lz4
+-rw-r----- 1 root root        0 1792430934 lock
+drwx------ 2 _apt root     4096 1792432161 partial
+
+/var/lib/apt/periodic/:
+total 12
+drwxr-xr-x 2 root root 4096 1685023897 .
+drwxr-xr-x 1 root root 4096 1792432168 ..
