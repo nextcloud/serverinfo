@@ -35,6 +35,7 @@ class EntryPointsTest extends \Test\TestCase {
 	private OsStatusService&MockObject $service;
 	private IL10N $l10n;
 	private IURLGenerator&MockObject $urlGenerator;
+	private bool $recipientIsAdmin = true;
 
 	protected function setUp(): void {
 		parent::setUp();
@@ -54,7 +55,10 @@ class EntryPointsTest extends \Test\TestCase {
 		$factory = $this->createMock(IFactory::class);
 		$factory->method('get')->willReturn($this->l10n);
 
-		return new OsNotifier($factory, $this->urlGenerator, $this->service, $sender, $this->texts());
+		$groups = $this->createMock(IGroupManager::class);
+		$groups->method('isAdmin')->willReturnCallback(fn (string $uid): bool => $uid === 'admin' && $this->recipientIsAdmin);
+
+		return new OsNotifier($factory, $this->urlGenerator, $this->service, $sender, $this->texts(), $groups);
 	}
 
 	private function notification(string $app, string $objectType, string $objectId): INotification&MockObject {
@@ -62,6 +66,7 @@ class EntryPointsTest extends \Test\TestCase {
 		$notification->method('getApp')->willReturn($app);
 		$notification->method('getObjectType')->willReturn($objectType);
 		$notification->method('getObjectId')->willReturn($objectId);
+		$notification->method('getUser')->willReturn('admin');
 
 		return $notification;
 	}
@@ -145,6 +150,14 @@ class EntryPointsTest extends \Test\TestCase {
 
 		$this->expectException(AlreadyProcessedException::class);
 		$this->notifier($sender)->prepare($this->notification('serverinfo', 'os', 'updates'), 'en');
+	}
+
+	public function testNotifierDropsNotificationsOfFormerAdmins(): void {
+		$this->recipientIsAdmin = false;
+		$this->service->expects($this->never())->method('getStatus');
+
+		$this->expectException(AlreadyProcessedException::class);
+		$this->notifier($this->currentSender())->prepare($this->liveNotification('updates', $subject), 'en');
 	}
 
 	private function widget(bool $admin): ServerHealthWidget {

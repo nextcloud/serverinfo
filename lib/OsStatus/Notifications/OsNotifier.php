@@ -12,6 +12,7 @@ namespace OCA\ServerInfo\OsStatus\Notifications;
 use OCA\ServerInfo\AppInfo\Application;
 use OCA\ServerInfo\OsStatus\OsStatusService;
 use OCA\ServerInfo\OsStatus\Verdict\ConcernTexts;
+use OCP\IGroupManager;
 use OCP\IURLGenerator;
 use OCP\L10N\IFactory;
 use OCP\Notification\AlreadyProcessedException;
@@ -32,6 +33,7 @@ class OsNotifier implements INotifier {
 		private OsStatusService $service,
 		private OsNotificationSender $sender,
 		private ConcernTexts $texts,
+		private IGroupManager $groupManager,
 	) {
 	}
 
@@ -51,7 +53,9 @@ class OsNotifier implements INotifier {
 			throw new UnknownNotificationException();
 		}
 
-		if (!$this->sender->isCurrent($notification)) {
+		// The text comes from the live status, so it must not reach someone
+		// who has stopped being an admin since it was sent.
+		if (!$this->groupManager->isAdmin($notification->getUser()) || !$this->sender->isCurrent($notification)) {
 			throw new AlreadyProcessedException();
 		}
 
