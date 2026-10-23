@@ -1,0 +1,27 @@
+NOTE: This is only a simulation!
+      apt-get needs root privileges for real execution.
+      Keep also in mind that locking is deactivated,
+      so don't depend on the relevance to the real current situation!
+Reading package lists...
+Building dependency tree...
+Reading state information...
+Calculating upgrade...
+The following packages have been kept back:
+  sudo
+The following packages will be upgraded:
+  curl libc-bin libc6 libcurl4t64 libssl3t64 openssl tzdata
+7 upgraded, 0 newly installed, 0 to remove and 1 not upgraded.
+Inst libc6 [2.39-0ubuntu8] (2.39-0ubuntu8.9 Ubuntu:24.04/noble-updates, Ubuntu:24.04/noble-security [arm64])
+Conf libc6 (2.39-0ubuntu8.9 Ubuntu:24.04/noble-updates, Ubuntu:24.04/noble-security [arm64])
+Inst libc-bin [2.39-0ubuntu8] (2.39-0ubuntu8.9 Ubuntu:24.04/noble-updates, Ubuntu:24.04/noble-security [arm64])
+Conf libc-bin (2.39-0ubuntu8.9 Ubuntu:24.04/noble-updates, Ubuntu:24.04/noble-security [arm64])
+Inst libssl3t64 [3.0.13-0ubuntu3] (3.0.13-0ubuntu3.16 Ubuntu:24.04/noble-updates, Ubuntu:24.04/noble-security [arm64])
+Conf libssl3t64 (3.0.13-0ubuntu3.16 Ubuntu:24.04/noble-updates, Ubuntu:24.04/noble-security [arm64])
+Inst openssl [3.0.13-0ubuntu3] (3.0.13-0ubuntu3.16 Ubuntu:24.04/noble-updates, Ubuntu:24.04/noble-security [arm64])
+Inst tzdata [2024a-2ubuntu1] (2026e-0ubuntu0.24.04.1 Ubuntu:24.04/noble-updates [all])
+Inst curl [8.5.0-2ubuntu10] (8.5.0-2ubuntu10.16 Ubuntu:24.04/noble-security [arm64]) []
+Inst libcurl4t64 [8.5.0-2ubuntu10] (8.5.0-2ubuntu10.16 Ubuntu:24.04/noble-security [arm64])
+Conf openssl (3.0.13-0ubuntu3.16 Ubuntu:24.04/noble-updates, Ubuntu:24.04/noble-security [arm64])
+Conf tzdata (2026e-0ubuntu0.24.04.1 Ubuntu:24.04/noble-updates [all])
+Conf curl (8.5.0-2ubuntu10.16 Ubuntu:24.04/noble-security [arm64])
+Conf libcurl4t64 (8.5.0-2ubuntu10.16 Ubuntu:24.04/noble-security [arm64])
