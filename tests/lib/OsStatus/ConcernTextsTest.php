@@ -102,4 +102,17 @@ class ConcernTextsTest extends \Test\TestCase {
 		$this->assertSame('PHP is running outdated libraries', $this->texts->title($concern, $this->status, $this->l));
 		$this->assertSame('Another 2 services need a restart too. Pending for 4 days.', $this->texts->detail($concern, $this->l));
 	}
+
+	public function testFailedUnitsSkipItemsThatAreNotNames(): void {
+		$concern = new Concern(Concern::FAILED_UNITS, Concern::LEVEL_WARNING, ['units' => ['nginx.service', 5, ['nested'], null, 'cron.service']]);
+
+		$this->assertSame('2 system services have failed', $this->texts->title($concern, $this->status, $this->l));
+		$this->assertSame('nginx.service, cron.service', $this->texts->detail($concern, $this->l));
+	}
+
+	public function testRebootKindsSkipItemsThatAreNotKinds(): void {
+		$concern = new Concern(Concern::REBOOT, Concern::LEVEL_WARNING, ['kinds' => [['kernel'], 'kernel']]);
+
+		$this->assertSame('A newer kernel is installed.', $this->texts->detail($concern, $this->l));
+	}
 }
