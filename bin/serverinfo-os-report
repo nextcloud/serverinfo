@@ -51,9 +51,6 @@ ERRORS=
 SERVICES=
 REBOOT_REASONS=
 
-# Architectures that end a package name in the output of the rpm tools.
-RPM_ARCHES='x86_64|aarch64|i[3-6]86|noarch|ppc64le|s390x|armv7hl|riscv64'
-
 usage() {
 	cat <<EOF
 Usage: serverinfo-os-report [--refresh] [--output FILE] [--dry-run]
@@ -186,7 +183,9 @@ parse_needrestart() {
 
 from_dnf() {
 	command -v dnf >/dev/null 2>&1 || return 1
-	output=$(run_limited 300 dnf -q needs-restarting -s 2>/dev/null) || return 1
+	# dnf 5 loads the repositories for needs-restarting; --cacheonly keeps it
+	# from downloading metadata. dnf 4 accepts the option and loads none.
+	output=$(run_limited 300 dnf -q --cacheonly needs-restarting -s 2>/dev/null) || return 1
 	add_services "$output"
 	return 0
 }
@@ -233,9 +232,10 @@ dnf_updates_json() {
 		printf '%s\n' "$3" | sed 's/^/I /'
 		printf '%s\n' "$2" | sed 's/^/A /'
 		printf '%s\n' "$1" | sed 's/^/U /'
-	} | awk -v arches="$RPM_ARCHES" '
+	} | awk '
 		function token(s) { return s ~ /^[A-Za-z0-9@._+:~^-]+$/ }
-		function strip_arch(s) { sub("\\.(" arches ")$", "", s); return s }
+		# The architecture is whatever follows the last dot: x86_64, x86_64_v2, noarch, s390, ...
+		function strip_arch(s) { sub(/\.[A-Za-z0-9_]+$/, "", s); return s }
 		function rank(s) {
 			s = tolower(s)
 			return s == "critical" ? 4 : s == "important" ? 3 : s == "moderate" ? 2 : s == "low" ? 1 : 0
@@ -256,7 +256,17 @@ dnf_updates_json() {
 			next
 		}
 		$1 == "U" && $2 ~ /^Obsoleting/ { stop = 1 }
-		$1 == "U" && !stop && NF == 4 && $2 ~ ("\\.(" arches ")$") {
+		# dnf 4 continues a row on the next line, indented to the next column,
+		# after a name or version too wide for its column.
+		$1 == "U" && !stop && held != "" {
+			if ($0 ~ /^U [ \t]/) $0 = "U " held " " substr($0, 3)
+			held = ""
+		}
+		$1 == "U" && !stop && (NF == 2 || NF == 3) && $0 !~ /^U [ \t]/ && $2 ~ /\.[A-Za-z0-9_]+$/ {
+			held = substr($0, 3)
+			next
+		}
+		$1 == "U" && !stop && NF == 4 && $2 ~ /\.[A-Za-z0-9_]+$/ {
 			if (!token($2) || !token($3) || !token($4)) next
 			name = strip_arch($2)
 			out = out (count++ ? "," : "") sprintf("{\"name\":\"%s\",\"installed\":%s,\"candidate\":\"%s\",\"security\":%s,\"origin\":\"%s\",\"advisories\":[%s],\"severity\":%s}",

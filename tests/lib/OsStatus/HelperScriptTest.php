@@ -94,6 +94,16 @@ class HelperScriptTest extends \Test\TestCase {
 		return realpath($directory) ?: $directory;
 	}
 
+	/**
+	 * Writes a shell script standing in for a system command.
+	 *
+	 * @param list<string> $lines
+	 */
+	private function fakeCommand(string $directory, string $name, array $lines): void {
+		file_put_contents($directory . '/' . $name, implode("\n", ['#!/bin/sh', ...$lines]) . "\n");
+		chmod($directory . '/' . $name, 0o755);
+	}
+
 	protected function tearDown(): void {
 		foreach ($this->temporary as $directory) {
 			$this->runner->run('rm', ['-rf', $directory], 10);
@@ -158,6 +168,56 @@ class HelperScriptTest extends \Test\TestCase {
 		$this->assertSame([], $updates['ok'][3]);
 	}
 
+	/**
+	 * dnf 4 wraps a row when a name or version is wider than its column;
+	 * architectures are not limited to a known list.
+	 */
+	public function testDnf4WrappedRowsAndAnyArchitecture(): void {
+		$checkUpdate = <<<'EOT'
+			Last metadata expiration check: 0:01:02 ago on Mon Oct 19 18:12:41 2026.
+
+			glibc.x86_64_v2                     2.39-58.el10_1                  baseos
+			rhel-9-a-very-long-package-name-for-testing.x86_64
+			                                    1.2.3-4.el9                     rhel-9-for-x86_64-appstream-rpms
+			long-version.noarch                 1:20261022.0.1234567890-1.el9.something_long
+			                                                                    rhel-9-for-x86_64-baseos-rpms
+			a-package-with-both-columns-too-wide.aarch64
+			                                    1:20261022.0.1234567890-1.el9.something_long
+			                                                                    rhel-9-for-aarch64-appstream-rpms
+			python3.11-libs.ppc64               3.11.9-1.el9                    appstream
+			zlib.s390                           1.2.11-41.el9                   baseos
+			orphan-line.noarch
+			tzdata.noarch                       2026e-1.el9                     baseos
+			Obsoleting Packages
+			obsoleting.noarch                   1-1                             baseos
+			EOT;
+
+		$updates = $this->dnfUpdates($checkUpdate, '', '');
+
+		$this->assertSame([
+			'glibc' => '2.39-58.el10_1',
+			'rhel-9-a-very-long-package-name-for-testing' => '1.2.3-4.el9',
+			'long-version' => '1:20261022.0.1234567890-1.el9.something_long',
+			'a-package-with-both-columns-too-wide' => '1:20261022.0.1234567890-1.el9.something_long',
+			'python3.11-libs' => '3.11.9-1.el9',
+			'zlib' => '1.2.11-41.el9',
+			'tzdata' => '2026e-1.el9',
+		], array_map(static fn (array $update): string => $update[1], $updates));
+	}
+
+	public function testDnfNeedsRestartingReadsFromTheCache(): void {
+		$directory = $this->temporaryDirectory();
+		$this->fakeCommand($directory, 'dnf', [
+			'printf "%s\n" "$*" > "$CAPTURE/arguments"',
+			'echo nginx.service',
+		]);
+
+		[$exit, $stdout, $stderr] = $this->functions('CAPTURE=$1; export CAPTURE; PATH="$1:$PATH"; from_dnf; printf "%s" "$SERVICES"', $directory);
+
+		$this->assertSame([0, "nginx.service\n"], [$exit, $stdout], $stderr);
+		$this->assertSame("-q --cacheonly needs-restarting -s\n", file_get_contents($directory . '/arguments'));
+	}
+
 	public function testInstalledVersionsThatAreNotPlainAreDropped(): void {
 		[$exit, $stdout, $stderr] = $this->functions(
 			'dnf_updates_json "$1" "" "$2"',
@@ -210,13 +270,11 @@ class HelperScriptTest extends \Test\TestCase {
 	 */
 	public function testNeedrestartRunsWithoutInterpreterScan(): void {
 		$directory = $this->temporaryDirectory();
-		file_put_contents($directory . '/needrestart', implode("\n", [
-			'#!/bin/sh',
+		$this->fakeCommand($directory, 'needrestart', [
 			'printf "%s\n" "$*" > "$CAPTURE/arguments"',
 			'cat "$2" > "$CAPTURE/config"',
 			'printf "NEEDRESTART-VER: 3.6\nNEEDRESTART-SVC: nginx.service\n"',
-		]) . "\n");
-		chmod($directory . '/needrestart', 0o755);
+		]);
 
 		[$exit, $stdout, $stderr] = $this->functions(
 			'CAPTURE=$1; export CAPTURE; PATH="$1:$PATH"; from_needrestart; printf "%s" "$SERVICES"',
