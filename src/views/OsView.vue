@@ -25,7 +25,7 @@
 						<ServerSecurity />
 					</template>
 					<template #action>
-						<NcButton variant="primary" :disabled="refreshing" @click="refresh">
+						<NcButton variant="primary" :disabled="refreshing || !data.refresh.systemCron" @click="refresh">
 							<template #icon>
 								<NcLoadingIcon v-if="refreshing" :size="20" />
 								<Refresh v-else :size="20" />
@@ -49,21 +49,31 @@
 						:status="status"
 						:concerns="problems(data)"
 						:refreshing="refreshing"
+						:canRefresh="data.refresh.systemCron"
 						@refresh="refresh"
 						@settings="settingsOpen = true" />
 
 					<NcNoteCard v-if="data.outdated" type="info" class="os-view__notice">
 						{{ t('serverinfo', 'Packages were installed or removed since the last check, so some of this may already be resolved.') }}
-						<NcButton variant="tertiary-no-background" :disabled="refreshing" @click="refresh">
+						<NcButton variant="tertiary-no-background" :disabled="refreshing || !data.refresh.systemCron" @click="refresh">
 							{{ t('serverinfo', 'Check now') }}
 						</NcButton>
 					</NcNoteCard>
 				</template>
 
-				<NcNoteCard v-if="refreshError === 429" type="warning" class="os-view__notice">
+				<NcNoteCard v-if="refreshing" type="info" class="os-view__notice">
+					{{ t('serverinfo', 'The check runs with the next background jobs, usually within a few minutes. This page updates when it is done.') }}
+				</NcNoteCard>
+				<NcNoteCard v-else-if="(!status || status.state === 'ok') && (!data.refresh.systemCron || refreshError === 'no-cron')" type="info" class="os-view__notice">
+					{{ t('serverinfo', '"Check now" needs background jobs to run from system cron. Until then, run "occ serverinfo:os-status --refresh" on the server.') }}
+				</NcNoteCard>
+				<NcNoteCard v-else-if="refreshError === 'rate-limited'" type="warning" class="os-view__notice">
 					{{ t('serverinfo', 'The operating system was checked several times in the last minutes. Try again a little later.') }}
 				</NcNoteCard>
-				<NcNoteCard v-else-if="refreshError !== null" type="error" class="os-view__notice">
+				<NcNoteCard v-else-if="refreshError === 'slow'" type="warning" class="os-view__notice">
+					{{ t('serverinfo', 'The check has not finished yet. Check that the background jobs run, then reload this page.') }}
+				</NcNoteCard>
+				<NcNoteCard v-else-if="refreshError === 'failed'" type="error" class="os-view__notice">
 					{{ t('serverinfo', 'The check failed. The Nextcloud log has the details.') }}
 				</NcNoteCard>
 			</div>

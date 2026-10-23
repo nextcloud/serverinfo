@@ -9,12 +9,13 @@ import OsVerdictCard from './OsVerdictCard.vue'
 import { concern, status } from '../../testing/osPayload.ts'
 
 describe('OsVerdictCard', () => {
-	const mountCard = (level: 'ok' | 'warning' | 'error' | 'unknown', refreshing = false) => mount(OsVerdictCard, {
+	const mountCard = (level: 'ok' | 'warning' | 'error' | 'unknown', refreshing = false, canRefresh = true) => mount(OsVerdictCard, {
 		props: {
 			level,
 			status: status(),
 			concerns: level === 'ok' ? [] : [concern('updates', 'warning', { classified: true, security: 7, other: 0 })],
 			refreshing,
+			canRefresh,
 		},
 	})
 
@@ -44,5 +45,9 @@ describe('OsVerdictCard', () => {
 		const busy = mountCard('ok', true)
 		expect(busy.findAll('button')[0].attributes('disabled')).toBeDefined()
 		expect(busy.text()).toContain('Checking…')
+	})
+
+	it('cannot ask for a check without system cron', () => {
+		expect(mountCard('ok', false, false).findAll('button')[0].attributes('disabled')).toBeDefined()
 	})
 })

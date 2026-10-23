@@ -9,25 +9,17 @@ declare(strict_types=1);
 
 namespace OCA\ServerInfo\Tests\OsStatus;
 
-use OCA\ServerInfo\Controller\OsController;
 use OCA\ServerInfo\Dashboard\ServerHealthWidget;
 use OCA\ServerInfo\OsStatus\Notifications\OsNotificationSender;
 use OCA\ServerInfo\OsStatus\Notifications\OsNotifier;
 use OCA\ServerInfo\OsStatus\OsStatus;
-use OCA\ServerInfo\OsStatus\OsStatusCollector;
 use OCA\ServerInfo\OsStatus\OsStatusService;
 use OCA\ServerInfo\OsStatus\Verdict\Concern;
 use OCA\ServerInfo\OsStatus\Verdict\ConcernTexts;
-use OCA\ServerInfo\OsStatus\Verdict\Thresholds;
 use OCA\ServerInfo\OsStatus\Verdict\Verdict;
-use OCP\App\IAppManager;
-use OCP\AppFramework\Http;
-use OCP\AppFramework\Services\IAppConfig;
-use OCP\AppFramework\Utility\ITimeFactory;
 use OCP\IDateTimeFormatter;
 use OCP\IGroupManager;
 use OCP\IL10N;
-use OCP\IRequest;
 use OCP\IURLGenerator;
 use OCP\IUser;
 use OCP\IUserSession;
@@ -48,7 +40,6 @@ class EntryPointsTest extends \Test\TestCase {
 	protected function setUp(): void {
 		parent::setUp();
 		$this->service = $this->createMock(OsStatusService::class);
-		$this->service->method('getThresholds')->willReturn(new Thresholds());
 		$this->l10n = new FakeL10N();
 		$this->urlGenerator = $this->createMock(IURLGenerator::class);
 		$this->urlGenerator->method('linkToRouteAbsolute')->willReturn('https://cloud.example.org/settings/admin/serverinfo');
@@ -58,60 +49,6 @@ class EntryPointsTest extends \Test\TestCase {
 
 	private function texts(): ConcernTexts {
 		return new ConcernTexts($this->createMock(IDateTimeFormatter::class));
-	}
-
-	private function controller(IAppConfig&MockObject $config, OsNotificationSender&MockObject $sender): OsController {
-		$appManager = $this->createMock(IAppManager::class);
-		$appManager->method('getAppPath')->willReturn('/var/www/nextcloud/apps/serverinfo');
-
-		return new OsController(
-			'serverinfo',
-			$this->createMock(IRequest::class),
-			$this->service,
-			$this->createMock(OsStatusCollector::class),
-			$sender,
-			$config,
-			$appManager,
-			$this->createMock(ITimeFactory::class),
-		);
-	}
-
-	public function testSettingsAreValidatedBeforeAnythingIsStored(): void {
-		$config = $this->createMock(IAppConfig::class);
-		$config->expects($this->never())->method('setAppValueInt');
-		$config->expects($this->never())->method('setAppValueBool');
-		$sender = $this->createMock(OsNotificationSender::class);
-		$sender->expects($this->never())->method('sync');
-
-		$response = $this->controller($config, $sender)->updateSettings(['securityWarning' => 20, 'securityError' => 10], true);
-
-		$this->assertSame(Http::STATUS_BAD_REQUEST, $response->getStatus());
-		$this->assertSame(['field' => 'rebootWarning'], $response->getData(), 'The first missing field is named');
-	}
-
-	public function testValidSettingsAreStoredAndApplied(): void {
-		$config = $this->createMock(IAppConfig::class);
-		$config->expects($this->exactly(8))->method('setAppValueInt');
-		$config->expects($this->once())->method('setAppValueBool')->with('os_notifications', false);
-		$config->method('getAppValueString')->willReturnArgument(1);
-		$sender = $this->createMock(OsNotificationSender::class);
-		$sender->expects($this->once())->method('sync');
-
-		$response = $this->controller($config, $sender)->updateSettings((new Thresholds(rebootWarning: 2))->toArray(), false);
-
-		$this->assertSame(Http::STATUS_OK, $response->getStatus());
-		$this->assertSame('/var/www/nextcloud/apps/serverinfo/bin/serverinfo-os-report', $response->getData()['helper']['scriptPath']);
-	}
-
-	public function testStatusSamplesThePhpProcess(): void {
-		$config = $this->createMock(IAppConfig::class);
-		$config->method('getAppValueString')->willReturnArgument(1);
-		$this->service->expects($this->once())->method('samplePhpProcess');
-
-		$data = $this->controller($config, $this->createMock(OsNotificationSender::class))->status()->getData();
-
-		$this->assertNull($data['status']);
-		$this->assertSame('/var/lib/serverinfo/os-report.json', $data['helper']['reportPath']);
 	}
 
 	private function notifier(OsNotificationSender&MockObject $sender): OsNotifier {

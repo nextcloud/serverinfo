@@ -112,6 +112,7 @@ export function payload(overrides: Partial<OsPayload> = {}): OsPayload {
 			listsError: 30,
 		},
 		notifications: true,
+		refresh: { systemCron: true, running: false },
 		helper: {
 			bundledVersion: '1.0.0',
 			scriptPath: '/var/www/nextcloud/apps/serverinfo/bin/serverinfo-os-report',

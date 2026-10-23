@@ -63,8 +63,9 @@ The status is collected by a background job once an hour, when background
 jobs run from system cron; under AJAX or webcron the commands would hold a web
 request for minutes. A status older than three job intervals (at least six
 hours), or background jobs that do not run from system cron, count as a
-warning, so an old all-clear is never shown as current. Admins can also check
-it from the page, or run:
+warning, so an old all-clear is never shown as current. "Check now" on the page
+queues a check for the next cron run and shows the result when it is done;
+only one check runs at a time. Admins can also run:
 
 ```
 occ serverinfo:os-status [--refresh] [--output=json]

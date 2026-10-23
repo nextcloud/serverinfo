@@ -48,6 +48,11 @@ class ShowOsStatus {
 		bool $refresh = false,
 	): int {
 		if ($refresh) {
+			if ($this->collector->isCollecting()) {
+				$output->writeln('<error>The operating system status is being collected right now; try again in a few minutes.</error>');
+
+				return self::EXIT_UNKNOWN;
+			}
 			if ($this->collector->collectAndStore() === null) {
 				$output->writeln('<error>The operating system status could not be collected; see the Nextcloud log.</error>');
 
