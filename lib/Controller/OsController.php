@@ -23,6 +23,7 @@ use OCA\ServerInfo\OsStatus\Verdict\ConcernTexts;
 use OCA\ServerInfo\OsStatus\Verdict\Thresholds;
 use OCP\AppFramework\Controller;
 use OCP\AppFramework\Http;
+use OCP\AppFramework\Http\Attribute\PasswordConfirmationRequired;
 use OCP\AppFramework\Http\Attribute\UserRateLimit;
 use OCP\AppFramework\Http\JSONResponse;
 use OCP\AppFramework\Services\IAppConfig;
@@ -98,6 +99,7 @@ class OsController extends Controller {
 	 *
 	 * @param mixed $thresholds days per setting, see Thresholds
 	 */
+	#[PasswordConfirmationRequired]
 	public function updateSettings(mixed $thresholds = null, ?bool $notifications = null): JSONResponse {
 		try {
 			$validated = Thresholds::fromInput(is_array($thresholds) ? $thresholds : []);

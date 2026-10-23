@@ -24,6 +24,7 @@ use OCA\ServerInfo\OsStatus\Verdict\ConcernTexts;
 use OCA\ServerInfo\OsStatus\Verdict\Thresholds;
 use OCA\ServerInfo\OsStatus\Verdict\Verdict;
 use OCP\AppFramework\Http;
+use OCP\AppFramework\Http\Attribute\PasswordConfirmationRequired;
 use OCP\AppFramework\Services\IAppConfig;
 use OCP\AppFramework\Utility\ITimeFactory;
 use OCP\BackgroundJob\IJobList;
@@ -107,6 +108,13 @@ class OsControllerTest extends \Test\TestCase {
 
 		$this->assertSame(Http::STATUS_BAD_REQUEST, $response->getStatus());
 		$this->assertSame(['field' => 'securityWarning'], $response->getData());
+	}
+
+	public function testSettingsNeedThePasswordConfirmed(): void {
+		$attributes = (new \ReflectionMethod(OsController::class, 'updateSettings'))->getAttributes(PasswordConfirmationRequired::class);
+
+		$this->assertCount(1, $attributes);
+		$this->assertFalse($attributes[0]->newInstance()->getStrict());
 	}
 
 	public function testSendsTheDefaultsAndLimitsOfTheSettings(): void {

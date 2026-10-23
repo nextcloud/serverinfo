@@ -54,6 +54,7 @@ import type { OsPayload, OsThresholds } from '../../types.ts'
 
 import axios from '@nextcloud/axios'
 import { t } from '@nextcloud/l10n'
+import { confirmPassword } from '@nextcloud/password-confirmation'
 import { generateUrl } from '@nextcloud/router'
 import { computed, reactive, ref } from 'vue'
 import NcButton from '@nextcloud/vue/components/NcButton'
@@ -62,6 +63,8 @@ import NcDialog from '@nextcloud/vue/components/NcDialog'
 import NcNoteCard from '@nextcloud/vue/components/NcNoteCard'
 import NcTextField from '@nextcloud/vue/components/NcTextField'
 import { PLAIN } from '../../osUtils.ts'
+
+import '@nextcloud/password-confirmation/style.css'
 
 const props = defineProps<{
 	thresholds: OsThresholds
@@ -166,6 +169,14 @@ async function save() {
 
 	busy.value = true
 	failed.value = false
+	try {
+		await confirmPassword()
+	} catch {
+		// Closing the password prompt leaves the form as it was.
+		busy.value = false
+		return
+	}
+
 	try {
 		const thresholds = Object.fromEntries(Object.entries(form).map(([key, value]) => [key, Number(value)])) as unknown as OsThresholds
 		const response = await axios.put<OsPayload>(generateUrl('/apps/serverinfo/os/settings'), { thresholds, notifications: notify.value })
