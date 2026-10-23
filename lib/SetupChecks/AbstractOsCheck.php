@@ -10,7 +10,6 @@ declare(strict_types=1);
 namespace OCA\ServerInfo\SetupChecks;
 
 use OCA\ServerInfo\AppInfo\Application;
-use OCA\ServerInfo\OsStatus\OsStatus;
 use OCA\ServerInfo\OsStatus\OsStatusService;
 use OCA\ServerInfo\OsStatus\Verdict\Concern;
 use OCA\ServerInfo\OsStatus\Verdict\ConcernTexts;
@@ -56,11 +55,9 @@ abstract class AbstractOsCheck implements ISetupCheck {
 				$this->l10n->t('The operating system has not been checked yet. It is checked by the background jobs when they run from system cron, or with occ serverinfo:os-status --refresh.'),
 			);
 		}
-		if ($status->state === OsStatus::STATE_RESTRICTED) {
-			return SetupResult::success($this->l10n->t('Not checked, because the Monitoring app runs in restricted mode.'));
-		}
-		if ($status->state === OsStatus::STATE_UNSUPPORTED) {
-			return SetupResult::success($this->l10n->t('Only Linux systems are checked.'));
+		$unavailable = $this->texts->unavailable($status, $this->l10n);
+		if ($unavailable !== null) {
+			return SetupResult::success($unavailable);
 		}
 
 		$verdict = $this->service->evaluate($status);

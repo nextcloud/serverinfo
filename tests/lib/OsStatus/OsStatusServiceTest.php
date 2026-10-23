@@ -32,6 +32,7 @@ class OsStatusServiceTest extends \Test\TestCase {
 	private FakeHost $host;
 	private string $mode = 'cron';
 	private OsStatusService $service;
+	private string $restrictedMode = 'no';
 
 	protected function setUp(): void {
 		parent::setUp();
@@ -43,6 +44,7 @@ class OsStatusServiceTest extends \Test\TestCase {
 			'os_reboot_error_days' => 30, 'os_restart_warning_days' => 3, 'os_eol_warning_days' => 90,
 			'os_lists_warning_days' => 7, 'os_lists_error_days' => 30, default => 0,
 		});
+		$config->method('getAppValueString')->willReturnCallback(fn (string $key, string $default): string => $key === 'restricted_mode' ? $this->restrictedMode : $default);
 		$time = $this->createMock(ITimeFactory::class);
 		$time->method('getTime')->willReturn(self::NOW);
 
@@ -161,5 +163,17 @@ class OsStatusServiceTest extends \Test\TestCase {
 		$this->service->samplePhpProcess();
 
 		$this->assertNotSame($before, $this->service->evaluate());
+	}
+
+	public function testOnlyLinuxOutsideRestrictedModeIsChecked(): void {
+		$this->store->expects($this->never())->method('load');
+		$this->assertTrue($this->service->isApplicable());
+
+		$this->restrictedMode = 'yes';
+		$this->assertFalse($this->service->isApplicable());
+
+		$this->restrictedMode = 'no';
+		$this->host->family = 'BSD';
+		$this->assertFalse($this->service->isApplicable());
 	}
 }

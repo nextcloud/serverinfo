@@ -43,6 +43,15 @@ class OsStatusService {
 	) {
 	}
 
+	/**
+	 * Whether the operating system of this server is checked at all: not in
+	 * restricted mode, and only on Linux. Reads no stored status.
+	 */
+	public function isApplicable(): bool {
+		return $this->appConfig->getAppValueString('restricted_mode', 'no') !== 'yes'
+			&& $this->host->osFamily() === 'Linux';
+	}
+
 	public function getStatus(): ?OsStatus {
 		return $this->store->load();
 	}
