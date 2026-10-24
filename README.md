@@ -156,6 +156,12 @@ process of their own (the command line PHP under system cron), which has its
 own OPcache and is not part of the web server's FPM pool, so the figures would
 describe the wrong process.
 
+On the Status page, the Load and Memory charts can switch from the live
+values to the last 24 hours, 7 days, 30 days or year, and **Disk usage over
+time** shows the data directory's file system. A day is shown in five-minute
+steps, 7 and 30 days in hours and a year in days; longer ranges also draw the
+highest load and memory use.
+
 Five-minute samples are kept for 48 hours. From them the job also computes
 hourly rows, kept for 30 days, and daily rows (UTC days), kept for a year.
 These hold the averages, and for the load, memory used and active users also
