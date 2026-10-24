@@ -22,7 +22,7 @@
     "chart.js": "^4.0.0",
     "vue": "^3.5.43",
     "vue-chartjs": "^5.3.4",
-    "vue-material-design-icons": "^5.3.1"
+    "vue-material-design-icons": "^5.4.0"
   },
   "devDependencies": {
     "@nextcloud/browserslist-config": "^3.1.2",
