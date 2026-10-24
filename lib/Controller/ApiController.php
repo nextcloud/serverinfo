@@ -9,14 +9,11 @@ declare(strict_types=1);
 
 namespace OCA\ServerInfo\Controller;
 
-use OCA\ServerInfo\DatabaseStatistics;
 use OCA\ServerInfo\FpmStatistics;
 use OCA\ServerInfo\Os;
 use OCA\ServerInfo\OsStatus\OsStatusService;
 use OCA\ServerInfo\PhpStatistics;
-use OCA\ServerInfo\SessionStatistics;
-use OCA\ServerInfo\ShareStatistics;
-use OCA\ServerInfo\StorageStatistics;
+use OCA\ServerInfo\StatisticsCache;
 use OCA\ServerInfo\SystemStatistics;
 use OCA\ServerInfo\UptimeFormatter;
 use OCP\AppFramework\Http;
@@ -36,12 +33,9 @@ class ApiController extends OCSController {
 		private ?IUserSession $userSession,
 		private Os $os,
 		private SystemStatistics $systemStatistics,
-		private StorageStatistics $storageStatistics,
+		private StatisticsCache $statisticsCache,
 		private PhpStatistics $phpStatistics,
 		private FpmStatistics $fpmStatistics,
-		private DatabaseStatistics $databaseStatistics,
-		private ShareStatistics $shareStatistics,
-		private SessionStatistics $sessionStatistics,
 		private UptimeFormatter $uptimeFormatter,
 		private OsStatusService $osStatus,
 	) {
@@ -88,19 +82,20 @@ class ApiController extends OCSController {
 			$response->setStatus(Http::STATUS_UNAUTHORIZED);
 			return $response;
 		}
+		$statistics = $this->statisticsCache->get();
 		$data = [
 			'nextcloud' => [
 				'system' => $this->systemStatistics->getSystemStatistics($skipApps, $skipUpdate),
-				'storage' => $this->storageStatistics->getStorageStatistics(),
-				'shares' => $this->shareStatistics->getShareStatistics()
+				'storage' => $statistics['storage'],
+				'shares' => $statistics['shares']
 			],
 			'server' => [
 				'webserver' => $this->getWebserver(),
 				'php' => $this->phpStatistics->getPhpStatistics(),
 				'fpm' => $this->fpmStatistics->getFpmStatistics(),
-				'database' => $this->databaseStatistics->getDatabaseStatistics()
+				'database' => $statistics['database']
 			],
-			'activeUsers' => $this->sessionStatistics->getSessionStatistics()
+			'activeUsers' => $statistics['activeUsers']
 		];
 		if (!$skipOs) {
 			$data['server']['os'] = $this->osStatus->monitoringSummary();

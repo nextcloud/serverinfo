@@ -19,13 +19,10 @@ class StaticData {
 	public function __construct(
 		private Os $os,
 		private IURLGenerator $urlGenerator,
-		private StorageStatistics $storageStatistics,
+		private StatisticsCache $statisticsCache,
 		private Php $php,
 		private Opcache $opcache,
 		private FpmStatistics $fpmStatistics,
-		private DatabaseStatistics $databaseStatistics,
-		private ShareStatistics $shareStatistics,
-		private SessionStatistics $sessionStatistics,
 		private SubscriptionStatistics $subscriptionStatistics,
 		private SystemStatistics $systemStatistics,
 		private IAppConfig $appConfig,
@@ -37,6 +34,7 @@ class StaticData {
 		$diskinfo = $this->os->getDiskInfo();
 		$interfaces = $this->os->getNetworkInterfaces();
 		$memory = $this->os->getMemory();
+		$statistics = $this->statisticsCache->get();
 
 		return [
 			'hostname' => $this->os->getHostname(),
@@ -63,13 +61,13 @@ class StaticData {
 				'loopback' => $i->isLoopback(),
 			], $interfaces),
 			'ocs' => $this->urlGenerator->getAbsoluteURL('ocs/v2.php/apps/serverinfo/api/v1/info'),
-			'storage' => $this->storageStatistics->getStorageStatistics(),
-			'shares' => $this->shareStatistics->getShareStatistics(),
+			'storage' => $statistics['storage'],
+			'shares' => $statistics['shares'],
 			'php' => $this->php->getData(),
 			'opcache' => $this->opcache->getData(),
 			'fpm' => $this->fpmStatistics->getFpmStatistics(),
-			'database' => $this->databaseStatistics->getDatabaseStatistics(),
-			'activeUsers' => $this->sessionStatistics->getSessionStatistics(),
+			'database' => $statistics['database'],
+			'activeUsers' => $statistics['activeUsers'],
 			'subscriptionUsers' => $this->subscriptionStatistics->getSubscriptionUsers(),
 			'freeSpace' => $this->systemStatistics->getFreeSpace(),
 			'memTotal' => $memory->getMemTotal(),
