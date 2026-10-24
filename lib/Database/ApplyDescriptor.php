@@ -29,11 +29,13 @@ namespace OCA\ServerInfo\Database;
 final class ApplyDescriptor {
 	/**
 	 * @param string $variable Name of the GLOBAL / GUC variable.
-	 * @param \Closure(Snapshot):string $recommendedValue Computes the suggested value from the snapshot.
+	 * @param \Closure(Snapshot):?string $recommendedValue Computes the suggested value from the snapshot;
+	 *                                                     null when it gives none, which leaves the failing rule without an apply.
 	 * @param bool $runtimeWritable Whether SET GLOBAL / ALTER SYSTEM SET reload-without-restart works.
-	 * @param string $configKey Directive name as it appears in my.cnf / postgresql.conf.
-	 * @param string $configFile 'my.cnf' | 'postgresql.conf'
-	 * @param string|null $note Optional human-readable caveat (e.g. "requires server restart").
+	 * @param string $configKey Directive name as it appears in my.cnf / postgresql.conf / php.ini.
+	 * @param string $configFile 'my.cnf' | 'postgresql.conf' | 'php.ini' | 'php-fpm.conf'
+	 * @param string|(\Closure(Snapshot):?string)|null $note Optional human-readable caveat (e.g. "requires
+	 *                                                       server restart"), or a closure deriving it from the snapshot.
 	 */
 	public function __construct(
 		public readonly string $variable,
@@ -41,11 +43,15 @@ final class ApplyDescriptor {
 		public readonly bool $runtimeWritable,
 		public readonly string $configKey,
 		public readonly string $configFile,
-		public readonly ?string $note = null,
+		public readonly string|\Closure|null $note = null,
 	) {
 	}
 
-	public function compute(Snapshot $snapshot): string {
+	public function compute(Snapshot $snapshot): ?string {
 		return ($this->recommendedValue)($snapshot);
+	}
+
+	public function noteFor(Snapshot $snapshot): ?string {
+		return $this->note instanceof \Closure ? ($this->note)($snapshot) : $this->note;
 	}
 }

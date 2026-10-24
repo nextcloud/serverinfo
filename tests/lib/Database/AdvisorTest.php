@@ -10,9 +10,11 @@ declare(strict_types=1);
 namespace OCA\ServerInfo\Tests\Database;
 
 use OCA\ServerInfo\Database\Advisor;
+use OCA\ServerInfo\Database\ApplyDescriptor;
 use OCA\ServerInfo\Database\ExpressionEvaluator;
 use OCA\ServerInfo\Database\Rule;
 use OCA\ServerInfo\Database\RuleResult;
+use OCA\ServerInfo\Database\RuleSet;
 use OCA\ServerInfo\Database\RuleSet\Mysql;
 use OCA\ServerInfo\Database\Snapshot;
 use PHPUnit\Framework\MockObject\MockObject;
@@ -149,5 +151,94 @@ class AdvisorTest extends \Test\TestCase {
 
 		$this->assertSame(RuleResult::STATUS_FAIL, $result->status);
 		$this->assertSame(Rule::SEVERITY_NOTICE, $result->rule->severity);
+	}
+
+	private function ruleSetOf(Rule $rule): RuleSet {
+		return new class($rule) implements RuleSet {
+			public function __construct(
+				private Rule $rule,
+			) {
+			}
+
+			#[\Override]
+			public function rules(): array {
+				return [$this->rule];
+			}
+
+			#[\Override]
+			public function flavour(): string {
+				return Snapshot::FLAVOUR_PHP;
+			}
+		};
+	}
+
+	private function rule(?ApplyDescriptor $apply = null): Rule {
+		return new Rule(
+			id: 'test.rule',
+			name: 'Test',
+			category: 'Test',
+			severity: Rule::SEVERITY_WARNING,
+			formula: 'level',
+			test: 'value > 1',
+			issue: 'Too high.',
+			recommendation: 'Lower it.',
+			justification: 'Level is %s.',
+			justificationFormula: 'value',
+			apply: $apply,
+			requires: ['level'],
+		);
+	}
+
+	public function testMissingKeyIsSkippedWithTheSnapshotsReason(): void {
+		$snapshot = new Snapshot(Snapshot::FLAVOUR_PHP, '8.4.0', [], [], [], [], ['level' => 'PHP-FPM is not in use.']);
+
+		[$result] = $this->advisor->run($this->ruleSetOf($this->rule()), $snapshot);
+
+		$this->assertSame(RuleResult::STATUS_SKIPPED, $result->status);
+		$this->assertSame('PHP-FPM is not in use.', $result->skipReason);
+	}
+
+	public function testMissingKeyWithoutAReasonKeepsTheDatabaseWording(): void {
+		$snapshot = new Snapshot(Snapshot::FLAVOUR_MARIADB, '11.8.8-MariaDB', [], [], []);
+
+		[$result] = $this->advisor->run($this->ruleSetOf($this->rule()), $snapshot);
+
+		$this->assertSame("Required value 'level' not present in this database's reports.", $result->skipReason);
+	}
+
+	public function testApplyIsWithheldWhenNoValueCanBeRecommended(): void {
+		$apply = new ApplyDescriptor('level', static fn (Snapshot $s): ?string => null, false, 'level', 'php.ini', 'Note.');
+		$snapshot = new Snapshot(Snapshot::FLAVOUR_PHP, '8.4.0', [], [], ['level' => 5]);
+
+		[$result] = $this->advisor->run($this->ruleSetOf($this->rule($apply)), $snapshot);
+
+		$this->assertSame(RuleResult::STATUS_FAIL, $result->status);
+		$this->assertNull($result->apply);
+	}
+
+	public function testApplyNoteCanDependOnTheSnapshot(): void {
+		$apply = new ApplyDescriptor(
+			'level',
+			static fn (Snapshot $s): string => '1',
+			false,
+			'level',
+			'php.ini',
+			static fn (Snapshot $s): string => 'Measured ' . (string)$s->derived['level'] . '.',
+		);
+		$snapshot = new Snapshot(Snapshot::FLAVOUR_PHP, '8.4.0', [], [], ['level' => 5]);
+
+		[$result] = $this->advisor->run($this->ruleSetOf($this->rule($apply)), $snapshot);
+
+		$this->assertSame('1', $result->apply['recommendedValue'] ?? null);
+		$this->assertSame('Measured 5.', $result->apply['note'] ?? null);
+	}
+
+	public function testStaticApplyNoteIsPassedThrough(): void {
+		$apply = new ApplyDescriptor('level', static fn (Snapshot $s): string => '1', true, 'level', 'my.cnf', 'Restart.');
+		$snapshot = new Snapshot(Snapshot::FLAVOUR_MARIADB, '11.8.8-MariaDB', [], [], ['level' => 5]);
+
+		[$result] = $this->advisor->run($this->ruleSetOf($this->rule($apply)), $snapshot);
+
+		$this->assertSame('Restart.', $result->apply['note'] ?? null);
 	}
 }

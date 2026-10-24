@@ -107,7 +107,8 @@ class Advisor {
 				return new RuleResult(
 					$rule,
 					RuleResult::STATUS_SKIPPED,
-					skipReason: "Required value '$req' not present in this database's reports.",
+					skipReason: $snapshot->unavailable[$req]
+						?? "Required value '$req' not present in this database's reports.",
 				);
 			}
 		}
@@ -183,19 +184,22 @@ class Advisor {
 			$testCtx,
 		);
 
-		// Optional apply descriptor.
+		// Optional apply descriptor; withheld when the snapshot gives no
+		// value to recommend.
 		$apply = null;
 		if ($rule->apply !== null) {
 			try {
 				$recommended = $rule->apply->compute($snapshot);
-				$apply = [
-					'variable' => $rule->apply->variable,
-					'configKey' => $rule->apply->configKey,
-					'configFile' => $rule->apply->configFile,
-					'runtimeWritable' => $rule->apply->runtimeWritable,
-					'recommendedValue' => $recommended,
-					'note' => $rule->apply->note,
-				];
+				if ($recommended !== null) {
+					$apply = [
+						'variable' => $rule->apply->variable,
+						'configKey' => $rule->apply->configKey,
+						'configFile' => $rule->apply->configFile,
+						'runtimeWritable' => $rule->apply->runtimeWritable,
+						'recommendedValue' => $recommended,
+						'note' => $rule->apply->noteFor($snapshot),
+					];
+				}
 			} catch (\Throwable $e) {
 				// A broken applier shouldn't sink the whole rule.
 				$this->logger->warning(
