@@ -33,6 +33,15 @@ export interface DatabaseRule {
 	docUrl: string | null
 }
 
+/** Payload of /php/check: the PHP checks, in the same shape as the database ones. */
+export interface PhpCheck {
+	sapi: string
+	/** The PHP-FPM pool that served the request, null without PHP-FPM */
+	pool: string | null
+	ranAt: number
+	results: DatabaseRule[]
+}
+
 export type DatabaseCheck
 	= | { supported: true, flavour: string, version: string, ranAt: number, results: DatabaseRule[] }
 		| { supported: false, reason: 'flavour', flavour: string }

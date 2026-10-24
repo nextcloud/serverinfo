@@ -89,6 +89,11 @@
 				</div>
 			</div>
 
+			<!-- PHP performance -->
+			<div class="section">
+				<PhpPerformanceSection />
+			</div>
+
 			<!-- Database -->
 			<div class="section">
 				<div class="row">
@@ -159,6 +164,7 @@ import MemoryChartSection from '../components/MemoryChartSection.vue'
 import MonitoringSection from '../components/MonitoringSection.vue'
 import NetworkSection from '../components/NetworkSection.vue'
 import OpcacheSection from '../components/OpcacheSection.vue'
+import PhpPerformanceSection from '../components/PhpPerformanceSection.vue'
 import PhpSection from '../components/PhpSection.vue'
 import ResourceOverviewSection from '../components/ResourceOverviewSection.vue'
 import SectionSkeleton from '../components/SectionSkeleton.vue'
