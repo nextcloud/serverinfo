@@ -46,6 +46,12 @@ class ConfigLexicon implements ILexicon {
 	public const OS_LISTS_ERROR_DAYS = 'os_lists_error_days';
 	public const OS_ALLOW_NETWORK = 'os_allow_network';
 
+	public const JOB_INTERVAL_HISTORY = 'job_interval_history';
+	public const HISTORY_RETENTION_RAW_HOURS = 'history_retention_raw_hours';
+	public const HISTORY_RETENTION_HOURLY_DAYS = 'history_retention_hourly_days';
+	public const HISTORY_RETENTION_DAILY_DAYS = 'history_retention_daily_days';
+	public const CACHED_HISTORY_DB_SIZE = 'cached_history_db_size';
+
 	#[\Override]
 	public function getStrictness(): Strictness {
 		// The app predates the lexicon and still writes keys that are not listed here
@@ -157,6 +163,22 @@ class ConfigLexicon implements ILexicon {
 				ValueType::BOOL,
 				true,
 				'Whether the operating system status may use the network as the web server user: on Arch, checkupdates syncs its own package databases from the pacman mirrors and arch-audit fetches the security advisories from security.archlinux.org',
+				lazy: true,
+			),
+			new Entry(
+				self::JOB_INTERVAL_HISTORY,
+				ValueType::INT,
+				4 * 60,
+				'How often the history sampler is due, in seconds. It stores one sample per five-minute bucket, so a value a little below five minutes keeps a cron run every five minutes from skipping buckets',
+			),
+			new Entry(self::HISTORY_RETENTION_RAW_HOURS, ValueType::INT, 48, 'Hours the five-minute history samples are kept, at least 25', lazy: true),
+			new Entry(self::HISTORY_RETENTION_HOURLY_DAYS, ValueType::INT, 30, 'Days the hourly history averages are kept', lazy: true),
+			new Entry(self::HISTORY_RETENTION_DAILY_DAYS, ValueType::INT, 365, 'Days the daily history averages are kept', lazy: true),
+			new Entry(
+				self::CACHED_HISTORY_DB_SIZE,
+				ValueType::ARRAY,
+				[],
+				'Database size and when the history sampler last measured it, so it is measured at most once an hour',
 				lazy: true,
 			),
 		];

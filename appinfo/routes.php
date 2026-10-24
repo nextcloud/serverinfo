@@ -30,6 +30,7 @@ return [
 		['name' => 'os#status', 'url' => '/os', 'verb' => 'GET'],
 		['name' => 'os#refresh', 'url' => '/os/refresh', 'verb' => 'POST'],
 		['name' => 'os#updateSettings', 'url' => '/os/settings', 'verb' => 'PUT'],
+		['name' => 'history#series', 'url' => '/history', 'verb' => 'GET'],
 	],
 	'ocs' => [
 		['name' => 'api#info', 'url' => '/api/v1/info', 'verb' => 'GET'],
