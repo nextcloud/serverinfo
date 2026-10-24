@@ -77,7 +77,6 @@ class BackgroundJobsTest extends \Test\TestCase {
 			'duration' => 1234,
 			'memoryPeak' => 5678,
 		]], $data['recent']);
-		$this->assertSame($data['recent'], $data['failures']);
 	}
 
 	public function testReportsTheRetentionWindow(): void {
@@ -97,7 +96,7 @@ class BackgroundJobsTest extends \Test\TestCase {
 		$this->assertSame(14, $instance->get()['retentionDays']);
 	}
 
-	public function testQueriesFailuresSeparately(): void {
+	public function testListsTheLatestRunsOfAnyStatus(): void {
 		$calls = [];
 		$this->jobRuns->method('completedJobs')->willReturnCallback(
 			function (array $statuses = [], array $classes = [], int $limit = 200) use (&$calls) {
@@ -110,10 +109,7 @@ class BackgroundJobsTest extends \Test\TestCase {
 
 		$this->instance->get();
 
-		$this->assertSame([
-			[[], 10],
-			[[JobStatus::FAILED, JobStatus::CRASHED], 10],
-		], $calls);
+		$this->assertSame([[[], 10]], $calls);
 	}
 
 	public function testEmptyResultIsAnEmptyList(): void {
@@ -123,7 +119,7 @@ class BackgroundJobsTest extends \Test\TestCase {
 			})(),
 		);
 
-		$this->assertSame(['recent' => [], 'failures' => [], 'slowest' => [], 'retentionDays' => 60], $this->instance->get());
+		$this->assertSame(['recent' => [], 'slowest' => [], 'retentionDays' => 60], $this->instance->get());
 	}
 
 	public function testUnresolvableJobClassKeepsEarlierRuns(): void {
@@ -135,7 +131,7 @@ class BackgroundJobsTest extends \Test\TestCase {
 				throw new \InvalidArgumentException('Unknown job class id');
 			})(),
 		);
-		$this->logger->expects($this->exactly(2))->method('warning');
+		$this->logger->expects($this->once())->method('warning');
 
 		$data = $this->instance->get();
 
@@ -220,6 +216,6 @@ class BackgroundJobsTest extends \Test\TestCase {
 			})(),
 		);
 
-		$this->assertSame(['recent' => [], 'failures' => [], 'slowest' => [], 'retentionDays' => 60], $this->instance->get());
+		$this->assertSame(['recent' => [], 'slowest' => [], 'retentionDays' => 60], $this->instance->get());
 	}
 }

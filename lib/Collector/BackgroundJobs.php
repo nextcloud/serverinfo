@@ -61,12 +61,8 @@ class BackgroundJobs {
 	}
 
 	/**
-	 * Failures are queried separately: completedJobs() is ordered by run id, so on
-	 * a busy instance a failure scrolls out of the newest rows within seconds.
-	 *
 	 * @return array{
 	 *     recent: list<ServerInfoJobRun>,
-	 *     failures: list<ServerInfoJobRun>,
 	 *     slowest: list<ServerInfoSlowJob>,
 	 *     retentionDays: int
 	 * }
@@ -77,9 +73,6 @@ class BackgroundJobs {
 
 		return [
 			'recent' => $this->collect($this->jobRuns->completedJobs(limit: self::LIMIT)),
-			'failures' => $this->collect(
-				$this->jobRuns->completedJobs([JobStatus::FAILED, JobStatus::CRASHED], limit: self::LIMIT),
-			),
 			'slowest' => $slowest,
 			'retentionDays' => $this->config->getSystemValueInt('background_jobs_expiration_days', 60),
 		];
