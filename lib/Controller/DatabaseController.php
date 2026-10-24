@@ -66,7 +66,7 @@ class DatabaseController extends Controller {
 	 */
 	public function check(): JSONResponse {
 		// PHP holds the session lock for the whole request, and this one takes
-		// seconds while the Status page keeps polling every two. Without letting
+		// seconds while the page keeps polling its live values. Without letting
 		// go first, those polls queue up behind it and can exhaust the web
 		// server's workers. Nothing below writes to the session.
 		$this->session->close();

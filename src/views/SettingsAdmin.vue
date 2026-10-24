@@ -53,7 +53,7 @@ import BackgroundJobsView from './BackgroundJobsView.vue'
 import DatabaseView from './DatabaseView.vue'
 import OsView from './OsView.vue'
 import StatusView from './StatusView.vue'
-import { useLiveData } from '../composables/useLiveData.ts'
+import { LIVE_INTERVAL_MS, useLiveData } from '../composables/useLiveData.ts'
 import { useStaticData } from '../composables/useStaticData.ts'
 
 defineOptions({ name: 'ServerInfo' })
@@ -94,7 +94,9 @@ onUnmounted(() => {
 })
 
 const { data: staticData, error: staticError, reload: reloadStatic } = useStaticData()
-const { data: liveData, tick, failures: liveFailures, lastUpdated: liveUpdatedAt } = useLiveData<LiveData>('/apps/serverinfo/update')
+// Only the Status page shows these values, and the other pages stay mounted
+// behind v-show, so the poll pauses while one of them is shown.
+const { data: liveData, tick, failures: liveFailures, lastUpdated: liveUpdatedAt } = useLiveData<LiveData>('/apps/serverinfo/update', LIVE_INTERVAL_MS, () => view.value === 'status')
 const { data: periodicData, failures: periodicFailures } = useLiveData<PeriodicData>('/apps/serverinfo/periodic', 60000)
 
 // One failed request is usually a blip worth riding out; two in a row means the

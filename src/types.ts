@@ -54,7 +54,7 @@ export interface ThermalZone {
 	temp: number
 }
 
-/** Payload of /update, polled every two seconds */
+/** Payload of /update, polled every five seconds while the Status page is shown */
 export interface LiveData {
 	cpu: { load: number[] | false }
 	memory: { total: number, free: number, swap_total: number, swap_free: number }
