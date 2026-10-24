@@ -10,11 +10,14 @@ declare(strict_types=1);
 namespace OCA\ServerInfo\Database;
 
 use Doctrine\DBAL\Connection;
+use OCA\ServerInfo\AppInfo\Application;
 use OCP\IDBConnection;
+use Psr\Log\LoggerInterface;
 
 /**
- * Read-only queries behind the live boxes on the database page: connection
- * saturation, cache hit ratio and throughput. Nothing here mutates anything.
+ * Read-only queries behind the live boxes on the database page: round-trip
+ * latency, connection saturation and throughput. Nothing here mutates
+ * anything.
  *
  * Ported from Nextcloud's DB Doctor app. Every query goes through
  * DatabaseProbe::withConnection(), so a configured override connection is
@@ -23,45 +26,80 @@ use OCP\IDBConnection;
 final class LiveMetrics {
 	public function __construct(
 		private DatabaseProbe $probe,
+		private LoggerInterface $logger,
 	) {
 	}
 
 	/**
-	 * A cheap snapshot of the headline live metrics.  Returns cumulative
-	 * counters (throughput) that the client turns into a per-second rate.
+	 * A cheap snapshot of the live metrics, taken over one connection whose
+	 * flavour is detected once. Returns cumulative counters (throughput) that
+	 * the client turns into a per-second rate.
+	 *
+	 * The page polls this every few seconds, so it opens at most one override
+	 * connection and keeps the number of queries to a handful.
 	 *
 	 * @return array{
-	 *   connections: array{used:int, max:int},
-	 *   cacheHitRatio: float|null,
-	 *   throughput: array{counter: float, label: string},
-	 *   threadsRunning: int,
+	 *   available: bool,
+	 *   latencyMs: float|null,
+	 *   connections?: array{used:int, max:int},
+	 *   throughput?: array{counter: float, label: string},
+	 *   threadsRunning?: int,
 	 * }
 	 */
 	public function collect(): array {
 		return $this->probe->withConnection(function (Connection|IDBConnection $conn, string $flavour): array {
-			if ($flavour === Snapshot::FLAVOUR_PGSQL) {
-				return $this->liveMetricsPostgres($conn);
+			if ($flavour === Snapshot::FLAVOUR_UNSUPPORTED) {
+				return ['available' => false, 'latencyMs' => null];
 			}
-			return $this->liveMetricsMysql($conn);
+
+			$latencyMs = $this->latencyMs($conn);
+
+			try {
+				$metrics = $flavour === Snapshot::FLAVOUR_PGSQL
+					? $this->liveMetricsPostgres($conn)
+					: $this->liveMetricsMysql($conn);
+			} catch (\Throwable $e) {
+				$this->logger->debug('serverinfo: live database metrics failed: {msg}', [
+					'msg' => $e->getMessage(), 'app' => Application::APP_ID,
+				]);
+
+				return ['available' => false, 'latencyMs' => $latencyMs];
+			}
+
+			return ['available' => true, 'latencyMs' => $latencyMs] + $metrics;
 		});
 	}
 
+	/**
+	 * Round trip of the cheapest query there is, on the connection that is
+	 * already open, so it measures the database and the network to it rather
+	 * than connection setup or catalogue size.
+	 */
+	private function latencyMs(Connection|IDBConnection $conn): ?float {
+		$started = hrtime(true);
+		try {
+			$this->probe->scalar($conn, 'SELECT 1');
+		} catch (\Throwable) {
+			return null;
+		}
+
+		return round((hrtime(true) - $started) / 1_000_000, 2);
+	}
+
+	/**
+	 * @return array{connections: array{used:int, max:int}, throughput: array{counter: float, label: string}, threadsRunning: int}
+	 */
 	private function liveMetricsMysql(Connection|IDBConnection $conn): array {
 		$status = $this->statusMap($conn,
 			'SHOW GLOBAL STATUS WHERE Variable_name IN '
-			. "('Threads_connected','Threads_running','Innodb_buffer_pool_read_requests','Innodb_buffer_pool_reads','Questions')");
+			. "('Threads_connected','Threads_running','Questions')");
 		$maxConn = $this->variableInt($conn, 'max_connections');
-
-		$readReq = (float)($status['Innodb_buffer_pool_read_requests'] ?? 0);
-		$reads = (float)($status['Innodb_buffer_pool_reads'] ?? 0);
-		$hit = $readReq > 0 ? 1.0 - ($reads / $readReq) : null;
 
 		return [
 			'connections' => [
 				'used' => (int)($status['Threads_connected'] ?? 0),
 				'max' => $maxConn,
 			],
-			'cacheHitRatio' => $hit,
 			'throughput' => [
 				'counter' => (float)($status['Questions'] ?? 0),
 				'label' => 'Queries/s',
@@ -70,28 +108,29 @@ final class LiveMetrics {
 		];
 	}
 
+	/**
+	 * @return array{connections: array{used:int, max:int}, throughput: array{counter: float, label: string}, threadsRunning: int}
+	 */
 	private function liveMetricsPostgres(Connection|IDBConnection $conn): array {
-		$used = (int)$this->probe->scalar($conn, 'SELECT count(*) FROM pg_stat_activity');
-		$max = (int)$this->probe->scalar($conn, "SELECT setting FROM pg_settings WHERE name = 'max_connections'");
-		$active = (int)$this->probe->scalar($conn, "SELECT count(*) FROM pg_stat_activity WHERE state = 'active'");
-
-		$row = $this->probe->row($conn, "
-			SELECT COALESCE(SUM(blks_hit), 0) AS hit,
-			       COALESCE(SUM(blks_read), 0) AS rd,
-			       COALESCE(SUM(xact_commit + xact_rollback), 0) AS xacts
+		$activity = $this->probe->row($conn, "
+			SELECT count(*) AS used,
+			       count(*) FILTER (WHERE state = 'active') AS active,
+			       current_setting('max_connections') AS max_connections
+			FROM pg_stat_activity");
+		$xacts = $this->probe->scalar($conn, "
+			SELECT COALESCE(SUM(xact_commit + xact_rollback), 0)
 			FROM pg_stat_database WHERE datname NOT LIKE 'template%'");
-		$hitB = (float)($row['hit'] ?? 0);
-		$readB = (float)($row['rd'] ?? 0);
-		$total = $hitB + $readB;
 
 		return [
-			'connections' => ['used' => $used, 'max' => $max],
-			'cacheHitRatio' => $total > 0 ? $hitB / $total : null,
+			'connections' => [
+				'used' => (int)($activity['used'] ?? 0),
+				'max' => (int)($activity['max_connections'] ?? 0),
+			],
 			'throughput' => [
-				'counter' => (float)($row['xacts'] ?? 0),
+				'counter' => (float)($xacts ?? 0),
 				'label' => 'Transactions/s',
 			],
-			'threadsRunning' => $active,
+			'threadsRunning' => (int)($activity['active'] ?? 0),
 		];
 	}
 
