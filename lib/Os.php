@@ -117,7 +117,7 @@ class Os implements IOperatingSystem {
 
 	/**
 	 * Sampling the uptime costs a process fork, and this is reached from a
-	 * two-second poll, so the boot time it implies is remembered and only
+	 * five-second poll, so the boot time it implies is remembered and only
 	 * re-measured once a minute. In between the answer is still exact — it is
 	 * wall-clock arithmetic on a constant — except for up to a minute after a
 	 * reboot.
