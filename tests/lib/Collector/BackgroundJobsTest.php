@@ -20,6 +20,7 @@ use OCP\DB\QueryBuilder\IQueryBuilder;
 use OCP\IAppConfig;
 use OCP\IConfig;
 use OCP\IDBConnection;
+use OCP\Snowflake\ISnowflakeDecoder;
 use PHPUnit\Framework\MockObject\MockObject;
 use Psr\Log\LoggerInterface;
 
@@ -41,7 +42,7 @@ class BackgroundJobsTest extends \Test\TestCase {
 		$this->appConfig->method('getValueArray')->willReturn([]);
 		$this->connection = $this->createMock(IDBConnection::class);
 		$this->logger = $this->createMock(LoggerInterface::class);
-		$this->instance = new BackgroundJobs($this->jobRuns, $this->config, $this->appConfig, $this->connection, $this->logger);
+		$this->instance = new BackgroundJobs($this->jobRuns, $this->config, $this->appConfig, $this->connection, $this->createMock(ISnowflakeDecoder::class), $this->logger);
 	}
 
 	private function jobRun(int $runId, JobStatus $status = JobStatus::SUCCEEDED): JobRun {
@@ -91,7 +92,7 @@ class BackgroundJobsTest extends \Test\TestCase {
 			->with('background_jobs_expiration_days', 60)
 			->willReturn(14);
 
-		$instance = new BackgroundJobs($this->jobRuns, $config, $this->appConfig, $this->connection, $this->logger);
+		$instance = new BackgroundJobs($this->jobRuns, $config, $this->appConfig, $this->connection, $this->createMock(ISnowflakeDecoder::class), $this->logger);
 
 		$this->assertSame(14, $instance->get()['retentionDays']);
 	}
