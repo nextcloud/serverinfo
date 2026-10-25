@@ -83,4 +83,15 @@ interface IPackageManager {
 	 * tell that a cached status is out of date.
 	 */
 	public function getPackageDatabasePath(): ?string;
+
+	/**
+	 * Files, directories and glob patterns whose modification times change
+	 * whenever getPendingUpdates() or getHeldPackages() could answer
+	 * differently: the installed packages, the repository metadata and the
+	 * configuration that selects or holds back updates.
+	 *
+	 * @return list<string>|null null when the answer depends on more than
+	 *                           local files, e.g. on the network
+	 */
+	public function getUpdateInputs(): ?array;
 }

@@ -90,6 +90,7 @@ class ShowOsStatus {
 			'packageManager' => $status->packageManager ?? 'none',
 			'securityUpdates' => $securityUpdates === null ? 'unknown' : count($securityUpdates),
 			'updates' => $status->updates === null ? 'unknown' : count($status->updates) + $status->updatesOmitted,
+			'updatesCheckedAt' => $status->updatesCheckedAt === null ? 'unknown' : date(DATE_ATOM, $status->updatesCheckedAt),
 			'updatesPendingDays' => is_int($pendingDays) ? $pendingDays : 'none',
 			'rebootRequired' => $status->rebootReasons === null ? 'unknown' : ($status->rebootReasons !== [] ? 'yes' : 'no'),
 			'helper' => $status->helper->state,

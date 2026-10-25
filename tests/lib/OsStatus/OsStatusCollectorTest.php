@@ -36,12 +36,14 @@ use OCA\ServerInfo\OsStatus\Support\SupportTable;
 use OCP\AppFramework\Services\IAppConfig;
 use OCP\AppFramework\Utility\ITimeFactory;
 use OCP\Files\IAppData;
+use OCP\Files\NotFoundException;
 use OCP\Files\SimpleFS\ISimpleFile;
 use OCP\Files\SimpleFS\ISimpleFolder;
 use OCP\ICache;
 use OCP\ICacheFactory;
 use OCP\Lock\ILockingProvider;
 use OCP\Lock\LockedException;
+use PHPUnit\Framework\Attributes\DataProvider;
 use PHPUnit\Framework\MockObject\MockObject;
 use Psr\Log\LoggerInterface;
 
@@ -112,7 +114,14 @@ class OsStatusCollectorTest extends \Test\TestCase {
 	 * App data that keeps the stored status in $this->stored.
 	 */
 	private function appData(): IAppData {
+		$file = $this->createMock(ISimpleFile::class);
+		$file->method('getContent')->willReturnCallback(fn (): string => $this->stored ?? throw new NotFoundException());
+		$file->method('putContent')->willReturnCallback(function (mixed $content): void {
+			$this->stored = (string)$content;
+		});
 		$folder = $this->createMock(ISimpleFolder::class);
+		$folder->method('fileExists')->willReturnCallback(fn (): bool => $this->stored !== null);
+		$folder->method('getFile')->willReturnCallback(fn (): ISimpleFile => $this->stored !== null ? $file : throw new NotFoundException());
 		$folder->method('newFile')->willReturnCallback(function (string $name, mixed $content = null): ISimpleFile {
 			$this->stored = (string)$content;
 
@@ -398,5 +407,189 @@ class OsStatusCollectorTest extends \Test\TestCase {
 		$this->assertNull($this->collector()->collectAndStore());
 		$this->assertSame([], $this->host->ran);
 		$this->assertNull($this->stored, 'Nothing was saved');
+	}
+
+	private const APT_SIMULATION = 'apt-get -s -o Debug::NoLocking=1 dist-upgrade';
+
+	/**
+	 * An Ubuntu host whose package state, lists and apt configuration have
+	 * known modification times.
+	 */
+	private function withAptHost(): void {
+		$this->withPendingUpdates();
+		$this->host->withCommand('apt-mark', ['showhold'], "nginx\n")
+			->withCommand('timedatectl', ['show', '--property=NTPSynchronized', '--value'], "yes\n");
+		foreach ([
+			'/var/lib/dpkg/status' => self::NOW - 7200,
+			'/var/lib/dpkg/updates' => self::NOW - 7200,
+			'/var/lib/apt/lists' => self::NOW - 3600,
+			'/var/lib/apt/periodic/update-success-stamp' => self::NOW - 3600,
+			'/etc/apt' => self::NOW - 86400,
+			'/etc/apt/sources.list.d' => self::NOW - 86400,
+			'/etc/apt/apt.conf.d' => self::NOW - 86400,
+		] as $path => $time) {
+			$this->host->modified[$path] = $time;
+		}
+	}
+
+	private function scheduledRun(int $now): OsStatus {
+		$this->host->ran = [];
+		$status = $this->collector($now)->collectAndStore(reuseUnchangedUpdates: true);
+		$this->assertNotNull($status);
+
+		return $status;
+	}
+
+	public function testUnchangedInputsReuseThePendingUpdates(): void {
+		$this->withAptHost();
+		$first = $this->scheduledRun(self::NOW);
+		$this->assertContains(self::APT_SIMULATION, $this->host->ran);
+		$this->assertFalse($first->updatesReused);
+		$this->assertSame(self::NOW, $first->updatesCheckedAt);
+		$this->assertSame(self::NOW - 7200, $first->updateInputs['/var/lib/dpkg/status'] ?? null);
+		$this->assertSame(0, $first->updateInputs['/etc/apt/preferences'] ?? null, 'A missing file counts as absent');
+
+		$this->host->withFile('/run/reboot-required', "*** System restart required ***\n", self::NOW + 1800);
+		$second = $this->scheduledRun(self::NOW + 3600);
+
+		$this->assertNotContains(self::APT_SIMULATION, $this->host->ran);
+		$this->assertNotContains('apt-mark showhold', $this->host->ran);
+		$this->assertContains('timedatectl show --property=NTPSynchronized --value', $this->host->ran, 'The cheap checks still run');
+		$this->assertTrue($second->updatesReused);
+		$this->assertSame(self::NOW, $second->updatesCheckedAt);
+		$this->assertSame(self::NOW + 3600, $second->collectedAt);
+		$this->assertSame(['libssl3t64', 'tzdata'], array_map(static fn ($u) => $u->name, $second->updates ?? []));
+		$this->assertTrue($second->securityClassified);
+		$this->assertSame('nginx', $second->held[0]->name ?? null);
+		$this->assertSame(self::NOW, $second->updates[0]->since, 'First seen still counts from the first run');
+		$this->assertSame(RebootReason::KIND_DISTRIBUTION, $second->rebootReasons[0]->kind ?? null, 'Reboots are checked again');
+		$this->assertSame($first->updateInputs, $second->updateInputs);
+
+		$third = $this->scheduledRun(self::NOW + 7200);
+		$this->assertTrue($third->updatesReused);
+		$this->assertSame(self::NOW, $third->updatesCheckedAt, 'Reuse does not move the time of the last real check');
+	}
+
+	public static function dataChanges(): array {
+		return [
+			'packages installed' => [static function (FakeHost $host): void {
+				$host->modified['/var/lib/dpkg/status'] = self::NOW + 600;
+			}],
+			'lists refreshed' => [static function (FakeHost $host): void {
+				$host->modified['/var/lib/apt/lists'] = self::NOW + 600;
+			}],
+			'source added' => [static function (FakeHost $host): void {
+				$host->globs['/etc/apt/sources.list.d/*'] = ['/etc/apt/sources.list.d/extra.sources'];
+				$host->modified['/etc/apt/sources.list.d/extra.sources'] = self::NOW - 86400;
+			}],
+			'pinning added' => [static function (FakeHost $host): void {
+				$host->modified['/etc/apt/preferences'] = self::NOW + 600;
+			}],
+			'lists hidden' => [static function (FakeHost $host): void {
+				unset($host->modified['/var/lib/apt/lists']);
+				$host->files['/var/lib/apt/lists'] = '';
+			}],
+			'release upgraded' => [static function (FakeHost $host): void {
+				$host->withFile('/etc/os-release', str_replace('24.04.3', '24.04.4', FakeHost::fixture('ubuntu-24.04-os-release')));
+			}],
+		];
+	}
+
+	/**
+	 * @param \Closure(FakeHost): void $change
+	 */
+	#[DataProvider('dataChanges')]
+	public function testAChangeAsksThePackageManagerAgain(\Closure $change): void {
+		$this->withAptHost();
+		$this->scheduledRun(self::NOW);
+
+		$change($this->host);
+		$status = $this->scheduledRun(self::NOW + 3600);
+
+		$this->assertContains(self::APT_SIMULATION, $this->host->ran);
+		$this->assertContains('apt-mark showhold', $this->host->ran);
+		$this->assertFalse($status->updatesReused);
+		$this->assertSame(self::NOW + 3600, $status->updatesCheckedAt);
+	}
+
+	public function testThePackageManagerIsAskedAtLeastDaily(): void {
+		$this->withAptHost();
+		$this->scheduledRun(self::NOW);
+
+		$this->assertTrue($this->scheduledRun(self::NOW + OsStatusCollector::REUSE_UPDATES_FOR - 1)->updatesReused);
+		$status = $this->scheduledRun(self::NOW + OsStatusCollector::REUSE_UPDATES_FOR);
+
+		$this->assertContains(self::APT_SIMULATION, $this->host->ran);
+		$this->assertFalse($status->updatesReused);
+	}
+
+	public function testAFailedQueryIsNotReused(): void {
+		$this->withAptHost();
+		$this->host->withCommand('apt-get', ['-s', '-o', 'Debug::NoLocking=1', 'dist-upgrade'], '', 100, "E: Could not get lock\n");
+		$failed = $this->scheduledRun(self::NOW);
+		$this->assertNull($failed->updates);
+		$this->assertNull($failed->updateInputs);
+
+		$this->withPendingUpdates();
+		$status = $this->scheduledRun(self::NOW + 3600);
+
+		$this->assertContains(self::APT_SIMULATION, $this->host->ran);
+		$this->assertCount(2, $status->updates ?? []);
+	}
+
+	public function testAnIncompleteAnswerIsNotReused(): void {
+		$this->host->withFile('/etc/os-release', "NAME=\"AlmaLinux\"\nID=\"almalinux\"\nID_LIKE=\"rhel centos fedora\"\nVERSION_ID=\"9.8\"\nPRETTY_NAME=\"AlmaLinux 9.8\"\n");
+		$this->host->binaries = ['dnf', 'dnf-3'];
+		$this->host->globs['/var/cache/dnf/*-updateinfo.solvx'] = ['/var/cache/dnf/baseos-updateinfo.solvx'];
+		foreach (['/var/cache/dnf/last_makecache', '/var/lib/rpm/rpmdb.sqlite', '/var/lib/rpm', '/var/cache', '/var/cache/dnf', '/etc/dnf', '/etc/dnf/plugins', '/etc/yum.repos.d'] as $path) {
+			$this->host->modified[$path] = self::NOW - 600;
+		}
+		$this->host->withCommand('dnf-3', ['-q', '--cacheonly', 'check-update'], FakeHost::fixture('alma-9-dnf-check-update-pending'), 100)
+			->withCommand('dnf-3', ['-q', '--cacheonly', 'updateinfo', 'list', '--security', '--available'], '', 1, "Error: something broke\n");
+
+		$first = $this->scheduledRun(self::NOW);
+		$this->assertCount(9, $first->updates ?? []);
+		$this->assertNull($first->updateInputs, 'The advisories are missing');
+
+		$this->scheduledRun(self::NOW + 3600);
+		$this->assertContains('dnf-3 -q --cacheonly check-update', $this->host->ran);
+	}
+
+	public function testUpdatesFromTheHelperAreNotReused(): void {
+		$this->withRootsHelperReportPath();
+		$this->host->withFile(HelperReportReader::DEFAULT_PATH, (string)json_encode([
+			'schema' => 1, 'helperVersion' => '1.0.0', 'generatedAt' => self::NOW - 600, 'hostname' => 'cloud.example.org',
+			'bootTime' => self::BOOT,
+			'pendingUpdates' => [['name' => 'openssl', 'installed' => '1', 'candidate' => '2', 'security' => true]],
+		]));
+
+		$status = $this->scheduledRun(self::NOW);
+
+		$this->assertSame(OsStatus::SOURCE_HELPER, $status->updatesSource);
+		$this->assertSame(self::NOW - 600, $status->updatesCheckedAt, 'When the helper asked');
+		$this->assertNull($status->updateInputs);
+	}
+
+	public function testCheckNowAlwaysAsksThePackageManager(): void {
+		$this->withAptHost();
+		$this->scheduledRun(self::NOW);
+
+		$this->host->ran = [];
+		$status = $this->collector(self::NOW + 3600)->collectAndStore();
+
+		$this->assertContains(self::APT_SIMULATION, $this->host->ran);
+		$this->assertFalse($status?->updatesReused);
+		$this->assertSame(self::NOW + 3600, $status?->updatesCheckedAt);
+	}
+
+	public function testTheReuseFieldsSurviveStorage(): void {
+		$status = new OsStatus(OsStatus::STATE_OK, self::NOW, updatesCheckedAt: self::NOW - 60, updatesReused: true, updateInputs: ['/var/lib/dpkg/status' => self::NOW - 600]);
+
+		$restored = OsStatus::fromArray(json_decode((string)json_encode($status->toArray()), true));
+
+		$this->assertSame(self::NOW - 60, $restored?->updatesCheckedAt);
+		$this->assertTrue($restored?->updatesReused);
+		$this->assertSame(['/var/lib/dpkg/status' => self::NOW - 600], $restored?->updateInputs);
+		$this->assertNull(OsStatus::fromArray(['updateInputs' => ['/x' => 'soon']] + $status->toArray())?->updateInputs, 'A damaged fingerprint is no fingerprint');
 	}
 }
