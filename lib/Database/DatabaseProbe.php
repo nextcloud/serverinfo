@@ -88,32 +88,6 @@ class DatabaseProbe {
 	}
 
 	/**
-	 * Run a cheap, read-only query so the caller can time the round-trip.
-	 *
-	 * Used by the live latency chart on the dashboard.  We deliberately
-	 * use the same query the user requested ("SHOW TABLES") on
-	 * MySQL/MariaDB and the closest catalog-read equivalent on Postgres
-	 * — it exercises parsing, planner lookup, and result transit so the
-	 * timing is meaningful rather than a pure round-trip ping.
-	 *
-	 * Throws on failure; the caller decides how to surface that.
-	 */
-	public function ping(): void {
-		$conn = $this->openConnection();
-		try {
-			$flavour = $this->flavourOf($conn);
-			$sql = $flavour === Snapshot::FLAVOUR_PGSQL
-				? "SELECT tablename FROM pg_catalog.pg_tables WHERE schemaname NOT IN ('pg_catalog','information_schema')"
-				: 'SHOW TABLES';
-			// Materialise the rowset so the timing reflects the full
-			// query, not just sending the SQL.
-			$this->all($conn, $sql);
-		} finally {
-			$this->closeIfOverride($conn);
-		}
-	}
-
-	/**
 	 * Total on-disk size of the probed database in bytes, or null when
 	 * it cannot be determined.  Same approach as the serverinfo app
 	 * (phpBB's get_database_size): sum of table data + index sizes on
