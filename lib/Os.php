@@ -19,6 +19,7 @@ use OCA\ServerInfo\Resources\CPU;
 use OCA\ServerInfo\Resources\Memory;
 use OCP\AppFramework\Services\IAppConfig;
 use OCP\IConfig;
+use Psr\Log\LoggerInterface;
 
 class Os implements IOperatingSystem {
 	/** How long a measured boot time is trusted before it is checked again. */
@@ -31,9 +32,10 @@ class Os implements IOperatingSystem {
 		IConfig $config,
 		private IAppConfig $appConfig,
 		private IHost $host,
+		LoggerInterface $logger,
 	) {
 		$this->restrictedMode = $config->getAppValue('serverinfo', 'restricted_mode', 'no') === 'yes';
-		$this->backend = $this->getBackend($this->restrictedMode ? 'Dummy' : PHP_OS);
+		$this->backend = $this->getBackend($this->restrictedMode ? 'Dummy' : PHP_OS, $logger);
 	}
 
 	/**
@@ -185,10 +187,10 @@ class Os implements IOperatingSystem {
 		return $this->backend->getThermalZones();
 	}
 
-	private function getBackend(string $os): IOperatingSystem {
+	private function getBackend(string $os, LoggerInterface $logger): IOperatingSystem {
 		return match ($os) {
-			'Linux' => new Linux(),
-			'FreeBSD' => new FreeBSD(),
+			'Linux' => new Linux($this->host, $logger),
+			'FreeBSD' => new FreeBSD($this->host, $logger),
 			default => new Dummy(),
 		};
 	}
