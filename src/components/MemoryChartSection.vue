@@ -17,7 +17,7 @@
 			<!-- TRANSLATORS: Tile label above the amount of swap space currently in use -->
 			<StatTile v-if="hasSwap" :label="t('serverinfo', 'Swap used')" :value="swapUsed" />
 		</div>
-		<div id="memorySection" class="infobox">
+		<div id="memorySection" class="infobox infobox--chart">
 			<!-- TRANSLATORS: Accessible name of the buttons choosing the time range of the memory chart -->
 			<RangeSwitch v-model="range" :label="t('serverinfo', 'Memory chart range')" :options="chartRanges()" />
 			<div v-if="range === 'live'" class="chart-wrapper">

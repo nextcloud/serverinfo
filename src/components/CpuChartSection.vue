@@ -17,7 +17,7 @@
 			<!-- TRANSLATORS: Tile label above the Unix load average, three numbers for the last 1/5/15 minutes -->
 			<StatTile :label="t('serverinfo', 'Load average')" :value="loadAverage" />
 		</div>
-		<div v-if="usage !== null" id="cpuSection" class="infobox">
+		<div v-if="usage !== null" id="cpuSection" class="infobox infobox--chart">
 			<!-- TRANSLATORS: Accessible name of the buttons choosing the time range of the load chart -->
 			<RangeSwitch v-model="range" :label="t('serverinfo', 'Load chart range')" :options="chartRanges()" />
 			<div v-if="range === 'live'" class="chart-wrapper">

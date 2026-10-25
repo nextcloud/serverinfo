@@ -30,6 +30,7 @@ defineProps<{
 <style scoped>
 .range-switch {
 	display: inline-flex;
+	align-self: flex-start;
 	flex-wrap: wrap;
 	gap: 2px;
 	margin-bottom: 8px;
