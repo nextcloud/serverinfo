@@ -150,6 +150,13 @@ https://<nextcloud-fqdn>/ocs/v2.php/apps/serverinfo/api/v1/info
 - Use the url parameter `skipApps=true` to omit app updates (including available app updates will send an external request to the app store).
 - Use the url parameter `skipOs=false` to include the operating system status.
 
+The values that come from database queries (`nextcloud.storage`,
+`nextcloud.shares`, `server.database` and `activeUsers`) are cached for five
+minutes by default, so they can be up to that old; see
+[Caching of the database statistics](#caching-of-the-database-statistics).
+CPU, memory, PHP, PHP-FPM and the web server are read on every request; app
+and server updates and the operating system status are not part of this cache.
+
 The operating system status in `server.os` holds counts and flags only, never
 package names, package or kernel versions, or advisories, so a leaked token
 does not reveal what is unpatched. Values that could not be determined are
@@ -292,6 +299,22 @@ php occ serverinfo:update-storage-statistics -v --output=json_pretty
     "num_storages_other": 33
 }
 ```
+
+##### Caching of the database statistics
+
+The storage and user counts, share counts, active users and the database type,
+version and size take about 25 database queries, on MySQL including
+`SHOW TABLE STATUS` and on PostgreSQL `pg_database_size()`. The API and the
+admin page share one copy of them in the distributed memory cache, so a
+monitoring system that polls every few seconds runs those queries at most once
+per cache period. The values can therefore be up to that period old.
+
+The period is 300 seconds by default and at most 3600; 0 turns the cache off:
+
+``php occ config:app:set serverinfo statistics_cache_ttl --type=integer --value=60``
+
+Without a memory cache (`memcache.local` or `memcache.distributed` in
+`config.php`) nothing is cached.
 
 ##### Restricted mode (>= Nextcloud 28)
 
