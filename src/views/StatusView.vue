@@ -12,6 +12,7 @@
 						<SystemSection
 							:hostname="staticData.hostname"
 							:osname="staticData.osname"
+							:osLevel="staticData.osLevel"
 							:cpu="staticData.cpu"
 							:servertime="liveData?.servertime ?? ''"
 							:uptime="liveData?.uptime ?? ''" />

@@ -19,6 +19,123 @@ provided end-points.
 This app is part of the standard Nextcloud package and can be found in the
 directory **nextcloud/apps/serverinfo**
 
+## Operating system
+
+The **Operating system** page shows what keeps the Linux distribution under
+Nextcloud secure:
+
+- pending updates, security fixes first, with the packages Nextcloud itself
+  runs on (PHP, the web server, the database, Redis …) marked
+- whether a reboot is needed, and why (a newer kernel, updated core libraries,
+  the distribution asking for one), with live kernel patches taken into account
+- whether the PHP serving Nextcloud still runs libraries that an update
+  replaced, and which service to restart
+- how long the release still receives security updates, and whether a paid
+  extension (Ubuntu Pro or Debian ELTS) is active
+- automatic updates, package list age, held packages, failed system services,
+  time synchronisation, SELinux and AppArmor
+
+Debian, Ubuntu, RHEL and its rebuilds, Fedora, openSUSE and SLES, Arch and
+Alpine are supported. Inside Docker, Podman, Kubernetes or a snap the page says
+what can and cannot be known from inside; LXC and systemd-nspawn guests are
+treated like machines without a kernel of their own.
+
+Nothing is installed or changed. Each command shown on the page is for the
+admin to copy. To find out, the app reads `/etc/os-release`, `/proc` (uptime,
+`/proc/1/cgroup`, its own process maps), `/sys/class/dmi/id`,
+`/sys/kernel/livepatch`, the SELinux and AppArmor state under `/sys`, the
+package manager's configuration, state and logs, `/run/reboot-required` and the
+installed kernel modules. It runs the package manager's query commands (updates
+only in simulation mode), `systemctl`, `timedatectl`, `chronyc` and
+`systemd-detect-virt`. Anything it may not read or run is reported as unknown.
+
+These queries stay offline, with one exception: on Arch, `checkupdates`
+downloads the package databases from the mirrors in
+`/etc/pacman.d/mirrorlist` into a temporary directory of the web server user,
+and `arch-audit` fetches the security advisories from security.archlinux.org.
+These are the only outbound connections the operating system status makes. To keep Arch offline as well, run
+`occ config:app:set serverinfo os_allow_network --type=boolean --value=false`.
+Pending updates then come from the databases root last synced, the age of
+those databases counts as the package list age, and security fixes are not
+told apart.
+
+The status is collected by a background job once an hour, when background
+jobs run from system cron; under AJAX or webcron the commands would hold a web
+request for minutes. A status older than three job intervals (at least six
+hours), or background jobs that do not run from system cron, count as a
+warning, so an old all-clear is never shown as current. "Check now" on the page
+queues a check for the next cron run and shows the result when it is done;
+only one check runs at a time. Admins can also run:
+
+```
+occ serverinfo:os-status [--refresh] [--output=json]
+```
+
+The command shows how old the status is and exits with 0, 1, 2 or 3 for ok,
+warning, error and unknown, so it can be used as a monitoring check. Unknown means the status has not been
+collected yet, or nothing is wrong but the pending updates could not be
+determined. The same verdict appears as setup checks on Settings → Overview
+(only for admins; sub-admins, who may load the setup checks too, get no
+details), in a notification to admins when a concern escalates, and in the
+**Server health** dashboard widget for admins. When something counts as a
+warning or an error can be adjusted on the page.
+
+Release support dates are bundled with the app (see
+`build/update-os-support.php`, data from [endoflife.date](https://endoflife.date),
+MIT License); the app never looks them up online.
+
+### Root helper
+
+The web server cannot see everything: only root can tell which services still
+run code an update replaced, and only root can refresh the package lists. On
+Fedora and other systems with dnf 5, only root can list pending updates at all:
+dnf 5 would first copy its whole cache into the web server's home. The
+optional script `bin/serverinfo-os-report` adds all of that. Run as root, it writes a
+small JSON report that the app reads. It only reads the system; it never
+installs, upgrades, restarts or reboots anything.
+
+Install it outside the Nextcloud directory: the web server can write there, so
+a root cron job pointing into it would hand the web server root.
+
+Take the file from a freshly extracted release archive, not from the
+installed app: the Nextcloud server archive, checked against the SHA-256 sum
+or signature published next to it on download.nextcloud.com, or the app's own
+release archive. A copy taken from `apps/serverinfo/bin` is safe from changes
+made after copying, but not from a web server that was already compromised
+and changed the file before. `cmp` shows whether the installed app's file
+still matches the release. Repeat this when an update ships a newer helper
+(the app then reports the installed helper as outdated). The release archive
+does not contain this README; the same instructions are at the top of the
+script.
+
+Extract the file into a new directory that only you can enter, which
+`mktemp -d` creates, so that no one can swap it before root installs it.
+Remove that directory afterwards.
+
+```
+d=$(mktemp -d) &&
+tar -xjf nextcloud-<version>.tar.bz2 -C "$d" nextcloud/apps/serverinfo/bin/serverinfo-os-report &&
+sudo install -o root -g root -m 0755 "$d"/nextcloud/apps/serverinfo/bin/serverinfo-os-report /usr/local/sbin/ &&
+rm -r "$d"
+echo '17 */6 * * * root /usr/local/sbin/serverinfo-os-report --refresh --random-delay' | sudo tee /etc/cron.d/serverinfo-os-report
+```
+
+`--random-delay` waits up to 30 minutes first, so that servers sharing this
+cron line do not all reach the package mirrors at the same minute; leave it
+out when running the helper by hand. Where `flock` is available, a run that
+finds another one still going exits without doing anything. Package manager
+calls are stopped after a time limit where `timeout` is available.
+
+The report is written to `/var/lib/serverinfo/os-report.json`. Use
+`--output` and `occ config:app:set serverinfo os_helper_report_path --value …`
+to put it elsewhere. Every directory on the way to the report must be owned
+by root, writable by no one else and no symbolic link; the helper refuses to
+write anywhere else, such as below /tmp or the Nextcloud directory. The app
+ignores a report that anyone but root could have written, on the same rules
+as far as open_basedir lets it check, one written before the last reboot or
+on another host, one older than 26 hours, and one dated more than five
+minutes in the future (a clock problem).
+
 ## API
 
 The API provides a lot of information about a running Nextcloud
@@ -31,6 +148,35 @@ https://<nextcloud-fqdn>/ocs/v2.php/apps/serverinfo/api/v1/info
 - To request the information in JSON append the url parameter `format=json`
 - Use the url parameter `skipUpdate=true` to omit server updates.
 - Use the url parameter `skipApps=true` to omit app updates (including available app updates will send an external request to the app store).
+- Use the url parameter `skipOs=false` to include the operating system status.
+
+The operating system status in `server.os` holds counts and flags only, never
+package names, package or kernel versions, or advisories, so a leaked token
+does not reveal what is unpatched. Values that could not be determined are
+`null`:
+
+```json
+"os": {
+    "state": "ok",
+    "level": "warning",
+    "collectedAt": 1792411200,
+    "outdated": false,
+    "name": "Ubuntu 24.04.3 LTS",
+    "environment": "host",
+    "container": null,
+    "updates": { "classified": true, "security": 7, "total": 23, "pendingDays": 5, "held": 0 },
+    "rebootRequired": true,
+    "rebootPendingDays": 2,
+    "phpRestartRequired": false,
+    "servicesNeedRestart": null,
+    "support": { "state": "supported", "ends": "2029-05-31", "daysLeft": 954 },
+    "automaticUpdates": "enabled",
+    "listsAgeHours": 4,
+    "timeSynchronized": true,
+    "failedUnits": 0,
+    "helper": "absent"
+}
+```
 
 ### Example XML output:
 ```

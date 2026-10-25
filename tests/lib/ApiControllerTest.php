@@ -13,6 +13,7 @@ use OCA\ServerInfo\Controller\ApiController;
 use OCA\ServerInfo\DatabaseStatistics;
 use OCA\ServerInfo\FpmStatistics;
 use OCA\ServerInfo\Os;
+use OCA\ServerInfo\OsStatus\OsStatusService;
 use OCA\ServerInfo\PhpStatistics;
 use OCA\ServerInfo\SessionStatistics;
 use OCA\ServerInfo\ShareStatistics;
@@ -40,6 +41,7 @@ class ApiControllerTest extends \Test\TestCase {
 	private ShareStatistics&MockObject $shareStatistics;
 	private SessionStatistics&MockObject $sessionStatistics;
 	private UptimeFormatter&MockObject $uptimeFormatter;
+	private OsStatusService&MockObject $osStatus;
 
 	protected function setUp(): void {
 		parent::setUp();
@@ -56,6 +58,7 @@ class ApiControllerTest extends \Test\TestCase {
 		$this->shareStatistics = $this->createMock(ShareStatistics::class);
 		$this->sessionStatistics = $this->createMock(SessionStatistics::class);
 		$this->uptimeFormatter = $this->createMock(UptimeFormatter::class);
+		$this->osStatus = $this->createMock(OsStatusService::class);
 	}
 
 	private function getController($userSession) {
@@ -73,7 +76,8 @@ class ApiControllerTest extends \Test\TestCase {
 			$this->databaseStatistics,
 			$this->shareStatistics,
 			$this->sessionStatistics,
-			$this->uptimeFormatter
+			$this->uptimeFormatter,
+			$this->osStatus,
 		);
 	}
 
@@ -202,6 +206,7 @@ class ApiControllerTest extends \Test\TestCase {
 		$this->sessionStatistics->expects($this->once())
 			->method('getSessionStatistics')
 			->willReturn(['some_user' => 'some_value']);
+		$this->osStatus->expects($this->never())->method('monitoringSummary');
 
 		$response = $this->getController($userSession)->info();
 
@@ -221,5 +226,20 @@ class ApiControllerTest extends \Test\TestCase {
 			],
 			'activeUsers' => ['some_user' => 'some_value'],
 		], $response->getData());
+	}
+
+	public function testInfoWithTheOperatingSystemOnRequest(): void {
+		$userSession = $this->createMock(IUserSession::class);
+		$user = $this->createMock(IUser::class);
+		$user->method('getUID')->willReturn('admin');
+		$userSession->method('getUser')->willReturn($user);
+		$this->groupManager->method('isAdmin')->willReturn(true);
+		$this->osStatus->expects($this->once())
+			->method('monitoringSummary')
+			->willReturn(['state' => 'ok', 'level' => 'warning']);
+
+		$response = $this->getController($userSession)->info(skipOs: false);
+
+		$this->assertSame(['state' => 'ok', 'level' => 'warning'], $response->getData()['server']['os']);
 	}
 }

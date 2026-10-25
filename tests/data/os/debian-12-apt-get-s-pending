@@ -1,0 +1,17 @@
+NOTE: This is only a simulation!
+      apt-get needs root privileges for real execution.
+      Keep also in mind that locking is deactivated,
+      so don't depend on the relevance to the real current situation!
+Reading package lists...
+Building dependency tree...
+Reading state information...
+Calculating upgrade...
+The following packages have been kept back:
+  tzdata
+The following packages will be upgraded:
+  libssl3 openssl
+2 upgraded, 0 newly installed, 0 to remove and 1 not upgraded.
+Inst libssl3 [3.0.20-1~deb12u2] (3.0.22-1~deb12u1 Debian-Security:12/oldstable-security [arm64])
+Inst openssl [3.0.20-1~deb12u2] (3.0.22-1~deb12u1 Debian-Security:12/oldstable-security [arm64])
+Conf libssl3 (3.0.22-1~deb12u1 Debian-Security:12/oldstable-security [arm64])
+Conf openssl (3.0.22-1~deb12u1 Debian-Security:12/oldstable-security [arm64])

@@ -1,0 +1,5 @@
+<!--
+  - SPDX-FileCopyrightText: 2026 Nextcloud GmbH and Nextcloud contributors
+  - SPDX-License-Identifier: AGPL-3.0-or-later
+-->
+<svg xmlns="http://www.w3.org/2000/svg" width="32" height="32" viewBox="0 0 32 32"><circle cx="16" cy="16" r="14" fill="#DB0606"/><path d="M11 11l10 10M21 11l-10 10" stroke="#fff" stroke-width="3" stroke-linecap="round"/></svg>

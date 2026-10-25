@@ -28,6 +28,24 @@ class ConfigLexicon implements ILexicon {
 
 	public const CACHED_DB_CHECK = 'cached_db_check';
 
+	public const CACHED_OS_FIRST_SEEN = 'cached_os_first_seen';
+	public const CACHED_OS_PHP_PROCESS = 'cached_os_php_process';
+	public const CACHED_OS_PHP_OUTDATED_SINCE = 'cached_os_php_outdated_since';
+	public const OS_NOTIFIED_LEVELS = 'os_notified_levels';
+	public const OS_NOTIFIED_USERS = 'os_notified_users';
+	public const JOB_INTERVAL_OS_STATUS = 'job_interval_os_status';
+	public const OS_HELPER_REPORT_PATH = 'os_helper_report_path';
+	public const OS_NOTIFICATIONS = 'os_notifications';
+	public const OS_SECURITY_WARNING_DAYS = 'os_security_warning_days';
+	public const OS_SECURITY_ERROR_DAYS = 'os_security_error_days';
+	public const OS_REBOOT_WARNING_DAYS = 'os_reboot_warning_days';
+	public const OS_REBOOT_ERROR_DAYS = 'os_reboot_error_days';
+	public const OS_RESTART_WARNING_DAYS = 'os_restart_warning_days';
+	public const OS_EOL_WARNING_DAYS = 'os_eol_warning_days';
+	public const OS_LISTS_WARNING_DAYS = 'os_lists_warning_days';
+	public const OS_LISTS_ERROR_DAYS = 'os_lists_error_days';
+	public const OS_ALLOW_NETWORK = 'os_allow_network';
+
 	#[\Override]
 	public function getStrictness(): Strictness {
 		// The app predates the lexicon and still writes keys that are not listed here
@@ -69,6 +87,76 @@ class ConfigLexicon implements ILexicon {
 				ValueType::ARRAY,
 				[],
 				'Outcome of the last database check run, read by the setup check on Settings > Overview',
+				lazy: true,
+			),
+			new Entry(
+				self::CACHED_OS_FIRST_SEEN,
+				ValueType::ARRAY,
+				[],
+				'When each pending security update and reboot reason was first seen, for the alert thresholds',
+				lazy: true,
+			),
+			new Entry(
+				self::CACHED_OS_PHP_PROCESS,
+				ValueType::ARRAY,
+				[],
+				'What the last web request saw of its own PHP process: libraries replaced on disk since it started',
+				lazy: true,
+			),
+			new Entry(
+				self::CACHED_OS_PHP_OUTDATED_SINCE,
+				ValueType::INT,
+				0,
+				'When web requests first saw their PHP process running replaced libraries, 0 when they do not',
+				lazy: true,
+			),
+			new Entry(
+				self::OS_NOTIFIED_LEVELS,
+				ValueType::ARRAY,
+				[],
+				'Alert level each operating system concern was last notified at, so admins are told once per escalation',
+				lazy: true,
+			),
+			new Entry(
+				self::OS_NOTIFIED_USERS,
+				ValueType::ARRAY,
+				[],
+				'Admins each operating system concern was notified to since it last escalated, so a dismissed notification is not sent again',
+				lazy: true,
+			),
+			new Entry(
+				self::JOB_INTERVAL_OS_STATUS,
+				ValueType::INT,
+				60 * 60,
+				'How often the operating system status is collected, in seconds',
+			),
+			new Entry(
+				self::OS_HELPER_REPORT_PATH,
+				ValueType::STRING,
+				'/var/lib/serverinfo/os-report.json',
+				'Where the optional root helper bin/serverinfo-os-report writes its report; an absolute path ending in .json',
+				lazy: true,
+			),
+			new Entry(
+				self::OS_NOTIFICATIONS,
+				ValueType::BOOL,
+				true,
+				'Whether admins are notified when an operating system concern escalates',
+				lazy: true,
+			),
+			new Entry(self::OS_SECURITY_WARNING_DAYS, ValueType::INT, 3, 'Days a security update may be pending before a warning', lazy: true),
+			new Entry(self::OS_SECURITY_ERROR_DAYS, ValueType::INT, 14, 'Days a security update may be pending before an error', lazy: true),
+			new Entry(self::OS_REBOOT_WARNING_DAYS, ValueType::INT, 7, 'Days a reboot may be pending before a warning', lazy: true),
+			new Entry(self::OS_REBOOT_ERROR_DAYS, ValueType::INT, 30, 'Days a reboot may be pending before an error', lazy: true),
+			new Entry(self::OS_RESTART_WARNING_DAYS, ValueType::INT, 3, 'Days a service restart may be pending before a warning', lazy: true),
+			new Entry(self::OS_EOL_WARNING_DAYS, ValueType::INT, 90, 'Days before the end of security support that a warning starts', lazy: true),
+			new Entry(self::OS_LISTS_WARNING_DAYS, ValueType::INT, 7, 'Days without a package list refresh before a warning', lazy: true),
+			new Entry(self::OS_LISTS_ERROR_DAYS, ValueType::INT, 30, 'Days without a package list refresh before an error', lazy: true),
+			new Entry(
+				self::OS_ALLOW_NETWORK,
+				ValueType::BOOL,
+				true,
+				'Whether the operating system status may use the network as the web server user: on Arch, checkupdates syncs its own package databases from the pacman mirrors and arch-audit fetches the security advisories from security.archlinux.org',
 				lazy: true,
 			),
 		];

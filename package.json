@@ -1,6 +1,6 @@
 {
   "name": "serverinfo",
-  "version": "8.0.0-dev.0",
+  "version": "8.0.0-dev.1",
   "private": true,
   "description": "Monitoring app with useful server information",
   "license": "AGPL-3.0-or-later",
@@ -9,6 +9,8 @@
     "dev": "vite build --mode development",
     "lint": "eslint",
     "lint:fix": "eslint --fix",
+    "test": "vitest run",
+    "test:watch": "vitest",
     "watch": "vite build --mode development --watch"
   },
   "browserslist": [
@@ -17,6 +19,7 @@
   "dependencies": {
     "@nextcloud/axios": "^2.6.0",
     "@nextcloud/l10n": "^3.4.1",
+    "@nextcloud/password-confirmation": "^6.1.0",
     "@nextcloud/router": "^3.2.0",
     "@nextcloud/vue": "^9.13.1",
     "chart.js": "^4.0.0",
@@ -27,7 +30,11 @@
   "devDependencies": {
     "@nextcloud/browserslist-config": "^3.1.2",
     "@nextcloud/eslint-config": "^9.0.1",
-    "@nextcloud/vite-config": "^2.5.1"
+    "@nextcloud/vite-config": "^2.5.1",
+    "@vitejs/plugin-vue": "^6.0.10",
+    "@vue/test-utils": "^2.5.1",
+    "happy-dom": "^20.14.6",
+    "vitest": "^5.0.5"
   },
   "engines": {
     "node": "^24.0.0",

@@ -1,0 +1,7 @@
+alpine-baselayout
+alpine-keys
+alpine-release
+apk-tools
+busybox
+musl-utils
+zlib=1.3.2-r0

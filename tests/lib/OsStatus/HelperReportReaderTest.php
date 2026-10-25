@@ -1,0 +1,310 @@
+<?php
+
+declare(strict_types=1);
+
+/**
+ * SPDX-FileCopyrightText: 2026 Nextcloud GmbH and Nextcloud contributors
+ * SPDX-License-Identifier: AGPL-3.0-or-later
+ */
+
+namespace OCA\ServerInfo\Tests\OsStatus;
+
+use OCA\ServerInfo\OsStatus\Helper\HelperReportReader;
+use OCA\ServerInfo\OsStatus\Helper\HelperState;
+use PHPUnit\Framework\Attributes\DataProvider;
+
+class HelperReportReaderTest extends \Test\TestCase {
+	private const PATH = '/var/lib/serverinfo/os-report.json';
+	private const NOW = 1792411200;
+	private const BOOT = 1792000000;
+
+	private FakeHost $host;
+	private HelperReportReader $reader;
+
+	protected function setUp(): void {
+		parent::setUp();
+		$this->host = new FakeHost();
+		$this->reader = new HelperReportReader($this->host);
+		$this->owned(self::PATH, 0o100644);
+		foreach (['/var/lib/serverinfo', '/var/lib', '/var', '/'] as $directory) {
+			$this->owned($directory, 0o40755);
+		}
+	}
+
+	private function owned(string $path, int $mode, int $owner = 0): void {
+		$this->host->owners[$path] = ['owner' => $owner, 'mode' => $mode];
+	}
+
+	private function report(array $overrides = []): string {
+		return (string)json_encode(array_merge([
+			'schema' => 1,
+			'helperVersion' => HelperReportReader::BUNDLED_VERSION,
+			'generatedAt' => self::NOW - 3600,
+			'hostname' => 'cloud.example.org',
+			'bootTime' => self::BOOT + 3,
+			'listsRefreshedAt' => self::NOW - 3600,
+			'restartServices' => ['php8.3-fpm.service', 'bad unit; rm -rf /'],
+			'rebootReasons' => [['kind' => 'kernel', 'detail' => '6.8.0-48-generic'], ['kind' => 'bogus']],
+			'subscription' => ['kind' => 'suse-ltss', 'active' => true],
+			'errors' => ['Refreshing the package lists with apt failed.'],
+		], $overrides));
+	}
+
+	/**
+	 * @return array{0: HelperState, 1: mixed}
+	 */
+	private function read(?string $content = null): array {
+		$this->host->files[self::PATH] = $content ?? $this->report();
+
+		return $this->reader->read(self::PATH, self::BOOT, self::NOW);
+	}
+
+	public function testAValidReport(): void {
+		[$state, $report] = $this->read();
+
+		$this->assertSame(HelperState::STATE_OK, $state->state);
+		$this->assertFalse($state->outdated);
+		$this->assertSame(['Refreshing the package lists with apt failed.'], $state->errors);
+		$this->assertSame(['php8.3-fpm.service'], array_map(static fn ($s) => $s->unit, $report->restartServices));
+		$this->assertCount(1, $report->rebootReasons);
+		$this->assertTrue($report->subscriptionActive);
+	}
+
+	public function testNoReport(): void {
+		unset($this->host->owners[self::PATH]);
+
+		[$state, $report] = $this->reader->read(self::PATH, self::BOOT, self::NOW);
+
+		$this->assertSame(HelperState::STATE_ABSENT, $state->state);
+		$this->assertNull($report);
+	}
+
+	public function testAReportTheWebServerCannotRead(): void {
+		[$state] = $this->reader->read(self::PATH, self::BOOT, self::NOW);
+
+		$this->assertSame(HelperState::STATE_UNREADABLE, $state->state);
+	}
+
+	public function testOutsideOpenBasedir(): void {
+		$this->host->basedir = ['/var/www/', '/tmp/'];
+		unset($this->host->owners[self::PATH]);
+
+		$this->assertSame(HelperState::STATE_UNREADABLE, $this->reader->read(self::PATH, self::BOOT, self::NOW)[0]->state);
+	}
+
+	public static function dataDirectories(): array {
+		return [
+			'only root may enter' => [0o40700, 0, HelperState::STATE_UNREADABLE],
+			'only root may list' => [0o40711, 0, HelperState::STATE_ABSENT],
+			'the group may enter' => [0o40750, 0, HelperState::STATE_ABSENT],
+			'owned by someone else' => [0o40700, 1000, HelperState::STATE_ABSENT],
+		];
+	}
+
+	/**
+	 * A report that cannot be seen is unreadable rather than absent when the
+	 * web server cannot enter its directory.
+	 */
+	#[DataProvider('dataDirectories')]
+	public function testAReportInADirectoryTheWebServerCannotEnter(int $mode, int $owner, string $expected): void {
+		unset($this->host->owners[self::PATH]);
+		$this->owned('/var/lib/serverinfo', $mode, $owner);
+
+		$this->assertSame($expected, $this->reader->read(self::PATH, self::BOOT, self::NOW)[0]->state);
+	}
+
+	public function testADirectoryThatCannotBeCheckedIsUnreadable(): void {
+		unset($this->host->owners['/var/lib/serverinfo']);
+
+		[$state, $report] = $this->read();
+
+		$this->assertSame(HelperState::STATE_UNREADABLE, $state->state);
+		$this->assertNull($report);
+	}
+
+	public static function dataOpenBasedir(): array {
+		return [
+			'the directory' => [['/var/lib/serverinfo'], HelperState::STATE_ABSENT],
+			'the directory with a slash' => [['/var/lib/serverinfo/'], HelperState::STATE_ABSENT],
+			'the file itself' => [['/var/www', '/var/lib/serverinfo/os-report.json'], HelperState::STATE_ABSENT],
+			'everything' => [['/'], HelperState::STATE_ABSENT],
+			'a directory whose name starts the same' => [['/var/lib/server'], HelperState::STATE_UNREADABLE],
+			'a file whose name starts the same' => [['/var/lib/serverinfo/os-report'], HelperState::STATE_UNREADABLE],
+		];
+	}
+
+	/**
+	 * @param list<string> $basedir
+	 */
+	#[DataProvider('dataOpenBasedir')]
+	public function testOpenBasedirEntries(array $basedir, string $expected): void {
+		$this->host->basedir = $basedir;
+		unset($this->host->owners[self::PATH]);
+
+		$this->assertSame($expected, $this->reader->read(self::PATH, self::BOOT, self::NOW)[0]->state);
+	}
+
+	public function testASlightlyFastClockIsTolerated(): void {
+		$this->assertSame(HelperState::STATE_OK, $this->read($this->report(['generatedAt' => self::NOW + 200]))[0]->state);
+	}
+
+	public function testLongStringsAreNotTaken(): void {
+		$long = str_repeat('a', 256);
+		[$state, $report] = $this->read($this->report([
+			'hostname' => 'cloud.example.org',
+			'pendingUpdates' => [
+				['name' => $long, 'candidate' => '1-1'],
+				['name' => 'openssl', 'candidate' => $long],
+				[
+					'name' => 'glibc', 'candidate' => '2.39-1', 'installed' => $long, 'origin' => $long, 'severity' => $long,
+					'security' => true, 'advisories' => [$long, ...array_map(static fn (int $i): string => 'USN-' . $i, range(1, 150))],
+				],
+			],
+			'rebootReasons' => [['kind' => 'kernel', 'detail' => $long, 'packages' => [$long, 'linux-image']]],
+		]));
+
+		$this->assertSame(HelperState::STATE_OK, $state->state);
+		$this->assertCount(1, $report->pendingUpdates);
+		$update = $report->pendingUpdates[0];
+		$this->assertSame(['glibc', '2.39-1', null, null, null, true], [$update->name, $update->candidateVersion, $update->installedVersion, $update->origin, $update->severity, $update->security]);
+		$this->assertCount(100, $update->advisories);
+		$this->assertSame('USN-1', $update->advisories[0]);
+		$this->assertNull($report->rebootReasons[0]->detail);
+		$this->assertSame(['linux-image'], $report->rebootReasons[0]->packages);
+	}
+
+	public function testOverlongHostnamesOrVersionsAreInvalid(): void {
+		$this->assertSame(HelperState::STATE_INVALID, $this->read($this->report(['hostname' => str_repeat('a', 254)]))[0]->state);
+		$this->assertSame(HelperState::STATE_INVALID, $this->read($this->report(['helperVersion' => '1.0.' . str_repeat('1', 6)]))[0]->state);
+	}
+
+	public static function dataInsecure(): array {
+		return [
+			'owned by the web server' => [self::PATH, 0o100644, 33],
+			'group writable' => [self::PATH, 0o100664, 0],
+			'world writable' => [self::PATH, 0o100646, 0],
+			'directory owned by the web server' => ['/var/lib/serverinfo', 0o40755, 33],
+			'directory world writable' => ['/var/lib/serverinfo', 0o41777, 0],
+			'an ancestor owned by the web server' => ['/var/lib', 0o40755, 33],
+			'an ancestor group writable' => ['/var', 0o40775, 0],
+			'an ancestor world writable with the sticky bit' => ['/var', 0o41777, 0],
+			'the root directory group writable' => ['/', 0o40775, 0],
+		];
+	}
+
+	#[DataProvider('dataInsecure')]
+	public function testReportsOthersCouldForgeAreIgnored(string $path, int $mode, int $owner): void {
+		$this->owned($path, $mode, $owner);
+
+		[$state, $report] = $this->read();
+
+		$this->assertSame(HelperState::STATE_INSECURE, $state->state);
+		$this->assertNull($report);
+	}
+
+	public static function dataSymlinks(): array {
+		return [
+			'the report' => [self::PATH],
+			'its directory' => ['/var/lib/serverinfo'],
+			'an ancestor' => ['/var'],
+		];
+	}
+
+	/**
+	 * The helper writes a plain file and refuses symlinked directories, so a
+	 * link anywhere on the path was not set up by it.
+	 */
+	#[DataProvider('dataSymlinks')]
+	public function testSymlinksOnThePathAreInsecure(string $link): void {
+		$this->host->links[$link] = '/srv/elsewhere';
+
+		[$state, $report] = $this->read();
+
+		$this->assertSame(HelperState::STATE_INSECURE, $state->state);
+		$this->assertNull($report);
+	}
+
+	public function testAnAncestorThatCannotBeCheckedIsUnreadable(): void {
+		unset($this->host->owners['/var']);
+
+		$this->assertSame(HelperState::STATE_UNREADABLE, $this->read()[0]->state);
+	}
+
+	public static function dataOpenBasedirAncestors(): array {
+		return [
+			'only the report directory' => [['/var/lib/serverinfo/'], null, HelperState::STATE_OK],
+			'an ancestor within open_basedir is checked' => [['/var/lib'], 33, HelperState::STATE_INSECURE],
+			'an ancestor within open_basedir that cannot be checked' => [['/var/lib/'], null, HelperState::STATE_UNREADABLE],
+		];
+	}
+
+	/**
+	 * Directories open_basedir hides from PHP cannot be inspected; the ones
+	 * it allows are.
+	 *
+	 * @param list<string> $basedir
+	 * @param int|null $libOwner owner of /var/lib, null when it cannot be checked
+	 */
+	#[DataProvider('dataOpenBasedirAncestors')]
+	public function testAncestorsOutsideOpenBasedir(array $basedir, ?int $libOwner, string $expected): void {
+		$this->host->basedir = $basedir;
+		foreach (['/var/lib', '/var', '/'] as $directory) {
+			unset($this->host->owners[$directory]);
+		}
+		if ($libOwner !== null) {
+			$this->owned('/var/lib', 0o40755, $libOwner);
+		}
+
+		$this->assertSame($expected, $this->read()[0]->state);
+	}
+
+	public static function dataRejected(): array {
+		$base = [
+			'schema' => 1, 'helperVersion' => '1.0.0', 'generatedAt' => self::NOW - 60,
+			'hostname' => 'cloud.example.org', 'bootTime' => self::BOOT,
+		];
+
+		return [
+			'not json' => ['{"schema": 1,', HelperState::STATE_INVALID],
+			'not an object' => ['"report"', HelperState::STATE_INVALID],
+			'future schema' => [json_encode(['schema' => 2] + $base), HelperState::STATE_UNSUPPORTED],
+			'missing host' => [json_encode(array_diff_key($base, ['hostname' => 1])), HelperState::STATE_INVALID],
+			'bad version' => [json_encode(['helperVersion' => 'latest'] + $base), HelperState::STATE_INVALID],
+			'other host' => [json_encode(['hostname' => 'elsewhere'] + $base), HelperState::STATE_OTHER_HOST],
+			'previous boot' => [json_encode(['bootTime' => self::BOOT - 86400] + $base), HelperState::STATE_PREVIOUS_BOOT],
+			'stale' => [json_encode(['generatedAt' => self::NOW - 27 * 3600] + $base), HelperState::STATE_STALE],
+			'from the future' => [json_encode(['generatedAt' => self::NOW + 3600] + $base), HelperState::STATE_CLOCK_SKEW],
+			'too large' => [json_encode($base + ['padding' => str_repeat('x', 1024 * 1024)]), HelperState::STATE_INVALID],
+			'too deep' => [str_repeat('[', 40) . str_repeat(']', 40), HelperState::STATE_INVALID],
+		];
+	}
+
+	#[DataProvider('dataRejected')]
+	public function testRejectedReports(string $content, string $expected): void {
+		[$state, $report] = $this->read($content);
+
+		$this->assertSame($expected, $state->state);
+		$this->assertNull($report);
+	}
+
+	public function testAnOlderHelperIsFlagged(): void {
+		[$state] = $this->read($this->report(['helperVersion' => '0.9.0']));
+
+		$this->assertSame(HelperState::STATE_OK, $state->state);
+		$this->assertTrue($state->outdated);
+	}
+
+	public function testUnsafePathsFallBackToTheDefault(): void {
+		$this->assertSame(HelperReportReader::DEFAULT_PATH, HelperReportReader::sanitizePath('/etc/shadow'));
+		$this->assertSame(HelperReportReader::DEFAULT_PATH, HelperReportReader::sanitizePath('/var/lib/../../etc/x.json'));
+		$this->assertSame(HelperReportReader::DEFAULT_PATH, HelperReportReader::sanitizePath('relative.json'));
+		$this->assertSame('/srv/reports/os.json', HelperReportReader::sanitizePath('/srv/reports/os.json'));
+	}
+
+	public function testBundledVersionMatchesTheScript(): void {
+		$script = (string)file_get_contents(__DIR__ . '/../../../bin/serverinfo-os-report');
+
+		$this->assertMatchesRegularExpression('/^VERSION=' . preg_quote(HelperReportReader::BUNDLED_VERSION, '/') . '$/m', $script);
+		$this->assertMatchesRegularExpression('/^OUTPUT=' . preg_quote(HelperReportReader::DEFAULT_PATH, '/') . '$/m', $script);
+	}
+}
