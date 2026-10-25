@@ -11,8 +11,7 @@
 		@update:open="$emit('close')">
 		<div class="snippet">
 			<p>
-				<!-- TRANSLATORS: Instruction above a block of config text. {file} is a file name such as my.cnf. -->
-				{{ t('serverinfo', 'Add the following to your {file}, then restart the database.', { file: rule.apply?.configFile ?? '' }) }}
+				{{ instruction }}
 			</p>
 
 			<pre class="snippet__code"><code>{{ snippet }}</code></pre>
@@ -53,15 +52,38 @@ import NcDialog from '@nextcloud/vue/components/NcDialog'
 import Check from 'vue-material-design-icons/Check.vue'
 import ContentCopy from 'vue-material-design-icons/ContentCopy.vue'
 
-const props = defineProps<{ rule: DatabaseRule | null }>()
+const props = defineProps<{
+	rule: DatabaseRule | null
+	/** The PHP-FPM pool a php-fpm.conf directive belongs to */
+	section?: string
+}>()
 
 defineEmits<{ close: [] }>()
 
 const copied = ref(false)
 const copyFailed = ref(false)
 
-// Postgres takes bare directives; MySQL and MariaDB need the [mysqld] section
-// header, so that pasting the block into a fresh file is enough on its own.
+const pool = computed(() => props.section || 'www')
+
+const instruction = computed(() => {
+	const file = props.rule?.apply?.configFile ?? ''
+	switch (file) {
+		case 'php.ini':
+			// TRANSLATORS: Instruction above a block of PHP configuration text
+			return t('serverinfo', 'Add the following to the php.ini that PHP-FPM or the web server loads, then restart it.')
+		case 'php-fpm.conf':
+			// TRANSLATORS: Instruction above a block of PHP-FPM configuration text. {pool} is the name of a PHP-FPM pool such as www.
+			return t('serverinfo', 'Add the following to the configuration of the PHP-FPM pool {pool}, then reload PHP-FPM.', { pool: pool.value })
+		default:
+			// TRANSLATORS: Instruction above a block of config text. {file} is a file name such as my.cnf.
+			return t('serverinfo', 'Add the following to your {file}, then restart the database.', { file })
+	}
+})
+
+// Postgres and php.ini take bare directives; MySQL and MariaDB need the
+// [mysqld] section header and PHP-FPM the pool's, so that pasting the block
+// into a fresh file is enough on its own. PHP-FPM reopens a pool section
+// that appears twice, so the header is also safe at the end of the pool's file.
 const snippet = computed(() => {
 	const apply = props.rule?.apply
 	if (!apply) {
@@ -70,9 +92,16 @@ const snippet = computed(() => {
 
 	const directive = `${apply.configKey} = ${apply.recommendedValue}`
 
-	return apply.configFile === 'postgresql.conf'
-		? `# ${apply.configFile}\n${directive}`
-		: `# ${apply.configFile}\n[mysqld]\n${directive}`
+	switch (apply.configFile) {
+		case 'postgresql.conf':
+			return `# ${apply.configFile}\n${directive}`
+		case 'php.ini':
+			return `; ${apply.configFile}\n${directive}`
+		case 'php-fpm.conf':
+			return `; ${apply.configFile}\n[${pool.value}]\n${directive}`
+		default:
+			return `# ${apply.configFile}\n[mysqld]\n${directive}`
+	}
 })
 
 /**

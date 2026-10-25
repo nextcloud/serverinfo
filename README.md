@@ -136,6 +136,39 @@ as far as open_basedir lets it check, one written before the last reboot or
 on another host, one older than 26 hours, and one dated more than five
 minutes in the future (a clock problem).
 
+## PHP performance
+
+The **PHP performance** card on the Status page explains what the PHP-FPM
+and OPcache numbers above it mean for speed. It runs these checks, lists the
+ones that found something first, and offers a configuration snippet where a
+concrete value can be suggested:
+
+- **PHP-FPM worker limit**: the pool reached `pm.max_children`. The suggested
+  value plans with 80 % of the memory available now and the average private
+  memory (RssAnon in `/proc/<pid>/status`) of the pool's workers. Where the
+  workers cannot be read (restricted mode, a system other than Linux,
+  open_basedir), `memory_limit` stands in as the size of every new worker,
+  which is an upper bound, and the card says so. When the memory has no room
+  for more workers, a second check says that instead.
+- **PHP-FPM listen queue**: requests are waiting for a worker now, or waited
+  at some point since PHP-FPM started.
+- **OPcache memory** (used plus wasted), **interned strings** and **script
+  slots** (`opcache.max_accelerated_files`): more than 90 % taken, or OPcache
+  restarted because it ran out of memory. OPcache rounds
+  `max_accelerated_files` up to one of a fixed set of prime numbers; the
+  check compares against that real limit and suggests one of those sizes.
+- **OPcache file checks**: `opcache.validate_timestamps` is on with
+  `opcache.revalidate_freq` below 2 seconds. A hint, not a problem.
+- **PHP memory limit**: `memory_limit` below Nextcloud's recommended 512 MB.
+- **Memory limit compared with RAM**: the most PHP-FPM processes seen at once
+  times `memory_limit` is more than the RAM. A hint, since most requests stay
+  far below the limit.
+
+PHP-FPM and OPcache state belongs to the PHP that runs the code, so the card
+asks the web server for it when the page opens; nothing is collected by cron,
+whose PHP would be the command line one. A check whose data is missing is
+skipped with the reason, e.g. without PHP-FPM (mod_php) or with OPcache off.
+
 ## API
 
 The API provides a lot of information about a running Nextcloud

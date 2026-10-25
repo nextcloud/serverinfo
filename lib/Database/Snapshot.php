@@ -13,6 +13,8 @@ namespace OCA\ServerInfo\Database;
  * Frozen view of the database's status + variables at a point in time.
  *
  * Built by {@see DatabaseProbe}, consumed by {@see \OCA\ServerInfo\Database\Advisor}.
+ * {@see \OCA\ServerInfo\Php\PhpProbe} builds one of flavour `php` for the
+ * PHP-FPM and OPcache rules, with everything in `derived`.
  *
  * Three name-spaces are merged into a single context map for the
  * expression evaluator (so a rule can write `Slow_queries / Questions`
@@ -31,6 +33,7 @@ final class Snapshot {
 	public const FLAVOUR_MARIADB = 'mariadb';
 	public const FLAVOUR_PGSQL = 'pgsql';
 	public const FLAVOUR_UNSUPPORTED = 'unsupported';
+	public const FLAVOUR_PHP = 'php';
 
 	/**
 	 * @param array<string, scalar|null> $status
@@ -42,6 +45,9 @@ final class Snapshot {
 	 *                                             name as that metric (e.g. the table names behind the
 	 *                                             `tables_without_index_use` count).  Rules opt in via
 	 *                                             {@see \OCA\ServerInfo\Database\Rule::$detailsKey}.
+	 * @param array<string, string> $unavailable Why a key is missing, keyed by
+	 *                                           that key; the Advisor shows it as the skip reason of
+	 *                                           a rule requiring the key.
 	 */
 	public function __construct(
 		public readonly string $flavour,
@@ -50,6 +56,7 @@ final class Snapshot {
 		public readonly array $variables,
 		public readonly array $derived,
 		public readonly array $details = [],
+		public readonly array $unavailable = [],
 	) {
 	}
 
