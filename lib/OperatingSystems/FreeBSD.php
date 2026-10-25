@@ -8,15 +8,26 @@ declare(strict_types=1);
 
 namespace OCA\ServerInfo\OperatingSystems;
 
+use OCA\ServerInfo\OsStatus\Host\IHost;
 use OCA\ServerInfo\Resources\CPU;
 use OCA\ServerInfo\Resources\Disk;
 use OCA\ServerInfo\Resources\Memory;
 use OCA\ServerInfo\Resources\NetInterface;
+use Psr\Log\LoggerInterface;
 use RuntimeException;
 
 class FreeBSD implements IOperatingSystem {
 	private const AF_INET = 2;
 	private const AF_INET6 = 28;
+
+	private CommandOutput $commands;
+
+	public function __construct(
+		private IHost $host,
+		LoggerInterface $logger,
+	) {
+		$this->commands = new CommandOutput($host, $logger);
+	}
 
 	#[\Override]
 	public function supported(): bool {
@@ -25,36 +36,47 @@ class FreeBSD implements IOperatingSystem {
 
 	#[\Override]
 	public function getCPU(): CPU {
-		try {
-			$name = $this->executeCommand('/sbin/sysctl -n hw.model');
-			$cores = (int)$this->executeCommand('/sbin/sysctl -n kern.smp.cpus');
-		} catch (RuntimeException) {
-			$name = 'Unknown Processor';
+		$lines = explode("\n", trim($this->commands->read('sysctl', ['-n', 'hw.model', 'kern.smp.cpus']) ?? ''));
+		if (count($lines) !== 2 || trim($lines[0]) === '' || preg_match('/^\d+$/', trim($lines[1])) !== 1) {
 			// -1 marks the count as unknown rather than claiming a single core.
-			$cores = -1;
+			return new CPU('Unknown Processor', -1);
 		}
-		return new CPU($name, $cores);
+
+		return new CPU(trim($lines[0]), (int)$lines[1]);
 	}
 
 	#[\Override]
 	public function getAverageLoad(): array|false {
-		return false;
+		$load = function_exists('sys_getloadavg') ? sys_getloadavg() : false;
+		if ($load === false || count($load) < 3) {
+			return false;
+		}
+
+		return [(float)$load[0], (float)$load[1], (float)$load[2]];
 	}
 
+	/**
+	 * The boot time comes from sysctl, which costs a fork, so
+	 * {@see \OCA\ServerInfo\Os::getUptime()} only asks occasionally and
+	 * remembers the answer.
+	 */
 	#[\Override]
 	public function sampleUptime(): int {
-		return -1;
+		$boottime = $this->commands->read('sysctl', ['-n', 'kern.boottime']);
+		if ($boottime === null || preg_match('/\bsec\s*=\s*(\d+)/', $boottime, $matches) !== 1) {
+			return -1;
+		}
+
+		$bootedAt = (int)$matches[1];
+
+		return $bootedAt > 0 ? max(0, time() - $bootedAt) : -1;
 	}
 
 	#[\Override]
 	public function getMemory(): Memory {
 		$data = new Memory();
 
-		try {
-			$swapinfo = $this->executeCommand('/usr/sbin/swapinfo -k');
-		} catch (RuntimeException $e) {
-			$swapinfo = '';
-		}
+		$swapinfo = $this->commands->read('swapinfo', ['-k']) ?? '';
 
 		$matches = [];
 		$pattern = '/(?>\/dev\/\S+)\s+(?>\d+)\s+(?<Used>\d+)\s+(?<Avail>\d+)\s+(?<Capacity>\d+)/';
@@ -67,11 +89,7 @@ class FreeBSD implements IOperatingSystem {
 
 		unset($matches, $result);
 
-		try {
-			$meminfo = $this->executeCommand('/sbin/sysctl -n hw.realmem hw.pagesize vm.stats.vm.v_inactive_count vm.stats.vm.v_cache_count vm.stats.vm.v_free_count');
-		} catch (RuntimeException $e) {
-			$meminfo = '';
-		}
+		$meminfo = $this->commands->read('sysctl', ['-n', 'hw.realmem', 'hw.pagesize', 'vm.stats.vm.v_inactive_count', 'vm.stats.vm.v_cache_count', 'vm.stats.vm.v_free_count']) ?? '';
 
 		$lines = array_map('intval', explode("\n", $meminfo));
 		if (count($lines) > 4) {
@@ -86,26 +104,37 @@ class FreeBSD implements IOperatingSystem {
 
 	#[\Override]
 	public function getTime(): string {
-		try {
-			return $this->executeCommand('date');
-		} catch (RuntimeException $e) {
-			return '';
-		}
+		return (new \DateTimeImmutable('now', $this->getSystemTimeZone()))->format('D M j H:i:s T Y');
 	}
 
+	/**
+	 * Nextcloud runs PHP in UTC, so the zone date(1) would use is read from
+	 * the system: tzsetup either links /etc/localtime into the zoneinfo
+	 * database or copies it there and records the name in /var/db/zoneinfo.
+	 */
+	private function getSystemTimeZone(): \DateTimeZone {
+		$link = $this->host->readLink('/etc/localtime');
+		$name = $link !== null && preg_match('#/zoneinfo/(.+)$#', $link, $matches) === 1
+			? $matches[1]
+			: trim($this->host->readFile('/var/db/zoneinfo', 128) ?? '');
+
+		if ($name !== '' && preg_match('#^[A-Za-z0-9/_+-]+$#', $name) === 1) {
+			try {
+				return new \DateTimeZone($name);
+			} catch (\Exception) {
+				// fall through to the configured default
+			}
+		}
+
+		return new \DateTimeZone(date_default_timezone_get());
+	}
+
+	/**
+	 * Only {@see sampleUptime()} can tell, at the cost of a fork.
+	 */
 	#[\Override]
 	public function getUptime(): int {
-		$uptime = -1;
-
-		try {
-			$shell_boot = $this->executeCommand('/sbin/sysctl -n kern.boottime');
-			preg_match("/[\d]+/", $shell_boot, $boottime);
-			$time = $this->executeCommand('date +%s');
-			$uptime = (int)$time - (int)$boottime[0];
-		} catch (RuntimeException $e) {
-			return $uptime;
-		}
-		return $uptime;
+		return -1;
 	}
 
 	#[\Override]
@@ -116,18 +145,17 @@ class FreeBSD implements IOperatingSystem {
 			'dns' => '',
 		];
 
-		try {
-			$netstat = $this->executeCommand('netstat -rn');
+		$netstat = $this->commands->read('netstat', ['-rn']);
+		if ($netstat !== null) {
 			preg_match_all("/(?<=^default)\s*[0-9a-fA-f\.:]+/m", $netstat, $gw);
 			if (count($gw[0]) > 0) {
 				$result['gateway'] = implode(', ', array_map('trim', $gw[0]));
 			}
-			$resolvConf = $this->readContent('/etc/resolv.conf');
-			if (preg_match_all('/^\s*nameserver\s+(\S+)/m', $resolvConf, $matches)) {
-				$result['dns'] = implode(', ', array_unique($matches[1]));
-			}
-		} catch (RuntimeException) {
-			// okay
+		}
+
+		$resolvConf = $this->host->readFile('/etc/resolv.conf', 65536);
+		if ($resolvConf !== null && preg_match_all('/^\s*nameserver\s+(\S+)/m', $resolvConf, $matches)) {
+			$result['dns'] = implode(', ', array_unique($matches[1]));
 		}
 
 		return $result;
@@ -160,9 +188,14 @@ class FreeBSD implements IOperatingSystem {
 				continue;
 			}
 
-			try {
-				$details = $this->executeCommand('/sbin/ifconfig ' . $interfaceName);
-			} catch (RuntimeException $e) {
+			// Interface names are at most 15 characters and never start with a
+			// dash, which keeps the name from being read as an option.
+			if (preg_match('/^[A-Za-z0-9][A-Za-z0-9._-]{0,14}$/', (string)$interfaceName) !== 1) {
+				continue;
+			}
+
+			$details = $this->commands->read('ifconfig', [(string)$interfaceName]);
+			if ($details === null) {
 				continue;
 			}
 
@@ -195,9 +228,8 @@ class FreeBSD implements IOperatingSystem {
 	public function getDiskInfo(): array {
 		$data = [];
 
-		try {
-			$disks = $this->executeCommand('df -TPk');
-		} catch (RuntimeException $e) {
+		$disks = $this->commands->read('df', ['-TPk'], CommandOutput::DF_TIMEOUT, true);
+		if ($disks === null) {
 			return $data;
 		}
 
@@ -241,37 +273,6 @@ class FreeBSD implements IOperatingSystem {
 	#[\Override]
 	public function getThermalZones(): array {
 		return [];
-	}
-
-	/**
-	 * @throws RuntimeException
-	 */
-	protected function readContent(string $filename): string {
-		$data = @file_get_contents($filename);
-		if ($data === false || $data === '') {
-			throw new RuntimeException('Unable to read: "' . $filename . '"');
-		}
-		return trim($data);
-	}
-
-	/**
-	 * Execute a command with shell_exec.
-	 *
-	 * The command will be escaped with escapeshellcmd.
-	 *
-	 * @throws RuntimeException if shell_exec is unavailable, the command failed or an empty response.
-	 */
-	protected function executeCommand(string $command): string {
-		if (function_exists('shell_exec') === false) {
-			throw new RuntimeException('shell_exec unavailable');
-		}
-
-		$output = shell_exec(escapeshellcmd($command));
-		if ($output === false || $output === null || $output === '') {
-			throw new RuntimeException('No output for command: "' . $command . '"');
-		}
-
-		return $output;
 	}
 
 	/**

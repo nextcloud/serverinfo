@@ -9,11 +9,13 @@ declare(strict_types=1);
 
 namespace OCA\ServerInfo\OperatingSystems;
 
+use OCA\ServerInfo\OsStatus\Host\IHost;
 use OCA\ServerInfo\Resources\CPU;
 use OCA\ServerInfo\Resources\Disk;
 use OCA\ServerInfo\Resources\Memory;
 use OCA\ServerInfo\Resources\NetInterface;
 use OCA\ServerInfo\Resources\ThermalZone;
+use Psr\Log\LoggerInterface;
 use RuntimeException;
 
 class Linux implements IOperatingSystem {
@@ -22,6 +24,12 @@ class Linux implements IOperatingSystem {
 
 	/** Mount point of both the cgroup v2 unified hierarchy and the v1 controllers. */
 	private const CGROUP_ROOT = '/sys/fs/cgroup';
+
+	private CommandOutput $commands;
+
+	public function __construct(IHost $host, LoggerInterface $logger) {
+		$this->commands = new CommandOutput($host, $logger);
+	}
 
 	#[\Override]
 	public function supported(): bool {
@@ -95,9 +103,8 @@ class Linux implements IOperatingSystem {
 	private function getMemoryFromFree(): Memory {
 		$data = new Memory();
 
-		try {
-			$output = $this->executeCommand('free -k');
-		} catch (RuntimeException) {
+		$output = $this->commands->read('free', ['-k']);
+		if ($output === null) {
 			return $data;
 		}
 
@@ -186,11 +193,7 @@ class Linux implements IOperatingSystem {
 	 * @return int the number of processors, or -1 when it cannot be determined
 	 */
 	private function countProcessors(): int {
-		try {
-			$output = trim($this->executeCommand('nproc'));
-		} catch (RuntimeException) {
-			return -1;
-		}
+		$output = trim($this->commands->read('nproc', []) ?? '');
 
 		return preg_match('/^\d+$/', $output) === 1 ? (int)$output : -1;
 	}
@@ -431,9 +434,8 @@ class Linux implements IOperatingSystem {
 	 */
 	#[\Override]
 	public function sampleUptime(): int {
-		try {
-			$stat = $this->executeCommand('cat /proc/self/stat');
-		} catch (RuntimeException) {
+		$stat = $this->commands->read('cat', ['/proc/self/stat']);
+		if ($stat === null) {
 			return -1;
 		}
 
@@ -460,8 +462,9 @@ class Linux implements IOperatingSystem {
 			'dns' => '',
 		];
 
-		if (function_exists('shell_exec')) {
-			$result['gateway'] = shell_exec('ip route | awk \'/default/ { print $3 }\'');
+		$routes = $this->commands->read('ip', ['route', 'show', 'default']);
+		if ($routes !== null) {
+			$result['gateway'] = implode(', ', self::parseDefaultGateways($routes));
 		}
 
 		try {
@@ -530,9 +533,8 @@ class Linux implements IOperatingSystem {
 	public function getDiskInfo(): array {
 		$data = [];
 
-		try {
-			$disks = $this->executeCommand('df -TPk');
-		} catch (RuntimeException $e) {
+		$disks = $this->commands->read('df', ['-TPk'], CommandOutput::DF_TIMEOUT, true);
+		if ($disks === null) {
 			return $data;
 		}
 
@@ -646,23 +648,14 @@ class Linux implements IOperatingSystem {
 	}
 
 	/**
-	 * Execute a command with shell_exec.
+	 * The gateways of the default routes in `ip route show default` output.
 	 *
-	 * The command will be escaped with escapeshellcmd.
-	 *
-	 * @throws RuntimeException if shell_exec is unavailable, the command failed or an empty response.
+	 * @return list<string>
 	 */
-	protected function executeCommand(string $command): string {
-		if (function_exists('shell_exec') === false) {
-			throw new RuntimeException('shell_exec unavailable');
-		}
+	public static function parseDefaultGateways(string $routes): array {
+		preg_match_all('/^default\s.*?\bvia\s+(\S+)/m', $routes, $matches);
 
-		$output = shell_exec(escapeshellcmd($command));
-		if ($output === false || $output === null || $output === '') {
-			throw new RuntimeException('No output for command: "' . $command . '"');
-		}
-
-		return $output;
+		return array_values(array_unique($matches[1]));
 	}
 
 	/**
