@@ -121,7 +121,7 @@ This file is generated from multiple sources. Included packages:
 	- version: 7.8.5
 	- license: ISC
 - serverinfo
-	- version: 8.0.0-dev.1
+	- version: 8.0.0-dev.2
 	- license: AGPL-3.0-or-later
 - tabbable
 	- version: 6.5.0

@@ -9,7 +9,7 @@
     <name>Monitoring</name>
     <summary>Monitoring app with useful server information</summary>
     <description>Provides useful server information, such as CPU load, RAM usage, disk usage, number of users, etc. Shows pending operating system updates, required reboots and service restarts, and how long the Linux distribution is still supported.</description>
-    <version>8.0.0-dev.1</version>
+    <version>8.0.0-dev.2</version>
     <licence>AGPL-3.0-or-later</licence>
     <author>Bjoern Schiessle</author>
     <author>Ivan Sein Santiago</author>
@@ -25,6 +25,7 @@
 		<job>OCA\ServerInfo\Jobs\UpdateStorageStats</job>
 		<job>OCA\ServerInfo\Jobs\UpdateJobStats</job>
 		<job>OCA\ServerInfo\Jobs\UpdateOsStatus</job>
+		<job>OCA\ServerInfo\Jobs\CollectHistory</job>
 	</background-jobs>
 	<commands>
 		<command>OCA\ServerInfo\Commands\UpdateStorageStats</command>

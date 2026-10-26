@@ -136,6 +136,55 @@ as far as open_basedir lets it check, one written before the last reboot or
 on another host, one older than 26 hours, and one dated more than five
 minutes in the future (a clock problem).
 
+## History
+
+A background job samples the server every five minutes and keeps the values
+in the database (table `serverinfo_samples`), so that load, memory and disk
+usage can be looked at after the fact. It records:
+
+- the load average over 1, 5 and 15 minutes
+- memory and swap, used and total
+- free and total space of the file system holding the data directory; space
+  reserved for root counts as used, because Nextcloud cannot use it
+- active users in the last 5 minutes and the last 24 hours
+- the number of files, as last counted by the storage statistics job (see
+  below), so it moves in steps of that job's interval
+- the database size, measured at most once an hour
+
+PHP-FPM and OPcache are not part of the history. Background jobs run in a PHP
+process of their own (the command line PHP under system cron), which has its
+own OPcache and is not part of the web server's FPM pool, so the figures would
+describe the wrong process.
+
+On the Status page, the Load and Memory charts can switch from the live
+values to the last 24 hours, 7 days, 30 days or year, and **Disk usage over
+time** shows the data directory's file system. A day is shown in five-minute
+steps, 7 and 30 days in hours and a year in days; longer ranges also draw the
+highest load and memory use.
+
+Five-minute samples are kept for 48 hours. From them the job also computes
+hourly rows, kept for 30 days, and daily rows (UTC days), kept for a year.
+These hold the averages, and for the load, memory used and active users also
+the highest sample. The current hour and day are brought up to date on every
+run. The retention can be changed:
+
+```
+occ config:app:set serverinfo history_retention_raw_hours --type=integer --value=48
+occ config:app:set serverinfo history_retention_hourly_days --type=integer --value=30
+occ config:app:set serverinfo history_retention_daily_days --type=integer --value=365
+```
+
+The five-minute samples are kept for at least 25 hours, which the daily rows
+are computed from. With the defaults the table holds about 1,700 rows per
+server.
+
+The job is due every four minutes (`job_interval_history`, in seconds) and
+stores one sample per five-minute slot, so a cron run every five minutes never
+skips a slot. With AJAX or webcron, samples are only taken when a request runs
+the background jobs, and the history has gaps. Each sample names the host that
+took it; with several web servers sharing the database, that is whichever one
+ran the job.
+
 ## API
 
 The API provides a lot of information about a running Nextcloud

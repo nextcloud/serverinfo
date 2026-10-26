@@ -250,3 +250,19 @@ export interface OsPayload {
 	refresh: { systemCron: boolean, running: boolean }
 	helper: { bundledVersion: string, installPath: string, reportPath: string }
 }
+
+/** The stored history the charts can show instead of the live values. */
+export type HistoryRange = '24h' | '7d' | '30d' | '1y'
+
+/** Payload of /history: one array per metric, parallel to the bucket start times in `t`. */
+export interface HistoryPayload {
+	range: HistoryRange
+	/** Seconds per point: 300, 3600 or 86400 */
+	resolution: number
+	/** Unix timestamps on the server clock */
+	from: number
+	now: number
+	/** Host that took the samples, null before the first one */
+	node: string | null
+	series: { t: number[] } & Record<string, Array<number | null>>
+}

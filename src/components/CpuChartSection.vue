@@ -17,10 +17,20 @@
 			<!-- TRANSLATORS: Tile label above the Unix load average, three numbers for the last 1/5/15 minutes -->
 			<StatTile :label="t('serverinfo', 'Load average')" :value="loadAverage" />
 		</div>
-		<div v-if="usage !== null" id="cpuSection" class="infobox">
-			<div class="chart-wrapper">
+		<div v-if="usage !== null" id="cpuSection" class="infobox infobox--chart">
+			<!-- TRANSLATORS: Accessible name of the buttons choosing the time range of the load chart -->
+			<RangeSwitch v-model="range" :label="t('serverinfo', 'Load chart range')" :options="chartRanges()" />
+			<div v-if="range === 'live'" class="chart-wrapper">
 				<Line :data="chartData" :options="chartOptions" />
 			</div>
+			<HistoryChart
+				v-else
+				:payload="history"
+				:failed="historyFailed"
+				:datasets="historyDatasets"
+				:label="t('serverinfo', 'CPU load over time')"
+				:summary="historySummary"
+				unit="percent" />
 		</div>
 		<p v-else>
 			<!-- TRANSLATORS: Shown under the load average when the server does not report how many CPU threads it has -->
@@ -31,14 +41,20 @@
 
 <script setup lang="ts">
 import type { TooltipItem } from 'chart.js'
+import type { HistoryRange } from '../types.ts'
+import type { HistoryDataset } from './HistoryChart.vue'
 
 import { t } from '@nextcloud/l10n'
 import { CategoryScale, Chart, Filler, LinearScale, LineController, LineElement, PointElement, Tooltip } from 'chart.js'
-import { computed, shallowRef, watch } from 'vue'
+import { computed, ref, shallowRef, watch } from 'vue'
 import { Line } from 'vue-chartjs'
 import Chip from 'vue-material-design-icons/Chip.vue'
+import HistoryChart from './HistoryChart.vue'
+import RangeSwitch from './RangeSwitch.vue'
 import SectionHeading from './SectionHeading.vue'
 import StatTile from './StatTile.vue'
+import { useHistory } from '../composables/useHistory.ts'
+import { chartRanges, formatUnit, summarize } from '../history.ts'
 import { primaryColor, withAlpha } from '../utils.ts'
 
 const props = defineProps<{
@@ -125,6 +141,50 @@ watch(() => props.tick, () => {
 		labels,
 		datasets: [{ ...datasetStyle, data }],
 	}
+})
+
+const range = ref<'live' | HistoryRange>('live')
+const { data: history, failed: historyFailed } = useHistory(range)
+
+const loadToPercent = computed(() => 100 / props.cpunum)
+
+// The five-minute load average covers a whole sample interval; the peak is
+// the highest one-minute load, so it is only worth a line of its own once a
+// point stands for an hour or a day.
+const historyDatasets = computed((): HistoryDataset[] => {
+	const average: HistoryDataset = {
+		// TRANSLATORS: Chart legend entry for the average CPU load over time
+		label: t('serverinfo', 'Average load'),
+		metric: 'load5',
+		scale: loadToPercent.value,
+		borderColor: passiveColor(),
+		backgroundColor: withAlpha(primaryColor(), 0.4),
+		fill: true,
+	}
+	if (history.value === null || history.value.resolution <= 300) {
+		return [average]
+	}
+	return [average, {
+		// TRANSLATORS: Chart legend entry for the highest CPU load in each hour or day
+		label: t('serverinfo', 'Peak load'),
+		metric: 'load1Max',
+		scale: loadToPercent.value,
+		borderColor: primaryColor(),
+		dashed: true,
+	}]
+})
+
+const historySummary = computed(() => {
+	const average = summarize(history.value?.series.load5 ?? [])
+	const peak = summarize(history.value?.series.load1Max ?? [])
+	if (average === null || peak === null) {
+		return ''
+	}
+	// TRANSLATORS: Text below the CPU load history chart, e.g. "Average load 12 %, highest 85 %"
+	return t('serverinfo', 'Average load {average}, highest {peak}', {
+		average: formatUnit(average.average * loadToPercent.value, 'percent'),
+		peak: formatUnit(peak.peak * loadToPercent.value, 'percent'),
+	})
 })
 </script>
 

@@ -27,6 +27,12 @@
 	border-radius: var(--border-radius-large);
 }
 
+/* A chart with its range switch above it */
+.infobox--chart {
+	flex-direction: column;
+	align-items: stretch;
+}
+
 @media (width <= 1280px) {
 	.infobox {
 		display: block;

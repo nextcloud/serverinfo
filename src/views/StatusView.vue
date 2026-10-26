@@ -57,6 +57,7 @@
 
 			<!-- Disk -->
 			<DiskSection :disks="staticData.diskinfo" :freespace="staticData.freeSpace" :storage="staticData.storage" />
+			<DiskHistorySection />
 
 			<!-- Network -->
 			<NetworkSection :networkinfo="staticData.networkinfo" :interfaces="staticData.networkinterfaces" />
@@ -154,6 +155,7 @@ import { computed } from 'vue'
 import ActiveUsersSection from '../components/ActiveUsersSection.vue'
 import CpuChartSection from '../components/CpuChartSection.vue'
 import DatabaseSection from '../components/DatabaseSection.vue'
+import DiskHistorySection from '../components/DiskHistorySection.vue'
 import DiskSection from '../components/DiskSection.vue'
 import MemoryChartSection from '../components/MemoryChartSection.vue'
 import MonitoringSection from '../components/MonitoringSection.vue'

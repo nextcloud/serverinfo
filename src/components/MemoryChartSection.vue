@@ -17,24 +17,41 @@
 			<!-- TRANSLATORS: Tile label above the amount of swap space currently in use -->
 			<StatTile v-if="hasSwap" :label="t('serverinfo', 'Swap used')" :value="swapUsed" />
 		</div>
-		<div id="memorySection" class="infobox">
-			<div class="chart-wrapper">
+		<div id="memorySection" class="infobox infobox--chart">
+			<!-- TRANSLATORS: Accessible name of the buttons choosing the time range of the memory chart -->
+			<RangeSwitch v-model="range" :label="t('serverinfo', 'Memory chart range')" :options="chartRanges()" />
+			<div v-if="range === 'live'" class="chart-wrapper">
 				<Line :data="chartData" :options="chartOptions" />
 			</div>
+			<HistoryChart
+				v-else
+				:payload="history"
+				:failed="historyFailed"
+				:datasets="historyDatasets"
+				:label="t('serverinfo', 'Memory usage over time')"
+				:summary="historySummary"
+				unit="gigabytes"
+				:yMax="historyMaxGB" />
 		</div>
 	</template>
 </template>
 
 <script setup lang="ts">
 import type { LegendItem, TooltipItem } from 'chart.js'
+import type { HistoryRange } from '../types.ts'
+import type { HistoryDataset } from './HistoryChart.vue'
 
 import { t } from '@nextcloud/l10n'
 import { CategoryScale, Chart, Filler, Legend, LinearScale, LineController, LineElement, PointElement, Tooltip } from 'chart.js'
 import { computed, ref, shallowRef, watch } from 'vue'
 import { Line } from 'vue-chartjs'
 import Memory from 'vue-material-design-icons/Memory.vue'
+import HistoryChart from './HistoryChart.vue'
+import RangeSwitch from './RangeSwitch.vue'
 import SectionHeading from './SectionHeading.vue'
 import StatTile from './StatTile.vue'
+import { useHistory } from '../composables/useHistory.ts'
+import { chartRanges, summarize } from '../history.ts'
 import { formatMegabytes, primaryColor, withAlpha } from '../utils.ts'
 
 const props = defineProps<{
@@ -163,6 +180,59 @@ watch(() => props.tick, () => {
 			{ ...swapDataset, data: swapData },
 		],
 	}
+})
+
+const range = ref<'live' | HistoryRange>('live')
+const { data: history, failed: historyFailed } = useHistory(range)
+
+// The history stores memory in MB
+const TO_GIGABYTES = 1 / 1024
+
+const historyMaxGB = computed(() => Math.max(1, Math.ceil(Math.max(props.memTotal, hasSwap.value ? props.swapTotal : 0) / 1024)))
+
+const historyDatasets = computed((): HistoryDataset[] => {
+	const datasets: HistoryDataset[] = [{
+		label: ramDataset.label,
+		metric: 'memUsed',
+		scale: TO_GIGABYTES,
+		borderColor: ramDataset.borderColor,
+		backgroundColor: ramDataset.backgroundColor,
+		fill: true,
+	}]
+	if (history.value !== null && history.value.resolution > 300) {
+		datasets.push({
+			// TRANSLATORS: Chart legend entry for the highest RAM usage in each hour or day
+			label: t('serverinfo', 'Peak RAM usage'),
+			metric: 'memUsedMax',
+			scale: TO_GIGABYTES,
+			borderColor: primaryColor(),
+			dashed: true,
+		})
+	}
+	if (hasSwap.value) {
+		datasets.push({
+			label: swapDataset.label,
+			metric: 'swapUsed',
+			scale: TO_GIGABYTES,
+			borderColor: swapDataset.borderColor,
+			backgroundColor: swapDataset.backgroundColor,
+			fill: true,
+		})
+	}
+	return datasets
+})
+
+const historySummary = computed(() => {
+	const used = summarize(history.value?.series.memUsed ?? [])
+	const peak = summarize(history.value?.series.memUsedMax ?? [])
+	if (used === null || peak === null) {
+		return ''
+	}
+	// TRANSLATORS: Text below the memory history chart, e.g. "RAM used: average 3.20 GB, highest 5.10 GB"
+	return t('serverinfo', 'RAM used: average {average}, highest {peak}', {
+		average: formatMegabytes(used.average),
+		peak: formatMegabytes(peak.peak),
+	})
 })
 </script>
 
