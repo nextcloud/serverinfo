@@ -13,6 +13,9 @@ OC.L10N.register(
     "Details" : "Jikme-jiklikler",
     "Yes" : "Hawa",
     "No" : "Ýok",
+    "OK" : "OK",
+    "Error" : "ýalňyşlyk",
+    "None" : "Hiç",
     "Copy" : "Göçüriň"
 },
 "nplurals=2; plural=(n != 1);");

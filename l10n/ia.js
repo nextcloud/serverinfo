@@ -1,6 +1,7 @@
 OC.L10N.register(
     "serverinfo",
     {
+    "View" : "Vider",
     "System" : "Systema",
     "Unknown" : "Incognite",
     "Monitoring" : "Controlante",
@@ -31,6 +32,7 @@ OC.L10N.register(
     "Shares" : "Compartimentos",
     "Users:" : "Usatores:",
     "All" : "Tote",
+    "to" : "a",
     "Copied!" : "Copiate!",
     "Not supported!" : "Non supportate!",
     "Press ⌘-C to copy." : "Pulsa ⌘-C pro copiar.",

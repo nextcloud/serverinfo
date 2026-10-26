@@ -1,4 +1,5 @@
 { "translations": {
+    "View" : "Vider",
     "System" : "Systema",
     "Unknown" : "Incognite",
     "Monitoring" : "Controlante",
@@ -29,6 +30,7 @@
     "Shares" : "Compartimentos",
     "Users:" : "Usatores:",
     "All" : "Tote",
+    "to" : "a",
     "Copied!" : "Copiate!",
     "Not supported!" : "Non supportate!",
     "Press ⌘-C to copy." : "Pulsa ⌘-C pro copiar.",

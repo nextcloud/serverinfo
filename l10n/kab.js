@@ -1,6 +1,7 @@
 OC.L10N.register(
     "serverinfo",
     {
+    "View" : "Askan",
     "System" : "Anagraw",
     "Unknown" : "Arussin",
     "Background jobs" : "Imahilen n ugilal",
@@ -43,7 +44,12 @@ OC.L10N.register(
     "PHP" : "PHP",
     "Version" : "Lqem",
     "Temperature" : "Lḥamu",
+    "OK" : "Ih",
+    "None" : "Ula d yiwen",
+    "Security" : "Taɣellist",
     "All" : "Akk",
+    "Updates" : "Ileqman",
+    "to" : "ɣer",
     "Try again" : "Ɛreḍ tikkelt nniḍen.",
     "{duration} s" : "{duration} tsn",
     "Copied!" : "Yenɣel!",

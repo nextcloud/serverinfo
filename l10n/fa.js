@@ -1,6 +1,7 @@
 OC.L10N.register(
     "serverinfo",
     {
+    "View" : "مشاهده",
     "System" : "سیستم",
     "Database configuration" : "پیکربندی پایگاه داده",
     "Unknown" : "ناشناخته",
@@ -8,7 +9,6 @@ OC.L10N.register(
     "%1$d hours, %2$d minutes, %3$d seconds" : "%1$d ساعت، %2$d دقیقه، %3$d ثانیه",
     "Monitoring" : "نظارت",
     "Monitoring app with useful server information" : "برنامه نظارت با اطلاعات مفید سرور",
-    "Provides useful server information, such as CPU load, RAM usage, disk usage, number of users, etc." : "اطلاعات مفید سرور مانند بار CPU، مصرف RAM، مصرف دیسک، تعداد کاربران و غیره را ارائه می‌دهد.",
     "Active users" : "کاربران فعال",
     "Last hour" : "ساعت گذشته",
     "Last 24 Hours" : "۲۴ ساعت گذشته",
@@ -123,6 +123,8 @@ OC.L10N.register(
     "Uptime:" : "زمان فعالیت:",
     "Temperature" : "دما",
     "All" : "همه",
+    "Updates" : "به‌روزرسانی‌ها",
+    "to" : "به",
     "Try again" : "تلاش مجدد",
     "CPU Usage:" : "مصرف CPU:",
     "Load average: {percentage} % ({load}) last minute" : "میانگین بار: {percentage}% ({load}) در دقیقه گذشته",
@@ -136,6 +138,7 @@ OC.L10N.register(
     "Not supported!" : "پشتیبانی نمی‌شود!",
     "Press ⌘-C to copy." : "برای کپی، ⌘-C را فشار دهید.",
     "Press Ctrl-C to copy." : "برای کپی، Ctrl-C را فشار دهید.",
+    "Provides useful server information, such as CPU load, RAM usage, disk usage, number of users, etc." : "اطلاعات مفید سرور مانند بار CPU، مصرف RAM، مصرف دیسک، تعداد کاربران و غیره را ارائه می‌دهد.",
     "Memory:" : "حافظه:",
     "Files:" : "فایل‌ها:",
     "Storages:" : "ذخیره‌سازها:",

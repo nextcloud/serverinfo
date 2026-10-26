@@ -1,6 +1,7 @@
 OC.L10N.register(
     "serverinfo",
     {
+    "View" : "Veire",
     "Unknown" : "Desconegut",
     "Active users" : "Utilizaires actius",
     "Background jobs" : "Prètzfaches de rèireplan",
@@ -40,7 +41,14 @@ OC.L10N.register(
     "PHP" : "PHP",
     "Version" : "Version",
     "Shares" : "Partatges",
+    "Active" : "Activa",
+    "OK" : "OK",
+    "Error" : "Error",
+    "None" : "Cap",
+    "Security" : "Seguretat",
     "All" : "Tot",
+    "Updates" : "Mesas a jorn",
+    "to" : "a",
     "Copied!" : "Copiat !",
     "Not supported!" : "Pas pres en carga !",
     "Press ⌘-C to copy." : "Quichar ⌘-C per copiar.",
