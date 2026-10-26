@@ -1,6 +1,7 @@
 OC.L10N.register(
     "serverinfo",
     {
+    "View" : "Shiko",
     "System" : "Sistem",
     "Unknown" : "I panjohur",
     "Monitoring" : "Vëzhgim",
@@ -46,7 +47,14 @@ OC.L10N.register(
     "Shares" : "Shpërndarje",
     "Users:" : "Përdoruesit:",
     "Temperature" : "Temperatura",
+    "OK" : "OK",
+    "Error" : "Gabim",
+    "None" : "Asnjë",
+    "Security" : "Siguria",
     "All" : "Të gjithë",
+    "Other" : "Tjetër",
+    "Updates" : "Përditësime",
+    "to" : "te",
     "Try again" : "Provo përsëri",
     "Copied!" : "I kopjuar!",
     "Not supported!" : "Nuk mbështetet!",

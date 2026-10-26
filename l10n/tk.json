@@ -11,6 +11,9 @@
     "Details" : "Jikme-jiklikler",
     "Yes" : "Hawa",
     "No" : "Ýok",
+    "OK" : "OK",
+    "Error" : "ýalňyşlyk",
+    "None" : "Hiç",
     "Copy" : "Göçüriň"
 },"pluralForm" :"nplurals=2; plural=(n != 1);"
 }

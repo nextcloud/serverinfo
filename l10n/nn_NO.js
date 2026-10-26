@@ -1,6 +1,7 @@
 OC.L10N.register(
     "serverinfo",
     {
+    "View" : "Vis",
     "System" : "System",
     "Unknown" : "Ukjend",
     "Monitoring" : "Overvåker",
@@ -31,7 +32,12 @@ OC.L10N.register(
     "Upload max size:" : "Maks opplastning storleik:",
     "Shares" : "Delingar",
     "Users:" : "Brukarare:",
+    "OK" : "OK",
+    "Error" : "Feil",
+    "None" : "Ingen",
     "All" : "Alle",
+    "Other" : "Anna",
+    "to" : "til",
     "Copied!" : "Kopiert!",
     "Not supported!" : "Ikkje støtta!",
     "Press ⌘-C to copy." : "Trykk  ⌘-C for å kopiere.",

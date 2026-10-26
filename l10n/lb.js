@@ -1,6 +1,7 @@
 OC.L10N.register(
     "serverinfo",
     {
+    "View" : "Usiicht",
     "System" : "System",
     "Unknown" : "Onbekannt",
     "Never" : "Ni",
@@ -32,7 +33,12 @@ OC.L10N.register(
     "Unlimited" : "Onbegrenzt",
     "Version" : "Versioun",
     "Temperature" : "Temperatur",
+    "OK" : "OK",
+    "Error" : "Feeler",
+    "None" : "Keng",
     "All" : "All",
+    "Updates" : "Updates",
+    "to" : "bis",
     "Copied!" : "Kopéiert!",
     "Not supported!" : "Nët ennerstëtzt!",
     "Press ⌘-C to copy." : "Dréck ⌘-C fir ze kopéieren.",

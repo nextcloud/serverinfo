@@ -1,6 +1,7 @@
 OC.L10N.register(
     "serverinfo",
     {
+    "View" : "Ver",
     "System" : "Sistema",
     "Database configuration" : "Configuración da base de datos",
     "Unknown" : "Descoñecido",
@@ -8,7 +9,6 @@ OC.L10N.register(
     "%1$d hours, %2$d minutes, %3$d seconds" : "%1$d horas, %2$d minutos, %3$d segundos",
     "Monitoring" : "Seguimento",
     "Monitoring app with useful server information" : "Aplicación de seguimento con información útil do servidor",
-    "Provides useful server information, such as CPU load, RAM usage, disk usage, number of users, etc." : "Fornece información útil do servidor, como a carga da CPU, o uso da memoria RAM, o uso do disco, o número de usuarios, etc.",
     "Active users" : "Usuarios activos",
     "Last hour" : "Última hora",
     "Last 24 Hours" : "Últimas 24 horas",
@@ -125,6 +125,8 @@ OC.L10N.register(
     "Uptime:" : "Tempo de actividade:",
     "Temperature" : "Temperatura",
     "All" : "Todo",
+    "Updates" : "Actualizacións",
+    "to" : "ata",
     "Try again" : "Ténteo de novo",
     "CPU Usage:" : "Uso da CPU:",
     "Load average: {percentage} % ({load}) last minute" : "Carga media: {percentage} % ({load}) último minuto",
@@ -138,6 +140,7 @@ OC.L10N.register(
     "Not supported!" : "Non admitido!",
     "Press ⌘-C to copy." : "Prema ⌘-C para copiar.",
     "Press Ctrl-C to copy." : "Prema Ctrl-C para copiar.",
+    "Provides useful server information, such as CPU load, RAM usage, disk usage, number of users, etc." : "Fornece información útil do servidor, como a carga da CPU, o uso da memoria RAM, o uso do disco, o número de usuarios, etc.",
     "Memory:" : "Memoria:",
     "Files:" : "Ficheiros:",
     "Storages:" : "Almacenamentos:",
