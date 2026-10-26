@@ -16,7 +16,11 @@ OC.L10N.register(
     "Details" : "விவரங்கள்",
     "Yes" : "ஆம்",
     "No" : "இல்லை",
+    "OK" : "OK",
+    "Error" : "வழு",
+    "None" : "ஒன்றுமில்லை",
     "All" : "எல்லாம்",
+    "Other" : "மற்றவை",
     "Copy" : "Copy"
 },
 "nplurals=2; plural=(n != 1);");

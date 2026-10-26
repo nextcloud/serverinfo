@@ -39,6 +39,8 @@ OC.L10N.register(
     "Users:" : "Usuarios:",
     "Temperature" : "Temperatura",
     "All" : "Todos",
+    "Updates" : "Actualizaciones",
+    "to" : "para",
     "Try again" : "Reintentar",
     "Not supported!" : "¡No soportado!",
     "Press ⌘-C to copy." : "Presiona ⌘-C para copiar.",
