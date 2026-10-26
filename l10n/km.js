@@ -20,7 +20,11 @@ OC.L10N.register(
     "Unlimited" : "មិន​កំណត់",
     "Version" : "កំណែ",
     "Shares" : "ចែក​រំលែក",
+    "OK" : "OK",
+    "Error" : "កំហុស",
+    "None" : "គ្មាន",
     "All" : "ទាំងអស់",
+    "to" : "ទៅ",
     "Copied!" : "បានចម្លង",
     "Press ⌘-C to copy." : " ចុច ⌘-C ដើម្បីចម្លង",
     "Press Ctrl-C to copy." : "ចុច Ctrl-C ដើម្បីចម្លង"

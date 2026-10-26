@@ -16,6 +16,7 @@ OC.L10N.register(
     "Yes" : "Այո",
     "No" : "Ոչ",
     "Version" : "Տարբերակ",
+    "Updates" : "Թարմացումներ",
     "Copied!" : "Պատճենված է․",
     "Not supported!" : "Չի՛ սպասարկվում։",
     "Press ⌘-C to copy." : "Սեղմել ⌘-C պատճենելու համար։",

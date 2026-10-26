@@ -39,6 +39,8 @@ OC.L10N.register(
     "Users:" : "Usuarios:",
     "Temperature" : "Temperatura",
     "All" : "Todos",
+    "Updates" : "Actualizaciones",
+    "to" : "para",
     "Try again" : "Reintentar",
     "Copied!" : "¡Copiado!",
     "Not supported!" : "¡No soportado!",

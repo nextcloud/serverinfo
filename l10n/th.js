@@ -1,6 +1,7 @@
 OC.L10N.register(
     "serverinfo",
     {
+    "View" : "มุมมอง",
     "System" : "ระบบ",
     "Unknown" : "ไม่ทราบ",
     "Active users" : "ผู้ใช้ที่ใช้งานอยู่",
@@ -29,7 +30,14 @@ OC.L10N.register(
     "Unlimited" : "ไม่จำกัด",
     "Version" : "รุ่น",
     "Shares" : "การแชร์",
+    "OK" : "OK",
+    "Error" : "ข้อผิดพลาด",
+    "None" : "ไม่มี",
+    "Security" : "ความปลอดภัย",
     "All" : "ทั้งหมด",
+    "Other" : "อื่น ๆ",
+    "Updates" : "อัปเดต",
+    "to" : "ถึง",
     "Copied!" : "คัดลอกแล้ว!",
     "Not supported!" : "ไม่สนับสนุน",
     "Press ⌘-C to copy." : "กด ⌘-C เพื่อคัดลอก",
