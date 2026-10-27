@@ -96,6 +96,7 @@ OC.L10N.register(
     "Max listen queue:" : "Upeo wa foleni ya kusikiliza:",
     "Max active processes:" : "Upeo wa michakato inayotumika:",
     "Max children reached:" : "Idadi ya juu ya watoto imefikiwa:",
+    "Swap" : "Badilishana",
     "Shares" : "Shiriki",
     "Users:" : "Watumiaji:",
     "Groups:" : "Vikundi:",
