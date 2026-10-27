@@ -9,96 +9,155 @@ declare(strict_types=1);
 
 namespace OCA\ServerInfo\Tests;
 
+use OC\Memcache\ArrayCache;
 use OCA\ServerInfo\JobQueueInfo;
-use OCP\DB\IResult;
-use OCP\DB\QueryBuilder\IExpressionBuilder;
-use OCP\DB\QueryBuilder\IFunctionBuilder;
+use OCP\AppFramework\Utility\ITimeFactory;
 use OCP\DB\QueryBuilder\IQueryBuilder;
-use OCP\DB\QueryBuilder\IQueryFunction;
+use OCP\ICacheFactory;
 use OCP\IDBConnection;
+use OCP\Server;
+use OCP\Snowflake\ISnowflakeGenerator;
 use PHPUnit\Framework\MockObject\MockObject;
 
+/**
+ * Runs against core's real jobs table, which already holds the jobs of the
+ * test installation, so totals are compared before and after the fixtures.
+ *
+ * @group DB
+ */
 class JobQueueInfoTest extends \Test\TestCase {
-	private IDBConnection&MockObject $db;
-	private JobQueueInfo $instance;
+	public const CLASS_PREFIX = 'OCA\\ServerInfo\\Tests\\QueueFixture\\';
+
+	private IDBConnection $db;
+	private ITimeFactory&MockObject $timeFactory;
+	private ICacheFactory&MockObject $cacheFactory;
+	private int $now;
 
 	protected function setUp(): void {
 		parent::setUp();
 
-		$this->db = $this->createMock(IDBConnection::class);
-		$this->instance = new JobQueueInfo($this->db);
+		$this->db = Server::get(IDBConnection::class);
+		$this->now = time();
+		$this->timeFactory = $this->createMock(ITimeFactory::class);
+		$this->timeFactory->method('getTime')->willReturnCallback(fn (): int => $this->now);
+		$this->cacheFactory = $this->createMock(ICacheFactory::class);
+		$this->cacheFactory->method('createDistributed')->willReturnCallback(static fn (): ArrayCache => new ArrayCache(''));
+		self::removeFixtures($this->db);
 	}
 
-	private function makeQb(mixed $fetchOneReturn = null, array $fetchRows = []): IQueryBuilder&MockObject {
-		$expr = $this->createMock(IExpressionBuilder::class);
-		$expr->method('gt')->willReturn('1=1');
-		$expr->method('lt')->willReturn('1=1');
+	protected function tearDown(): void {
+		self::removeFixtures($this->db);
+		parent::tearDown();
+	}
 
-		$queryFunction = $this->createMock(IQueryFunction::class);
-		$func = $this->createMock(IFunctionBuilder::class);
-		$func->method('count')->willReturn($queryFunction);
-		$func->method('min')->willReturn($queryFunction);
+	public static function removeFixtures(IDBConnection $db): void {
+		$qb = $db->getQueryBuilder();
+		$qb->delete('jobs')
+			->where($qb->expr()->like('class', $qb->createNamedParameter($db->escapeLikeParameter(self::CLASS_PREFIX) . '%')));
+		$qb->executeStatement();
+	}
 
-		$result = $this->createMock(IResult::class);
-		if ($fetchOneReturn !== null) {
-			$result->method('fetchOne')->willReturn($fetchOneReturn);
+	/**
+	 * @return string the id of the new job
+	 */
+	public static function addFixture(IDBConnection $db, string $class, int $reservedAt = 0, int $lastRun = 0, int $lastChecked = 0): string {
+		$id = Server::get(ISnowflakeGenerator::class)->nextId();
+		$argument = json_encode($id);
+		$qb = $db->getQueryBuilder();
+		$qb->insert('jobs')
+			->values([
+				'id' => $qb->createNamedParameter($id),
+				'class' => $qb->createNamedParameter(self::CLASS_PREFIX . $class),
+				'argument' => $qb->createNamedParameter($argument),
+				'argument_hash' => $qb->createNamedParameter(hash('sha256', $argument)),
+				'last_run' => $qb->createNamedParameter($lastRun, IQueryBuilder::PARAM_INT),
+				'last_checked' => $qb->createNamedParameter($lastChecked, IQueryBuilder::PARAM_INT),
+				'reserved_at' => $qb->createNamedParameter($reservedAt, IQueryBuilder::PARAM_INT),
+			])
+			->executeStatement();
+
+		return $id;
+	}
+
+	private function info(): JobQueueInfo {
+		return new JobQueueInfo($this->db, $this->timeFactory, $this->cacheFactory);
+	}
+
+	public function testCountsTheQueue(): void {
+		$before = $this->info()->getJobQueueInfo();
+
+		self::addFixture($this->db, 'Idle', lastRun: 2);
+		self::addFixture($this->db, 'Idle');
+		self::addFixture($this->db, 'Running', reservedAt: $this->now - 60, lastRun: 1);
+		self::addFixture($this->db, 'Stuck', reservedAt: $this->now - JobQueueInfo::STUCK_THRESHOLD_SECONDS - 60);
+		$after = $this->info()->getJobQueueInfo();
+
+		$this->assertSame(4, $after['total'] - $before['total']);
+		$this->assertSame(2, $after['reserved'] - $before['reserved']);
+		$this->assertSame(1, $after['stuck'] - $before['stuck']);
+		// A job that never ran does not count as the oldest last run
+		$this->assertSame(1, $after['oldestLastRun']);
+	}
+
+	public function testAReservationAtTheThresholdIsNotStuckYet(): void {
+		$before = $this->info()->getJobQueueInfo();
+
+		self::addFixture($this->db, 'Stuck', reservedAt: $this->now - JobQueueInfo::STUCK_THRESHOLD_SECONDS);
+
+		$this->assertSame($before['stuck'], $this->info()->getJobQueueInfo()['stuck']);
+	}
+
+	public function testListsTheLargestClassesFirst(): void {
+		for ($i = 0; $i < 30; $i++) {
+			self::addFixture($this->db, 'Many');
 		}
-		if (!empty($fetchRows)) {
-			$result->method('fetch')->willReturnOnConsecutiveCalls(...$fetchRows);
-		}
+		self::addFixture($this->db, 'Few');
 
-		$qb = $this->createMock(IQueryBuilder::class);
-		$qb->method('select')->willReturnSelf();
-		$qb->method('selectAlias')->willReturnSelf();
-		$qb->method('from')->willReturnSelf();
-		$qb->method('where')->willReturnSelf();
-		$qb->method('andWhere')->willReturnSelf();
-		$qb->method('groupBy')->willReturnSelf();
-		$qb->method('orderBy')->willReturnSelf();
-		$qb->method('setMaxResults')->willReturnSelf();
-		$qb->method('expr')->willReturn($expr);
-		$qb->method('func')->willReturn($func);
-		$qb->method('createNamedParameter')->willReturnArgument(0);
-		$qb->method('executeQuery')->willReturn($result);
+		$top = $this->info()->getJobQueueInfo()['topClasses'];
 
-		return $qb;
+		$this->assertLessThanOrEqual(5, count($top));
+		$this->assertSame(['class' => self::CLASS_PREFIX . 'Many', 'count' => 30], $top[0]);
 	}
 
-	public function testGetJobQueueInfo(): void {
-		$this->db->method('getQueryBuilder')->willReturnOnConsecutiveCalls(
-			$this->makeQb(fetchOneReturn: '42'),   // countTotal
-			$this->makeQb(fetchOneReturn: '3'),    // countReserved
-			$this->makeQb(fetchOneReturn: '1'),    // countStuck
-			$this->makeQb(fetchOneReturn: '1700000000'), // oldestLastRun
-			$this->makeQb(fetchRows: [            // topClasses
-				['class' => 'OC\Files\BackgroundJob\ScanFiles', 'count' => '30'],
-				false,
-			]),
-		);
+	public function testListsReservedJobsLongestReservedFirst(): void {
+		$recent = self::addFixture($this->db, 'Running', reservedAt: 2_002, lastRun: 5);
+		$oldest = self::addFixture($this->db, 'Stuck', reservedAt: 1_001, lastRun: 4);
+		self::addFixture($this->db, 'Idle');
 
-		$info = $this->instance->getJobQueueInfo();
+		$reserved = array_values(array_filter(
+			$this->info()->getJobQueueInfo()['reservedJobs'],
+			static fn (array $job): bool => str_starts_with($job['class'], self::CLASS_PREFIX),
+		));
 
-		$this->assertSame(42, $info['total']);
-		$this->assertSame(3, $info['reserved']);
-		$this->assertSame(1, $info['stuck']);
-		$this->assertSame(1700000000, $info['oldestLastRun']);
-		$this->assertCount(1, $info['topClasses']);
-		$this->assertSame('OC\Files\BackgroundJob\ScanFiles', $info['topClasses'][0]['class']);
-		$this->assertSame(30, $info['topClasses'][0]['count']);
+		$this->assertSame([
+			['id' => $oldest, 'class' => self::CLASS_PREFIX . 'Stuck', 'reservedAt' => 1_001, 'lastRun' => 4],
+			['id' => $recent, 'class' => self::CLASS_PREFIX . 'Running', 'reservedAt' => 2_002, 'lastRun' => 5],
+		], $reserved);
 	}
 
-	public function testOldestLastRunReturnsZeroWhenNoJobs(): void {
-		$this->db->method('getQueryBuilder')->willReturnOnConsecutiveCalls(
-			$this->makeQb(fetchOneReturn: '0'),
-			$this->makeQb(fetchOneReturn: '0'),
-			$this->makeQb(fetchOneReturn: '0'),
-			$this->makeQb(fetchOneReturn: false),
-			$this->makeQb(fetchRows: [false]),
-		);
+	public function testCachesUntilInvalidated(): void {
+		$info = $this->info();
+		$before = $info->getJobQueueInfo();
 
-		$info = $this->instance->getJobQueueInfo();
+		self::addFixture($this->db, 'Idle');
+		$this->assertSame($before, $info->getJobQueueInfo());
 
-		$this->assertSame(0, $info['oldestLastRun']);
-		$this->assertSame([], $info['topClasses']);
+		$info->invalidate();
+		$this->assertSame($before['total'] + 1, $info->getJobQueueInfo()['total']);
+	}
+
+	public function testFindsTheJobOfClassesWithOnlyOne(): void {
+		$sole = self::addFixture($this->db, 'Sole');
+		self::addFixture($this->db, 'Twice');
+		self::addFixture($this->db, 'Twice');
+
+		$ids = $this->info()->soleJobIds([
+			self::CLASS_PREFIX . 'Sole',
+			self::CLASS_PREFIX . 'Twice',
+			self::CLASS_PREFIX . 'Gone',
+		]);
+
+		$this->assertSame([self::CLASS_PREFIX . 'Sole' => $sole], $ids);
+		$this->assertSame([], $this->info()->soleJobIds([]));
 	}
 }

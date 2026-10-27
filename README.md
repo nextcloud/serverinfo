@@ -136,6 +136,35 @@ as far as open_basedir lets it check, one written before the last reboot or
 on another host, one older than 26 hours, and one dated more than five
 minutes in the future (a clock problem).
 
+## Background jobs
+
+The **Background jobs** page shows how background jobs run: the cron mode and
+its last run, the queue (queued jobs, jobs reserved now, jobs stuck for more
+than 12 hours, how long ago the queued job that waited longest last ran), the
+jobs cron has reserved, failed and crashed runs grouped by job with their
+count and latest failure, the latest runs, the job kinds with the most queued
+jobs and the slowest jobs. The queue is read from the `jobs` table only while
+the page is shown, and is cached for a minute.
+
+Admins can act on a single job. Both actions ask for the password, are limited
+to 20 per user in 10 minutes and are logged at info level with the admin, the
+job id and its class. Neither runs job code in the web request; cron runs the
+job.
+
+- **Release reservation**, on a job reserved for more than 12 hours: clears
+  the reservation, as `IJobList::unlockJob()` does, and keeps the last run, so
+  a timed job keeps its schedule. Cron already ignores a reservation that old
+  and takes the job again, so this clears the leftover reservation, which
+  otherwise counts as a running job.
+- **Run at next cron**, on a stuck job, or on a failing job when its class has
+  exactly one job queued: clears the last run and the reservation, as
+  `IJobList::resetBackgroundJob()` does, and puts the job first in line, so the
+  next cron run starts it. A job reserved within the last 12 hours may be
+  running and is left alone. Outside a configured `maintenance_window_start`,
+  cron runs only time-sensitive jobs, so other jobs wait for the window.
+
+Removing jobs is left to `occ background-job:delete`.
+
 ## API
 
 The API provides a lot of information about a running Nextcloud

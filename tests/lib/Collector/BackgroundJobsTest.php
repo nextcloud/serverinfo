@@ -20,6 +20,7 @@ use OCP\DB\QueryBuilder\IQueryBuilder;
 use OCP\IAppConfig;
 use OCP\IConfig;
 use OCP\IDBConnection;
+use OCP\Snowflake\ISnowflakeDecoder;
 use PHPUnit\Framework\MockObject\MockObject;
 use Psr\Log\LoggerInterface;
 
@@ -41,7 +42,7 @@ class BackgroundJobsTest extends \Test\TestCase {
 		$this->appConfig->method('getValueArray')->willReturn([]);
 		$this->connection = $this->createMock(IDBConnection::class);
 		$this->logger = $this->createMock(LoggerInterface::class);
-		$this->instance = new BackgroundJobs($this->jobRuns, $this->config, $this->appConfig, $this->connection, $this->logger);
+		$this->instance = new BackgroundJobs($this->jobRuns, $this->config, $this->appConfig, $this->connection, $this->createMock(ISnowflakeDecoder::class), $this->logger);
 	}
 
 	private function jobRun(int $runId, JobStatus $status = JobStatus::SUCCEEDED): JobRun {
@@ -76,7 +77,6 @@ class BackgroundJobsTest extends \Test\TestCase {
 			'duration' => 1234,
 			'memoryPeak' => 5678,
 		]], $data['recent']);
-		$this->assertSame($data['recent'], $data['failures']);
 	}
 
 	public function testReportsTheRetentionWindow(): void {
@@ -91,12 +91,12 @@ class BackgroundJobsTest extends \Test\TestCase {
 			->with('background_jobs_expiration_days', 60)
 			->willReturn(14);
 
-		$instance = new BackgroundJobs($this->jobRuns, $config, $this->appConfig, $this->connection, $this->logger);
+		$instance = new BackgroundJobs($this->jobRuns, $config, $this->appConfig, $this->connection, $this->createMock(ISnowflakeDecoder::class), $this->logger);
 
 		$this->assertSame(14, $instance->get()['retentionDays']);
 	}
 
-	public function testQueriesFailuresSeparately(): void {
+	public function testListsTheLatestRunsOfAnyStatus(): void {
 		$calls = [];
 		$this->jobRuns->method('completedJobs')->willReturnCallback(
 			function (array $statuses = [], array $classes = [], int $limit = 200) use (&$calls) {
@@ -109,10 +109,7 @@ class BackgroundJobsTest extends \Test\TestCase {
 
 		$this->instance->get();
 
-		$this->assertSame([
-			[[], 10],
-			[[JobStatus::FAILED, JobStatus::CRASHED], 10],
-		], $calls);
+		$this->assertSame([[[], 10]], $calls);
 	}
 
 	public function testEmptyResultIsAnEmptyList(): void {
@@ -122,7 +119,7 @@ class BackgroundJobsTest extends \Test\TestCase {
 			})(),
 		);
 
-		$this->assertSame(['recent' => [], 'failures' => [], 'slowest' => [], 'retentionDays' => 60], $this->instance->get());
+		$this->assertSame(['recent' => [], 'slowest' => [], 'retentionDays' => 60], $this->instance->get());
 	}
 
 	public function testUnresolvableJobClassKeepsEarlierRuns(): void {
@@ -134,7 +131,7 @@ class BackgroundJobsTest extends \Test\TestCase {
 				throw new \InvalidArgumentException('Unknown job class id');
 			})(),
 		);
-		$this->logger->expects($this->exactly(2))->method('warning');
+		$this->logger->expects($this->once())->method('warning');
 
 		$data = $this->instance->get();
 
@@ -219,6 +216,6 @@ class BackgroundJobsTest extends \Test\TestCase {
 			})(),
 		);
 
-		$this->assertSame(['recent' => [], 'failures' => [], 'slowest' => [], 'retentionDays' => 60], $this->instance->get());
+		$this->assertSame(['recent' => [], 'slowest' => [], 'retentionDays' => 60], $this->instance->get());
 	}
 }

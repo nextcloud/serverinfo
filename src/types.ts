@@ -123,12 +123,52 @@ export interface PeriodicData {
 	}
 	backgroundJobs: {
 		recent: JobRun[]
-		failures: JobRun[]
 		/** Empty until the collecting job has run once */
 		slowest: SlowJob[]
 		/** Runs older than this are pruned, bounding what "no failures" means */
 		retentionDays: number
 	}
+}
+
+/** A job that holds a reservation in the queue */
+export interface ReservedJob {
+	/** Snowflake id, kept as a string because it exceeds what a JavaScript number holds exactly */
+	id: string
+	class: string
+	/** Unix timestamp on the server clock */
+	reservedAt: number
+	/** Unix timestamp on the server clock, 0 if the job never ran */
+	lastRun: number
+}
+
+/** One job class with failed or crashed runs in the retained history */
+export interface FailedJobClass {
+	className: string
+	failures: number
+	/** Unix timestamp on the server clock */
+	lastFailedAt: number
+	/** The class's job, when exactly one is queued */
+	jobId: string | null
+}
+
+/** Payload of /jobs, read while the Background jobs tab is shown */
+export interface JobQueue {
+	/** Server clock */
+	now: number
+	/** Seconds after which a reservation counts as stuck */
+	stuckAfter: number
+	queue: {
+		total: number
+		reserved: number
+		stuck: number
+		/** Unix timestamp on the server clock, 0 if no queued job has run */
+		oldestLastRun: number
+		topClasses: { class: string, count: number }[]
+		/** Longest reserved first, at most 20 */
+		reservedJobs: ReservedJob[]
+	}
+	/** Most recent failure first, at most 20 classes */
+	failures: FailedJobClass[]
 }
 
 export type OsLevel = 'ok' | 'info' | 'warning' | 'error' | 'unknown'

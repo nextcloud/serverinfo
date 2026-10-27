@@ -36,7 +36,8 @@
 		<DatabaseView v-show="view === 'database'" :active="view === 'database'" />
 		<BackgroundJobsView
 			v-show="view === 'background-jobs'"
-			:periodicData="periodicData" />
+			:periodicData="periodicData"
+			:active="view === 'background-jobs'" />
 		<OsView v-show="view === 'os'" :active="view === 'os'" />
 	</div>
 </template>

@@ -100,8 +100,8 @@ function detailsLabel(run: JobRun): string {
 </script>
 
 <style scoped>
-/* Fixed layout so the failures and latest runs tables line up column for column
-   despite holding different rows. */
+/* Fixed layout so that the columns do not shift with every poll, and
+   SlowJobsTable can line up with them. */
 table {
 	table-layout: fixed;
 }
@@ -122,7 +122,7 @@ table {
 	width: 110px;
 }
 
-/* A normal-size button would set a 44px row height across three tables */
+/* A normal-size button would set a 44px row height */
 .info-cell {
 	width: 44px;
 	padding: 0;

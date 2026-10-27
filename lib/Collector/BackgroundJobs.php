@@ -18,6 +18,7 @@ use OCP\DB\QueryBuilder\IQueryBuilder;
 use OCP\IAppConfig;
 use OCP\IConfig;
 use OCP\IDBConnection;
+use OCP\Snowflake\ISnowflakeDecoder;
 use Psr\Log\LoggerInterface;
 
 /**
@@ -38,27 +39,30 @@ use Psr\Log\LoggerInterface;
  *     maxDuration: int,
  *     memoryPeak: int
  * }
+ * @psalm-type ServerInfoFailedJob = array{
+ *     className: string,
+ *     failures: int,
+ *     lastFailedAt: int
+ * }
  */
 class BackgroundJobs {
 	private const LIMIT = 10;
 	private const SLOWEST_LIMIT = 5;
+	private const FAILED_CLASSES_LIMIT = 20;
 
 	public function __construct(
 		private IJobRuns $jobRuns,
 		private IConfig $config,
 		private IAppConfig $appConfig,
 		private IDBConnection $connection,
+		private ISnowflakeDecoder $snowflakeDecoder,
 		private LoggerInterface $logger,
 	) {
 	}
 
 	/**
-	 * Failures are queried separately: completedJobs() is ordered by run id, so on
-	 * a busy instance a failure scrolls out of the newest rows within seconds.
-	 *
 	 * @return array{
 	 *     recent: list<ServerInfoJobRun>,
-	 *     failures: list<ServerInfoJobRun>,
 	 *     slowest: list<ServerInfoSlowJob>,
 	 *     retentionDays: int
 	 * }
@@ -69,12 +73,48 @@ class BackgroundJobs {
 
 		return [
 			'recent' => $this->collect($this->jobRuns->completedJobs(limit: self::LIMIT)),
-			'failures' => $this->collect(
-				$this->jobRuns->completedJobs([JobStatus::FAILED, JobStatus::CRASHED], limit: self::LIMIT),
-			),
 			'slowest' => $slowest,
 			'retentionDays' => $this->config->getSystemValueInt('background_jobs_expiration_days', 60),
 		];
+	}
+
+	/**
+	 * Failed and crashed runs per job class, most recent failure first.
+	 *
+	 * Grouped rather than listed: one job failing every five minutes would
+	 * otherwise push every other failure out of view. The status index keeps
+	 * this to the failed rows.
+	 *
+	 * @return list<ServerInfoFailedJob>
+	 */
+	public function failuresByClass(): array {
+		$query = $this->connection->getQueryBuilder();
+		$query->select('c.class_name')
+			->selectAlias($query->func()->count(), 'failures')
+			// Run ids are snowflakes, so the highest is the latest
+			->selectAlias($query->func()->max('r.run_id'), 'last_run_id')
+			->from('job_runs', 'r')
+			->innerJoin('r', 'job_classes_registry', 'c', $query->expr()->eq('r.class_id', 'c.class_id'))
+			->where($query->expr()->in('r.status', $query->createNamedParameter(
+				[JobStatus::FAILED->value, JobStatus::CRASHED->value],
+				IQueryBuilder::PARAM_INT_ARRAY,
+			)))
+			->groupBy('r.class_id', 'c.class_name');
+
+		$result = $query->executeQuery();
+		$failed = [];
+		while ($row = $result->fetch()) {
+			$failed[] = [
+				'className' => (string)$row['class_name'],
+				'failures' => (int)$row['failures'],
+				'lastFailedAt' => $this->snowflakeDecoder->decode((string)$row['last_run_id'])->getCreatedAt()->getTimestamp(),
+			];
+		}
+		$result->closeCursor();
+
+		usort($failed, static fn (array $a, array $b): int => $b['lastFailedAt'] <=> $a['lastFailedAt']);
+
+		return array_slice($failed, 0, self::FAILED_CLASSES_LIMIT);
 	}
 
 	/**
