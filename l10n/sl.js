@@ -87,6 +87,7 @@ OC.L10N.register(
     "Extensions:" : "Razširitve:",
     "Show phpinfo" : "Pokaži odvod ukaza phpinfo",
     "CPU" : "CPE",
+    "Swap" : "Zamenjaj",
     "Shares" : "Souporaba",
     "Users:" : "Uporabniki:",
     "Groups:" : "Skupine:",

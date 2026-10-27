@@ -95,6 +95,7 @@ OC.L10N.register(
     "Active processes:" : "活跃进程：",
     "Idle processes:" : "空闲进程：",
     "CPU" : "CPU",
+    "Swap" : "交换",
     "Shares" : "共享",
     "Users:" : "用户：",
     "Groups:" : "组别：",
