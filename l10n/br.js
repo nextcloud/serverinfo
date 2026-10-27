@@ -1,6 +1,7 @@
 OC.L10N.register(
     "serverinfo",
     {
+    "View" : "Gwell",
     "System" : "Sistem",
     "Unknown" : "Dianv",
     "Background jobs" : "Labour en a-dreñv",
@@ -30,7 +31,13 @@ OC.L10N.register(
     "PHP" : "PHP",
     "Version" : "Stumm",
     "Shares" : "Rannañ",
+    "Active" : "O labourat",
+    "OK" : "OK",
+    "Error" : "Fazi",
+    "None" : "Hini ebet",
+    "Security" : "Surentez",
     "All" : "Pep tra",
+    "Updates" : "Adnevesadennoù",
     "Copied!" : "Eilet eo !",
     "Not supported!" : "Diembreget eo ! ",
     "Press ⌘-C to copy." : "Pouezañ war ⌘+C evit eilañ. ",

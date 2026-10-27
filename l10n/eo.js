@@ -1,6 +1,7 @@
 OC.L10N.register(
     "serverinfo",
     {
+    "View" : "Vidi",
     "System" : "Sistemo",
     "Unknown" : "Nekonata",
     "Monitoring" : "Observado",
@@ -53,7 +54,14 @@ OC.L10N.register(
     "Shares" : "Kunhavoj",
     "Users:" : "Uzantoj:",
     "Temperature" : "Temperaturo",
+    "OK" : "OK",
+    "Error" : "Eraro",
+    "None" : "Nenio",
+    "Security" : "Sekurigo",
     "All" : "Ĉiuj",
+    "Other" : "Alia",
+    "Updates" : "Ĝisdatigoj",
+    "to" : "al",
     "Copied!" : "Kopiita!",
     "Not supported!" : "Ne subtenite!",
     "Press ⌘-C to copy." : "Premu ⌘-C por kopii.",

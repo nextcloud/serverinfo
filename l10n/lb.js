@@ -37,6 +37,7 @@ OC.L10N.register(
     "Error" : "Feeler",
     "None" : "Keng",
     "All" : "All",
+    "Other" : "Aner",
     "Updates" : "Updates",
     "to" : "bis",
     "Copied!" : "Kopéiert!",

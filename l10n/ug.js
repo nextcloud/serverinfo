@@ -98,6 +98,7 @@ OC.L10N.register(
     "Max listen queue:" : "ئەڭ چوڭ ئاڭلاش ئۆچرېتى:",
     "Max active processes:" : "ئەڭ چوڭ ئاكتىپ جەريانلار:",
     "Max children reached:" : "ئەڭ چوڭ تارماقلارغا يەتكىنى:",
+    "Swap" : "ئالماشتۇرۇش",
     "Resource usage" : "بايلىق ئىشلىتىش",
     "Shares" : "ھەمبەھىرلەر",
     "Users:" : "ئىشلەتكۈچىلەر:",
