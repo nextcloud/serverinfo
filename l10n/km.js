@@ -24,6 +24,7 @@ OC.L10N.register(
     "Error" : "កំហុស",
     "None" : "គ្មាន",
     "All" : "ទាំងអស់",
+    "Other" : "ផ្សេងៗ",
     "to" : "ទៅ",
     "Copied!" : "បានចម្លង",
     "Press ⌘-C to copy." : " ចុច ⌘-C ដើម្បីចម្លង",

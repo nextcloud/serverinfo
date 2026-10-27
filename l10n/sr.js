@@ -106,6 +106,7 @@ OC.L10N.register(
     "Max active processes:" : "Максимално активних процеса:",
     "Max children reached:" : "Достигнуто максимално деце:",
     "CPU" : "Процесор",
+    "Swap" : "Замени",
     "Resource usage" : "Употреба ресурса",
     "Shares" : "Дељења",
     "Users:" : "Корисника:",

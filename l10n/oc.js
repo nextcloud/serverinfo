@@ -43,6 +43,7 @@ OC.L10N.register(
     "Shares" : "Partatges",
     "Active" : "Activa",
     "OK" : "OK",
+    "Information" : "Informacions",
     "Error" : "Error",
     "None" : "Cap",
     "Security" : "Seguretat",

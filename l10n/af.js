@@ -1,6 +1,7 @@
 OC.L10N.register(
     "serverinfo",
     {
+    "View" : "Bekyk",
     "System" : "Stelsel",
     "Active users" : "Aktiewe gebruikers",
     "Current usage" : "Huidige gebruik",
@@ -26,7 +27,14 @@ OC.L10N.register(
     "Version" : "Weergawe",
     "Users:" : "Gebruikers:",
     "Temperature" : "Temperatuur",
+    "Active" : "Aktief",
+    "OK" : "OK",
+    "None" : "Geen",
+    "Security" : "Sekuriteit",
     "All" : "Alle",
+    "Other" : "Ander",
+    "Updates" : "Bywerkings",
+    "to" : "aan",
     "Copied!" : "Gekopieer!",
     "Not supported!" : "Word nie ondersteun nie!",
     "Press ⌘-C to copy." : "Druk ⌘-C om te kopieer.",

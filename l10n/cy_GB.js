@@ -1,6 +1,7 @@
 OC.L10N.register(
     "serverinfo",
     {
+    "View" : "Golwg",
     "System" : "System",
     "Unknown" : "Anhysbys",
     "Monitoring" : "Monitro",
@@ -24,7 +25,13 @@ OC.L10N.register(
     "PHP extensions" : "Estyniadau PHP",
     "PHP" : "PHP",
     "Version" : "Fersiwn",
+    "OK" : "OK",
+    "Error" : "Gwall",
+    "None" : "Dim",
+    "Security" : "Diogelwch",
     "All" : "Popeth",
+    "Other" : "Arall",
+    "to" : "at",
     "Copied!" : "Wedi'i gopïo!",
     "Not supported!" : "Heb ei gefnogi!",
     "Press ⌘-C to copy." : "Pwyswch ⌘-C i gopïo.",
