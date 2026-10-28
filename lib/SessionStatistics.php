@@ -31,6 +31,18 @@ class SessionStatistics {
 	private const OFFSET_6MONTHS = 15552000;
 	private const OFFSET_1YEAR = 31536000;
 
+	/** Seconds per reported window, keyed by the output key. */
+	private const WINDOWS = [
+		'last5minutes' => self::OFFSET_5MIN,
+		'last1hour' => self::OFFSET_1HOUR,
+		'last24hours' => self::OFFSET_1DAY,
+		'last7days' => self::OFFSET_7DAYS,
+		'last1month' => self::OFFSET_1MONTH,
+		'last3months' => self::OFFSET_3MONTHS,
+		'last6months' => self::OFFSET_6MONTHS,
+		'lastyear' => self::OFFSET_1YEAR,
+	];
+
 	private IDBConnection $connection;
 	private ITimeFactory $timeFactory;
 
@@ -39,40 +51,40 @@ class SessionStatistics {
 		$this->timeFactory = $timeFactory;
 	}
 
-	public function getSessionStatistics(): array {
-		return [
-			'last5minutes' => $this->getNumberOfActiveUsers(self::OFFSET_5MIN),
-			'last1hour' => $this->getNumberOfActiveUsers(self::OFFSET_1HOUR),
-			'last24hours' => $this->getNumberOfActiveUsers(self::OFFSET_1DAY),
-			'last7days' => $this->getNumberOfActiveUsers(self::OFFSET_7DAYS),
-			'last1month' => $this->getNumberOfActiveUsers(self::OFFSET_1MONTH),
-			'last3months' => $this->getNumberOfActiveUsers(self::OFFSET_3MONTHS),
-			'last6months' => $this->getNumberOfActiveUsers(self::OFFSET_6MONTHS),
-			'lastyear' => $this->getNumberOfActiveUsers(self::OFFSET_1YEAR),
-		];
-	}
-
 	/**
-	 * get number of active user in a given time span
+	 * Count the users whose last login falls into each window, in one pass
+	 * over the lastLogin rows.
 	 *
-	 * @param int $offset seconds
+	 * @return array<string, int>
 	 */
-	private function getNumberOfActiveUsers(int $offset): int {
+	public function getSessionStatistics(): array {
+		$now = $this->timeFactory->getTime();
 		$queryBuilder = $this->connection->getQueryBuilder();
-		$queryBuilder->select($queryBuilder->func()->count('userid'))
-			->from('preferences')
-			->where($queryBuilder->expr()->eq('appid', $queryBuilder->createNamedParameter('login')))
-			->andWhere($queryBuilder->expr()->eq('configkey', $queryBuilder->createNamedParameter('lastLogin')))
-			->andwhere($queryBuilder->expr()->gte(
-				$queryBuilder->expr()->castColumn('configvalue', IQueryBuilder::PARAM_INT),
-				$queryBuilder->createNamedParameter($this->timeFactory->getTime() - $offset, IQueryBuilder::PARAM_INT),
+		$lastLogin = $queryBuilder->expr()->castColumn('configvalue', IQueryBuilder::PARAM_INT);
+		foreach (self::WINDOWS as $key => $offset) {
+			$isActive = $queryBuilder->expr()->gte(
+				$lastLogin,
+				$queryBuilder->createNamedParameter($now - $offset, IQueryBuilder::PARAM_INT),
 				IQueryBuilder::PARAM_INT,
-			));
+			);
+			$queryBuilder->selectAlias(
+				$queryBuilder->func()->sum($queryBuilder->createFunction('CASE WHEN ' . $isActive . ' THEN 1 ELSE 0 END')),
+				$key,
+			);
+		}
+		$queryBuilder->from('preferences')
+			->where($queryBuilder->expr()->eq('appid', $queryBuilder->createNamedParameter('login')))
+			->andWhere($queryBuilder->expr()->eq('configkey', $queryBuilder->createNamedParameter('lastLogin')));
 
 		$result = $queryBuilder->executeQuery();
-		$activeUsers = (int)$result->fetchOne();
+		$row = $result->fetch() ?: [];
 		$result->closeCursor();
 
-		return $activeUsers;
+		// SUM over no rows is NULL
+		$statistics = [];
+		foreach (array_keys(self::WINDOWS) as $key) {
+			$statistics[$key] = (int)($row[$key] ?? 0);
+		}
+		return $statistics;
 	}
 }
