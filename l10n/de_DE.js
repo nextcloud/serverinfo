@@ -428,7 +428,7 @@ OC.L10N.register(
     "\"Check now\" needs background jobs to run from system cron. Until then, run \"occ serverinfo:os-status --refresh\" on the server." : "\"Jetzt prüfen\" erfordert Hintergrundprozesse, die über einen System-Cronjob ausgeführt werden. Bis dahin auf dem Server den Befehl \"occ serverinfo:os-status --refresh\" ausführen.",
     "The operating system was checked several times in the last minutes. Try again a little later." : "Das Betriebssystem wurde in den letzten Minuten mehrmals überprüft. Versuchen Sie es etwas später noch einmal.",
     "The check has not finished yet. Check that the background jobs run, then reload this page." : "Die Überprüfung ist noch nicht abgeschlossen. Sicherstellen, dass die Hintergrundprozesse laufen, und dann diese Seite neuladen.",
-    "The check failed. The Nextcloud log has the details." : "Die Überprüfung ist fehlgeschlagen. Details dazu finden sich im Nextcloud-Protokoll.",
+    "The check failed. The Nextcloud log has the details." : "Überprüfung ist fehlgeschlagen. Details dazu finden sich im Nextcloud-Protokoll.",
     "_%n diagnostic message_::_%n diagnostic messages_" : ["%nDiagnosemeldung","%n Diagnosemeldungen"],
     "The server information could not be loaded." : "Die Serverinformationen konnten nicht geladen werden.",
     "These values stopped updating at {time}: the server is not responding." : "Die Aktualisierung dieser Werte wurde um {time} unterbrochen: Der Server reagiert nicht.",
