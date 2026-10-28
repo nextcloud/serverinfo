@@ -45,15 +45,21 @@ import SectionHeading from './SectionHeading.vue'
 const props = defineProps<{
 	activeUsers: { last1hour: number, last24hours: number, last7days: number, last1month: number, total: number }
 	numUsers: number
+	subscriptionUsers: number | null
 }>()
 
 /**
- * Format the active-user count as its share of all users, e.g. "3% of all users".
+ * Format the active-user count as its share of the subscription quota when one is known,
+ * otherwise of all users, e.g. "3% of all users".
  *
  * @param count number of active users in the period
  */
 function percentageOfAllUsers(count: number): string {
-	const percentage = props.numUsers === 0 ? 0 : Math.round(count * 1000 / props.numUsers) / 10
+	const total = props.subscriptionUsers ?? props.numUsers
+	const percentage = total === 0 ? 0 : Math.round(count * 1000 / total) / 10
+	if (props.subscriptionUsers !== null) {
+		return t('serverinfo', '{0}% of your subscription quota', [String(percentage)])
+	}
 	return t('serverinfo', '{0}% of all users', [String(percentage)])
 }
 </script>
