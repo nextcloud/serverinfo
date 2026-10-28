@@ -27,6 +27,11 @@
 					<span class="info">{{ activeUsers.last1month }}</span><br>
 					<em>{{ percentageOfAllUsers(activeUsers.last1month) }}</em>
 				</div>
+				<div class="active-users-box">
+					{{ t('serverinfo', 'Logged in at least once') }}<br>
+					<span class="info">{{ activeUsers.total }}</span><br>
+					<em>{{ percentageOfAllUsers(activeUsers.total) }}</em>
+				</div>
 			</div>
 		</div>
 	</div>
@@ -38,7 +43,7 @@ import AccountGroup from 'vue-material-design-icons/AccountGroup.vue'
 import SectionHeading from './SectionHeading.vue'
 
 const props = defineProps<{
-	activeUsers: { last1hour: number, last24hours: number, last7days: number, last1month: number }
+	activeUsers: { last1hour: number, last24hours: number, last7days: number, last1month: number, total: number }
 	numUsers: number
 }>()
 
