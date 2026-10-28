@@ -51,6 +51,7 @@ export interface StaticData {
 	fpm: Record<string, string | number> | false
 	database: { type: string, version: string, size: number }
 	activeUsers: { last1hour: number, last24hours: number, last7days: number, last1month: number, total: number }
+	subscriptionUsers: number | null
 	freeSpace: number | null
 	memTotal: number
 	phpinfo: boolean
