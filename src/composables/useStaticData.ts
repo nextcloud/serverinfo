@@ -50,7 +50,7 @@ export interface StaticData {
 	opcache: OpcacheStatus
 	fpm: Record<string, string | number> | false
 	database: { type: string, version: string, size: number }
-	activeUsers: { last1hour: number, last24hours: number, last7days: number, last1month: number }
+	activeUsers: { last1hour: number, last24hours: number, last7days: number, last1month: number, total: number }
 	freeSpace: number | null
 	memTotal: number
 	phpinfo: boolean
