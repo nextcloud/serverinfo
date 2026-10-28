@@ -330,4 +330,26 @@ class Apt implements IPackageManager {
 	public function getPackageDatabasePath(): ?string {
 		return self::DPKG_STATUS;
 	}
+
+	/**
+	 * dpkg rewrites its status file, which also records holds, on every
+	 * change, and apt update moves each changed list into the lists
+	 * directory. Sources, pinning and apt's configuration choose among them.
+	 */
+	#[\Override]
+	public function getUpdateInputs(): ?array {
+		return [
+			self::DPKG_STATUS,
+			'/var/lib/dpkg/updates',
+			self::LISTS,
+			'/etc/apt/sources.list',
+			'/etc/apt/sources.list.d',
+			'/etc/apt/sources.list.d/*',
+			'/etc/apt/preferences',
+			'/etc/apt/preferences.d',
+			'/etc/apt/preferences.d/*',
+			'/etc/apt/apt.conf.d',
+			'/etc/apt/apt.conf.d/*',
+		];
+	}
 }

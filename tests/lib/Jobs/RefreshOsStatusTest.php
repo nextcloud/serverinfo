@@ -32,7 +32,7 @@ class RefreshOsStatusTest extends \Test\TestCase {
 		$appConfig = $this->createMock(IAppConfig::class);
 		$appConfig->method('getValueString')->with('core', 'backgroundjobs_mode', 'ajax')->willReturn($mode);
 		$collector = $this->createMock(OsStatusCollector::class);
-		$collector->expects($this->exactly($collections))->method('collectAndStore')->willReturn($result);
+		$collector->expects($this->exactly($collections))->method('collectAndStore')->with(false)->willReturn($result);
 		$notifications = $this->createMock(OsNotificationSender::class);
 		$notifications->expects($this->exactly($syncs))->method('sync');
 

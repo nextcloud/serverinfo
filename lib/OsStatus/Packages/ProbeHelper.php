@@ -15,6 +15,9 @@ use OCA\ServerInfo\OsStatus\Host\IHost;
  * Small pieces the package managers share.
  */
 final class ProbeHelper {
+	/** Files a fingerprint checks at most, to keep it a handful of stat calls */
+	private const MAX_FINGERPRINT_PATHS = 512;
+
 	/**
 	 * The newest modification time among the files matching the patterns;
 	 * a pattern without a wildcard names a single file.
@@ -33,6 +36,43 @@ final class ProbeHelper {
 		}
 
 		return $newest;
+	}
+
+	/**
+	 * The modification time of every path, and of every file a glob pattern
+	 * matches, so that comparing two fingerprints tells whether anything was
+	 * written, added or removed. A path that does not exist counts as 0 when
+	 * its directory can be seen.
+	 *
+	 * @param list<string> $paths
+	 * @return array<string, int>|null null when any path cannot be checked,
+	 *                                 or a pattern matches too many files
+	 */
+	public static function fingerprint(IHost $host, array $paths): ?array {
+		$fingerprint = [];
+		foreach ($paths as $path) {
+			if (str_contains($path, '*')) {
+				$matches = $host->glob($path);
+				if (count($fingerprint) + count($matches) > self::MAX_FINGERPRINT_PATHS) {
+					return null;
+				}
+			} else {
+				$matches = [$path];
+			}
+
+			foreach ($matches as $file) {
+				$time = $host->modifiedAt($file);
+				if ($time === null) {
+					if ($host->fileExists($file) || $host->modifiedAt(dirname($file)) === null) {
+						return null;
+					}
+					$time = 0;
+				}
+				$fingerprint[$file] = $time;
+			}
+		}
+
+		return $fingerprint;
 	}
 
 	/**

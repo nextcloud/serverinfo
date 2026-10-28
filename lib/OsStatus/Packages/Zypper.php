@@ -461,4 +461,29 @@ class Zypper implements IPackageManager, IReportsDiagnostics {
 	public function getPackageDatabasePath(): ?string {
 		return $this->rpm->getDatabasePath();
 	}
+
+	/**
+	 * The RPM database, the solv cache that zypper reads with --no-refresh,
+	 * the repositories and the package locks.
+	 */
+	#[\Override]
+	public function getUpdateInputs(): ?array {
+		$database = $this->rpm->getUpdateInputs();
+		if ($database === null) {
+			return null;
+		}
+
+		return [
+			...$database,
+			'/var/cache/zypp/solv',
+			'/var/cache/zypp/solv/*/cookie',
+			'/var/cache/zypp/solv/*/solv',
+			'/var/cache/zypp/raw',
+			'/var/cache/zypp/raw/*/repodata/repomd.xml',
+			'/etc/zypp/zypp.conf',
+			'/etc/zypp/locks',
+			'/etc/zypp/repos.d',
+			'/etc/zypp/repos.d/*.repo',
+		];
+	}
 }

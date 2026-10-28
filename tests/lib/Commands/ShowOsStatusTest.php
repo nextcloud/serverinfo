@@ -63,6 +63,19 @@ class ShowOsStatusTest extends \Test\TestCase {
 		$this->assertSame(ShowOsStatus::EXIT_UNKNOWN, $this->execute($this->createMock(OsStatusService::class), $written, true, $collector));
 	}
 
+	public function testRefreshAsksThePackageManagerAndShowsWhen(): void {
+		$status = new OsStatus(OsStatus::STATE_OK, 1792411200, updates: [], updatesCheckedAt: 1792407600, updatesReused: true);
+		$collector = $this->createMock(OsStatusCollector::class);
+		$collector->expects($this->once())->method('collectAndStore')->with(false)->willReturn($status);
+		$service = $this->createMock(OsStatusService::class);
+		$service->method('getStatus')->willReturn($status);
+
+		$written = [];
+		$this->execute($service, $written, true, $collector);
+
+		$this->assertSame(date(DATE_ATOM, 1792407600), $written['updatesCheckedAt'] ?? null);
+	}
+
 	public function testAStaleStatusWarnsAndShowsItsAge(): void {
 		$status = new OsStatus(OsStatus::STATE_OK, 1792411200 - 3 * 86400 - 7200);
 		$service = $this->createMock(OsStatusService::class);
@@ -72,6 +85,7 @@ class ShowOsStatusTest extends \Test\TestCase {
 		$written = [];
 		$this->assertSame(ShowOsStatus::EXIT_WARNING, $this->execute($service, $written));
 		$this->assertSame('3 d 2 h', $written['statusAge'] ?? null);
+		$this->assertSame('unknown', $written['updatesCheckedAt'] ?? null);
 	}
 
 	public static function dataAges(): array {

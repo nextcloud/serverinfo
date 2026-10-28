@@ -48,6 +48,7 @@ final class OsStatus {
 	 * @param list<string>|null $failedUnits
 	 * @param array{all: ?string, security: ?string} $upgradeCommands
 	 * @param list<string> $diagnostics
+	 * @param array<string, int>|null $updateInputs
 	 */
 	public function __construct(
 		public readonly string $state,
@@ -81,6 +82,12 @@ final class OsStatus {
 		public readonly HelperState $helper = new HelperState(HelperState::STATE_ABSENT, HelperReportReader::DEFAULT_PATH),
 		public readonly ?int $bootTime = null,
 		public readonly array $diagnostics = [],
+		/** When the pending updates were last asked of the package manager or written by the helper */
+		public readonly ?int $updatesCheckedAt = null,
+		/** Whether the pending updates were taken over from the previous run, because nothing they depend on changed */
+		public readonly bool $updatesReused = false,
+		/** Modification times of what the pending updates depend on, set when a later run may reuse them */
+		public readonly ?array $updateInputs = null,
 	) {
 	}
 
@@ -135,6 +142,9 @@ final class OsStatus {
 			'helper' => $this->helper->toArray(),
 			'bootTime' => $this->bootTime,
 			'diagnostics' => $this->diagnostics,
+			'updatesCheckedAt' => $this->updatesCheckedAt,
+			'updatesReused' => $this->updatesReused,
+			'updateInputs' => $this->updateInputs,
 		];
 	}
 
@@ -186,7 +196,29 @@ final class OsStatus {
 			HelperState::fromArray($data['helper'] ?? null, HelperReportReader::DEFAULT_PATH),
 			Values::int($data['bootTime'] ?? null),
 			self::stringList($data['diagnostics'] ?? null) ?? [],
+			Values::int($data['updatesCheckedAt'] ?? null),
+			($data['updatesReused'] ?? false) === true,
+			self::modificationTimes($data['updateInputs'] ?? null),
 		);
+	}
+
+	/**
+	 * @return array<string, int>|null null unless every entry is a path with a time
+	 */
+	private static function modificationTimes(mixed $items): ?array {
+		if (!is_array($items) || $items === []) {
+			return null;
+		}
+
+		$times = [];
+		foreach ($items as $path => $time) {
+			if (!is_string($path) || !is_int($time)) {
+				return null;
+			}
+			$times[$path] = $time;
+		}
+
+		return $times;
 	}
 
 	/**
