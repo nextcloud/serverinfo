@@ -50,15 +50,23 @@ class SessionStatistics {
 			'last3months' => $this->getNumberOfActiveUsers(self::OFFSET_3MONTHS),
 			'last6months' => $this->getNumberOfActiveUsers(self::OFFSET_6MONTHS),
 			'lastyear' => $this->getNumberOfActiveUsers(self::OFFSET_1YEAR),
+			'total' => $this->getNumberOfUsersLoggedInSince(1),
 		];
 	}
 
 	/**
-	 * get number of active user in a given time span
+	 * Get number of active user in a given time span
 	 *
 	 * @param int $offset seconds
 	 */
 	private function getNumberOfActiveUsers(int $offset): int {
+		return $this->getNumberOfUsersLoggedInSince($this->timeFactory->getTime() - $offset);
+	}
+
+	/**
+	 * Get number of users whose last login is at or after the given timestamp
+	 */
+	private function getNumberOfUsersLoggedInSince(int $timestamp): int {
 		$queryBuilder = $this->connection->getQueryBuilder();
 		$queryBuilder->select($queryBuilder->func()->count('userid'))
 			->from('preferences')
@@ -66,7 +74,7 @@ class SessionStatistics {
 			->andWhere($queryBuilder->expr()->eq('configkey', $queryBuilder->createNamedParameter('lastLogin')))
 			->andwhere($queryBuilder->expr()->gte(
 				$queryBuilder->expr()->castColumn('configvalue', IQueryBuilder::PARAM_INT),
-				$queryBuilder->createNamedParameter($this->timeFactory->getTime() - $offset, IQueryBuilder::PARAM_INT),
+				$queryBuilder->createNamedParameter($timestamp, IQueryBuilder::PARAM_INT),
 				IQueryBuilder::PARAM_INT,
 			));
 
