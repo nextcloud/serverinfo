@@ -285,6 +285,14 @@ $phpinfo = $_['phpinfo'];
 										<em><?php p($l->t('%s%% of all users', [round($_['activeUsers']['last1month'] * 100 / $_['storage']['num_users'], 1)])) ?></em>
 									</div>
 								<?php endif; ?>
+
+								<?php if ($_['activeUsers']['total'] > 0) : ?>
+									<div class="active-users-box">
+										<?php p($l->t('Logged in at least once')); ?><br>
+										<span class="info"><?php p($_['activeUsers']['total']) ?></span><br>
+										<em><?php p($l->t('%s%% of all users', [round($_['activeUsers']['total'] * 100 / $_['storage']['num_users'], 1)])) ?></em>
+									</div>
+								<?php endif; ?>
 							</div>
 						</div>
 					</div>
