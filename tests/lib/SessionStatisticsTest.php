@@ -104,7 +104,7 @@ class SessionStatisticsTest extends TestCase {
 
 		$result = $this->instance->getSessionStatistics();
 
-		$this->assertSame(8, count($result));
+		$this->assertSame(9, count($result));
 		$this->assertSame(2, $result['last5minutes']);  // 2 users in last 5 minutes
 		$this->assertSame(5, $result['last1hour']);     // 2 + 3 users in last hour
 		$this->assertSame(6, $result['last24hours']);   // 2 + 3 + 1 users in last day
@@ -113,5 +113,6 @@ class SessionStatisticsTest extends TestCase {
 		$this->assertSame(8, $result['last3months']);   // 2 + 3 + 1 + 0 + 1 + 1 users in last 3 months
 		$this->assertSame(9, $result['last6months']);   // 2 + 3 + 1 + 0 + 1 + 1 + 1 users in last 6 months
 		$this->assertSame(12, $result['lastyear']);     // 2 + 3 + 1 + 0 + 1 + 1 + 1 + 3 users in last year
+		$this->assertGreaterThanOrEqual(12, $result['total']); // all 12 users, plus any existing lastLogin values in the database
 	}
 }
