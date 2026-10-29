@@ -5,6 +5,8 @@
     "Operating system" : "Système d'exploitation",
     "View" : "Vue",
     "Only Linux systems are checked." : "Seuls les systèmes Linux sont vérifiés.",
+    "The age of the package lists could not be determined" : "L'âge des listes de paquets n’a pas pu être déterminé.",
+    "System services could not be checked" : "Les services système n'ont pas pu être vérifiés",
     "No reboot required" : "Aucun redémarrage n'est requis",
     "Reboot required" : "Un redémarrage est requis",
     "No service restart required" : "Aucun redémarrage de service n'est requis",
