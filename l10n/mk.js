@@ -2,6 +2,7 @@ OC.L10N.register(
     "serverinfo",
     {
     "View" : "Поглед",
+    "Reboot required" : "Потребен е рестарт",
     "System" : "Систем",
     "Database configuration" : "Конфигурација за база на податоци",
     "The database configuration could not be checked." : "Конфигурацијата на базата на податоци не може да се провери.",

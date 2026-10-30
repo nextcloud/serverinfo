@@ -85,6 +85,7 @@ OC.L10N.register(
     "Last 24 Hours" : "Posledných 24 hodín",
     "Last 7 Days" : "Posledných 7 dní",
     "Last 30 Days" : "Posledných 30 dní",
+    "Logged in at least once" : "Prihlásili sa aspoň raz",
     "System cron" : "Systémový cron",
     "Webcron" : "Webcron",
     "AJAX (not recommended)" : "AJAX (neodporúča sa)",
