@@ -85,6 +85,7 @@ OC.L10N.register(
     "Last 24 Hours" : "Последние 24 часа",
     "Last 7 Days" : "Последние 7 дней",
     "Last 30 Days" : "Последние 30 дней",
+    "Logged in at least once" : "Входили хотя бы раз",
     "System cron" : "Системный cron",
     "Webcron" : "Webcron",
     "AJAX (not recommended)" : "AJAX (не рекомендуется)",

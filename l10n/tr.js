@@ -85,6 +85,7 @@ OC.L10N.register(
     "Last 24 Hours" : "Son 24 saat",
     "Last 7 Days" : "Son 7 gün",
     "Last 30 Days" : "Son 30 gün",
+    "Logged in at least once" : "En az bir kez oturum açmış",
     "System cron" : "Sistem zamanlanmış görevi",
     "Webcron" : "İnternet zamanlanmış görevi",
     "AJAX (not recommended)" : "AJAX (önerilmez)",
