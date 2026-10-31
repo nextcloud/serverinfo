@@ -178,20 +178,6 @@ final class Mysql implements RuleSet {
 		);
 
 		$rules[] = new Rule(
-			id: 'Select_full_join',
-			name: 'Joins without indexes',
-			category: 'Performance',
-			severity: Rule::SEVERITY_WARNING,
-			formula: 'Select_full_join / Questions * 100',
-			test: 'value > 0.05',
-			issue: 'Some joins are scanning entire tables because no usable index exists on the join column.',
-			recommendation: 'Identify the offending queries (set log_queries_not_using_indexes) and add the missing indexes.',
-			justification: '%s%% of queries did a full join without an index.',
-			justificationFormula: 'value',
-			requires: ['Select_full_join', 'Questions'],
-		);
-
-		$rules[] = new Rule(
 			id: 'Sort_merge_passes',
 			name: 'Sort buffer passes',
 			category: 'Performance',
@@ -488,21 +474,6 @@ final class Mysql implements RuleSet {
 		);
 
 		// Performance / joins + scans (rate-based companions to existing absolute checks)
-		$rules[] = new Rule(
-			// upstream id: "Rate of joins without indexes"
-			id: 'Join_without_index_rate',
-			name: 'Join-without-index rate',
-			category: 'Performance',
-			severity: Rule::SEVERITY_NOTICE,
-			formula: '(Select_range_check + Select_scan + Select_full_join) / Uptime',
-			test: 'value * 60 * 60 > 1',
-			issue: 'Many SELECTs are doing full table scans or joins without indexes.',
-			recommendation: 'Add indexes for the columns used in JOIN conditions and WHERE filters.',
-			justification: 'Index-less join+scan rate: %s per hour; aim for less than 1.',
-			justificationFormula: 'round(value * 3600, 2)',
-			requires: ['Select_range_check', 'Select_scan', 'Select_full_join', 'Uptime'],
-		);
-
 		$rules[] = new Rule(
 			// upstream id: "Rate of reading first index entry"
 			id: 'Handler_read_first_rate',
