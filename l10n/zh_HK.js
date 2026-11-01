@@ -85,6 +85,7 @@ OC.L10N.register(
     "Last 24 Hours" : "過去24小時",
     "Last 7 Days" : "過去7日",
     "Last 30 Days" : "過去30日",
+    "Logged in at least once" : "登入至少一次",
     "System cron" : "系統 cron",
     "Webcron" : "Webcron",
     "AJAX (not recommended)" : "AJAX（不建議）",
