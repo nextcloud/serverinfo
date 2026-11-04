@@ -12,13 +12,14 @@ namespace OCA\ServerInfo\Tests\OsStatus;
 use OCA\ServerInfo\Os;
 use OCP\AppFramework\Services\IAppConfig;
 use OCP\IConfig;
+use Psr\Log\LoggerInterface;
 
 class OsNameTest extends \Test\TestCase {
 	private function osName(FakeHost $host, bool $restricted = false): string {
 		$config = $this->createMock(IConfig::class);
 		$config->method('getAppValue')->willReturn($restricted ? 'yes' : 'no');
 
-		return (new Os($config, $this->createMock(IAppConfig::class), $host))->getOSName();
+		return (new Os($config, $this->createMock(IAppConfig::class), $host, $this->createMock(LoggerInterface::class)))->getOSName();
 	}
 
 	public function testNamesTheDistributionThroughTheHost(): void {

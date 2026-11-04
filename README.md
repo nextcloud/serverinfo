@@ -295,7 +295,7 @@ php occ serverinfo:update-storage-statistics -v --output=json_pretty
 
 ##### Restricted mode (>= Nextcloud 28)
 
-To obtain information about your server, the serverinfo app reads files outside the application directory (e.g. /proc on Linux) or executes shell commands (e.g. df on Linux). 
+To obtain information about your server, the serverinfo app reads files outside the application directory (e.g. /proc on Linux) or runs system commands (e.g. df on Linux) without a shell and with a time limit of a few seconds each. 
 
 If you don't want that (for example, to avoid open_basedir warnings) enable the restricted mode.
 

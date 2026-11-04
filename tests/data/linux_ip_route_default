@@ -1,0 +1,4 @@
+default via 192.0.2.1 dev eth0 proto dhcp src 192.0.2.10 metric 100
+default via 198.51.100.1 dev wlan0 proto dhcp metric 600
+default dev wg0 scope link
+default via 192.0.2.1 dev eth0 proto static metric 1024
