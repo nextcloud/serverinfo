@@ -46,6 +46,7 @@ OC.L10N.register(
     "Information" : "Informacions",
     "Error" : "Error",
     "None" : "Cap",
+    "Restore defaults" : "Restaurar çò per defaut",
     "Security" : "Seguretat",
     "All" : "Tot",
     "Updates" : "Mesas a jorn",
