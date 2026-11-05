@@ -63,6 +63,29 @@ class Linux implements IOperatingSystem {
 		return new CPU($matches[1][0], $threads);
 	}
 
+	#[\Override]
+	public function getAverageLoad(): array|false {
+		try {
+			$loadavg = $this->readContent('/proc/loadavg');
+		} catch (RuntimeException) {
+			return false;
+		}
+
+		$fields = preg_split('/\s+/', $loadavg);
+		if ($fields === false || count($fields) < 3) {
+			return false;
+		}
+
+		$averages = array_slice($fields, 0, 3);
+		foreach ($averages as $average) {
+			if (!is_numeric($average) || (float)$average < 0) {
+				return false;
+			}
+		}
+
+		return [(float)$averages[0], (float)$averages[1], (float)$averages[2]];
+	}
+
 	/**
 	 * Read memory from free(1) when /proc/meminfo is out of reach.
 	 *
