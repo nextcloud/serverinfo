@@ -452,6 +452,31 @@ class Dnf implements IPackageManager, IReportsDiagnostics {
 	}
 
 	/**
+	 * The RPM database, the system cache that check-update and updateinfo
+	 * read with --cacheonly, the repositories and the version locks.
+	 */
+	#[\Override]
+	public function getUpdateInputs(): ?array {
+		$database = $this->rpm->getUpdateInputs();
+		if ($database === null) {
+			return null;
+		}
+
+		return [
+			...$database,
+			'/var/cache/dnf',
+			'/var/cache/dnf/*/repodata/repomd.xml',
+			'/var/cache/libdnf5',
+			'/var/cache/libdnf5/*/repodata/repomd.xml',
+			'/etc/dnf/dnf.conf',
+			'/etc/dnf/plugins/versionlock.list',
+			'/etc/dnf/versionlock.toml',
+			'/etc/yum.repos.d',
+			'/etc/yum.repos.d/*.repo',
+		];
+	}
+
+	/**
 	 * Told apart by the binaries rather than by running dnf, because running
 	 * dnf 5 as the web server is what has to be avoided. Where both are
 	 * installed, dnf 5 keeps the system cache and dnf 4's would be stale.

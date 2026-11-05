@@ -24,6 +24,7 @@ use OCA\ServerInfo\OsStatus\Packages\NeedsRootException;
 use OCA\ServerInfo\OsStatus\Packages\PackageManagerFactory;
 use OCA\ServerInfo\OsStatus\Packages\PendingUpdate;
 use OCA\ServerInfo\OsStatus\Packages\ProbeException;
+use OCA\ServerInfo\OsStatus\Packages\ProbeHelper;
 use OCA\ServerInfo\OsStatus\Reboot\CoreLibraryProbe;
 use OCA\ServerInfo\OsStatus\Reboot\KernelProbe;
 use OCA\ServerInfo\OsStatus\Reboot\RebootReason;
@@ -53,6 +54,9 @@ class OsStatusCollector {
 	/** Held while a collection runs, so package managers never run twice at once. */
 	public const LOCK = 'serverinfo/os-status-collection';
 
+	/** Pending updates are asked of the package manager at least this often, even when nothing changed. */
+	public const REUSE_UPDATES_FOR = 86400;
+
 	public function __construct(
 		private IHost $host,
 		private IAppConfig $appConfig,
@@ -74,7 +78,13 @@ class OsStatusCollector {
 	) {
 	}
 
-	public function collect(): OsStatus {
+	/**
+	 * With $reuseUnchangedUpdates, the pending updates, held packages and
+	 * last upgrade of the previous run are kept when nothing they depend on
+	 * changed, which spares a scheduled run the package manager's query.
+	 * Everything else is asked again.
+	 */
+	public function collect(bool $reuseUnchangedUpdates = false): OsStatus {
 		$now = $this->timeFactory->getTime();
 
 		if ($this->appConfig->getAppValueString('restricted_mode', 'no') === 'yes') {
@@ -125,11 +135,26 @@ class OsStatusCollector {
 
 		$updates = null;
 		$updatesSource = null;
+		$updatesCheckedAt = null;
 		$needsRoot = null;
+		$inputs = null;
+		$reused = null;
 		if ($packageManager !== null) {
+			// Taken before the query, so that a change while it runs shows on the next run.
+			$inputs = $this->probe('What the pending updates depend on', fn (): ?array => $this->updateInputs($packageManager), null, $diagnostics);
+			if ($reuseUnchangedUpdates && $inputs !== null && $release !== null) {
+				$reused = $this->reusableUpdates($packageManager, $release, $inputs, $now);
+			}
+		}
+		if ($reused !== null) {
+			$updates = $reused->updates;
+			$updatesSource = OsStatus::SOURCE_SYSTEM;
+			$updatesCheckedAt = $reused->updatesCheckedAt;
+		} elseif ($packageManager !== null) {
 			try {
 				$updates = $packageManager->getPendingUpdates();
 				$updatesSource = OsStatus::SOURCE_SYSTEM;
+				$updatesCheckedAt = $now;
 			} catch (NeedsRootException $e) {
 				$needsRoot = $e->getMessage();
 			} catch (ProbeException $e) {
@@ -143,6 +168,7 @@ class OsStatusCollector {
 		if ($updates === null && $reportedUpdates !== null && $environment->managesPackages()) {
 			$updates = $reportedUpdates;
 			$updatesSource = OsStatus::SOURCE_HELPER;
+			$updatesCheckedAt = $report?->generatedAt;
 		}
 		if ($needsRoot !== null && $updatesSource !== OsStatus::SOURCE_HELPER) {
 			$diagnostics[] = $needsRoot;
@@ -156,6 +182,7 @@ class OsStatusCollector {
 		if ($updates === [] && $updatesSource === OsStatus::SOURCE_SYSTEM && $listsRefreshedAt === null && in_array($packageManager?->getId(), OsVerdict::LISTS_AGE_MATTERS, true)) {
 			$updates = null;
 			$updatesSource = null;
+			$updatesCheckedAt = null;
 			$diagnostics[] = 'The package lists could not be found, so pending updates are unknown until the lists are refreshed.';
 		}
 
@@ -164,7 +191,7 @@ class OsStatusCollector {
 			: null;
 		$restartServices = $environment->managesPackages() ? $report?->restartServices : null;
 
-		$classified = $packageManager?->classifiesSecurity() ?? ($updatesSource === OsStatus::SOURCE_HELPER);
+		$classified = $reused?->securityClassified ?? $packageManager?->classifiesSecurity() ?? ($updatesSource === OsStatus::SOURCE_HELPER);
 		[$updates, $rebootReasons, $restartServices] = $this->probe(
 			'How long the findings have been pending',
 			fn (): array => $this->applyFirstSeen($updates, $classified, $rebootReasons, $restartServices, $now),
@@ -179,9 +206,11 @@ class OsStatusCollector {
 			$updates = array_slice($updates, 0, self::MAX_LISTED_UPDATES);
 		}
 
-		if ($packageManager instanceof IReportsDiagnostics) {
-			array_push($diagnostics, ...$packageManager->getDiagnostics());
-		}
+		$packageDiagnostics = $reused === null && $packageManager instanceof IReportsDiagnostics ? $packageManager->getDiagnostics() : [];
+		array_push($diagnostics, ...$packageDiagnostics);
+
+		// Only a complete answer of the package manager is worth reusing.
+		$reusableInputs = $updatesSource === OsStatus::SOURCE_SYSTEM && $packageDiagnostics === [] && $omitted === 0 ? $inputs : null;
 
 		$timeSync = $this->probe('The time synchronisation', fn (): array => $this->timeSync->probe(), ['synchronized' => null, 'source' => null], $diagnostics);
 
@@ -198,9 +227,9 @@ class OsStatusCollector {
 			$updatesSource,
 			$classified,
 			$omitted,
-			$packageManager !== null ? $this->probe('The held packages', fn (): ?array => $packageManager->getHeldPackages(), null, $diagnostics) : null,
+			$reused?->held ?? ($packageManager !== null ? $this->probe('The held packages', fn (): ?array => $packageManager->getHeldPackages(), null, $diagnostics) : null),
 			$listsRefreshedAt,
-			$packageManager !== null ? $this->probe('The last upgrade', fn (): ?int => $packageManager->getLastUpgradeAt(), null, $diagnostics) : null,
+			$reused?->lastUpgradeAt ?? ($packageManager !== null ? $this->probe('The last upgrade', fn (): ?int => $packageManager->getLastUpgradeAt(), null, $diagnostics) : null),
 			$packageManager !== null
 				? $this->probe('The automatic updates', fn (): AutomaticUpdates => $packageManager->getAutomaticUpdates(), AutomaticUpdates::unknown(), $diagnostics)
 				: AutomaticUpdates::unknown(),
@@ -217,7 +246,49 @@ class OsStatusCollector {
 			$helperState,
 			$bootTime,
 			$diagnostics,
+			$updatesCheckedAt,
+			$reused !== null,
+			$reusableInputs,
 		);
+	}
+
+	/**
+	 * @return array<string, int>|null null when any of it cannot be checked
+	 */
+	private function updateInputs(IPackageManager $packageManager): ?array {
+		$paths = $packageManager->getUpdateInputs();
+		$inputs = $paths === null ? null : ProbeHelper::fingerprint($this->host, $paths);
+
+		return $inputs === [] ? null : $inputs;
+	}
+
+	/**
+	 * The previous status, when its pending updates still hold: the same
+	 * package manager on the same release found them completely, less than
+	 * REUSE_UPDATES_FOR ago, and nothing they depend on was touched since.
+	 *
+	 * @param array<string, int> $inputs
+	 */
+	private function reusableUpdates(IPackageManager $packageManager, OsRelease $release, array $inputs, int $now): ?OsStatus {
+		$previous = $this->store->load();
+		$checkedAt = $previous?->updatesCheckedAt;
+		if ($previous === null
+			|| $previous->updateInputs === null
+			|| $previous->updates === null
+			|| $previous->updatesSource !== OsStatus::SOURCE_SYSTEM
+			|| $previous->packageManager !== $packageManager->getId()
+			|| $previous->release?->toArray() !== $release->toArray()
+			|| $checkedAt === null
+			|| $checkedAt > $now
+			|| $now - $checkedAt >= self::REUSE_UPDATES_FOR) {
+			return null;
+		}
+
+		$stored = $previous->updateInputs;
+		ksort($stored);
+		ksort($inputs);
+
+		return $stored === $inputs ? $previous : null;
 	}
 
 	/**
@@ -247,8 +318,10 @@ class OsStatusCollector {
 	 * Collects and stores the result, logging rather than throwing so a
 	 * failure does not take the background job queue down with it. Returns
 	 * null without collecting while another collection runs.
+	 *
+	 * @param bool $reuseUnchangedUpdates as for collect()
 	 */
-	public function collectAndStore(): ?OsStatus {
+	public function collectAndStore(bool $reuseUnchangedUpdates = false): ?OsStatus {
 		try {
 			$this->locks->acquireLock(self::LOCK, ILockingProvider::LOCK_EXCLUSIVE);
 		} catch (LockedException) {
@@ -258,7 +331,7 @@ class OsStatusCollector {
 		}
 
 		try {
-			$status = $this->collect();
+			$status = $this->collect($reuseUnchangedUpdates);
 			$this->store->save($status);
 
 			return $status;

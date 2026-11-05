@@ -65,13 +65,27 @@ request for minutes. A status older than three job intervals (at least six
 hours), or background jobs that do not run from system cron, count as a
 warning, so an old all-clear is never shown as current. "Check now" on the page
 queues a check for the next cron run and shows the result when it is done;
-only one check runs at a time. Admins can also run:
+only one check runs at a time.
+
+The hourly job asks the package manager for pending updates only when
+something they depend on changed: it compares the modification times of the
+installed-package database, the repository metadata and the package manager's
+sources, pinning and lock configuration with those of the last run. If none
+changed, it keeps the last list of pending updates, held packages and last
+upgrade, and checks everything else (reboot, services, time sync) again. The
+package manager is still asked at least once a day, and whenever a file cannot
+be checked, the last query failed or was incomplete, more than 500 updates are
+pending, or the updates came from the root helper. On Arch this only applies
+with `os_allow_network` off, because `checkupdates` and `arch-audit` answer
+from the network. "Check now" and `--refresh` below always ask the package
+manager. Admins can also run:
 
 ```
 occ serverinfo:os-status [--refresh] [--output=json]
 ```
 
-The command shows how old the status is and exits with 0, 1, 2 or 3 for ok,
+The command shows how old the status is and when the pending updates were
+last checked (`updatesCheckedAt`), and exits with 0, 1, 2 or 3 for ok,
 warning, error and unknown, so it can be used as a monitoring check. Unknown means the status has not been
 collected yet, or nothing is wrong but the pending updates could not be
 determined. The same verdict appears as setup checks on Settings → Overview

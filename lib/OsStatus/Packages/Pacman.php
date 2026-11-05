@@ -238,4 +238,24 @@ class Pacman implements IPackageManager, IReportsDiagnostics {
 	public function getPackageDatabasePath(): ?string {
 		return '/var/lib/pacman/local';
 	}
+
+	/**
+	 * Only without the network: checkupdates and arch-audit answer from
+	 * what the mirrors and security.archlinux.org publish, which no local
+	 * file shows. pacman -Qu reads the installed packages, whose directory
+	 * gains and loses an entry per package, and root's sync databases.
+	 */
+	#[\Override]
+	public function getUpdateInputs(): ?array {
+		if ($this->networkAllowed() && ($this->host->binaryState('checkupdates') !== false || $this->host->binaryState('arch-audit') !== false)) {
+			return null;
+		}
+
+		return [
+			'/var/lib/pacman/local',
+			'/var/lib/pacman/sync',
+			'/var/lib/pacman/sync/*.db',
+			'/etc/pacman.conf',
+		];
+	}
 }

@@ -225,4 +225,19 @@ class Apk implements IPackageManager {
 	public function getPackageDatabasePath(): ?string {
 		return '/lib/apk/db/installed';
 	}
+
+	/**
+	 * The installed packages, the cached indexes, the repositories and the
+	 * constraints in /etc/apk/world.
+	 */
+	#[\Override]
+	public function getUpdateInputs(): ?array {
+		return [
+			'/lib/apk/db/installed',
+			'/var/cache/apk',
+			'/var/cache/apk/APKINDEX.*.tar.gz',
+			'/etc/apk/repositories',
+			self::WORLD,
+		];
+	}
 }

@@ -47,7 +47,7 @@ class UpdateOsStatus extends TimedJob {
 			return;
 		}
 
-		if ($this->collector->collectAndStore() !== null) {
+		if ($this->collector->collectAndStore(reuseUnchangedUpdates: true) !== null) {
 			$this->notifications->sync();
 		}
 	}

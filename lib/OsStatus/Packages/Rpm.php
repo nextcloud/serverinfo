@@ -53,6 +53,18 @@ class Rpm {
 	}
 
 	/**
+	 * The database and its directory, where the sqlite backend keeps its
+	 * write-ahead log until it is merged back.
+	 *
+	 * @return list<string>|null null when the database cannot be found
+	 */
+	public function getUpdateInputs(): ?array {
+		$path = $this->getDatabasePath();
+
+		return $path === null ? null : [$path, dirname($path)];
+	}
+
+	/**
 	 * Installed version (with epoch when it has one) by package name.
 	 *
 	 * @return array<string, string>

@@ -32,7 +32,7 @@ class UpdateOsStatusTest extends \Test\TestCase {
 		$appConfig->method('getValueInt')->willReturn(3600);
 		$appConfig->method('getValueString')->with('core', 'backgroundjobs_mode', 'ajax')->willReturn($mode);
 		$collector = $this->createMock(OsStatusCollector::class);
-		$collector->expects($this->exactly($runs))->method('collectAndStore')->willReturn(OsStatus::restricted(1792411200));
+		$collector->expects($this->exactly($runs))->method('collectAndStore')->with(true)->willReturn(OsStatus::restricted(1792411200));
 		$notifications = $this->createMock(OsNotificationSender::class);
 		$notifications->expects($this->exactly($runs))->method('sync');
 
