@@ -62,7 +62,7 @@
 			<NetworkSection :networkinfo="staticData.networkinfo" :interfaces="staticData.networkinterfaces" />
 
 			<!-- Active users -->
-			<ActiveUsersSection :activeUsers="staticData.activeUsers" :numUsers="staticData.storage.num_users" />
+			<ActiveUsersSection :activeUsers="staticData.activeUsers" :numUsers="staticData.storage.num_users" :subscriptionUsers="staticData.subscriptionUsers" />
 
 			<!-- Shares -->
 			<SharesSection v-if="staticData.shares.num_shares > 0" :shares="staticData.shares" />
