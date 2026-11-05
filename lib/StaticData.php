@@ -25,6 +25,7 @@ class StaticData {
 		private DatabaseStatistics $databaseStatistics,
 		private ShareStatistics $shareStatistics,
 		private SessionStatistics $sessionStatistics,
+		private SubscriptionStatistics $subscriptionStatistics,
 		private SystemStatistics $systemStatistics,
 		private IAppConfig $appConfig,
 	) {
@@ -66,6 +67,7 @@ class StaticData {
 			'fpm' => $this->fpmStatistics->getFpmStatistics(),
 			'database' => $this->databaseStatistics->getDatabaseStatistics(),
 			'activeUsers' => $this->sessionStatistics->getSessionStatistics(),
+			'subscriptionUsers' => $this->subscriptionStatistics->getSubscriptionUsers(),
 			'freeSpace' => $this->systemStatistics->getFreeSpace(),
 			'memTotal' => $memory->getMemTotal(),
 			'phpinfo' => $this->appConfig->getAppValueBool('phpinfo', false),
