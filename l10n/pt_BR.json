@@ -77,6 +77,7 @@
     "Monitoring" : "Monitoramento",
     "Monitoring app with useful server information" : "Aplicativo de monitoramento com informações úteis do servidor",
     "Provides useful server information, such as CPU load, RAM usage, disk usage, number of users, etc. Shows pending operating system updates, required reboots and service restarts, and how long the Linux distribution is still supported." : "Fornece informações úteis do servidor, como carga da CPU, uso de RAM, uso de disco, número de usuários, etc. Mostra atualizações pendentes do sistema operacional, reinicializações de sistema e de serviços necessárias, e por quanto tempo a distribuição Linux ainda será suportada.",
+    "{0}% of your subscription quota" : "{0}% da sua cota de assinatura",
     "{0}% of all users" : "{0}% de todos os usuários",
     "Active users" : "Usuários ativos",
     "Last hour" : "Na última hora",

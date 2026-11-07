@@ -77,6 +77,7 @@
     "Monitoring" : "İzleniyor",
     "Monitoring app with useful server information" : "Yararlı sunucu bilgileri sunan izleme uygulaması",
     "Provides useful server information, such as CPU load, RAM usage, disk usage, number of users, etc. Shows pending operating system updates, required reboots and service restarts, and how long the Linux distribution is still supported." : "İşlemci yükü, bellek kullanımı, disk kullanımı, kullanıcı sayısı gibi yararlı sunucu bilgileri sağlar. Bekleyen işletim sistemi güncellemelerini, yapılması gereken sunucu ve hizmet yeniden başlatmalarını, Linux dağıtımının ne kadar süreyle destekleneceğini gösterir.",
+    "{0}% of your subscription quota" : "Abonelik kotanızın %{0} kadarı ",
     "{0}% of all users" : "Tüm kullanıcılarda %{0} ",
     "Active users" : "Etkin kullanıcılar",
     "Last hour" : "Son 1 saat",

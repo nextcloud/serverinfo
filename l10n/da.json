@@ -77,6 +77,7 @@
     "Monitoring" : "Overvågning",
     "Monitoring app with useful server information" : "Overvågningsapp med nyttige serveroplysninger",
     "Provides useful server information, such as CPU load, RAM usage, disk usage, number of users, etc. Shows pending operating system updates, required reboots and service restarts, and how long the Linux distribution is still supported." : "Viser nyttige oplysninger om serveren, fx CPU-belastning, RAM-forbrug, diskforbrug og antal brugere. Viser afventende opdateringer af operativsystemet, nødvendige genstarter af systemet og tjenester, og hvor længe Linux-distributionen stadig understøttes.",
+    "{0}% of your subscription quota" : "{0} % af kvoten i dit abonnement",
     "{0}% of all users" : "{0} % af alle brugere",
     "Active users" : "Aktive brugere",
     "Last hour" : "Seneste time",
