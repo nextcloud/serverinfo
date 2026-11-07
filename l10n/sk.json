@@ -77,6 +77,7 @@
     "Monitoring" : "Sledovanie",
     "Monitoring app with useful server information" : "Monitorovacia apka s užitočnými informáciami o serveri",
     "Provides useful server information, such as CPU load, RAM usage, disk usage, number of users, etc. Shows pending operating system updates, required reboots and service restarts, and how long the Linux distribution is still supported." : "Poskytuje užitočné informácie o serveri, napríklad zaťaženie CPU, využitie pamäte RAM, využitie disku, počet používateľov atď. Zobrazuje čakajúce aktualizácie operačného systému, potrebné reštarty a reštarty služieb, ako aj to, ako dlho bude distribúcia Linuxu ešte podporovaná.",
+    "{0}% of your subscription quota" : "{0} % z kvóty vášho predplatného",
     "{0}% of all users" : "{0}% všetkých používateľov",
     "Active users" : "Aktívni používatelia",
     "Last hour" : "Posledná hodina",
