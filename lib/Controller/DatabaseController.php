@@ -66,7 +66,7 @@ class DatabaseController extends Controller {
 	 */
 	public function check(): JSONResponse {
 		// PHP holds the session lock for the whole request, and this one takes
-		// seconds while the Status page keeps polling every two. Without letting
+		// seconds while the page keeps polling its live values. Without letting
 		// go first, those polls queue up behind it and can exhaust the web
 		// server's workers. Nothing below writes to the session.
 		$this->session->close();
@@ -124,31 +124,15 @@ class DatabaseController extends Controller {
 		// page's own polling queue up behind it. Nothing below writes to it.
 		$this->session->close();
 
-		$started = microtime(true);
 		try {
-			$this->probe->ping();
-			$latencyMs = round((microtime(true) - $started) * 1000.0, 2);
-		} catch (\Throwable) {
-			$latencyMs = null;
-		}
-
-		try {
-			$metrics = $this->liveMetrics->collect();
+			return new JSONResponse($this->liveMetrics->collect());
 		} catch (\Throwable $e) {
 			$this->logger->debug('serverinfo: live database metrics failed: {msg}', [
 				'msg' => $e->getMessage(), 'app' => Application::APP_ID,
 			]);
 
-			return new JSONResponse(['available' => false, 'latencyMs' => $latencyMs]);
+			return new JSONResponse(['available' => false, 'latencyMs' => null]);
 		}
-
-		return new JSONResponse([
-			'available' => true,
-			'latencyMs' => $latencyMs,
-			'connections' => $metrics['connections'],
-			'throughput' => $metrics['throughput'],
-			'threadsRunning' => $metrics['threadsRunning'],
-		]);
 	}
 
 	/**

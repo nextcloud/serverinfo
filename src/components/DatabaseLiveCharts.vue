@@ -31,7 +31,7 @@ const props = defineProps<{ active: boolean }>()
 
 Chart.register(CategoryScale, Filler, LinearScale, LineController, LineElement, PointElement, Tooltip)
 
-/** Matches the Status page's charts, which keep a minute of two-second samples. */
+/** A minute and a half of three-second samples. */
 const MAX_POINTS = 30
 const INTERVAL_MS = 3000
 
@@ -48,6 +48,7 @@ const throughputLabel = ref(t('serverinfo', 'Queries per second'))
 
 let timeoutId: ReturnType<typeof setTimeout> | null = null
 let stopped = false
+let inFlight = false
 // Throughput is published as a cumulative counter, so a rate needs two samples.
 let previousCounter: number | null = null
 let previousAt: number | null = null
@@ -67,6 +68,7 @@ function push(series: typeof connections, value: number | null) {
 
 async function poll() {
 	timeoutId = null
+	inFlight = true
 	try {
 		const { data } = await axios.get(generateUrl('/apps/serverinfo/database/live'))
 
@@ -100,6 +102,7 @@ async function poll() {
 		push(queries, null)
 		push(latency, null)
 	} finally {
+		inFlight = false
 		schedule()
 	}
 }
@@ -123,7 +126,8 @@ function stop() {
 // three live series are not worth a request every three seconds for nobody.
 watch(() => [props.active, document.hidden], () => {
 	if (props.active && !document.hidden) {
-		if (timeoutId === null) {
+		// A request still under way schedules the next one when it returns.
+		if (timeoutId === null && !inFlight) {
 			poll()
 		}
 	} else {
@@ -140,7 +144,7 @@ watch(() => [props.active, document.hidden], () => {
 function onVisibilityChange() {
 	if (document.hidden) {
 		stop()
-	} else if (props.active && timeoutId === null) {
+	} else if (props.active && timeoutId === null && !inFlight) {
 		poll()
 	}
 }

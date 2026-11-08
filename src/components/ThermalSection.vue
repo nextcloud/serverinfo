@@ -29,8 +29,8 @@ defineProps<{
 </script>
 
 <style scoped>
-/* The reading refreshes every two seconds; equal-width digits keep it from
-   jumping sideways between updates. */
+/* The reading refreshes while the page is open; equal-width digits keep it
+   from jumping sideways between updates. */
 .temp {
 	font-variant-numeric: tabular-nums;
 }
