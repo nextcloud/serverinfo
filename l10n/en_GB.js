@@ -79,6 +79,7 @@ OC.L10N.register(
     "Monitoring" : "Monitoring",
     "Monitoring app with useful server information" : "Monitoring app with useful server information",
     "Provides useful server information, such as CPU load, RAM usage, disk usage, number of users, etc. Shows pending operating system updates, required reboots and service restarts, and how long the Linux distribution is still supported." : "Provides useful server information, such as CPU load, RAM usage, disk usage, number of users, etc. Shows pending operating system updates, required reboots and service restarts, and how long the Linux distribution is still supported.",
+    "{0}% of your subscription quota" : "{0}% of your subscription quota",
     "{0}% of all users" : "{0}% of all users",
     "Active users" : "Active users",
     "Last hour" : "Last hour",

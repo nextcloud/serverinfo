@@ -66,6 +66,7 @@
     "Monitoring" : "Monatóireacht",
     "Monitoring app with useful server information" : "Aip monatóireachta le faisnéis úsáideach freastalaí",
     "Provides useful server information, such as CPU load, RAM usage, disk usage, number of users, etc. Shows pending operating system updates, required reboots and service restarts, and how long the Linux distribution is still supported." : "Soláthraíonn sé faisnéis úsáideach faoin bhfreastalaí, amhail ualach LAP, úsáid RAM, úsáid diosca, líon úsáideoirí, srl. Taispeánann sé nuashonruithe ar feitheamh ar an gcóras oibriúcháin, atosaithe riachtanacha agus atosaithe seirbhíse, agus cé chomh fada is atá an dáileadh Linux fós faoi thacaíocht.",
+    "{0}% of your subscription quota" : "{0}% de chuóta do shíntiúis",
     "{0}% of all users" : "{0}% de na húsáideoirí uile",
     "Active users" : "Úsáideoirí gníomhacha",
     "Last hour" : "Uair dheireanach",
