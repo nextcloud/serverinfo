@@ -10,10 +10,13 @@ declare(strict_types=1);
 namespace OCA\ServerInfo\Tests;
 
 use OCA\ServerInfo\OperatingSystems\FreeBSD;
+use OCA\ServerInfo\OsStatus\Host\CommandResult;
 use OCA\ServerInfo\Resources\Disk;
 use OCA\ServerInfo\Resources\Memory;
 use OCA\ServerInfo\Resources\NetInterface;
+use OCA\ServerInfo\Tests\OsStatus\FakeHost;
 use PHPUnit\Framework\MockObject\MockObject;
+use Psr\Log\LoggerInterface;
 use RuntimeException;
 use Test\TestCase;
 
@@ -25,22 +28,41 @@ use Test\TestCase;
 class FreeBSDTest extends TestCase {
 	/** @var FreeBSD&MockObject */
 	protected $os;
+	private FakeHost $host;
+	/** @var LoggerInterface&MockObject */
+	private LoggerInterface $logger;
 
 	protected function setUp(): void {
 		parent::setUp();
 
+		$this->host = new FakeHost();
+		$this->host->family = 'BSD';
+		$this->logger = $this->createMock(LoggerInterface::class);
 		$this->os = $this->getMockBuilder(FreeBSD::class)
-			->disableOriginalConstructor()
+			->setConstructorArgs([$this->host, $this->logger])
 			->disableOriginalClone()
 			->disableArgumentCloning()
 			->disallowMockingUnknownTypes()
-			->onlyMethods(['readContent', 'executeCommand', 'getNetInterfaces'])
+			->onlyMethods(['getNetInterfaces'])
 			->getMock();
 	}
 
+	private function fixture(string $name): string {
+		return (string)file_get_contents(__DIR__ . '/../data/' . $name);
+	}
+
+	public function testGetCpu(): void {
+		$this->host->withCommand('sysctl', ['-n', 'hw.model', 'kern.smp.cpus'], "Intel(R) Xeon(R) CPU E5-2650 v4 @ 2.20GHz\n8\n");
+
+		$cpu = $this->os->getCPU();
+
+		$this->assertEquals('Intel(R) Xeon(R) CPU E5-2650 v4 @ 2.20GHz', $cpu->getName());
+		$this->assertEquals(8, $cpu->getThreads());
+		$this->assertSame(['sysctl -n hw.model kern.smp.cpus'], $this->host->ran);
+	}
+
 	public function testGetCpuNoData(): void {
-		$this->os->method('executeCommand')
-			->willThrowException(new RuntimeException('No output for command'));
+		$this->host->commandsAllowed = false;
 
 		$cpu = $this->os->getCPU();
 
@@ -51,11 +73,8 @@ class FreeBSDTest extends TestCase {
 	}
 
 	public function testGetMemory(): void {
-		$this->os->method('executeCommand')
-			->willReturnMap([
-				['/usr/sbin/swapinfo -k', file_get_contents(__DIR__ . '/../data/freebsd_swapinfo')],
-				['/sbin/sysctl -n hw.realmem hw.pagesize vm.stats.vm.v_inactive_count vm.stats.vm.v_cache_count vm.stats.vm.v_free_count', file_get_contents(__DIR__ . '/../data/freebsd_meminfo')],
-			]);
+		$this->host->withCommand('swapinfo', ['-k'], $this->fixture('freebsd_swapinfo'))
+			->withCommand('sysctl', ['-n', 'hw.realmem', 'hw.pagesize', 'vm.stats.vm.v_inactive_count', 'vm.stats.vm.v_cache_count', 'vm.stats.vm.v_free_count'], $this->fixture('freebsd_meminfo'));
 
 		$memory = $this->os->getMemory();
 
@@ -67,15 +86,8 @@ class FreeBSDTest extends TestCase {
 	}
 
 	public function testGetMemoryNoSwapinfo(): void {
-		$this->os->method('executeCommand')
-			->willReturnCallback(static function ($command) {
-				if ($command === '/usr/sbin/swapinfo -k') {
-					throw new \RuntimeException('No output for command: /usr/sbin/swapinfo');
-				}
-				if ($command === '/sbin/sysctl -n hw.realmem hw.pagesize vm.stats.vm.v_inactive_count vm.stats.vm.v_cache_count vm.stats.vm.v_free_count') {
-					return file_get_contents(__DIR__ . '/../data/freebsd_meminfo');
-				}
-			});
+		$this->host->withCommand('swapinfo', ['-k'], '', 1)
+			->withCommand('sysctl', ['-n', 'hw.realmem', 'hw.pagesize', 'vm.stats.vm.v_inactive_count', 'vm.stats.vm.v_cache_count', 'vm.stats.vm.v_free_count'], $this->fixture('freebsd_meminfo'));
 
 		$memory = $this->os->getMemory();
 
@@ -87,18 +99,14 @@ class FreeBSDTest extends TestCase {
 	}
 
 	public function testGetMemoryNoData(): void {
-		$this->os->method('executeCommand')
-			->willThrowException(new \RuntimeException('No output for command: xxx'));
+		$this->host->commandsAllowed = false;
 
 		$this->assertEquals(new Memory(), $this->os->getMemory());
 	}
 
 	public function testGetMemoryTruenasSwapinfo(): void {
-		$this->os->method('executeCommand')
-			->willReturnMap([
-				['/usr/sbin/swapinfo -k', file_get_contents(__DIR__ . '/../data/truenas_core_swapinfo')],
-				['/sbin/sysctl -n hw.realmem hw.pagesize vm.stats.vm.v_inactive_count vm.stats.vm.v_cache_count vm.stats.vm.v_free_count', file_get_contents(__DIR__ . '/../data/truenas_core_meminfo')],
-			]);
+		$this->host->withCommand('swapinfo', ['-k'], $this->fixture('truenas_core_swapinfo'))
+			->withCommand('sysctl', ['-n', 'hw.realmem', 'hw.pagesize', 'vm.stats.vm.v_inactive_count', 'vm.stats.vm.v_cache_count', 'vm.stats.vm.v_free_count'], $this->fixture('truenas_core_meminfo'));
 
 		$memory = $this->os->getMemory();
 
@@ -112,16 +120,8 @@ class FreeBSDTest extends TestCase {
 	public function testGetNetworkInterfaces(): void {
 		$this->os->method('getNetInterfaces')
 			->willReturn(json_decode(file_get_contents(__DIR__ . '/../data/freebsd_net_get_interfaces.json'), true, 512, JSON_THROW_ON_ERROR));
-		$this->os->method('executeCommand')
-			->willReturnCallback(static function ($command) {
-				if ($command === '/sbin/ifconfig pflog0') {
-					return file_get_contents(__DIR__ . '/../data/freebsd_interface_pflog0');
-				}
-				if ($command === '/sbin/ifconfig epair0b') {
-					return file_get_contents(__DIR__ . '/../data/freebsd_interface_epair0b');
-				}
-				throw new RuntimeException();
-			});
+		$this->host->withCommand('ifconfig', ['pflog0'], $this->fixture('freebsd_interface_pflog0'))
+			->withCommand('ifconfig', ['epair0b'], $this->fixture('freebsd_interface_epair0b'));
 
 		$net1 = new NetInterface('epair0b', true);
 		$net1->addIPv4('10.0.2.15');
@@ -148,9 +148,7 @@ class FreeBSDTest extends TestCase {
 	}
 
 	public function testGetDiskInfoUnusualMountPoints(): void {
-		$this->os->method('executeCommand')
-			->with('df -TPk')
-			->willReturn(file_get_contents(__DIR__ . '/../data/freebsd_df_tp_mount_points'));
+		$this->host->withCommand('df', ['-TPk'], $this->fixture('freebsd_df_tp_mount_points'));
 
 		// getDiskInfo() had no coverage here at all, and this pattern was even
 		// narrower than the Linux one: it allowed no dots, so a mount point like
@@ -191,12 +189,7 @@ class FreeBSDTest extends TestCase {
 	}
 
 	public function testGetNetworkInfo(): void {
-		$this->os->method('executeCommand')
-			->with('netstat -rn')
-			->willReturn("Routing tables\n\ndefault            192.0.2.1        UGS\n");
-		$this->os->method('readContent')
-			->with('/etc/resolv.conf')
-			->willThrowException(new RuntimeException('Unable to read: "/etc/resolv.conf"'));
+		$this->host->withCommand('netstat', ['-rn'], "Routing tables\n\ndefault            192.0.2.1        UGS\n");
 
 		$networkInfo = $this->os->getNetworkInfo();
 
@@ -206,12 +199,8 @@ class FreeBSDTest extends TestCase {
 	}
 
 	public function testGetNetworkInfoListsTheNameservers(): void {
-		$this->os->method('executeCommand')
-			->with('netstat -rn')
-			->willReturn("Routing tables\n\ndefault            192.0.2.1        UGS\n");
-		$this->os->method('readContent')
-			->with('/etc/resolv.conf')
-			->willReturn("# Generated by resolvconf\nsearch example.org\nnameserver 192.0.2.53\n  nameserver 2001:db8::53\nnameserver 192.0.2.53\n");
+		$this->host->withCommand('netstat', ['-rn'], "Routing tables\n\ndefault            192.0.2.1        UGS\n");
+		$this->host->withFile('/etc/resolv.conf', "# Generated by resolvconf\nsearch example.org\nnameserver 192.0.2.53\n  nameserver 2001:db8::53\nnameserver 192.0.2.53\n");
 
 		$this->assertSame('192.0.2.53, 2001:db8::53', $this->os->getNetworkInfo()['dns']);
 	}
@@ -227,9 +216,7 @@ class FreeBSDTest extends TestCase {
 	}
 
 	public function testGetDiskInfoZeroCapacityAndInvertedUsage(): void {
-		$this->os->method('executeCommand')
-			->with('df -TPk')
-			->willReturn(file_get_contents(__DIR__ . '/../data/freebsd_df_tp_edge_cases'));
+		$this->host->withCommand('df', ['-TPk'], $this->fixture('freebsd_df_tp_edge_cases'));
 
 		$disk1 = new Disk();
 		$disk1->setDevice('/dev/gpt/rootfs');
@@ -258,6 +245,81 @@ class FreeBSDTest extends TestCase {
 		$disk3->setMount('/tank');
 
 		$this->assertEquals([$disk1, $disk2, $disk3], $this->os->getDiskInfo());
+	}
+
+	public function testGetNetworkInterfacesSkipsNamesThatAreNoInterfaceName(): void {
+		$this->host->withCommand('ifconfig', ['-a'], 'every interface');
+		$this->os->method('getNetInterfaces')->willReturn([
+			'-a' => ['up' => true, 'unicast' => []],
+			'em0 ; reboot' => ['up' => true, 'unicast' => []],
+		]);
+
+		$interfaces = $this->os->getNetworkInterfaces();
+
+		$this->assertCount(2, $interfaces);
+		$this->assertSame([], $this->host->ran);
+	}
+
+	public function testGetAverageLoadComesFromPhp(): void {
+		$load = $this->os->getAverageLoad();
+		if (!function_exists('sys_getloadavg') || sys_getloadavg() === false) {
+			$this->assertFalse($load);
+			return;
+		}
+
+		$this->assertIsArray($load);
+		$this->assertCount(3, $load);
+		$this->assertContainsOnly('float', $load);
+		$this->assertSame([], $this->host->ran);
+	}
+
+	public function testSampleUptimeFromBootTime(): void {
+		$bootedAt = time() - 3600;
+		$this->host->withCommand('sysctl', ['-n', 'kern.boottime'], '{ sec = ' . $bootedAt . ', usec = 503212 } Sat Oct 24 09:00:00 2026' . "\n");
+
+		$this->assertEqualsWithDelta(3600, $this->os->sampleUptime(), 2);
+	}
+
+	public function testSampleUptimeWithoutSysctl(): void {
+		$this->host->withCommand('sysctl', ['-n', 'kern.boottime'], 'sysctl: unknown oid', 1);
+
+		$this->assertSame(-1, $this->os->sampleUptime());
+	}
+
+	public function testUptimeIsLeftToTheSampler(): void {
+		$this->assertSame(-1, $this->os->getUptime());
+		$this->assertSame([], $this->host->ran);
+	}
+
+	public function testGetTimeInTheLinkedSystemZone(): void {
+		$this->host->links['/etc/localtime'] = '/usr/share/zoneinfo/Asia/Kolkata';
+
+		$this->assertStringContainsString(' IST ', $this->os->getTime());
+		$this->assertSame([], $this->host->ran);
+	}
+
+	public function testGetTimeInTheZoneTzsetupRecorded(): void {
+		$this->host->withFile('/var/db/zoneinfo', "Asia/Kolkata\n");
+
+		$this->assertStringContainsString(' IST ', $this->os->getTime());
+	}
+
+	public function testGetTimeFormat(): void {
+		$this->assertMatchesRegularExpression(
+			'/^[A-Z][a-z]{2} [A-Z][a-z]{2} \d{1,2} \d{2}:\d{2}:\d{2} \S+ \d{4}$/',
+			$this->os->getTime(),
+		);
+	}
+
+	public function testGetDiskInfoReturnsTheMountsThatAnsweredBeforeATimeout(): void {
+		$this->host->binaries[] = 'df';
+		$this->host->commands['df -TPk'] = new CommandResult(137, "/dev/gpt/rootfs ufs 10000000 2000000 8000000 20% /\nstorage:/vol nfs 1", '', true);
+		$this->logger->expects($this->once())->method('warning');
+
+		$disks = $this->os->getDiskInfo();
+
+		$this->assertCount(1, $disks);
+		$this->assertSame('/', $disks[0]->getMount());
 	}
 
 	public function testSupported(): void {

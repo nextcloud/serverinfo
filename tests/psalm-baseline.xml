@@ -129,19 +129,12 @@
     </PossiblyUnusedMethod>
   </file>
   <file src="lib/OperatingSystems/FreeBSD.php">
-    <ForbiddenCode>
-      <code><![CDATA[shell_exec(escapeshellcmd($command))]]></code>
-    </ForbiddenCode>
     <InvalidOperand>
       <code><![CDATA[$lines[0] / 1024 / 1024]]></code>
       <code><![CDATA[($lines[1] * ($lines[2] + $lines[3] + $lines[4])) / 1024 / 1024]]></code>
     </InvalidOperand>
   </file>
   <file src="lib/OperatingSystems/Linux.php">
-    <ForbiddenCode>
-      <code><![CDATA[shell_exec('ip route | awk \'/default/ { print $3 }\'')]]></code>
-      <code><![CDATA[shell_exec(escapeshellcmd($command))]]></code>
-    </ForbiddenCode>
     <InvalidOperand>
       <code><![CDATA[$speed / 1000]]></code>
     </InvalidOperand>
