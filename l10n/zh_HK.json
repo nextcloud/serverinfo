@@ -77,6 +77,7 @@
     "Monitoring" : "監控",
     "Monitoring app with useful server information" : "使用有用的伺服器訊息以監控應用程式",
     "Provides useful server information, such as CPU load, RAM usage, disk usage, number of users, etc. Shows pending operating system updates, required reboots and service restarts, and how long the Linux distribution is still supported." : "提供實用的伺服器資訊，例如 CPU 負載、RAM 使用量、磁碟使用量及使用者人數等。顯示待安裝的作業系統更新、所需的系統及服務重新啟動，以及 Linux 發行版本的剩餘支援期限。",
+    "{0}% of your subscription quota" : "您的訂閱配額的{0}%",
     "{0}% of all users" : "所有用戶的 {0}%",
     "Active users" : "活躍用戶",
     "Last hour" : "過去 1 小時",
