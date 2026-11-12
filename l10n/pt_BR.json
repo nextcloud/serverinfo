@@ -394,7 +394,7 @@
     "Waiting" : "Aguardando",
     "Security update" : "Atualização de segurança",
     "patch" : "patch",
-    "to" : "a",
+    "to" : "para",
     "No pending update matches this filter." : "Não há nenhuma atualização pendente que corresponda a este filtro.",
     "Show fewer" : "Exibir menos",
     "Regular updates carry fixes too, for example Debian point releases, so install them as well." : "As atualizações regulares também trazem correções, como, por exemplo, as versões incrementais (point releases) do Debian; portanto, instale-as também.",
