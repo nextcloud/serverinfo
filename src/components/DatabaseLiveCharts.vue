@@ -20,7 +20,7 @@
 import type { ChartOptions } from 'chart.js'
 
 import axios from '@nextcloud/axios'
-import { t } from '@nextcloud/l10n'
+import { n, t } from '@nextcloud/l10n'
 import { generateUrl } from '@nextcloud/router'
 import { CategoryScale, Chart, Filler, LinearScale, LineController, LineElement, PointElement, Tooltip } from 'chart.js'
 import { computed, onUnmounted, ref, shallowRef, watch } from 'vue'
@@ -156,9 +156,9 @@ onUnmounted(() => {
 /**
  * Chart options shared by the three boxes: no axes, no legend, just the shape.
  *
- * @param unit appended to the tooltip value
+ * @param format turns a sample into the tooltip text
  */
-function optionsFor(unit: string): ChartOptions<'line'> {
+function optionsFor(format: (value: number) => string): ChartOptions<'line'> {
 	return {
 		animation: false,
 		responsive: true,
@@ -171,7 +171,7 @@ function optionsFor(unit: string): ChartOptions<'line'> {
 			legend: { display: false },
 			tooltip: {
 				displayColors: false,
-				callbacks: { label: (ctx) => `${ctx.parsed.y ?? '—'} ${unit}` },
+				callbacks: { label: (ctx) => (ctx.parsed.y === null || ctx.parsed.y === undefined ? '—' : format(ctx.parsed.y)) },
 			},
 		},
 		elements: { point: { radius: 0, hitRadius: 8 } },
@@ -203,14 +203,15 @@ const boxes = computed(() => [
 		label: t('serverinfo', 'Current connections'),
 		value: connectionsNow.value,
 		data: dataFor(connections.value),
-		options: optionsFor(t('serverinfo', 'connections')),
+		// TRANSLATORS: Tooltip of the live chart, %n is the number of open database connections
+		options: optionsFor((value) => n('serverinfo', '%n connection', '%n connections', value)),
 	},
 	{
 		key: 'queries',
 		label: throughputLabel.value,
 		value: queriesNow.value,
 		data: dataFor(queries.value),
-		options: optionsFor('/s'),
+		options: optionsFor((value) => `${value} /s`),
 	},
 	{
 		key: 'latency',
@@ -218,7 +219,7 @@ const boxes = computed(() => [
 		label: t('serverinfo', 'Database latency'),
 		value: latencyNow.value,
 		data: dataFor(latency.value),
-		options: optionsFor('ms'),
+		options: optionsFor((value) => `${value} ms`),
 	},
 ])
 </script>
