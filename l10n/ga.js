@@ -98,7 +98,6 @@ OC.L10N.register(
     "Queries per second" : "Ceisteanna in aghaidh an tsoicind",
     "Transactions per second" : "Idirbhearta in aghaidh an tsoicind",
     "Current connections" : "Naisc reatha",
-    "connections" : "naisc",
     "Database latency" : "Moill bhunachar sonraí",
     "Passing" : "Ag dul thart",
     "Skipped" : "Scipeáilte",

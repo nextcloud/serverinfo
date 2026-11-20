@@ -109,7 +109,6 @@ OC.L10N.register(
     "Queries per second" : "Dotazy za sekundu",
     "Transactions per second" : "Transakcie za sekundu",
     "Current connections" : "Aktuálne pripojenia",
-    "connections" : "pripojení",
     "Database latency" : "Latencia databázy",
     "Passing" : "Úspešné",
     "Skipped" : "Preskočené",
