@@ -43,7 +43,6 @@ OC.L10N.register(
     "Queries per second" : "Секунд тутамд асуулга",
     "Transactions per second" : "Секунд тутамд гүйлгээ",
     "Current connections" : "Одоогийн холболтууд",
-    "connections" : "холболтууд",
     "Database latency" : "Өгөгдлийн сангийн хоцрогдол",
     "Passing" : "Тэнцэж байна",
     "Skipped" : "Алгассан",
