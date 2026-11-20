@@ -54,7 +54,6 @@ OC.L10N.register(
     "Queries per second" : "Прашања по секунда",
     "Transactions per second" : "Трансакции по секунда",
     "Current connections" : "Тековни врски",
-    "connections" : "врски",
     "Database latency" : "Каснење на базата на податоци",
     "Passing" : "Поминуваат",
     "Skipped" : "Прескокнати",

@@ -109,7 +109,6 @@ OC.L10N.register(
     "Queries per second" : "Solicitações por segundo",
     "Transactions per second" : "Transações por segundo",
     "Current connections" : "Conexões atuais",
-    "connections" : "conexões",
     "Database latency" : "Latência do banco de dados",
     "Passing" : "Êxito",
     "Skipped" : "Ignorado",

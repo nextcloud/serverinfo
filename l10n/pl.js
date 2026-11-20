@@ -47,7 +47,6 @@ OC.L10N.register(
     "Queries per second" : "Zapytania na sekundę (QPS)",
     "Transactions per second" : "Transakcje na sekundę (TPS)",
     "Current connections" : "Aktualne połączenia",
-    "connections" : "połączenia",
     "Passing" : "Zaliczone",
     "Skipped" : "Pominięto",
     "Hint" : "Wskazówka",

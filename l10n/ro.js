@@ -108,7 +108,6 @@ OC.L10N.register(
     "Queries per second" : "Interogări pe secundă",
     "Transactions per second" : "Tranzacții pe secundă",
     "Current connections" : "Conexiuni curente",
-    "connections" : "conexiuni",
     "Database latency" : "Latența bazei de date",
     "Passing" : "Trecute",
     "Skipped" : "Omis",

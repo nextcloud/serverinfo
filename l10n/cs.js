@@ -27,7 +27,6 @@ OC.L10N.register(
     "Current usage" : "Aktuální využití",
     "Threads" : "Vláken",
     "Load average" : "Průměrné vytížení",
-    "connections" : "spojení",
     "Passing" : "V pořádku",
     "Skipped" : "Přeskočeno",
     "Hint" : "Rada",
