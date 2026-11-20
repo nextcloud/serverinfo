@@ -109,7 +109,6 @@ OC.L10N.register(
     "Queries per second" : "Bir saniyedeki sorgu sayısı",
     "Transactions per second" : "Bir saniyedeki işlem sayısı",
     "Current connections" : "Geçerli bağlantılar",
-    "connections" : "bağlantı",
     "Database latency" : "Veri tabanı gecikmesi",
     "Passing" : "Sorunsuz",
     "Skipped" : "Atlandı",

@@ -109,7 +109,6 @@ OC.L10N.register(
     "Queries per second" : "Frågor per sekund",
     "Transactions per second" : "Transaktioner per sekund",
     "Current connections" : "Aktuella anslutningar",
-    "connections" : "anslutningar",
     "Database latency" : "Databasfördröjning",
     "Passing" : "Godkänd",
     "Skipped" : "Hoppades över",

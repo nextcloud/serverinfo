@@ -75,7 +75,6 @@ OC.L10N.register(
     "Queries per second" : "Päringuid sekundis",
     "Transactions per second" : "Transaktsioone sekundis",
     "Current connections" : "Praegused ühendused",
-    "connections" : "ühendust",
     "Database latency" : "Andmebaasi latentsus",
     "Passing" : "Korras",
     "Skipped" : "Vahelejäetud",

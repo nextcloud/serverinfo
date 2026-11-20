@@ -43,7 +43,6 @@ OC.L10N.register(
     "Queries per second" : "1秒あたりのクエリ数",
     "Transactions per second" : "1秒あたりのトランザクション数",
     "Current connections" : "現在の接続数",
-    "connections" : "接続数",
     "Database latency" : "データベースのレイテンシ",
     "Passing" : "合格",
     "Skipped" : "スキップ",
