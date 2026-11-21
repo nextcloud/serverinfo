@@ -109,6 +109,7 @@ OC.L10N.register(
     "Queries per second" : "Запросов в секунду",
     "Transactions per second" : "Транзакций в секунду",
     "Current connections" : "Текущие соединения",
+    "_%n connection_::_%n connections_" : ["%n подключение","%n подключения","%n подключений","%n подключения"],
     "Database latency" : "Задержка базы данных",
     "Passing" : "Пройдено",
     "Skipped" : "Пропущено",
