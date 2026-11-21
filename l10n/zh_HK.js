@@ -109,6 +109,7 @@ OC.L10N.register(
     "Queries per second" : "每秒查詢數",
     "Transactions per second" : "每秒交易數",
     "Current connections" : "目前連線數",
+    "_%n connection_::_%n connections_" : ["%n 個連線"],
     "Database latency" : "資料庫延遲",
     "Passing" : "通過",
     "Skipped" : "略過",
