@@ -181,6 +181,7 @@ class ConcernTexts {
 		}
 		$age = self::int($concern, 'ageSeconds') ?? 0;
 		if ($concern->level === Concern::LEVEL_OK) {
+			// TRANSLATORS: Title of the check freshness entry: the information about the operating system was checked recently and is not out of date. It does not mean that all updates are installed
 			return $l->t('The operating system status is current');
 		}
 		if ($age < 86400) {
@@ -216,6 +217,7 @@ class ConcernTexts {
 		$extendedEnds = $this->date(self::string($concern, 'extendedEnds'), $l);
 
 		return match (self::string($concern, 'state')) {
+			// TRANSLATORS: %1$s is the name of the operating system distribution, e.g. "Arch Linux". A rolling release has no fixed versions and no end of support
 			SupportStatus::STATE_ROLLING => $l->t('%1$s is a rolling release', [$name]),
 			SupportStatus::STATE_ENDED => $l->t('%1$s no longer receives security updates since %2$s', [$name, $ends]),
 			// TRANSLATORS: %1$s is the release, %2$s a paid support programme, e.g. "Ubuntu Pro", %3$s the date it ends
