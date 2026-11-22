@@ -83,17 +83,23 @@ class BackgroundJobs {
 	 */
 	public function updateSlowestJobs(): void {
 		$query = $this->connection->getQueryBuilder();
-		$query->select('c.class_name')
-			->selectAlias($query->func()->count(), 'runs')
-			->selectAlias($query->func()->sum('r.duration'), 'total_duration')
-			->selectAlias($query->func()->max('r.duration'), 'max_duration')
-			->selectAlias($query->func()->max('r.ram_peak_usage'), 'max_ram')
-			->from('job_runs', 'r')
-			// A run whose class is gone from the registry drops out of the join
-			->innerJoin('r', 'job_classes_registry', 'c', $query->expr()->eq('r.class_id', 'c.class_id'))
+		$runsByClass = $this->connection->getQueryBuilder();
+		$runsByClass->select('class_id')
+			->selectAlias($runsByClass->func()->count(), 'runs')
+			->selectAlias($runsByClass->func()->sum('duration'), 'total_duration')
+			->selectAlias($runsByClass->func()->max('duration'), 'max_duration')
+			->selectAlias($runsByClass->func()->max('ram_peak_usage'), 'max_ram')
+			->from('job_runs')
 			// A running job has not reported its duration yet
-			->where($query->expr()->neq('r.status', $query->createNamedParameter(JobStatus::RUNNING->value, IQueryBuilder::PARAM_INT)))
-			->groupBy('r.class_id', 'c.class_name');
+			->where($runsByClass->expr()->neq('status', $query->createNamedParameter(JobStatus::RUNNING->value, IQueryBuilder::PARAM_INT)))
+			->groupBy('class_id');
+
+		$query->select('c.class_name', 'r.runs', 'r.total_duration', 'r.max_duration', 'r.max_ram')
+			->from($query->createFunction('(' . $runsByClass->getSQL() . ')'), 'r')
+			// Look up each class name once and exclude classes missing from the registry.
+			->innerJoin('r', 'job_classes_registry', 'c', $query->expr()->eq('r.class_id', 'c.class_id'))
+			// The stable average-duration sort below keeps this order for ties.
+			->orderBy('r.class_id', 'ASC');
 
 		$result = $query->executeQuery();
 		$stats = [];
