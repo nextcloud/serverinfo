@@ -28,6 +28,8 @@ class ConfigLexicon implements ILexicon {
 
 	public const CACHED_DB_CHECK = 'cached_db_check';
 
+	public const STATISTICS_CACHE_TTL = 'statistics_cache_ttl';
+
 	public const CACHED_OS_FIRST_SEEN = 'cached_os_first_seen';
 	public const CACHED_OS_PHP_PROCESS = 'cached_os_php_process';
 	public const CACHED_OS_PHP_OUTDATED_SINCE = 'cached_os_php_outdated_since';
@@ -88,6 +90,12 @@ class ConfigLexicon implements ILexicon {
 				[],
 				'Outcome of the last database check run, read by the setup check on Settings > Overview',
 				lazy: true,
+			),
+			new Entry(
+				self::STATISTICS_CACHE_TTL,
+				ValueType::INT,
+				300,
+				'How long the database statistics of the monitoring API and the admin page are cached, in seconds; 0 turns the cache off, at most 3600',
 			),
 			new Entry(
 				self::CACHED_OS_FIRST_SEEN,

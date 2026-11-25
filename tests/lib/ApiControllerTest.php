@@ -10,14 +10,11 @@ declare(strict_types=1);
 namespace OCA\ServerInfo\Tests;
 
 use OCA\ServerInfo\Controller\ApiController;
-use OCA\ServerInfo\DatabaseStatistics;
 use OCA\ServerInfo\FpmStatistics;
 use OCA\ServerInfo\Os;
 use OCA\ServerInfo\OsStatus\OsStatusService;
 use OCA\ServerInfo\PhpStatistics;
-use OCA\ServerInfo\SessionStatistics;
-use OCA\ServerInfo\ShareStatistics;
-use OCA\ServerInfo\StorageStatistics;
+use OCA\ServerInfo\StatisticsCache;
 use OCA\ServerInfo\SystemStatistics;
 use OCA\ServerInfo\UptimeFormatter;
 use OCP\AppFramework\Http;
@@ -34,12 +31,9 @@ class ApiControllerTest extends \Test\TestCase {
 	private IConfig&MockObject $config;
 	private IGroupManager&MockObject $groupManager;
 	private SystemStatistics&MockObject $systemStatistics;
-	private StorageStatistics&MockObject $storageStatistics;
+	private StatisticsCache&MockObject $statisticsCache;
 	private PhpStatistics&MockObject $phpStatistics;
 	private FpmStatistics&MockObject $fpmStatistics;
-	private DatabaseStatistics&MockObject $databaseStatistics;
-	private ShareStatistics&MockObject $shareStatistics;
-	private SessionStatistics&MockObject $sessionStatistics;
 	private UptimeFormatter&MockObject $uptimeFormatter;
 	private OsStatusService&MockObject $osStatus;
 
@@ -51,12 +45,15 @@ class ApiControllerTest extends \Test\TestCase {
 		$this->groupManager = $this->createMock(IGroupManager::class);
 		$this->os = $this->createMock(Os::class);
 		$this->systemStatistics = $this->createMock(SystemStatistics::class);
-		$this->storageStatistics = $this->createMock(StorageStatistics::class);
+		$this->statisticsCache = $this->createMock(StatisticsCache::class);
+		$this->statisticsCache->method('get')->willReturn([
+			'storage' => [],
+			'shares' => [],
+			'database' => [],
+			'activeUsers' => [],
+		]);
 		$this->phpStatistics = $this->createMock(PhpStatistics::class);
 		$this->fpmStatistics = $this->createMock(FpmStatistics::class);
-		$this->databaseStatistics = $this->createMock(DatabaseStatistics::class);
-		$this->shareStatistics = $this->createMock(ShareStatistics::class);
-		$this->sessionStatistics = $this->createMock(SessionStatistics::class);
 		$this->uptimeFormatter = $this->createMock(UptimeFormatter::class);
 		$this->osStatus = $this->createMock(OsStatusService::class);
 	}
@@ -70,18 +67,17 @@ class ApiControllerTest extends \Test\TestCase {
 			$userSession,
 			$this->os,
 			$this->systemStatistics,
-			$this->storageStatistics,
+			$this->statisticsCache,
 			$this->phpStatistics,
 			$this->fpmStatistics,
-			$this->databaseStatistics,
-			$this->shareStatistics,
-			$this->sessionStatistics,
 			$this->uptimeFormatter,
 			$this->osStatus,
 		);
 	}
 
 	public function testAuthFailureNoSession() {
+		$this->statisticsCache->expects($this->never())->method('get');
+
 		$response = $this->getController(null)->info();
 
 		$this->assertEquals(['message' => 'Unauthorized'], $response->getData());
@@ -188,24 +184,21 @@ class ApiControllerTest extends \Test\TestCase {
 		$this->systemStatistics->expects($this->once())
 			->method('getSystemStatistics')
 			->willReturn(['some_system' => 'some_value']);
-		$this->storageStatistics->expects($this->once())
-			->method('getStorageStatistics')
-			->willReturn(['some_storage' => 'some_value']);
-		$this->shareStatistics->expects($this->once())
-			->method('getShareStatistics')
-			->willReturn(['some_shares' => 'some_value']);
 		$this->phpStatistics->expects($this->once())
 			->method('getPhpStatistics')
 			->willReturn(['some_php' => 'some_value']);
 		$this->fpmStatistics->expects($this->once())
 			->method('getFpmStatistics')
 			->willReturn(['some_fpm' => 'some_value']);
-		$this->databaseStatistics->expects($this->once())
-			->method('getDatabaseStatistics')
-			->willReturn(['some_database' => 'some_value']);
-		$this->sessionStatistics->expects($this->once())
-			->method('getSessionStatistics')
-			->willReturn(['some_user' => 'some_value']);
+		$this->statisticsCache = $this->createMock(StatisticsCache::class);
+		$this->statisticsCache->expects($this->once())
+			->method('get')
+			->willReturn([
+				'storage' => ['some_storage' => 'some_value'],
+				'shares' => ['some_shares' => 'some_value'],
+				'database' => ['some_database' => 'some_value'],
+				'activeUsers' => ['some_user' => 'some_value'],
+			]);
 		$this->osStatus->expects($this->never())->method('monitoringSummary');
 
 		$response = $this->getController($userSession)->info();
