@@ -10,10 +10,14 @@ declare(strict_types=1);
 namespace OCA\ServerInfo\Settings;
 
 use OCP\AppFramework\Http\TemplateResponse;
-use OCP\Settings\ISettings;
+use OCP\Settings\IDelegatedSettings;
 use OCP\Util;
 
-class AdminSettings implements ISettings {
+/**
+ * Read-only System monitoring page — exposable via Admin delegation
+ * (same pattern as logreader).
+ */
+class AdminSettings implements IDelegatedSettings {
 	#[\Override]
 	public function getForm(): TemplateResponse {
 		Util::addScript('serverinfo', 'serverinfo-main');
@@ -40,5 +44,16 @@ class AdminSettings implements ISettings {
 	#[\Override]
 	public function getPriority(): int {
 		return 0;
+	}
+
+	#[\Override]
+	public function getName(): ?string {
+		return null; // Only setting in this section
+	}
+
+	#[\Override]
+	public function getAuthorizedAppConfig(): array {
+		// Page is read-only; no appconfig writes to authorize.
+		return [];
 	}
 }
