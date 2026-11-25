@@ -59,7 +59,7 @@ class SystemStatistics {
 			'memcache.locking' => $this->config->getSystemValue('memcache.locking', 'none'),
 			'debug' => $this->config->getSystemValue('debug', false) ? 'yes' : 'no',
 			'freespace' => $this->getFreeSpace(),
-			'cpuload' => $cpu->getAverageLoad(),
+			'cpuload' => $this->os->getAverageLoad(),
 			'cpunum' => $cpu->getThreads(),
 			'mem_total' => $this->toKibibytes($memory->getMemTotal()),
 			'mem_free' => $this->toKibibytes($memory->getMemAvailable()),

@@ -25,6 +25,11 @@ class Dummy implements IOperatingSystem {
 	}
 
 	#[\Override]
+	public function getAverageLoad(): array|false {
+		return false;
+	}
+
+	#[\Override]
 	public function sampleUptime(): int {
 		return -1;
 	}
