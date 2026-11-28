@@ -150,7 +150,7 @@ class BackgroundJobsTest extends \Test\TestCase {
 		$result->method('fetch')->willReturnOnConsecutiveCalls(...[...$rows, false]);
 
 		$query = $this->createMock(IQueryBuilder::class);
-		foreach (['select', 'selectAlias', 'from', 'innerJoin', 'where', 'groupBy'] as $method) {
+		foreach (['select', 'selectAlias', 'from', 'innerJoin', 'where', 'groupBy', 'orderBy'] as $method) {
 			$query->method($method)->willReturnSelf();
 		}
 		$query->method('func')->willReturn($this->createMock(IFunctionBuilder::class));
